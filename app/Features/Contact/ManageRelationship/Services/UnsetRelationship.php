@@ -66,7 +66,7 @@ class UnsetRelationship extends BaseService implements ServiceInterface
         $this->unsetRelationship($this->contact, $otherContact);
         $this->unsetRelationship($otherContact, $this->contact);
 
-        $this->log($otherContact, $this->relationshipType);
+        $this->log($otherContact);
     }
 
     private function unsetRelationship(Contact $contact, Contact $otherContact): void

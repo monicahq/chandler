@@ -13,6 +13,7 @@ use App\Exceptions\NotEnoughPermissionException;
 
 class CopyContactToAnotherVault extends BaseService implements ServiceInterface
 {
+    private array $data;
     private Contact $newContact;
     private Vault $newVault;
 

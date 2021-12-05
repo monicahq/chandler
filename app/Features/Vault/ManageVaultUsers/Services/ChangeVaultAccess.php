@@ -9,6 +9,7 @@ use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 use App\Exceptions\SameUserException;
+use App\Helpers\VaultHelper;
 
 class ChangeVaultAccess extends BaseService implements ServiceInterface
 {
@@ -90,7 +91,7 @@ class ChangeVaultAccess extends BaseService implements ServiceInterface
             'objects' => json_encode([
                 'user_name' => $this->user->name,
                 'vault_name' => $this->vault->name,
-                'permission_type' => $this->vault->friendlyType,
+                'permission_type' => VaultHelper::getPermissionFriendlyName($this->data['permission']),
             ]),
         ]);
     }

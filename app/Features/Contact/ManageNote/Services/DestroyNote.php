@@ -11,6 +11,8 @@ use App\Interfaces\ServiceInterface;
 
 class DestroyNote extends BaseService implements ServiceInterface
 {
+    private Note $note;
+
     /**
      * Get the validation rules that apply to the service.
      *
