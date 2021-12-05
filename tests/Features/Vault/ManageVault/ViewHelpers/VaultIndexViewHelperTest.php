@@ -38,7 +38,7 @@ class VaultIndexViewHelperTest extends TestCase
             [
                 'url' => [
                     'vault' => [
-                        'new' => env('APP_URL') . '/vaults/new',
+                        'new' => env('APP_URL').'/vaults/new',
                     ],
                 ],
             ],
