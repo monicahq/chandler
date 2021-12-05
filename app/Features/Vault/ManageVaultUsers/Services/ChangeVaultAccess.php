@@ -50,7 +50,7 @@ class ChangeVaultAccess extends BaseService implements ServiceInterface
     /**
      * Change the access type of the given user in the given vault.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function execute(array $data): void
     {

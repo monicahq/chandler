@@ -9,7 +9,7 @@ class VaultHelper
     /**
      * Get the friendly name of a vault permission.
      *
-     * @param int $permission
+     * @param  int  $permission
      * @return string
      */
     public static function getPermissionFriendlyName(int $permission): string

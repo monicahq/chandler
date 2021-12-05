@@ -51,7 +51,7 @@ class CopyContactToAnotherVault extends BaseService implements ServiceInterface
     /**
      * Copy a contact from one vault to another.
      *
-     * @param array $data
+     * @param  array  $data
      * @return Contact
      */
     public function execute(array $data): Contact

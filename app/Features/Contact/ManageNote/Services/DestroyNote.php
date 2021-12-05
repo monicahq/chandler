@@ -47,7 +47,7 @@ class DestroyNote extends BaseService implements ServiceInterface
     /**
      * Destroy a note.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function execute(array $data): void
     {

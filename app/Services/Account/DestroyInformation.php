@@ -41,7 +41,7 @@ class DestroyInformation extends BaseService implements ServiceInterface
     /**
      * Destroy an information.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function execute(array $data): void
     {
