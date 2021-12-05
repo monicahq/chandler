@@ -14,7 +14,7 @@ class Attribute extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string, bool>
+     * @var array
      */
     protected $fillable = [
         'information_id',

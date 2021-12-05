@@ -13,6 +13,7 @@ class CreateAttribute extends BaseService implements ServiceInterface
 {
     private array $data;
     private Attribute $attribute;
+    private Information $information;
 
     /**
      * Get the validation rules that apply to the service.

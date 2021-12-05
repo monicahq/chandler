@@ -26,6 +26,10 @@ class VaultHelper
             case Vault::PERMISSION_VIEW:
                 $friendlyType = trans('account.vault_permission_view');
                 break;
+
+            default:
+                $friendlyType = '';
+                break;
         }
 
         return $friendlyType;

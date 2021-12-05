@@ -12,6 +12,9 @@
         <directory name="routes"/>
         <ignoreFiles>
             <directory name="vendor"/>
+            <directory name="node_modules"/>
+            <file name="app/Services/Account/AssociateInformationToTemplate.php" />
+            <file name="app/Services/Account/RemoveInformationFromTemplate.php" />
         </ignoreFiles>
     </projectFiles>
 
