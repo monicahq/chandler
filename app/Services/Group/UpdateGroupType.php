@@ -14,6 +14,7 @@ class UpdateGroupType extends BaseService implements ServiceInterface
     private User $author;
     private array $data;
     private GroupType $groupType;
+
     /**
      * Get the validation rules that apply to the service.
      *
@@ -50,7 +51,7 @@ class UpdateGroupType extends BaseService implements ServiceInterface
     /**
      * Update a group type.
      *
-     * @param array $data
+     * @param  array  $data
      * @return GroupType
      */
     public function execute(array $data): GroupType

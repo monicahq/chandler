@@ -49,7 +49,7 @@ class CreateGroupType extends BaseService implements ServiceInterface
     /**
      * Create a group type.
      *
-     * @param array $data
+     * @param  array  $data
      * @return GroupType
      */
     public function execute(array $data): GroupType

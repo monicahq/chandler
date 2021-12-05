@@ -58,7 +58,7 @@ class CreateAttribute extends BaseService implements ServiceInterface
     /**
      * Create an attribute.
      *
-     * @param array $data
+     * @param  array  $data
      * @return Attribute
      */
     public function execute(array $data): Attribute
