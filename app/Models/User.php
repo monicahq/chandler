@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasFactory, HasApiTokens;
+    use Notifiable, HasFactory, HasApiTokens, MustVerifyEmail;
 
     /**
      * The attributes that are mass assignable.
