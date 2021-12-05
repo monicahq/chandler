@@ -4,16 +4,8 @@ namespace Tests\Features\Vault\ManageVault\ViewHelpers;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Vault;
-use App\Models\Account;
-use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Features\Vault\ManageVault\Services\CreateVault;
 use App\Features\Vault\ManageVault\ViewHelpers\VaultIndexViewHelper;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VaultIndexViewHelperTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Vault\VaultController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\Vault\VaultController;
 
 /*
 |--------------------------------------------------------------------------
