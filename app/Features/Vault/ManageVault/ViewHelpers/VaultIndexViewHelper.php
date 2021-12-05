@@ -17,4 +17,20 @@ class VaultIndexViewHelper
             'name' => Auth::user()->name,
         ];
     }
+
+    /**
+     * Get all the data needed for the general layout page.
+     *
+     * @return array
+     */
+    public static function data(): array
+    {
+        return [
+            'url' => [
+                'vault' => [
+                    'new' => route('vault.new'),
+                ],
+            ],
+        ];
+    }
 }

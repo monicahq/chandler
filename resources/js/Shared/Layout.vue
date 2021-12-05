@@ -5,7 +5,7 @@
 
         <!-- main nav -->
         <nav class="bg-gray-50 border-b max-w-8xl mx-auto px-3 sm:px-6 flex items-center justify-between h-10">
-          <div class="items-center sm:flex hidden">
+          <div class="items-center sm:flex">
             <div class="flex-shrink-0">
               {{ user.name }}
             </div>

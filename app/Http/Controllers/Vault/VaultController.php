@@ -18,6 +18,19 @@ class VaultController extends Controller
     {
         return Inertia::render('Vault/Index', [
             'user' => VaultIndexViewHelper::loggedUserInformation(),
+            'data' => VaultIndexViewHelper::data(),
+        ]);
+    }
+
+    /**
+     * Display the create vault page.
+     *
+     * @return Response
+     */
+    public function new()
+    {
+        return Inertia::render('Vault/Create', [
+            'user' => VaultIndexViewHelper::loggedUserInformation(),
         ]);
     }
 }

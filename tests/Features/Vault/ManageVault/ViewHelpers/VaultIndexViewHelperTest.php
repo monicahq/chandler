@@ -29,4 +29,20 @@ class VaultIndexViewHelperTest extends TestCase
             $array
         );
     }
+
+    /** @test */
+    public function it_gets_the_data_needed_for_the_view(): void
+    {
+        $array = VaultIndexViewHelper::data();
+        $this->assertEquals(
+            [
+                'url' => [
+                    'vault' => [
+                        'new' => env('APP_URL') . '/vaults/new',
+                    ],
+                ],
+            ],
+            $array
+        );
+    }
 }

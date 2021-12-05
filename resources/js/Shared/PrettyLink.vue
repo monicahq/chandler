@@ -3,7 +3,7 @@
   top: -1px;
 }
 
-button {
+a {
 	--tw-shadow: 2px 2px 0 #191a1b !important;
 	border-radius: .25rem !important;
   border-color: #191a1b;
@@ -28,23 +28,26 @@ button {
 </style>
 
 <template>
-  <button :class="classes" class="relative text-sm" name="save" type="submit">
-
-    <span v-if="state == 'loading'">Loading…</span>
-
-    <svg v-if="icon === 'plus' && state != 'loading'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24"
+  <Link :class="classes" class="relative text-sm" :href="href">
+    <svg v-if="icon === 'plus'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24"
           stroke="currentColor"
     >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
     </svg>
-    <span v-if="state != 'loading'">
+    <span>
       {{ text }}
     </span>
-  </button>
+  </Link>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3';
+
 export default {
+  components: {
+    Link,
+  },
+
   props: {
     text: {
       type: String,
@@ -54,7 +57,7 @@ export default {
       type: String,
       default: '',
     },
-    state: {
+    href: {
       type: String,
       default: '',
     },

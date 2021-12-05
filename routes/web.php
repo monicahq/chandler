@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
     Route::get('vaults', [VaultController::class, 'index'])->name('vault.index');
+    Route::get('vaults/new', [VaultController::class, 'new'])->name('vault.new');
 
     Route::get('contacts', 'ContactController@index');
 
