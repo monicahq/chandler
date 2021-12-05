@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Vault;
 
-use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 class VaultController extends Controller
 {
