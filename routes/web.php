@@ -31,7 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
-    Route::get('home', 'HomeController@index')->name('home');
+    Route::get('vaults', 'Vault\\VaultController@index')->name('vault.index');
+
     Route::get('contacts', 'ContactController@index');
 
     Route::get('settings', 'Settings\\SettingsController@index')->name('settings.index');
