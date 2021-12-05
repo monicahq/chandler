@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Vault\VaultController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -29,7 +30,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
-    Route::get('vaults', 'Vault\\VaultController@index')->name('vault.index');
+    Route::get('vaults', [VaultController::class, 'index'])->name('vault.index');
 
     Route::get('contacts', 'ContactController@index');
 
