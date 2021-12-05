@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-  workflow_run:
-    workflows: [Compress images]
-    types: [completed]
-
 env:
   php-version: '8.0'
 
