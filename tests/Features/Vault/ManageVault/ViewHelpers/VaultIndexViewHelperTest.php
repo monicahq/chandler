@@ -26,7 +26,7 @@ class VaultIndexViewHelperTest extends TestCase
             [
                 'name' => $user->name,
                 'url' => [
-                    'logout' => env('APP_URL') . '/logout',
+                    'logout' => env('APP_URL').'/logout',
                 ],
             ],
             $array

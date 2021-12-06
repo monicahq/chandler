@@ -2,8 +2,6 @@
 
 namespace App\Features\Vault\ManageVault\ViewHelpers;
 
-use Illuminate\Support\Facades\Auth;
-
 class VaultCreateViewHelper
 {
     /**
