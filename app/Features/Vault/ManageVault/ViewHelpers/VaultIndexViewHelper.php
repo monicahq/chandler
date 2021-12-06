@@ -15,6 +15,9 @@ class VaultIndexViewHelper
     {
         return [
             'name' => Auth::user()->name,
+            'url' => [
+                'logout' => route('logout')
+            ],
         ];
     }
 

@@ -19,7 +19,7 @@
 </style>
 
 <template>
-  <div :class="divOuterClass">
+  <div class="mb3">
     <label v-if="label" class="block text-sm mb-2" :for="id">
       {{ label }}
       <span v-if="!required" class="optional-badge text-xs">
@@ -27,26 +27,25 @@
       </span>
     </label>
 
-    <div class="relative component">
-      <input
-        :class="localInputClasses"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        ref="input"
-        :type="type"
-        :maxlength="maxlength"
+    <div class="relative">
+      <textarea @input="$emit('update:modelValue', $event.target.value)"
+        v-model="modelValue"
         :id="id"
+        :class="localTextAreaClasses"
         :required="required"
-        :autofocus="autofocus"
+        :type="type"
+        :rows="rows"
+        :maxlength="maxlength"
+        @keydown.esc="sendEscKey"
         @focus="showMaxLength"
         @blur="displayMaxLength = false"
-      >
+      ></textarea>
       <span v-if="maxlength && displayMaxLength" class="length absolute text-xs rounded">
         {{ charactersLeft }}
       </span>
     </div>
 
-    <p v-if="help" class="text-sm mb-3">
+    <p v-if="help" class="f7 mb3 lh-title">
       {{ help }}
     </p>
   </div>
@@ -54,38 +53,27 @@
 
 <script>
 export default {
-  emits: ['update:modelValue'],
+  inheritAttrs: false,
+
+  model: {
+    prop: 'modelValue',
+    event: 'update:modelValue'
+  },
 
   props: {
     id: {
       type: String,
-      default: 'text-input-',
-    },
-    inputClass: {
-      type: String,
-      default: '',
-    },
-    divOuterClass: {
-      type: String,
-      default: '',
-    },
-    modelValue: {
-      type: [String, Number],
-      default: '',
+      default: 'text-area-',
     },
     type: {
       type: String,
       default: 'text',
     },
-    name: {
-      type: String,
-      default: 'input',
-    },
-    placeholder: {
+    textareaClass: {
       type: String,
       default: '',
     },
-    help: {
+    modelValue: {
       type: String,
       default: '',
     },
@@ -93,13 +81,17 @@ export default {
       type: String,
       default: '',
     },
+    help: {
+      type: String,
+      default: '',
+    },
     required: {
       type: Boolean,
       default: false,
     },
-    autofocus: {
-      type: Boolean,
-      default: false,
+    rows: {
+      type: Number,
+      default: 3,
     },
     maxlength: {
       type: Number,
@@ -107,11 +99,18 @@ export default {
     },
   },
 
+  emits: [
+    'esc-key-pressed', 'update:modelValue'
+  ],
+
   data() {
     return {
-      localInputClasses: '',
       displayMaxLength: false,
     };
+  },
+
+  created() {
+    this.localTextAreaClasses = 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ' + this.textareaClass;
   },
 
   computed: {
@@ -125,18 +124,14 @@ export default {
     },
   },
 
-  created() {
-    this.localInputClasses = 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ' + this.inputClass;
-  },
-
   methods: {
-    focus() {
-      this.$refs.input.focus()
+    sendEscKey() {
+      this.$emit('esc-key-pressed');
     },
 
     showMaxLength() {
       this.displayMaxLength = true;
     }
-  }
-}
+  },
+};
 </script>

@@ -3,12 +3,15 @@
   top: -1px;
 }
 
+.save {
+  background-color: #fcf27e;
+}
+
 button {
-	--tw-shadow: 2px 2px 0 #191a1b !important;
 	border-radius: .25rem !important;
   border-color: #191a1b;
 	border-width: 1px !important;
-	box-shadow: var(--tw-ring-offset-shadow,0 0 transparent),var(--tw-ring-shadow,0 0 transparent),var(--tw-shadow) !important;
+	box-shadow: 2px 2px 0 #191a1b;
 	display: inline-block !important;
 	position: relative !important;
 	text-decoration: none !important;
@@ -24,19 +27,31 @@ button {
     box-shadow: none !important;
     transform: translate(2px,2px);
   }
+
+  &:disabled {
+    box-shadow: none;
+    transform: translate(0,0);
+  }
 }
 </style>
 
 <template>
-  <button :class="classes" class="relative text-sm" name="save" type="submit">
+  <button :class="classes" :disabled="state == 'loading'" class="relative text-sm" name="save" type="submit">
 
     <span v-if="state == 'loading'">Loading…</span>
 
+    <!-- + icon -->
     <svg v-if="icon === 'plus' && state != 'loading'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24"
           stroke="currentColor"
     >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
     </svg>
+
+    <!-- check icon -->
+    <svg v-if="icon === 'check' && state != 'loading'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+
     <span v-if="state != 'loading'">
       {{ text }}
     </span>

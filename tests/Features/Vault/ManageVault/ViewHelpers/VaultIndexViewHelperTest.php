@@ -25,6 +25,9 @@ class VaultIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'name' => $user->name,
+                'url' => [
+                    'logout' => env('APP_URL') . '/logout',
+                ],
             ],
             $array
         );

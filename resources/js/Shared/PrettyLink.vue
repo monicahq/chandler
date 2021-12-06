@@ -29,11 +29,18 @@ a {
 
 <template>
   <Link :class="classes" class="relative text-sm" :href="href">
-    <svg v-if="icon === 'plus'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24"
+    <!-- + icon -->
+    <svg v-if="icon === 'plus' && state != 'loading'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24"
           stroke="currentColor"
     >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
     </svg>
+
+    <!-- check icon -->
+    <svg v-if="icon === 'check' && state != 'loading'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline relative icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+
     <span>
       {{ text }}
     </span>

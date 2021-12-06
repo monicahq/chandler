@@ -30,8 +30,10 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
+    // vaults
     Route::get('vaults', [VaultController::class, 'index'])->name('vault.index');
     Route::get('vaults/new', [VaultController::class, 'new'])->name('vault.new');
+    Route::post('vaults', [VaultController::class, 'store'])->name('vault.store');
 
     Route::get('contacts', 'ContactController@index');
 
