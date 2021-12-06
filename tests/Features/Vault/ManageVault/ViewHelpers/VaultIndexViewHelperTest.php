@@ -4,9 +4,9 @@ namespace Tests\Features\Vault\ManageVault\ViewHelpers;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Features\Vault\ManageVault\ViewHelpers\VaultIndexViewHelper;
-use App\Models\Vault;
 
 class VaultIndexViewHelperTest extends TestCase
 {
