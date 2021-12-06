@@ -23,7 +23,7 @@ class VaultController extends Controller
     {
         return Inertia::render('Vault/Index', [
             'user' => VaultIndexViewHelper::loggedUserInformation(),
-            'data' => VaultIndexViewHelper::data(),
+            'data' => VaultIndexViewHelper::data(Auth::user()->account),
         ]);
     }
 

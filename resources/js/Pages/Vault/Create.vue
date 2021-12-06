@@ -1,4 +1,8 @@
 <style lang="scss" scoped>
+.section-head {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
 </style>
 
 <template>
@@ -7,8 +11,8 @@
       <div class="max-w-lg mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
 
         <form @submit.prevent="submit()" class="bg-white border border-gray-200 rounded-lg mb-6">
-          <div class="p-5 border-b border-gray-200 bg-blue-50">
-            <h1 class="text-center text-2xl mb-2">Create a new vault</h1>
+          <div class="p-5 border-b border-gray-200 bg-blue-50 section-head">
+            <h1 class="text-center text-2xl mb-1 font-medium">Create a new vault</h1>
             <p class="text-center">Vaults contain all your contacts data.</p>
           </div>
           <div class="p-5 border-b border-gray-200">
@@ -76,7 +80,7 @@ export default {
 
       axios.post(this.data.url.store, this.form)
         .then(response => {
-          //localStorage.success = this.$t('employee.edit_information_success');
+          localStorage.success = 'The vault has been created';
           this.$inertia.visit(response.data.data);
         })
         .catch(error => {

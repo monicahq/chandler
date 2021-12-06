@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Features\Vault\ManageVault\ViewHelpers\VaultIndexViewHelper;
+use App\Models\Vault;
 
 class VaultIndexViewHelperTest extends TestCase
 {
@@ -36,16 +37,33 @@ class VaultIndexViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
-        $array = VaultIndexViewHelper::data();
+        $vault = Vault::factory()->create();
+
+        $array = VaultIndexViewHelper::data($vault->account);
+
+        $this->assertEquals(2, count($array));
+
         $this->assertEquals(
             [
-                'url' => [
-                    'vault' => [
-                        'new' => env('APP_URL').'/vaults/new',
+                0 => [
+                    'id' => $vault->id,
+                    'name' => $vault->name,
+                    'description' => $vault->description,
+                    'url' => [
+                        'show' => env('APP_URL').'/vaults/'.$vault->id,
                     ],
                 ],
             ],
-            $array
+            $array['vaults']->toArray()
+        );
+
+        $this->assertEquals(
+            [
+                'vault' => [
+                    'new' => env('APP_URL').'/vaults/new',
+                ],
+            ],
+            $array['url']
         );
     }
 }

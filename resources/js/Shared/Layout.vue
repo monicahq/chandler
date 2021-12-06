@@ -1,3 +1,9 @@
+<style lang="scss" scoped>
+main {
+  color: #343a4b;
+}
+</style>
+
 <template>
   <main>
     <div class="min-h-full">
@@ -92,10 +98,12 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue3';
+import Toaster from '@/Shared/Toaster';
 
 export default {
   components: {
     Link,
+    Toaster,
   },
 
   props: {
@@ -111,6 +119,13 @@ export default {
       type: Object,
       default: null,
     },
+  },
+
+  mounted() {
+    if (localStorage.success) {
+      this.flash(localStorage.success, 'success');
+      localStorage.removeItem('success');
+    }
   },
 
   methods: {
