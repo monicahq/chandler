@@ -35,13 +35,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('vaults/new', [VaultController::class, 'new'])->name('vault.new');
     Route::post('vaults', [VaultController::class, 'store'])->name('vault.store');
 
+    Route::middleware(['vault'])->prefix('vaults/{vault}')->group(function () {
+        Route::get('', [VaultController::class, 'show'])->name('vault.show');
+    });
+
     Route::get('contacts', 'ContactController@index');
 
     Route::get('settings', 'Settings\\SettingsController@index')->name('settings.index');
     Route::resource('settings/information', 'Settings\\InformationController');
-
-    // vaults
-    Route::get('vaults/{vault}', 'HomeController@index')->name('vault.show');
 
     // contacts
     Route::get('vaults/{vault}/contacts/{contact}', 'HomeController@index')->name('contact.show');

@@ -22,11 +22,14 @@ class VaultIndexViewHelperTest extends TestCase
             'password' => 'password',
         ]);
 
-        $array = VaultIndexViewHelper::loggedUserInformation();
+        $array = VaultIndexViewHelper::layoutData();
         $this->assertEquals(
             [
-                'name' => $user->name,
+                'user' => [
+                    'name' => $user->name,
+                ],
                 'url' => [
+                    'vaults' => env('APP_URL').'/vaults',
                     'logout' => env('APP_URL').'/logout',
                 ],
             ],

@@ -22,7 +22,7 @@ class VaultController extends Controller
     public function index()
     {
         return Inertia::render('Vault/Index', [
-            'user' => VaultIndexViewHelper::loggedUserInformation(),
+            'user' => VaultIndexViewHelper::layoutData(),
             'data' => VaultIndexViewHelper::data(Auth::user()->account),
         ]);
     }
@@ -35,7 +35,7 @@ class VaultController extends Controller
     public function new()
     {
         return Inertia::render('Vault/Create', [
-            'user' => VaultIndexViewHelper::loggedUserInformation(),
+            'user' => VaultIndexViewHelper::layoutData(),
             'data' => VaultCreateViewHelper::data(),
         ]);
     }
@@ -43,6 +43,7 @@ class VaultController extends Controller
     /**
      * Store the vault.
      *
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -60,5 +61,22 @@ class VaultController extends Controller
         return response()->json([
             'data' => route('vault.index'),
         ], 201);
+    }
+
+    /**
+     * Display the vault.
+     *
+     * @param Request $request
+     * @param int $vaultId
+     * @return Response
+     */
+    public function show(Request $request, int $vaultId)
+    {
+        $vault = Vault::find($vaultId);
+
+        return Inertia::render('Vault/Show', [
+            'user' => VaultIndexViewHelper::layoutData(),
+            'data' => VaultCreateViewHelper::data(),
+        ]);
     }
 }

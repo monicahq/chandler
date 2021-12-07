@@ -20,8 +20,8 @@ button {
 	transition-timing-function: cubic-bezier(.4,0,.2,1) !important;
   font-size: .875rem !important;
   line-height: 1.25rem !important;
-  padding-left: .75rem !important;
-  padding-right: .75rem !important;
+  padding-left: 9px;
+  padding-right: 9px;
 
   &:hover {
     box-shadow: none !important;

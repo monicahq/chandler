@@ -12,9 +12,9 @@ main {
         <!-- main nav -->
         <nav class="bg-gray-50 border-b max-w-8xl mx-auto px-3 sm:px-6 flex items-center justify-between h-10">
           <div class="items-center sm:flex">
-            <div class="flex-shrink-0">
+            <Link :href="user.url.vaults" class="flex-shrink-0">
               {{ user.name }}
-            </div>
+            </Link>
           </div>
 
           <!-- search box -->
@@ -50,35 +50,31 @@ main {
             <div class="py-2">
               <div class="">
                 <div class="hidden md:block">
-                  <div class="flex items-baseline space-x-6">
-                    <Link href="" class="bg-blue-700 text-white px-2 py-1 rounded-md text-sm font-medium"
-                                  aria-current="page"
-                    >
-                      Dashboard
-                    </Link>
+                  <div class="flex items-baseline justify-between space-x-6">
+                    <div>
+                      <Link href="" class="bg-blue-700 text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                        Dashboard
+                      </Link>
 
-                    <Link href=""
-                                  class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium"
-                    >
-                      Reports
-                    </Link>
+                      <Link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                        Reports
+                      </Link>
 
-                    <Link href="contacts'"
-                                  class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium"
-                    >
-                      Contacts
-                    </Link>
+                      <Link href="contacts'" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                        Contacts
+                      </Link>
 
-                    <Link href=""
-                                  class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium"
-                    >
-                      Gift center
-                    </Link>
+                      <Link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                        Gift center
+                      </Link>
 
-                    <Link href=""
-                                  class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium"
-                    >
-                      Loans & debts center
+                      <Link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                        Loans & debts center
+                      </Link>
+                    </div>
+
+                    <Link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium">
+                        Settings
                     </Link>
                   </div>
                 </div>

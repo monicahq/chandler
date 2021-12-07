@@ -11,13 +11,17 @@ class VaultIndexViewHelper
     /**
      * Get all the data needed for the general layout page.
      *
+     * @param Vault $vault
      * @return array
      */
-    public static function loggedUserInformation(): array
+    public static function layoutData(): array
     {
         return [
-            'name' => Auth::user()->name,
+            'user' => [
+                'name' => Auth::user()->name,
+            ],
             'url' => [
+                'vaults' => route('vault.index'),
                 'logout' => route('logout')
             ],
         ];
@@ -31,7 +35,10 @@ class VaultIndexViewHelper
      */
     public static function data(Account $account): array
     {
-        $vaults = Vault::where('account_id', $account->id)->get();
+        $vaults = Vault::where('account_id', $account->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
         $vaultCollection = collect();
         foreach ($vaults as $vault) {
             $vaultCollection->push([

@@ -17,7 +17,6 @@ class CreateAccount extends BaseService implements ServiceInterface
     private User $user;
     private Account $account;
     private array $data;
-    public Vault $vault;
 
     /**
      * Get the validation rules that apply to the service.
@@ -47,7 +46,6 @@ class CreateAccount extends BaseService implements ServiceInterface
 
         $this->account = Account::create();
         $this->addFirstUser();
-        $this->createFirstVault();
         $this->addLogs();
 
         SetupAccount::dispatch($this->user)->onQueue('low');
@@ -67,21 +65,6 @@ class CreateAccount extends BaseService implements ServiceInterface
         ]);
     }
 
-    private function createFirstVault(): void
-    {
-        $this->vault = Vault::create([
-            'account_id' => $this->account->id,
-            'type' => Vault::TYPE_PERSONAL,
-            'name' => trans('account.default_vault_name'),
-        ]);
-
-        DB::table('user_vault')->insert([
-            'vault_id' => $this->vault->id,
-            'user_id' => $this->user->id,
-            'permission' => Vault::PERMISSION_MANAGE,
-        ]);
-    }
-
     private function addLogs(): void
     {
         CreateAuditLog::dispatch([
@@ -90,17 +73,6 @@ class CreateAccount extends BaseService implements ServiceInterface
             'author_name' => $this->user->name,
             'action_name' => 'account_created',
             'objects' => json_encode([]),
-        ]);
-
-        CreateAuditLog::dispatch([
-            'account_id' => $this->account->id,
-            'author_id' => $this->user->id,
-            'author_name' => $this->user->name,
-            'action_name' => 'vault_created',
-            'objects' => json_encode([
-                'vault_id' => $this->vault->id,
-                'vault_name' => $this->vault->name,
-            ]),
         ]);
     }
 }
