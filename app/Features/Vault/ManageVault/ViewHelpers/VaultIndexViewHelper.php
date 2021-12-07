@@ -2,8 +2,8 @@
 
 namespace App\Features\Vault\ManageVault\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Vault;
+use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
 
 class VaultIndexViewHelper
@@ -30,7 +30,7 @@ class VaultIndexViewHelper
     /**
      * Get all the data needed for the general layout page.
      *
-     * @param Account $account
+     * @param  Account  $account
      * @return array
      */
     public static function data(Account $account): array
