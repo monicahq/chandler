@@ -18,10 +18,7 @@ class VaultIndexViewHelperTest extends TestCase
         $user = User::factory()->create();
         $vault = Vault::factory()->create();
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $this->be($user);
 
         $array = VaultIndexViewHelper::layoutData($vault);
         $this->assertEquals(
