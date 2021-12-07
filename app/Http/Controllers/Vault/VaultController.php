@@ -43,7 +43,7 @@ class VaultController extends Controller
     /**
      * Store the vault.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return Response
      */
     public function store(Request $request)
@@ -66,8 +66,8 @@ class VaultController extends Controller
     /**
      * Display the vault.
      *
-     * @param Request $request
-     * @param int $vaultId
+     * @param  Request  $request
+     * @param  int  $vaultId
      * @return Response
      */
     public function show(Request $request, int $vaultId)

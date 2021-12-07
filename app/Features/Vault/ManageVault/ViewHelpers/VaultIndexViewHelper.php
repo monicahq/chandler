@@ -11,7 +11,7 @@ class VaultIndexViewHelper
     /**
      * Get all the data needed for the general layout page.
      *
-     * @param Vault $vault
+     * @param  Vault  $vault
      * @return array
      */
     public static function layoutData(): array
@@ -22,7 +22,7 @@ class VaultIndexViewHelper
             ],
             'url' => [
                 'vaults' => route('vault.index'),
-                'logout' => route('logout')
+                'logout' => route('logout'),
             ],
         ];
     }

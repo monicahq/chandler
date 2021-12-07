@@ -3,12 +3,10 @@
 namespace App\Features\Account\ManageAccount\Services;
 
 use App\Models\User;
-use App\Models\Vault;
 use App\Models\Account;
 use App\Jobs\SetupAccount;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 use Illuminate\Support\Facades\Hash;
 
