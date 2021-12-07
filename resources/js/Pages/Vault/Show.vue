@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <Layout title="Dashboard" :inside-vault="true" :user="user">
+  <Layout title="Dashboard" :inside-vault="true" :layoutData="layoutData">
     <main class="sm:mt-24 relative">
       d
     </main>
@@ -23,7 +23,7 @@ export default {
   },
 
   props: {
-    user: {
+    layoutData: {
       type: Object,
       default: null,
     },

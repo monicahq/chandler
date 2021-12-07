@@ -6,7 +6,7 @@
 </style>
 
 <template>
-  <layout :user="user">
+  <Layout :layoutData="layoutData">
     <main class="sm:mt-24 relative">
       <div class="max-w-lg mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
 
@@ -27,7 +27,7 @@
         </form>
       </div>
     </main>
-  </layout>
+  </Layout>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
   },
 
   props: {
-    user: {
+    layoutData: {
       type: Object,
       default: null,
     },

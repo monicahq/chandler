@@ -27,7 +27,7 @@ input[type=checkbox] {
 </style>
 
 <template>
-  <Layout title="Dashboard" :user="user">
+  <Layout title="Dashboard" :layoutData="layoutData">
     <main class="sm:mt-24 relative">
       <!-- blank state -->
       <div v-if="data.vaults.length == 0" class="max-w-md mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
@@ -98,7 +98,7 @@ export default {
   },
 
   props: {
-    user: {
+    layoutData: {
       type: Object,
       default: null,
     },

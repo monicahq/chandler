@@ -16,17 +16,22 @@ class VaultIndexViewHelperTest extends TestCase
     public function it_gets_general_layout_information(): void
     {
         $user = User::factory()->create();
+        $vault = Vault::factory()->create();
 
         $this->post('/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $array = VaultIndexViewHelper::layoutData();
+        $array = VaultIndexViewHelper::layoutData($vault);
         $this->assertEquals(
             [
                 'user' => [
                     'name' => $user->name,
+                ],
+                'vault' => [
+                    'id' => $vault->id,
+                    'name' => $vault->name,
                 ],
                 'url' => [
                     'vaults' => env('APP_URL').'/vaults',

@@ -22,7 +22,7 @@ class VaultController extends Controller
     public function index()
     {
         return Inertia::render('Vault/Index', [
-            'user' => VaultIndexViewHelper::layoutData(),
+            'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => VaultIndexViewHelper::data(Auth::user()->account),
         ]);
     }
@@ -35,7 +35,7 @@ class VaultController extends Controller
     public function new()
     {
         return Inertia::render('Vault/Create', [
-            'user' => VaultIndexViewHelper::layoutData(),
+            'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => VaultCreateViewHelper::data(),
         ]);
     }
@@ -75,7 +75,7 @@ class VaultController extends Controller
         $vault = Vault::find($vaultId);
 
         return Inertia::render('Vault/Show', [
-            'user' => VaultIndexViewHelper::layoutData(),
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'data' => VaultCreateViewHelper::data(),
         ]);
     }

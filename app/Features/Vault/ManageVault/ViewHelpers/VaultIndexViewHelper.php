@@ -14,12 +14,16 @@ class VaultIndexViewHelper
      * @param  Vault  $vault
      * @return array
      */
-    public static function layoutData(): array
+    public static function layoutData(Vault $vault = null): array
     {
         return [
             'user' => [
                 'name' => Auth::user()->name,
             ],
+            'vault' => $vault ? [
+                'id' => $vault->id,
+                'name' => $vault->name,
+            ] : null,
             'url' => [
                 'vaults' => route('vault.index'),
                 'logout' => route('logout'),
