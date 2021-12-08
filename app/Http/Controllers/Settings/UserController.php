@@ -17,7 +17,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
         return Inertia::render('Settings/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => VaultIndexViewHelper::data(Auth::user()->account),

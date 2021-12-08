@@ -3,18 +3,17 @@
 namespace Tests\Features\Account\ManageUsers\Services;
 
 use Tests\TestCase;
-use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Account;
+use App\Mail\UserInvited;
 use App\Jobs\CreateAuditLog;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Features\Account\ManageUsers\Services\GiveAdministratorPrivilege;
 use App\Features\Account\ManageUsers\Services\InviteUser;
-use App\Mail\UserInvited;
 
 class InviteUserTest extends TestCase
 {

@@ -2,10 +2,8 @@
 
 namespace App\Features\Vault\ManageUsers\ViewHelpers;
 
-use App\Helpers\DateHelper;
-use App\Models\Vault;
 use App\Models\Account;
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\DateHelper;
 
 class UserIndexViewHelper
 {
