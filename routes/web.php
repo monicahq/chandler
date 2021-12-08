@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\SettingsController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,10 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
+    Route::prefix('settings')->group(function () {
+        Route::get('', [SettingsController::class, 'index'])->name('settings.index');
+    });
+
     // vaults
     Route::get('vaults', [VaultController::class, 'index'])->name('vault.index');
     Route::get('vaults/new', [VaultController::class, 'new'])->name('vault.new');
@@ -41,7 +46,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('contacts', 'ContactController@index');
 
-    Route::get('settings', 'Settings\\SettingsController@index')->name('settings.index');
     Route::resource('settings/information', 'Settings\\InformationController');
 
     // contacts

@@ -32,6 +32,7 @@ class VaultIndexViewHelperTest extends TestCase
                 ],
                 'url' => [
                     'vaults' => env('APP_URL').'/vaults',
+                    'settings' => env('APP_URL').'/settings',
                     'logout' => env('APP_URL').'/logout',
                 ],
             ],

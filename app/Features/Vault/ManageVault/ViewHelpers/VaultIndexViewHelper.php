@@ -26,6 +26,7 @@ class VaultIndexViewHelper
             ] : null,
             'url' => [
                 'vaults' => route('vault.index'),
+                'settings' => route('settings.index'),
                 'logout' => route('logout'),
             ],
         ];
