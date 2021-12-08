@@ -6,17 +6,6 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,6 +16,8 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('invitation/{code}', 'Dashboard\\DashboardController@index')->name('invitation.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
