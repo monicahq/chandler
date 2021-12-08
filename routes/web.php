@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
+use App\Http\Controllers\Settings\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('settings')->group(function () {
         Route::get('', [SettingsController::class, 'index'])->name('settings.index');
+        Route::get('users', [UserController::class, 'index'])->name('settings.user.index');
+        Route::get('users/{user}', [UserController::class, 'show'])->name('settings.user.show');
     });
 
     // vaults
