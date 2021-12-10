@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Features\Vault\ManageUsers\ViewHelpers\UserIndexViewHelper;
 use Inertia\Inertia;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Features\Vault\ManageUsers\ViewHelpers\UserIndexViewHelper;
 use App\Features\Vault\ManageVault\ViewHelpers\VaultIndexViewHelper;
 
 class UserController extends Controller
