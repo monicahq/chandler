@@ -42,7 +42,7 @@
 
           <div class="p-5 flex justify-between">
             <pretty-link :href="data.url.back" :text="'Cancel'" :classes="'mr-3'" />
-            <pretty-button :href="'data.url.vault.new'" :text="'Create a vault'" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-button :href="'data.url.vault.create'" :text="'Create a vault'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </div>

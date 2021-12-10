@@ -44,7 +44,7 @@ class UserIndexViewHelperTest extends TestCase
                     'index' => env('APP_URL').'/settings',
                 ],
                 'users' => [
-                    'store' => env('APP_URL').'/settings/users',
+                    'new' => env('APP_URL').'/settings/users/new',
                 ],
             ],
             $array['url']

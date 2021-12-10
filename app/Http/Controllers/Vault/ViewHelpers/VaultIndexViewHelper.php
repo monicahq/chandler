@@ -58,7 +58,7 @@ class VaultIndexViewHelper
             'vaults' => $vaultCollection,
             'url' => [
                 'vault' => [
-                    'new' => route('vault.new'),
+                    'create' => route('vault.create'),
                 ],
             ],
         ];

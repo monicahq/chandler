@@ -35,7 +35,7 @@ class UserIndexViewHelper
                     'index' => route('settings.index'),
                 ],
                 'users' => [
-                    'store' => route('settings.user.store'),
+                    'create' => route('settings.user.create'),
                 ],
             ],
         ];

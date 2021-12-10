@@ -44,7 +44,7 @@
         <!-- title + cta -->
         <div class="flex items-center justify-between mb-6">
           <h3>All users in this account</h3>
-          <pretty-link :href="'data.url.vault.new'" :text="'Invite a new user'" :icon="'plus'" />
+          <pretty-link :href="data.url.users.create" :text="'Invite a new user'" :icon="'plus'" />
         </div>
 
         <!-- list of users -->
