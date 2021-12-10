@@ -27,7 +27,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        //$response->assertRedirect(RouteServiceProvider::HOME);
+        $response = $this->get('/vaults');
         $this->assertAuthenticated();
     }
 }
