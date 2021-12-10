@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Settings\Users;
 
 use Inertia\Inertia;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
+use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
 
 class UserController extends Controller
 {
