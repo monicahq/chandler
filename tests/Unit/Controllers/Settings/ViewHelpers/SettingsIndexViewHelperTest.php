@@ -3,13 +3,9 @@
 namespace Tests\Unit\Controllers\Settings\Users\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
-use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
-use App\Models\User;
+use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
 
 class SettingsIndexViewHelperTest extends TestCase
 {
@@ -23,8 +19,8 @@ class SettingsIndexViewHelperTest extends TestCase
             [
                 'url' => [
                     'users' => [
-                        'index' => env('APP_URL') . '/settings/users',
-                    ]
+                        'index' => env('APP_URL').'/settings/users',
+                    ],
                 ],
             ],
             $array
