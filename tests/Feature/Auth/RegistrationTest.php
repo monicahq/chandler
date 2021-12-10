@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use Tests\TestCase;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegistrationTest extends TestCase
