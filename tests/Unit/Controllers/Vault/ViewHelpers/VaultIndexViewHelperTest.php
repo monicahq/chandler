@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Services\Vault\ManageVault\ViewHelpers;
 
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Vault\ManageVault\VaultIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use function env;

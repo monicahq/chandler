@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Vault\ManageVault\ViewHelpers;
+namespace App\Http\Controllers\Vault\ViewHelpers;
 
 use function route;
 

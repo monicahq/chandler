@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Vault;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
 use App\Services\Vault\ManageVault\CreateVault;
-use App\Services\Vault\ManageVault\VaultCreateViewHelper;
-use App\Services\Vault\ManageVault\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;

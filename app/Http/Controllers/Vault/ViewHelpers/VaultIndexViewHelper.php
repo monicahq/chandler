@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Services\Vault\ManageVault\ViewHelpers;
+namespace App\Http\Controllers\Vault\ViewHelpers;
 
-use App\Models\Vault;
 use App\Models\Account;
+use App\Models\Vault;
 use Illuminate\Support\Facades\Auth;
+use function collect;
+use function route;
 
 class VaultIndexViewHelper
 {
     /**
      * Get all the data needed for the general layout page.
      *
-     * @param  Vault  $vault
+     * @param Vault|null $vault
      * @return array
      */
     public static function layoutData(Vault $vault = null): array

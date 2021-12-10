@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Services\Vault\ManageVault\ViewHelpers;
+namespace Tests\Unit\Controllers\Vault\ViewHelpers;
 
-use App\Services\Vault\ManageVault\VaultCreateViewHelper;
+use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use function env;
