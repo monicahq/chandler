@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Users\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 
 class UserIndexViewHelperTest extends TestCase
 {
@@ -34,7 +32,7 @@ class UserIndexViewHelperTest extends TestCase
                     'invitation_code' => null,
                     'invitation_accepted_at' => null,
                     'url' => [
-                        'show' => env('APP_URL') . '/settings/users/'.$user->id,
+                        'show' => env('APP_URL').'/settings/users/'.$user->id,
                     ],
                 ],
             ],
@@ -43,10 +41,10 @@ class UserIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'settings' => [
-                    'index' => env('APP_URL') . '/settings',
+                    'index' => env('APP_URL').'/settings',
                 ],
                 'users' => [
-                    'store' => env('APP_URL') . '/settings/users',
+                    'store' => env('APP_URL').'/settings/users',
                 ],
             ],
             $array['url']
