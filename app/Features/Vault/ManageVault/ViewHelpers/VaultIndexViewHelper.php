@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Vault\ManageVault\ViewHelpers;
+namespace App\Services\Vault\ManageVault\ViewHelpers;
 
 use App\Models\Vault;
 use App\Models\Account;

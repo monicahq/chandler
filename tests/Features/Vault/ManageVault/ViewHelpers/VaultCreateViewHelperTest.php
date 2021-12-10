@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Features\Vault\ManageVault\ViewHelpers;
+namespace Tests\Unit\Services\Vault\ManageVault\ViewHelpers;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Features\Vault\ManageVault\ViewHelpers\VaultCreateViewHelper;
+use App\Services\Vault\ManageVault\VaultCreateViewHelper;
 
 class VaultCreateViewHelperTest extends TestCase
 {
