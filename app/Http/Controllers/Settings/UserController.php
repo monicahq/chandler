@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Features\Vault\ManageUsers\ViewHelpers\UserIndexViewHelper;
 use Inertia\Inertia;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,7 @@ class UserController extends Controller
     {
         return Inertia::render('Settings/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => VaultIndexViewHelper::data(Auth::user()->account),
+            'data' => UserIndexViewHelper::data(Auth::user()->account),
         ]);
     }
 }

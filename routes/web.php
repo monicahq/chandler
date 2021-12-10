@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('', [SettingsController::class, 'index'])->name('settings.index');
         Route::get('users', [UserController::class, 'index'])->name('settings.user.index');
         Route::get('users/{user}', [UserController::class, 'show'])->name('settings.user.show');
+        Route::post('users', [UserController::class, 'store'])->name('settings.user.store');
     });
 
     // vaults

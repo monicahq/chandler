@@ -19,7 +19,6 @@ class SettingsController extends Controller
     {
         return Inertia::render('Settings/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => VaultIndexViewHelper::data(Auth::user()->account),
         ]);
     }
 }
