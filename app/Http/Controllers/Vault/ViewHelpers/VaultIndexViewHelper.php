@@ -34,12 +34,6 @@ class VaultIndexViewHelper
         ];
     }
 
-    /**
-     * Get all the data needed for the general layout page.
-     *
-     * @param  Account  $account
-     * @return array
-     */
     public static function data(Account $account): array
     {
         $vaults = Vault::where('account_id', $account->id)

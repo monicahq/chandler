@@ -18,6 +18,7 @@
 
 <template>
   <Layout title="Dashboard" :layoutData="layoutData">
+    <!-- breadcrumb -->
     <nav class="sm:border-b bg-white">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
         <div class="flex items-baseline justify-between space-x-6">
@@ -39,6 +40,8 @@
 
     <main class="sm:mt-24 relative">
       <div class="max-w-3xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+
+        <!-- title + cta -->
         <div class="flex items-center justify-between mb-6">
           <h3>All users in this account</h3>
           <pretty-link :href="'data.url.vault.new'" :text="'Invite a new user'" :icon="'plus'" />

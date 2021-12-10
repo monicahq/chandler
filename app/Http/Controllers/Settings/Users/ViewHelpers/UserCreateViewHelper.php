@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Settings\Users\ViewHelpers;
 use App\Models\Account;
 use App\Helpers\DateHelper;
 
-class UserIndexViewHelper
+class UserCreateViewHelper
 {
     public static function data(Account $account): array
     {

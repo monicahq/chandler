@@ -7,11 +7,6 @@ use App\Helpers\DateHelper;
 
 class SettingsIndexViewHelper
 {
-    /**
-     * Get all the data for the view.
-     *
-     * @return array
-     */
     public static function data(): array
     {
         return [
