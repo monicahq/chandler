@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Vault;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use App\Models\Vault;
-use App\Services\Vault\ManageVault\CreateVault;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
+use App\Services\Vault\ManageVault\CreateVault;
 
 class VaultController extends Controller
 {

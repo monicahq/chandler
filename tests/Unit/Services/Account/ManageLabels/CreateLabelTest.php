@@ -10,9 +10,9 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Services\Account\ManageLabels\CreateLabel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageLabels\CreateLabel;
 
 class CreateLabelTest extends TestCase
 {

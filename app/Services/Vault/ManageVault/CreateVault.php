@@ -2,11 +2,11 @@
 
 namespace App\Services\Vault\ManageVault;
 
-use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Models\Contact;
 use App\Models\Vault;
+use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
 class CreateVault extends BaseService implements ServiceInterface
 {

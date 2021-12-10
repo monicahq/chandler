@@ -2,17 +2,17 @@
 
 namespace Tests\Unit\Services\Vault\ManageVault;
 
-use App\Jobs\CreateAuditLog;
-use App\Models\Account;
-use App\Models\Contact;
+use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Vault\ManageVault\CreateVault;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Account;
+use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Services\Vault\ManageVault\CreateVault;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CreateVaultTest extends TestCase
 {

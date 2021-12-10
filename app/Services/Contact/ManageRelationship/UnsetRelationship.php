@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\ManageRelationship;
 
-use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Contact;
-use App\Models\RelationshipType;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Jobs\CreateContactLog;
+use App\Models\RelationshipType;
+use App\Interfaces\ServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UnsetRelationship extends BaseService implements ServiceInterface

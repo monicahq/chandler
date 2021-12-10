@@ -2,22 +2,22 @@
 
 namespace Tests\Unit\Services\Contact\ManageContactAddress;
 
-use App\Exceptions\NotEnoughPermissionException;
+use Tests\TestCase;
+use App\Models\User;
+use App\Models\Place;
+use App\Models\Vault;
+use App\Models\Account;
+use App\Models\Contact;
+use App\Models\AddressType;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
-use App\Models\Account;
-use App\Models\AddressType;
-use App\Models\Contact;
 use App\Models\ContactAddress;
-use App\Models\Place;
-use App\Models\User;
-use App\Models\Vault;
-use App\Services\Contact\ManageContactAddress\DestroyContactAddress;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Exceptions\NotEnoughPermissionException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Contact\ManageContactAddress\DestroyContactAddress;
 
 class DestroyContactAddressTest extends TestCase
 {

@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\ManageNote;
 
-use App\Interfaces\ServiceInterface;
+use App\Models\Note;
 use App\Jobs\CreateAuditLog;
+use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
-use App\Models\Note;
-use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
 class CreateNote extends BaseService implements ServiceInterface
 {

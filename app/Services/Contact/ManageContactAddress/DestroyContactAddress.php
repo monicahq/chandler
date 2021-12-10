@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\ManageContactAddress;
 
-use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\AddressType;
-use App\Models\ContactAddress;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Jobs\CreateContactLog;
+use App\Models\ContactAddress;
+use App\Interfaces\ServiceInterface;
 
 class DestroyContactAddress extends BaseService implements ServiceInterface
 {

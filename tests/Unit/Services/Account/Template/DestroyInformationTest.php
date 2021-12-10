@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Services\Account\Template;
 
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Account;
 use App\Models\Information;
-use App\Models\User;
-use App\Services\Account\Template\DestroyInformation;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Services\Account\Template\DestroyInformation;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyInformationTest extends TestCase
 {

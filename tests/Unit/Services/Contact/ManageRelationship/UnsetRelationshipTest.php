@@ -2,21 +2,21 @@
 
 namespace Tests\Unit\Services\Contact\ManageRelationship;
 
-use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Account;
-use App\Models\Contact;
-use App\Models\RelationshipGroupType;
-use App\Models\RelationshipType;
+use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Contact\ManageRelationship\UnsetRelationship;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Account;
+use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
+use App\Jobs\CreateContactLog;
+use App\Models\RelationshipType;
+use App\Models\RelationshipGroupType;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Exceptions\NotEnoughPermissionException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Contact\ManageRelationship\UnsetRelationship;
 
 class UnsetRelationshipTest extends TestCase
 {

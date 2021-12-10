@@ -2,19 +2,19 @@
 
 namespace Tests\Unit\Services\Contact\ManageContact;
 
-use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Account;
-use App\Models\Contact;
+use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Contact\ManageContact\CopyContactToAnotherVault;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Account;
+use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
+use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Exceptions\NotEnoughPermissionException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Contact\ManageContact\CopyContactToAnotherVault;
 
 class CopyContactToAnotherVaultTest extends TestCase
 {
