@@ -4,8 +4,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Vault\VaultController;
-use App\Http\Controllers\Settings\UserController;
 use App\Http\Controllers\Settings\SettingsController;
+use App\Http\Controllers\Settings\Users\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -23,8 +23,11 @@ Route::get('invitation/{code}', 'Dashboard\\DashboardController@index')->name('i
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
 
+    // settings
     Route::prefix('settings')->group(function () {
         Route::get('', [SettingsController::class, 'index'])->name('settings.index');
+
+        // users
         Route::get('users', [UserController::class, 'index'])->name('settings.user.index');
         Route::get('users/{user}', [UserController::class, 'show'])->name('settings.user.show');
         Route::post('users', [UserController::class, 'store'])->name('settings.user.store');

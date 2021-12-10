@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Settings\Users;
 
 use Inertia\Inertia;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\ViewHelpers\UserIndexViewHelper;
 
 class UserController extends Controller
 {
@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Settings/Index', [
+        return Inertia::render('Settings/Users/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => UserIndexViewHelper::data(Auth::user()->account),
         ]);

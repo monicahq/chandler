@@ -1,39 +1,25 @@
 <style lang="scss" scoped>
-.vault-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.vault-detail {
-  height: 250px;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-}
-
-@media (max-width: 480px) {
-  .vault-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-input[type=checkbox] {
-  top: 3px;
-  width: 12px;
-}
 </style>
 
 <template>
   <Layout title="Dashboard" :layoutData="layoutData">
-    <main class="sm:mt-24 relative">
+    <nav class="sm:border-b bg-white">
+      <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
+        <div class="flex items-baseline justify-between space-x-6">
+          <ul class="text-sm">
+            <li class="inline mr-2">You are here:</li>
+            <li class="inline">Settings</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="sm:mt-20 relative">
       <div class="max-w-md mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+        <h2 class="text-lg text-center mb-6">Settings</h2>
         <div class="bg-white border border-gray-200 rounded-lg mb-6 p-5">
-          <h2 class="text-lg text-center mb-6">Settings</h2>
           <ul>
-            <li><span class="mr-1">🥸</span> Manage users</li>
+            <li><span class="mr-1">🥸</span> <Link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900">Manage users</Link></li>
             <li><span class="mr-1">🎃</span> Personalize your contacts data</li>
             <li><span class="mr-1">💩</span> Cancel your account</li>
           </ul>

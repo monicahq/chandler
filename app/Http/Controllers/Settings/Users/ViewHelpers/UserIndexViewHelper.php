@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\ViewHelpers;
+namespace App\Http\Controllers\Settings\Users\ViewHelpers;
 
 use App\Models\Account;
 use App\Helpers\DateHelper;
@@ -24,8 +24,8 @@ class UserIndexViewHelper
                 'email' => $user->email,
                 'name' => $user->name,
                 'is_account_administrator' => $user->is_account_administrator,
-                'invitation_code' => $user->invitation_code,
-                'invitation_accepted_at' => DateHelper::formatDate($user->invitation_accepted_at),
+                'invitation_code' => $user->invitation_code ? $user->invitation_code : null,
+                'invitation_accepted_at' => $user->invitation_accepted_at ? DateHelper::formatDate($user->invitation_accepted_at) : null,
                 'url' => [
                     'show' => route('settings.user.show', [
                         'user' => $user,
@@ -37,8 +37,11 @@ class UserIndexViewHelper
         return [
             'users' => $userCollection,
             'url' => [
-                'vault' => [
-                    'new' => route('vault.new'),
+                'settings' => [
+                    'index' => route('settings.index'),
+                ],
+                'users' => [
+                    'store' => route('settings.user.store'),
                 ],
             ],
         ];

@@ -7,6 +7,8 @@ use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Vault\ManageVault\CreateVault;
 
