@@ -2,10 +2,10 @@
 
 namespace App\Services\Account\Template;
 
-use App\Interfaces\ServiceInterface;
 use App\Models\Attribute;
 use App\Models\Information;
 use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
 class DestroyAttribute extends BaseService implements ServiceInterface
 {

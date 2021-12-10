@@ -2,15 +2,15 @@
 
 namespace App\Services\Vault\ManageVaultUsers;
 
-use App\Exceptions\MaximumNumberOfUsersInVaultException;
-use App\Exceptions\SameUserException;
-use App\Helpers\VaultHelper;
-use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Contact;
+use App\Helpers\VaultHelper;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
+use App\Exceptions\SameUserException;
+use App\Exceptions\MaximumNumberOfUsersInVaultException;
 
 class GrantVaultAccessToUser extends BaseService implements ServiceInterface
 {

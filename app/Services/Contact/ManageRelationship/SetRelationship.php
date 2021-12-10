@@ -2,13 +2,13 @@
 
 namespace App\Services\Contact\ManageRelationship;
 
+use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
+use App\Services\BaseService;
+use App\Jobs\CreateContactLog;
+use App\Models\RelationshipType;
 use App\Helpers\RelationshipHelper;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Contact;
-use App\Models\RelationshipType;
-use App\Services\BaseService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SetRelationship extends BaseService implements ServiceInterface

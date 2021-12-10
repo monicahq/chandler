@@ -2,10 +2,10 @@
 
 namespace App\Services\Account\Template;
 
-use App\Interfaces\ServiceInterface;
-use App\Models\Information;
 use App\Models\Template;
+use App\Models\Information;
 use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
 class RemoveInformationFromTemplate extends BaseService implements ServiceInterface
 {

@@ -6,9 +6,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Jobs\SetupAccount;
 use App\Jobs\CreateAuditLog;
-use App\Services\Account\ManageAccount\CreateAccount;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
+use App\Services\Account\ManageAccount\CreateAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CreateAccountTest extends TestCase

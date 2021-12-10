@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Controllers\Vault\ViewHelpers;
 
-use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\TestCase;
 use function env;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
 
 class VaultCreateViewHelperTest extends TestCase
 {

@@ -5,9 +5,9 @@ namespace Tests\Unit\Services\Account\ManageAccount;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
-use App\Services\Account\ManageAccount\DestroyAccount;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
+use App\Services\Account\ManageAccount\DestroyAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

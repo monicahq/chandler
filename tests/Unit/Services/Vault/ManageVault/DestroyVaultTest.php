@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Services\Vault\ManageVault;
 
-use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Account;
+use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Vault\ManageVault\DestroyVault;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use App\Exceptions\NotEnoughPermissionException;
+use App\Services\Vault\ManageVault\DestroyVault;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyVaultTest extends TestCase
 {

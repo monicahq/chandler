@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Services\Account\Template;
 
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Account;
 use App\Models\Attribute;
 use App\Models\Information;
-use App\Models\User;
-use App\Services\Account\Template\AddDefaultValueToAttribute;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Account\Template\AddDefaultValueToAttribute;
 
 class AddDefaultValueToAttributeTest extends TestCase
 {

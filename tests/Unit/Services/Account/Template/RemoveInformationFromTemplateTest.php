@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Services\Account\Template;
 
-use App\Models\Account;
-use App\Models\Information;
-use App\Models\Template;
+use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Account;
+use App\Models\Template;
+use App\Models\Information;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RemoveInformationFromTemplateTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 namespace App\Services\Account\Template;
 
-use App\Interfaces\ServiceInterface;
 use App\Models\Attribute;
-use App\Models\AttributeDefaultValue;
 use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
+use App\Models\AttributeDefaultValue;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AddDefaultValueToAttribute extends BaseService implements ServiceInterface
