@@ -44,7 +44,9 @@
             <p class="text-center">This user will be part of your account, but won't get access to your vaults unless you give specific access to them. This person will be able to create vaults as well.</p>
           </div>
           <div class="p-5 border-b border-gray-200">
-            <text-input v-model="form.email" :autofocus="true" :div-outer-class="'mb-5'" :input-class="'block w-full'" :required="true" :maxlength="255" :label="'Email address to send the invitation to'" />
+            <errors :errors="form.errors" />
+
+            <text-input v-model="form.email" :label="'Email address to send the invitation to'" :type="'email'" :autofocus="true" :div-outer-class="'mb-5'" :input-class="'block w-full'" :required="true" :maxlength="255" />
          </div>
 
           <div class="p-5 flex justify-between">
@@ -62,8 +64,10 @@ import Layout from '@/Shared/Layout';
 import PrettyLink from '@/Shared/PrettyLink';
 import PrettyButton from '@/Shared/PrettyButton';
 import TextInput from '@/Shared/TextInput';
+import Errors from '@/Shared/Errors';
 import TextArea from '@/Shared/TextArea';
 import { Link } from '@inertiajs/inertia-vue3';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 
 export default {
   components: {
@@ -71,8 +75,10 @@ export default {
     PrettyLink,
     PrettyButton,
     TextInput,
+    Errors,
     TextArea,
     Link,
+    BreezeValidationErrors,
   },
 
   props: {
@@ -88,33 +94,26 @@ export default {
 
   data() {
     return {
-      addMode: false,
       loadingState: '',
       form: {
-        name: '',
-        description: '',
+        email: '',
+        errors: [],
       },
     };
   },
 
   methods: {
-    showAddModal(type) {
-      if (type == 'lifeEvent') {
-        this.addMode = true;
-      }
-    },
-
     submit() {
       this.loadingState = 'loading';
 
       axios.post(this.data.url.store, this.form)
         .then(response => {
-          localStorage.success = 'The vault has been created';
+          localStorage.success = 'Invitation sent';
           this.$inertia.visit(response.data.data);
         })
         .catch(error => {
           this.loadingState = null;
-          //this.form.errors = error.response.data;
+          this.form.errors = error.response.data;
         });
     },
   },

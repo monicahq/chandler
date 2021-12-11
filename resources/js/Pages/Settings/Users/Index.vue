@@ -13,6 +13,10 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
+
+  .icon-mail {
+    top: -1px;
+  }
 }
 </style>
 
@@ -49,15 +53,35 @@
 
         <!-- list of users -->
         <ul class="bg-white border border-gray-200 rounded-lg mb-6 user-list">
-          <li class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50">
-            <div>
-              <span class="block">Regis Freyd</span>
-              <span class="text-gray-400 text-sm">rfreyd@fastmail.fm</span>
+          <li v-for="user in data.users" :key="user.id" class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50">
+
+            <!-- case user has been invited -->
+            <div v-if="!user.name" class="flex justify-between items-center">
+              <div>
+                <span class="block">{{ user.email }}</span>
+                <span class="text-gray-400 text-sm relative">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 icon-mail inline relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+
+                  Invitation sent
+                </span>
+              </div>
             </div>
-            <ul class="text-sm">
-              <li class="inline mr-4 text-sky-500 hover:text-blue-900">Change permission</li>
-              <li class="inline text-red-500 hover:text-red-900">Delete</li>
-            </ul>
+
+            <!-- case normal user -->
+            <div v-if="user.name" class="flex justify-between items-center">
+              <div>
+                <span class="block">{{ user.name }}</span>
+                <span class="text-gray-400 text-sm">{{ user.email }}</span>
+              </div>
+
+              <!-- actions -->
+              <ul class="text-sm">
+                <li class="inline mr-4 text-sky-500 hover:text-blue-900">Change permission</li>
+                <li class="inline text-red-500 hover:text-red-900">Delete</li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
@@ -90,7 +114,6 @@ export default {
 
   data() {
     return {
-      addMode: false,
     };
   },
 

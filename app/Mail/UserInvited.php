@@ -27,7 +27,7 @@ class UserInvited extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $user, User $invitedUser)
+    public function __construct(User $invitedUser, User $user)
     {
         $this->user = $user;
         $this->invitedUser = $invitedUser;
@@ -44,7 +44,8 @@ class UserInvited extends Mailable implements ShouldQueue
             'code' => $this->invitedUser->invitation_code,
         ]);
 
-        return $this->view('view.name')
+        return $this->markdown('emails.user.invitation')
+            ->subject('You are invited to join Monica')
             ->with('userName', $this->user->name)
             ->with('url', $invitationRoute);
     }

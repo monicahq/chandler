@@ -1,8 +1,10 @@
 @component('mail::message')
-# {{ $userName }} invites you to join Monica.
+# Please join Monica
+
+{{ $userName }} invites you to join Monica, an open source personal CRM, designed to help you document your relationships.
 
 @component('mail::button', ['url' => $url])
-Join
+Accept invitation and create your account
 @endcomponent
 
 Thanks,<br>

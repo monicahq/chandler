@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Settings\Users\ViewHelpers;
 
 use App\Models\Account;
 use App\Helpers\DateHelper;
+use App\Models\User;
 
 class UserIndexViewHelper
 {
-    public static function data(Account $account): array
+    public static function data(User $loggedUser): array
     {
-        $users = $account->users;
+        $users = $loggedUser->account->users;
 
         $userCollection = collect();
         foreach ($users as $user) {
@@ -20,6 +21,7 @@ class UserIndexViewHelper
                 'is_account_administrator' => $user->is_account_administrator,
                 'invitation_code' => $user->invitation_code ? $user->invitation_code : null,
                 'invitation_accepted_at' => $user->invitation_accepted_at ? DateHelper::formatDate($user->invitation_accepted_at) : null,
+                'is_logged_user' => $user->id === $loggedUser->id,
                 'url' => [
                     'show' => route('settings.user.show', [
                         'user' => $user,

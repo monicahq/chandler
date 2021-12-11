@@ -123,7 +123,7 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     if (localStorage.success) {
       this.flash(localStorage.success, 'success');
       localStorage.removeItem('success');

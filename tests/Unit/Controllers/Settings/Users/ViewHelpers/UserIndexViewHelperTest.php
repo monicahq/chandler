@@ -17,7 +17,7 @@ class UserIndexViewHelperTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $array = UserIndexViewHelper::data($user->account);
+        $array = UserIndexViewHelper::data($user);
         $this->assertEquals(
             2,
             count($array)
@@ -31,6 +31,7 @@ class UserIndexViewHelperTest extends TestCase
                     'is_account_administrator' => false,
                     'invitation_code' => null,
                     'invitation_accepted_at' => null,
+                    'is_logged_user' => true,
                     'url' => [
                         'show' => env('APP_URL').'/settings/users/'.$user->id,
                     ],
@@ -44,7 +45,7 @@ class UserIndexViewHelperTest extends TestCase
                     'index' => env('APP_URL').'/settings',
                 ],
                 'users' => [
-                    'new' => env('APP_URL').'/settings/users/new',
+                    'create' => env('APP_URL').'/settings/users/create',
                 ],
             ],
             $array['url']

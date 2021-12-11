@@ -81,7 +81,6 @@ export default {
 
   data() {
     return {
-      addMode: false,
       loadingState: '',
       form: {
         name: '',
@@ -91,12 +90,6 @@ export default {
   },
 
   methods: {
-    showAddModal(type) {
-      if (type == 'lifeEvent') {
-        this.addMode = true;
-      }
-    },
-
     submit() {
       this.loadingState = 'loading';
 
@@ -107,7 +100,6 @@ export default {
         })
         .catch(error => {
           this.loadingState = null;
-          //this.form.errors = error.response.data;
         });
     },
   },

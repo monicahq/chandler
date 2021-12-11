@@ -41,8 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // users
         Route::get('users', [UserController::class, 'index'])->name('settings.user.index');
         Route::get('users/create', [UserController::class, 'create'])->name('settings.user.create');
-        Route::get('users/{user}', [UserController::class, 'show'])->name('settings.user.show');
         Route::post('users', [UserController::class, 'store'])->name('settings.user.store');
+        Route::get('users/{user}', [UserController::class, 'show'])->name('settings.user.show');
     });
 
     Route::get('contacts', 'ContactController@index');

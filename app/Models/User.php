@@ -85,10 +85,14 @@ class User extends Authenticatable implements MustVerifyEmail
      * Get the name of the user.
      *
      * @param  mixed  $value
-     * @return string
+     * @return null|string
      */
-    public function getNameAttribute($value): string
+    public function getNameAttribute($value): ?string
     {
+        if (!$this->first_name) {
+            return null;
+        }
+
         return $this->first_name.' '.$this->last_name;
     }
 }

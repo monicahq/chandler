@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
+use App\Services\Account\ManageUsers\InviteUser;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
     {
         return Inertia::render('Settings/Users/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => UserIndexViewHelper::data(Auth::user()->account),
+            'data' => UserIndexViewHelper::data(Auth::user()),
         ]);
     }
 
@@ -25,5 +27,20 @@ class UserController extends Controller
             'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => UserCreateViewHelper::data(Auth::user()->account),
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'email' => $request->input('email'),
+        ];
+
+        (new InviteUser)->execute($data);
+
+        return response()->json([
+            'data' => route('settings.user.index'),
+        ], 201);
     }
 }
