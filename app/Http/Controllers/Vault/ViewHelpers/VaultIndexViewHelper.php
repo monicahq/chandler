@@ -6,8 +6,8 @@ use function route;
 use App\Models\Vault;
 use function collect;
 use App\Models\Account;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VaultIndexViewHelper
 {
