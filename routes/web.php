@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AcceptInvitationController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -18,11 +19,9 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('invitation/{code}', 'Dashboard\\DashboardController@index')->name('invitation.show');
+Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', 'Dashboard\\DashboardController@index')->name('dashboard');
-
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vault.index');
