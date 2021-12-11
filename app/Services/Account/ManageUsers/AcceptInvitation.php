@@ -2,14 +2,10 @@
 
 namespace App\Services\Account\ManageUsers;
 
+use Carbon\Carbon;
 use App\Models\User;
-use App\Mail\UserInvited;
-use Illuminate\Support\Str;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 
 class AcceptInvitation extends BaseService implements ServiceInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\AcceptInvitationController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\Users\UserController;
+use App\Http\Controllers\Auth\AcceptInvitationController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
