@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Settings\Users\ViewHelpers;
 
-use App\Models\Account;
-use App\Helpers\DateHelper;
 use App\Models\User;
+use App\Helpers\DateHelper;
 
 class UserIndexViewHelper
 {

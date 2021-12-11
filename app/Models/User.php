@@ -89,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getNameAttribute($value): ?string
     {
-        if (!$this->first_name) {
+        if (! $this->first_name) {
             return null;
         }
 
