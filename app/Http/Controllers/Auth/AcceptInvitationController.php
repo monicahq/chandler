@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Auth\ViewHelpers\AcceptInvitationShowViewHelper;
-use Inertia\Inertia;
-use Illuminate\Validation\Rules;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageUsers\AcceptInvitation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\Auth\ViewHelpers\AcceptInvitationShowViewHelper;
 
 class AcceptInvitationController extends Controller
 {
