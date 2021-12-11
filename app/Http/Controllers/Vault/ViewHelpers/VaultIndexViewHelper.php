@@ -7,6 +7,7 @@ use App\Models\Vault;
 use function collect;
 use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VaultIndexViewHelper
 {
@@ -36,7 +37,11 @@ class VaultIndexViewHelper
 
     public static function data(Account $account): array
     {
+        $vaultIds = DB::table('user_vault')->where('user_id', Auth::user()->id)
+            ->pluck('vault_id')->toArray();
+
         $vaults = Vault::where('account_id', $account->id)
+            ->whereIn('id', $vaultIds)
             ->orderBy('name', 'asc')
             ->get();
 
