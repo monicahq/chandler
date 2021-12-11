@@ -5,7 +5,7 @@
 
   <form @submit.prevent="submit">
     <h1 class="text-center mb-3 text-xl"><span class="mr-2">👋</span> Welcome to Monica.</h1>
-    <p class="mb-4">Please fill this form to finalize your account.</p>
+    <p class="mb-4 text-center">Please complete this form to finalize your account.</p>
 
     <div>
       <BreezeLabel for="first_name" value="First name" />
@@ -15,11 +15,6 @@
     <div class="mt-4">
       <BreezeLabel for="last_name" value="Last name" />
       <BreezeInput id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autocomplete="last_name" />
-    </div>
-
-    <div class="mt-4">
-      <BreezeLabel for="email" value="Email" />
-      <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" />
     </div>
 
     <div class="mt-4">
@@ -60,25 +55,42 @@ export default {
     Link,
   },
 
-    data() {
-      return {
-        form: this.$inertia.form({
-          first_name: '',
-          last_name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
-          terms: false,
-        })
-      }
+  props: {
+    data: {
+      type: Object,
+      default: null,
     },
+  },
 
-    methods: {
-      submit() {
-        this.form.post(this.route('register'), {
-          onFinish: () => this.form.reset('password', 'password_confirmation'),
-        })
-      }
+  data() {
+    return {
+      form: {
+        first_name: '',
+        last_name: '',
+        password: '',
+        password_confirmation: '',
+        invitation_code: '',
+      },
     }
+  },
+
+  mounted() {
+    this.form.invitation_code = this.data.invitation_code;
+  },
+
+  methods: {
+    submit() {
+      this.loadingState = 'loading';
+
+      axios.post(this.data.url.store, this.form)
+        .then(response => {
+          localStorage.success = 'Your account has been created';
+          this.$inertia.visit(response.data.data);
+        })
+        .catch(error => {
+          this.loadingState = null;
+        });
+    },
+  }
 }
 </script>

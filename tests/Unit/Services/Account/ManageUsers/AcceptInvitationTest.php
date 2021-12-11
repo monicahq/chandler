@@ -69,6 +69,11 @@ class AcceptInvitationTest extends TestCase
 
         $user = (new AcceptInvitation)->execute($request);
 
+        $this->assertInstanceOf(
+            User::class,
+            $user
+        );
+
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'is_account_administrator' => false,
