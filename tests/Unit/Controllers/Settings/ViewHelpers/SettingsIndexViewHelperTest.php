@@ -21,6 +21,9 @@ class SettingsIndexViewHelperTest extends TestCase
                     'users' => [
                         'index' => env('APP_URL').'/settings/users',
                     ],
+                    'cancel' => [
+                        'index' => env('APP_URL').'/settings/cancel',
+                    ],
                 ],
             ],
             $array

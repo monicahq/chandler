@@ -11,6 +11,9 @@ class SettingsIndexViewHelper
                 'users' => [
                     'index' => route('settings.user.index'),
                 ],
+                'cancel' => [
+                    'index' => route('settings.cancel.index'),
+                ],
             ],
         ];
     }
