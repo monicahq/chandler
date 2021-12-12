@@ -8,6 +8,7 @@ use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
+use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -47,6 +48,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('create', [UserController::class, 'create'])->name('settings.user.create');
                 Route::post('', [UserController::class, 'store'])->name('settings.user.store');
                 Route::get('{user}', [UserController::class, 'show'])->name('settings.user.show');
+            });
+
+            // personalize
+            Route::prefix('personalize')->group(function () {
+                Route::get('', [PersonalizeController::class, 'index'])->name('settings.personalize.index');
+
+                // relationship types
+                Route::get('relationships', [PersonalizeController::class, 'index'])->name('settings.personalize.relationship.index');
             });
 
             // cancel
