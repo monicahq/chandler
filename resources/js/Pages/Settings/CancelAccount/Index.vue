@@ -30,7 +30,7 @@
     <main class="sm:mt-24 relative">
       <div class="max-w-lg mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
 
-        <form @submit.prevent="submit()" class="bg-white border border-gray-200 rounded-lg mb-6">
+        <form @submit.prevent="destroy()" class="bg-white border border-gray-200 rounded-lg mb-6">
 
           <!-- title -->
           <div class="p-5 border-b border-gray-200 bg-blue-50 section-head">
@@ -39,6 +39,7 @@
             <p class="mb-2">Once you cancel,</p>
             <ul class="pl-6 list-disc">
               <li>Your account will be closed immediately,</li>
+              <li>All users and vaults will be deleted immediately,</li>
               <li>The account's data will be permanently deleted from our servers within 30 days and from all backups within 60 days.</li>
             </ul>
           </div>
@@ -47,18 +48,17 @@
           <div class="p-5 border-b border-gray-200">
             <errors :errors="form.errors" />
 
-            <text-input v-model="form.email"
-              :label="'Email address to send the invitation to'"
-              :type="'email'" :autofocus="true"
-              :div-outer-class="'mb-5'"
+            <text-input v-model="form.password"
+              :label="'Please enter your password to cancel the account'"
+              :type="'password'" :autofocus="true"
               :input-class="'block w-full'"
               :required="true"
               :autocomplete="false"
               :maxlength="255" />
-         </div>
+          </div>
 
           <div class="p-5 flex justify-between">
-            <pretty-link :href="data.url.back" :text="'Cancel'" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="'Go back'" :classes="'mr-3'" />
             <pretty-button :href="'data.url.vault.create'" :text="'Cancel account'" :state="loadingState" :icon="'arrow'" :classes="'save'" />
           </div>
         </form>
@@ -73,9 +73,7 @@ import PrettyLink from '@/Shared/PrettyLink';
 import PrettyButton from '@/Shared/PrettyButton';
 import TextInput from '@/Shared/TextInput';
 import Errors from '@/Shared/Errors';
-import TextArea from '@/Shared/TextArea';
 import { Link } from '@inertiajs/inertia-vue3';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 
 export default {
   components: {
@@ -84,9 +82,7 @@ export default {
     PrettyButton,
     TextInput,
     Errors,
-    TextArea,
     Link,
-    BreezeValidationErrors,
   },
 
   props: {
@@ -104,19 +100,18 @@ export default {
     return {
       loadingState: '',
       form: {
-        email: '',
+        password: '',
         errors: [],
       },
     };
   },
 
   methods: {
-    submit() {
+    destroy() {
       this.loadingState = 'loading';
 
-      axios.post(this.data.url.store, this.form)
+      axios.put(this.data.url.destroy)
         .then(response => {
-          localStorage.success = 'Invitation sent';
           this.$inertia.visit(response.data.data);
         })
         .catch(error => {

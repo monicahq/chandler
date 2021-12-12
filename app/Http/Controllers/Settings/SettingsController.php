@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
@@ -19,7 +20,7 @@ class SettingsController extends Controller
     {
         return Inertia::render('Settings/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => SettingsIndexViewHelper::data(),
+            'data' => SettingsIndexViewHelper::data(Auth::user()),
         ]);
     }
 }
