@@ -4,9 +4,9 @@ namespace Tests\Unit\Controllers\Settings\Users\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
-use App\Models\User;
 
 class SettingsIndexViewHelperTest extends TestCase
 {
