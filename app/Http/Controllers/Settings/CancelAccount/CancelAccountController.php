@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Settings\CancelAccount;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\CancelAccount\ViewHelpers\CancelAccountIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageUsers\InviteUser;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
+use App\Http\Controllers\Settings\CancelAccount\ViewHelpers\CancelAccountIndexViewHelper;
 
 class CancelAccountController extends Controller
 {
