@@ -16,7 +16,7 @@ class CancelAccountController extends Controller
     {
         return Inertia::render('Settings/CancelAccount/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => CancelAccountIndexViewHelper::data(Auth::user()),
+            'data' => CancelAccountIndexViewHelper::data(),
         ]);
     }
 

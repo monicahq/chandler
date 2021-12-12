@@ -9,8 +9,8 @@ class CancelAccountIndexViewHelper
         return [
             'url' => [
                 'settings' => route('settings.index'),
-                'back' => route('settings.user.index'),
-                'destroy' => route('settings.user.destroy'),
+                'back' => route('settings.index'),
+                'destroy' => route('settings.cancel.destroy'),
             ],
         ];
     }
