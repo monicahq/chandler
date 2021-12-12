@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Vault\ViewHelpers;
 
 use function route;
+use App\Models\User;
 use App\Models\Vault;
 use function collect;
-use App\Models\Account;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
