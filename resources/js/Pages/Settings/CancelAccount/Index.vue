@@ -110,7 +110,7 @@ export default {
     destroy() {
       this.loadingState = 'loading';
 
-      axios.put(this.data.url.destroy)
+      axios.put(this.data.url.destroy, this.form)
         .then(response => {
           this.$inertia.visit(response.data.data);
         })

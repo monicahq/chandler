@@ -24,8 +24,7 @@ class CancelAccountController extends Controller
 
     public function destroy(Request $request)
     {
-        $hashedPassword = Hash::make($request->input('password'));
-        if (Auth::user()->password != $hashedPassword) {
+        if (! Hash::check($request->input('password'), Auth::user()->password)) {
             throw new ModelNotFoundException('Passwords do not match.');
         }
 
@@ -37,7 +36,7 @@ class CancelAccountController extends Controller
         (new DestroyAccount)->execute($data);
 
         return response()->json([
-            'data' => route('settings.user.index'),
+            'data' => route('login'),
         ], 200);
     }
 }
