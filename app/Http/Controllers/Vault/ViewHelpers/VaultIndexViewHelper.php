@@ -6,6 +6,7 @@ use function route;
 use App\Models\Vault;
 use function collect;
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,12 +36,12 @@ class VaultIndexViewHelper
         ];
     }
 
-    public static function data(Account $account): array
+    public static function data(User $user): array
     {
-        $vaultIds = DB::table('user_vault')->where('user_id', Auth::user()->id)
+        $vaultIds = DB::table('user_vault')->where('user_id', $user->id)
             ->pluck('vault_id')->toArray();
 
-        $vaults = Vault::where('account_id', $account->id)
+        $vaults = Vault::where('account_id', $user->account->id)
             ->whereIn('id', $vaultIds)
             ->orderBy('name', 'asc')
             ->get();
