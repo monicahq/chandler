@@ -7,8 +7,8 @@ use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
-use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
+use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
