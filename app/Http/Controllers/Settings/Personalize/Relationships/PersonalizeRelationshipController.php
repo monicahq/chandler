@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
+use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
+use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
+use Illuminate\Http\Request;
 
 class PersonalizeRelationshipController extends Controller
 {
@@ -16,5 +19,35 @@ class PersonalizeRelationshipController extends Controller
             'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => PersonalizeRelationshipIndexViewHelper::data(Auth::user()->account),
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'name' => $request->input('groupTypeName'),
+        ];
+
+        $groupType = (new CreateRelationshipGroupType)->execute($data);
+
+        return response()->json([
+            'data' => PersonalizeRelationshipIndexViewHelper::dtoGroupType($groupType),
+        ], 201);
+    }
+
+    public function destroy(Request $request, int $groupTypeId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'relationship_group_type_id' => $groupTypeId,
+        ];
+
+        (new DestroyRelationshipGroupType)->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 200);
     }
 }

@@ -3,6 +3,22 @@
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 </style>
 
 <template>
@@ -53,26 +69,48 @@
         <!-- title + cta -->
         <div class="flex items-center justify-between mb-6">
           <h3>All the relationship types</h3>
-          <pretty-button :href="''" :text="'Add a new group type'" :icon="'plus'" />
+          <pretty-button @click="showGroupTypeModal" v-if="!createGroupTypeModalShown" :text="'Add a new group type'" :icon="'plus'" />
         </div>
+
+        <!-- modal to create a new group type -->
+        <form v-if="createGroupTypeModalShown" @submit.prevent="submitGroupType()" class="bg-white border border-gray-200 rounded-lg mb-6">
+          <div class="p-5 border-b border-gray-200">
+            <errors :errors="form.errors" />
+
+            <text-input v-model="form.groupTypeName"
+              :label="'Name of the new group type'"
+              :type="'text'" :autofocus="true"
+              :input-class="'block w-full'"
+              :required="true"
+              :ref="'newGroupType'"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createGroupTypeModalShown = false" />
+          </div>
+
+          <div class="p-5 flex justify-between">
+            <pretty-link @click="createGroupTypeModalShown = false" :text="'Cancel'" :classes="'mr-3'" />
+            <pretty-button :text="'Create group type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+          </div>
+        </form>
 
         <!-- list of groups types -->
         <ul class="bg-white border border-gray-200 rounded-lg mb-6">
-          <li v-for="groupType in data.group_types" :key="groupType.id">
-            <div class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50">
+          <li v-for="groupType in localGroupTypes" :key="groupType.id">
+            <div class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50 item-list">
               <span class="text-base font-semibold">{{ groupType.name }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
                 <li class="inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
-                <li class="inline text-red-500 hover:text-red-900">Delete</li>
+                <li @click="destroyGroupType(groupType)" class="cursor-pointer inline text-red-500 hover:text-red-900">Delete</li>
               </ul>
             </div>
 
+            <!-- list of relationship types -->
             <div v-for="type in groupType.types" :key="type.id" class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50 pl-6">
               <div class="flex justify-between items-center">
                 <div class="relative">
-
                   <!-- relation type name -->
                   <span>{{ type.name }}</span>
 
@@ -91,6 +129,11 @@
                 </ul>
               </div>
             </div>
+
+            <!-- create a new relationship type line -->
+            <div class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50 pl-6 item-list">
+              <Link :href="'data.url.settings'" class="text-sky-500 hover:text-blue-900">Add a new relationship type</Link>
+            </div>
           </li>
         </ul>
       </div>
@@ -102,12 +145,18 @@
 import Layout from '@/Shared/Layout';
 import { Link } from '@inertiajs/inertia-vue3';
 import PrettyButton from '@/Shared/PrettyButton';
+import PrettyLink from '@/Shared/PrettyLink';
+import TextInput from '@/Shared/TextInput';
+import Errors from '@/Shared/Errors';
 
 export default {
   components: {
     Layout,
     Link,
     PrettyButton,
+    PrettyLink,
+    TextInput,
+    Errors,
   },
 
   props: {
@@ -119,6 +168,65 @@ export default {
       type: Object,
       default: null,
     },
+  },
+
+  data() {
+    return {
+      loadingState: '',
+      createGroupTypeModalShown: false,
+      localGroupTypes: [],
+      form: {
+        groupTypeName: '',
+        errors: [],
+      },
+    };
+  },
+
+  mounted() {
+    this.localGroupTypes = this.data.group_types;
+  },
+
+  methods: {
+    showGroupTypeModal() {
+      this.form.groupTypeName = '';
+      this.createGroupTypeModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.newGroupType.focus();
+      });
+    },
+
+    submitGroupType() {
+      this.loadingState = 'loading';
+
+      axios.post(this.data.url.group_type_store, this.form)
+        .then(response => {
+          this.flash('The group type has been created', 'success');
+          this.localGroupTypes.unshift(response.data.data);
+          this.loadingState = '';
+          this.createGroupTypeModalShown = false;
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroyGroupType(groupType) {
+      if(confirm("Are you sure? This will delete all the relationships of this type for all the contacts that were using it.")) {
+
+        axios.delete(groupType.url.destroy)
+          .then(response => {
+            this.flash('The group type has been deleted', 'success');
+            var id = this.localGroupTypes.findIndex(x => x.id === groupType.id);
+            this.localGroupTypes.splice(id, 1);
+          })
+          .catch(error => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+        }
+      },
   },
 };
 </script>

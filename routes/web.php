@@ -55,8 +55,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::prefix('personalize')->group(function () {
                 Route::get('', [PersonalizeController::class, 'index'])->name('settings.personalize.index');
 
-                // relationship types
+                // relationship group types
                 Route::get('relationships', [PersonalizeRelationshipController::class, 'index'])->name('settings.personalize.relationship.index');
+                Route::post('relationships', [PersonalizeRelationshipController::class, 'store'])->name('settings.personalize.relationship.grouptype.store');
+                Route::delete('relationships/{groupType}', [PersonalizeRelationshipController::class, 'destroy'])->name('settings.personalize.relationship.grouptype.destroy');
             });
 
             // cancel

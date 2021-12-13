@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers;
 
 use App\Models\Account;
+use App\Models\RelationshipGroupType;
+use Faker\Provider\ar_EG\Person;
 
 class PersonalizeRelationshipIndexViewHelper
 {
@@ -15,17 +17,7 @@ class PersonalizeRelationshipIndexViewHelper
 
         $collection = collect();
         foreach ($relationshipGroupTypes as $relationshipGroupType) {
-            $collection->push([
-                'id' => $relationshipGroupType->id,
-                'name' => $relationshipGroupType->name,
-                'types' => $relationshipGroupType->types->map(function ($type) {
-                    return [
-                        'id' => $type->id,
-                        'name' => $type->name,
-                        'name_reverse_relationship' => $type->name_reverse_relationship,
-                    ];
-                }),
-            ]);
+            $collection->push(self::dtoGroupType($relationshipGroupType));
         }
 
         return [
@@ -33,6 +25,27 @@ class PersonalizeRelationshipIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
+                'group_type_store' => route('settings.personalize.relationship.grouptype.store'),
+            ],
+        ];
+    }
+
+    public static function dtoGroupType(RelationshipGroupType $groupType): array
+    {
+        return [
+            'id' => $groupType->id,
+            'name' => $groupType->name,
+            'types' => $groupType->types->map(function ($type) {
+                return [
+                    'id' => $type->id,
+                    'name' => $type->name,
+                    'name_reverse_relationship' => $type->name_reverse_relationship,
+                ];
+            }),
+            'url' => [
+                'destroy' => route('settings.personalize.relationship.grouptype.destroy', [
+                    'groupType' => $groupType->id,
+                ]),
             ],
         ];
     }
