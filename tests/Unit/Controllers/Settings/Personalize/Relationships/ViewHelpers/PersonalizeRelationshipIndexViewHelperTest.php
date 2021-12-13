@@ -3,13 +3,11 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Relationships\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\ViewHelpers\PersonalizeIndexViewHelper;
-use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
+use App\Models\RelationshipGroupType;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipIndexViewHelperTest extends TestCase
 {
@@ -31,9 +29,9 @@ class PersonalizeRelationshipIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('group_types', $array);
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'personalize' => env('APP_URL') . '/settings/personalize',
-                'group_type_store' => env('APP_URL') . '/settings/personalize/relationships',
+                'settings' => env('APP_URL').'/settings',
+                'personalize' => env('APP_URL').'/settings/personalize',
+                'group_type_store' => env('APP_URL').'/settings/personalize/relationships',
             ],
             $array['url']
         );
@@ -52,9 +50,9 @@ class PersonalizeRelationshipIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('types', $array);
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/settings/personalize/relationships/'.$group->id.'/types',
-                'update' => env('APP_URL') . '/settings/personalize/relationships/' . $group->id,
-                'destroy' => env('APP_URL') . '/settings/personalize/relationships/' . $group->id,
+                'store' => env('APP_URL').'/settings/personalize/relationships/'.$group->id.'/types',
+                'update' => env('APP_URL').'/settings/personalize/relationships/'.$group->id,
+                'destroy' => env('APP_URL').'/settings/personalize/relationships/'.$group->id,
             ],
             $array['url']
         );
@@ -79,8 +77,8 @@ class PersonalizeRelationshipIndexViewHelperTest extends TestCase
                 'name' => $type->name,
                 'name_reverse_relationship' => $type->name_reverse_relationship,
                 'url' => [
-                    'update' => env('APP_URL') . '/settings/personalize/relationships/' . $group->id.'/types/'.$type->id,
-                    'destroy' => env('APP_URL') . '/settings/personalize/relationships/' . $group->id.'/types/'.$type->id,
+                    'update' => env('APP_URL').'/settings/personalize/relationships/'.$group->id.'/types/'.$type->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/relationships/'.$group->id.'/types/'.$type->id,
                 ],
             ],
             $array
