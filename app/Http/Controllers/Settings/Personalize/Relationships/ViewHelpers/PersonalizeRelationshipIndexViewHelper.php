@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\RelationshipGroupType;
-use Faker\Provider\ar_EG\Person;
 
 class PersonalizeRelationshipIndexViewHelper
 {
