@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Settings\Personalize\Relationships;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\ViewHelpers\PersonalizeIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipController extends Controller
 {
