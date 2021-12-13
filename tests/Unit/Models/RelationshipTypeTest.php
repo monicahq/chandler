@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\RelationshipType;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class RelationshipTypeTest extends TestCase

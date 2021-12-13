@@ -37,7 +37,7 @@ return [
     'relationship_type_love' => 'Love',
     'relationship_type_family' => 'Family',
     'relationship_type_work' => 'Work',
-    'relationship_type_friend' => 'Friend',
+    'relationship_type_friend_title' => 'Friend',
 
     'relationship_type_partner' => 'significant other',
     'relationship_type_spouse' => 'spouse',

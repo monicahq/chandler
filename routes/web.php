@@ -9,6 +9,7 @@ use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
+use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('', [PersonalizeController::class, 'index'])->name('settings.personalize.index');
 
                 // relationship types
-                Route::get('relationships', [PersonalizeController::class, 'index'])->name('settings.personalize.relationship.index');
+                Route::get('relationships', [PersonalizeRelationshipController::class, 'index'])->name('settings.personalize.relationship.index');
             });
 
             // cancel
