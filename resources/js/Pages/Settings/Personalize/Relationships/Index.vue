@@ -95,21 +95,46 @@
         </form>
 
         <!-- list of groups types -->
-        <ul class="bg-white border border-gray-200 rounded-lg mb-6">
+        <ul v-if="localGroupTypes.length > 0" class="bg-white border border-gray-200 rounded-lg mb-6">
           <li v-for="groupType in localGroupTypes" :key="groupType.id">
-            <div class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50 item-list">
+            <!-- detail of the group type -->
+            <div v-if="renameGroupTypeModalShownId != groupType.id" class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50 item-list">
               <span class="text-base font-semibold">{{ groupType.name }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
+                <li @click="renameGroupTypeModal(groupType)" class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
                 <li @click="destroyGroupType(groupType)" class="cursor-pointer inline text-red-500 hover:text-red-900">Delete</li>
               </ul>
             </div>
 
+            <!-- rename a group type modal -->
+            <form v-if="renameGroupTypeModalShownId == groupType.id" @submit.prevent="updateGroupType(groupType)" class="border-b border-gray-200 hover:bg-slate-50 item-list">
+              <div class="p-5 border-b border-gray-200">
+                <errors :errors="form.errors" />
+
+                <text-input v-model="form.groupTypeName"
+                  :label="'Name of the new group type'"
+                  :type="'text'" :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="true"
+                  :ref="'rename' + groupType.id"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="renameGroupTypeModalShownId = 0" />
+              </div>
+
+              <div class="p-5 flex justify-between">
+                <pretty-span @click.prevent="renameGroupTypeModalShownId = 0" :text="'Cancel'" :classes="'mr-3'" />
+                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              </div>
+            </form>
+
             <!-- list of relationship types -->
             <div v-for="type in groupType.types" :key="type.id" class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50 pl-6">
-              <div class="flex justify-between items-center">
+
+              <!-- detail of the relationship type -->
+              <div v-if="renameRelationshipTypeModalId != type.id" class="flex justify-between items-center">
                 <div class="relative">
                   <!-- relation type name -->
                   <span>{{ type.name }}</span>
@@ -124,18 +149,92 @@
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li class="inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
-                  <li class="inline text-red-500 hover:text-red-900">Delete</li>
+                  <li @click="renameRelationTypeModal(type)" class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
+                  <li @click="destroyRelationshipType(groupType, type)" class="cursor-pointer inline text-red-500 hover:text-red-900">Delete</li>
                 </ul>
               </div>
+
+              <!-- rename the relationship type modal -->
+              <form v-if="renameRelationshipTypeModalId == type.id" @submit.prevent="updateRelationType(groupType, type)" class="border-b border-gray-200 hover:bg-slate-50 item-list">
+                <div class="p-5 border-b border-gray-200">
+                  <errors :errors="form.errors" />
+
+                  <text-input v-model="form.name"
+                    :label="'Name of the relationship'"
+                    :type="'text'" :autofocus="true"
+                    :input-class="'block w-full'"
+                    :required="true"
+                    :ref="'rename' + type.id"
+                    :div-outer-class="'mb-4'"
+                    :placeholder="'Parent'"
+                    :autocomplete="false"
+                    :maxlength="255"
+                    @esc-key-pressed="renameRelationshipTypeModalId = 0" />
+
+                  <text-input v-model="form.nameReverseRelationship"
+                    :label="'Name of the reverse relationship'"
+                    :type="'text'" :autofocus="true"
+                    :input-class="'block w-full'"
+                    :required="true"
+                    :autocomplete="false"
+                    :placeholder="'Child'"
+                    :maxlength="255"
+                    @esc-key-pressed="renameRelationshipTypeModalId = 0" />
+                </div>
+
+                <div class="p-5 flex justify-between">
+                  <pretty-span @click.prevent="renameRelationshipTypeModalId = 0" :text="'Cancel'" :classes="'mr-3'" />
+                  <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                </div>
+              </form>
+
             </div>
 
             <!-- create a new relationship type line -->
-            <div class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50 pl-6 item-list">
-              <Link :href="'data.url.settings'" class="text-sky-500 hover:text-blue-900">Add a new relationship type</Link>
+            <div v-if="createRelationshipTypeModalId != groupType.id" class="px-5 py-2 border-b border-gray-200 hover:bg-slate-50 pl-6 item-list">
+              <span @click="showRelationshipTypeModal(groupType)" class="text-sky-500 hover:text-blue-900 text-sm cursor-pointer">Add a new relationship type</span>
             </div>
+
+            <!-- create a new relationship type -->
+            <form v-if="createRelationshipTypeModalId == groupType.id" @submit.prevent="storeRelationshipType(groupType)" class="border-b border-gray-200 hover:bg-slate-50 item-list">
+              <div class="p-5 border-b border-gray-200">
+                <errors :errors="form.errors" />
+
+                <text-input v-model="form.name"
+                  :label="'Name of the relationship'"
+                  :type="'text'" :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="true"
+                  :ref="'newRelationshipType'"
+                  :div-outer-class="'mb-4'"
+                  :placeholder="'Parent'"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createRelationshipTypeModalId = 0" />
+
+                <text-input v-model="form.nameReverseRelationship"
+                  :label="'Name of the reverse relationship'"
+                  :type="'text'" :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="true"
+                  :autocomplete="false"
+                  :placeholder="'Child'"
+                  :maxlength="255"
+                  @esc-key-pressed="createRelationshipTypeModalId = 0" />
+              </div>
+
+              <div class="p-5 flex justify-between">
+                <pretty-span @click.prevent="createRelationshipTypeModalId = 0" :text="'Cancel'" :classes="'mr-3'" />
+                <pretty-button :text="'Add'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+              </div>
+            </form>
           </li>
         </ul>
+
+        <!-- blank state -->
+        <div v-if="localGroupTypes.length == 0" class="bg-white border border-gray-200 rounded-lg mb-6">
+          <p class="p-5 text-center">Relationship types let you link contacts and document how they are connected.</p>
+        </div>
       </div>
     </main>
   </Layout>
@@ -146,6 +245,7 @@ import Layout from '@/Shared/Layout';
 import { Link } from '@inertiajs/inertia-vue3';
 import PrettyButton from '@/Shared/PrettyButton';
 import PrettyLink from '@/Shared/PrettyLink';
+import PrettySpan from '@/Shared/PrettySpan';
 import TextInput from '@/Shared/TextInput';
 import Errors from '@/Shared/Errors';
 
@@ -155,6 +255,7 @@ export default {
     Link,
     PrettyButton,
     PrettyLink,
+    PrettySpan,
     TextInput,
     Errors,
   },
@@ -174,9 +275,14 @@ export default {
     return {
       loadingState: '',
       createGroupTypeModalShown: false,
+      renameGroupTypeModalShownId: 0,
+      createRelationshipTypeModalId: 0,
+      renameRelationshipTypeModalId: 0,
       localGroupTypes: [],
       form: {
         groupTypeName: '',
+        name: '',
+        nameReverseRelationship: '',
         errors: [],
       },
     };
@@ -196,6 +302,35 @@ export default {
       });
     },
 
+    renameGroupTypeModal(groupType) {
+      this.form.groupTypeName = groupType.name;
+      this.renameGroupTypeModalShownId = groupType.id;
+
+      this.$nextTick(() => {
+        this.$refs[`rename${groupType.id}`].focus();
+      });
+    },
+
+    showRelationshipTypeModal(groupType) {
+      this.createRelationshipTypeModalId = groupType.id;
+      this.form.name = '';
+      this.form.nameReverseRelationship = '';
+
+      this.$nextTick(() => {
+        this.$refs.newRelationshipType.focus();
+      });
+    },
+
+    renameRelationTypeModal(type) {
+      this.form.name = type.name;
+      this.form.nameReverseRelationship = type.name_reverse_relationship;
+      this.renameRelationshipTypeModalId = type.id;
+
+      this.$nextTick(() => {
+        this.$refs[`rename${type.id}`].focus();
+      });
+    },
+
     submitGroupType() {
       this.loadingState = 'loading';
 
@@ -203,8 +338,24 @@ export default {
         .then(response => {
           this.flash('The group type has been created', 'success');
           this.localGroupTypes.unshift(response.data.data);
-          this.loadingState = '';
+          this.loadingState = null;
           this.createGroupTypeModalShown = false;
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    updateGroupType(groupType) {
+      this.loadingState = 'loading';
+
+      axios.put(groupType.url.update, this.form)
+        .then(response => {
+          this.flash('The group type has been updated', 'success');
+          this.localGroupTypes[this.localGroupTypes.findIndex(x => x.id === groupType.id)] = response.data.data;
+          this.loadingState = null;
+          this.renameGroupTypeModalShownId = 0;
         })
         .catch(error => {
           this.loadingState = null;
@@ -226,7 +377,59 @@ export default {
             this.form.errors = error.response.data;
           });
         }
-      },
+    },
+
+    storeRelationshipType(groupType) {
+      this.loadingState = 'loading';
+
+      axios.post(groupType.url.store, this.form)
+        .then(response => {
+          this.flash('The relationship type has been created', 'success');
+          this.loadingState = null;
+          this.createRelationshipTypeModalId = 0;
+          var id = this.localGroupTypes.findIndex(x => x.id === groupType.id);
+          this.localGroupTypes[id].types.unshift(response.data.data);
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    updateRelationType(groupType, type) {
+      this.loadingState = 'loading';
+
+      axios.put(type.url.update, this.form)
+        .then(response => {
+          this.flash('The relationship type has been updated', 'success');
+          this.loadingState = null;
+          this.renameRelationshipTypeModalId = 0;
+          var groupTypeId = this.localGroupTypes.findIndex(x => x.id === groupType.id);
+          var typeId = this.localGroupTypes[groupTypeId].types.findIndex(x => x.id === type.id);
+          this.localGroupTypes[groupTypeId].types[typeId] = response.data.data;
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroyRelationshipType(groupType, type) {
+      if(confirm("Are you sure? This will delete all the relationships of this type for all the contacts that were using it.")) {
+
+        axios.delete(type.url.destroy)
+          .then(response => {
+            this.flash('The relationship type has been deleted', 'success');
+            var groupTypeId = this.localGroupTypes.findIndex(x => x.id === groupType.id);
+            var typeId = this.localGroupTypes[groupTypeId].types.findIndex(x => x.id === type.id);
+            this.localGroupTypes[groupTypeId].types.splice(typeId, 1);
+          })
+          .catch(error => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+        }
+    },
   },
 };
 </script>

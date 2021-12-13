@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\RelationshipGroupType;
+use App\Models\RelationshipType;
 
 class PersonalizeRelationshipIndexViewHelper
 {
@@ -34,16 +35,37 @@ class PersonalizeRelationshipIndexViewHelper
         return [
             'id' => $groupType->id,
             'name' => $groupType->name,
-            'types' => $groupType->types->map(function ($type) {
-                return [
-                    'id' => $type->id,
-                    'name' => $type->name,
-                    'name_reverse_relationship' => $type->name_reverse_relationship,
-                ];
+            'types' => $groupType->types->map(function ($type) use ($groupType) {
+                return self::dtoRelationshipType($groupType, $type);
             }),
             'url' => [
+                'store' => route('settings.personalize.relationship.type.store', [
+                    'groupType' => $groupType->id,
+                ]),
+                'update' => route('settings.personalize.relationship.grouptype.update', [
+                    'groupType' => $groupType->id,
+                ]),
                 'destroy' => route('settings.personalize.relationship.grouptype.destroy', [
                     'groupType' => $groupType->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoRelationshipType(RelationshipGroupType $groupType, RelationshipType $type): array
+    {
+        return [
+            'id' => $type->id,
+            'name' => $type->name,
+            'name_reverse_relationship' => $type->name_reverse_relationship,
+            'url' => [
+                'update' => route('settings.personalize.relationship.type.update', [
+                    'groupType' => $groupType->id,
+                    'type' => $type->id,
+                ]),
+                'destroy' => route('settings.personalize.relationship.type.destroy', [
+                    'groupType' => $groupType->id,
+                    'type' => $type->id,
                 ]),
             ],
         ];

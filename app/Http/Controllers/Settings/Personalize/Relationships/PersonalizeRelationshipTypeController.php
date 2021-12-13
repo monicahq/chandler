@@ -10,58 +10,58 @@ use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
 use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
+use App\Services\Account\ManageRelationshipTypes\CreateRelationshipType;
+use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipType;
 use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
+use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipType;
 
-class PersonalizeRelationshipController extends Controller
+class PersonalizeRelationshipTypeController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Settings/Personalize/Relationships/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeRelationshipIndexViewHelper::data(Auth::user()->account),
-        ]);
-    }
-
-    public function store(Request $request)
+    public function store(Request $request, int $groupTypeId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'name' => $request->input('groupTypeName'),
+            'relationship_group_type_id' => $groupTypeId,
+            'name' => $request->input('name'),
+            'name_reverse_relationship' => $request->input('nameReverseRelationship'),
         ];
 
-        $groupType = (new CreateRelationshipGroupType)->execute($data);
+        $type = (new CreateRelationshipType)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeRelationshipIndexViewHelper::dtoGroupType($groupType),
+            'data' => PersonalizeRelationshipIndexViewHelper::dtoRelationshipType($type->groupType, $type),
         ], 201);
     }
 
-    public function update(Request $request, int $groupTypeId)
+    public function update(Request $request, int $groupTypeId, int $typeId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'relationship_group_type_id' => $groupTypeId,
-            'name' => $request->input('groupTypeName'),
+            'relationship_type_id' => $typeId,
+            'name' => $request->input('name'),
+            'name_reverse_relationship' => $request->input('nameReverseRelationship'),
         ];
 
-        $groupType = (new UpdateRelationshipGroupType)->execute($data);
+        $type = (new UpdateRelationshipType)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeRelationshipIndexViewHelper::dtoGroupType($groupType),
+            'data' => PersonalizeRelationshipIndexViewHelper::dtoRelationshipType($type->groupType, $type),
         ], 200);
     }
 
-    public function destroy(Request $request, int $groupTypeId)
+    public function destroy(Request $request, int $groupTypeId, int $typeId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'relationship_group_type_id' => $groupTypeId,
+            'relationship_type_id' => $typeId,
         ];
 
-        (new DestroyRelationshipGroupType)->execute($data);
+        (new DestroyRelationshipType)->execute($data);
 
         return response()->json([
             'data' => true,
