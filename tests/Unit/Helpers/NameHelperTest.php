@@ -2,12 +2,10 @@
 
 namespace Tests\Unit\Helpers;
 
-use Carbon\Carbon;
 use Tests\TestCase;
-use App\Helpers\DateHelper;
-use App\Helpers\NameHelper;
-use App\Models\Contact;
 use App\Models\User;
+use App\Models\Contact;
+use App\Helpers\NameHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class NameHelperTest extends TestCase

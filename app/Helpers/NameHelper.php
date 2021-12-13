@@ -2,11 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Models\Contact;
-use App\Models\RelationshipType;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use App\Models\Contact;
 
 class NameHelper
 {
@@ -25,24 +22,24 @@ class NameHelper
         $variableName = '';
         $completeName = '';
         foreach ($allCharacters as $char) {
-            if ($char === '%' && !$variableFound) {
+            if ($char === '%' && ! $variableFound) {
                 // a variable has been found
                 $variableFound = true;
-                $variableName = $variableName . $char;
+                $variableName = $variableName.$char;
             } elseif ($char !== '%' && $variableFound) {
-                $variableName = $variableName . $char;
+                $variableName = $variableName.$char;
             } elseif ($char === '%' && $variableFound) {
                 // the variable has ended
                 // get rid of the first %
                 $variableName = substr($variableName, 1);
-                $completeName = $completeName . $contact->{$variableName};
+                $completeName = $completeName.$contact->{$variableName};
 
                 // reset the variable
                 $variableFound = false;
                 $variableName = '';
             } else {
                 // this is a normal character
-                $completeName = $completeName . $char;
+                $completeName = $completeName.$char;
             }
         }
 
