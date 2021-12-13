@@ -44,6 +44,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // only for administrators
         Route::middleware(['administrator'])->group(function () {
+            // preferences
+            Route::prefix('preferences')->group(function () {
+                Route::get('', [PreferencesController::class, 'index'])->name('settings.preferences.index');
+            });
+
             // users
             Route::prefix('users')->group(function () {
                 Route::get('', [UserController::class, 'index'])->name('settings.user.index');
