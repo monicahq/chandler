@@ -16,6 +16,23 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasFactory, HasApiTokens;
 
     /**
+     * Available names order.
+     *
+     * @var array
+     */
+    protected const NAMES_ORDER = [
+        'firstname_lastname',
+        'lastname_firstname',
+        'firstname_lastname_nickname',
+        'firstname_nickname_lastname',
+        'lastname_firstname_nickname',
+        'lastname_nickname_firstname',
+        'nickname_firstname_lastname',
+        'nickname_lastname_firstname',
+        'nickname',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -30,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_account_administrator',
         'invitation_code',
         'invitation_accepted_at',
+        'name_order',
     ];
 
     /**
@@ -94,6 +112,22 @@ class User extends Authenticatable implements MustVerifyEmail
             return null;
         }
 
-        return $this->first_name.' '.$this->last_name;
+        $name = '';
+
+        switch ($this->name_order) {
+            case 'firstname_lastname':
+            case 'firstname_nickname_lastname':
+            case 'firstname_lastname_nickname':
+            case 'nickname_firstname_lastname':
+            case 'nickname':
+                $name = $this->first_name . ' ' . $this->last_name;
+                break;
+
+            default:
+                $name = $this->last_name . ' ' . $this->first_name;
+                break;
+        }
+
+        return $name;
     }
 }

@@ -52,9 +52,59 @@ class UserTest extends TestCase
             'last_name' => 'Schrute',
         ]);
 
+        $rachel->name_order = 'firstname_lastname';
+        $rachel->save();
         $this->assertEquals(
             'Dwight Schrute',
-            $rachel->name
+            $rachel->name,
+        );
+        $rachel->name_order = 'lastname_firstname';
+        $rachel->save();
+        $this->assertEquals(
+            'Schrute Dwight',
+            $rachel->name,
+        );
+        $rachel->name_order = 'firstname_lastname_nickname';
+        $rachel->save();
+        $this->assertEquals(
+            'Dwight Schrute',
+            $rachel->name,
+        );
+        $rachel->name_order = 'firstname_nickname_lastname';
+        $rachel->save();
+        $this->assertEquals(
+            'Dwight Schrute',
+            $rachel->name,
+        );
+        $rachel->name_order = 'lastname_firstname_nickname';
+        $rachel->save();
+        $this->assertEquals(
+            'Schrute Dwight',
+            $rachel->name,
+        );
+        $rachel->name_order = 'lastname_nickname_firstname';
+        $rachel->save();
+        $this->assertEquals(
+            'Schrute Dwight',
+            $rachel->name,
+        );
+        $rachel->name_order = 'nickname_firstname_lastname';
+        $rachel->save();
+        $this->assertEquals(
+            'Dwight Schrute',
+            $rachel->name,
+        );
+        $rachel->name_order = 'nickname_lastname_firstname';
+        $rachel->save();
+        $this->assertEquals(
+            'Schrute Dwight',
+            $rachel->name,
+        );
+        $rachel->name_order = 'nickname';
+        $rachel->save();
+        $this->assertEquals(
+            'Dwight Schrute',
+            $rachel->name,
         );
     }
 }
