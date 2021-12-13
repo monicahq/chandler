@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Relationships;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipType;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
 use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipType;
+use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipType;
+use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipTypeController extends Controller
 {

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
+use App\Models\RelationshipGroupType;
 
 class PersonalizeRelationshipIndexViewHelper
 {
