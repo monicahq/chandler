@@ -15,7 +15,7 @@ class AuditLogHelper
      * it understandable by a human.
      *
      * @param  AuditLog  $log
-     * @param User $user
+     * @param  User  $user
      * @return string
      */
     public static function process(AuditLog $log, User $user): string

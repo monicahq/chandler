@@ -132,7 +132,7 @@ class Contact extends Model
     /**
      * Get the name of the contact, according to the user preference.
      *
-     * @param User $user
+     * @param  User  $user
      * @return string
      */
     public function getName(User $user): string
