@@ -112,22 +112,6 @@ class User extends Authenticatable implements MustVerifyEmail
             return null;
         }
 
-        $name = '';
-
-        switch ($this->name_order) {
-            case 'firstname_lastname':
-            case 'firstname_nickname_lastname':
-            case 'firstname_lastname_nickname':
-            case 'nickname_firstname_lastname':
-            case 'nickname':
-                $name = $this->first_name.' '.$this->last_name;
-                break;
-
-            default:
-                $name = $this->last_name.' '.$this->first_name;
-                break;
-        }
-
-        return $name;
+        return $this->first_name.' '.$this->last_name;
     }
 }

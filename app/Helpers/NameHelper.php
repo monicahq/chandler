@@ -14,7 +14,7 @@ class NameHelper
      * @param  Contact  $contact
      * @return string
      */
-    public static function formatName(User $user, Contact $contact): string
+    public static function formatContactName(User $user, Contact $contact): string
     {
         $allCharacters = str_split($user->name_order);
 
