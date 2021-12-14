@@ -37,25 +37,25 @@ pre {
     <div v-if="editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <div class="px-5 py-2 border-b border-gray-200">
         <div class="flex items-center mb-2">
-          <input @click="disableNameOrder = true" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
           <label for="first_name_last_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name <span class="text-gray-500 font-normal ml-4">James Bond</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input @click="disableNameOrder = true" id="last_name_first_name" value="%last_name% %first_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="last_name_first_name" value="%last_name% %first_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
           <label for="last_name_first_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Last name First name <span class="text-gray-500 font-normal ml-4">Bond James</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input @click="disableNameOrder = true" id="first_name_last_name_surname" value="%first_name% %last_name% (%surname%)" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="first_name_last_name_surname" value="%first_name% %last_name% (%surname%)" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
           <label for="first_name_last_name_surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name (Surname) <span class="text-gray-500 font-normal ml-4">James Bond (007)</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input @click="disableNameOrder = true" id="surname" value="%surname%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="surname" value="%surname%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
           <label for="surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Surname <span class="text-gray-500 font-normal ml-4">007</span>
           </label>
@@ -67,7 +67,7 @@ pre {
           </label>
         </div>
         <div class="ml-8">
-          <text-input v-model="form.groupTypeName"
+          <text-input v-model="form.nameOrder"
             :type="'text'" :autofocus="true"
             :input-class="'block w-full'"
             :div-outer-class="'block mb-2'"
@@ -120,6 +120,7 @@ export default {
       disableNameOrder: true,
       form: {
         nameOrder: '',
+        choice: '',
         errors: [],
       },
     };
@@ -128,6 +129,11 @@ export default {
   methods: {
     enableEditMode() {
       this.editMode = true;
+    },
+
+    setNameOrder() {
+      this.disableNameOrder = true;
+      this.form.nameOrder = this.form.choice;
     },
 
     focusNameOrder() {
