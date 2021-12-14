@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Settings\Preferences\ViewHelpers;
 
-use App\Helpers\NameHelper;
-use App\Models\Contact;
 use App\Models\User;
+use App\Models\Contact;
+use App\Helpers\NameHelper;
 
 class PreferencesIndexViewHelper
 {
