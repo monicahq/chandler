@@ -40,7 +40,7 @@
 
     <main class="sm:mt-20 relative">
       <div class="max-w-3xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <name-order />
+        <name-order :data="data" />
       </div>
     </main>
   </Layout>

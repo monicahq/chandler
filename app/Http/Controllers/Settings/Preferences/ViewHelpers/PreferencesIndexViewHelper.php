@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers\Settings\Preferences\ViewHelpers;
 
+use App\Helpers\NameHelper;
+use App\Models\Contact;
 use App\Models\User;
 
 class PreferencesIndexViewHelper
 {
     public static function data(User $user): array
     {
+        $contact = new Contact([
+            'first_name' => 'James',
+            'last_name' => 'Bond',
+            'surname' => '007',
+            'middle_name' => 'W.',
+            'maiden_name' => 'Muller',
+        ]);
+
+        $nameExample = NameHelper::formatContactName($user, $contact);
+
         return [
-            'name_order_choices' => [
-                'first_name_last_name' => '%first_name% %last_name%',
-                'last_name_first_name' => '%last_name% %first_name%',
-                'first_name_last_name_surname' => '%first_name% %last_name% (%surname%)',
-                'last_name_first_name_surname' => '%last_name% %first_name% (%surname%)',
-            ],
+            'name_example' => $nameExample,
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),

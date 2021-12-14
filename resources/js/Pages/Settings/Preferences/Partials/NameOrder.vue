@@ -1,11 +1,16 @@
 <style lang="scss" scoped>
+pre {
+  background-color: #1f2937;
+  color: #c9ef78;
+}
 </style>
 
 <template>
   <div>
     <!-- title + cta -->
-    <div class="mb-2 sm:mt-0 mt-8">
+    <div class="sm:flex items-center justify-between mb-3 sm:mt-0 mt-8">
       <h3 class="mb-4 sm:mb-0"><span class="mr-1">👉</span> Customize how contacts should be displayed</h3>
+      <pretty-button @click="enableEditMode" :text="'Edit'" />
     </div>
 
     <!-- help text -->
@@ -15,11 +20,21 @@
       </svg>
 
       <div>
-        <p>You can customize how contacts should be displayed according to your own culture. Perhaps you would want to use James Bond instead of Bond James. Here, you can define it at will.</p>
+        <p>You can customize how contacts should be displayed according to your own taste/culture. Perhaps you would want to use James Bond instead of Bond James. Here, you can define it at will.</p>
       </div>
     </div>
 
-    <div class="bg-white border border-gray-200 rounded-lg mb-6">
+    <!-- normal mode -->
+    <div v-if="!editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
+      <p class="px-5 py-2 border-b border-gray-200">
+        <span class="mb-2">Current way of displaying contact names:</span>
+        <pre class="px-5 py-2 text-sm rounded">alsdjflask</pre>
+      </p>
+      <p class="px-5 py-2 text-sm bg-orange-50 font-medium"><span class="font-light">Contacts will be shown as follow:</span> {{ data.name_example }}</p>
+    </div>
+
+    <!-- edit mode -->
+    <div v-if="editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <div class="px-5 py-2 border-b border-gray-200">
         <div class="flex items-center mb-2">
           <input @click="disableNameOrder = true" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
@@ -66,7 +81,7 @@
       </div>
 
       <div class="p-5 flex justify-between">
-        <pretty-link @click="createGroupTypeModalShown = false" :text="'Cancel'" :classes="'mr-3'" />
+        <pretty-link @click="editMode = false" :text="'Cancel'" :classes="'mr-3'" />
         <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </div>
@@ -101,6 +116,7 @@ export default {
   data() {
     return {
       loadingState: '',
+      editMode: false,
       disableNameOrder: true,
       form: {
         nameOrder: '',
@@ -110,6 +126,10 @@ export default {
   },
 
   methods: {
+    enableEditMode() {
+      this.editMode = true;
+    },
+
     focusNameOrder() {
       this.disableNameOrder = false;
 
