@@ -22,6 +22,7 @@ class PreferencesIndexViewHelper
 
         return [
             'name_example' => $nameExample,
+            'name_order' => $user->name_order,
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),

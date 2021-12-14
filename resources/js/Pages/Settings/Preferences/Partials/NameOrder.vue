@@ -28,7 +28,7 @@ pre {
     <div v-if="!editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <p class="px-5 py-2 border-b border-gray-200">
         <span class="mb-2">Current way of displaying contact names:</span>
-        <pre class="px-5 py-2 text-sm rounded">alsdjflask</pre>
+        <pre class="px-5 py-2 text-sm rounded">{{ data.name_order }}</pre>
       </p>
       <p class="px-5 py-2 text-sm bg-orange-50 font-medium"><span class="font-light">Contacts will be shown as follow:</span> {{ data.name_example }}</p>
     </div>
