@@ -21,7 +21,7 @@
           <ul>
             <li class="mb-2">
               <span class="mr-1">🥳</span>
-              <Link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900">User preferences</Link>
+              <Link :href="data.url.preferences.index" class="text-sky-500 hover:text-blue-900">User preferences</Link>
             </li>
             <li v-if="data.is_account_administrator" class="mb-2">
               <span class="mr-1">🥸</span>

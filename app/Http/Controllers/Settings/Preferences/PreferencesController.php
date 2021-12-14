@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings\Preferences;
 use Inertia\Inertia;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
@@ -20,7 +21,7 @@ class PreferencesController extends Controller
     {
         return Inertia::render('Settings/Preferences/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => SettingsIndexViewHelper::data(Auth::user()),
+            'data' => PreferencesIndexViewHelper::data(Auth::user()),
         ]);
     }
 }

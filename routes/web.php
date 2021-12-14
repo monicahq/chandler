@@ -11,6 +11,7 @@ use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
+use App\Http\Controllers\Settings\Preferences\PreferencesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
