@@ -3,6 +3,11 @@ pre {
   background-color: #1f2937;
   color: #c9ef78;
 }
+
+.example {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
 </style>
 
 <template>
@@ -28,13 +33,13 @@ pre {
     <div v-if="!editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <p class="px-5 py-2 border-b border-gray-200">
         <span class="mb-2 block">Current way of displaying contact names:</span>
-        <pre class="px-5 py-2 text-sm rounded block mb-2">{{ data.name_order }}</pre>
+        <pre class="px-5 py-2 text-sm rounded block mb-2">{{ localNameOrder }}</pre>
       </p>
-      <p class="px-5 py-2 text-sm bg-orange-50 font-medium"><span class="font-light">Contacts will be shown as follow:</span> {{ data.name_example }}</p>
+      <p class="px-5 py-2 text-sm bg-orange-50 font-medium example"><span class="font-light">Contacts will be shown as follow:</span> {{ localNameExample }}</p>
     </div>
 
     <!-- edit mode -->
-    <div v-if="editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
+    <form v-if="editMode" @submit.prevent="submit()" class="bg-white border border-gray-200 rounded-lg mb-6">
       <div class="px-5 py-2 border-b border-gray-200">
         <div class="flex items-center mb-2">
           <input v-model="form.nameOrder" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
@@ -84,7 +89,7 @@ pre {
         <pretty-link @click="editMode = false" :text="'Cancel'" :classes="'mr-3'" />
         <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -117,6 +122,8 @@ export default {
     return {
       loadingState: '',
       editMode: false,
+      localNameOrder: '',
+      localNameExample: '',
       disableNameOrder: true,
       form: {
         nameOrder: '',
@@ -124,6 +131,12 @@ export default {
         errors: [],
       },
     };
+  },
+
+  mounted() {
+    this.localNameOrder = this.data.name_order;
+    this.localNameExample = this.data.name_example;
+    this.form.nameOrder = this.data.name_order;
   },
 
   methods: {
@@ -142,6 +155,25 @@ export default {
       this.$nextTick(() => {
         this.$refs.nameOrder.focus();
       });
+    },
+
+    submit() {
+      this.loadingState = 'loading';
+
+      axios.post(this.data.url.store, this.form)
+        .then(response => {
+          this.flash('Changes saved', 'success');
+          this.localNameOrder = this.form.nameOrder;
+          this.localNameExample = response.data.data.name_example;
+          this.choice = this.form.nameOrder;
+          this.editMode = false;
+          this.loadingState = null;
+
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
     },
   },
 };

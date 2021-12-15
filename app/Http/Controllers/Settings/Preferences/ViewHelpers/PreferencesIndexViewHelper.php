@@ -10,6 +10,17 @@ class PreferencesIndexViewHelper
 {
     public static function data(User $user): array
     {
+        return [
+            'name_order' => self::dtoNameOrder($user),
+            'url' => [
+                'settings' => route('settings.index'),
+                'back' => route('settings.index'),
+            ],
+        ];
+    }
+
+    public static function dtoNameOrder(User $user): array
+    {
         $contact = new Contact([
             'first_name' => 'James',
             'last_name' => 'Bond',
@@ -24,8 +35,7 @@ class PreferencesIndexViewHelper
             'name_example' => $nameExample,
             'name_order' => $user->name_order,
             'url' => [
-                'settings' => route('settings.index'),
-                'back' => route('settings.index'),
+                'store' => route('settings.preferences.store'),
             ],
         ];
     }

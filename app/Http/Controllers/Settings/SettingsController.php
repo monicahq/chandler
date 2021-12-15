@@ -11,11 +11,6 @@ use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
 
 class SettingsController extends Controller
 {
-    /**
-     * Show the settings page.
-     *
-     * @return Response
-     */
     public function index()
     {
         return Inertia::render('Settings/Index', [

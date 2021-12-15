@@ -40,7 +40,7 @@
 
     <main class="sm:mt-20 relative">
       <div class="max-w-3xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <name-order :data="data" />
+        <name-order :data="data.name_order" />
       </div>
     </main>
   </Layout>
@@ -52,7 +52,6 @@ import { Link } from '@inertiajs/inertia-vue3';
 import PrettyButton from '@/Shared/PrettyButton';
 import PrettyLink from '@/Shared/PrettyLink';
 import PrettySpan from '@/Shared/PrettySpan';
-import TextInput from '@/Shared/TextInput';
 import Errors from '@/Shared/Errors';
 import NameOrder from '@/Pages/Settings/Preferences/Partials/NameOrder';
 
@@ -63,7 +62,6 @@ export default {
     PrettyButton,
     PrettyLink,
     PrettySpan,
-    TextInput,
     Errors,
     NameOrder,
   },
@@ -77,19 +75,6 @@ export default {
       type: Object,
       default: null,
     },
-  },
-
-  data() {
-    return {
-      loadingState: '',
-      form: {
-        nameOrder: '',
-        errors: [],
-      },
-    };
-  },
-
-  methods: {
   },
 };
 </script>

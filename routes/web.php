@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // preferences
             Route::prefix('preferences')->group(function () {
                 Route::get('', [PreferencesController::class, 'index'])->name('settings.preferences.index');
+                Route::post('', [PreferencesController::class, 'store'])->name('settings.preferences.store');
             });
 
             // users

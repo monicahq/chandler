@@ -16,23 +16,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable, HasFactory, HasApiTokens;
 
     /**
-     * Available names order.
-     *
-     * @var array
-     */
-    protected const NAMES_ORDER = [
-        'firstname_lastname',
-        'lastname_firstname',
-        'firstname_lastname_nickname',
-        'firstname_nickname_lastname',
-        'lastname_firstname_nickname',
-        'lastname_nickname_firstname',
-        'nickname_firstname_lastname',
-        'nickname_lastname_firstname',
-        'nickname',
-    ];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

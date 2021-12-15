@@ -23,6 +23,9 @@ class SettingsIndexViewHelperTest extends TestCase
             [
                 'is_account_administrator' => true,
                 'url' => [
+                    'preferences' => [
+                        'index' => env('APP_URL').'/settings/preferences',
+                    ],
                     'users' => [
                         'index' => env('APP_URL').'/settings/users',
                     ],
