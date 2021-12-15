@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Preferences\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\ViewHelpers\SettingsIndexViewHelper;
+use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 
 class PreferencesIndexViewHelperTest extends TestCase
 {
@@ -27,8 +25,8 @@ class PreferencesIndexViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'back' => env('APP_URL') . '/settings',
+                'settings' => env('APP_URL').'/settings',
+                'back' => env('APP_URL').'/settings',
             ],
             $array['url']
         );
@@ -46,7 +44,7 @@ class PreferencesIndexViewHelperTest extends TestCase
                 'name_example' => 'James Bond (007)',
                 'name_order' => '%first_name% %last_name% (%surname%)',
                 'url' => [
-                    'store' => env('APP_URL') . '/settings/preferences',
+                    'store' => env('APP_URL').'/settings/preferences',
                 ],
             ],
             $array

@@ -2,11 +2,9 @@
 
 namespace App\Services\User;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use Illuminate\Support\Facades\Hash;
 
 class StoreNameOrderPreference extends BaseService implements ServiceInterface
 {

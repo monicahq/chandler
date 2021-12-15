@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings;
 
 use Inertia\Inertia;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
