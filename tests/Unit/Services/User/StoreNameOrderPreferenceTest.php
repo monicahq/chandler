@@ -4,14 +4,11 @@ namespace Tests\Unit\Services\User;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Label;
 use App\Models\Account;
-use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManageLabels\CreateLabel;
 use App\Services\User\StoreNameOrderPreference;
+use App\Services\Account\ManageLabels\CreateLabel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -44,7 +41,7 @@ class StoreNameOrderPreferenceTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
-        $this->executeService($ross, '%user%' ,$account);
+        $this->executeService($ross, '%user%', $account);
     }
 
     public function it_fails_if_name_order_has_no_variable(): void
@@ -52,14 +49,15 @@ class StoreNameOrderPreferenceTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $this->executeService($ross, '' ,$ross->account);
+        $this->executeService($ross, '', $ross->account);
     }
+
     public function it_fails_if_name_order_has_no_closing_percent_symbol(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $this->executeService($ross, '%' ,$ross->account);
+        $this->executeService($ross, '%', $ross->account);
     }
 
     private function executeService(User $author, string $nameOrder, Account $account): void
