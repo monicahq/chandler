@@ -73,6 +73,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('relationships/{groupType}/types', [PersonalizeRelationshipTypeController::class, 'store'])->name('settings.personalize.relationship.type.store');
                 Route::put('relationships/{groupType}/types/{type}', [PersonalizeRelationshipTypeController::class, 'update'])->name('settings.personalize.relationship.type.update');
                 Route::delete('relationships/{groupType}/types/{type}', [PersonalizeRelationshipTypeController::class, 'destroy'])->name('settings.personalize.relationship.type.destroy');
+
+                // labels
+                Route::get('labels', [PersonalizeLabelController::class, 'index'])->name('settings.personalize.label.index');
             });
 
             // cancel
