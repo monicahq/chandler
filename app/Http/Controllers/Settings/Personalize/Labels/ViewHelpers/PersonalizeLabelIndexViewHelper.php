@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Labelss\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Label;
-use App\Models\RelationshipType;
-use App\Models\RelationshipGroupType;
+use App\Models\Account;
 
 class PersonalizeLabelIndexViewHelper
 {
@@ -43,7 +41,7 @@ class PersonalizeLabelIndexViewHelper
                 'destroy' => route('settings.personalize.label.destroy', [
                     'label' => $label->id,
                 ]),
-            ]
+            ],
         ];
     }
 }
