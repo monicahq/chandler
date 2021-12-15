@@ -76,6 +76,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                 // labels
                 Route::get('labels', [PersonalizeLabelController::class, 'index'])->name('settings.personalize.label.index');
+                Route::post('labels', [PersonalizeLabelController::class, 'store'])->name('settings.personalize.label.store');
+                Route::put('labels/{label}', [PersonalizeLabelController::class, 'update'])->name('settings.personalize.label.update');
+                Route::delete('labels/{label}', [PersonalizeLabelController::class, 'destroy'])->name('settings.personalize.label.destroy');
             });
 
             // cancel
