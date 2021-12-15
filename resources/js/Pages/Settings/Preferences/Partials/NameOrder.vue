@@ -27,8 +27,8 @@ pre {
     <!-- normal mode -->
     <div v-if="!editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <p class="px-5 py-2 border-b border-gray-200">
-        <span class="mb-2">Current way of displaying contact names:</span>
-        <pre class="px-5 py-2 text-sm rounded">{{ data.name_order }}</pre>
+        <span class="mb-2 block">Current way of displaying contact names:</span>
+        <pre class="px-5 py-2 text-sm rounded block mb-2">{{ data.name_order }}</pre>
       </p>
       <p class="px-5 py-2 text-sm bg-orange-50 font-medium"><span class="font-light">Contacts will be shown as follow:</span> {{ data.name_example }}</p>
     </div>
@@ -37,32 +37,32 @@ pre {
     <div v-if="editMode" class="bg-white border border-gray-200 rounded-lg mb-6">
       <div class="px-5 py-2 border-b border-gray-200">
         <div class="flex items-center mb-2">
-          <input v-model="form.nameOrder" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="first_name_last_name" value="%first_name% %last_name%" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
           <label for="first_name_last_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name <span class="text-gray-500 font-normal ml-4">James Bond</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input v-model="form.nameOrder" id="last_name_first_name" value="%last_name% %first_name%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="last_name_first_name" value="%last_name% %first_name%" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
           <label for="last_name_first_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Last name First name <span class="text-gray-500 font-normal ml-4">Bond James</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input v-model="form.nameOrder" id="first_name_last_name_surname" value="%first_name% %last_name% (%surname%)" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="first_name_last_name_surname" value="%first_name% %last_name% (%surname%)" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
           <label for="first_name_last_name_surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name (Surname) <span class="text-gray-500 font-normal ml-4">James Bond (007)</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input v-model="form.nameOrder" id="surname" value="%surname%" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
+          <input v-model="form.nameOrder" id="surname" value="%surname%" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
           <label for="surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Surname <span class="text-gray-500 font-normal ml-4">007</span>
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input @click="focusNameOrder" id="push-everything" name="name-order" type="radio" class="focus:ring-sky-500 h-4 w-4 text-sky-500 border-gray-300">
-          <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+          <input @click="focusNameOrder" id="custom" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300">
+          <label for="custom" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Custom name order
           </label>
         </div>

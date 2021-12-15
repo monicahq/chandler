@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Users\ViewHelpers;
+namespace Tests\Unit\Controllers\Settings\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
