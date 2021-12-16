@@ -245,7 +245,6 @@
 import Layout from '@/Shared/Layout';
 import { Link } from '@inertiajs/inertia-vue3';
 import PrettyButton from '@/Shared/PrettyButton';
-import PrettyLink from '@/Shared/PrettyLink';
 import PrettySpan from '@/Shared/PrettySpan';
 import TextInput from '@/Shared/TextInput';
 import Errors from '@/Shared/Errors';
@@ -255,7 +254,6 @@ export default {
     Layout,
     Link,
     PrettyButton,
-    PrettyLink,
     PrettySpan,
     TextInput,
     Errors,
