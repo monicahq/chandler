@@ -10,8 +10,8 @@ use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Settings\Preferences\PreferencesController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
-use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Settings\Personalize\Labels\PersonalizeLabelController;
+use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 

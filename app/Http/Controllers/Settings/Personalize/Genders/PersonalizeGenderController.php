@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Settings\Personalize\Genders;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageLabels\CreateLabel;
-use App\Services\Account\ManageLabels\UpdateLabel;
-use App\Services\Account\ManageLabels\DestroyLabel;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 use App\Services\Account\ManageGenders\CreateGender;
-use App\Services\Account\ManageGenders\DestroyGender;
 use App\Services\Account\ManageGenders\UpdateGender;
+use App\Services\Account\ManageGenders\DestroyGender;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 
 class PersonalizeGenderController extends Controller
 {
