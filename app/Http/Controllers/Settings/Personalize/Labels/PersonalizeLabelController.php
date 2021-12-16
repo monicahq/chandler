@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Settings\Personalize\Labels;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use App\Services\Account\ManageLabels\CreateLabel;
-use App\Services\Account\ManageLabels\DestroyLabel;
 use App\Services\Account\ManageLabels\UpdateLabel;
+use App\Services\Account\ManageLabels\DestroyLabel;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 
 class PersonalizeLabelController extends Controller
 {

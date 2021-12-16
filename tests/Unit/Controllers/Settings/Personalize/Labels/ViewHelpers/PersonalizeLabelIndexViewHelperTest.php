@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Labels\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\ViewHelpers\PersonalizeIndexViewHelper;
 use App\Models\Label;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 
 class PersonalizeLabelIndexViewHelperTest extends TestCase
 {
@@ -26,9 +24,9 @@ class PersonalizeLabelIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('labels', $array);
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'personalize' => env('APP_URL') . '/settings/personalize',
-                'label_store' => env('APP_URL') . '/settings/personalize/labels',
+                'settings' => env('APP_URL').'/settings',
+                'personalize' => env('APP_URL').'/settings/personalize',
+                'label_store' => env('APP_URL').'/settings/personalize/labels',
             ],
             $array['url']
         );
