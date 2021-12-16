@@ -2,7 +2,7 @@
 
 namespace App\Services\Account\ManageLabels;
 
-use App\Models\User;
+use Illuminate\Support\Str;
 use App\Models\Label;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
@@ -22,6 +22,7 @@ class UpdateLabel extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'label_id' => 'required|integer|exists:labels,id',
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
         ];
     }
 
@@ -52,6 +53,8 @@ class UpdateLabel extends BaseService implements ServiceInterface
             ->findOrFail($data['label_id']);
 
         $label->name = $data['name'];
+        $label->description = $this->valueOrNull($data, 'description');
+        $label->slug = Str::slug($data['name'], '-');
         $label->save();
 
         CreateAuditLog::dispatch([

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Labelss\ViewHelpers;
+namespace App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers;
 
 use App\Models\Label;
 use App\Models\Account;
