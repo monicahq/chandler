@@ -6,14 +6,11 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageGenders\CreateGender;
-use App\Services\Account\ManageGenders\UpdateGender;
-use App\Services\Account\ManageGenders\DestroyGender;
+use App\Services\Account\ManagePronouns\CreatePronoun;
+use App\Services\Account\ManagePronouns\UpdatePronoun;
+use App\Services\Account\ManagePronouns\DestroyPronoun;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
-use App\Services\Account\ManagePronouns\CreatePronoun;
-use App\Services\Account\ManagePronouns\DestroyPronoun;
-use App\Services\Account\ManagePronouns\UpdatePronoun;
 
 class PersonalizePronounController extends Controller
 {

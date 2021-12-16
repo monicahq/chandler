@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers;
 
-use App\Models\Gender;
 use App\Models\Account;
 use App\Models\Pronoun;
 

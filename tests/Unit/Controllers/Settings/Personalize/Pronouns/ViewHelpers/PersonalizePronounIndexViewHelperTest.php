@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Pronouns\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
 use Tests\TestCase;
-use App\Models\Gender;
 use App\Models\Pronoun;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
 
 class PersonalizePronounIndexViewHelperTest extends TestCase
 {
