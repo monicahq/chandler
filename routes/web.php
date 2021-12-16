@@ -80,6 +80,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('labels', [PersonalizeLabelController::class, 'store'])->name('settings.personalize.label.store');
                 Route::put('labels/{label}', [PersonalizeLabelController::class, 'update'])->name('settings.personalize.label.update');
                 Route::delete('labels/{label}', [PersonalizeLabelController::class, 'destroy'])->name('settings.personalize.label.destroy');
+
+                // genders
+                Route::get('genders', [PersonalizeGenderController::class, 'index'])->name('settings.personalize.gender.index');
+                Route::post('genders', [PersonalizeGenderController::class, 'store'])->name('settings.personalize.gender.store');
+                Route::put('genders/{gender}', [PersonalizeGenderController::class, 'update'])->name('settings.personalize.gender.update');
+                Route::delete('genders/{gender}', [PersonalizeGenderController::class, 'destroy'])->name('settings.personalize.gender.destroy');
             });
 
             // cancel
