@@ -41,6 +41,7 @@ class PersonalizeLabelIndexViewHelperTest extends TestCase
             [
                 'id' => $label->id,
                 'name' => $label->name,
+                'count' => 0,
                 'url' => [
                     'update' => route('settings.personalize.label.update', [
                         'label' => $label->id,

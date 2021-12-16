@@ -34,6 +34,7 @@ class PersonalizeLabelIndexViewHelper
         return [
             'id' => $label->id,
             'name' => $label->name,
+            'count' => $label->contacts_count,
             'url' => [
                 'update' => route('settings.personalize.label.update', [
                     'label' => $label->id,

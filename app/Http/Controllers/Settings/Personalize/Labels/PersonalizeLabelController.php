@@ -60,7 +60,7 @@ class PersonalizeLabelController extends Controller
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'labelId' => $labelId,
+            'label_id' => $labelId,
         ];
 
         (new DestroyLabel)->execute($data);

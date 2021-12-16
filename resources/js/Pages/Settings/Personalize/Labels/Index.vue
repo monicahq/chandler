@@ -1,9 +1,4 @@
 <style lang="scss" scoped>
-.section-head {
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
-}
-
 .item-list {
   &:hover:first-child {
     border-top-left-radius: 8px;
@@ -54,20 +49,20 @@
         <!-- title + cta -->
         <div class="sm:flex items-center justify-between mb-6 sm:mt-0 mt-8">
           <h3 class="mb-4 sm:mb-0"><span class="mr-1">🏷</span> All the labels used in the account</h3>
-          <pretty-button @click="showlabelModal" v-if="!createlabelModalShown" :text="'Add a label'" :icon="'plus'" />
+          <pretty-button @click="showLabelModal" v-if="!createlabelModalShown" :text="'Add a label'" :icon="'plus'" />
         </div>
 
         <!-- modal to create a new group type -->
-        <form v-if="createlabelModalShown" @submit.prevent="submitlabel()" class="bg-white border border-gray-200 rounded-lg mb-6">
+        <form v-if="createlabelModalShown" @submit.prevent="submit()" class="bg-white border border-gray-200 rounded-lg mb-6">
           <div class="p-5 border-b border-gray-200">
             <errors :errors="form.errors" />
 
-            <text-input v-model="form.labelName"
-              :label="'Name of the new group type'"
+            <text-input v-model="form.name"
+              :label="'Name'"
               :type="'text'" :autofocus="true"
               :input-class="'block w-full'"
               :required="true"
-              :ref="'newlabel'"
+              :ref="'newLabel'"
               :autocomplete="false"
               :maxlength="255"
               @esc-key-pressed="createlabelModalShown = false" />
@@ -75,31 +70,31 @@
 
           <div class="p-5 flex justify-between">
             <pretty-span @click="createlabelModalShown = false" :text="'Cancel'" :classes="'mr-3'" />
-            <pretty-button :text="'Create group type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-button :text="'Create label'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
         <!-- list of groups types -->
         <ul v-if="localLabels.length > 0" class="bg-white border border-gray-200 rounded-lg mb-6">
-          <li v-for="label in localLabels" :key="label.id">
+          <li v-for="label in localLabels" :key="label.id" class="border-b border-gray-200 hover:bg-slate-50 item-list">
             <!-- detail of the group type -->
-            <div v-if="renamelabelModalShownId != label.id" class="flex justify-between items-center px-5 py-2 border-b border-gray-200 hover:bg-slate-50 item-list">
-              <span class="text-base font-semibold">{{ label.name }}</span>
+            <div v-if="renamelabelModalShownId != label.id" class="flex justify-between items-center px-5 py-2">
+              <span class="text-base">{{ label.name }} <span class="text-xs text-gray-500">({{ label.count }} contacts)</span></span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li @click="update(label)" class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
+                <li @click="updateLabelModal(label)" class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900">Rename</li>
                 <li @click="destroy(label)" class="cursor-pointer inline text-red-500 hover:text-red-900">Delete</li>
               </ul>
             </div>
 
             <!-- rename a label modal -->
-            <form v-if="renamelabelModalShownId == label.id" @submit.prevent="updatelabel(label)" class="border-b border-gray-200 hover:bg-slate-50 item-list">
+            <form v-if="renamelabelModalShownId == label.id" @submit.prevent="update(label)" class="border-b border-gray-200 hover:bg-slate-50 item-list">
               <div class="p-5 border-b border-gray-200">
                 <errors :errors="form.errors" />
 
-                <text-input v-model="form.labelName"
-                  :label="'Name of the new group type'"
+                <text-input v-model="form.name"
+                  :label="'Name'"
                   :type="'text'" :autofocus="true"
                   :input-class="'block w-full'"
                   :required="true"
@@ -176,17 +171,17 @@ export default {
   },
 
   methods: {
-    showlabelModal() {
-      this.form.labelName = '';
+    showLabelModal() {
+      this.form.name = '';
       this.createlabelModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.newlabel.focus();
+        this.$refs.newLabel.focus();
       });
     },
 
-    renamelabelModal(label) {
-      this.form.labelName = label.name;
+    updateLabelModal(label) {
+      this.form.name = label.name;
       this.renamelabelModalShownId = label.id;
 
       this.$nextTick(() => {
