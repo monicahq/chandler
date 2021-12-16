@@ -3,13 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Genders\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 use Tests\TestCase;
-use App\Models\Label;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Labels\ViewHelpers\PersonalizeLabelIndexViewHelper;
 use App\Models\Gender;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 
 class PersonalizeGenderIndexViewHelperTest extends TestCase
 {

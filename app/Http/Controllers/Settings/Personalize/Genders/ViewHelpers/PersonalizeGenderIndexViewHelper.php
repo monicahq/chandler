@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers;
 
-use App\Models\Label;
-use App\Models\Account;
 use App\Models\Gender;
+use App\Models\Account;
 
 class PersonalizeGenderIndexViewHelper
 {
