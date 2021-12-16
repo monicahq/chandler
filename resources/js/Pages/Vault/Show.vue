@@ -3,11 +3,11 @@
 </style>
 
 <template>
-  <Layout title="Dashboard" :inside-vault="true" :layoutData="layoutData">
+  <layout title="Dashboard" :inside-vault="true" :layout-data="layoutData">
     <main class="sm:mt-24 relative">
       d
     </main>
-  </Layout>
+  </layout>
 </template>
 
 <script>

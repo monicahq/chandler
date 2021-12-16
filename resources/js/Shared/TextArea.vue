@@ -28,17 +28,17 @@
     </label>
 
     <div class="relative">
-      <textarea @input="$emit('update:modelValue', $event.target.value)"
-        v-model="modelValue"
-        :id="id"
-        :class="localTextAreaClasses"
-        :required="required"
-        :type="type"
-        :rows="rows"
-        :maxlength="maxlength"
-        @keydown.esc="sendEscKey"
-        @focus="showMaxLength"
-        @blur="displayMaxLength = false"
+      <textarea :id="id"
+                v-model="modelValue"
+                :class="localTextAreaClasses"
+                :required="required"
+                :type="type"
+                :rows="rows"
+                :maxlength="maxlength"
+                @input="$emit('update:modelValue', $event.target.value)"
+                @keydown.esc="sendEscKey"
+                @focus="showMaxLength"
+                @blur="displayMaxLength = false"
       ></textarea>
       <span v-if="maxlength && displayMaxLength" class="length absolute text-xs rounded">
         {{ charactersLeft }}
@@ -109,10 +109,6 @@ export default {
     };
   },
 
-  created() {
-    this.localTextAreaClasses = 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ' + this.textareaClass;
-  },
-
   computed: {
     charactersLeft() {
       var char = 0;
@@ -122,6 +118,10 @@ export default {
 
       return `${this.maxlength - char} / ${this.maxlength}`;
     },
+  },
+
+  created() {
+    this.localTextAreaClasses = 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ' + this.textareaClass;
   },
 
   methods: {

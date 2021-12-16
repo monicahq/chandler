@@ -2,7 +2,7 @@
 </style>
 
 <template>
-  <Layout title="Dashboard" :layoutData="layoutData">
+  <layout title="Dashboard" :layout-data="layoutData">
     <nav class="sm:border-b bg-white">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
         <div class="flex items-baseline justify-between space-x-6">
@@ -16,30 +16,32 @@
 
     <main class="sm:mt-20 relative">
       <div class="max-w-md mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <h2 class="text-lg text-center mb-6">Account settings</h2>
+        <h2 class="text-lg text-center mb-6">
+          Account settings
+        </h2>
         <div class="bg-white border border-gray-200 rounded-lg mb-6 p-5">
           <ul>
             <li class="mb-2">
               <span class="mr-1">🥳</span>
-              <Link :href="data.url.preferences.index" class="text-sky-500 hover:text-blue-900">User preferences</Link>
+              <link :href="data.url.preferences.index" class="text-sky-500 hover:text-blue-900" />User preferences</link>
             </li>
             <li v-if="data.is_account_administrator" class="mb-2">
               <span class="mr-1">🥸</span>
-              <Link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900">Manage users</Link>
+              <link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900" />Manage users</link>
             </li>
             <li v-if="data.is_account_administrator" class="mb-2">
               <span class="mr-1">🎃</span>
-              <Link :href="data.url.personalize.index" class="text-sky-500 hover:text-blue-900">Personalize your contacts data</Link>
+              <link :href="data.url.personalize.index" class="text-sky-500 hover:text-blue-900" />Personalize your contacts data</link>
             </li>
             <li v-if="data.is_account_administrator">
               <span class="mr-1">💩</span>
-              <Link :href="data.url.cancel.index" class="text-sky-500 hover:text-blue-900">Cancel your account</Link>
+              <link :href="data.url.cancel.index" class="text-sky-500 hover:text-blue-900" />Cancel your account</link>
             </li>
           </ul>
         </div>
       </div>
     </main>
-  </Layout>
+  </layout>
 </template>
 
 <script>

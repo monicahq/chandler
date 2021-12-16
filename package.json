@@ -45,7 +45,6 @@
     "lint-staged": {
         "linters": {
             "*.js|.*.js|resources/js/**/*.{vue,js}": [
-                "yarn lint --fix"
             ]
         }
     },

@@ -17,7 +17,7 @@
 </style>
 
 <template>
-  <Layout :layoutData="layoutData">
+  <layout :layout-data="layoutData">
     <!-- breadcrumb -->
     <nav class="sm:border-b bg-white">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
@@ -25,7 +25,7 @@
           <ul class="text-sm">
             <li class="inline mr-2 text-gray-600">You are here:</li>
             <li class="inline mr-2">
-              <Link :href="data.url.settings" class="text-sky-500 hover:text-blue-900">Settings</Link>
+              <link :href="data.url.settings" class="text-sky-500 hover:text-blue-900" />Settings</link>
             </li>
             <li class="inline mr-2 relative">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline relative icon-breadcrumb" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -43,7 +43,7 @@
         <name-order :data="data.name_order" />
       </div>
     </main>
-  </Layout>
+  </layout>
 </template>
 
 <script>
