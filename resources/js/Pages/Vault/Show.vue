@@ -12,14 +12,10 @@
 
 <script>
 import Layout from '@/Shared/Layout';
-import { Link } from '@inertiajs/inertia-vue3';
-import PrettyLink from '@/Shared/PrettyLink';
 
 export default {
   components: {
     Layout,
-    Link,
-    PrettyLink,
   },
 
   props: {
@@ -29,7 +25,7 @@ export default {
     },
     data: {
       type: Array,
-      default: [],
+      default: () => [],
     },
   },
 

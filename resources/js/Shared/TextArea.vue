@@ -29,7 +29,7 @@
 
     <div class="relative">
       <textarea :id="id"
-                v-model="modelValue"
+                v-model="proxyValue"
                 :class="localTextAreaClasses"
                 :required="required"
                 :type="type"
@@ -39,7 +39,7 @@
                 @keydown.esc="sendEscKey"
                 @focus="showMaxLength"
                 @blur="displayMaxLength = false"
-      ></textarea>
+      />
       <span v-if="maxlength && displayMaxLength" class="length absolute text-xs rounded">
         {{ charactersLeft }}
       </span>
@@ -110,6 +110,15 @@ export default {
   },
 
   computed: {
+    proxyValue: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
+    },
+
     charactersLeft() {
       var char = 0;
       if (this.modelValue) {

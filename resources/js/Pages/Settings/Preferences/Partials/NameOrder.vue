@@ -50,7 +50,7 @@ pre {
         <div class="flex items-center mb-2">
           <input id="first_name_last_name" v-model="form.nameOrder" value="%first_name% %last_name%" name="name-order" type="radio"
                  class="h-4 w-4 text-sky-500 border-gray-300"
-          />
+          >
           <label for="first_name_last_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name <span class="text-gray-500 font-normal ml-4">
               James Bond
@@ -60,7 +60,7 @@ pre {
         <div class="flex items-center mb-2">
           <input id="last_name_first_name" v-model="form.nameOrder" value="%last_name% %first_name%" name="name-order" type="radio"
                  class="h-4 w-4 text-sky-500 border-gray-300"
-          />
+          >
           <label for="last_name_first_name" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Last name First name <span class="text-gray-500 font-normal ml-4">
               Bond James
@@ -70,7 +70,7 @@ pre {
         <div class="flex items-center mb-2">
           <input id="first_name_last_name_surname" v-model="form.nameOrder" value="%first_name% %last_name% (%surname%)" name="name-order" type="radio"
                  class="h-4 w-4 text-sky-500 border-gray-300"
-          />
+          >
           <label for="first_name_last_name_surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             First name Last name (Surname) <span class="text-gray-500 font-normal ml-4">
               James Bond (007)
@@ -80,7 +80,7 @@ pre {
         <div class="flex items-center mb-2">
           <input id="surname" v-model="form.nameOrder" value="%surname%" name="name-order" type="radio"
                  class="h-4 w-4 text-sky-500 border-gray-300"
-          />
+          >
           <label for="surname" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Surname <span class="text-gray-500 font-normal ml-4">
               007
@@ -88,7 +88,7 @@ pre {
           </label>
         </div>
         <div class="flex items-center mb-2">
-          <input id="custom" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300" @click="focusNameOrder" />
+          <input id="custom" name="name-order" type="radio" class="h-4 w-4 text-sky-500 border-gray-300" @click="focusNameOrder">
           <label for="custom" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
             Custom name order
           </label>
@@ -117,19 +117,15 @@ pre {
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue3';
 import PrettyButton from '@/Shared/PrettyButton';
 import PrettyLink from '@/Shared/PrettyLink';
-import PrettySpan from '@/Shared/PrettySpan';
 import TextInput from '@/Shared/TextInput';
 import Errors from '@/Shared/Errors';
 
 export default {
   components: {
-    Link,
     PrettyButton,
     PrettyLink,
-    PrettySpan,
     TextInput,
     Errors,
   },

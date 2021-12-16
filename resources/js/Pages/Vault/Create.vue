@@ -14,7 +14,7 @@
           <ul class="text-sm">
             <li class="inline mr-2 text-gray-600">You are here:</li>
             <li class="inline mr-2">
-              <link :href="data.url.back" class="text-sky-500 hover:text-blue-900" />All the vaults</link>
+              <inertia-link :href="data.url.back" class="text-sky-500 hover:text-blue-900">All the vaults</inertia-link>
             </li>
             <li class="inline mr-2 relative">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline relative icon-breadcrumb" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +59,6 @@ import PrettyLink from '@/Shared/PrettyLink';
 import PrettyButton from '@/Shared/PrettyButton';
 import TextInput from '@/Shared/TextInput';
 import TextArea from '@/Shared/TextArea';
-import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
   components: {
@@ -68,7 +67,6 @@ export default {
     PrettyButton,
     TextInput,
     TextArea,
-    Link,
   },
 
   props: {

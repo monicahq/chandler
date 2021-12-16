@@ -69,8 +69,8 @@ module.exports = {
       'error',
       {
         'html': {
-          'normal': 'never',
-          'void': 'always'
+          'normal': 'always',
+          'void': 'never'
         }
       }
     ],

@@ -43,7 +43,7 @@
         @keydown.esc="sendEscKey"
         @focus="showMaxLength"
         @blur="displayMaxLength = false"
-      />
+      >
       <span v-if="maxlength && displayMaxLength" class="length absolute text-xs rounded">
         {{ charactersLeft }}
       </span>

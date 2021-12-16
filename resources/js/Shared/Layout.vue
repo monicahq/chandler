@@ -11,9 +11,9 @@ main {
         <!-- main nav -->
         <nav class="bg-gray-50 border-b max-w-8xl mx-auto px-3 sm:px-6 flex items-center justify-between h-10">
           <div class="border border-gray-200 rounded-lg bg-white items-center sm:flex px-2 py-1 text-sm">
-            <link :href="layoutData.url.vaults" class="flex-shrink-0" />
-            {{ layoutData.user.name }}
-            </link>
+            <inertia-link :href="layoutData.url.vaults" class="flex-shrink-0">
+              {{ layoutData.user.name }}
+            </inertia-link>
 
             <!-- information about the current vault -->
             <div v-if="layoutData.vault">
@@ -28,21 +28,21 @@ main {
 
           <!-- search box -->
           <div v-if="insideVault" class="flew-grow">
-            <input type="text" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md border border-gray-300 w-64 px-2 py-1" placeholder="Search a contact" />
+            <input type="text" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md border border-gray-300 w-64 px-2 py-1" placeholder="Search a contact">
           </div>
 
           <!-- icons -->
           <div class="flew-grow">
             <ul>
               <li class="inline mr-4">
-                <link :href="layoutData.url.settings" class="inline" />
-                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block text-gray-600 h-4 w-4 sm:h-5 sm:w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                </link>
+                <inertia-link :href="layoutData.url.settings" class="inline">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="inline-block text-gray-600 h-4 w-4 sm:h-5 sm:w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </inertia-link>
               </li>
               <li class="inline">
                 <svg xmlns="http://www.w3.org/2000/svg" class="inline-block text-gray-600 h-4 w-4 sm:h-5 sm:w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -62,36 +62,36 @@ main {
           <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
             <div class="flex items-baseline justify-between space-x-6">
               <div>
-                <link href="" class="bg-blue-700 text-white px-2 py-1 mr-2 rounded-md text-sm font-medium" />
-                Dashboard
-                </link>
+                <inertia-link href="" class="bg-blue-700 text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                  Dashboard
+                </inertia-link>
 
-                <link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium" />
-                Reports
-                </link>
+                <inertia-link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                  Reports
+                </inertia-link>
 
-                <link href="contacts'" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium" />
-                Contacts
-                </link>
+                <inertia-link href="contacts'" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                  Contacts
+                </inertia-link>
 
-                <link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium" />
-                Gift center
-                </link>
+                <inertia-link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                  Gift center
+                </inertia-link>
 
-                <link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium" />
-                Loans & debts center
-                </link>
+                <inertia-link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                  Loans & debts center
+                </inertia-link>
 
-                <link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium" />
-                Vault settings
-                </link>
+                <inertia-link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md text-sm font-medium">
+                  Vault settings
+                </inertia-link>
               </div>
             </div>
           </div>
         </nav>
       </div>
       <main class="mt-10 relative">
-        <slot></slot>
+        <slot />
       </main>
     </div>
 
@@ -100,12 +100,11 @@ main {
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue3';
+
 import Toaster from '@/Shared/Toaster';
 
 export default {
   components: {
-    Link,
     Toaster,
   },
 

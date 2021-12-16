@@ -23,19 +23,19 @@
           <ul>
             <li class="mb-2">
               <span class="mr-1">🥳</span>
-              <link :href="data.url.preferences.index" class="text-sky-500 hover:text-blue-900" />User preferences</link>
+              <inertia-link :href="data.url.preferences.index" class="text-sky-500 hover:text-blue-900">User preferences</inertia-link>
             </li>
             <li v-if="data.is_account_administrator" class="mb-2">
               <span class="mr-1">🥸</span>
-              <link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900" />Manage users</link>
+              <inertia-link :href="data.url.users.index" class="text-sky-500 hover:text-blue-900">Manage users</inertia-link>
             </li>
             <li v-if="data.is_account_administrator" class="mb-2">
               <span class="mr-1">🎃</span>
-              <link :href="data.url.personalize.index" class="text-sky-500 hover:text-blue-900" />Personalize your contacts data</link>
+              <inertia-link :href="data.url.personalize.index" class="text-sky-500 hover:text-blue-900">Personalize your contacts data</inertia-link>
             </li>
             <li v-if="data.is_account_administrator">
               <span class="mr-1">💩</span>
-              <link :href="data.url.cancel.index" class="text-sky-500 hover:text-blue-900" />Cancel your account</link>
+              <inertia-link :href="data.url.cancel.index" class="text-sky-500 hover:text-blue-900">Cancel your account</inertia-link>
             </li>
           </ul>
         </div>
@@ -46,14 +46,10 @@
 
 <script>
 import Layout from '@/Shared/Layout';
-import { Link } from '@inertiajs/inertia-vue3';
-import PrettyLink from '@/Shared/PrettyLink';
 
 export default {
   components: {
     Layout,
-    Link,
-    PrettyLink,
   },
 
   props: {
@@ -63,7 +59,7 @@ export default {
     },
     data: {
       type: Array,
-      default: [],
+      default: () => [],
     },
   },
 };

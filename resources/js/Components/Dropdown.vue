@@ -1,11 +1,11 @@
 <template>
   <div class="relative">
     <div @click="open = ! open">
-      <slot name="trigger"></slot>
+      <slot name="trigger" />
     </div>
 
     <!-- Full Screen Dropdown Overlay -->
-    <div v-show="open" class="fixed inset-0 z-40" @click="open = false"></div>
+    <div v-show="open" class="fixed inset-0 z-40" @click="open = false" />
 
     <transition
       enter-active-class="transition ease-out duration-200"
@@ -22,7 +22,7 @@
            @click="open = false"
       >
         <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-          <slot name="content"></slot>
+          <slot name="content" />
         </div>
       </div>
     </transition>
@@ -35,12 +35,15 @@ import { onMounted, onUnmounted, ref } from 'vue';
 export default {
   props: {
     align: {
+      type: String,
       default: 'right'
     },
     width: {
+      type: String,
       default: '48'
     },
     contentClasses: {
+      type: [String, Array],
       default: () => ['py-1', 'bg-white']
     }
   },
