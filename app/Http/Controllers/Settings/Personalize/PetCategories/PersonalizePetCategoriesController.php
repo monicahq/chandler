@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Settings\Personalize\PetCategories;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageGenders\CreateGender;
-use App\Services\Account\ManageGenders\UpdateGender;
-use App\Services\Account\ManageGenders\DestroyGender;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
-use App\Services\Account\ManagePetCategories\DestroyPetCategory;
 use App\Services\Account\ManagePetCategories\UpdatePetCategory;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Services\Account\ManagePetCategories\DestroyPetCategory;
+use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 
 class PersonalizePetCategoriesController extends Controller
 {

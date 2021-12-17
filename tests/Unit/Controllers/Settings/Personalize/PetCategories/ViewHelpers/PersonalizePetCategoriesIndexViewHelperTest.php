@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\PetCategories\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 use Tests\TestCase;
-use App\Models\Gender;
 use App\Models\PetCategory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 
 class PersonalizePetCategoriesIndexViewHelperTest extends TestCase
 {
