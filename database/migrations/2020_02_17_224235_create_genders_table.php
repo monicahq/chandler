@@ -11,6 +11,9 @@ class CreateGendersTable extends Migration
      */
     public function up()
     {
+        // necessary for SQLlite
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('genders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');

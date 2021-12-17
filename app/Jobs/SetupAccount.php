@@ -100,6 +100,7 @@ class SetupAccount implements ShouldQueue
         $this->addRelationshipTypes();
         $this->addAddressTypes();
         $this->addContactInformation();
+        $this->addPetCategories();
     }
 
     /**
@@ -694,5 +695,26 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_instagram'),
         ]);
+    }
+
+    private function addPetCategories(): void
+    {
+        $categories = collect([
+            trans('account.pets_title'),
+            trans('account.pets_reptile'),
+            trans('account.pets_bird'),
+            trans('account.pets_cat'),
+            trans('account.pets_dog'),
+            trans('account.pets_fish'),
+            trans('account.pets_hamster'),
+            trans('account.pets_horse'),
+            trans('account.pets_rabbit'),
+            trans('account.pets_rat'),
+            trans('account.pets_small_animal'),
+            trans('account.pets_other'),
+        ]);
+
+        foreach ($categories as $category) {
+        }
     }
 }
