@@ -21,7 +21,7 @@ class PersonalizePetCategoriesIndexViewHelperTest extends TestCase
             2,
             count($array)
         );
-        $this->assertArrayHasKey('genders', $array);
+        $this->assertArrayHasKey('pet_categories', $array);
         $this->assertEquals(
             [
                 'settings' => env('APP_URL').'/settings',
