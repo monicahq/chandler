@@ -39,7 +39,7 @@ class DestroyPetCategory extends BaseService implements ServiceInterface
     /**
      * Destroy a pet category.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function execute(array $data): void
     {

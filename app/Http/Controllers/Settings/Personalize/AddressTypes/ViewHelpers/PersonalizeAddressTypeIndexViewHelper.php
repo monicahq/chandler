@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\AddressType;
-use App\Models\Pronoun;
 
 class PersonalizeAddressTypeIndexViewHelper
 {

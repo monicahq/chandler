@@ -3,13 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\AddressTypes\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 use Tests\TestCase;
-use App\Models\Pronoun;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizePronounIndexViewHelper;
 use App\Models\AddressType;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 
 class PersonalizeAddressTypeIndexViewHelperTest extends TestCase
 {

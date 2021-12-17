@@ -40,7 +40,7 @@ class UpdatePetCategory extends BaseService implements ServiceInterface
     /**
      * Update a pet category.
      *
-     * @param array $data
+     * @param  array  $data
      * @return PetCategory
      */
     public function execute(array $data): PetCategory

@@ -9,9 +9,9 @@ use App\Models\PetCategory;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManagePetCategories\DestroyPetCategory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Account\ManagePetCategories\DestroyPetCategory;
 
 class DestroyPetCategoriesTest extends TestCase
 {

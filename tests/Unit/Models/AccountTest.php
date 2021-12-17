@@ -12,9 +12,9 @@ use App\Models\Template;
 use App\Models\GroupType;
 use App\Models\AddressType;
 use App\Models\Information;
+use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
-use App\Models\PetCategory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase
