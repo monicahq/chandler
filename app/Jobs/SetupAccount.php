@@ -22,6 +22,7 @@ use App\Services\Account\ManageAddressTypes\CreateAddressType;
 use App\Services\Account\Template\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use App\Services\Account\ManagePetCategories\CreatePetCategory;
 
 class SetupAccount implements ShouldQueue
 {
@@ -700,21 +701,25 @@ class SetupAccount implements ShouldQueue
     private function addPetCategories(): void
     {
         $categories = collect([
-            trans('account.pets_title'),
-            trans('account.pets_reptile'),
-            trans('account.pets_bird'),
-            trans('account.pets_cat'),
             trans('account.pets_dog'),
+            trans('account.pets_cat'),
+            trans('account.pets_bird'),
             trans('account.pets_fish'),
             trans('account.pets_hamster'),
             trans('account.pets_horse'),
             trans('account.pets_rabbit'),
             trans('account.pets_rat'),
+            trans('account.pets_reptile'),
             trans('account.pets_small_animal'),
             trans('account.pets_other'),
         ]);
 
         foreach ($categories as $category) {
+            (new CreatePetCategory)->execute([
+                'account_id' => $this->user->account_id,
+                'author_id' => $this->user->id,
+                'name' => $category,
+            ]);
         }
     }
 }

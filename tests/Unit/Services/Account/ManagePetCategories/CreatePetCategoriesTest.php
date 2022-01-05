@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Features\Account\ManagePetCategories\Services;
+namespace Tests\Unit\Services\Account\ManagePetCategories;
 
 use Tests\TestCase;
 use App\Models\User;
