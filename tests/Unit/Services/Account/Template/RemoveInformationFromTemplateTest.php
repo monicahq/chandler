@@ -7,11 +7,11 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
 use App\Models\Information;
-use App\Services\Account\ManageTemplate\RemoveInformationFromTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Account\ManageTemplate\RemoveInformationFromTemplate;
 
 class RemoveInformationFromTemplateTest extends TestCase
 {

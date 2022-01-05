@@ -7,10 +7,10 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\Attribute;
 use App\Models\Information;
-use App\Services\Account\ManageTemplate\CreateAttribute;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Services\Account\ManageTemplate\CreateAttribute;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CreateAttributeTest extends TestCase
