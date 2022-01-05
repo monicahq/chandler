@@ -6,9 +6,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
+use App\Services\Account\ManageTemplate\CreateTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\Template\CreateTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -54,7 +54,7 @@ class CreateTemplateTest extends TestCase
             'name' => 'Business',
         ];
 
-        $template = (new \App\Services\Account\Template\CreateTemplate)->execute($request);
+        $template = (new CreateTemplate)->execute($request);
 
         $this->assertDatabaseHas('templates', [
             'id' => $template->id,

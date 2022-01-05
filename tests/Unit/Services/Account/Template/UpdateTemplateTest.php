@@ -6,18 +6,19 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
-use App\Services\Account\ManageTemplate\DestroyTemplate;
+use App\Services\Account\ManageTemplate\UpdateTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
+use App\Services\Account\Template\DestroyTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class DestroyTemplateTest extends TestCase
+class UpdateTemplateTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_destroys_a_template(): void
+    public function it_updates_a_template(): void
     {
         $ross = $this->createAdministrator();
         $template = $this->createTemplate($ross->account);
@@ -32,7 +33,7 @@ class DestroyTemplateTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyTemplate)->execute($request);
+        (new UpdateTemplate)->execute($request);
     }
 
     /** @test */
@@ -65,13 +66,21 @@ class DestroyTemplateTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'template_id' => $template->id,
+            'name' => 'name',
         ];
 
-        (new DestroyTemplate)->execute($request);
+        (new UpdateTemplate)->execute($request);
 
-        $this->assertDatabaseMissing('templates', [
+        $this->assertDatabaseHas('templates', [
             'id' => $template->id,
+            'account_id' => $account->id,
+            'name' => 'name',
         ]);
+
+        $this->assertInstanceOf(
+            Template::class,
+            $template
+        );
     }
 
     private function createTemplate(Account $account): Template

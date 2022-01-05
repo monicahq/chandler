@@ -18,6 +18,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -119,8 +120,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 // templates
                 Route::get('templates', [PersonalizeTemplatesController::class, 'index'])->name('settings.personalize.template.index');
                 Route::post('templates', [PersonalizeTemplatesController::class, 'store'])->name('settings.personalize.template.store');
-                Route::put('templates/{template}', [PersonalizeTemplatesController::class, 'update'])->name('settings.personalize.contact_information_type.update');
-                Route::delete('templates/{template}', [PersonalizeTemplatesController::class, 'destroy'])->name('settings.personalize.contact_information_type.destroy');
+                Route::put('templates/{template}', [PersonalizeTemplatesController::class, 'update'])->name('settings.personalize.template.update');
+                Route::delete('templates/{template}', [PersonalizeTemplatesController::class, 'destroy'])->name('settings.personalize.template.destroy');
             });
 
             // cancel
