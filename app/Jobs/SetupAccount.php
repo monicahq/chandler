@@ -19,10 +19,10 @@ use App\Services\Account\Template\CreateInformation;
 use App\Services\Account\ManagePronouns\CreatePronoun;
 use App\Services\Account\Template\AddDefaultValueToAttribute;
 use App\Services\Account\ManageAddressTypes\CreateAddressType;
+use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\Template\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\Account\ManagePetCategories\CreatePetCategory;
 
 class SetupAccount implements ShouldQueue
 {
