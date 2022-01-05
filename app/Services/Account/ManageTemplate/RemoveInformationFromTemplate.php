@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Account\Template;
+namespace App\Services\Account\ManageTemplate;
 
+use App\Models\Template;
 use App\Models\Information;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class DestroyInformation extends BaseService implements ServiceInterface
+class RemoveInformationFromTemplate extends BaseService implements ServiceInterface
 {
-    private array $data;
+    private Template $template;
     private Information $information;
 
     /**
@@ -21,6 +22,7 @@ class DestroyInformation extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
+            'template_id' => 'required|integer|exists:templates,id',
             'information_id' => 'required|integer|exists:information,id',
         ];
     }
@@ -39,19 +41,25 @@ class DestroyInformation extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy an information.
+     * Remove an information from a template.
      *
      * @param  array  $data
+     * @return Template
      */
-    public function execute(array $data): void
+    public function execute(array $data): Template
     {
         $this->validateRules($data);
 
         $this->information = Information::where('account_id', $data['account_id'])
             ->findOrFail($data['information_id']);
 
-        $this->data = $data;
+        $this->template = Template::where('account_id', $data['account_id'])
+            ->findOrFail($data['template_id']);
 
-        $this->information->delete();
+        $this->template->informations()->toggle([
+            $this->information->id,
+        ]);
+
+        return $this->template;
     }
 }

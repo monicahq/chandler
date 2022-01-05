@@ -115,6 +115,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('contactInformationType', [PersonalizeContatInformationTypesController::class, 'store'])->name('settings.personalize.contact_information_type.store');
                 Route::put('contactInformationType/{type}', [PersonalizeContatInformationTypesController::class, 'update'])->name('settings.personalize.contact_information_type.update');
                 Route::delete('contactInformationType/{type}', [PersonalizeContatInformationTypesController::class, 'destroy'])->name('settings.personalize.contact_information_type.destroy');
+
+                // templates
+                Route::get('templates', [PersonalizeTemplatesController::class, 'index'])->name('settings.personalize.template.index');
+                Route::post('templates', [PersonalizeTemplatesController::class, 'store'])->name('settings.personalize.template.store');
+                Route::put('templates/{template}', [PersonalizeTemplatesController::class, 'update'])->name('settings.personalize.contact_information_type.update');
+                Route::delete('templates/{template}', [PersonalizeTemplatesController::class, 'destroy'])->name('settings.personalize.contact_information_type.destroy');
             });
 
             // cancel

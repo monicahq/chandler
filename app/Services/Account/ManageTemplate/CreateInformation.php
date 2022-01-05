@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\Account\Template;
+namespace App\Services\Account\ManageTemplate;
 
-use App\Models\Template;
+use App\Models\Information;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class CreateTemplate extends BaseService implements ServiceInterface
+class CreateInformation extends BaseService implements ServiceInterface
 {
-    private Template $template;
+    private Information $information;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,6 +21,7 @@ class CreateTemplate extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:255',
+            'allows_multiple_entries' => 'nullable|boolean',
         ];
     }
 
@@ -38,20 +39,21 @@ class CreateTemplate extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a template.
+     * Create an information.
      *
      * @param  array  $data
-     * @return Template
+     * @return Information
      */
-    public function execute(array $data): Template
+    public function execute(array $data): Information
     {
         $this->validateRules($data);
 
-        $this->template = Template::create([
+        $this->information = Information::create([
             'account_id' => $data['account_id'],
             'name' => $data['name'],
+            'allows_multiple_entries' => $this->valueOrFalse($data, 'allows_multiple_entries'),
         ]);
 
-        return $this->template;
+        return $this->information;
     }
 }

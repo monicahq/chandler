@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Account\Template;
+namespace App\Services\Account\ManageTemplate;
 
-use App\Models\Template;
+use App\Models\Attribute;
+use App\Models\Information;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class DestroyTemplate extends BaseService implements ServiceInterface
+class DestroyAttribute extends BaseService implements ServiceInterface
 {
-    private Template $template;
+    private Attribute $attribute;
 
     /**
      * Get the validation rules that apply to the service.
@@ -20,7 +21,7 @@ class DestroyTemplate extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
+            'attribute_id' => 'required|integer|exists:attributes,id',
         ];
     }
 
@@ -38,7 +39,7 @@ class DestroyTemplate extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a template.
+     * Destroy an attribute.
      *
      * @param  array  $data
      */
@@ -46,9 +47,11 @@ class DestroyTemplate extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->template = Template::where('account_id', $data['account_id'])
-            ->findOrFail($data['template_id']);
+        $this->attribute = Attribute::findOrFail($data['attribute_id']);
 
-        $this->template->delete();
+        Information::where('account_id', $data['account_id'])
+            ->findOrFail($this->attribute->information_id);
+
+        $this->attribute->delete();
     }
 }
