@@ -14,11 +14,15 @@
 <template>
   <section class="relative">
     <!-- close button -->
-    <svg @click="$emit('cancelled')" xmlns="http://www.w3.org/2000/svg" class="absolute close-button h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" class="absolute close-button h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+         @click="$emit('cancelled')"
+    >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
 
-    <h1 class="text-center text-xl mb-3">{{ $t('people.life_event_list_cta') }}</h1>
+    <h1 class="text-center text-xl mb-3">
+      {{ $t('people.life_event_list_cta') }}
+    </h1>
 
     <div v-if="!loading" class="mt4 mw7 center mb3">
       <!-- Breadcrumb -->
@@ -48,12 +52,12 @@
         <ul>
           <li v-for="category in categories" :key="category.id" class="relative cursor-pointer border-b border-gray-200 hover:bg-yellow-50 p-2 flex items-center justify-between type-list-item" @click="getType(category)">
             <div>
-              <img class="inline mr-2" :src="'img/people/life-events/categories/' + category.default_life_event_category_key + '.svg'" :alt="category.default_life_event_category_key" />
+              <img class="inline mr-2" :src="'img/people/life-events/categories/' + category.default_life_event_category_key + '.svg'" :alt="category.default_life_event_category_key">
               <span>{{ $t('people.life_event_category_' + category.default_life_event_category_key) }}</span>
             </div>
 
             <svg class="life-event-add-arrow" width="10" height="13" viewBox="0 0 10 13" fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                 xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M8.75071 5.66783C9.34483 6.06361 9.34483 6.93653 8.75072 7.33231L1.80442 11.9598C1.13984 12.4025 0.25 11.9261 0.25 11.1275L0.25 1.87263C0.25 1.07409 1.13984 0.59767 1.80442 1.04039L8.75071 5.66783Z" fill="#C4C4C4" />
             </svg>
@@ -68,7 +72,7 @@
         <!-- TYPES -->
         <li v-for="type in types" :key="type.id" class="relative cursor-pointer border-b border-gray-200 hover:bg-yellow-50 p-2 flex items-center justify-between type-list-item" @click="displayAddScreen(type)">
           <div>
-            <img class="inline mr-2" :src="'img/people/life-events/types/' + type.default_life_event_type_key + '.svg'" :alt="type.default_life_event_type_key" style="min-width: 12px;" />
+            <img class="inline mr-2" :src="'img/people/life-events/types/' + type.default_life_event_type_key + '.svg'" :alt="type.default_life_event_type_key" style="min-width: 12px;">
             <span v-if="type.name">
               {{ type.name }}
             </span>
@@ -78,7 +82,7 @@
           </div>
 
           <svg class="life-event-add-arrow" width="10" height="13" viewBox="0 0 10 13" fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+               xmlns="http://www.w3.org/2000/svg"
           >
             <path d="M8.75071 5.66783C9.34483 6.06361 9.34483 6.93653 8.75072 7.33231L1.80442 11.9598C1.13984 12.4025 0.25 11.9261 0.25 11.1275L0.25 1.87263C0.25 1.07409 1.13984 0.59767 1.80442 1.04039L8.75071 5.66783Z" fill="#C4C4C4" />
           </svg>
@@ -91,7 +95,7 @@
       <!-- ADD SCREEN -->
       <div v-if="add" class="border border-gray-200 br2 pt4">
         <div class="life-event-add-icon tc center">
-          <img :src="'img/people/life-events/types/' + activeType.default_life_event_type_key + '.svg'" :alt="activeType.default_life_event_type_key" style="min-width: 17px;" />
+          <img :src="'img/people/life-events/types/' + activeType.default_life_event_type_key + '.svg'" :alt="activeType.default_life_event_type_key" style="min-width: 17px;">
         </div>
 
         <h3 class="pt3 ph4 f3 fw5 tc">
@@ -185,7 +189,6 @@ import moment from 'moment';
 import Loading from '@/Shared/Loading';
 
 export default {
-  emits: ['cancelled'],
 
   components: {
     Loading,
@@ -215,6 +218,7 @@ export default {
       }
     },
   },
+  emits: ['cancelled'],
 
   data() {
     return {

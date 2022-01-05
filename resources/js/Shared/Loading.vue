@@ -46,9 +46,9 @@
 <template>
   <div class="inline-block">
     <div class="hollow-dots-spinner" :style="spinnerStyle">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+      <div class="dot" />
+      <div class="dot" />
+      <div class="dot" />
     </div>
   </div>
 </template>

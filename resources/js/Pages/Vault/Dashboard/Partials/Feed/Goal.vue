@@ -14,13 +14,16 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span class="font-semibold">Goal:</span> Walk 500 steps every day</div>
+        <span class="font-semibold">
+          Goal:
+        </span> Walk 500 steps every day
+      </div>
     </div>
     <div class="border-t border-gray-200 flex justify-between text-xs text-gray-600 px-3 py-2">
       <div>
         <div class="inline mr-3 relative">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline relative icon-date text-gray-400" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor"
+               stroke="currentColor"
           >
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"

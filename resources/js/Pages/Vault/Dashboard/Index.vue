@@ -52,7 +52,7 @@ input[type=checkbox] {
                 <p class="text-center mb-5"><span class="mr-2">👋</span> Good evening, Regis.</p>
 
                 <div class="sm:flex justify-center mb-2">
-                  <pretty-button @click="showAddModal('lifeEvent')" :text="'life event'" :icon="'plus'" :classes="'mr-3'" />
+                  <pretty-button :text="'life event'" :icon="'plus'" :classes="'mr-3'" @click="showAddModal('lifeEvent')" />
                   <pretty-button :text="'activity'" :icon="'plus'" :classes="'mr-3'" />
                   <pretty-button :text="'entry'" :icon="'plus'" :classes="'mr-3'" />
                   <pretty-button :text="'mood'" :icon="'plus'" :classes="'mr-3'" />
@@ -62,7 +62,7 @@ input[type=checkbox] {
               </div>
 
               <div v-if="addMode" class="p-5">
-                <create-life-event v-on:cancelled="addMode = false" />
+                <create-life-event @cancelled="addMode = false" />
               </div>
             </div>
 
@@ -80,7 +80,9 @@ input[type=checkbox] {
 
             <!-- feed -->
             <div class="mb-10 overflow-auto">
-              <h3 class="mb-5 font-bold">Janvier 2010</h3>
+              <h3 class="mb-5 font-bold">
+                Janvier 2010
+              </h3>
 
               <!-- journal entry -->
               <entry />
@@ -132,13 +134,13 @@ input[type=checkbox] {
               Tasks
             </h3>
             <div class="flex items-start mb-3 relative">
-              <input id="remember-me" name="remember-me" type="checkbox" class="relative h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+              <input id="remember-me" name="remember-me" type="checkbox" class="relative h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
               <label for="remember-me" class="cursor-pointer ml-2 block text-sm text-gray-900">
                 Remember mea sdfasdf asdf asdf asdf sdf
               </label>
             </div>
             <div class="flex items-start">
-              <input id="remember-me" name="remember-me" type="checkbox" class="relative h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+              <input id="remember-me" name="remember-me" type="checkbox" class="relative h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
               <label for="remember-me" class="cursor-pointer ml-2 block text-sm text-gray-900">
                 Remember me
               </label>
