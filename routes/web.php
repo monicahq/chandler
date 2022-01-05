@@ -14,6 +14,7 @@ use App\Http\Controllers\Settings\Personalize\Labels\PersonalizeLabelController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Http\Controllers\Settings\Personalize\AddressTypes\PersonalizeAddressTypeController;
+use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
@@ -108,6 +109,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('petCategories', [PersonalizePetCategoriesController::class, 'store'])->name('settings.personalize.pet_category.store');
                 Route::put('petCategories/{petCategory}', [PersonalizePetCategoriesController::class, 'update'])->name('settings.personalize.pet_category.update');
                 Route::delete('petCategories/{petCategory}', [PersonalizePetCategoriesController::class, 'destroy'])->name('settings.personalize.pet_category.destroy');
+
+                // contact information
+                Route::get('contactInformationType', [PersonalizeContatInformationTypesController::class, 'index'])->name('settings.personalize.contact_information_type.index');
+                Route::post('contactInformationType', [PersonalizeContatInformationTypesController::class, 'store'])->name('settings.personalize.contact_information_type.store');
+                Route::put('contactInformationType/{type}', [PersonalizeContatInformationTypesController::class, 'update'])->name('settings.personalize.contact_information_type.update');
+                Route::delete('contactInformationType/{type}', [PersonalizeContatInformationTypesController::class, 'destroy'])->name('settings.personalize.contact_information_type.destroy');
             });
 
             // cancel
