@@ -43,8 +43,8 @@ class PersonalizeLabelIndexViewHelperTest extends TestCase
                 'name' => $label->name,
                 'count' => 0,
                 'url' => [
-                    'update' => env('APP_URL') . '/settings/personalize/labels/' . $label->id,
-                    'destroy' => env('APP_URL') . '/settings/personalize/labels/' . $label->id,
+                    'update' => env('APP_URL').'/settings/personalize/labels/'.$label->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/labels/'.$label->id,
                 ],
             ],
             $array

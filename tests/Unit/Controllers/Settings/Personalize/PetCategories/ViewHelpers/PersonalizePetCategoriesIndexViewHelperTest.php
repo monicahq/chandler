@@ -42,8 +42,8 @@ class PersonalizePetCategoriesIndexViewHelperTest extends TestCase
                 'id' => $petCategory->id,
                 'name' => $petCategory->name,
                 'url' => [
-                    'update' => env('APP_URL') . '/settings/personalize/petCategories/' . $petCategory->id,
-                    'destroy' => env('APP_URL') . '/settings/personalize/petCategories/' . $petCategory->id,
+                    'update' => env('APP_URL').'/settings/personalize/petCategories/'.$petCategory->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/petCategories/'.$petCategory->id,
                 ],
             ],
             $array

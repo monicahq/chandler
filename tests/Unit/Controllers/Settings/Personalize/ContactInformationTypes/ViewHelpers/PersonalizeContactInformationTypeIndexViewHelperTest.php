@@ -4,10 +4,9 @@ namespace Tests\Unit\Controllers\Settings\Personalize\ContactInformationTypes\Vi
 
 use function env;
 use Tests\TestCase;
-use App\Models\AddressType;
+use App\Models\ContactInformationType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
-use App\Models\ContactInformationType;
 
 class PersonalizeContactInformationTypeIndexViewHelperTest extends TestCase
 {
@@ -25,9 +24,9 @@ class PersonalizeContactInformationTypeIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('contact_information_types', $array);
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'personalize' => env('APP_URL') . '/settings/personalize',
-                'contact_information_type_store' => env('APP_URL') . '/settings/personalize/contactInformationType',
+                'settings' => env('APP_URL').'/settings',
+                'personalize' => env('APP_URL').'/settings/personalize',
+                'contact_information_type_store' => env('APP_URL').'/settings/personalize/contactInformationType',
             ],
             $array['url']
         );
@@ -45,8 +44,8 @@ class PersonalizeContactInformationTypeIndexViewHelperTest extends TestCase
                 'protocol' => $contactInformationType->protocol,
                 'can_be_deleted' => $contactInformationType->can_be_deleted,
                 'url' => [
-                    'update' => env('APP_URL'). '/settings/personalize/contactInformationType/'. $contactInformationType->id,
-                    'destroy' => env('APP_URL'). '/settings/personalize/contactInformationType/'. $contactInformationType->id,
+                    'update' => env('APP_URL').'/settings/personalize/contactInformationType/'.$contactInformationType->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/contactInformationType/'.$contactInformationType->id,
                 ],
             ],
             $array

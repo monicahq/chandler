@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\AddressType;
 use App\Models\ContactInformationType;
 
 class PersonalizeContactInformationTypeIndexViewHelper

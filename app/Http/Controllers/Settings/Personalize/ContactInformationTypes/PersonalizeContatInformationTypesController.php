@@ -6,16 +6,11 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManagePronouns\DestroyPronoun;
-use App\Services\Account\ManageAddressTypes\CreateAddressType;
-use App\Services\Account\ManageAddressTypes\UpdateAddressType;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\Account\ManageContactInformationTypes\DestroyContactInformationType;
 use App\Services\Account\ManageContactInformationTypes\UpdateContactInformationType;
-use App\Services\Contact\ManageContactInformation\CreateContactInformation;
+use App\Services\Account\ManageContactInformationTypes\DestroyContactInformationType;
+use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 
 class PersonalizeContatInformationTypesController extends Controller
 {
