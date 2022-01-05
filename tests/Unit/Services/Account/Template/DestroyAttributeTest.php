@@ -9,7 +9,7 @@ use App\Models\Attribute;
 use App\Models\Information;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\Template\DestroyAttribute;
+use App\Services\Account\ManageTemplate\DestroyAttribute;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -68,7 +68,7 @@ class DestroyAttributeTest extends TestCase
             'attribute_id' => $attribute->id,
         ];
 
-        (new \App\Services\Account\Template\DestroyAttribute)->execute($request);
+        (new DestroyAttribute)->execute($request);
 
         $this->assertDatabaseMissing('attributes', [
             'id' => $attribute->id,

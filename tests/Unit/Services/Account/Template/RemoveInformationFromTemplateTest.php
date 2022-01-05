@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
 use App\Models\Information;
+use App\Services\Account\ManageTemplate\RemoveInformationFromTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -35,7 +36,7 @@ class RemoveInformationFromTemplateTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new \App\Services\Account\Template\RemoveInformationFromTemplate)->execute($request);
+        (new RemoveInformationFromTemplate)->execute($request);
     }
 
     /** @test */
@@ -82,7 +83,7 @@ class RemoveInformationFromTemplateTest extends TestCase
             'template_id' => $this->template->id,
         ];
 
-        (new \App\Services\Account\Template\RemoveInformationFromTemplate)->execute($request);
+        (new RemoveInformationFromTemplate)->execute($request);
 
         $this->assertDatabaseMissing('information_template', [
             'information_id' => $this->information->id,

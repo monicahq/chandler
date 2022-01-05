@@ -10,6 +10,8 @@ class TemplatePage extends Model
 {
     use HasFactory;
 
+    protected $table = 'template_pages';
+
     /**
      * The attributes that are mass assignable.
      *

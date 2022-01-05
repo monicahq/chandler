@@ -25,6 +25,7 @@ class TemplatePageFactory extends Factory
         return [
             'template_id' => Template::factory(),
             'name' => 'business',
+            'position' => 1,
         ];
     }
 }

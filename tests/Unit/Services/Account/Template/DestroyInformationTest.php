@@ -8,7 +8,7 @@ use App\Models\Account;
 use App\Models\Information;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\Template\DestroyInformation;
+use App\Services\Account\ManageTemplate\DestroyInformation;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
