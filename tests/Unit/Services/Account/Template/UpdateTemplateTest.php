@@ -6,10 +6,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
-use App\Services\Account\ManageTemplate\UpdateTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\Template\DestroyTemplate;
+use App\Services\Account\ManageTemplate\UpdateTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

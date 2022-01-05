@@ -6,15 +6,11 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 use App\Services\Account\ManageTemplate\CreateTemplate;
-use App\Services\Account\ManageTemplate\DestroyTemplate;
 use App\Services\Account\ManageTemplate\UpdateTemplate;
+use App\Services\Account\ManageTemplate\DestroyTemplate;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 
 class PersonalizeTemplatesController extends Controller
 {

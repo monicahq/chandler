@@ -6,10 +6,10 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
-use App\Services\Account\ManageTemplate\DestroyTemplate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Services\Account\ManageTemplate\DestroyTemplate;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyTemplateTest extends TestCase

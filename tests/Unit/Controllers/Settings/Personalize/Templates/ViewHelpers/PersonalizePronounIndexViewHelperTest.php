@@ -4,11 +4,9 @@ namespace Tests\Unit\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
-use App\Models\Pronoun;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 use App\Models\Template;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 
 class PersonalizeTemplateIndexViewHelperTest extends TestCase
 {
@@ -26,9 +24,9 @@ class PersonalizeTemplateIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('templates', $array);
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'personalize' => env('APP_URL') . '/settings/personalize',
-                'template_store' => env('APP_URL') . '/settings/personalize/templates',
+                'settings' => env('APP_URL').'/settings',
+                'personalize' => env('APP_URL').'/settings/personalize',
+                'template_store' => env('APP_URL').'/settings/personalize/templates',
             ],
             $array['url']
         );
@@ -44,8 +42,8 @@ class PersonalizeTemplateIndexViewHelperTest extends TestCase
                 'id' => $template->id,
                 'name' => $template->name,
                 'url' => [
-                    'update' => env('APP_URL') . '/settings/personalize/templates/' . $template->id,
-                    'destroy' => env('APP_URL') . '/settings/personalize/templates/' . $template->id,
+                    'update' => env('APP_URL').'/settings/personalize/templates/'.$template->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/templates/'.$template->id,
                 ],
             ],
             $array

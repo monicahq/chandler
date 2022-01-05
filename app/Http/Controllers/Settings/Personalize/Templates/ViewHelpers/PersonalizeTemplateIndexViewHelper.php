@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\Pronoun;
 use App\Models\Template;
 
 class PersonalizeTemplateIndexViewHelper
