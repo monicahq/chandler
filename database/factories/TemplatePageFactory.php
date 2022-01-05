@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use Illuminate\Database\Eloquent\Factories\Factory;
