@@ -3,9 +3,9 @@
 namespace App\Services\Account\ManageTemplate;
 
 use App\Models\Template;
+use App\Models\TemplatePage;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\TemplatePage;
 
 class CreateTemplatePage extends BaseService implements ServiceInterface
 {

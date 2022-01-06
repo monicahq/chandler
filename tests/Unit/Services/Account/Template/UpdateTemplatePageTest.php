@@ -9,11 +9,9 @@ use App\Models\Template;
 use App\Models\TemplatePage;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\ManageTemplate\CreateTemplate;
-use App\Services\Account\ManageTemplate\CreateTemplatePage;
-use App\Services\Account\ManageTemplate\UpdateTemplatePage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Account\ManageTemplate\UpdateTemplatePage;
 
 class UpdateTemplatePageTest extends TestCase
 {
