@@ -23,6 +23,7 @@ use App\Services\Account\ManageTemplate\AddDefaultValueToAttribute;
 use App\Services\Account\ManageTemplate\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use App\Services\Account\ManageTemplate\CreateTemplatePage;
 
 class SetupAccount implements ShouldQueue
 {
@@ -65,6 +66,7 @@ class SetupAccount implements ShouldQueue
     public function handle()
     {
         $this->addTemplate();
+        $this->addTemplatePages();
         $this->addFirstInformation();
     }
 
@@ -80,6 +82,21 @@ class SetupAccount implements ShouldQueue
         ];
 
         $this->template = (new CreateTemplate)->execute($request);
+    }
+
+    /**
+     * Add the template pages.
+     */
+    private function addTemplatePages(): void
+    {
+        $request = [
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'name' => trans('app.default_template_page_social'),
+        ];
+
+        (new CreateTemplatePage)->execute($request);
     }
 
     /**
