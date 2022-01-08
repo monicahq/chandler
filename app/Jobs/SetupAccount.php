@@ -24,6 +24,7 @@ use App\Services\Account\ManageTemplate\AddDefaultValueToAttribute;
 use App\Services\Account\ManageTemplate\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use App\Services\Account\ManageTemplate\CreateModule;
 
 class SetupAccount implements ShouldQueue
 {
@@ -67,6 +68,7 @@ class SetupAccount implements ShouldQueue
     {
         $this->addTemplate();
         $this->addTemplatePages();
+        $this->addModules();
         $this->addFirstInformation();
     }
 
@@ -97,6 +99,23 @@ class SetupAccount implements ShouldQueue
         ];
 
         (new CreateTemplatePage)->execute($request);
+    }
+
+    /**
+     * Add the default modules.
+     *
+     * @return void
+     */
+    private function addModules(): void
+    {
+        $request = [
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_notes'),
+            'can_be_deleted' => false,
+        ];
+
+        (new CreateModule)->execute($request);
     }
 
     /**
