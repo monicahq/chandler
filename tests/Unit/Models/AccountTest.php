@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
 use App\Models\Gender;
+use App\Models\Module;
 use App\Models\Account;
 use App\Models\Pronoun;
 use App\Models\Template;
@@ -15,7 +16,6 @@ use App\Models\Information;
 use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
-use App\Models\Module;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase

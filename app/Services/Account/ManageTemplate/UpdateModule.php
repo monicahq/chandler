@@ -2,10 +2,9 @@
 
 namespace App\Services\Account\ManageTemplate;
 
-use App\Models\Template;
+use App\Models\Module;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\Module;
 
 class UpdateModule extends BaseService implements ServiceInterface
 {

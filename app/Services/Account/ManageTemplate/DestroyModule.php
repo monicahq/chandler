@@ -2,10 +2,10 @@
 
 namespace App\Services\Account\ManageTemplate;
 
+use App\Models\Module;
 use App\Models\Template;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\Module;
 
 class DestroyModule extends BaseService implements ServiceInterface
 {
@@ -50,7 +50,7 @@ class DestroyModule extends BaseService implements ServiceInterface
         $this->module = Module::where('account_id', $data['account_id'])
             ->findOrFail($data['module_id']);
 
-        if (!$this->module->can_be_deleted) {
+        if (! $this->module->can_be_deleted) {
             throw new \Exception('The module cannot be deleted.');
         }
 

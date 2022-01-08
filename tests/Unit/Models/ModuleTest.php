@@ -4,8 +4,6 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Template;
-use App\Models\Information;
-use App\Models\TemplatePage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ModuleTest extends TestCase

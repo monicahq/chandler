@@ -4,12 +4,11 @@ namespace Tests\Unit\Services\Account\Template;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Account;
 use App\Models\Module;
-use App\Models\Template;
-use App\Services\Account\ManageTemplate\UpdateModule;
+use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
+use App\Services\Account\ManageTemplate\UpdateModule;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
