@@ -15,6 +15,7 @@ use App\Models\Information;
 use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
+use App\Models\Module;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase
@@ -41,6 +42,17 @@ class AccountTest extends TestCase
         ]);
 
         $this->assertTrue($account->templates()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_modules()
+    {
+        $account = Account::factory()->create();
+        Module::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->modules()->exists());
     }
 
     /** @test */
