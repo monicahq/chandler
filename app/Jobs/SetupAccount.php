@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Services\Account\ManageGenders\CreateGender;
+use App\Services\Account\ManageTemplate\CreateModule;
 use App\Services\Account\ManagePronouns\CreatePronoun;
 use App\Services\Account\ManageTemplate\CreateTemplate;
 use App\Services\Account\ManageTemplate\CreateAttribute;
@@ -24,7 +25,6 @@ use App\Services\Account\ManageTemplate\AddDefaultValueToAttribute;
 use App\Services\Account\ManageTemplate\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\Account\ManageTemplate\CreateModule;
 
 class SetupAccount implements ShouldQueue
 {
