@@ -67,4 +67,12 @@ class PersonalizeTemplatesController extends Controller
             'data' => true,
         ], 200);
     }
+
+    public function show()
+    {
+        return Inertia::render('Settings/Personalize/Templates/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData(),
+            'data' => PersonalizeTemplateIndexViewHelper::data(Auth::user()->account),
+        ]);
+    }
 }

@@ -32,4 +32,14 @@ class TemplatePage extends Model
     {
         return $this->belongsTo(Template::class);
     }
+
+    /**
+     * Get the modules associated with the template page.
+     *
+     * @return BelongsToMany
+     */
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, 'module_template_page')->withTimestamps();
+    }
 }
