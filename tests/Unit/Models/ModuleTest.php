@@ -2,12 +2,10 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Module;
 use Tests\TestCase;
-use App\Models\Template;
+use App\Models\Module;
 use App\Models\TemplatePage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class ModuleTest extends TestCase
 {
