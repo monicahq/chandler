@@ -25,7 +25,9 @@ class ModuleTest extends TestCase
         $module = Module::factory()->create();
 
         $templatePage = TemplatePage::factory()->create();
-        $module->templatePages()->sync([$module->id]);
+        $module->templatePages()->syncWithoutDetaching([
+            $templatePage->id => ['position' => 3],
+        ]);
 
         $this->assertTrue($module->templatePages()->exists());
     }
