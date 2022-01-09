@@ -11,6 +11,9 @@ use App\Services\Account\ManageTemplate\UpdateTemplate;
 use App\Services\Account\ManageTemplate\DestroyTemplate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
+use App\Models\Template;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PersonalizeTemplatesController extends Controller
 {
@@ -68,11 +71,18 @@ class PersonalizeTemplatesController extends Controller
         ], 200);
     }
 
-    public function show()
+    public function show(Request $request, int $templateId)
     {
+        try {
+            $template = Template::where('account_id', Auth::user()->account_id)
+                ->findOrFail($templateId);
+        } catch (ModelNotFoundException) {
+            return redirect('vaults');
+        }
+
         return Inertia::render('Settings/Personalize/Templates/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeTemplateIndexViewHelper::data(Auth::user()->account),
+            'data' => PersonalizeTemplateShowViewHelper::data(Auth::user()->account, $template),
         ]);
     }
 }

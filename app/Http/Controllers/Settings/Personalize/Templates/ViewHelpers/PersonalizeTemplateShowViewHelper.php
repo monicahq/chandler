@@ -22,17 +22,19 @@ class PersonalizeTemplateShowViewHelper
             $collection->push([
                 'id' => $templatePage->id,
                 'name' => $templatePage->name,
-                'modules' => $templatePage->modules()
-                    ->orderBy('name', 'asc')
-                    ->get(),
             ]);
         }
 
         return [
-            'templates' => $collection,
+            'template' => [
+                'id' => $template->id,
+                'name' => $template->name,
+            ],
+            'template_pages' => $collection,
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
+                'templates' => route('settings.personalize.template.index'),
                 'template_store' => route('settings.personalize.template.store'),
             ],
         ];
