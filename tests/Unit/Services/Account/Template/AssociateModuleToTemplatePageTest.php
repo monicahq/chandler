@@ -4,16 +4,14 @@ namespace Tests\Unit\Services\Account\Template;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Module;
 use App\Models\Account;
 use App\Models\Template;
-use App\Models\Information;
-use App\Models\Module;
 use App\Models\TemplatePage;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageTemplate\AssociateInformationToTemplate;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 
 class AssociateModuleToTemplatePageTest extends TestCase
