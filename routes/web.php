@@ -19,8 +19,8 @@ use App\Http\Controllers\Settings\Personalize\AddressTypes\PersonalizeAddressTyp
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
-use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
+use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
