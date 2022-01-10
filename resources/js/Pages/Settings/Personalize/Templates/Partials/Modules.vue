@@ -14,10 +14,11 @@
     <div v-for="page in localPages" :key="page.id">
       <!-- the content of the page -->
       <div v-if="renamePageModalShownId != page.id" class="bg-white border border-gray-200 rounded-lg mb-2 pl-2 pr-5 py-2 flex items-center">
-
         <!-- icon to move position -->
         <div class="mr-2">
-          <svg class="cursor-move" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="cursor-move" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M7 7H9V9H7V7Z" fill="currentColor" />
             <path d="M11 7H13V9H11V7Z" fill="currentColor" />
             <path d="M17 7H15V9H17V7Z" fill="currentColor" />
