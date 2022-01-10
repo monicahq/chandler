@@ -3,10 +3,10 @@
 namespace App\Services\Account\ManageTemplate;
 
 use App\Models\Template;
-use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
 use App\Models\TemplatePage;
+use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
 
 class UpdateTemplatePagePosition extends BaseService implements ServiceInterface
 {

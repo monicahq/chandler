@@ -5,10 +5,9 @@ namespace Tests\Unit\Controllers\Settings\Personalize\Templates\ViewHelpers;
 use function env;
 use Tests\TestCase;
 use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
 use App\Models\TemplatePage;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
 
 class PersonalizeTemplateShowViewHelperTest extends TestCase
 {

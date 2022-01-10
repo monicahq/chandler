@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Template;
 use App\Models\TemplatePage;
 
