@@ -11,9 +11,7 @@
     </div>
 
     <!-- list of pages -->
-    <div v-for="page in localPages" :key="page.id">
-
-    </div>
+    <div v-for="page in localPages" :key="page.id" />
 
     <!-- list of pages -->
     <draggable
@@ -28,7 +26,7 @@
           <!-- icon to move position -->
           <div class="mr-2">
             <svg class="cursor-move handle" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+                 xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M7 7H9V9H7V7Z" fill="currentColor" />
               <path d="M11 7H13V9H11V7Z" fill="currentColor" />
