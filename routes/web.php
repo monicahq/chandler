@@ -19,6 +19,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -118,11 +119,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('contactInformationType/{type}', [PersonalizeContatInformationTypesController::class, 'destroy'])->name('contact_information_type.destroy');
 
                 // templates
-                Route::get('templates', [PersonalizeTemplatesController::class, 'index'])->name('template.index');
-                Route::post('templates', [PersonalizeTemplatesController::class, 'store'])->name('template.store');
-                Route::put('templates/{template}', [PersonalizeTemplatesController::class, 'update'])->name('template.update');
-                Route::delete('templates/{template}', [PersonalizeTemplatesController::class, 'destroy'])->name('template.destroy');
-                Route::get('templates/{template}', [PersonalizeTemplatesController::class, 'show'])->name('template.show');
+                Route::prefix('templates')->name('template.')->group(function () {
+                    Route::get('', [PersonalizeTemplatesController::class, 'index'])->name('index');
+                    Route::post('', [PersonalizeTemplatesController::class, 'store'])->name('store');
+                    Route::put('{template}', [PersonalizeTemplatesController::class, 'update'])->name('update');
+                    Route::delete('{template}', [PersonalizeTemplatesController::class, 'destroy'])->name('destroy');
+                    Route::get('{template}', [PersonalizeTemplatesController::class, 'show'])->name('show');
+
+                    // template pages
+                    Route::post('{template}', [PersonalizeTemplatePagesController::class, 'store'])->name('template_page.store');
+                    Route::put('{template}/template_pages/{page}', [PersonalizeTemplatePagesController::class, 'update'])->name('template_page.update');
+                    Route::delete('{template}/template_pages/{page}', [PersonalizeTemplatePagesController::class, 'destroy'])->name('template_page.destroy');
+                });
             });
 
             // cancel

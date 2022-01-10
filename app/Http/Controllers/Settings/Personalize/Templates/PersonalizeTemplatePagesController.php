@@ -14,75 +14,58 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
 use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;
+use App\Services\Account\ManageTemplate\CreateTemplatePage;
+use App\Services\Account\ManageTemplate\DestroyTemplatePage;
+use App\Services\Account\ManageTemplate\UpdateTemplatePage;
 
-class PersonalizeTemplatesController extends Controller
+class PersonalizeTemplatePagesController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Settings/Personalize/Templates/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeTemplateIndexViewHelper::data(Auth::user()->account),
-        ]);
-    }
-
-    public function store(Request $request)
+    public function store(Request $request, int $templateId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
+            'template_id' => $templateId,
             'name' => $request->input('name'),
         ];
 
-        $template = (new CreateTemplate)->execute($data);
+        $templatePage = (new CreateTemplatePage)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeTemplateIndexViewHelper::dtoTemplate($template),
+            'data' => PersonalizeTemplateShowViewHelper::dtoTemplatePage($templatePage->template, $templatePage),
         ], 201);
     }
 
-    public function update(Request $request, int $templateId)
+    public function update(Request $request, int $templateId, int $templatePageId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'template_id' => $templateId,
+            'template_page_id' => $templatePageId,
             'name' => $request->input('name'),
         ];
 
-        $template = (new UpdateTemplate)->execute($data);
+        $templatePage = (new UpdateTemplatePage)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeTemplateIndexViewHelper::dtoTemplate($template),
+            'data' => PersonalizeTemplateShowViewHelper::dtoTemplatePage($templatePage->template, $templatePage),
         ], 200);
     }
 
-    public function destroy(Request $request, int $templateId)
+    public function destroy(Request $request, int $templateId, int $templatePageId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'template_id' => $templateId,
+            'template_page_id' => $templatePageId,
         ];
 
-        (new DestroyTemplate)->execute($data);
+        (new DestroyTemplatePage)->execute($data);
 
         return response()->json([
             'data' => true,
         ], 200);
-    }
-
-    public function show(Request $request, int $templateId)
-    {
-        try {
-            $template = Template::where('account_id', Auth::user()->account_id)
-                ->findOrFail($templateId);
-        } catch (ModelNotFoundException) {
-            return redirect('vaults');
-        }
-
-        return Inertia::render('Settings/Personalize/Templates/Show', [
-            'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeTemplateShowViewHelper::data($template),
-        ]);
     }
 }

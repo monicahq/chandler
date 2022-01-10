@@ -24,6 +24,15 @@ class TemplatePage extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'position' => 'integer',
+    ];
+
+    /**
      * Get the account associated with the template page.
      *
      * @return BelongsTo

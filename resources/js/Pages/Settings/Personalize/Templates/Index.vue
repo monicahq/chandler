@@ -100,7 +100,7 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900" @click="updateTemplateModal(template)">Rename</li>
+                <li class="cursor-pointer inline mr-4 text-sky-500 hover:text-blue-900" @click="showUpdateTemplateModal(template)">Rename</li>
                 <li class="cursor-pointer inline text-red-500 hover:text-red-900" @click="destroy(template)">Delete</li>
               </ul>
             </div>
@@ -193,7 +193,7 @@ export default {
       });
     },
 
-    updateTemplateModal(template) {
+    showUpdateTemplateModal(template) {
       this.form.name = template.name;
       this.renameTemplateModalShownId = template.id;
 

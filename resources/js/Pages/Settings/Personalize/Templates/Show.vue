@@ -61,25 +61,21 @@
 
           <div>
             <p class="mb-2">This template will define what information are displayed on a contact page.</p>
-            <p>A template is made of pages, and in each page, there are modules. You can define it however you like.</p>
+            <p class="mb-2">A template is made of pages, and in each page, there are modules. How data is displayed is entirely up to you.</p>
+            <p>Note that removing a module from a page will not delete the actual data on your contact pages. It will simply hide it.</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- left -->
           <div class="p-3 sm:p-0">
-            <h3 class="border-b mb-4">
-              Pages (or tabs)
-            </h3>
-            <div v-for="page in data.template_pages" :key="page.id">
-              {{ page.name }}
-            </div>
+            <modules :data="data" />
           </div>
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <h3 class="border-b mb-4">
-              Modules in the page
+              Modules in this page
             </h3>
 
             <p>Please select a page on the lefts</p>
@@ -92,10 +88,12 @@
 
 <script>
 import Layout from '@/Shared/Layout';
+import Modules from '@/Pages/Settings/Personalize/Templates/Partials/Modules';
 
 export default {
   components: {
     Layout,
+    Modules,
   },
 
   props: {

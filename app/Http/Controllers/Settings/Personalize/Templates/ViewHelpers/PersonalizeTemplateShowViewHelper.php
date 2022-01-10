@@ -4,25 +4,19 @@ namespace App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Template;
+use App\Models\TemplatePage;
 
 class PersonalizeTemplateShowViewHelper
 {
-    public static function data(Account $account, Template $template): array
+    public static function data(Template $template): array
     {
-        $modules = $account->modules()
-            ->orderBy('name', 'asc')
-            ->get();
-
         $templatePages = $template->pages()
-            ->orderBy('name', 'asc')
+            ->orderBy('position', 'asc')
             ->get();
 
         $collection = collect();
         foreach ($templatePages as $templatePage) {
-            $collection->push([
-                'id' => $templatePage->id,
-                'name' => $templatePage->name,
-            ]);
+            $collection->push(self::dtoTemplatePage($template, $templatePage));
         }
 
         return [
@@ -35,7 +29,27 @@ class PersonalizeTemplateShowViewHelper
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
                 'templates' => route('settings.personalize.template.index'),
-                'template_store' => route('settings.personalize.template.store'),
+                'template_page_store' => route('settings.personalize.template.template_page.store', [
+                    'template' => $template->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoTemplatePage(Template $template, TemplatePage $page): array
+    {
+        return [
+            'id' => $page->id,
+            'name' => $page->name,
+            'url' => [
+                'update' => route('settings.personalize.template.template_page.update', [
+                    'template' => $template->id,
+                    'page' => $page->id,
+                ]),
+                'destroy' => route('settings.personalize.template.template_page.destroy', [
+                    'template' => $template->id,
+                    'page' => $page->id,
+                ]),
             ],
         ];
     }
