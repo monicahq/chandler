@@ -131,6 +131,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('{template}', [PersonalizeTemplatePagesController::class, 'store'])->name('template_page.store');
                     Route::put('{template}/template_pages/{page}', [PersonalizeTemplatePagesController::class, 'update'])->name('template_page.update');
                     Route::delete('{template}/template_pages/{page}', [PersonalizeTemplatePagesController::class, 'destroy'])->name('template_page.destroy');
+                    Route::get('{template}/template_pages/{page}', [PersonalizeTemplatePagesController::class, 'show'])->name('template_page.show');
                     Route::post('{template}/template_pages/{page}/order', [PersonalizeTemplatePagePositionController::class, 'update'])->name('template_page.order.update');
                 });
             });

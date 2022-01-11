@@ -11,7 +11,6 @@ use App\Interfaces\ServiceInterface;
 class AssociateModuleToTemplatePage extends BaseService implements ServiceInterface
 {
     private array $data;
-    private Template $template;
     private TemplatePage $templatePage;
     private Module $module;
 

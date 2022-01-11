@@ -54,7 +54,7 @@
         </div>
 
         <!-- help text -->
-        <div class="px-3 py-2 border mb-6 flex rounded text-sm bg-slate-50">
+        <div class="px-3 py-2 border mb-10 flex rounded text-sm bg-slate-50">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 pr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -69,16 +69,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- left -->
           <div class="p-3 sm:p-0">
-            <modules :data="data" />
+            <pages :data="data" @page-selected="loadModules" />
           </div>
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
-            <h3 class="border-b mb-4">
-              Modules in this page
-            </h3>
-
-            <p>Please select a page on the lefts</p>
+            <modules :data="localModules" />
           </div>
         </div>
       </div>
@@ -88,11 +84,13 @@
 
 <script>
 import Layout from '@/Shared/Layout';
+import Pages from '@/Pages/Settings/Personalize/Templates/Partials/Pages';
 import Modules from '@/Pages/Settings/Personalize/Templates/Partials/Modules';
 
 export default {
   components: {
     Layout,
+    Pages,
     Modules,
   },
 
@@ -110,6 +108,7 @@ export default {
   data() {
     return {
       addMode: false,
+      localModules: [],
     };
   },
 
@@ -118,6 +117,17 @@ export default {
       if (type == 'lifeEvent') {
         this.addMode = true;
       }
+    },
+
+    loadModules(page) {
+      axios.get(page.url.show)
+        .then(response => {
+          this.localModules = response.data.data;
+        })
+        .catch(error => {
+          this.loadingState = null;
+          this.errors = error.response.data;
+        });
     },
   },
 };
