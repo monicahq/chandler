@@ -19,7 +19,7 @@
       @change="updatePosition"
     >
       <template #item="{ element }">
-        <div v-if="renamePageModalShownId != element.id" class="bg-white border hover:bg-slate-50 border-gray-200 rounded-lg mb-2 pl-2 pr-5 py-2 flex items-center" @click="selectPage(element)">
+        <div v-if="renamePageModalShownId != element.id" :class="isSelectedId == element.id ? 'border-2	bg-sky-100' : ''" class="bg-white border hover:bg-slate-50 border-gray-200 rounded-lg mb-2 pl-2 pr-5 py-2 flex items-center" @click="selectPage(element)">
           <!-- icon to move position -->
           <div class="mr-2">
             <svg class="cursor-move handle" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -134,6 +134,7 @@ export default {
       createPageModalShown: false,
       renamePageModalShownId: 0,
       localPages: [],
+      isSelectedId: 0,
       drag: false,
       form: {
         name: '',
@@ -229,6 +230,7 @@ export default {
     },
 
     selectPage(page) {
+      this.isSelectedId = page.id;
       this.$emit('pageSelected', page);
     }
   },
