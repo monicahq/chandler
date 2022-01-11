@@ -60,8 +60,8 @@
           </svg>
 
           <div>
-            <p class="mb-2">This template will define what information are displayed on a contact page.</p>
-            <p class="mb-2">A template is made of pages, and in each page, there are modules. How data is displayed is entirely up to you.</p>
+            <p class="mb-1">This template will define what information are displayed on a contact page.</p>
+            <p class="mb-1">A template is made of pages, and in each page, there are modules. How data is displayed is entirely up to you.</p>
             <p>Note that removing a module from a page will not delete the actual data on your contact pages. It will simply hide it.</p>
           </div>
         </div>
