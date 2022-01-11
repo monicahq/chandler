@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Templates;
 
+use App\Models\TemplatePage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageTemplate\UpdateTemplatePagePosition;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
-use App\Models\TemplatePage;
 use App\Services\Account\ManageTemplate\UpdateModulePosition;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 
 class PersonalizeTemplatePageModulesPositionController extends Controller
 {

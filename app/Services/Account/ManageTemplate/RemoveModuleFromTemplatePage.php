@@ -2,12 +2,11 @@
 
 namespace App\Services\Account\ManageTemplate;
 
+use App\Models\Module;
 use App\Models\Template;
-use App\Models\Information;
+use App\Models\TemplatePage;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\Module;
-use App\Models\TemplatePage;
 
 class RemoveModuleFromTemplatePage extends BaseService implements ServiceInterface
 {

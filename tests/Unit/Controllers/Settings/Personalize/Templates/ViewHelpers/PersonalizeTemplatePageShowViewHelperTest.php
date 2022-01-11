@@ -3,14 +3,12 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 use Tests\TestCase;
+use App\Models\Module;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
-use App\Models\Module;
+use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 
 class PersonalizeTemplatePageShowViewHelperTest extends TestCase
 {
@@ -52,7 +50,7 @@ class PersonalizeTemplatePageShowViewHelperTest extends TestCase
                     'name' => $module->name,
                     'already_used' => true,
                     'url' => [
-                        'destroy' => env('APP_URL') . '/settings/personalize/templates/' . $template->id . '/template_pages/' . $templatePage->id.'/modules/'.$module->id,
+                        'destroy' => env('APP_URL').'/settings/personalize/templates/'.$template->id.'/template_pages/'.$templatePage->id.'/modules/'.$module->id,
                     ],
                 ],
             ],
@@ -66,8 +64,8 @@ class PersonalizeTemplatePageShowViewHelperTest extends TestCase
                     'name' => $module->name,
                     'position' => $module->position,
                     'url' => [
-                        'position' => env('APP_URL') . '/settings/personalize/templates/' . $template->id . '/template_pages/' . $templatePage->id.'/modules/'.$module->id.'/order',
-                        'destroy' => env('APP_URL') . '/settings/personalize/templates/' . $template->id . '/template_pages/' . $templatePage->id.'/modules/'.$module->id,
+                        'position' => env('APP_URL').'/settings/personalize/templates/'.$template->id.'/template_pages/'.$templatePage->id.'/modules/'.$module->id.'/order',
+                        'destroy' => env('APP_URL').'/settings/personalize/templates/'.$template->id.'/template_pages/'.$templatePage->id.'/modules/'.$module->id,
                     ],
                 ],
             ],
