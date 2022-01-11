@@ -4,17 +4,16 @@ namespace Tests\Unit\Services\Account\Template;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Account;
 use App\Models\Module;
+use App\Models\Account;
 use App\Models\Template;
 use App\Models\TemplatePage;
-use App\Services\Account\ManageTemplate\UpdateModulePosition;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Account\ManageTemplate\UpdateTemplatePage;
-use App\Services\Account\ManageTemplate\UpdateTemplatePagePosition;
+use App\Services\Account\ManageTemplate\UpdateModulePosition;
 
 class UpdateModulePositionTest extends TestCase
 {

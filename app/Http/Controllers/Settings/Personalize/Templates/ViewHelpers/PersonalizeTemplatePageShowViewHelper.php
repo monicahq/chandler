@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers;
 
 use App\Models\Module;
-use App\Models\Template;
 use App\Models\TemplatePage;
 
 class PersonalizeTemplatePageShowViewHelper
