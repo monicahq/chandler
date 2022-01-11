@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers;
 use App\Models\Module;
 use App\Models\TemplatePage;
 
-// TODO: unit test
 class PersonalizeTemplatePageShowViewHelper
 {
     public static function data(TemplatePage $templatePage): array

@@ -36,7 +36,7 @@
       <li class="text-sm border-b border-gray-200 bg-slate-50 pl-2 pr-5 py-2 item-list">Available modules:</li>
       <li v-for="module in localAllModules" :key="module.id" class="border-b border-gray-200 hover:bg-slate-50 item-list flex items-center pl-2 pr-5 py-2 justify-between">
         <span>{{ module.name }}</span>
-        <span v-if="!module.already_used" @click="add(module)" class="cursor-pointer inline text-sky-500 hover:text-blue-900">Add</span>
+        <span v-if="!module.already_used" class="cursor-pointer inline text-sky-500 hover:text-blue-900" @click="add(module)">Add</span>
         <span v-if="module.already_used" class="text-xs"><span class="mr-1">✅</span> Already in use on this page</span>
       </li>
     </ul>
@@ -55,7 +55,7 @@
             <!-- anchor to move module -->
             <div class="mr-2">
               <svg class="cursor-move handle" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                   xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M7 7H9V9H7V7Z" fill="currentColor" />
                 <path d="M11 7H13V9H11V7Z" fill="currentColor" />
@@ -75,7 +75,7 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li @click="remove(element)" class="cursor-pointer inline text-red-500 hover:text-red-900">Remove</li>
+                <li class="cursor-pointer inline text-red-500 hover:text-red-900" @click="remove(element)">Remove</li>
               </ul>
             </div>
           </div>
