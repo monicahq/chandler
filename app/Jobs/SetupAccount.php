@@ -22,10 +22,10 @@ use App\Services\Account\ManageTemplate\CreateTemplatePage;
 use App\Services\Account\ManageAddressTypes\CreateAddressType;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AddDefaultValueToAttribute;
+use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\Account\ManageTemplate\AssociateInformationToTemplate;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 
 class SetupAccount implements ShouldQueue
 {
