@@ -22,11 +22,12 @@ class PersonalizeTemplateShowViewHelperTest extends TestCase
         ]);
         $array = PersonalizeTemplateShowViewHelper::data($template);
         $this->assertEquals(
-            3,
+            4,
             count($array)
         );
         $this->assertArrayHasKey('template', $array);
         $this->assertArrayHasKey('template_pages', $array);
+        $this->assertArrayHasKey('template_page_contact_information', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
@@ -62,6 +63,7 @@ class PersonalizeTemplateShowViewHelperTest extends TestCase
                 'id' => $templatePage->id,
                 'name' => $templatePage->name,
                 'position' => $templatePage->position,
+                'can_be_deleted' => $templatePage->can_be_deleted,
                 'url' => [
                     'show' => env('APP_URL').'/settings/personalize/templates/'.$template->id.'/template_pages/'.$templatePage->id,
                     'update' => env('APP_URL').'/settings/personalize/templates/'.$template->id.'/template_pages/'.$templatePage->id,

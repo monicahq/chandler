@@ -21,6 +21,7 @@ class TemplatePage extends Model
         'template_id',
         'name',
         'position',
+        'can_be_deleted',
     ];
 
     /**
@@ -30,6 +31,7 @@ class TemplatePage extends Model
      */
     protected $casts = [
         'position' => 'integer',
+        'can_be_deleted' => 'boolean',
     ];
 
     /**

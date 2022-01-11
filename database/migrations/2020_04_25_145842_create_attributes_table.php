@@ -27,6 +27,7 @@ class CreateAttributesTable extends Migration
             $table->unsignedBigInteger('template_id');
             $table->string('name');
             $table->integer('position');
+            $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
         });
@@ -35,6 +36,7 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('account_id');
             $table->string('name');
+            $table->string('type')->nullable();
             $table->boolean('can_be_deleted');
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');

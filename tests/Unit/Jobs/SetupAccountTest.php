@@ -21,6 +21,17 @@ class SetupAccountTest extends TestCase
             'account_id' => $regis->account_id,
             'name' => 'Default template',
         ]);
+        $this->assertDatabaseHas('template_pages', [
+            'name' => trans('app.default_template_page_contact_information'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_notes'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_names'),
+        ]);
 
         $this->assertDatabaseHas('information', [
             'account_id' => $regis->account_id,
@@ -352,11 +363,6 @@ class SetupAccountTest extends TestCase
         $this->assertDatabaseHas('pet_categories', [
             'account_id' => $regis->account_id,
             'name' => trans('account.pets_other'),
-        ]);
-
-        $this->assertDatabaseHas('modules', [
-            'account_id' => $regis->account_id,
-            'name' => trans('app.module_notes'),
         ]);
     }
 }

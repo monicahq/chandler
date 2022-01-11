@@ -141,6 +141,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('{template}/template_pages/{page}/modules/{module}/order', [PersonalizeTemplatePageModulesPositionController::class, 'update'])->name('template_page.module.order.update');
                     Route::delete('{template}/template_pages/{page}/modules/{module}', [PersonalizeTemplatePageModulesController::class, 'destroy'])->name('template_page.module.destroy');
                 });
+
+                // modules
+                Route::get('modules', [PersonalizeModulesController::class, 'index'])->name('module.index');
+                Route::post('modules', [PersonalizeModulesController::class, 'store'])->name('module.store');
+                Route::put('modules/{module}', [PersonalizeModulesController::class, 'update'])->name('module.update');
+                Route::delete('modules/{module}', [PersonalizeModulesController::class, 'destroy'])->name('module.destroy');
             });
 
             // cancel
