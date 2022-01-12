@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Vault;
 
 class ContactCreateViewHelper
