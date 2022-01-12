@@ -6,7 +6,7 @@
 </style>
 
 <template>
-  <layout :layout-data="layoutData" :inside-vault="true" >
+  <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
     <nav class="sm:mt-20 sm:border-b bg-white">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
@@ -47,27 +47,40 @@
             />
 
             <!-- middle name -->
-            <text-input v-if="showMiddleNameField" :id="'middle_name'" v-model="form.middle_name" :div-outer-class="'mb-5'" :input-class="'block w-full'" :required="false"
+            <text-input v-if="showMiddleNameField" :id="'middle_name'" v-model="form.middle_name" :div-outer-class="'mb-5'" :input-class="'block w-full'"
+                        :required="false"
                         :maxlength="255" :label="'Middle name'"
             />
 
             <!-- nickname -->
-            <text-input v-if="showNicknameField" :id="'nickname'" v-model="form.nickname" :div-outer-class="'mb-5'" :input-class="'block w-full'" :required="false"
+            <text-input v-if="showNicknameField" :id="'nickname'" v-model="form.nickname" :div-outer-class="'mb-5'" :input-class="'block w-full'"
+                        :required="false"
                         :maxlength="255" :label="'Nickname'"
             />
 
             <!-- nickname -->
-            <text-input v-if="showMaidenNameField" :id="'maiden_name'" v-model="form.maiden_name" :div-outer-class="'mb-5'" :input-class="'block w-full'" :required="false"
+            <text-input v-if="showMaidenNameField" :id="'maiden_name'" v-model="form.maiden_name" :div-outer-class="'mb-5'" :input-class="'block w-full'"
+                        :required="false"
                         :maxlength="255" :label="'Maiden name'"
             />
 
             <!-- other fields -->
             <div class="text-xs flex flex-wrap">
-              <span @click="displayMiddleNameField" v-if="!showMiddleNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">+ middle name</span>
-              <span @click="displayNicknameField" v-if="!showNicknameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">+ nickname</span>
-              <span @click="displayMaidenNameField" v-if="!showMaidenNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">+ maiden name</span>
-              <span v-if="data.genders.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">+ gender</span>
-              <span v-if="data.pronouns.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">+ pronoun</span>
+              <span v-if="!showMiddleNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayMiddleNameField">
+                + middle name
+              </span>
+              <span v-if="!showNicknameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayNicknameField">
+                + nickname
+              </span>
+              <span v-if="!showMaidenNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayMaidenNameField">
+                + maiden name
+              </span>
+              <span v-if="data.genders.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">
+                + gender
+              </span>
+              <span v-if="data.pronouns.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">
+                + pronoun
+              </span>
             </div>
           </div>
 
