@@ -3,11 +3,10 @@
 namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Vault;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 
 class ContactCreateViewHelperTest extends TestCase
 {
@@ -22,7 +21,7 @@ class ContactCreateViewHelperTest extends TestCase
             [
                 'url' => [
                     'store' => env('APP_URL').'/vaults/'.$vault->id.'/contacts',
-                    'back' => env('APP_URL'). '/vaults/' . $vault->id . '/contacts',
+                    'back' => env('APP_URL').'/vaults/'.$vault->id.'/contacts',
                 ],
             ],
             $array

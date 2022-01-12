@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Vault\Contact;
 
 use Inertia\Inertia;
 use App\Models\Vault;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Vault\ManageVault\CreateVault;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
-use App\Models\Contact;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 
 class ContactController extends Controller
 {
