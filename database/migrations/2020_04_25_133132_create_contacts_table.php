@@ -22,7 +22,7 @@ class CreateContactsTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('surname')->nullable();
+            $table->string('nickname')->nullable();
             $table->string('maiden_name')->nullable();
             $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();

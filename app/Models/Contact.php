@@ -25,7 +25,7 @@ class Contact extends Model
         'first_name',
         'last_name',
         'middle_name',
-        'surname',
+        'nickname',
         'maiden_name',
         'can_be_deleted',
     ];

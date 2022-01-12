@@ -24,7 +24,7 @@ class CreateContact extends BaseService implements ServiceInterface
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
-            'surname' => 'nullable|string|max:255',
+            'nickname' => 'nullable|string|max:255',
             'maiden_name' => 'nullable|string|max:255',
         ];
     }
@@ -58,7 +58,7 @@ class CreateContact extends BaseService implements ServiceInterface
             'first_name' => $data['first_name'],
             'last_name' => $this->valueOrNull($data, 'last_name'),
             'middle_name' => $this->valueOrNull($data, 'middle_name'),
-            'surname' => $this->valueOrNull($data, 'surname'),
+            'nickname' => $this->valueOrNull($data, 'nickname'),
             'maiden_name' => $this->valueOrNull($data, 'maiden_name'),
         ]);
 

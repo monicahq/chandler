@@ -23,6 +23,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\ContactController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -47,6 +48,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+
+            // contacts
+            Route::prefix('contacts')->group(function () {
+                Route::get('', [ContactController::class, 'index'])->name('contact.index');
+                Route::get('create', [ContactController::class, 'create'])->name('contact.create');
+                Route::post('', [ContactController::class, 'store'])->name('contact.store');
+            });
         });
     });
 
