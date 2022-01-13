@@ -3,13 +3,12 @@
 namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 
 class ContactIndexViewHelperTest extends TestCase
 {
