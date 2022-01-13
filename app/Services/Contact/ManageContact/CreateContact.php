@@ -2,13 +2,13 @@
 
 namespace App\Services\Contact\ManageContact;
 
+use App\Models\Gender;
 use App\Models\Contact;
+use App\Models\Pronoun;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use App\Models\Gender;
-use App\Models\Pronoun;
 
 class CreateContact extends BaseService implements ServiceInterface
 {

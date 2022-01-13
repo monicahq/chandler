@@ -5,10 +5,10 @@ namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 use function env;
 use Tests\TestCase;
 use App\Models\Vault;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 use App\Models\Gender;
 use App\Models\Pronoun;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 
 class ContactCreateViewHelperTest extends TestCase
 {

@@ -8,11 +8,10 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Contact\ManageContact\CreateContact;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Services\Contact\ManageContact\CreateContact;
-use App\Services\Contact\ManageContactInformation\CreateContactInformation;
 
 class ContactController extends Controller
 {
