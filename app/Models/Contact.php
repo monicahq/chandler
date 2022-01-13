@@ -28,6 +28,7 @@ class Contact extends Model
         'nickname',
         'maiden_name',
         'can_be_deleted',
+        'last_updated_at',
     ];
 
     /**
@@ -37,6 +38,7 @@ class Contact extends Model
      */
     protected $casts = [
         'can_be_deleted' => 'boolean',
+        'last_updated_at' => 'datetime',
     ];
 
     /**
@@ -67,6 +69,16 @@ class Contact extends Model
     public function pronoun()
     {
         return $this->belongsTo(Pronoun::class);
+    }
+
+    /**
+     * Get the template associated with the contact.
+     *
+     * @return BelongsTo
+     */
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
     }
 
     /**

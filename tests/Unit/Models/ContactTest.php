@@ -12,6 +12,7 @@ use App\Models\ContactLog;
 use App\Models\ContactAddress;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
+use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
@@ -44,6 +45,16 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->pronoun()->exists());
+    }
+
+    /** @test */
+    public function it_has_one_template()
+    {
+        $ross = Contact::factory()->create([
+            'template_id' => Template::factory()->create(),
+        ]);
+
+        $this->assertTrue($ross->template()->exists());
     }
 
     /** @test */

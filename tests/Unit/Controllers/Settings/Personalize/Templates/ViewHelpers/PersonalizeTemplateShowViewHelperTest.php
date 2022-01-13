@@ -19,6 +19,7 @@ class PersonalizeTemplateShowViewHelperTest extends TestCase
         $template = Template::factory()->create();
         $templatePage = TemplatePage::factory()->create([
             'template_id' => $template->id,
+            'type' => 'contact_information',
         ]);
         $array = PersonalizeTemplateShowViewHelper::data($template);
         $this->assertEquals(

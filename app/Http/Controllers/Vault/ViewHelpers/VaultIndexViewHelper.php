@@ -24,9 +24,14 @@ class VaultIndexViewHelper
             'vault' => $vault ? [
                 'id' => $vault->id,
                 'name' => $vault->name,
-                'url' => route('vault.show', [
-                    'vault' => $vault->id,
-                ]),
+                'url' => [
+                    'dashboard' => route('vault.show', [
+                        'vault' => $vault->id,
+                    ]),
+                    'contacts' => route('contact.index', [
+                        'vault' => $vault->id,
+                    ]),
+                ],
             ] : null,
             'url' => [
                 'vaults' => route('vault.index'),

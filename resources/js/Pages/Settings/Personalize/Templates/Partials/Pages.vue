@@ -164,6 +164,7 @@ export default {
 
   methods: {
     showPageModal() {
+      this.form.errors = [];
       this.form.name = '';
       this.createPageModalShown = true;
 

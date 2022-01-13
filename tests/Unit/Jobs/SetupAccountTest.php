@@ -23,6 +23,7 @@ class SetupAccountTest extends TestCase
         ]);
         $this->assertDatabaseHas('template_pages', [
             'name' => trans('app.default_template_page_contact_information'),
+            'can_be_deleted' => false,
         ]);
         $this->assertDatabaseHas('modules', [
             'account_id' => $regis->account_id,

@@ -9,13 +9,12 @@ class PersonalizeTemplateShowViewHelper
 {
     public static function data(Template $template): array
     {
-        // get all the template pages EXCEPT the first one
-        // the first one is the page that contains all the contact information
+        // get all the template pages EXCEPT the one about contact information
         // we can't delete this one, or rename it, as we need it to display
         // a contact page
         $templatePages = $template->pages()
             ->orderBy('position', 'asc')
-            ->where('position', '>', 1)
+            ->whereNull('type')
             ->get();
 
         $collection = collect();
@@ -23,8 +22,8 @@ class PersonalizeTemplateShowViewHelper
             $collection->push(self::dtoTemplatePage($template, $templatePage));
         }
 
-        $firstTemplatePage = $template->pages()
-            ->where('position', 1)
+        $contactInformationTemplatePage = $template->pages()
+            ->where('type', 'contact_information')
             ->first();
 
         return [
@@ -32,7 +31,7 @@ class PersonalizeTemplateShowViewHelper
                 'id' => $template->id,
                 'name' => $template->name,
             ],
-            'template_page_contact_information' => self::dtoTemplatePage($template, $firstTemplatePage),
+            'template_page_contact_information' => self::dtoTemplatePage($template, $contactInformationTemplatePage),
             'template_pages' => $collection,
             'url' => [
                 'settings' => route('settings.index'),

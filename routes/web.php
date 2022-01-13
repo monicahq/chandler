@@ -54,7 +54,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('', [ContactController::class, 'index'])->name('contact.index');
                 Route::get('create', [ContactController::class, 'create'])->name('contact.create');
                 Route::post('', [ContactController::class, 'store'])->name('contact.store');
-                Route::get('{contact}', [ContactController::class, 'show'])->name('contact.show');
+
+                Route::middleware(['contact'])->prefix('{contact}')->group(function () {
+                    Route::get('', [ContactController::class, 'show'])->name('contact.show');
+
+                    Route::get('tab/{page}', [ContactPageController::class, 'show'])->name('contact.page.show');
+                });
             });
         });
     });
@@ -164,10 +169,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::get('contacts', 'ContactController@index');
-
     Route::resource('settings/information', 'Settings\\InformationController');
-
-    // contacts
-    Route::get('vaults/{vault}/contacts/{contact}', 'HomeController@index')->name('contact.show');
 });

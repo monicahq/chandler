@@ -22,6 +22,7 @@ class TemplatePage extends Model
         'name',
         'position',
         'can_be_deleted',
+        'type',
     ];
 
     /**

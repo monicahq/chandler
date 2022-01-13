@@ -3,25 +3,34 @@
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Vault;
+use Illuminate\Support\Collection;
 
 class ContactIndexViewHelper
 {
-    public static function data(Collection $contacts, User $user): array
+    public static function data($contacts, User $user, Vault $vault): array
     {
         $contactCollection = collect();
         foreach ($contacts as $contact) {
             $contactCollection->push([
                 'id' => $contact->id,
                 'name' => $contact->getName($user),
+                'url' => [
+                    'show' => route('contact.show', [
+                        'vault' => $vault->id,
+                        'contact' => $contact->id,
+                    ]),
+                ],
             ]);
         }
 
         return [
             'contacts' => $contactCollection,
             'url' => [
-                'vault' => [
-                    'create' => route('vault.create'),
+                'contact' => [
+                    'create' => route('contact.create', [
+                        'vault' => $vault->id,
+                    ]),
                 ],
             ],
         ];

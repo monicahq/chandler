@@ -66,7 +66,7 @@ main {
           <div class="max-w-8xl mx-auto px-4 sm:px-6 py-2 hidden md:block">
             <div class="flex items-baseline justify-between space-x-6">
               <div>
-                <inertia-link href="" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                <inertia-link :href="layoutData.vault.url.dashboard" :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Dashboard') }" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
                   Dashboard
                 </inertia-link>
 
@@ -74,7 +74,7 @@ main {
                   Reports
                 </inertia-link>
 
-                <inertia-link href="contacts'" :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
+                <inertia-link :href="layoutData.vault.url.contacts" :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }" class="hover:bg-gray-700 hover:text-white px-2 py-1 mr-2 rounded-md text-sm font-medium">
                   Contacts
                 </inertia-link>
 

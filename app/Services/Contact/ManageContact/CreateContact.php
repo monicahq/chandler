@@ -12,6 +12,8 @@ use App\Interfaces\ServiceInterface;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
+    private array $data;
+
     /**
      * Get the validation rules that apply to the service.
      *
@@ -55,32 +57,42 @@ class CreateContact extends BaseService implements ServiceInterface
      */
     public function execute(array $data): Contact
     {
-        $this->validateRules($data);
+        $this->data = $data;
 
-        if ($this->valueOrNull($data, 'gender_id')) {
-            Gender::where('account_id', $data['account_id'])
-                ->findOrFail($data['gender_id']);
-        }
-
-        if ($this->valueOrNull($data, 'pronoun_id')) {
-            Pronoun::where('account_id', $data['account_id'])
-                ->findOrFail($data['pronoun_id']);
-        }
-
-        $this->contact = Contact::create([
-            'vault_id' => $data['vault_id'],
-            'first_name' => $data['first_name'],
-            'last_name' => $this->valueOrNull($data, 'last_name'),
-            'middle_name' => $this->valueOrNull($data, 'middle_name'),
-            'nickname' => $this->valueOrNull($data, 'nickname'),
-            'maiden_name' => $this->valueOrNull($data, 'maiden_name'),
-            'gender_id' => $this->valueOrNull($data, 'gender_id'),
-            'pronoun_id' => $this->valueOrNull($data, 'pronoun_id'),
-        ]);
-
+        $this->validate();
+        $this->create();
         $this->log();
 
         return $this->contact;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+
+        if ($this->valueOrNull($this->data, 'gender_id')) {
+            Gender::where('account_id', $this->data['account_id'])
+                ->findOrFail($this->data['gender_id']);
+        }
+
+        if ($this->valueOrNull($this->data, 'pronoun_id')) {
+            Pronoun::where('account_id', $this->data['account_id'])
+                ->findOrFail($this->data['pronoun_id']);
+        }
+    }
+
+    private function create(): void
+    {
+        $this->contact = Contact::create([
+            'vault_id' => $this->data['vault_id'],
+            'first_name' => $this->data['first_name'],
+            'last_name' => $this->valueOrNull($this->data, 'last_name'),
+            'middle_name' => $this->valueOrNull($this->data, 'middle_name'),
+            'nickname' => $this->valueOrNull($this->data, 'nickname'),
+            'maiden_name' => $this->valueOrNull($this->data, 'maiden_name'),
+            'gender_id' => $this->valueOrNull($this->data, 'gender_id'),
+            'pronoun_id' => $this->valueOrNull($this->data, 'pronoun_id'),
+        ]);
     }
 
     private function log(): void

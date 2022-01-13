@@ -12,18 +12,21 @@ use App\Services\Contact\ManageContact\CreateContact;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 
 class ContactController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, int $vaultId)
     {
+        $vault = Vault::findOrFail($vaultId);
+
         $contacts = Contact::where('vault_id', $request->route()->parameter('vault'))
             ->orderBy('created_at', 'asc')
             ->paginate(10);
 
         return Inertia::render('Vault/Contact/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => ContactIndexViewHelper::data($contacts, Auth::user()),
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => ContactIndexViewHelper::data($contacts, Auth::user(), $vault),
         ]);
     }
 
@@ -60,5 +63,16 @@ class ContactController extends Controller
                 'contact' => $contact,
             ]),
         ], 201);
+    }
+
+    public function show(Request $request, int $vaultId, int $contactId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $contact = Contact::findOrFail($contactId);
+
+        return Inertia::render('Vault/Contact/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => ContactShowViewHelper::data($contact),
+        ]);
     }
 }

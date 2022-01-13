@@ -171,7 +171,7 @@ abstract class BaseService
      */
     public function valueOrTrue($data, $index)
     {
-        if (empty($data[$index])) {
+        if (empty($data[$index]) && $data[$index] !== false) {
             return true;
         }
 

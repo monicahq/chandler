@@ -105,6 +105,7 @@ class SetupAccount implements ShouldQueue
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_contact_information'),
             'can_be_deleted' => false,
+            'type' => 'contact_information',
         ];
         $this->templatePageContact = (new CreateTemplatePage)->execute($request);
 
