@@ -48,7 +48,7 @@ class ContactShowViewHelper
     private static function getContactInformation(TemplatePage $templatePage, Contact $contact): array
     {
         return  [
-
+            'todo'
         ];
     }
 }
