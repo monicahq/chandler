@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Vault;
-use Illuminate\Support\Collection;
 
 class ContactIndexViewHelper
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Contact;
 use Tests\TestCase;
+use App\Models\Contact;
 use App\Models\Template;
 use App\Models\Information;
 use App\Models\TemplatePage;

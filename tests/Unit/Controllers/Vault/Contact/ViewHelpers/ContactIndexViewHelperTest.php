@@ -4,14 +4,11 @@ namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
-use App\Models\Vault;
-use App\Models\Gender;
-use App\Models\Pronoun;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
-use App\Models\Contact;
 use App\Models\User;
+use App\Models\Vault;
+use App\Models\Contact;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 
 class ContactIndexViewHelperTest extends TestCase
 {
@@ -42,7 +39,7 @@ class ContactIndexViewHelperTest extends TestCase
                     'id' => $contact->id,
                     'name' => $contact->getName($user),
                     'url' => [
-                        'show' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/'.$contact->id,
+                        'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id,
                     ],
                 ],
             ],

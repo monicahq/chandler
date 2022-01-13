@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Contact;
 use App\Models\TemplatePage;
-use App\Models\User;
-use App\Models\Vault;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class ContactShowViewHelper
 {
@@ -28,7 +25,7 @@ class ContactShowViewHelper
     {
         $pagesCollection = collect();
         foreach ($templatePages as $page) {
-            if (!$page->can_be_deleted) {
+            if (! $page->can_be_deleted) {
                 continue;
             }
 

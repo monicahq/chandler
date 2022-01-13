@@ -8,11 +8,11 @@ use App\Models\Label;
 use App\Models\Gender;
 use App\Models\Contact;
 use App\Models\Pronoun;
+use App\Models\Template;
 use App\Models\ContactLog;
 use App\Models\ContactAddress;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
-use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
