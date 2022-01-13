@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('', [ContactController::class, 'index'])->name('contact.index');
                 Route::get('create', [ContactController::class, 'create'])->name('contact.create');
                 Route::post('', [ContactController::class, 'store'])->name('contact.store');
+                Route::get('{contact}', [ContactController::class, 'show'])->name('contact.show');
             });
         });
     });

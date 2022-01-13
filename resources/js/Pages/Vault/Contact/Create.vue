@@ -64,6 +64,16 @@
                         :maxlength="255" :label="'Maiden name'"
             />
 
+            <!-- genders -->
+            <dropdown v-if="showGenderField" v-model="form.gender_id" :data="data.genders" :required="false" :div-outer-class="'mb-5'"
+                      :placeholder="'Choose a value'" :dropdown-class="'block w-full'" :label="'Gender'"
+            />
+
+            <!-- pronouns -->
+            <dropdown v-if="showPronounField" v-model="form.pronoun_id" :data="data.pronouns" :required="false" :div-outer-class="'mb-5'"
+                      :placeholder="'Choose a value'" :dropdown-class="'block w-full'" :label="'Pronoun'"
+            />
+
             <!-- other fields -->
             <div class="text-xs flex flex-wrap">
               <span v-if="!showMiddleNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayMiddleNameField">
@@ -75,10 +85,10 @@
               <span v-if="!showMaidenNameField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayMaidenNameField">
                 + maiden name
               </span>
-              <span v-if="data.genders.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">
+              <span v-if="data.genders.length > 0 && !showGenderField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayGenderField">
                 + gender
               </span>
-              <span v-if="data.pronouns.length > 0" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer">
+              <span v-if="data.pronouns.length > 0 && !showPronounField" class="border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 mr-2 mb-2 flex flex-wrap cursor-pointer" @click="displayPronounField">
                 + pronoun
               </span>
             </div>
@@ -99,6 +109,7 @@ import Layout from '@/Shared/Layout';
 import PrettyLink from '@/Shared/PrettyLink';
 import PrettyButton from '@/Shared/PrettyButton';
 import TextInput from '@/Shared/TextInput';
+import Dropdown from '@/Shared/Dropdown';
 
 export default {
   components: {
@@ -106,6 +117,7 @@ export default {
     PrettyLink,
     PrettyButton,
     TextInput,
+    Dropdown,
   },
 
   props: {
@@ -125,12 +137,16 @@ export default {
       showMiddleNameField: false,
       showNicknameField: false,
       showMaidenNameField: false,
+      showGenderField: false,
+      showPronounField: false,
       form: {
         first_name: '',
         last_name: '',
         middle_name: '',
         nickname: '',
         maiden_name: '',
+        gender_id: '',
+        pronoun_id: '',
         description: '',
       },
     };
@@ -149,12 +165,20 @@ export default {
       this.showMaidenNameField = true;
     },
 
+    displayGenderField() {
+      this.showGenderField = true;
+    },
+
+    displayPronounField() {
+      this.showPronounField = true;
+    },
+
     submit() {
       this.loadingState = 'loading';
 
       axios.post(this.data.url.store, this.form)
         .then(response => {
-          localStorage.success = 'The vault has been created';
+          localStorage.success = 'The contact has been added';
           this.$inertia.visit(response.data.data);
         })
         .catch(error => {

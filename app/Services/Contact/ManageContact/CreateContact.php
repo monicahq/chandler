@@ -7,6 +7,8 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use App\Models\Gender;
+use App\Models\Pronoun;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
@@ -26,6 +28,8 @@ class CreateContact extends BaseService implements ServiceInterface
             'middle_name' => 'nullable|string|max:255',
             'nickname' => 'nullable|string|max:255',
             'maiden_name' => 'nullable|string|max:255',
+            'gender_id' => 'nullable|integer|exists:genders,id',
+            'pronoun_id' => 'nullable|integer|exists:pronouns,id',
         ];
     }
 
@@ -53,6 +57,16 @@ class CreateContact extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
+        if ($this->valueOrNull($data, 'gender_id')) {
+            Gender::where('account_id', $data['account_id'])
+                ->findOrFail($data['gender_id']);
+        }
+
+        if ($this->valueOrNull($data, 'pronoun_id')) {
+            Pronoun::where('account_id', $data['account_id'])
+                ->findOrFail($data['pronoun_id']);
+        }
+
         $this->contact = Contact::create([
             'vault_id' => $data['vault_id'],
             'first_name' => $data['first_name'],
@@ -60,6 +74,8 @@ class CreateContact extends BaseService implements ServiceInterface
             'middle_name' => $this->valueOrNull($data, 'middle_name'),
             'nickname' => $this->valueOrNull($data, 'nickname'),
             'maiden_name' => $this->valueOrNull($data, 'maiden_name'),
+            'gender_id' => $this->valueOrNull($data, 'gender_id'),
+            'pronoun_id' => $this->valueOrNull($data, 'pronoun_id'),
         ]);
 
         $this->log();
