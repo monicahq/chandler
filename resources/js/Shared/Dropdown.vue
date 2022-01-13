@@ -59,7 +59,7 @@ export default {
     data: {
       type: Array,
       default() {
-        return []
+        return [];
       },
     },
     dropdownClass: {
