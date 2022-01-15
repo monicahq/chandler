@@ -24,6 +24,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Settings\VaultSettingsController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -52,14 +53,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // contacts
             Route::prefix('contacts')->group(function () {
                 Route::get('', [ContactController::class, 'index'])->name('contact.index');
-                Route::get('create', [ContactController::class, 'create'])->name('contact.create');
-                Route::post('', [ContactController::class, 'store'])->name('contact.store');
 
+                // create a contact
+                Route::middleware(['atLeastVaultEditor'])->get('create', [ContactController::class, 'create'])->name('contact.create');
+                Route::middleware(['atLeastVaultEditor'])->post('', [ContactController::class, 'store'])->name('contact.store');
+
+                // contact page
                 Route::middleware(['contact'])->prefix('{contact}')->group(function () {
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
 
                     Route::get('tab/{page}', [ContactPageController::class, 'show'])->name('contact.page.show');
                 });
+            });
+
+            // settings
+            Route::middleware(['atLeastVaultManager'])->group(function () {
+                Route::get('settings', [VaultSettingsController::class, 'index'])->name('vault.settings.index');
+                Route::delete('', [VaultController::class, 'destroy'])->name('vault.settings.destroy');
             });
         });
     });
