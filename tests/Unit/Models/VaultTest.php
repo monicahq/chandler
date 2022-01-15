@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Template;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class VaultTest extends TestCase

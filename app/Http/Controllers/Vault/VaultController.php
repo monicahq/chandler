@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Vault\ManageVault\CreateVault;
+use App\Services\Vault\ManageVault\DestroyVault;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\ViewHelpers\VaultCreateViewHelper;
-use App\Services\Vault\ManageVault\DestroyVault;
 
 class VaultController extends Controller
 {
