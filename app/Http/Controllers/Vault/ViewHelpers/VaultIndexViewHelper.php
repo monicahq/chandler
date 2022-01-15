@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Vault\ViewHelpers;
 
-use App\Helpers\VaultHelper;
 use App\Models\User;
 use App\Models\Vault;
+use App\Helpers\VaultHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 

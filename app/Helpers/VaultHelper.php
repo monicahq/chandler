@@ -40,9 +40,9 @@ class VaultHelper
     /**
      * Get the permission for the given user in the given vault.
      *
-     * @param User $user
-     * @param Vault $vault
-     * @return integer
+     * @param  User  $user
+     * @param  Vault  $vault
+     * @return int
      */
     public static function getPermission(User $user, Vault $vault): int
     {
