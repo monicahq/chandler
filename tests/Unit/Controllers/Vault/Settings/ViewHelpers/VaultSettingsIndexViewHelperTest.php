@@ -3,14 +3,11 @@
 namespace Tests\Unit\Controllers\Vault\Settings\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Vault;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Models\Template;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
 
 class VaultSettingsIndexViewHelperTest extends TestCase
 {
@@ -43,9 +40,9 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'template_update' => env('APP_URL') . '/vaults/' . $vault->id.'/settings/template',
-                'update' => env('APP_URL') . '/vaults/' . $vault->id . '/settings',
-                'destroy' => env('APP_URL') . '/vaults/' . $vault->id,
+                'template_update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/template',
+                'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
+                'destroy' => env('APP_URL').'/vaults/'.$vault->id,
             ],
             $array['url']
         );
