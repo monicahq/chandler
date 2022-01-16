@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Vault\Settings\ViewHelpers;
 
 use App\Models\Vault;
 
-// TODO: unit test
 class VaultSettingsIndexViewHelper
 {
     public static function data(Vault $vault): array
