@@ -8,7 +8,7 @@ use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\Template;
 
-class UpdateVault extends BaseService implements ServiceInterface
+class UpdateVaultDefaultTemplate extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -21,8 +21,7 @@ class UpdateVault extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
+            'template_id' => 'required|integer|exists:templates,id',
         ];
     }
 
@@ -41,7 +40,7 @@ class UpdateVault extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a vault.
+     * Update the vault's default template.
      *
      * @param  array  $data
      * @return Vault
@@ -50,8 +49,12 @@ class UpdateVault extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->vault->name = $data['name'];
-        $this->vault->description = $this->valueOrNull($data, 'description');
+        if ($this->valueOrNull($data, 'template_id')) {
+            Template::where('account_id', $data['account_id'])
+                ->findOrFail($data['template_id']);
+        }
+
+        $this->vault->default_template_id = $this->valueOrNull($data, 'template_id');
         $this->vault->save();
 
         CreateAuditLog::dispatch([

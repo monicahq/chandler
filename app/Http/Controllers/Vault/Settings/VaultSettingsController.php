@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
+use App\Services\Vault\ManageVault\UpdateVault;
+use Illuminate\Support\Facades\Auth;
 
 class VaultSettingsController extends Controller
 {

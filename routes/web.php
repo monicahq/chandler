@@ -25,6 +25,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -50,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
 
-            // contacts
+            // vault contacts
             Route::prefix('contacts')->group(function () {
                 Route::get('', [ContactController::class, 'index'])->name('contact.index');
 
@@ -66,9 +67,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
             });
 
-            // settings
+            // vault settings
             Route::middleware(['atLeastVaultManager'])->group(function () {
                 Route::get('settings', [VaultSettingsController::class, 'index'])->name('vault.settings.index');
+                Route::put('settings', [VaultSettingsController::class, 'update'])->name('vault.settings.update');
+                Route::put('settings/template', [VaultSettingsTemplateController::class, 'update'])->name('vault.settings.template.update');
                 Route::delete('', [VaultController::class, 'destroy'])->name('vault.settings.destroy');
             });
         });
