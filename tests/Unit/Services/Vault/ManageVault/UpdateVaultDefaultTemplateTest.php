@@ -6,15 +6,14 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
+use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Vault\ManageVault\UpdateVault;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Template;
-use App\Services\Vault\ManageVault\UpdateVaultDefaultTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Vault\ManageVault\UpdateVaultDefaultTemplate;
 
 class UpdateVaultDefaultTemplateTest extends TestCase
 {

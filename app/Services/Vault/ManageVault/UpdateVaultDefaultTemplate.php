@@ -3,10 +3,10 @@
 namespace App\Services\Vault\ManageVault;
 
 use App\Models\Vault;
+use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
 
 class UpdateVaultDefaultTemplate extends BaseService implements ServiceInterface
 {

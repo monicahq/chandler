@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Vault\Settings;
 
-use Inertia\Inertia;
-use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
-use App\Services\Vault\ManageVault\UpdateVault;
-use App\Services\Vault\ManageVault\UpdateVaultDefaultTemplate;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Vault\ManageVault\UpdateVaultDefaultTemplate;
 
 class VaultSettingsTemplateController extends Controller
 {
