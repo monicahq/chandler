@@ -10,7 +10,6 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Exceptions\SameUserException;
-use App\Exceptions\MaximumNumberOfUsersInVaultException;
 
 class GrantVaultAccessToUser extends BaseService implements ServiceInterface
 {
