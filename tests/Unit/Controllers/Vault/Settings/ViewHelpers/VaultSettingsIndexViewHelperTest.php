@@ -4,11 +4,11 @@ namespace Tests\Unit\Controllers\Vault\Settings\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Vault;
 use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
-use App\Models\User;
 
 class VaultSettingsIndexViewHelperTest extends TestCase
 {
