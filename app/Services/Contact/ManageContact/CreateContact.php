@@ -5,11 +5,11 @@ namespace App\Services\Contact\ManageContact;
 use App\Models\Gender;
 use App\Models\Contact;
 use App\Models\Pronoun;
+use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
@@ -93,7 +93,7 @@ class CreateContact extends BaseService implements ServiceInterface
         // template - if no template is provided, we should use the default
         // template that is in the vault - if it exists.
         $templateId = $this->valueOrNull($this->data, 'template_id');
-        if (!$templateId) {
+        if (! $templateId) {
             $templateId = $this->vault->default_template_id;
         }
 

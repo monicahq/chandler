@@ -7,9 +7,9 @@ use Tests\TestCase;
 use App\Models\Vault;
 use App\Models\Gender;
 use App\Models\Pronoun;
+use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Models\Template;
 
 class ContactCreateViewHelperTest extends TestCase
 {
