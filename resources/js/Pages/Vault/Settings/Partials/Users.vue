@@ -130,7 +130,7 @@
               <!-- view -->
               <div class="flex items-center mb-2">
                 <input id="viewer" v-model="form.permission" value="300" name="permission" type="radio"
-                      class="h-4 w-4 text-sky-500 border-gray-300"
+                       class="h-4 w-4 text-sky-500 border-gray-300"
                 >
                 <label for="viewer" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                   Viewer <span class="text-gray-500 font-normal ml-4">
@@ -142,7 +142,7 @@
               <!-- editor -->
               <div class="flex items-center mb-2">
                 <input id="editor" v-model="form.permission" value="200" name="permission" type="radio"
-                      class="h-4 w-4 text-sky-500 border-gray-300"
+                       class="h-4 w-4 text-sky-500 border-gray-300"
                 >
                 <label for="editor" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                   Editor <span class="text-gray-500 font-normal ml-4">
@@ -154,7 +154,7 @@
               <!-- manager -->
               <div class="flex items-center">
                 <input id="manager" v-model="form.permission" value="100" name="permission" type="radio"
-                      class="h-4 w-4 text-sky-500 border-gray-300"
+                       class="h-4 w-4 text-sky-500 border-gray-300"
                 >
                 <label for="manager" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                   Manager <span class="text-gray-500 font-normal ml-4">
