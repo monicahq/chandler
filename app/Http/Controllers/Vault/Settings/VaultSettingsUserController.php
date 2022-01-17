@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Vault\ManageVaultUsers\RemoveVaultAccess;
 use App\Services\Vault\ManageVaultUsers\GrantVaultAccessToUser;
 use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
+use App\Services\Vault\ManageVaultUsers\ChangeVaultAccess;
 
 class VaultSettingsUserController extends Controller
 {
@@ -29,6 +30,25 @@ class VaultSettingsUserController extends Controller
         return response()->json([
             'data' => VaultSettingsIndexViewHelper::dtoUser($user, $vault),
         ], 201);
+    }
+
+    public function update(Request $request, int $vaultId, int $userId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'user_id' => $userId,
+            'permission' => $request->input('permission'),
+        ];
+
+        $user = (new ChangeVaultAccess)->execute($data);
+
+        $vault = Vault::findOrFail($vaultId);
+
+        return response()->json([
+            'data' => VaultSettingsIndexViewHelper::dtoUser($user, $vault),
+        ], 200);
     }
 
     public function destroy(Request $request, int $vaultId, int $userId)

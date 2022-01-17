@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Vault\Settings\ViewHelpers;
 
+use App\Helpers\VaultHelper;
 use App\Models\User;
 use App\Models\Vault;
+use Tests\Unit\Helpers\VaultHelperTest;
 
 // TODO
 class VaultSettingsIndexViewHelper
@@ -55,6 +57,7 @@ class VaultSettingsIndexViewHelper
         return [
             'id' => $user->id,
             'name' => $user->name,
+            'permission' => VaultHelper::getPermission($user, $vault),
             'url' => [
                 'update' => route('vault.settings.user.update', [
                     'vault' => $vault->id,

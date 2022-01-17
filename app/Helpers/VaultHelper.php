@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\User;
 use App\Models\Vault;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class VaultHelper
@@ -42,12 +43,18 @@ class VaultHelper
      *
      * @param  User  $user
      * @param  Vault  $vault
-     * @return int
+     * @return int|null
      */
-    public static function getPermission(User $user, Vault $vault): int
+    public static function getPermission(User $user, Vault $vault): ?int
     {
-        return DB::table('user_vault')->where('vault_id', $vault->id)
+        $permission = DB::table('user_vault')->where('vault_id', $vault->id)
             ->where('user_id', $user->id)
-            ->select('permission')->first()->permission;
+            ->select('permission')->first();
+
+        if (!$permission) {
+            return null;
+        }
+
+        return $permission->permission;
     }
 }
