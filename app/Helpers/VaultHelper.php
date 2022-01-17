@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\User;
 use App\Models\Vault;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class VaultHelper
@@ -51,7 +50,7 @@ class VaultHelper
             ->where('user_id', $user->id)
             ->select('permission')->first();
 
-        if (!$permission) {
+        if (! $permission) {
             return null;
         }
 

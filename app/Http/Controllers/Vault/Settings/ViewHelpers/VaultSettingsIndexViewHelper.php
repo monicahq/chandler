@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Settings\ViewHelpers;
 
-use App\Helpers\VaultHelper;
 use App\Models\User;
 use App\Models\Vault;
-use Tests\Unit\Helpers\VaultHelperTest;
+use App\Helpers\VaultHelper;
 
 // TODO
 class VaultSettingsIndexViewHelper
