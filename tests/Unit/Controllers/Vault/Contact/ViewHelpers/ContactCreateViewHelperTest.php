@@ -9,6 +9,7 @@ use App\Models\Gender;
 use App\Models\Pronoun;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
+use App\Models\Template;
 
 class ContactCreateViewHelperTest extends TestCase
 {
@@ -18,6 +19,11 @@ class ContactCreateViewHelperTest extends TestCase
     public function it_gets_the_data_needed_for_the_view(): void
     {
         $vault = Vault::factory()->create();
+        $template = Template::factory()->create([
+            'account_id' => $vault->account_id,
+        ]);
+        $vault->default_template_id = $template->id;
+        $vault->save();
         $gender = Gender::factory()->create([
             'account_id' => $vault->account_id,
         ]);
@@ -27,12 +33,13 @@ class ContactCreateViewHelperTest extends TestCase
         $array = ContactCreateViewHelper::data($vault);
 
         $this->assertEquals(
-            3,
+            4,
             count($array)
         );
 
         $this->assertArrayHasKey('genders', $array);
         $this->assertArrayHasKey('pronouns', $array);
+        $this->assertArrayHasKey('templates', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
@@ -43,6 +50,17 @@ class ContactCreateViewHelperTest extends TestCase
                 ],
             ],
             $array['genders']->toArray()
+        );
+
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => $template->id,
+                    'name' => $template->name,
+                    'selected' => true,
+                ],
+            ],
+            $array['templates']->toArray()
         );
 
         $this->assertEquals(
