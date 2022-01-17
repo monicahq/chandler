@@ -20,6 +20,7 @@ class VaultIndexViewHelper
     {
         return [
             'user' => [
+                'id' => Auth::user()->id,
                 'name' => Auth::user()->name,
             ],
             'vault' => $vault ? [

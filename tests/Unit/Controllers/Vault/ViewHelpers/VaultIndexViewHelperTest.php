@@ -28,6 +28,7 @@ class VaultIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'user' => [
+                    'id' => $user->id,
                     'name' => $user->name,
                 ],
                 'vault' => [
