@@ -6,10 +6,10 @@ use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Vault\ManageVaultUsers\ChangeVaultAccess;
 use App\Services\Vault\ManageVaultUsers\RemoveVaultAccess;
 use App\Services\Vault\ManageVaultUsers\GrantVaultAccessToUser;
 use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
-use App\Services\Vault\ManageVaultUsers\ChangeVaultAccess;
 
 class VaultSettingsUserController extends Controller
 {
