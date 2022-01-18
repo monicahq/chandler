@@ -72,7 +72,7 @@ class ContactController extends Controller
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
 
-        if (!$contact->template_id) {
+        if (! $contact->template_id) {
             return redirect()->route('contact.blank', [
                 'vault' => $vaultId,
                 'contact' => $contactId,

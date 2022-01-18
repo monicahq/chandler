@@ -2,9 +2,7 @@
 
 namespace App\Services\Contact\ManageContact;
 
-use App\Models\Gender;
 use App\Models\Contact;
-use App\Models\Pronoun;
 use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;

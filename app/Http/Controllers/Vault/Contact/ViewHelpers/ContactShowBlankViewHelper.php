@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Helpers\NameHelper;
-use App\Helpers\VaultHelper;
 use App\Models\Contact;
-use App\Models\TemplatePage;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Auth;
 
 class ContactShowBlankViewHelper
@@ -16,7 +11,7 @@ class ContactShowBlankViewHelper
     {
         $templates = $contact->vault->account->templates;
 
-        $templatesCollection = $templates->map(function ($template) use ($contact) {
+        $templatesCollection = $templates->map(function ($template) {
             return [
                 'id' => $template->id,
                 'name' => $template->name,
@@ -33,7 +28,7 @@ class ContactShowBlankViewHelper
                     'vault' => $contact->vault->id,
                     'contact' => $contact->id,
                 ]),
-            ]
+            ],
         ];
     }
 }

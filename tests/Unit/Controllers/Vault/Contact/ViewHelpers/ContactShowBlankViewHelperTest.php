@@ -7,10 +7,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
 use App\Models\Template;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
 
 class ContactShowBlankViewHelperTest extends TestCase
 {

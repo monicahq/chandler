@@ -7,16 +7,15 @@ use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Template;
-use App\Services\Contact\ManageContact\UpdateContact;
-use App\Services\Contact\ManageContact\UpdateContactTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Contact\ManageContact\UpdateContactTemplate;
 
 class UpdateContactTemplateTest extends TestCase
 {

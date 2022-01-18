@@ -1474,11 +1474,11 @@ class AuditLogHelperTest extends TestCase
             ]),
         ]);
 
-        $url = env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id;
+        $url = env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id;
         $loggedUser = User::factory()->create();
         $sentence = AuditLogHelper::process($log, $loggedUser);
         $this->assertEquals(
-            'Updated the template used to display the contact <a href="' . $url . '">' . $contact->getName($loggedUser) . '</a>',
+            'Updated the template used to display the contact <a href="'.$url.'">'.$contact->getName($loggedUser).'</a>',
             $sentence
         );
     }
