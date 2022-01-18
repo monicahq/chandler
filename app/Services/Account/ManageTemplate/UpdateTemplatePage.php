@@ -3,9 +3,9 @@
 namespace App\Services\Account\ManageTemplate;
 
 use App\Models\Template;
+use Illuminate\Support\Str;
 use App\Models\TemplatePage;
 use App\Services\BaseService;
-use Illuminate\Support\Str;
 use App\Interfaces\ServiceInterface;
 
 class UpdateTemplatePage extends BaseService implements ServiceInterface
