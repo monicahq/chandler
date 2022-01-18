@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('no-template', [ContactController::class, 'blank'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
-                    Route::get('tab/{page}', [ContactPageController::class, 'show'])->name('contact.page.show');
+                    Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
                 });
             });
 

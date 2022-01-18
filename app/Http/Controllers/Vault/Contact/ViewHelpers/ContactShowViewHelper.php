@@ -7,19 +7,16 @@ use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
+// TODO: unit test
 class ContactShowViewHelper
 {
     public static function data(Contact $contact): array
     {
-        $template = $contact->template;
-
-        if ($template) {
-            $templatePages = $template->pages()->orderBy('position', 'asc')->get();
-        }
+        $templatePages = $contact->template->pages()->orderBy('position', 'asc')->get();
 
         return [
-            'template_pages' => $template ? self::getTemplatePagesList($templatePages, $contact) : null,
-            'contact_information' => $template ? self::getContactInformation($templatePages->first(), $contact) : null,
+            'template_pages' => self::getTemplatePagesList($templatePages, $contact),
+            'contact_information' => self::getContactInformation($templatePages->first(), $contact),
             'url' => [
             ],
         ];
@@ -29,7 +26,7 @@ class ContactShowViewHelper
     {
         $pagesCollection = collect();
         foreach ($templatePages as $page) {
-            if (! $page->can_be_deleted) {
+            if ($page->type == TemplatePage::TYPE_CONTACT) {
                 continue;
             }
 
@@ -40,7 +37,7 @@ class ContactShowViewHelper
                     'show' => route('contact.page.show', [
                         'vault' => $contact->vault->id,
                         'contact' => $contact->id,
-                        'page' => $page->id,
+                        'slug' => $page->slug,
                     ]),
                 ],
             ]);

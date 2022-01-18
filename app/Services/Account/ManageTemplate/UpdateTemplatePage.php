@@ -5,6 +5,7 @@ namespace App\Services\Account\ManageTemplate;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Services\BaseService;
+use Illuminate\Support\Str;
 use App\Interfaces\ServiceInterface;
 
 class UpdateTemplatePage extends BaseService implements ServiceInterface
@@ -58,6 +59,7 @@ class UpdateTemplatePage extends BaseService implements ServiceInterface
             ->findOrFail($data['template_page_id']);
 
         $this->templatePage->name = $data['name'];
+        $this->templatePage->slug = Str::slug($data['name'], '-');
         $this->templatePage->save();
 
         return $this->templatePage;

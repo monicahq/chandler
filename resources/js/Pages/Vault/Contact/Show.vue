@@ -51,7 +51,8 @@
           </div>
 
           <!-- right -->
-          <div class="p-3 sm:p-3 border border-gray-200">
+          <div class="p-3 sm:px-3 sm:py-0">
+
             <!-- all the pages -->
             <div>
               <ul>
@@ -61,6 +62,10 @@
               </ul>
             </div>
 
+            <!-- page content -->
+            <div class="border border-gray-200 rounded-lg">
+
+            </div>
 
             <div class="mb-10">
               <h3 class="font-medium mb-3 border-b border-gray-200">
