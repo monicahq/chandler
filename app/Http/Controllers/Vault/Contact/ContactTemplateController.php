@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers\Vault\Contact;
+
+use Inertia\Inertia;
+use App\Models\Vault;
+use App\Models\Contact;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Contact\ManageContact\CreateContact;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
+use App\Services\Contact\ManageContact\UpdateContactTemplate;
+
+class ContactTemplateController extends Controller
+{
+    public function update(Request $request, int $vaultId, int $contactId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+            'template_id' => $request->input('templateId'),
+        ];
+
+        (new UpdateContactTemplate)->execute($data);
+
+        return response()->json([
+            'data' => route('contact.show', [
+                'vault' => $vaultId,
+                'contact' => $contactId,
+            ]),
+        ], 200);
+    }
+}

@@ -27,6 +27,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\ContactTemplateController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -63,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 // contact page
                 Route::middleware(['contact'])->prefix('{contact}')->group(function () {
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
+                    Route::get('no-template', [ContactController::class, 'blank'])->name('contact.blank');
+                    Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
                     Route::get('tab/{page}', [ContactPageController::class, 'show'])->name('contact.page.show');
                 });
