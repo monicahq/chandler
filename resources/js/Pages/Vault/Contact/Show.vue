@@ -36,14 +36,14 @@
       <div class="max-w-6xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- left -->
-          <div class="p-3 sm:p-3 border border-gray-200 rounded-lg">
+          <div class="p-3 sm:p-3">
             <!-- avatar -->
             <div class="text-center">
               <img class="h-20 w-20 mx-auto rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </div>
 
             <!-- names -->
-            <div>
+            <div class="border border-gray-200 rounded-lg">
               <h1 class="text-lg">
                 Regis Freyd
               </h1>
@@ -52,22 +52,20 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
-
             <!-- all the pages -->
-            <div>
+            <div class="border-b border-gray-200 mb-8">
               <ul>
                 <li v-for="page in data.template_pages" :key="page.id" class="inline mr-2">
-                  <inertia-link :href="page.url.show">{{ page.name }}</inertia-link>
+                  <inertia-link :href="page.url.show" :class="{ 'border-orange-500 hover:border-orange-500' : page.selected }" class="pb-2 px-4 inline-block border-b-2 border-transparent hover:border-gray-200">{{ page.name }}</inertia-link>
                 </li>
               </ul>
             </div>
 
+            <notes :data="data" />
+
             <!-- page content -->
-            <div class="border border-gray-200 rounded-lg">
-
-            </div>
-
             <div class="mb-10">
+
               <h3 class="font-medium mb-3 border-b border-gray-200">
                 <span class="relative">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon-sidebar h-4 w-4 inline relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,10 +108,12 @@
 
 <script>
 import Layout from '@/Shared/Layout';
+import Notes from '@/Shared/Modules/Notes';
 
 export default {
   components: {
     Layout,
+    Notes,
   },
 
   props: {

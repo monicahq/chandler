@@ -7,7 +7,6 @@ use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-// TODO: unit test
 class ContactShowViewHelper
 {
     public static function data(Contact $contact): array
@@ -16,7 +15,7 @@ class ContactShowViewHelper
 
         return [
             'template_pages' => self::getTemplatePagesList($templatePages, $contact),
-            'contact_information' => self::getContactInformation($templatePages->first(), $contact),
+            'contact_information' => self::getContactInformation($templatePages, $contact),
             'url' => [
             ],
         ];
@@ -24,6 +23,10 @@ class ContactShowViewHelper
 
     private static function getTemplatePagesList(EloquentCollection $templatePages, Contact $contact): Collection
     {
+        $templatePages = $templatePages->filter(function ($page) {
+            return $page->type != TemplatePage::TYPE_CONTACT;
+        });
+
         $pagesCollection = collect();
         foreach ($templatePages as $page) {
             if ($page->type == TemplatePage::TYPE_CONTACT) {
@@ -33,6 +36,7 @@ class ContactShowViewHelper
             $pagesCollection->push([
                 'id' => $page->id,
                 'name' => $page->name,
+                'selected' => $page->id === $templatePages->first()->id,
                 'url' => [
                     'show' => route('contact.page.show', [
                         'vault' => $contact->vault->id,
@@ -46,10 +50,10 @@ class ContactShowViewHelper
         return $pagesCollection;
     }
 
-    private static function getContactInformation(TemplatePage $templatePage, Contact $contact): array
+    private static function getContactInformation(EloquentCollection $templatePages, Contact $contact): array
     {
+        $contactInformationPage = $templatePages->where('type', TemplatePage::TYPE_CONTACT)->first();
         return  [
-            'todo',
         ];
     }
 }
