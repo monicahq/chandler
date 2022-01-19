@@ -65,7 +65,6 @@
 
             <!-- page content -->
             <div class="mb-10">
-
               <h3 class="font-medium mb-3 border-b border-gray-200">
                 <span class="relative">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon-sidebar h-4 w-4 inline relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
