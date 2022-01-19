@@ -53,6 +53,7 @@ class ContactShowViewHelper
     private static function getContactInformation(EloquentCollection $templatePages, Contact $contact): array
     {
         $contactInformationPage = $templatePages->where('type', TemplatePage::TYPE_CONTACT)->first();
+
         return  [
         ];
     }

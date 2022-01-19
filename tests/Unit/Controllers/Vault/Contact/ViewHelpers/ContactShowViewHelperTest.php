@@ -4,14 +4,11 @@ namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 use App\Models\TemplatePage;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 
 class ContactShowViewHelperTest extends TestCase
 {
