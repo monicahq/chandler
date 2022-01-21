@@ -28,6 +28,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\Modules\ContactNoteController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -68,6 +69,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
+
+                    // notes
+                    Route::get('notes', [ContactNoteController::class, 'index'])->name('contact.note.index');
+                    Route::post('notes', [ContactNoteController::class, 'store'])->name('contact.note.store');
+                    Route::put('notes/{note}', [ContactNoteController::class, 'update'])->name('contact.note.update');
+                    Route::delete('notes/{note}', [ContactNoteController::class, 'destroy'])->name('contact.note.destroy');
                 });
             });
 

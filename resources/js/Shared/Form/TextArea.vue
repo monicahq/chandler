@@ -33,6 +33,8 @@
                 :class="localTextAreaClasses"
                 :required="required"
                 :type="type"
+                :ref="ref"
+                :autofocus="autofocus"
                 :rows="rows"
                 :maxlength="maxlength"
                 @input="$emit('update:modelValue', $event.target.value)"
@@ -93,9 +95,17 @@ export default {
       type: Number,
       default: 3,
     },
+    autofocus: {
+      type: Boolean,
+      default: false,
+    },
     maxlength: {
       type: Number,
       default: null,
+    },
+    ref: {
+      type: String,
+      default: 'textarea',
     },
   },
 

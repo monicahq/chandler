@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
+use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
 use App\Models\Contact;
+use App\Models\Module;
 use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -13,11 +15,15 @@ class ContactShowViewHelper
     {
         $templatePages = $contact->template->pages()->orderBy('position', 'asc')->get();
 
+        // get the first page to display in this default page
+        $firstPage = $templatePages->filter(function ($page) {
+            return $page->type != TemplatePage::TYPE_CONTACT;
+        })->first();
+
         return [
             'template_pages' => self::getTemplatePagesList($templatePages, $contact),
             'contact_information' => self::getContactInformation($templatePages, $contact),
-            'url' => [
-            ],
+            'modules' => self::modules($firstPage, $contact),
         ];
     }
 
@@ -56,5 +62,28 @@ class ContactShowViewHelper
 
         return  [
         ];
+    }
+
+    /**
+     * Get the modules list and data in the given page.
+     */
+    public static function modules(TemplatePage $page, Contact $contact): Collection
+    {
+        $modules = $page->modules()->orderBy('position', 'asc')->get();
+
+        $modulesCollection = collect();
+        foreach ($modules as $module) {
+            if ($module->type == Module::TYPE_NOTES) {
+                $data = ModuleNotesViewHelper::data($contact);
+            }
+
+            $modulesCollection->push([
+                'id' => $module->id,
+                'type' => $module->type,
+                'data' => $data,
+            ]);
+        }
+
+        return $modulesCollection;
     }
 }

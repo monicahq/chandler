@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Template;
 use App\Models\Attribute;
 use App\Models\Information;
+use App\Models\Module;
 use App\Models\TemplatePage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
@@ -131,7 +132,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_names'),
-            'type' => 'contact_names',
+            'type' => Module::TYPE_CONTACT_NAMES,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage)->execute([
@@ -146,7 +147,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_notes'),
-            'type' => 'notes',
+            'type' => Module::TYPE_NOTES,
             'can_be_deleted' => false,
         ]);
     }

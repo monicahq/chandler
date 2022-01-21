@@ -9,6 +9,7 @@ use App\Models\Template;
 use App\Models\TemplatePage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
+use App\Models\Module;
 
 class ContactShowViewHelperTest extends TestCase
 {
@@ -40,7 +41,7 @@ class ContactShowViewHelperTest extends TestCase
 
         $this->assertArrayHasKey('template_pages', $array);
         $this->assertArrayHasKey('contact_information', $array);
-        $this->assertArrayHasKey('url', $array);
+        $this->assertArrayHasKey('modules', $array);
 
         $this->assertEquals(
             [
@@ -60,6 +61,35 @@ class ContactShowViewHelperTest extends TestCase
             [
             ],
             $array['contact_information']
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_modules_in_a_given_page(): void
+    {
+        $contact = Contact::factory()->create();
+        $templatePage = TemplatePage::factory()->create([
+            'position' => 2,
+        ]);
+        $module = Module::factory()->create([
+            'type' => Module::TYPE_NOTES,
+        ]);
+        $templatePage->modules()->syncWithoutDetaching($module);
+
+        $collection = ContactShowViewHelper::modules($templatePage, $contact);
+
+        $this->assertEquals(
+            1,
+            $collection->count()
+        );
+
+        $this->assertEquals(
+            $module->id,
+            $collection[0]['id']
+        );
+        $this->assertEquals(
+            $module->type,
+            $collection[0]['type']
         );
     }
 }

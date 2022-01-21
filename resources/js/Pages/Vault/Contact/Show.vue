@@ -19,14 +19,14 @@
           <ul class="text-sm">
             <li class="inline mr-2 text-gray-600">You are here:</li>
             <li class="inline mr-2">
-              <inertia-link :href="data.url.back" class="text-sky-500 hover:text-blue-900">Contacts</inertia-link>
+              <inertia-link :href="''" class="text-sky-500 hover:text-blue-900">Contacts</inertia-link>
             </li>
             <li class="inline mr-2 relative">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline relative icon-breadcrumb" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Create a contact</li>
+            <li class="inline">Profile of Regis Freyd</li>
           </ul>
         </div>
       </div>
@@ -61,7 +61,7 @@
               </ul>
             </div>
 
-            <notes :data="data" />
+            <notes :data="notes" />
 
             <!-- page content -->
             <div class="mb-10">
@@ -128,7 +128,12 @@ export default {
 
   data() {
     return {
+      notes: [],
     };
+  },
+
+  created() {
+    this.notes = this.data.modules[this.data.modules.findIndex(x => x.type == 'notes')].data;
   },
 
   methods: {
