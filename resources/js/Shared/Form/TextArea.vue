@@ -29,11 +29,11 @@
 
     <div class="relative">
       <textarea :id="id"
+                :ref="ref"
                 v-model="proxyValue"
                 :class="localTextAreaClasses"
                 :required="required"
                 :type="type"
-                :ref="ref"
                 :autofocus="autofocus"
                 :rows="rows"
                 :maxlength="maxlength"

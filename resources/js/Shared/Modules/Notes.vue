@@ -30,7 +30,9 @@
       <div class="p-5 border-b border-gray-200">
         <errors :errors="form.errors" />
 
-        <text-area v-model="form.body" :label="'Body'" :rows="10" :required="true" :maxlength="65535" :textarea-class="'block w-full mb-3'" />
+        <text-area v-model="form.body" :label="'Body'" :rows="10" :required="true" :maxlength="65535"
+                   :textarea-class="'block w-full mb-3'"
+        />
 
         <!-- cta to add a title -->
         <span v-if="!titleFieldShown" class="text-xs border rounded-lg bg-slate-200 hover:bg-slate-300 px-1 py-1 inline-block cursor-pointer" @click="showTitleField">
@@ -59,10 +61,11 @@
     <!-- notes -->
     <div v-if="localNotes.length > 0">
       <div v-for="note in localNotes" :key="note.id" class="border-gray-200 rounded border last:mb-0 mb-4">
-
         <!-- body of the note, if not being edited -->
         <div v-if="editedNoteId !== note.id">
-          <div v-if="note.title" class="p-3 mb-1 text-xs text-gray-600 font-semibol border-b border-gray-200">{{ note.title }}</div>
+          <div v-if="note.title" class="p-3 mb-1 text-xs text-gray-600 font-semibol border-b border-gray-200">
+            {{ note.title }}
+          </div>
           <div class="p-3">
             {{ note.body }}
           </div>
@@ -97,7 +100,9 @@
           <div class="p-5 border-b border-gray-200">
             <errors :errors="form.errors" />
 
-            <text-area v-model="form.body" :label="'Body'" :rows="10" :required="true" :maxlength="65535" :textarea-class="'block w-full mb-3'" />
+            <text-area v-model="form.body" :label="'Body'" :rows="10" :required="true" :maxlength="65535"
+                       :textarea-class="'block w-full mb-3'"
+            />
 
             <!-- title -->
             <text-input :ref="'newTitle'"
