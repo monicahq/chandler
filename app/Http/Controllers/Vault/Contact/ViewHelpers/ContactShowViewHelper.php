@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
-use App\Models\Contact;
 use App\Models\Module;
+use App\Models\Contact;
 use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
 
 class ContactShowViewHelper
 {

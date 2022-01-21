@@ -3,10 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\User;
+use App\Models\Module;
 use App\Models\Template;
 use App\Models\Attribute;
 use App\Models\Information;
-use App\Models\Module;
 use App\Models\TemplatePage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;

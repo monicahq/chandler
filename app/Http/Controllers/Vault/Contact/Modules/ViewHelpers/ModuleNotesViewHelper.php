@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\ViewHelpers;
 
-use App\Helpers\DateHelper;
-use App\Models\Contact;
 use App\Models\Note;
-use App\Models\Vault;
+use App\Models\Contact;
+use App\Helpers\DateHelper;
 
 class ModuleNotesViewHelper
 {

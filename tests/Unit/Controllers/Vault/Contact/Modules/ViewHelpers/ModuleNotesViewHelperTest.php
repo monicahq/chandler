@@ -3,17 +3,12 @@
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
-use Tests\TestCase;
-use App\Models\Contact;
-use App\Models\Template;
-use App\Models\TemplatePage;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
-use App\Models\Module;
-use App\Models\Note;
 use Carbon\Carbon;
+use Tests\TestCase;
+use App\Models\Note;
+use App\Models\Contact;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
 
 class ModuleNotesViewHelperTest extends TestCase
 {
@@ -65,8 +60,8 @@ class ModuleNotesViewHelperTest extends TestCase
                 'author' => $note->author->name,
                 'written_at' => 'Jan 01, 2018',
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/notes/'.$note->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/notes/'.$note->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/notes/'.$note->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/notes/'.$note->id,
                 ],
             ],
             $collection

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
-use App\Models\Contact;
-use App\Models\Vault;
-use App\Services\Account\ManageLabels\UpdateLabel;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageContact\UpdateContactTemplate;
 use App\Services\Contact\ManageNote\CreateNote;
-use App\Services\Contact\ManageNote\DestroyNote;
 use App\Services\Contact\ManageNote\UpdateNote;
+use App\Services\Contact\ManageNote\DestroyNote;
+use App\Http\Controllers\Vault\Contact\Modules\ViewHelpers\ModuleNotesViewHelper;
 
 class ContactNoteController extends Controller
 {
