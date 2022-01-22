@@ -23,7 +23,7 @@ class ContactShowViewHelper
         return [
             'template_pages' => self::getTemplatePagesList($templatePages, $contact),
             'contact_information' => self::getContactInformation($templatePages, $contact),
-            'modules' => self::modules($firstPage, $contact),
+            'modules' => $firstPage ? self::modules($firstPage, $contact) : [],
         ];
     }
 
