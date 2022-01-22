@@ -22,7 +22,7 @@
 
         Notes
       </div>
-      <pretty-button :text="'Add a note'" :icon="'plus'" @click="showCreateNoteModal" :classes="'sm:w-fit w-full'" />
+      <pretty-button :text="'Add a note'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
     </div>
 
     <!-- add a note modal -->
