@@ -27,7 +27,7 @@
         </div>
         <div v-if="!note.show_full_content" class="p-3">
           {{ note.body_excerpt }}
-          <span @click="showFull(note)" class="text-sky-500 hover:text-blue-900 cursor-pointer">View all</span>
+          <span class="text-sky-500 hover:text-blue-900 cursor-pointer" @click="showFull(note)">View all</span>
         </div>
         <div v-else class="p-3">
           {{ note.body }}
@@ -75,7 +75,7 @@ export default {
 
     return {
       localNotes
-    }
+    };
   },
 
   methods: {
