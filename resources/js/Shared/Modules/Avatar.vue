@@ -2,8 +2,7 @@
 </style>
 
 <template>
-  <div v-html="data">
-  </div>
+  <div v-html="data" />
 </template>
 
 <script>

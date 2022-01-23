@@ -70,7 +70,9 @@
           <!-- excerpt, if it exists -->
           <div v-if="!note.show_full_content && note.body_excerpt" class="p-3">
             {{ note.body_excerpt }}
-            <span class="text-sky-500 hover:text-blue-900 cursor-pointer" @click="showFullBody(note)">View all</span>
+            <span class="text-sky-500 hover:text-blue-900 cursor-pointer" @click="showFullBody(note)">
+              View all
+            </span>
           </div>
           <!-- full body -->
           <div v-else class="p-3">

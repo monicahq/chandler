@@ -23,7 +23,9 @@
       </span>
     </div>
 
-    <h1 class="text-xl">{{ data.name }}</h1>
+    <h1 class="text-xl">
+      {{ data.name }}
+    </h1>
   </div>
 </template>
 

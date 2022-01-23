@@ -46,7 +46,7 @@
             </div>
 
             <ul class="text-sm">
-              <li><span @click="destroy" class="text-sky-500 hover:text-blue-900 cursor-pointer">Delete contact</span></li>
+              <li><span class="text-sky-500 hover:text-blue-900 cursor-pointer" @click="destroy">Delete contact</span></li>
             </ul>
           </div>
 
