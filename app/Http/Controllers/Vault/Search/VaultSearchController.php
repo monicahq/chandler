@@ -6,9 +6,8 @@ use Inertia\Inertia;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\Search\ViewHelpers\VaultSearchIndexViewHelper;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
+use App\Http\Controllers\Vault\Search\ViewHelpers\VaultSearchIndexViewHelper;
 
 class VaultSearchController extends Controller
 {

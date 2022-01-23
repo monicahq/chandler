@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Search\ViewHelpers;
 
-use App\Models\User;
-use App\Models\Vault;
-use App\Helpers\VaultHelper;
-use App\Models\Contact;
 use App\Models\Note;
+use App\Models\Vault;
+use App\Models\Contact;
 use Illuminate\Support\Collection;
 
 class VaultSearchIndexViewHelper
@@ -20,7 +18,7 @@ class VaultSearchIndexViewHelper
                 'search' => route('vault.search.show', [
                     'vault' => $vault->id,
                 ]),
-            ]
+            ],
         ];
     }
 
