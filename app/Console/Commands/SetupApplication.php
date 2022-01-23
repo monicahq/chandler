@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use MeiliSearch\Client;
+use Illuminate\Console\Command;
 
 class SetupApplication extends Command
 {
@@ -51,12 +51,12 @@ class SetupApplication extends Command
         $index = $client->index('contacts');
         $index->updateFilterableAttributes([
             'id',
-            'vault_id'
+            'vault_id',
         ]);
         $index = $client->index('notes');
         $index->updateFilterableAttributes([
             'id',
-            'vault_id'
+            'vault_id',
         ]);
 
         $this->line('✓ Indexes created');
