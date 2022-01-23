@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +42,30 @@ class Contact extends Model
         'can_be_deleted' => 'boolean',
         'last_updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = [
+            'id' => $this->id,
+            'vault_id' => $this->vault_id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'middle_name' => $this->middle_name,
+            'nickname' => $this->nickname,
+            'maiden_name' => $this->maiden_name,
+            'url' => route('contact.show', [
+                'vault' => $this->vault_id,
+                'contact' => $this->id,
+            ]),
+        ];
+
+        return $array;
+    }
 
     /**
      * Get the vault associated with the contact.

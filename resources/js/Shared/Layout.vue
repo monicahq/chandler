@@ -28,7 +28,7 @@ main {
 
           <!-- search box -->
           <div v-if="insideVault" class="flew-grow">
-            <input type="text" class="focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md border border-gray-300 w-64 px-2 py-1" placeholder="Search a contact">
+            <input type="text" class="text-center focus:ring-indigo-500 hover:cursor-pointer focus:border-indigo-500 block sm:text-sm rounded-md border border-gray-300 w-64 px-2 py-1" placeholder="Search something" @focus="goToSearchPage">
           </div>
 
           <!-- icons -->
@@ -137,6 +137,10 @@ export default {
   methods: {
     logout() {
       window.open(this.user.url.logout);
+    },
+
+    goToSearchPage() {
+      this.$inertia.visit(this.layoutData.vault.url.search);
     },
   },
 };

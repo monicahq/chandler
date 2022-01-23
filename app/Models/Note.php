@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Scout\Searchable;
 
 class Note extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +23,24 @@ class Note extends Model
         'title',
         'body',
     ];
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = [
+            'id' => $this->id,
+            'vault_id' => $this->contact->vault_id,
+            'contact_id' => $this->contact->id,
+            'title' => $this->title,
+            'body' => $this->body,
+        ];
+
+        return $array;
+    }
 
     /**
      * Get the contact associated with the note.

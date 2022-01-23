@@ -29,6 +29,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Search\VaultSearchController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -88,6 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('settings/users/{user}', [VaultSettingsUserController::class, 'destroy'])->name('vault.settings.user.destroy');
                 Route::delete('', [VaultController::class, 'destroy'])->name('vault.settings.destroy');
             });
+
+            // search
+            Route::get('search', [VaultSearchController::class, 'index'])->name('vault.search.index');
+            Route::post('search', [VaultSearchController::class, 'show'])->name('vault.search.show');
         });
     });
 
