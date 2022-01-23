@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
+use App\Models\User;
 use App\Models\Module;
 use App\Models\Contact;
 use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarViewHelper;
+use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
 
 class ContactShowViewHelper
 {
@@ -34,7 +33,7 @@ class ContactShowViewHelper
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
-            ]
+            ],
         ];
     }
 

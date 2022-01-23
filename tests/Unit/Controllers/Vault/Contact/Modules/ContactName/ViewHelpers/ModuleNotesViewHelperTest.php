@@ -2,16 +2,11 @@
 
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\Note\ViewHelpers;
 
-use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
-use Illuminate\Support\Str;
-use function env;
-use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Note;
+use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
-use App\Models\User;
+use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
 
 class ModuleContactNameViewHelperTest extends TestCase
 {

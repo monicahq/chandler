@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers;
 
-use App\Models\Note;
-use App\Models\Contact;
-use App\Helpers\DateHelper;
 use App\Models\User;
-use Illuminate\Support\Str;
+use App\Models\Contact;
 
 class ModuleContactNameViewHelper
 {

@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers;
 
-use App\Models\Note;
 use App\Models\Contact;
-use App\Helpers\DateHelper;
-use App\Models\User;
-use Illuminate\Support\Str;
 
 class ModuleAvatarViewHelper
 {

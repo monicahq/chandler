@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\Note\ViewHelpers;
 
-use Illuminate\Support\Str;
 use function env;
 use Carbon\Carbon;
 use Tests\TestCase;
