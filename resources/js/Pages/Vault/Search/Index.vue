@@ -61,6 +61,10 @@
               <inertia-link :href="contact.url" class="text-sky-500 hover:text-blue-900">{{ contact.name }}</inertia-link>
             </li>
           </ul>
+          <!-- blank state -->
+          <div v-else class="bg-white border border-gray-200 rounded-lg mb-6 p-5 text-center text-gray-500">
+            No contacts found.
+          </div>
 
           <!-- notes -->
           <div class="sm:mb-1 mb-2">
@@ -77,6 +81,11 @@
               {{ note.body }}
             </li>
           </ul>
+          <!-- blank state -->
+          <div v-else class="bg-white border border-gray-200 rounded-lg mb-6 p-5 text-center text-gray-500">
+            No notes found.
+          </div>
+
         </div>
       </div>
     </main>

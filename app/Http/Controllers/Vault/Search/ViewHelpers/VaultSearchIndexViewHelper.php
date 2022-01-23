@@ -22,7 +22,7 @@ class VaultSearchIndexViewHelper
         ];
     }
 
-    public static function contacts(Vault $vault, string $term): Collection
+    private static function contacts(Vault $vault, string $term): Collection
     {
         $contacts = Contact::search($term)
             ->where('vault_id', $vault->id)
@@ -42,7 +42,7 @@ class VaultSearchIndexViewHelper
         return $contactsCollection;
     }
 
-    public static function notes(Vault $vault, string $term): Collection
+    private static function notes(Vault $vault, string $term): Collection
     {
         $notes = Note::search($term)
             ->where('vault_id', $vault->id)
