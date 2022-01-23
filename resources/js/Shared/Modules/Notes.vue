@@ -66,9 +66,18 @@
           <div v-if="note.title" class="p-3 mb-1 text-xs text-gray-600 font-semibol border-b border-gray-200">
             {{ note.title }}
           </div>
-          <div class="p-3">
+
+          <!-- excerpt, if it exists -->
+          <div v-if="!note.show_full_content && note.body_excerpt" class="p-3">
+            {{ note.body_excerpt }}
+            <span class="text-sky-500 hover:text-blue-900 cursor-pointer" @click="showFullBody(note)">View all</span>
+          </div>
+          <!-- full body -->
+          <div v-else class="p-3">
             {{ note.body }}
           </div>
+
+          <!-- details -->
           <div class="border-t border-gray-200 flex justify-between text-xs text-gray-600 px-3 py-2 hover:bg-slate-50 hover:rounded-b">
             <div>
               <!-- date -->
@@ -200,6 +209,10 @@ export default {
       this.$nextTick(() => {
         this.$refs.newTitle.focus();
       });
+    },
+
+    showFullBody(note) {
+      this.localNotes[this.localNotes.findIndex(x => x.id === note.id)].show_full_content = true;
     },
 
     submit() {

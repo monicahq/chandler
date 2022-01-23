@@ -19,35 +19,35 @@
           <ul class="text-sm">
             <li class="inline mr-2 text-gray-600">You are here:</li>
             <li class="inline mr-2">
-              <inertia-link :href="''" class="text-sky-500 hover:text-blue-900">Contacts</inertia-link>
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">Contacts</inertia-link>
             </li>
             <li class="inline mr-2 relative">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline relative icon-breadcrumb" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Profile of Regis Freyd</li>
+            <li class="inline">Profile of {{ data.contact_name.name }}</li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main class="sm:mt-20 relative">
+    <main class="sm:mt-18 relative">
       <div class="max-w-6xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- left -->
           <div class="p-3 sm:p-3">
-            <!-- avatar -->
-            <div class="text-center">
-              <img class="h-20 w-20 mx-auto rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+            <div v-if="data.contact_information.length > 0" class="mb-8">
+              <div v-for="module in data.contact_information" :key="module.id">
+                <avatar v-if="module.type == 'avatar'" :data="avatar" />
+
+                <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
+              </div>
             </div>
 
-            <!-- names -->
-            <div class="border border-gray-200 rounded-lg">
-              <h1 class="text-lg">
-                Regis Freyd
-              </h1>
-            </div>
+            <ul class="text-sm">
+              <li><span @click="destroy" class="text-sky-500 hover:text-blue-900 cursor-pointer">Delete contact</span></li>
+            </ul>
           </div>
 
           <!-- right -->
@@ -76,11 +76,15 @@
 
 <script>
 import Layout from '@/Shared/Layout';
+import ContactName from '@/Shared/Modules/ContactName';
+import Avatar from '@/Shared/Modules/Avatar';
 import Notes from '@/Shared/Modules/Notes';
 
 export default {
   components: {
     Layout,
+    ContactName,
+    Avatar,
     Notes,
   },
 
@@ -97,17 +101,43 @@ export default {
 
   data() {
     return {
+      avatar: [],
+      contactName: [],
       notes: [],
     };
   },
 
   created() {
+    if (this.data.contact_information.length > 0) {
+      if (this.data.contact_information.findIndex(x => x.type == 'contact_names') > -1) {
+        this.contactName = this.data.contact_information[this.data.contact_information.findIndex(x => x.type == 'contact_names')].data;
+      }
+
+      if (this.data.contact_information.findIndex(x => x.type == 'avatar') > -1) {
+        this.avatar = this.data.contact_information[this.data.contact_information.findIndex(x => x.type == 'avatar')].data;
+      }
+    }
+
     if (this.data.modules.length > 0) {
       this.notes = this.data.modules[this.data.modules.findIndex(x => x.type == 'notes')].data;
     }
   },
 
   methods: {
+    destroy() {
+      if(confirm('Are you sure? This will remove everything we know about this contact.')) {
+
+        axios.delete(this.data.url.destroy)
+          .then(response => {
+            localStorage.success = 'The contact has been deleted';
+            this.$inertia.visit(response.data.data);
+          })
+          .catch(error => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+      }
+    }
   },
 };
 </script>

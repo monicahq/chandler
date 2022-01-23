@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\ViewHelpers;
+namespace App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers;
 
 use App\Models\Note;
 use App\Models\Contact;
 use App\Helpers\DateHelper;
+use Illuminate\Support\Str;
 
 class ModuleNotesViewHelper
 {
@@ -35,6 +36,8 @@ class ModuleNotesViewHelper
         return [
             'id' => $note->id,
             'body' => $note->body,
+            'body_excerpt' => Str::length($note->body) >= 200 ? Str::limit($note->body, 200) : null,
+            'show_full_content' => false,
             'title' => $note->title,
             'author' => $note->author ? $note->author->name : $note->author_name,
             'written_at' => DateHelper::formatDate($note->created_at),

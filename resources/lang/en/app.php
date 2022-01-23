@@ -77,5 +77,6 @@ return [
     'group_type_roomates' => 'Roomates',
 
     'module_names' => 'Contact name',
+    'module_avatar' => 'Avatar',
     'module_notes' => 'Notes',
 ];

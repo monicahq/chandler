@@ -14,6 +14,7 @@ use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
+use App\Services\Contact\ManageContact\DestroyContact;
 
 class ContactController extends Controller
 {
@@ -81,7 +82,7 @@ class ContactController extends Controller
 
         return Inertia::render('Vault/Contact/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => ContactShowViewHelper::data($contact),
+            'data' => ContactShowViewHelper::data($contact, Auth::user()),
         ]);
     }
 
@@ -94,5 +95,23 @@ class ContactController extends Controller
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'data' => ContactShowBlankViewHelper::data($contact),
         ]);
+    }
+
+    public function destroy(Request $request, int $vaultId, int $contactId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+        ];
+
+        (new DestroyContact)->execute($data);
+
+        return response()->json([
+            'data' => route('contact.index', [
+                'vault' => $vaultId,
+            ]),
+        ], 200);
     }
 }

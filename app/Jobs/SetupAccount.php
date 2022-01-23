@@ -101,24 +101,19 @@ class SetupAccount implements ShouldQueue
      */
     private function addTemplatePages(): void
     {
-        $request = [
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_contact_information'),
-            'can_be_deleted' => false,
-            'type' => TemplatePage::TYPE_CONTACT,
-        ];
-        $this->templatePageContact = (new CreateTemplatePage)->execute($request);
+        // the contact information page is automatically created when we
+        // create the template
+        $this->templatePageContact = TemplatePage::where('template_id', $this->template->id)
+            ->where('type', TemplatePage::TYPE_CONTACT)
+            ->first();
 
-        $request = [
+        (new CreateTemplatePage)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_social'),
             'can_be_deleted' => true,
-        ];
-        (new CreateTemplatePage)->execute($request);
+        ]);
     }
 
     /**
@@ -128,6 +123,20 @@ class SetupAccount implements ShouldQueue
      */
     private function addModules(): void
     {
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_avatar'),
+            'type' => Module::TYPE_AVATAR,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $this->templatePageContact->id,
+            'module_id' => $module->id,
+        ]);
         $module = (new CreateModule)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,

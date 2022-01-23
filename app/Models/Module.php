@@ -15,6 +15,7 @@ class Module extends Model
      */
     const TYPE_NOTES = 'notes';
     const TYPE_CONTACT_NAMES = 'contact_names';
+    const TYPE_AVATAR = 'avatar';
 
     /**
      * The attributes that are mass assignable.
