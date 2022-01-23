@@ -45,47 +45,21 @@
           </div>
         </form>
 
-        <div v-if="Object.keys(results).length !== 0">
-          <!-- contacts -->
-          <div class="sm:mb-1 mb-2">
-            <span class="relative">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon-sidebar h-4 w-4 inline relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </span>
+        <!-- search results -->
+        <div v-if="!processingSearch && Object.keys(results).length !== 0">
+          <contact :data="results.contacts" />
 
-            Contacts
-          </div>
-          <ul v-if="results.contacts.length > 0" class="bg-white border border-gray-200 rounded-lg mb-6">
-            <li v-for="contact in results.contacts" :key="contact.id" class="p-3 border-b border-gray-200 hover:bg-slate-50 item-list">
-              <inertia-link :href="contact.url" class="text-sky-500 hover:text-blue-900">{{ contact.name }}</inertia-link>
-            </li>
-          </ul>
-          <!-- blank state -->
-          <div v-else class="bg-white border border-gray-200 rounded-lg mb-6 p-5 text-center text-gray-500">
-            No contacts found.
-          </div>
+          <note :data="results.notes" />
+        </div>
 
-          <!-- notes -->
-          <div class="sm:mb-1 mb-2">
-            <span class="relative">
-              <svg class="icon-sidebar h-4 w-4 inline relative" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 6C6 5.44772 6.44772 5 7 5H17C17.5523 5 18 5.44772 18 6C18 6.55228 17.5523 7 17 7H7C6.44771 7 6 6.55228 6 6Z" fill="currentColor" /><path d="M6 10C6 9.44771 6.44772 9 7 9H17C17.5523 9 18 9.44771 18 10C18 10.5523 17.5523 11 17 11H7C6.44771 11 6 10.5523 6 10Z" fill="currentColor" /><path d="M7 13C6.44772 13 6 13.4477 6 14C6 14.5523 6.44771 15 7 15H17C17.5523 15 18 14.5523 18 14C18 13.4477 17.5523 13 17 13H7Z" fill="currentColor" /><path d="M6 18C6 17.4477 6.44772 17 7 17H11C11.5523 17 12 17.4477 12 18C12 18.5523 11.5523 19 11 19H7C6.44772 19 6 18.5523 6 18Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M2 4C2 2.34315 3.34315 1 5 1H19C20.6569 1 22 2.34315 22 4V20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V4ZM5 3H19C19.5523 3 20 3.44771 20 4V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44771 3 5 3Z" fill="currentColor" />
-              </svg>
-            </span>
+        <!-- searching results -->
+        <div v-if="processingSearch" class="bg-white border border-gray-200 rounded-lg mb-6 p-6 text-center text-gray-500">
+          <loading />
+        </div>
 
-            Notes
-          </div>
-          <ul v-if="results.notes.length > 0">
-            <li v-for="note in results.notes" :key="note.id">
-              {{ note.body }}
-            </li>
-          </ul>
-          <!-- blank state -->
-          <div v-else class="bg-white border border-gray-200 rounded-lg mb-6 p-5 text-center text-gray-500">
-            No notes found.
-          </div>
-
+        <!-- not enough characters -->
+        <div v-if="form.searchTerm.length < 3" class="bg-white border border-gray-200 rounded-lg mb-6 p-6 text-center text-gray-500">
+          <p>Please enter at least 3 characters to initiate a search.</p>
         </div>
       </div>
     </main>
@@ -95,11 +69,17 @@
 <script>
 import Layout from '@/Shared/Layout';
 import TextInput from '@/Shared/Form/TextInput';
+import Contact from '@/Pages/Vault/Search/Partials/Contact';
+import Note from '@/Pages/Vault/Search/Partials/Note';
+import Loading from '@/Shared/Loading';
 
 export default {
   components: {
     Layout,
     TextInput,
+    Contact,
+    Note,
+    Loading,
   },
 
   props: {
@@ -134,7 +114,7 @@ export default {
     search: _.debounce(
 
       function () {
-        if (this.form.searchTerm != '') {
+        if (this.form.searchTerm != '' && this.form.searchTerm.length >= 3) {
           this.processingSearch = true;
 
           axios.post(this.data.url.search, this.form)

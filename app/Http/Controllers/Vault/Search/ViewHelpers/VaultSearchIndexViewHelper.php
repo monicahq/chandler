@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Vault\Search\ViewHelpers;
 
+use App\Helpers\DateHelper;
 use App\Models\Note;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class VaultSearchIndexViewHelper
 {
@@ -31,7 +33,7 @@ class VaultSearchIndexViewHelper
         $contactsCollection = $contacts->map(function (Contact $contact) {
             return [
                 'id' => $contact->id,
-                'name' => $contact->first_name.' '.$contact->last_name.' ('.$contact->nickname.')'.' '.$contact->maiden_name.' '.$contact->middle_name,
+                'name' => $contact->first_name.' '.$contact->last_name.' '.$contact->nickname.' '.$contact->maiden_name.' '.$contact->middle_name,
                 'url' => route('contact.show', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -48,11 +50,22 @@ class VaultSearchIndexViewHelper
             ->where('vault_id', $vault->id)
             ->get();
 
-        $notesCollection = $notes->map(function (Note $note) {
+        $notesCollection = $notes->map(function (Note $note) use ($vault) {
             return [
                 'id' => $note->id,
                 'title' => $note->title,
                 'body' => $note->body,
+                'body_excerpt' => Str::limit($note->body, 100),
+                'show_full_content' => false,
+                'written_at' => DateHelper::formatDate($note->created_at),
+                'contact' => [
+                    'id' => $note->contact_id,
+                    'name' => $note->contact->first_name.' '.$note->contact->last_name.' '.$note->contact->nickname.' '.$note->contact->maiden_name.' '.$note->contact->middle_name,
+                    'url' => route('contact.show', [
+                        'vault' => $vault->id,
+                        'contact' => $note->contact_id,
+                    ]),
+                ],
             ];
         });
 

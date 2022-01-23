@@ -57,6 +57,7 @@ class SetupApplication extends Command
         $index->updateFilterableAttributes([
             'id',
             'vault_id',
+            'contact_id',
         ]);
 
         $this->line('✓ Indexes created');
