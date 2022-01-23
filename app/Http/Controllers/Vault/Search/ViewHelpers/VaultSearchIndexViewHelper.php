@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Vault\Search\ViewHelpers;
 
-use App\Helpers\DateHelper;
 use App\Models\Note;
 use App\Models\Vault;
 use App\Models\Contact;
-use Illuminate\Support\Collection;
+use App\Helpers\DateHelper;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 class VaultSearchIndexViewHelper
 {

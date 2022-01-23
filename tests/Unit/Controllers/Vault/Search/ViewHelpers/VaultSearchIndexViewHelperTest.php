@@ -3,16 +3,12 @@
 namespace Tests\Unit\Controllers\Vault\Settings\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Search\ViewHelpers\VaultSearchIndexViewHelper;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Vault;
-use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
-use App\Models\Contact;
 use App\Models\Note;
+use App\Models\Vault;
+use App\Models\Contact;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Search\ViewHelpers\VaultSearchIndexViewHelper;
 
 class VaultSearchIndexViewHelperTest extends TestCase
 {
@@ -47,7 +43,7 @@ class VaultSearchIndexViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'search' => env('APP_URL') . '/vaults/' . $vault->id . '/search',
+                'search' => env('APP_URL').'/vaults/'.$vault->id.'/search',
             ],
             $array['url']
         );
@@ -57,7 +53,7 @@ class VaultSearchIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => $contact->id,
                     'name' => 'John Doe Johnny Doe Doe',
-                    'url' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $contact->id,
+                    'url' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id,
                 ],
             ],
             $array['contacts']->toArray()
