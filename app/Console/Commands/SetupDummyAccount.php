@@ -2,17 +2,16 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Contact;
-use App\Models\Template;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Vault;
-use App\Services\Account\ManageAccount\CreateAccount;
-use App\Services\Contact\ManageContact\CreateContact;
+use App\Models\Contact;
+use Faker\Factory as Faker;
+use Illuminate\Console\Command;
 use App\Services\Contact\ManageNote\CreateNote;
 use App\Services\Vault\ManageVault\CreateVault;
-use Carbon\Carbon;
-use Illuminate\Console\Command;
-use Faker\Factory as Faker;
+use App\Services\Account\ManageAccount\CreateAccount;
+use App\Services\Contact\ManageContact\CreateContact;
 
 class SetupDummyAccount extends Command
 {
@@ -61,7 +60,7 @@ class SetupDummyAccount extends Command
 
     private function start(): void
     {
-        if (!$this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
+        if (! $this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
             exit;
         }
 
@@ -95,7 +94,7 @@ class SetupDummyAccount extends Command
         $this->line('| username: blank@blank.com');
         $this->line('| password: blank123');
         $this->line('|------------------------–––-');
-        $this->line('| URL:      ' . config('app.url'));
+        $this->line('| URL:      '.config('app.url'));
         $this->line('-----------------------------');
 
         $this->info('Setup is done. Have fun.');
@@ -129,7 +128,7 @@ class SetupDummyAccount extends Command
                 'author_id' => $this->user->id,
                 'type' => Vault::TYPE_PERSONAL,
                 'name' => $this->faker->firstName,
-                'description' => rand(1,2) == 1 ? $this->faker->sentence() : null,
+                'description' => rand(1, 2) == 1 ? $this->faker->sentence() : null,
             ]);
         }
     }
@@ -146,7 +145,7 @@ class SetupDummyAccount extends Command
                     'vault_id' => $vault->id,
                     'first_name' => $this->faker->firstName(),
                     'last_name' => $this->faker->lastName(),
-                    'middle_name' => rand(1,2) == 1 ? $this->faker->lastName() : null,
+                    'middle_name' => rand(1, 2) == 1 ? $this->faker->lastName() : null,
                     'nickname' => null,
                     'maiden_name' => null,
                 ]);
@@ -165,7 +164,7 @@ class SetupDummyAccount extends Command
                     'author_id' => $this->user->id,
                     'vault_id' => $contact->vault_id,
                     'contact_id' => $contact->id,
-                    'title' => rand(1,2) == 1 ? $this->faker->sentence(rand(3,6)) : null,
+                    'title' => rand(1, 2) == 1 ? $this->faker->sentence(rand(3, 6)) : null,
                     'body' => $this->faker->paragraph(),
                 ]);
             }

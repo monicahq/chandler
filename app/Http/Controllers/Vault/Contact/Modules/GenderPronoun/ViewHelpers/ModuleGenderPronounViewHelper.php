@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers;
 
-use App\Models\User;
 use App\Models\Contact;
 
 class ModuleGenderPronounViewHelper
