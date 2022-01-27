@@ -4,15 +4,13 @@ namespace Tests\Unit\Controllers\Vault\Contact\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Vault;
 use App\Models\Gender;
-use App\Models\Pronoun;
-use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactEditViewHelper;
 use App\Models\Contact;
-use App\Models\User;
+use App\Models\Pronoun;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactEditViewHelper;
 
 class ContactEditViewHelperTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Contact\ViewHelpers;
 
-use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Contact;
 
 class ContactEditViewHelper
 {

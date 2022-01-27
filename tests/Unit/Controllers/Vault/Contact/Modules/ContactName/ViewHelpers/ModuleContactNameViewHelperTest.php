@@ -31,7 +31,7 @@ class ModuleContactNameViewHelperTest extends TestCase
             [
                 'name' => $contact->getName($user),
                 'url' => [
-                    'edit' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/edit',
+                    'edit' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/edit',
                 ],
             ],
             $array

@@ -42,7 +42,7 @@ class ModuleGenderPronounViewHelperTest extends TestCase
                 'gender' => 'gender',
                 'pronoun' => 'pronoun',
                 'url' => [
-                    'edit' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/edit',
+                    'edit' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/edit',
                 ],
             ],
             $array
