@@ -66,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 // contact page
                 Route::middleware(['contact'])->prefix('{contact}')->group(function () {
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
+                    Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
+                    Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
                     Route::get('no-template', [ContactController::class, 'blank'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');

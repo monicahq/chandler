@@ -2,7 +2,7 @@
 </style>
 
 <template>
-  <div v-html="data" class="mb-6" />
+  <div class="mb-6" v-html="data" />
 </template>
 
 <script>
