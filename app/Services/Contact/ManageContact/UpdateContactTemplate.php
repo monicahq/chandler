@@ -2,13 +2,13 @@
 
 namespace App\Services\Contact\ManageContact;
 
+use Carbon\Carbon;
 use App\Models\Contact;
 use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
 
 class UpdateContactTemplate extends BaseService implements ServiceInterface
 {

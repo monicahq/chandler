@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\AssignLabel;
 
+use Carbon\Carbon;
 use App\Models\Label;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
 
 class RemoveLabel extends BaseService implements ServiceInterface
 {

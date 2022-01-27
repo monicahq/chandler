@@ -2,16 +2,15 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Address;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\Label;
 use App\Models\Gender;
+use App\Models\Address;
 use App\Models\Contact;
 use App\Models\Pronoun;
 use App\Models\Template;
 use App\Models\ContactLog;
-use App\Models\ContactAddress;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

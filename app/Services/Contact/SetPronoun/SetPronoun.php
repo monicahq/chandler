@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\SetPronoun;
 
+use Carbon\Carbon;
 use App\Models\Pronoun;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
 
 class SetPronoun extends BaseService implements ServiceInterface
 {

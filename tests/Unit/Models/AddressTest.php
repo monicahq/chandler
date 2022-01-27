@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Address;
 use Tests\TestCase;
-use App\Models\AddressType;
+use App\Models\Address;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AddressTest extends TestCase

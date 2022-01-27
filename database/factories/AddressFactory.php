@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Address;
-use App\Models\AddressType;
 use App\Models\Contact;
-use App\Models\Place;
+use App\Models\AddressType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AddressFactory extends Factory

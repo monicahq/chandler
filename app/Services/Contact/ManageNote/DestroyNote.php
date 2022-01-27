@@ -2,12 +2,12 @@
 
 namespace App\Services\Contact\ManageNote;
 
+use Carbon\Carbon;
 use App\Models\Note;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
 
 class DestroyNote extends BaseService implements ServiceInterface
 {

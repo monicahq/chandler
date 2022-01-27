@@ -2,6 +2,7 @@
 
 namespace App\Services\Contact\ManageContact;
 
+use Carbon\Carbon;
 use App\Models\Gender;
 use App\Models\Contact;
 use App\Models\Pronoun;
@@ -10,7 +11,6 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use Carbon\Carbon;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
