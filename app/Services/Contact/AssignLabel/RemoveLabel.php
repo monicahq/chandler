@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class RemoveLabel extends BaseService implements ServiceInterface
 {
@@ -56,6 +57,9 @@ class RemoveLabel extends BaseService implements ServiceInterface
             ->findOrFail($data['label_id']);
 
         $this->contact->labels()->detach($this->label);
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         $this->log();
     }

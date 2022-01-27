@@ -8,6 +8,7 @@ use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class CreateNote extends BaseService implements ServiceInterface
 {
@@ -62,6 +63,9 @@ class CreateNote extends BaseService implements ServiceInterface
             'title' => $this->valueOrNull($data, 'title'),
             'body' => $data['body'],
         ]);
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         $this->log();
 

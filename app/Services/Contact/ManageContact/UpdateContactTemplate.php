@@ -8,6 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class UpdateContactTemplate extends BaseService implements ServiceInterface
 {
@@ -73,6 +74,7 @@ class UpdateContactTemplate extends BaseService implements ServiceInterface
     private function update(): void
     {
         $this->contact->template_id = $this->data['template_id'];
+        $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
     }
 

@@ -122,9 +122,9 @@ class CreateContactAddressTest extends TestCase
 
         $address = (new CreateContactAddress)->execute($request);
 
-        $this->assertDatabaseHas('places', [
-            'placeable_id' => $address->id,
-            'placeable_type' => 'App\Models\ContactAddress',
+        $this->assertDatabaseHas('addresses', [
+            'contact_id' => $contact->id,
+            'address_type_id' => $type->id,
             'street' => '123 rue',
             'city' => 'paris',
             'province' => '67',
@@ -132,11 +132,6 @@ class CreateContactAddressTest extends TestCase
             'country' => 'FRA',
             'latitude' => 12345,
             'longitude' => 12345,
-        ]);
-
-        $this->assertDatabaseHas('contact_addresses', [
-            'contact_id' => $contact->id,
-            'address_type_id' => $type->id,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {

@@ -2,13 +2,14 @@
 
 namespace App\Services\Contact\ManageContact;
 
-use App\Models\Gender;
 use App\Models\Contact;
-use App\Models\Pronoun;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use App\Models\Gender;
+use App\Models\Pronoun;
+use Carbon\Carbon;
 
 class UpdateContact extends BaseService implements ServiceInterface
 {
@@ -79,6 +80,7 @@ class UpdateContact extends BaseService implements ServiceInterface
         } else {
             $this->contact->pronoun_id = null;
         }
+        $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
         $this->log();

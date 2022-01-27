@@ -10,6 +10,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
@@ -107,6 +108,7 @@ class CreateContact extends BaseService implements ServiceInterface
             'gender_id' => $this->valueOrNull($this->data, 'gender_id'),
             'pronoun_id' => $this->valueOrNull($this->data, 'pronoun_id'),
             'template_id' => $templateId,
+            'last_updated_at' => Carbon::now(),
         ]);
     }
 

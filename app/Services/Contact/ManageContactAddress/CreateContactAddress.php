@@ -9,10 +9,10 @@ use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactAddress;
 use App\Interfaces\ServiceInterface;
+use App\Models\Address;
 
 class CreateContactAddress extends BaseService implements ServiceInterface
 {
-    private ContactAddress $contactAddress;
     private AddressType $addressType;
 
     /**
@@ -35,6 +35,8 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'country' => 'nullable|string|max:3',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'lived_from_at' => 'nullable|date_format:Y-m-d',
+            'lived_until_at' => 'nullable|date_format:Y-m-d',
         ];
     }
 
@@ -57,16 +59,18 @@ class CreateContactAddress extends BaseService implements ServiceInterface
      * Create a contact address.
      *
      * @param  array  $data
-     * @return ContactAddress
+     * @return Address
      */
-    public function execute(array $data): ContactAddress
+    public function execute(array $data): Address
     {
         $this->validateRules($data);
 
         $this->addressType = AddressType::where('account_id', $data['account_id'])
             ->findOrFail($data['address_type_id']);
 
-        $place = Place::create([
+        $address = Address::create([
+            'contact_id' => $data('contact_id'),
+            'address_type_id' => $this->valueOrNull($data, 'address_type_id'),
             'street' => $this->valueOrNull($data, 'street'),
             'city' => $this->valueOrNull($data, 'city'),
             'province' => $this->valueOrNull($data, 'province'),
@@ -74,18 +78,13 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'country' => $this->valueOrNull($data, 'country'),
             'latitude' => $this->valueOrNull($data, 'latitude'),
             'longitude' => $this->valueOrNull($data, 'longitude'),
+            'lived_from_at' => $this->valueOrNull($data, 'lived_from_at'),
+            'lived_until_at' => $this->valueOrNull($data, 'lived_until_at'),
         ]);
-
-        $this->contactAddress = ContactAddress::create([
-            'contact_id' => $this->contact->id,
-            'address_type_id' => $this->addressType->id,
-        ]);
-
-        $this->contactAddress->place()->save($place);
 
         $this->log();
 
-        return $this->contactAddress;
+        return $address;
     }
 
     private function log(): void

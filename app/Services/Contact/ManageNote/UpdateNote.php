@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class UpdateNote extends BaseService implements ServiceInterface
 {
@@ -61,6 +62,9 @@ class UpdateNote extends BaseService implements ServiceInterface
         $this->note->body = $data['body'];
         $this->note->title = $this->valueOrNull($data, 'title');
         $this->note->save();
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         $this->log();
 

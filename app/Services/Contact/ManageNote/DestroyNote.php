@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class DestroyNote extends BaseService implements ServiceInterface
 {
@@ -58,6 +59,9 @@ class DestroyNote extends BaseService implements ServiceInterface
         $this->removeContactFeedItem();
 
         $this->note->delete();
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         $this->log();
     }

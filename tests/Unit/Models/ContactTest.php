@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Address;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\Label;
@@ -103,14 +104,14 @@ class ContactTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_contact_addresses(): void
+    public function it_has_many_addresses(): void
     {
         $ross = Contact::factory()->create();
-        ContactAddress::factory()->count(2)->create([
+        Address::factory()->count(2)->create([
             'contact_id' => $ross->id,
         ]);
 
-        $this->assertTrue($ross->contactAddresses()->exists());
+        $this->assertTrue($ross->addresses()->exists());
     }
 
     /** @test */

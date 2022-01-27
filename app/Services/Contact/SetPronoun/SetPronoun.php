@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class SetPronoun extends BaseService implements ServiceInterface
 {
@@ -56,6 +57,7 @@ class SetPronoun extends BaseService implements ServiceInterface
             ->findOrFail($data['pronoun_id']);
 
         $this->contact->pronoun_id = $this->pronoun->id;
+        $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
         $this->log();
