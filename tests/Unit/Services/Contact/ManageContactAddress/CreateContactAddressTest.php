@@ -13,6 +13,7 @@ use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Models\Address;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Contact\ManageContactAddress\CreateContactAddress;
@@ -133,6 +134,11 @@ class CreateContactAddressTest extends TestCase
             'latitude' => 12345,
             'longitude' => 12345,
         ]);
+
+        $this->assertInstanceOf(
+            Address::class,
+            $address
+        );
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
             return $job->auditLog['action_name'] === 'contact_address_created';

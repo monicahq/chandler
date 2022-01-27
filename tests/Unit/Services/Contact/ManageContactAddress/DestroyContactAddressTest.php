@@ -15,6 +15,7 @@ use App\Models\ContactAddress;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Models\Address;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Contact\ManageContactAddress\DestroyContactAddress;
@@ -30,17 +31,11 @@ class DestroyContactAddressTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
-        $address = ContactAddress::factory()->create([
-            'address_type_id' => $type->id,
+        $address = Address::factory()->create([
             'contact_id' => $contact->id,
         ]);
-        Place::factory()->create([
-            'placeable_id' => $address->id,
-            'placeable_type' => 'App\Models\ContactAddress',
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $address);
+        $this->executeService($regis, $regis->account, $vault, $contact, $address);
     }
 
     /** @test */
@@ -64,13 +59,11 @@ class DestroyContactAddressTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
-        $address = ContactAddress::factory()->create([
-            'address_type_id' => $type->id,
+        $address = Address::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
-        $this->executeService($regis, $account, $vault, $contact, $type, $address);
+        $this->executeService($regis, $account, $vault, $contact, $address);
     }
 
     /** @test */
@@ -82,13 +75,11 @@ class DestroyContactAddressTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
-        $address = ContactAddress::factory()->create([
-            'address_type_id' => $type->id,
+        $address = Address::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $address);
+        $this->executeService($regis, $regis->account, $vault, $contact, $address);
     }
 
     /** @test */
@@ -100,17 +91,15 @@ class DestroyContactAddressTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
-        $address = ContactAddress::factory()->create([
-            'address_type_id' => $type->id,
+        $address = Address::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $address);
+        $this->executeService($regis, $regis->account, $vault, $contact, $address);
     }
 
     /** @test */
-    public function it_fails_if_type_is_not_in_the_account(): void
+    public function it_fails_if_address_does_not_exist(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
@@ -118,31 +107,12 @@ class DestroyContactAddressTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = AddressType::factory()->create();
-        $address = ContactAddress::factory()->create([
-            'address_type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
+        $address = Address::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $address);
+        $this->executeService($regis, $regis->account, $vault, $contact, $address);
     }
 
-    /** @test */
-    public function it_fails_if_information_does_not_exist(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = AddressType::factory()->create();
-        $address = ContactAddress::factory()->create();
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $address);
-    }
-
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, AddressType $type, ContactAddress $address): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Address $address): void
     {
         Queue::fake();
 
@@ -151,13 +121,12 @@ class DestroyContactAddressTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'address_type_id' => $type->id,
-            'contact_address_id' => $address->id,
+            'address_id' => $address->id,
         ];
 
         (new DestroyContactAddress)->execute($request);
 
-        $this->assertDatabaseMissing('contact_addresses', [
+        $this->assertDatabaseMissing('addresses', [
             'id' => $address->id,
         ]);
 

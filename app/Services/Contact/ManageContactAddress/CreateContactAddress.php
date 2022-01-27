@@ -8,6 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class CreateContactAddress extends BaseService implements ServiceInterface
 {
@@ -25,7 +26,7 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'address_type_id' => 'required|integer|exists:address_types,id',
+            'address_type_id' => 'nullable|integer|exists:address_types,id',
             'street' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'province' => 'nullable|string|max:255',
@@ -63,11 +64,13 @@ class CreateContactAddress extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->addressType = AddressType::where('account_id', $data['account_id'])
-            ->findOrFail($data['address_type_id']);
+        if ($this->valueOrNull($data, 'address_type_id')) {
+            $this->addressType = AddressType::where('account_id', $data['account_id'])
+                ->findOrFail($data['address_type_id']);
+        }
 
         $address = Address::create([
-            'contact_id' => $data('contact_id'),
+            'contact_id' => $data['contact_id'],
             'address_type_id' => $this->valueOrNull($data, 'address_type_id'),
             'street' => $this->valueOrNull($data, 'street'),
             'city' => $this->valueOrNull($data, 'city'),
@@ -79,6 +82,9 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'lived_from_at' => $this->valueOrNull($data, 'lived_from_at'),
             'lived_until_at' => $this->valueOrNull($data, 'lived_until_at'),
         ]);
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         $this->log();
 
@@ -95,7 +101,7 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'address_type_name' => $this->addressType->name,
+                'address_type_name' => isset($this->addressType) ? $this->addressType->name : null,
             ]),
         ]);
 
@@ -105,7 +111,7 @@ class CreateContactAddress extends BaseService implements ServiceInterface
             'author_name' => $this->author->name,
             'action_name' => 'contact_address_created',
             'objects' => json_encode([
-                'address_type_name' => $this->addressType->name,
+                'address_type_name' => isset($this->addressType) ? $this->addressType->name : null,
             ]),
         ]);
     }
