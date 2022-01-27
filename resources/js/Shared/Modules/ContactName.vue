@@ -10,8 +10,7 @@
 </style>
 
 <template>
-  <div>
-    <!-- title + cta -->
+  <div class="mb-6">
     <div class="sm:flex items-center justify-between pb-1 mb-3 border-b border-gray-200">
       <div class="sm:mb-0 mb-2 text-sm">
         Name

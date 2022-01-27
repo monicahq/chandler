@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
+use App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers\ModuleGenderPronounViewHelper;
 
 class ContactShowViewHelper
 {
@@ -81,6 +82,10 @@ class ContactShowViewHelper
                 $data = ModuleAvatarViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_GENDER_PRONOUN) {
+                $data = ModuleGenderPronounViewHelper::data($contact);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,
@@ -101,6 +106,10 @@ class ContactShowViewHelper
         $modulesCollection = collect();
         foreach ($modules as $module) {
             if ($module->type == Module::TYPE_NOTES) {
+                $data = ModuleNotesViewHelper::data($contact);
+            }
+
+            if ($module->type == Module::TYPE_FEED) {
                 $data = ModuleNotesViewHelper::data($contact);
             }
 

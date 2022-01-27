@@ -80,7 +80,7 @@
           </div>
 
           <!-- details -->
-          <div class="border-t border-gray-200 flex justify-between text-xs text-gray-600 px-3 py-2 hover:bg-slate-50 hover:rounded-b">
+          <div class="border-t border-gray-200 flex justify-between text-xs text-gray-600 px-3 py-1 hover:bg-slate-50 hover:rounded-b">
             <div>
               <!-- date -->
               <div class="inline mr-3 relative">

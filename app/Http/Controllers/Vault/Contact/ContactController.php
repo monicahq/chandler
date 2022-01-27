@@ -71,7 +71,10 @@ class ContactController extends Controller
     public function show(Request $request, int $vaultId, int $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
-        $contact = Contact::findOrFail($contactId);
+        $contact = Contact::with('gender')
+            ->with('pronoun')
+            ->with('notes')
+            ->findOrFail($contactId);
 
         if (! $contact->template_id) {
             return redirect()->route('contact.blank', [

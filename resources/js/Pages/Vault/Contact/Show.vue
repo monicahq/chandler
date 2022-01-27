@@ -1,10 +1,10 @@
 <style lang="scss" scoped>
-.grid {
+.special-grid {
   grid-template-columns: 300px 1fr;
 }
 
 @media (max-width: 480px) {
-  .grid {
+  .special-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -34,7 +34,7 @@
 
     <main class="sm:mt-18 relative">
       <div class="max-w-6xl mx-auto px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="grid special-grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- left -->
           <div class="p-3 sm:p-3">
             <div v-if="data.contact_information.length > 0" class="mb-8">
@@ -42,6 +42,8 @@
                 <avatar v-if="module.type == 'avatar'" :data="avatar" />
 
                 <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
+
+                <gender-pronoun v-if="module.type == 'gender_pronoun'" :data="genderPronoun" />
               </div>
             </div>
 
@@ -77,6 +79,7 @@
 <script>
 import Layout from '@/Shared/Layout';
 import ContactName from '@/Shared/Modules/ContactName';
+import GenderPronoun from '@/Shared/Modules/GenderPronoun';
 import Avatar from '@/Shared/Modules/Avatar';
 import Notes from '@/Shared/Modules/Notes';
 
@@ -84,6 +87,7 @@ export default {
   components: {
     Layout,
     ContactName,
+    GenderPronoun,
     Avatar,
     Notes,
   },
@@ -103,11 +107,14 @@ export default {
     return {
       avatar: [],
       contactName: [],
+      genderPronoun: [],
       notes: [],
     };
   },
 
   created() {
+
+    // contact information page
     if (this.data.contact_information.length > 0) {
       if (this.data.contact_information.findIndex(x => x.type == 'contact_names') > -1) {
         this.contactName = this.data.contact_information[this.data.contact_information.findIndex(x => x.type == 'contact_names')].data;
@@ -116,10 +123,17 @@ export default {
       if (this.data.contact_information.findIndex(x => x.type == 'avatar') > -1) {
         this.avatar = this.data.contact_information[this.data.contact_information.findIndex(x => x.type == 'avatar')].data;
       }
+
+      if (this.data.contact_information.findIndex(x => x.type == 'gender_pronoun') > -1) {
+        this.genderPronoun = this.data.contact_information[this.data.contact_information.findIndex(x => x.type == 'gender_pronoun')].data;
+      }
     }
 
+    // active page
     if (this.data.modules.length > 0) {
-      this.notes = this.data.modules[this.data.modules.findIndex(x => x.type == 'notes')].data;
+      if (this.data.modules.findIndex(x => x.type == 'notes') > -1) {
+        this.notes = this.data.modules[this.data.modules.findIndex(x => x.type == 'notes')].data;
+      }
     }
   },
 
