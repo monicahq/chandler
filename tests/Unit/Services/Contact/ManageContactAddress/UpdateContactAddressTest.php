@@ -4,17 +4,15 @@ namespace Tests\Unit\Services\Contact\ManageContactAddress;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Place;
 use App\Models\Vault;
 use App\Models\Account;
+use App\Models\Address;
 use App\Models\Contact;
 use App\Models\AddressType;
 use App\Jobs\CreateAuditLog;
-use App\Models\ContactAddress;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Address;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Contact\ManageContactAddress\UpdateContactAddress;
