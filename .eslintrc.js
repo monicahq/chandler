@@ -80,9 +80,9 @@ module.exports = {
       // https://vuejs.org/v2/style-guide/#Multi-attribute-elements-strongly-recommended
       'error',
       {
-        'singleline': 5,
+        'singleline': 10,
         'multiline': {
-          'max': 5,
+          'max': 10,
           'allowFirstLine': true
         }
       }
