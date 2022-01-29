@@ -50,12 +50,11 @@
   "lint-staged": {
     "linters": {
       "*.js|.*.js|resources/js/**/*.{vue,js}": [
-        "yarn lint --fix",
         "prettier --write --ignore-unknown"
       ],
       "resources/**/*.{css,scss}": [
         "prettier --write --ignore-unknown"
-    ]
+      ]
     }
   },
   "husky": {

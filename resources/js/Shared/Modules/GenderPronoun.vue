@@ -32,7 +32,9 @@
         </inertia-link>
       </div>
 
-      <p v-if="data.gender" class="text-sm">{{ data.gender }}</p>
+      <p v-if="data.gender" class="text-sm">
+        {{ data.gender }}
+      </p>
       <p v-else class="text-gray-600">Not set</p>
     </div>
 
@@ -58,7 +60,9 @@
         </inertia-link>
       </div>
 
-      <p v-if="data.pronoun" class="text-sm">{{ data.pronoun }}</p>
+      <p v-if="data.pronoun" class="text-sm">
+        {{ data.pronoun }}
+      </p>
       <p v-else class="text-gray-600">Not set</p>
     </div>
   </div>

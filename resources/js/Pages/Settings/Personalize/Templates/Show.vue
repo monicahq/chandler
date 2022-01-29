@@ -19,7 +19,7 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-sky-500 hover:text-blue-900">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-sky-500 hover:text-blue-900"> Settings </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -49,7 +49,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.templates" class="text-sky-500 hover:text-blue-900">Templates</inertia-link>
+              <inertia-link :href="data.url.templates" class="text-sky-500 hover:text-blue-900">
+                Templates
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -62,7 +64,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ data.template.name }}</li>
+            <li class="inline">
+              {{ data.template.name }}
+            </li>
           </ul>
         </div>
       </div>

@@ -33,12 +33,6 @@ module.exports = {
 
     // strongly recommended
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
-    'vue/component-tags-order': [
-      'warn',
-      {
-        order: [['style', 'template'], 'script'],
-      },
-    ],
     'vue/html-end-tags': 'error',
     'vue/html-self-closing': [
       'error',
@@ -51,24 +45,5 @@ module.exports = {
     ],
     'vue/no-v-model-argument': 0,
     'vue/no-v-html': 0,
-    'vue/max-attributes-per-line': [
-      // https://vuejs.org/v2/style-guide/#Multi-attribute-elements-strongly-recommended
-      'error',
-      {
-        singleline: 10,
-        multiline: {
-          max: 10,
-          allowFirstLine: true,
-        },
-      },
-    ],
-    'vue/singleline-html-element-content-newline': [
-      'error',
-      {
-        ignoreWhenNoAttributes: true,
-        ignoreWhenEmpty: true,
-        ignores: ['pre', 'textarea', 'inertia-link', 'a', 'p', 'li'],
-      },
-    ],
   },
 };

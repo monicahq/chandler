@@ -218,7 +218,7 @@
 
       <!-- view all button -->
       <div class="text-center">
-        <inertia-link :href="data.url.index" class="text-sky-500 hover:text-blue-900">View all notes</inertia-link>
+        <inertia-link :href="data.url.index" class="text-sky-500 hover:text-blue-900"> View all notes </inertia-link>
       </div>
     </div>
 
