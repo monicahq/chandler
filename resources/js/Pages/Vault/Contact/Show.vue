@@ -19,9 +19,9 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900"
-                >Contacts</inertia-link
-              >
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
+                Contacts
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -72,8 +72,9 @@
                     :href="page.url.show"
                     :class="{ 'border-orange-500 hover:border-orange-500': page.selected }"
                     class="inline-block border-b-2 border-transparent px-4 pb-2 hover:border-gray-200"
-                    >{{ page.name }}</inertia-link
                   >
+                    {{ page.name }}
+                  </inertia-link>
                 </li>
               </ul>
             </div>

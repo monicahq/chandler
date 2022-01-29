@@ -39,9 +39,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-sky-500 hover:text-blue-900"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-sky-500 hover:text-blue-900">
+                Personalize your account
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -140,9 +140,9 @@
           >
             <!-- detail of the template -->
             <div v-if="renameTemplateModalShownId != template.id" class="flex items-center justify-between px-5 py-2">
-              <inertia-link :href="template.url.show" class="text-sky-500 hover:text-blue-900">{{
-                template.name
-              }}</inertia-link>
+              <inertia-link :href="template.url.show" class="text-sky-500 hover:text-blue-900">
+                {{ template.name }}
+              </inertia-link>
 
               <!-- actions -->
               <ul class="text-sm">

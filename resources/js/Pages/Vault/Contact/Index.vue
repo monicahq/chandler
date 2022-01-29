@@ -42,9 +42,9 @@
             :key="contact.id"
             class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50"
           >
-            <inertia-link :href="contact.url.show" class="text-sky-500 hover:text-blue-900">{{
-              contact.name
-            }}</inertia-link>
+            <inertia-link :href="contact.url.show" class="text-sky-500 hover:text-blue-900">
+              {{ contact.name }}
+            </inertia-link>
           </li>
         </ul>
       </div>

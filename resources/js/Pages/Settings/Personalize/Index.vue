@@ -40,57 +40,57 @@
           <ul>
             <li class="mb-2">
               <span class="mr-2">📐</span>
-              <inertia-link :href="data.url.manage_templates" class="text-sky-500 hover:text-blue-900"
-                >Manage templates</inertia-link
-              >
+              <inertia-link :href="data.url.manage_templates" class="text-sky-500 hover:text-blue-900">
+                Manage templates
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">🥪</span>
-              <inertia-link :href="data.url.manage_modules" class="text-sky-500 hover:text-blue-900"
-                >Manage modules</inertia-link
-              >
+              <inertia-link :href="data.url.manage_modules" class="text-sky-500 hover:text-blue-900">
+                Manage modules
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">🥸</span>
-              <inertia-link :href="data.url.manage_relationships" class="text-sky-500 hover:text-blue-900"
-                >Manage relationship types</inertia-link
-              >
+              <inertia-link :href="data.url.manage_relationships" class="text-sky-500 hover:text-blue-900">
+                Manage relationship types
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">🏷</span>
-              <inertia-link :href="data.url.manage_labels" class="text-sky-500 hover:text-blue-900"
-                >Manage labels</inertia-link
-              >
+              <inertia-link :href="data.url.manage_labels" class="text-sky-500 hover:text-blue-900">
+                Manage labels
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">👩‍🔬</span>
-              <inertia-link :href="data.url.manage_pronouns" class="text-sky-500 hover:text-blue-900"
-                >Manage pronouns</inertia-link
-              >
+              <inertia-link :href="data.url.manage_pronouns" class="text-sky-500 hover:text-blue-900">
+                Manage pronouns
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">🚻</span>
-              <inertia-link :href="data.url.manage_genders" class="text-sky-500 hover:text-blue-900"
-                >Manage genders</inertia-link
-              >
+              <inertia-link :href="data.url.manage_genders" class="text-sky-500 hover:text-blue-900">
+                Manage genders
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">🏖</span>
-              <inertia-link :href="data.url.manage_address_types" class="text-sky-500 hover:text-blue-900"
-                >Manage address types</inertia-link
-              >
+              <inertia-link :href="data.url.manage_address_types" class="text-sky-500 hover:text-blue-900">
+                Manage address types
+              </inertia-link>
             </li>
             <li class="mb-2">
               <span class="mr-2">☎️</span>
-              <inertia-link :href="data.url.manage_contact_information_types" class="text-sky-500 hover:text-blue-900"
-                >Manage contact information types</inertia-link
-              >
+              <inertia-link :href="data.url.manage_contact_information_types" class="text-sky-500 hover:text-blue-900">
+                Manage contact information types
+              </inertia-link>
             </li>
             <li class="">
               <span class="mr-2">🐱</span>
-              <inertia-link :href="data.url.manage_pet_categories" class="text-sky-500 hover:text-blue-900"
-                >Manage pet categories</inertia-link
-              >
+              <inertia-link :href="data.url.manage_pet_categories" class="text-sky-500 hover:text-blue-900">
+                Manage pet categories
+              </inertia-link>
             </li>
           </ul>
         </div>

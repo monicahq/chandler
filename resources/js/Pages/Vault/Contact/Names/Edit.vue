@@ -14,9 +14,9 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900"
-                >Contacts</inertia-link
-              >
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
+                Contacts
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -30,9 +30,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.show" class="text-sky-500 hover:text-blue-900"
-                >Profile of {{ data.contact.name }}</inertia-link
-              >
+              <inertia-link :href="data.url.show" class="text-sky-500 hover:text-blue-900">
+                Profile of {{ data.contact.name }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
