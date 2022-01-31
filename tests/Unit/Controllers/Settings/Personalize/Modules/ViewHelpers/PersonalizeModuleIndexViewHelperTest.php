@@ -3,12 +3,10 @@
 namespace Tests\Unit\Controllers\Settings\Personalize\Modules\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers\PersonalizeModuleIndexViewHelper;
 use Tests\TestCase;
-use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Module;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers\PersonalizeModuleIndexViewHelper;
 
 class PersonalizeModuleIndexViewHelperTest extends TestCase
 {

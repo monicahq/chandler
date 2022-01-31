@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Module;
-use App\Models\Account;
 use App\Models\ModuleRow;
 use App\Models\ModuleRowField;
 use Illuminate\Database\Eloquent\Factories\Factory;

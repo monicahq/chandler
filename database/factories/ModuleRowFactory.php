@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Module;
-use App\Models\Account;
 use App\Models\ModuleRow;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

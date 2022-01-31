@@ -19,6 +19,7 @@ use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactNoteController;
 use App\Http\Controllers\Settings\Personalize\Labels\PersonalizeLabelController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
+use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
@@ -30,7 +31,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

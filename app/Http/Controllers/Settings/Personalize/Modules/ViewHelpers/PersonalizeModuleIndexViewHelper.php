@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers;
 
-use App\Models\Account;
 use App\Models\Module;
-use App\Models\Template;
+use App\Models\Account;
 
 class PersonalizeModuleIndexViewHelper
 {
