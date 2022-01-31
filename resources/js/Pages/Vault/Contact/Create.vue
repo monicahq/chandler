@@ -183,6 +183,7 @@
             </div>
           </div>
 
+          <!-- actions -->
           <div class="flex justify-between p-5">
             <pretty-link :href="data.url.back" :text="'Cancel'" :classes="'mr-3'" />
             <pretty-button

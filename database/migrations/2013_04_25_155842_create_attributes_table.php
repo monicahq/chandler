@@ -41,6 +41,7 @@ class CreateAttributesTable extends Migration
             $table->string('type')->nullable();
             $table->boolean('reserved_to_contact_information')->default(false);
             $table->boolean('can_be_deleted')->default('true');
+            $table->integer('pagination')->nullable();
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });

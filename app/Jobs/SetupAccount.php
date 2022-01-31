@@ -183,6 +183,7 @@ class SetupAccount implements ShouldQueue
             'name' => trans('app.module_notes'),
             'type' => Module::TYPE_NOTES,
             'can_be_deleted' => false,
+            'pagination' => 3,
         ]);
         (new AssociateModuleToTemplatePage)->execute([
             'account_id' => $this->user->account_id,

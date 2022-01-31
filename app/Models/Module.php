@@ -31,6 +31,7 @@ class Module extends Model
         'type',
         'can_be_deleted',
         'reserved_to_contact_information',
+        'pagination',
     ];
 
     /**
