@@ -38,6 +38,7 @@
         :autofocus="autofocus"
         :autocomplete="autocomplete"
         :disabled="disabled"
+        :placeholder="placeholder"
         @input="$emit('update:modelValue', $event.target.value)"
         @keydown.esc="sendEscKey"
         @focus="showMaxLength"

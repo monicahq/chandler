@@ -8,6 +8,17 @@
     grid-template-columns: 1fr;
   }
 }
+
+.module-list {
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 </style>
 
 <template>
@@ -48,7 +59,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Modules</li>
+            <li class="inline">
+              Modules
+            </li>
           </ul>
         </div>
       </div>
@@ -58,7 +71,9 @@
       <div class="mx-auto max-w-5xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 sm:mt-0">
-          <h3 class="mb-4 text-center text-xl sm:mb-2">All the modules in the account</h3>
+          <h3 class="mb-4 text-center text-xl sm:mb-2">
+            All the modules in the account
+          </h3>
         </div>
 
         <!-- help text -->
@@ -81,9 +96,7 @@
           <div>
             <p class="mb-1">Modules contain each one of your contact's data.</p>
             <p class="mb-1">
-              Monica comes with a set of predefined modules that can't be edited or deleted – because we need them for
-              Monica to function properly. However, you can create your own modules to record the data you want in yiyr
-              account.
+              Monica comes with a set of predefined modules that can't be edited or deleted – because we need them for Monica to function properly. However, you can create your own modules to record the data you want in yiyr account.
             </p>
           </div>
         </div>
@@ -95,10 +108,81 @@
               <h3>Modules</h3>
               <pretty-button :text="'Add new module'" :icon="'plus'" @click="showPageModal" />
             </div>
+
+            <div>
+              <!-- search a module -->
+              <div class="px-3 py-2 module-list rounded-t-md border-t border-r border-l border-gray-200 hover:bg-slate-50">
+                  <text-input
+                      v-model="form.search"
+                      :type="'text'"
+                      :autofocus="true"
+                      :input-class="'block w-full'"
+                      :required="true"
+                      :autocomplete="false"
+                      :placeholder="'Filter'"
+                      :maxlength="255"
+                    />
+              </div>
+
+              <!-- list of modules -->
+              <ul class="rounded-b border border-gray-200 bg-white overflow-auto	h-80	">
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+                <li class="px-5 py-2 module-list border-b border-gray-200 hover:bg-slate-50">
+                  <span class="">Module name</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- middle -->
-          <div class="p-3 sm:p-0">asdfasdf</div>
+          <div class="border rounded-lg border-gray-200">
+            <h3 class="px-5 py-2 border-b border-gray-200">Module details</h3>
+
+            <!-- blank state -->
+            <div class="mb-6">
+              <p class="p-5 text-center">
+                Please select a module on the left or create a new module.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -109,12 +193,14 @@
 import Layout from '@/Shared/Layout';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyButton from '@/Shared/Form/PrettyButton';
+import TextInput from '@/Shared/Form/TextInput';
 
 export default {
   components: {
     Layout,
     PrettySpan,
     PrettyButton,
+    TextInput,
   },
 
   props: {
@@ -132,6 +218,9 @@ export default {
     return {
       addMode: false,
       localModules: [],
+      form: {
+        search: '',
+      },
     };
   },
 
