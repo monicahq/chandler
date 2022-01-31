@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Template;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers\PersonalizeModuleIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageTemplate\CreateTemplate;
 use App\Services\Account\ManageTemplate\UpdateTemplate;
@@ -19,9 +20,9 @@ class PersonalizeModulesController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Settings/Personalize/Templates/Index', [
+        return Inertia::render('Settings/Personalize/Modules/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeTemplateIndexViewHelper::data(Auth::user()->account),
+            'data' => PersonalizeModuleIndexViewHelper::data(Auth::user()->account),
         ]);
     }
 
