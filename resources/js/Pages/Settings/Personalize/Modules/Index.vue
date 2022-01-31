@@ -48,9 +48,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">
-              Modules
-            </li>
+            <li class="inline">Modules</li>
           </ul>
         </div>
       </div>
@@ -60,9 +58,7 @@
       <div class="mx-auto max-w-5xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 sm:mt-0">
-          <h3 class="mb-4 text-center text-xl sm:mb-2">
-            All the modules in the account
-          </h3>
+          <h3 class="mb-4 text-center text-xl sm:mb-2">All the modules in the account</h3>
         </div>
 
         <!-- help text -->
@@ -85,7 +81,9 @@
           <div>
             <p class="mb-1">Modules contain each one of your contact's data.</p>
             <p class="mb-1">
-              Monica comes with a set of predefined modules that can't be edited or deleted – because we need them for Monica to function properly. However, you can create your own modules to record the data you want in yiyr account.
+              Monica comes with a set of predefined modules that can't be edited or deleted – because we need them for
+              Monica to function properly. However, you can create your own modules to record the data you want in yiyr
+              account.
             </p>
           </div>
         </div>
@@ -100,9 +98,7 @@
           </div>
 
           <!-- middle -->
-          <div class="p-3 sm:p-0">
-            asdfasdf
-          </div>
+          <div class="p-3 sm:p-0">asdfasdf</div>
         </div>
       </div>
     </main>
