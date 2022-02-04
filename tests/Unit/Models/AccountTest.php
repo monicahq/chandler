@@ -12,7 +12,6 @@ use App\Models\Pronoun;
 use App\Models\Template;
 use App\Models\GroupType;
 use App\Models\AddressType;
-use App\Models\Information;
 use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
