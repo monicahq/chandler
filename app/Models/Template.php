@@ -51,14 +51,4 @@ class Template extends Model
     {
         return $this->hasMany(Contact::class);
     }
-
-    /**
-     * Get the information values associated with the template.
-     *
-     * @return BelongsToMany
-     */
-    public function informations()
-    {
-        return $this->belongsToMany(Information::class);
-    }
 }

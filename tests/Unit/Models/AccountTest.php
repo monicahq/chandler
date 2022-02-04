@@ -56,17 +56,6 @@ class AccountTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_informations()
-    {
-        $account = Account::factory()->create();
-        Information::factory(2)->create([
-            'account_id' => $account->id,
-        ]);
-
-        $this->assertTrue($account->informations()->exists());
-    }
-
-    /** @test */
     public function it_has_many_group_types()
     {
         $account = Account::factory()->create();

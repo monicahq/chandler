@@ -44,22 +44,4 @@ class TemplateTest extends TestCase
 
         $this->assertTrue($template->contacts()->exists());
     }
-
-    /** @test */
-    public function it_has_many_informations()
-    {
-        $template = Template::factory()->create();
-
-        $information = Information::factory()->create([
-            'account_id' => $template->account_id,
-        ]);
-        $template->informations()->attach(
-            $information->id,
-            [
-                'position' => 0,
-            ]
-        );
-
-        $this->assertTrue($template->informations()->exists());
-    }
 }
