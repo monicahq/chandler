@@ -259,7 +259,7 @@
       </div>
 
       <!-- pagination -->
-      <div v-if="!moduleMode" class="text-center flex justify-between">
+      <div v-if="!moduleMode" class="flex justify-between text-center">
         <inertia-link
           v-show="paginator.previousPageUrl"
           class="fl dib"
