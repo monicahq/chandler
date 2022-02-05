@@ -5,17 +5,17 @@ namespace App\Http\Controllers\Vault\Contact\Notes\ViewHelpers;
 use App\Models\Note;
 use App\Models\Contact;
 use App\Helpers\DateHelper;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
 class NotesIndexViewHelper
 {
-    public static function data(Contact $contact): array
+    public static function data(Contact $contact, $notes): array
     {
-        $notes = $contact->notes()->orderBy('created_at', 'desc')->get();
         $notesCollection = $notes->map(function ($note) use ($contact) {
             return self::dto($contact, $note);
         });
-        $emotions = $contact->account->emotions()->get();
+        $emotions = $contact->vault->account->emotions()->get();
         $emotionsCollection = $emotions->map(function ($emotion) {
             return [
                 'id' => $emotion->id,
@@ -29,10 +29,6 @@ class NotesIndexViewHelper
             'emotions' => $emotionsCollection,
             'url' => [
                 'store' => route('contact.note.store', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                ]),
-                'index' => route('contact.note.index', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),

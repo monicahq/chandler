@@ -254,8 +254,18 @@
       </div>
 
       <!-- view all button -->
-      <div class="text-center">
+      <div v-if="moduleMode" class="text-center">
         <inertia-link :href="data.url.index" class="text-sky-500 hover:text-blue-900"> View all notes </inertia-link>
+      </div>
+
+      <!-- pagination -->
+      <div v-if="!moduleMode" class="text-center">
+        <inertia-link v-show="paginator.previousPageUrl" class="fl dib" :href="paginator.previousPageUrl" title="Previous">
+          &larr; {{ $t('app.previous') }}
+        </inertia-link>
+        <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">
+          {{ $t('app.next') }} &rarr;
+        </inertia-link>
       </div>
     </div>
 
@@ -288,6 +298,14 @@ export default {
     data: {
       type: Object,
       default: null,
+    },
+    paginator: {
+      type: Object,
+      default: null,
+    },
+    moduleMode: {
+      type: Boolean,
+      default: true,
     },
   },
 

@@ -16,7 +16,7 @@ use App\Http\Controllers\Settings\Preferences\PreferencesController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsUserController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ContactNoteController;
+use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
 use App\Http\Controllers\Settings\Personalize\Labels\PersonalizeLabelController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
@@ -31,6 +31,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -76,10 +77,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
                     // notes
-                    Route::get('notes', [ContactNoteController::class, 'index'])->name('contact.note.index');
-                    Route::post('notes', [ContactNoteController::class, 'store'])->name('contact.note.store');
-                    Route::put('notes/{note}', [ContactNoteController::class, 'update'])->name('contact.note.update');
-                    Route::delete('notes/{note}', [ContactNoteController::class, 'destroy'])->name('contact.note.destroy');
+                    Route::get('notes', [ContactNotesController::class, 'index'])->name('contact.note.index');
+                    Route::post('notes', [ContactModuleNoteController::class, 'store'])->name('contact.note.store');
+                    Route::put('notes/{note}', [ContactModuleNoteController::class, 'update'])->name('contact.note.update');
+                    Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
                 });
             });
 
