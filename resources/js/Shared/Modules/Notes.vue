@@ -84,10 +84,17 @@
         />
 
         <!-- emotion -->
-        <div v-if="emotionFieldShown" class="mt-2 w-full block">
+        <div v-if="emotionFieldShown" class="mt-2 block w-full">
           <p class="mb-2">How did you feel?</p>
-          <div v-for="emotion in data.emotions" :key="emotion.id" class="flex items-center mb-2">
-            <input :value="emotion.id" v-model="form.emotion" :id="emotion.type" name="emotion" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+          <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
+            <input
+              :value="emotion.id"
+              v-model="form.emotion"
+              :id="emotion.type"
+              name="emotion"
+              type="radio"
+              class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
             <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
           </div>
         </div>
@@ -95,7 +102,7 @@
         <!-- cta to add a title -->
         <span
           v-if="!titleFieldShown"
-          class="inline-block mr-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+          class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
           @click="showTitleField"
         >
           + add title
@@ -196,11 +203,7 @@
         </div>
 
         <!-- edit modal form -->
-        <form
-          v-if="editedNoteId === note.id"
-          class="mb-6 bg-white"
-          @submit.prevent="update(note)"
-        >
+        <form v-if="editedNoteId === note.id" class="mb-6 bg-white" @submit.prevent="update(note)">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
@@ -227,10 +230,17 @@
             />
 
             <!-- emotion -->
-            <div v-if="form.emotion" class="mt-2 w-full block">
+            <div v-if="form.emotion" class="mt-2 block w-full">
               <p class="mb-2">How did you feel?</p>
-              <div v-for="emotion in data.emotions" :key="emotion.id" class="flex items-center mb-2">
-                <input :value="emotion.id" v-model="form.emotion" :id="emotion.type" name="emotion" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+              <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
+                <input
+                  :value="emotion.id"
+                  v-model="form.emotion"
+                  :id="emotion.type"
+                  name="emotion"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
                 <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
               </div>
             </div>
