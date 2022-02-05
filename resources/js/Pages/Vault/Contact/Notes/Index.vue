@@ -25,8 +25,8 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
-                Profile of {{ data.contact_name.name }}
+              <inertia-link :href="data.url.contact" class="text-sky-500 hover:text-blue-900">
+                Profile of {{ data.contact.name }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -48,7 +48,7 @@
 
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <notes :data="data" :module-mode="true" :paginator="paginator" />
+        <notes :data="data" :module-mode="false" :paginator="paginator" />
       </div>
     </main>
   </layout>

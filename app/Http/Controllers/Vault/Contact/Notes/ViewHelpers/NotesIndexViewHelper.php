@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Vault\Contact\Notes\ViewHelpers;
 use App\Models\Note;
 use App\Models\Contact;
 use App\Helpers\DateHelper;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class NotesIndexViewHelper
 {
-    public static function data(Contact $contact, $notes): array
+    public static function data(Contact $contact, $notes, User $user): array
     {
         $notesCollection = $notes->map(function ($note) use ($contact) {
             return self::dto($contact, $note);
@@ -24,6 +25,9 @@ class NotesIndexViewHelper
         });
 
         return [
+            'contact' => [
+                'name' => $contact->getName($user),
+            ],
             'notes' => $notesCollection,
             'emotions' => $emotionsCollection,
             'url' => [
@@ -48,7 +52,10 @@ class NotesIndexViewHelper
             'show_full_content' => false,
             'title' => $note->title,
             'author' => $note->author ? $note->author->name : $note->author_name,
-            'emotion' => $note->emotion ? $note->emotion->name : null,
+            'emotion' => $note->emotion ? [
+                'id' => $note->emotion->id,
+                'name' => $note->emotion->name,
+            ] : null,
             'written_at' => DateHelper::formatDate($note->created_at),
             'url' => [
                 'update' => route('contact.note.update', [

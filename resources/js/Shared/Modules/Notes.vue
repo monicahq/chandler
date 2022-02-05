@@ -76,7 +76,7 @@
           v-model="form.title"
           :label="'Title'"
           :type="'text'"
-          :input-class="'block w-full'"
+          :input-class="'block w-full mb-3'"
           :required="false"
           :autocomplete="false"
           :maxlength="255"
@@ -259,17 +259,17 @@
       </div>
 
       <!-- pagination -->
-      <div v-if="!moduleMode" class="text-center">
+      <div v-if="!moduleMode" class="text-center flex justify-between">
         <inertia-link
           v-show="paginator.previousPageUrl"
           class="fl dib"
           :href="paginator.previousPageUrl"
           title="Previous"
         >
-          &larr; {{ $t('app.previous') }}
+          &larr; Previous
         </inertia-link>
         <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">
-          {{ $t('app.next') }} &rarr;
+          Next &rarr;
         </inertia-link>
       </div>
     </div>
