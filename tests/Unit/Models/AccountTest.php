@@ -15,6 +15,7 @@ use App\Models\AddressType;
 use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
+use App\Models\Emotion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase
@@ -140,5 +141,16 @@ class AccountTest extends TestCase
         ]);
 
         $this->assertTrue($account->petCategories()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_emotions()
+    {
+        $account = Account::factory()->create();
+        Emotion::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->emotions()->exists());
     }
 }
