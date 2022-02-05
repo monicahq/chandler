@@ -260,7 +260,12 @@
 
       <!-- pagination -->
       <div v-if="!moduleMode" class="text-center">
-        <inertia-link v-show="paginator.previousPageUrl" class="fl dib" :href="paginator.previousPageUrl" title="Previous">
+        <inertia-link
+          v-show="paginator.previousPageUrl"
+          class="fl dib"
+          :href="paginator.previousPageUrl"
+          title="Previous"
+        >
           &larr; {{ $t('app.previous') }}
         </inertia-link>
         <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">

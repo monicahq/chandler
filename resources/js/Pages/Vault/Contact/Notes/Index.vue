@@ -1,5 +1,4 @@
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
@@ -84,10 +83,8 @@ export default {
     },
   },
 
-  data() {
-  },
+  data() {},
 
-  methods: {
-  },
+  methods: {},
 };
 </script>
