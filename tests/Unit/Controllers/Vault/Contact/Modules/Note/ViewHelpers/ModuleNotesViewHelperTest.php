@@ -7,9 +7,9 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\Contact;
+use App\Models\Emotion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
-use App\Models\Emotion;
 
 class ModuleNotesViewHelperTest extends TestCase
 {

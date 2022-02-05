@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Account;
-use App\Models\Vault;
-use App\Models\Contact;
 use App\Models\Emotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

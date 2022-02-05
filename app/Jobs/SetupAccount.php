@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Models\Emotion;
 use App\Models\User;
 use App\Models\Module;
+use App\Models\Emotion;
 use App\Models\Template;
 use App\Models\Information;
 use App\Models\TemplatePage;

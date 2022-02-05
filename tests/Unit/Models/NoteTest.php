@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Emotion;
 use Tests\TestCase;
 use App\Models\Note;
+use App\Models\Emotion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class NoteTest extends TestCase
