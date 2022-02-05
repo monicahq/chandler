@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Vault\Contact\Notes\ViewHelpers;
 use App\Models\Note;
 use App\Models\Contact;
 use App\Helpers\DateHelper;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
 class NotesIndexViewHelper

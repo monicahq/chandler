@@ -3,11 +3,9 @@
 namespace Tests\Unit\Helpers;
 
 use Tests\TestCase;
-use App\Models\Company\Company;
-use App\Helpers\PaginatorHelper;
-use App\Models\Company\Employee;
-use App\Models\Contact;
 use App\Models\Vault;
+use App\Models\Contact;
+use App\Helpers\PaginatorHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PaginatorHelperTest extends TestCase
@@ -31,7 +29,7 @@ class PaginatorHelperTest extends TestCase
                 'hasMorePages' => true,
                 'lastItem' => 1,
                 'lastPage' => 3,
-                'nextPageUrl' => config('app.url') . '?page=2',
+                'nextPageUrl' => config('app.url').'?page=2',
                 'onFirstPage' => true,
                 'perPage' => 1,
                 'previousPageUrl' => null,

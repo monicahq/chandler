@@ -2,23 +2,14 @@
 
 namespace App\Http\Controllers\Vault\Contact\Notes;
 
-use App\Helpers\PaginatorHelper;
 use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\Contact\Notes\ViewHelpers\NotesIndexViewHelper;
-use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageContact\CreateContact;
-use App\Services\Contact\ManageContact\UpdateContact;
-use App\Services\Contact\ManageContact\DestroyContact;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactEditViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
-use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
+use App\Http\Controllers\Vault\Contact\Notes\ViewHelpers\NotesIndexViewHelper;
 
 class ContactNotesController extends Controller
 {
