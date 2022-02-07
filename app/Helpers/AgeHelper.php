@@ -2,9 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
-use App\Models\Contact;
 use Carbon\Carbon;
+use App\Models\Contact;
 
 class AgeHelper
 {
@@ -23,7 +22,7 @@ class AgeHelper
      */
     public static function getAge(Contact $contact): ?string
     {
-        if (!$contact->born_at) {
+        if (! $contact->born_at) {
             return null;
         }
 

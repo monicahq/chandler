@@ -142,7 +142,7 @@ class SetupDummyAccount extends Command
                 $date = $this->faker->dateTimeThisCentury();
                 $date = Carbon::parse($date);
 
-                if (rand(1,2) == 1) {
+                if (rand(1, 2) == 1) {
                     $birthDate = $date->isoFormat('Y');
                 } else {
                     $birthDate = $date->isoFormat('MM-DD');
