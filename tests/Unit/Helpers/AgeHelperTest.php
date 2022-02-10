@@ -4,9 +4,7 @@ namespace Tests\Unit\Helpers;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Contact;
 use App\Helpers\AgeHelper;
-use App\Models\ContactDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AgeHelperTest extends TestCase

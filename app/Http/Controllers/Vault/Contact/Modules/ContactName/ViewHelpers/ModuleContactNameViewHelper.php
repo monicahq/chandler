@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;
-use App\Helpers\AgeHelper;
 
 class ModuleContactNameViewHelper
 {

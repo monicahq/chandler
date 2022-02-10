@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
 
-use App\Helpers\AgeHelper;
 use App\Models\Contact;
+use App\Helpers\AgeHelper;
 
 class ModuleImportantDatesViewHelper
 {
