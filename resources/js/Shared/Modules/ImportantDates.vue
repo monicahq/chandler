@@ -33,7 +33,9 @@
     <ul v-for="date in data.dates" :key="date.id" class="">
       <li class="flex justify-between">
         <span class="font-semibold">{{ date.label }}</span>
-        <span>{{ date.date }} <span v-if="date.age" class="text-gray-400">({{ date.age }})</span></span>
+        <span
+          >{{ date.date }} <span v-if="date.age" class="text-gray-400">({{ date.age }})</span></span
+        >
       </li>
     </ul>
   </div>
