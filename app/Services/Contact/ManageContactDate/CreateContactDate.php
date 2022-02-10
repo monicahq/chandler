@@ -2,14 +2,11 @@
 
 namespace App\Services\Contact\ManageContactDate;
 
-use Carbon\Carbon;
-use App\Models\Address;
-use App\Models\AddressType;
+use App\Models\ContactDate;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactDate;
 
 class CreateContactDate extends BaseService implements ServiceInterface
 {

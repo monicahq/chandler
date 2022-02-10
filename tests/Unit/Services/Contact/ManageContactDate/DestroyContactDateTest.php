@@ -6,17 +6,15 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
-use App\Models\Address;
 use App\Models\Contact;
+use App\Models\ContactDate;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\ContactDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactAddress\DestroyContactAddress;
 use App\Services\Contact\ManageContactDate\DestroyContactDate;
 
 class DestroyContactDateTest extends TestCase

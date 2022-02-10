@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\ContactDate;
 use Illuminate\Database\Eloquent\Factories\Factory;
