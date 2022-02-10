@@ -35,7 +35,7 @@
       <p v-if="data.gender" class="text-sm">
         {{ data.gender }}
       </p>
-      <p v-else class="text-gray-600 text-sm">Not set</p>
+      <p v-else class="text-sm text-gray-600">Not set</p>
     </div>
 
     <!-- pronoun -->
@@ -63,7 +63,7 @@
       <p v-if="data.pronoun" class="text-sm">
         {{ data.pronoun }}
       </p>
-      <p v-else class="text-gray-600 text-sm">Not set</p>
+      <p v-else class="text-sm text-gray-600">Not set</p>
     </div>
   </div>
 </template>
