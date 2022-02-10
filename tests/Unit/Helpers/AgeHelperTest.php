@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
+use App\Models\ContactDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AgeHelperTest extends TestCase
@@ -16,8 +17,11 @@ class AgeHelperTest extends TestCase
     public function it_gets_the_age_based_on_a_complete_date(): void
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
-        $contact = Contact::factory()->create([
-            'born_at' => '1981-10-29',
+        $contact = Contact::factory()->create();
+        ContactDate::factory()->create([
+            'contact_id' => $contact->id,
+            'date' => '1981-10-29',
+            'type' => ContactDate::TYPE_BIRTHDATE,
         ]);
 
         $this->assertEquals(
@@ -30,8 +34,11 @@ class AgeHelperTest extends TestCase
     public function it_gets_the_age_based_on_a_year(): void
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
-        $contact = Contact::factory()->create([
-            'born_at' => '1970',
+        $contact = Contact::factory()->create();
+        ContactDate::factory()->create([
+            'contact_id' => $contact->id,
+            'date' => '1970',
+            'type' => ContactDate::TYPE_BIRTHDATE,
         ]);
 
         $this->assertEquals(
@@ -44,8 +51,11 @@ class AgeHelperTest extends TestCase
     public function it_cant_get_the_age_based_on_a_month_or_day(): void
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
-        $contact = Contact::factory()->create([
-            'born_at' => '10-02',
+        $contact = Contact::factory()->create();
+        ContactDate::factory()->create([
+            'contact_id' => $contact->id,
+            'date' => '10-02',
+            'type' => ContactDate::TYPE_BIRTHDATE,
         ]);
 
         $this->assertNull(

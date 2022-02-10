@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use App\Models\Contact;
+use App\Models\ContactDate;
 
 class AgeHelper
 {
@@ -22,22 +23,25 @@ class AgeHelper
      */
     public static function getAge(Contact $contact): ?string
     {
-        if (! $contact->born_at) {
+        $birthdate = $contact->dates()->where('type', ContactDate::TYPE_BIRTHDATE)
+            ->first();
+
+        if (! $birthdate) {
             return null;
         }
 
         // case: full date
-        if (strlen($contact->born_at) == 10) {
-            $age = Carbon::parse($contact->born_at)->age;
+        if (strlen($birthdate->date) == 10) {
+            $age = Carbon::parse($birthdate->date)->age;
         }
 
         // case: only know the age. In this case, we have stored a year.
-        if (strlen($contact->born_at) == 4) {
-            $age = Carbon::createFromFormat('Y', $contact->born_at)->age;
+        if (strlen($birthdate->date) == 4) {
+            $age = Carbon::createFromFormat('Y', $birthdate->date)->age;
         }
 
         // case: only know the month and day.
-        if (strlen($contact->born_at) == 5) {
+        if (strlen($birthdate->date) == 5) {
             return null;
         }
 

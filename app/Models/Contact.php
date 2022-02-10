@@ -29,8 +29,6 @@ class Contact extends Model
         'nickname',
         'maiden_name',
         'can_be_deleted',
-        'born_at',
-        'deceased_at',
         'template_id',
         'last_updated_at',
     ];
@@ -181,6 +179,16 @@ class Contact extends Model
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    /**
+     * Get the date records associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function dates()
+    {
+        return $this->hasMany(ContactDate::class);
     }
 
     /**

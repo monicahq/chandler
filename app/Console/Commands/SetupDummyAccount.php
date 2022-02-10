@@ -6,12 +6,14 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
+use App\Models\ContactDate;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
 use App\Services\Contact\ManageNote\CreateNote;
 use App\Services\Vault\ManageVault\CreateVault;
 use App\Services\Account\ManageAccount\CreateAccount;
 use App\Services\Contact\ManageContact\CreateContact;
+use App\Services\Contact\ManageContactDate\CreateContactDate;
 
 class SetupDummyAccount extends Command
 {
@@ -159,8 +161,15 @@ class SetupDummyAccount extends Command
                     'maiden_name' => null,
                 ]);
 
-                $contact->born_at = $birthDate;
-                $contact->save();
+                (new CreateContactDate)->execute([
+                    'account_id' => $this->user->account_id,
+                    'author_id' => $this->user->id,
+                    'vault_id' => $vault->id,
+                    'contact_id' => $contact->id,
+                    'label' => 'Birthdate',
+                    'date' => $birthDate,
+                    'type' => ContactDate::TYPE_BIRTHDATE,
+                ]);
             }
         }
     }
