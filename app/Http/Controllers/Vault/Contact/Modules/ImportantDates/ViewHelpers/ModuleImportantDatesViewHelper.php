@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
 
+use App\Helpers\AgeHelper;
 use App\Models\Contact;
 
 class ModuleImportantDatesViewHelper
@@ -16,6 +17,7 @@ class ModuleImportantDatesViewHelper
                 'label' => $date->label,
                 'date' => $date->date,
                 'type' => $date->type,
+                'age' => AgeHelper::getAge($date->date),
             ];
         });
 

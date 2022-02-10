@@ -31,7 +31,7 @@
     </div>
 
     <h1 class="text-xl">
-      {{ data.name }} <span v-if="data.age" class="text-gray-400">({{ data.age }})</span>
+      {{ data.name }}
     </h1>
   </div>
 </template>

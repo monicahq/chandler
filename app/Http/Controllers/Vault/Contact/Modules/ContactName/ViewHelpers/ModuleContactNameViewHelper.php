@@ -12,7 +12,6 @@ class ModuleContactNameViewHelper
     {
         return [
             'name' => $contact->getName($user),
-            'age' => AgeHelper::getAge($contact),
             'url' => [
                 'edit' => route('contact.edit', [
                     'vault' => $contact->vault_id,

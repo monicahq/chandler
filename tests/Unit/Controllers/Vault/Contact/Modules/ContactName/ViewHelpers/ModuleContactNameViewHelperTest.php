@@ -21,17 +21,15 @@ class ModuleContactNameViewHelperTest extends TestCase
         $array = ModuleContactNameViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            3,
+            2,
             count($array)
         );
 
         $this->assertArrayHasKey('name', $array);
-        $this->assertArrayHasKey('age', $array);
 
         $this->assertEquals(
             [
                 'name' => $contact->getName($user),
-                'age' => null,
                 'url' => [
                     'edit' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/edit',
                 ],
