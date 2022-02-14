@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('invitation_code')->nullable();
             $table->dateTime('invitation_accepted_at')->nullable();
             $table->string('name_order')->default('%first_name% %last_name%');
+            $table->string('date_format')->default('Y-m-d');
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
