@@ -19,19 +19,4 @@ class PreferencesController extends Controller
             'data' => PreferencesIndexViewHelper::data(Auth::user()),
         ]);
     }
-
-    public function store(Request $request)
-    {
-        $data = [
-            'account_id' => Auth::user()->account_id,
-            'author_id' => Auth::user()->id,
-            'name_order' => $request->input('nameOrder'),
-        ];
-
-        $user = (new StoreNameOrderPreference)->execute($data);
-
-        return response()->json([
-            'data' => PreferencesIndexViewHelper::dtoNameOrder($user),
-        ], 200);
-    }
 }

@@ -32,6 +32,8 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
+use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -110,7 +112,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // preferences
             Route::prefix('preferences')->name('preferences.')->group(function () {
                 Route::get('', [PreferencesController::class, 'index'])->name('index');
-                Route::post('', [PreferencesController::class, 'store'])->name('store');
+                Route::post('name', [PreferencesNameOrderController::class, 'store'])->name('name.store');
+                Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
             });
 
             // users

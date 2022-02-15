@@ -2,10 +2,24 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use Carbon\Carbon;
 
 class DateHelper
 {
+    /**
+     * Return a date according to the timezone of the user, and the format
+     * stored in the preferences for this user.
+     *
+     * @param  Carbon  $date
+     * @param  User  $user
+     * @return string
+     */
+    public static function format(Carbon $date, User $user): string
+    {
+        return $date->isoFormat($user->date_format);
+    }
+
     /**
      * Return a date according to the timezone of the user, in a
      * short format like "Oct 29, 1981".

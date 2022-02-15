@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Emotion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
+use App\Models\User;
 
 class ModuleNotesViewHelperTest extends TestCase
 {
@@ -19,6 +20,8 @@ class ModuleNotesViewHelperTest extends TestCase
     public function it_gets_the_data_needed_for_the_view(): void
     {
         $contact = Contact::factory()->create();
+        $user = User::factory()->create();
+
         Note::factory()->create([
             'contact_id' => $contact->id,
         ]);
@@ -26,7 +29,7 @@ class ModuleNotesViewHelperTest extends TestCase
             'account_id' => $contact->vault->account_id,
         ]);
 
-        $array = ModuleNotesViewHelper::data($contact);
+        $array = ModuleNotesViewHelper::data($contact, $user);
 
         $this->assertEquals(
             3,
@@ -62,11 +65,12 @@ class ModuleNotesViewHelperTest extends TestCase
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $contact = Contact::factory()->create();
+        $user = User::factory()->create();
         $note = Note::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
-        $collection = ModuleNotesViewHelper::dto($contact, $note);
+        $collection = ModuleNotesViewHelper::dto($contact, $note, $user);
 
         $this->assertEquals(
             [
