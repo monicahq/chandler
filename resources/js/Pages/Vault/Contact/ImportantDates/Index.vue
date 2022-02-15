@@ -30,7 +30,7 @@
   line-height: 1.5rem;
   border-width: 1px;
   appearance: none;
-background-color: #fff;
+  background-color: #fff;
 }
 </style>
 
@@ -83,25 +83,17 @@ background-color: #fff;
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> All the important dates</h3>
-          <pretty-button
-            v-if="!createDateModalShown"
-            :text="'Add a date'"
-            :icon="'plus'"
-            @click="showCreateModal" />
+          <pretty-button v-if="!createDateModalShown" :text="'Add a date'" :icon="'plus'" @click="showCreateModal" />
         </div>
 
         <!-- list of dates -->
         <ul v-if="localDates.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li
-            v-for="date in localDates"
-            :key="date.id"
-            class="item-list border-b border-gray-200 hover:bg-slate-50">
+          <li v-for="date in localDates" :key="date.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
             <!-- detail of the group type -->
-            <div
-              v-if="editDateModalShownId != date.id"
-              class="flex items-center justify-between px-5 py-2">
-
-              <span class="text-base">{{ date.label }}: <span>{{ date.date }}</span></span>
+            <div v-if="editDateModalShownId != date.id" class="flex items-center justify-between px-5 py-2">
+              <span class="text-base"
+                >{{ date.label }}: <span>{{ date.date }}</span></span
+              >
 
               <!-- actions -->
               <ul class="text-sm">
@@ -110,9 +102,7 @@ background-color: #fff;
                   @click="updateAdressTypeModal(date)">
                   Rename
                 </li>
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">
-                  Delete
-                </li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
               </ul>
             </div>
 
@@ -151,21 +141,20 @@ background-color: #fff;
           class="mb-6 rounded-lg border border-gray-200 bg-white"
           @submit.prevent="submit()">
           <div class="border-b border-gray-200">
-
             <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
 
             <div class="border-b border-gray-200 p-5">
               <text-input
-              :ref="'name'"
-              v-model="form.name"
-              :label="'Name of the date'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'block w-full'"
-              :required="true"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressTypeModalShown = false" />
+                :ref="'name'"
+                v-model="form.name"
+                :label="'Name of the date'"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="createAddressTypeModalShown = false" />
             </div>
 
             <div class="border-b border-gray-200 p-5">
@@ -178,9 +167,7 @@ background-color: #fff;
                   name="name-order"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label
-                  for="exactDate"
-                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                <label for="exactDate" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                   I know the exact date, including the year
                 </label>
               </div>
@@ -197,21 +184,19 @@ background-color: #fff;
                   name="name-order"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label
-                  for="monthDay"
-                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                <label for="monthDay" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                   I only know the date and month, not the year
                 </label>
               </div>
               <div v-if="form.choice == 'monthDay'" class="ml-6">
                 <dropdown
-              v-model="form.gender_id"
-              :data="data.months"
-              :required="false"
-              :div-outer-class="'mb-5'"
-              :placeholder="'Choose a value'"
-              :dropdown-class="'block w-full'"
-              :label="'Month'" />
+                  v-model="form.gender_id"
+                  :data="data.months"
+                  :required="false"
+                  :div-outer-class="'mb-5'"
+                  :placeholder="'Choose a value'"
+                  :dropdown-class="'block w-full'"
+                  :label="'Month'" />
               </div>
 
               <!-- case: I know the age -->
@@ -224,9 +209,7 @@ background-color: #fff;
                   name="name-order"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label
-                  for="age"
-                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                <label for="age" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                   I think this person is… (years old)
                 </label>
               </div>
