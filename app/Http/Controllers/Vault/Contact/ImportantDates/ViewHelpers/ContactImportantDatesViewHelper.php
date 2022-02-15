@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
 use App\Helpers\DateHelper;
-use Illuminate\Support\Str;
 use App\Models\ContactDate;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class ContactImportantDatesViewHelper
 {

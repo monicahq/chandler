@@ -11,11 +11,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Contact\ManageContactDate\CreateContactDate;
+use App\Services\Contact\ManageContactDate\UpdateContactDate;
 use App\Services\Contact\ManageContactDate\DestroyContactDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
-use App\Services\Contact\ManageContactDate\UpdateContactDate;
-use Tests\Unit\Services\Contact\ManageContactDate\UpdateContactDateTest;
 
 class ContactImportantDatesController extends Controller
 {
