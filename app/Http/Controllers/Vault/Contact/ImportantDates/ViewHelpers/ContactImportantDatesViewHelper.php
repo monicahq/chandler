@@ -57,8 +57,8 @@ class ContactImportantDatesViewHelper
             case 5:
                 // case: only know the month and day.
                 $choice = 'monthDay';
-                $month = Str::substr($date->date, 0, 2);
-                $day = Str::substr($date->date, 3, 2);
+                $month = (int) ltrim(Str::substr($date->date, 0, 2), '0');
+                $day = (int) ltrim(Str::substr($date->date, 3, 2), '0');
                 break;
 
             case 4:

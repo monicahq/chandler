@@ -91,15 +91,13 @@
           <li v-for="date in localDates" :key="date.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
             <!-- detail of the group type -->
             <div v-if="editedDateId !== date.id" class="flex items-center justify-between px-5 py-2">
-              <span class="text-base"
-                >{{ date.label }}: <span class="font-medium">{{ date.date }}</span></span
-              >
+              <span class="text-base">
+                {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
+              </span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                  @click="updateDateModal(date)">
+                <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateDateModal(date)">
                   Edit
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
@@ -107,17 +105,14 @@
             </div>
 
             <!-- edit date modal -->
-            <form
-              v-if="editedDateId === date.id"
-              class="bg-white"
-              @submit.prevent="submit()">
+            <form v-if="editedDateId === date.id" class="bg-white" @submit.prevent="submit()">
               <div class="border-b border-gray-200">
                 <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
 
                 <!-- name -->
                 <div class="border-b border-gray-200 p-5">
                   <text-input
-                    :ref="'name'"
+                    :ref="'label'"
                     v-model="form.label"
                     :label="'Name of the date'"
                     :type="'text'"
@@ -168,6 +163,7 @@
                       :div-outer-class="'mb-5 mr-2'"
                       :placeholder="'Choose a value'"
                       :dropdown-class="'block w-full'"
+                      :selected-id="date.month"
                       :label="'Month'" />
 
                     <dropdown
@@ -177,6 +173,7 @@
                       :div-outer-class="'mb-5'"
                       :placeholder="'Choose a value'"
                       :dropdown-class="'block w-full'"
+                      :selected-id="date.day"
                       :label="'Day'" />
                   </div>
 
@@ -228,7 +225,7 @@
             <!-- name -->
             <div class="border-b border-gray-200 p-5">
               <text-input
-                :ref="'name'"
+                :ref="'label'"
                 v-model="form.label"
                 :label="'Name of the date'"
                 :type="'text'"
@@ -396,7 +393,7 @@ export default {
       this.createDateModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.name.focus();
+        this.$refs.label.focus();
       });
     },
 
@@ -408,10 +405,6 @@ export default {
       this.form.date = date.completeDate;
       this.form.age = date.age;
       this.editedDateId = date.id;
-
-      this.$nextTick(() => {
-        this.$refs.name.focus();
-      });
     },
 
     showAge() {
