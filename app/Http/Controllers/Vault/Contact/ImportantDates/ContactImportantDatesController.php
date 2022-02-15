@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Vault\Contact\ImportantDates;
 
-use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Contact\ManageContactDate\CreateContactDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
-use App\Services\Contact\ManageContactDate\CreateContactDate;
-use Carbon\Carbon;
 
 class ContactImportantDatesController extends Controller
 {
@@ -36,7 +36,7 @@ class ContactImportantDatesController extends Controller
         if ($request->input('choice') === 'monthDay') {
             $month = Str::padLeft($request->input('month'), 2, '0');
             $day = Str::padLeft($request->input('day'), 2, '0');
-            $date = $month . '-' . $day;
+            $date = $month.'-'.$day;
         }
 
         if ($request->input('choice') === 'age') {
