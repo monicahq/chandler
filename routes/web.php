@@ -78,6 +78,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
+                    // important dates
+                    Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.dates.index');
+
                     // notes
                     Route::get('notes', [ContactNotesController::class, 'index'])->name('contact.note.index');
                     Route::post('notes', [ContactModuleNoteController::class, 'store'])->name('contact.note.store');

@@ -127,7 +127,7 @@
       v-if="addUserModalShown && localUsersInAccount.length == 0"
       class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center"
     >
-      <p>There are no more users in this account.</p>
+      <p>There are no other users in this account.</p>
     </div>
 
     <!-- list of existing users -->

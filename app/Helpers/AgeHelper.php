@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use Carbon\Carbon;
 
 class AgeHelper
@@ -41,5 +42,60 @@ class AgeHelper
         }
 
         return $age;
+    }
+
+    public static function formatDate(string $date, User $user): ?string
+    {
+        if (!$date) {
+            return null;
+        }
+
+        switch (strlen($date)) {
+            case 10:
+                // case: full date
+                $string = Carbon::parse($date)->isoFormat($user->date_format);
+                break;
+
+            case 5:
+                // case: only know the month and day.
+                // in this case, we'll add a random year and format the date
+                // with only month and day
+                $date = $date.'-1900';
+                switch ($user->date_format) {
+                    case 'MMM DD, YYYY':
+                        $string = Carbon::parse($date)->isoFormat('MMM DD');
+                        break;
+
+                    case 'DD MMM YYYY':
+                        $string = Carbon::parse($date)->isoFormat('DD MMM');
+                        break;
+
+                    case 'YYYY/MM/DD':
+                        $string = Carbon::parse($date)->isoFormat('MM/DD');
+                        break;
+
+                    case 'DD/MM/YYYY':
+                        $string = Carbon::parse($date)->isoFormat('DD/MM');
+                        break;
+
+                    default:
+                        $string = Carbon::parse($date)->isoFormat('DD/MM');
+                        break;
+                }
+                break;
+
+            case 4:
+                // case: only know the year.
+                // in this case, we'll add a random month and day and format
+                // the date
+                $string = $date;
+                break;
+
+            default:
+                $string = $date;
+                break;
+        }
+
+        return $string;
     }
 }

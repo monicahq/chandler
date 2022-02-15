@@ -41,7 +41,7 @@
     </ul>
 
     <!-- blank state -->
-    <p v-if="!data.dates" class="text-sm text-gray-600">Not set</p>
+    <p v-if="data.dates.length == 0" class="text-sm text-gray-600">Not set</p>
   </div>
 </template>
 
