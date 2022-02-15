@@ -323,7 +323,10 @@
 
         <!-- blank state -->
         <div v-if="localDates.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <p class="p-5 text-center">Add an important date to remember what matters to you about this person, like a birthdate or a deceased date.</p>
+          <p class="p-5 text-center">
+            Add an important date to remember what matters to you about this person, like a birthdate or a deceased
+            date.
+          </p>
         </div>
       </div>
     </main>
