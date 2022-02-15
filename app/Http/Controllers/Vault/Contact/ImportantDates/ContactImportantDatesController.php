@@ -73,7 +73,7 @@ class ContactImportantDatesController extends Controller
         if ($request->input('choice') === 'monthDay') {
             $month = Str::padLeft($request->input('month'), 2, '0');
             $day = Str::padLeft($request->input('day'), 2, '0');
-            $date = $month . '-' . $day;
+            $date = $month.'-'.$day;
         }
 
         if ($request->input('choice') === 'age') {
