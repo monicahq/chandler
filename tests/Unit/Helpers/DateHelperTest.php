@@ -196,7 +196,7 @@ class DateHelperTest extends TestCase
                 28,
                 29,
                 30,
-                31
+                31,
             ],
             $collection->toArray()
         );

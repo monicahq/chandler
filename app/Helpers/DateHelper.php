@@ -127,7 +127,7 @@ class DateHelper
         for ($month = 1; $month <= 12; $month++) {
             $monthsCollection->push([
                 'id' => $month,
-                'name' => Carbon::create($year, $month, 1)->isoFormat('MMMM')
+                'name' => Carbon::create($year, $month, 1)->isoFormat('MMMM'),
             ]);
         }
 
