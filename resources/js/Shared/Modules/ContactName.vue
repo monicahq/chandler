@@ -28,7 +28,7 @@
       </inertia-link>
     </div>
 
-    <h1 class="text-xl">
+    <h1 class="text-xl font-bold">
       {{ data.name }}
     </h1>
   </div>

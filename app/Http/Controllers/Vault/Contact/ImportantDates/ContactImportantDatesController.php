@@ -14,6 +14,8 @@ use App\Services\Contact\ManageContactDate\CreateContactDate;
 use App\Services\Contact\ManageContactDate\DestroyContactDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use App\Services\Contact\ManageContactDate\UpdateContactDate;
+use Tests\Unit\Services\Contact\ManageContactDate\UpdateContactDateTest;
 
 class ContactImportantDatesController extends Controller
 {
@@ -61,6 +63,28 @@ class ContactImportantDatesController extends Controller
         return response()->json([
             'data' => ContactImportantDatesViewHelper::dto($contact, $date, Auth::user()),
         ], 201);
+    }
+
+    public function update(Request $request, int $vaultId, int $contactId, int $dateId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+            'contact_date_id' => $dateId,
+            'label' => $request->input('label'),
+            'date' => $date,
+            'type' => $request->input('type'),
+        ];
+
+        $date = (new UpdateContactDate)->execute($data);
+
+        $contact = Contact::find($contactId);
+
+        return response()->json([
+            'data' => ContactImportantDatesViewHelper::dto($contact, $date, Auth::user()),
+        ], 200);
     }
 
     public function destroy(Request $request, int $vaultId, int $contactId, int $dateId)

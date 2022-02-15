@@ -44,6 +44,14 @@ class AgeHelper
         return $age;
     }
 
+    /**
+     * A contact date can be complex (see self::getAge() documentation).
+     * This method returns the date as a string.
+     *
+     * @param string $date
+     * @param User $user
+     * @return string|null
+     */
     public static function formatDate(string $date, User $user): ?string
     {
         if (! $date) {
