@@ -40,8 +40,7 @@
               :required="true"
               :autocomplete="false"
               :maxlength="255"
-              @keyup="search"
-            />
+              @keyup="search" />
           </div>
         </form>
 
@@ -55,16 +54,14 @@
         <!-- searching results -->
         <div
           v-if="processingSearch"
-          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500"
-        >
+          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
           <loading />
         </div>
 
         <!-- not enough characters -->
         <div
           v-if="form.searchTerm.length < 3"
-          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500"
-        >
+          class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
           <p>Please enter at least 3 characters to initiate a search.</p>
         </div>
       </div>

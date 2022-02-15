@@ -30,6 +30,8 @@ class ContactImportantDatesViewHelper
                 'name' => $contact->getName($user),
             ],
             'dates' => $datesCollection,
+            'months' => DateHelper::getMonths(),
+            'days' => DateHelper::getDays(),
             'url' => [
                 'store' => route('contact.note.store', [
                     'vault' => $contact->vault_id,

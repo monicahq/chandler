@@ -45,5 +45,12 @@ class ModuleImportantDatesViewHelperTest extends TestCase
             ],
             $array['dates']->toArray()
         );
+
+        $this->assertEquals(
+            [
+                'edit' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/dates',
+            ],
+            $array['url']
+        );
     }
 }
