@@ -60,7 +60,8 @@ class AgeHelper
                 // case: only know the month and day.
                 // in this case, we'll add a random year and format the date
                 // with only month and day
-                $date = $date.'-1900';
+                $date = '1900-'.$date;
+                $date = Carbon::parse($date);
                 switch ($user->date_format) {
                     case 'MMM DD, YYYY':
                         $string = Carbon::parse($date)->isoFormat('MMM DD');

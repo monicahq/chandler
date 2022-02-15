@@ -77,7 +77,7 @@ class AgeHelperTest extends TestCase
     {
         $user = User::factory()->create();
         $this->assertEquals(
-            'Feb 10',
+            'Oct 02',
             AgeHelper::formatDate('10-02', $user)
         );
     }

@@ -305,7 +305,12 @@ export default {
 
   methods: {
     showCreateModal() {
-      this.form.name = '';
+      this.form.label = '';
+      this.form.choice = '';
+      this.form.day = '';
+      this.form.month = '';
+      this.form.date = '';
+      this.form.age = '';
       this.createDateModalShown = true;
 
       this.$nextTick(() => {
@@ -343,7 +348,7 @@ export default {
         .put(addressType.url.update, this.form)
         .then((response) => {
           this.flash('The address type has been updated', 'success');
-          this.localAddressTypes[this.localAddressTypes.findIndex((x) => x.id === addressType.id)] = response.data.data;
+          this.localDates[this.localDates.findIndex((x) => x.id === date.id)] = response.data.data;
           this.loadingState = null;
           this.renameAddressTypeModalShownId = 0;
         })
@@ -353,18 +358,18 @@ export default {
         });
     },
 
-    destroy(addressType) {
+    destroy(date) {
       if (
         confirm(
-          "Are you sure? This will remove the address types from all contacts, but won't delete the contacts themselves.",
+          "Are you sure? This is permanent.",
         )
       ) {
         axios
-          .delete(addressType.url.destroy)
+          .delete(date.url.destroy)
           .then((response) => {
-            this.flash('The address type has been deleted', 'success');
-            var id = this.localAddressTypes.findIndex((x) => x.id === addressType.id);
-            this.localAddressTypes.splice(id, 1);
+            this.flash('The date has been deleted', 'success');
+            var id = this.localDates.findIndex((x) => x.id === date.id);
+            this.localDates.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;

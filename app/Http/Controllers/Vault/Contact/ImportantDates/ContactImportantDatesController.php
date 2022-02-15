@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Contact\ManageContactDate\CreateContactDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use App\Services\Contact\ManageContactDate\DestroyContactDate;
 
 class ContactImportantDatesController extends Controller
 {
@@ -60,5 +61,22 @@ class ContactImportantDatesController extends Controller
         return response()->json([
             'data' => ContactImportantDatesViewHelper::dto($contact, $date, Auth::user()),
         ], 201);
+    }
+
+    public function destroy(Request $request, int $vaultId, int $contactId, int $dateId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+            'contact_date_id' => $dateId,
+        ];
+
+        (new DestroyContactDate)->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 200);
     }
 }
