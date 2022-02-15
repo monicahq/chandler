@@ -1,4 +1,5 @@
-<style lang="scss" scoped> pre {
+<style lang="scss" scoped>
+pre {
   background-color: #1f2937;
   color: #c9ef78;
 }
@@ -14,7 +15,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> How should we display dates</h3>
-      <pretty-button v-if="!editMode"  :text="'Edit'" @click="enableEditMode" />
+      <pretty-button v-if="!editMode" :text="'Edit'" @click="enableEditMode" />
     </div>
 
     <!-- help text -->
@@ -35,9 +36,7 @@
       </svg>
 
       <div>
-        <p>
-          You can choose how you want Monica to display dates in the application.
-        </p>
+        <p>You can choose how you want Monica to display dates in the application.</p>
       </div>
     </div>
 
@@ -45,7 +44,7 @@
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <p class="px-5 py-2">
         <span class="mb-2 block">Current way of displaying dates:</span>
-        <span class="mb-2 block bg-slate-100 rounded px-5 py-2 text-sm">{{ localHumanDateFormat }}</span>
+        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm">{{ localHumanDateFormat }}</span>
       </p>
     </div>
 
