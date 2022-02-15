@@ -64,7 +64,6 @@
 
     <main class="relative sm:mt-20">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-
         <!-- list of dates -->
         <ul v-if="localDates.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
           <li
@@ -167,6 +166,5 @@ export default {
   mounted() {
     this.localDates = this.data.dates;
   },
-
 };
 </script>
