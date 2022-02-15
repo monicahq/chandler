@@ -4,8 +4,8 @@ namespace Tests\Unit\Helpers;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Helpers\DateHelper;
 use App\Models\User;
+use App\Helpers\DateHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DateHelperTest extends TestCase
@@ -17,7 +17,7 @@ class DateHelperTest extends TestCase
     {
         $date = Carbon::createFromFormat('Y-m-d H:i:s', '1978-10-01 17:56:03');
         $user = User::factory()->create([
-            'date_format' => 'MMM DD, YYYY'
+            'date_format' => 'MMM DD, YYYY',
         ]);
 
         $this->assertEquals(

@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
 
 class DateHelper
 {

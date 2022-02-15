@@ -3,11 +3,11 @@
 namespace Tests\Unit\Controllers\Settings\Preferences\ViewHelpers;
 
 use function env;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
-use Carbon\Carbon;
 
 class PreferencesIndexViewHelperTest extends TestCase
 {
@@ -81,7 +81,7 @@ class PreferencesIndexViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/settings/preferences/date',
+                'store' => env('APP_URL').'/settings/preferences/date',
             ],
             $array['url']
         );

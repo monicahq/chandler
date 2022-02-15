@@ -7,8 +7,6 @@ use App\Models\User;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\User\StoreNameOrderPreference;
-use App\Services\Account\ManageLabels\CreateLabel;
 use App\Services\User\StoreDateFormatPreference;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

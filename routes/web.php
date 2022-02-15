@@ -17,6 +17,8 @@ use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsUserController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
+use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
+use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
 use App\Http\Controllers\Settings\Personalize\Labels\PersonalizeLabelController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
@@ -32,8 +34,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
-use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Settings\Preferences;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\StoreNameOrderPreference;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use App\Services\User\StoreDateFormatPreference;
+use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 
 class PreferencesDateFormatController extends Controller
 {
