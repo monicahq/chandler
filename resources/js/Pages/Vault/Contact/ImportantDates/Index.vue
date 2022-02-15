@@ -86,134 +86,6 @@
           <pretty-button v-if="!createDateModalShown" :text="'Add a date'" :icon="'plus'" @click="showCreateModal" />
         </div>
 
-        <!-- list of dates -->
-        <ul v-if="localDates.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li v-for="date in localDates" :key="date.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
-            <!-- detail of the group type -->
-            <div v-if="editedDateId !== date.id" class="flex items-center justify-between px-5 py-2">
-              <span class="text-base">
-                {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
-              </span>
-
-              <!-- actions -->
-              <ul class="text-sm">
-                <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateDateModal(date)">
-                  Edit
-                </li>
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
-              </ul>
-            </div>
-
-            <!-- edit date modal -->
-            <form v-if="editedDateId === date.id" class="bg-white" @submit.prevent="submit()">
-              <div class="border-b border-gray-200">
-                <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
-
-                <!-- name -->
-                <div class="border-b border-gray-200 p-5">
-                  <text-input
-                    :ref="'label'"
-                    v-model="form.label"
-                    :label="'Name of the date'"
-                    :type="'text'"
-                    :autofocus="true"
-                    :input-class="'block w-full'"
-                    :required="true"
-                    :autocomplete="false"
-                    :maxlength="255"
-                    @esc-key-pressed="createDateModalShown = false" />
-                </div>
-
-                <div class="p-5">
-                  <!-- case: I know the exact date -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="exactDate"
-                      v-model="form.choice"
-                      value="exactDate"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="exactDate" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I know the exact date, including the year
-                    </label>
-                  </div>
-                  <div v-if="form.choice == 'exactDate'" class="ml-6 mb-4">
-                    <a-date-picker v-model:value="form.date" class="" />
-                  </div>
-
-                  <!-- case: date and month -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="monthDay"
-                      v-model="form.choice"
-                      value="monthDay"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="monthDay" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I only know the date and month, not the year
-                    </label>
-                  </div>
-                  <div v-if="form.choice == 'monthDay'" class="ml-6 flex">
-                    <dropdown
-                      v-model="form.month"
-                      :data="data.months"
-                      :required="true"
-                      :div-outer-class="'mb-5 mr-2'"
-                      :placeholder="'Choose a value'"
-                      :dropdown-class="'block w-full'"
-                      :selected-id="date.month"
-                      :label="'Month'" />
-
-                    <dropdown
-                      v-model="form.day"
-                      :data="data.days"
-                      :required="true"
-                      :div-outer-class="'mb-5'"
-                      :placeholder="'Choose a value'"
-                      :dropdown-class="'block w-full'"
-                      :selected-id="date.day"
-                      :label="'Day'" />
-                  </div>
-
-                  <!-- case: I know the age -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="age"
-                      v-model="form.choice"
-                      @selected="showAge"
-                      value="age"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="age" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I only know a number of years (an age, for example)
-                    </label>
-                  </div>
-                  <div v-if="form.choice == 'age'" class="ml-6">
-                    <text-input
-                      :ref="'age'"
-                      v-model="form.age"
-                      :type="'number'"
-                      :min="0"
-                      :max="120"
-                      :autofocus="true"
-                      :input-class="'block'"
-                      :required="true"
-                      :autocomplete="false" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedDateId = 0" />
-                <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
-              </div>
-            </form>
-          </li>
-        </ul>
-
         <!-- modal to create a new date -->
         <form
           v-if="createDateModalShown"
@@ -322,6 +194,137 @@
             <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
+
+        <!-- list of dates -->
+        <ul v-if="localDates.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <li v-for="date in localDates" :key="date.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+            <!-- detail of the group type -->
+            <div v-if="editedDateId !== date.id" class="flex items-center justify-between px-5 py-2">
+              <span class="text-base">
+                {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
+              </span>
+
+              <!-- actions -->
+              <ul class="text-sm">
+                <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateDateModal(date)">
+                  Edit
+                </li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
+              </ul>
+            </div>
+
+            <!-- edit date modal -->
+            <form v-if="editedDateId === date.id" class="bg-white" @submit.prevent="update(date)">
+              <div class="border-b border-gray-200">
+                <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
+
+                <!-- name -->
+                <div class="border-b border-gray-200 p-5">
+                  <text-input
+                    :ref="'label'"
+                    v-model="form.label"
+                    :label="'Name of the date'"
+                    :type="'text'"
+                    :autofocus="true"
+                    :input-class="'block w-full'"
+                    :required="true"
+                    :autocomplete="false"
+                    :maxlength="255"
+                    @esc-key-pressed="createDateModalShown = false" />
+                </div>
+
+                <div class="p-5">
+                  <!-- case: I know the exact date -->
+                  <div class="mb-2 flex items-center">
+                    <input
+                      id="exactDate"
+                      v-model="form.choice"
+                      value="exactDate"
+                      name="name-order"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="exactDate" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      I know the exact date, including the year
+                    </label>
+                  </div>
+                  <div v-if="form.choice == 'exactDate'" class="ml-6 mb-4">
+                    <a-date-picker v-model:value="form.date" class="" />
+                  </div>
+
+                  <!-- case: date and month -->
+                  <div class="mb-2 flex items-center">
+                    <input
+                      id="monthDay"
+                      v-model="form.choice"
+                      value="monthDay"
+                      name="name-order"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="monthDay" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      I only know the date and month, not the year
+                    </label>
+                  </div>
+                  <div v-if="form.choice == 'monthDay'" class="ml-6 flex">
+                    <dropdown
+                      v-model="form.month"
+                      :data="data.months"
+                      :required="true"
+                      :div-outer-class="'mb-5 mr-2'"
+                      :placeholder="'Choose a value'"
+                      :dropdown-class="'block w-full'"
+                      :label="'Month'" />
+
+                    <dropdown
+                      v-model="form.day"
+                      :data="data.days"
+                      :required="true"
+                      :div-outer-class="'mb-5'"
+                      :placeholder="'Choose a value'"
+                      :dropdown-class="'block w-full'"
+                      :label="'Day'" />
+                  </div>
+
+                  <!-- case: I know the age -->
+                  <div class="mb-2 flex items-center">
+                    <input
+                      id="age"
+                      v-model="form.choice"
+                      @selected="showAge"
+                      value="age"
+                      name="name-order"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="age" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      I only know a number of years (an age, for example)
+                    </label>
+                  </div>
+                  <div v-if="form.choice == 'age'" class="ml-6">
+                    <text-input
+                      :ref="'age'"
+                      v-model="form.age"
+                      :type="'number'"
+                      :min="0"
+                      :max="120"
+                      :autofocus="true"
+                      :input-class="'block'"
+                      :required="true"
+                      :autocomplete="false" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-between p-5">
+                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedDateId = 0" />
+                <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              </div>
+            </form>
+          </li>
+        </ul>
+
+        <!-- blank state -->
+        <div v-if="localDates.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <p class="p-5 text-center">Add an important date to remember what matters to you about this person, like a birthdate or a deceased date.</p>
+        </div>
       </div>
     </main>
   </layout>
@@ -430,16 +433,16 @@ export default {
         });
     },
 
-    update(addressType) {
+    update(date) {
       this.loadingState = 'loading';
 
       axios
-        .put(addressType.url.update, this.form)
+        .put(date.url.update, this.form)
         .then((response) => {
-          this.flash('The address type has been updated', 'success');
+          this.flash('The date has been updated', 'success');
           this.localDates[this.localDates.findIndex((x) => x.id === date.id)] = response.data.data;
           this.loadingState = null;
-          this.renameAddressTypeModalShownId = 0;
+          this.editedDateId = 0;
         })
         .catch((error) => {
           this.loadingState = null;
