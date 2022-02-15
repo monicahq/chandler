@@ -326,7 +326,7 @@ class DateHelperTest extends TestCase
                     'id' => 31,
                     'name' => 31,
                 ],
-   ],
+            ],
             $collection->toArray()
         );
     }
