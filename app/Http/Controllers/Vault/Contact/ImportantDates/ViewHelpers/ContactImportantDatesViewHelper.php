@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
 use App\Helpers\DateHelper;
+use App\Models\ContactDate;
 use Illuminate\Support\Str;
 
 class ContactImportantDatesViewHelper
@@ -15,14 +16,8 @@ class ContactImportantDatesViewHelper
     {
         $dates = $contact->dates;
 
-        $datesCollection = $dates->map(function ($date) use ($user) {
-            return [
-                'id' => $date->id,
-                'label' => $date->label,
-                'date' => AgeHelper::formatDate($date->date, $user),
-                'type' => $date->type,
-                'age' => AgeHelper::getAge($date->date),
-            ];
+        $datesCollection = $dates->map(function ($date) use ($user, $contact) {
+            return self::dto($contact, $date, $user);
         });
 
         return [
@@ -33,7 +28,7 @@ class ContactImportantDatesViewHelper
             'months' => DateHelper::getMonths(),
             'days' => DateHelper::getDays(),
             'url' => [
-                'store' => route('contact.note.store', [
+                'store' => route('contact.date.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -45,30 +40,24 @@ class ContactImportantDatesViewHelper
         ];
     }
 
-    public static function dto(Contact $contact, Note $note, User $user): array
+    public static function dto(Contact $contact, ContactDate $date, User $user): array
     {
         return [
-            'id' => $note->id,
-            'body' => $note->body,
-            'body_excerpt' => Str::length($note->body) >= 200 ? Str::limit($note->body, 200) : null,
-            'show_full_content' => false,
-            'title' => $note->title,
-            'author' => $note->author ? $note->author->name : $note->author_name,
-            'emotion' => $note->emotion ? [
-                'id' => $note->emotion->id,
-                'name' => $note->emotion->name,
-            ] : null,
-            'written_at' => DateHelper::format($note->created_at, $user),
+            'id' => $date->id,
+            'label' => $date->label,
+            'date' => AgeHelper::formatDate($date->date, $user),
+            'type' => $date->type,
+            'age' => AgeHelper::getAge($date->date),
             'url' => [
-                'update' => route('contact.note.update', [
+                'update' => route('contact.date.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'note' => $note->id,
+                    'date' => $date->id,
                 ]),
-                'destroy' => route('contact.note.destroy', [
+                'destroy' => route('contact.date.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'note' => $note->id,
+                    'date' => $date->id,
                 ]),
             ],
         ];

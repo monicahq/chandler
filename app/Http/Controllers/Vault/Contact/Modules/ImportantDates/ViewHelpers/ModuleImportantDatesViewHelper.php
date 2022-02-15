@@ -25,7 +25,7 @@ class ModuleImportantDatesViewHelper
         return [
             'dates' => $datesCollection,
             'url' => [
-                'edit' => route('contact.dates.index', [
+                'edit' => route('contact.date.index', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),

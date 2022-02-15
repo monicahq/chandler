@@ -80,7 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
                     // important dates
-                    Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.dates.index');
+                    Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');
+                    Route::post('dates', [ContactImportantDatesController::class, 'store'])->name('contact.date.store');
+                    Route::put('dates/{date}', [ContactImportantDatesController::class, 'update'])->name('contact.date.update');
+                    Route::delete('dates/{date}', [ContactImportantDatesController::class, 'destroy'])->name('contact.date.destroy');
 
                     // notes
                     Route::get('notes', [ContactNotesController::class, 'index'])->name('contact.note.index');

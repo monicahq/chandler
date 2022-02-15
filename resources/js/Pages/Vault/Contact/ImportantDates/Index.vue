@@ -92,7 +92,7 @@
             <!-- detail of the group type -->
             <div v-if="editDateModalShownId != date.id" class="flex items-center justify-between px-5 py-2">
               <span class="text-base"
-                >{{ date.label }}: <span>{{ date.date }}</span></span
+                >{{ date.label }}: <span class="font-medium">{{ date.date }}</span></span
               >
 
               <!-- actions -->
@@ -106,7 +106,7 @@
               </ul>
             </div>
 
-            <!-- rename a addressType modal -->
+            <!-- create a date modal -->
             <form
               v-if="editDateModalShownId == date.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50"
@@ -116,7 +116,7 @@
 
                 <text-input
                   :ref="'rename' + date.id"
-                  v-model="form.name"
+                  v-model="form.label"
                   :label="'Name'"
                   :type="'text'"
                   :autofocus="true"
@@ -147,7 +147,7 @@
             <div class="border-b border-gray-200 p-5">
               <text-input
                 :ref="'name'"
-                v-model="form.name"
+                v-model="form.label"
                 :label="'Name of the date'"
                 :type="'text'"
                 :autofocus="true"
@@ -155,22 +155,7 @@
                 :required="true"
                 :autocomplete="false"
                 :maxlength="255"
-                @esc-key-pressed="createAddressTypeModalShown = false" />
-            </div>
-
-            <!-- type -->
-            <div class="border-b border-gray-200 p-5">
-              <text-input
-                :ref="'name'"
-                v-model="form.name"
-                :label="'Name of the date'"
-                :type="'text'"
-                :autofocus="true"
-                :input-class="'block w-full'"
-                :required="true"
-                :autocomplete="false"
-                :maxlength="255"
-                @esc-key-pressed="createAddressTypeModalShown = false" />
+                @esc-key-pressed="createDateModalShown = false" />
             </div>
 
             <div class="border-b border-gray-200 p-5">
@@ -191,7 +176,7 @@
                 <a-date-picker v-model:value="form.date" class="" />
               </div>
 
-              <!-- case: I know the exact date -->
+              <!-- case: date and month -->
               <div class="mb-2 flex items-center">
                 <input
                   id="monthDay"
@@ -206,7 +191,7 @@
               </div>
               <div v-if="form.choice == 'monthDay'" class="ml-6 flex">
                 <dropdown
-                  v-model="form.gender_id"
+                  v-model="form.month"
                   :data="data.months"
                   :required="true"
                   :div-outer-class="'mb-5 mr-2'"
@@ -215,7 +200,7 @@
                   :label="'Month'" />
 
                 <dropdown
-                  v-model="form.gender_id"
+                  v-model="form.day"
                   :data="data.days"
                   :required="true"
                   :div-outer-class="'mb-5'"
@@ -235,13 +220,13 @@
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500" />
                 <label for="age" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                  I think this person is… (years old)
+                  I only know a number of years (an age, for example)
                 </label>
               </div>
               <div v-if="form.choice == 'age'" class="ml-6">
                 <text-input
                   :ref="'age'"
-                  v-model="form.name"
+                  v-model="form.age"
                   :type="'number'"
                   :min="0"
                   :max="120"
@@ -254,8 +239,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createAddressTypeModalShown = false" />
-            <pretty-button :text="'Create address type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createDateModalShown = false" />
+            <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
       </div>
@@ -268,8 +253,10 @@ import Layout from '@/Shared/Layout';
 import NameOrder from '@/Pages/Settings/Preferences/Partials/NameOrder';
 import DateFormat from '@/Pages/Settings/Preferences/Partials/DateFormat';
 import PrettyButton from '@/Shared/Form/PrettyButton';
+import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import Dropdown from '@/Shared/Form/Dropdown';
+import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
@@ -277,8 +264,10 @@ export default {
     NameOrder,
     DateFormat,
     PrettyButton,
+    PrettySpan,
     Dropdown,
     TextInput,
+    Errors,
   },
 
   props: {
@@ -300,6 +289,8 @@ export default {
       localDates: [],
       form: {
         choice: '',
+        month: '',
+        day: '',
         label: '',
         date: '',
         age: '',
@@ -332,12 +323,12 @@ export default {
       this.loadingState = 'loading';
 
       axios
-        .post(this.data.url.address_type_store, this.form)
+        .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The address type has been created', 'success');
-          this.localAddressTypes.unshift(response.data.data);
+          this.flash('The date has been added', 'success');
+          this.localDates.unshift(response.data.data);
           this.loadingState = null;
-          this.createAddressTypeModalShown = false;
+          this.createDateModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
