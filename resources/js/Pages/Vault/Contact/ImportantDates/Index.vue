@@ -143,6 +143,22 @@
           <div class="border-b border-gray-200">
             <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
 
+            <!-- name -->
+            <div class="border-b border-gray-200 p-5">
+              <text-input
+                :ref="'name'"
+                v-model="form.name"
+                :label="'Name of the date'"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="createAddressTypeModalShown = false" />
+            </div>
+
+            <!-- type -->
             <div class="border-b border-gray-200 p-5">
               <text-input
                 :ref="'name'"
@@ -188,15 +204,24 @@
                   I only know the date and month, not the year
                 </label>
               </div>
-              <div v-if="form.choice == 'monthDay'" class="ml-6">
+              <div v-if="form.choice == 'monthDay'" class="ml-6 flex">
                 <dropdown
                   v-model="form.gender_id"
                   :data="data.months"
-                  :required="false"
-                  :div-outer-class="'mb-5'"
+                  :required="true"
+                  :div-outer-class="'mb-5 mr-2'"
                   :placeholder="'Choose a value'"
                   :dropdown-class="'block w-full'"
                   :label="'Month'" />
+
+                <dropdown
+                  v-model="form.gender_id"
+                  :data="data.days"
+                  :required="true"
+                  :div-outer-class="'mb-5'"
+                  :placeholder="'Choose a value'"
+                  :dropdown-class="'block w-full'"
+                  :label="'Day'" />
               </div>
 
               <!-- case: I know the age -->

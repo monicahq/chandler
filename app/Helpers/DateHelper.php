@@ -143,7 +143,10 @@ class DateHelper
     {
         $daysCollection = collect();
         for ($day = 1; $day <= 31; $day++) {
-            $daysCollection->push($day);
+            $daysCollection->push([
+                'id' => $day,
+                'name' => $day,
+            ]);
         }
 
         return $daysCollection;
