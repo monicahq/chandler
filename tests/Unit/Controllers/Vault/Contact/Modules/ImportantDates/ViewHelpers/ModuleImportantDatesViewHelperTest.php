@@ -3,13 +3,11 @@
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
 
 use Tests\TestCase;
-use App\Models\Gender;
+use App\Models\User;
 use App\Models\Contact;
-use App\Models\Pronoun;
+use App\Models\ContactDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
-use App\Models\ContactDate;
-use App\Models\User;
 
 class ModuleImportantDatesViewHelperTest extends TestCase
 {
