@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
 
 class AgeHelper
 {
@@ -46,7 +46,7 @@ class AgeHelper
 
     public static function formatDate(string $date, User $user): ?string
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
