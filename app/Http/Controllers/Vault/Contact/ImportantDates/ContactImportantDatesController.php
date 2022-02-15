@@ -6,12 +6,10 @@ use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\Notes\ViewHelpers\NotesIndexViewHelper;
+use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 
 class ContactImportantDatesController extends Controller
 {
