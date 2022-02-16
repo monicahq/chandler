@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vault\Settings\ViewHelpers;
 use App\Models\User;
 use App\Models\Vault;
 use App\Helpers\VaultHelper;
+use App\Models\Label;
 
 class VaultSettingsIndexViewHelper
 {
@@ -19,6 +20,7 @@ class VaultSettingsIndexViewHelper
             ];
         });
 
+        // users
         $usersInAccount = $vault->account->users()->whereNotNull('email_verified_at')->get();
         $usersInVault = $vault->users()->get();
         $usersInAccount = $usersInAccount->diff($usersInVault);
@@ -29,15 +31,48 @@ class VaultSettingsIndexViewHelper
             return self::dtoUser($user, $vault);
         });
 
+        // labels
+        $labels = $vault->labels()
+            ->withCount('contacts')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $labelsCollection = $labels->map(function ($label) use ($vault) {
+            return self::dtoLabel($vault, $label);
+        });
+
+        $labelColorsCollection = collect();
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-neutral-200',
+            'text_color' => 'text-neutral-800',
+        ]);
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-red-500',
+            'text_color' => 'text-red-800',
+        ]);
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-amber-300',
+            'text_color' => 'text-amber-800',
+        ]);
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-lime-600',
+            'text_color' => 'text-lime-900',
+        ]);
+
         return [
             'templates' => $templatesCollection,
             'users_in_vault' => $usersInVaultCollection,
             'users_in_account' => $usersInAccountCollection,
+            'labels' => $labelsCollection,
+            'label_colors' => $labelColorsCollection,
             'url' => [
                 'template_update' => route('vault.settings.template.update', [
                     'vault' => $vault->id,
                 ]),
                 'user_store' => route('vault.settings.user.store', [
+                    'vault' => $vault->id,
+                ]),
+                'label_store' => route('vault.settings.label.store', [
                     'vault' => $vault->id,
                 ]),
                 'update' => route('vault.settings.update', [
@@ -64,6 +99,27 @@ class VaultSettingsIndexViewHelper
                 'destroy' => route('vault.settings.user.destroy', [
                     'vault' => $vault->id,
                     'user' => $user->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoLabel(Vault $vault, Label $label): array
+    {
+        return [
+            'id' => $label->id,
+            'name' => $label->name,
+            'count' => $label->contacts_count,
+            'bg_color' => $label->bg_color,
+            'text_color' => $label->text_color,
+            'url' => [
+                'update' => route('vault.settings.label.update', [
+                    'vault' => $vault->id,
+                    'label' => $label->id,
+                ]),
+                'destroy' => route('vault.settings.label.destroy', [
+                    'vault' => $vault->id,
+                    'label' => $label->id,
                 ]),
             ],
         ];

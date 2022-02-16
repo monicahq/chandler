@@ -20,6 +20,7 @@ class DestroyLabel extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
+            'vault_id' => 'required|integer|exists:vaults,id',
             'label_id' => 'required|integer|exists:labels,id',
         ];
     }
@@ -33,7 +34,8 @@ class DestroyLabel extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'author_must_be_account_administrator',
+            'author_must_be_vault_editor',
+            'vault_must_belong_to_account',
         ];
     }
 
@@ -46,7 +48,7 @@ class DestroyLabel extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $label = Label::where('account_id', $data['account_id'])
+        $label = Label::where('vault_id', $data['vault_id'])
             ->findOrFail($data['label_id']);
 
         $label->delete();

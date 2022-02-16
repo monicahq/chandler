@@ -53,7 +53,7 @@ class CreateLabel extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        Vault::$label = Label::create([
+        $label = Label::create([
             'vault_id' => $data['vault_id'],
             'name' => $data['name'],
             'description' => $this->valueOrNull($data, 'description'),

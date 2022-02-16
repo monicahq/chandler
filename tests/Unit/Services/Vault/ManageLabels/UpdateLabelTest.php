@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageLabels;
+namespace Tests\Unit\Services\Vault\ManageLabels;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,7 +10,8 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManageLabels\UpdateLabel;
+use App\Models\Vault;
+use App\Services\Vault\ManageLabels\UpdateLabel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -22,10 +23,12 @@ class UpdateLabelTest extends TestCase
     public function it_updates_a_label(): void
     {
         $ross = $this->createAdministrator();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_MANAGE, $vault);
         $label = Label::factory()->create([
-            'account_id' => $ross->account->id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $ross->account, $label);
+        $this->executeService($ross, $ross->account, $vault, $label);
     }
 
     /** @test */
@@ -46,20 +49,24 @@ class UpdateLabelTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_MANAGE, $vault);
         $label = Label::factory()->create([
-            'account_id' => $ross->account->id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $account, $label);
+        $this->executeService($ross, $account, $vault, $label);
     }
 
     /** @test */
-    public function it_fails_if_label_doesnt_belong_to_account(): void
+    public function it_fails_if_label_doesnt_belong_to_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_MANAGE, $vault);
         $label = Label::factory()->create();
-        $this->executeService($ross, $ross->account, $label);
+        $this->executeService($ross, $ross->account, $vault, $label);
     }
 
     /** @test */
@@ -68,19 +75,22 @@ class UpdateLabelTest extends TestCase
         $this->expectException(NotEnoughPermissionException::class);
 
         $ross = $this->createUser();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_VIEW, $vault);
         $label = Label::factory()->create([
-            'account_id' => $ross->account->id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $ross->account, $label);
+        $this->executeService($ross, $ross->account, $vault, $label);
     }
 
-    private function executeService(User $author, Account $account, Label $label): void
+    private function executeService(User $author, Account $account, Vault $vault, Label $label): void
     {
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
+            'vault_id' => $vault->id,
             'label_id' => $label->id,
             'name' => 'label name',
             'bg_color' => 'bg-zinc-700',
@@ -91,7 +101,7 @@ class UpdateLabelTest extends TestCase
 
         $this->assertDatabaseHas('labels', [
             'id' => $label->id,
-            'account_id' => $account->id,
+            'vault_id' => $vault->id,
             'name' => 'label name',
             'bg_color' => 'bg-zinc-700',
             'text_color' => 'bg-zinc-700',

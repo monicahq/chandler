@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Label;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
@@ -41,5 +42,16 @@ class VaultTest extends TestCase
         $vault->users()->sync([$dwight->id => ['permission' => Vault::PERMISSION_MANAGE]]);
 
         $this->assertTrue($vault->users()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_labels(): void
+    {
+        $vault = Vault::factory()->create();
+        $label = Label::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->labels()->exists());
     }
 }
