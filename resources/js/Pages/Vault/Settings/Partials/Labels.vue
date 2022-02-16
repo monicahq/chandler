@@ -45,24 +45,22 @@
           :div-outer-class="'mb-4'"
           @esc-key-pressed="createlabelModalShown = false" />
 
-          <p class="mb-2 block text-sm">Choose a color</p>
-          <div class="grid grid-cols-8 gap-4">
-            <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
-              <input
-                :id="color.bg_color"
-                v-model="form.bg_color"
-                :value="color.bg_color"
-                name="name-order"
-                type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500"
-                @click="form.text_color = color.text_color" />
-              <label
-                :for="color.bg_color"
-                class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
-                <div class="p-4 rounded" :class="color.bg_color"></div>
-              </label>
-            </div>
+        <p class="mb-2 block text-sm">Choose a color</p>
+        <div class="grid grid-cols-8 gap-4">
+          <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
+            <input
+              :id="color.bg_color"
+              v-model="form.bg_color"
+              :value="color.bg_color"
+              name="name-order"
+              type="radio"
+              class="h-4 w-4 border-gray-300 text-sky-500"
+              @click="form.text_color = color.text_color" />
+            <label :for="color.bg_color" class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
+              <div class="rounded p-4" :class="color.bg_color"></div>
+            </label>
           </div>
+        </div>
       </div>
 
       <div class="flex justify-between p-5">
@@ -76,17 +74,15 @@
       <li v-for="label in localLabels" :key="label.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
         <!-- detail of the group type -->
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
-          <span class="text-base flex items-center">
-            <div class="inline-block h-4 w-4 mr-2 rounded-full" :class="label.bg_color"></div>
+          <span class="flex items-center text-base">
+            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></div>
             {{ label.name }}
             <span v-if="label.count > 0" class="text-xs text-gray-500">({{ label.count }} contacts)</span>
           </span>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li
-              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="updateLabelModal(label)">
+            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateLabelModal(label)">
               Edit
             </li>
             <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(label)">Delete</li>
@@ -114,7 +110,7 @@
               :div-outer-class="'mb-4'"
               @esc-key-pressed="editLabelModalShownId = 0" />
 
-              <p class="mb-2 block text-sm">Choose a color</p>
+            <p class="mb-2 block text-sm">Choose a color</p>
             <div class="grid grid-cols-8 gap-4">
               <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
                 <input
@@ -125,10 +121,8 @@
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500"
                   @click="form.text_color = color.text_color" />
-                <label
-                  :for="color.bg_color"
-                  class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
-                  <div class="p-4 rounded" :class="color.bg_color"></div>
+                <label :for="color.bg_color" class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
+                  <div class="rounded p-4" :class="color.bg_color"></div>
                 </label>
               </div>
             </div>
