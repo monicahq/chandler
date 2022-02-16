@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Label;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

@@ -3,7 +3,6 @@
 namespace App\Services\Vault\ManageLabels;
 
 use App\Models\Label;
-use App\Models\Vault;
 use Illuminate\Support\Str;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;

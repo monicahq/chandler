@@ -5,11 +5,11 @@ namespace Tests\Unit\Controllers\Vault\Settings\ViewHelpers;
 use function env;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Settings\ViewHelpers\VaultSettingsIndexViewHelper;
-use App\Models\Label;
 
 class VaultSettingsIndexViewHelperTest extends TestCase
 {
@@ -104,8 +104,8 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'bg_color' => $label->bg_color,
                 'text_color' => $label->text_color,
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/'.$vault->id.'/settings/labels/' . $label->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $vault->id . '/settings/labels/' . $label->id,
+                    'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/labels/'.$label->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/settings/labels/'.$label->id,
                 ],
             ],
             $array
