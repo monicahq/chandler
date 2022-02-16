@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\Account\ManageLabels;
+namespace App\Services\Vault\ManageLabels;
 
+use App\Models\User;
 use App\Models\Label;
-use Illuminate\Support\Str;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class CreateLabel extends BaseService implements ServiceInterface
+class DestroyLabel extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -20,8 +20,7 @@ class CreateLabel extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:65535',
+            'label_id' => 'required|integer|exists:labels,id',
         ];
     }
 
@@ -39,32 +38,27 @@ class CreateLabel extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a label.
+     * Destroy a label.
      *
      * @param  array  $data
-     * @return Label
      */
-    public function execute(array $data): Label
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $label = Label::create([
-            'account_id' => $data['account_id'],
-            'name' => $data['name'],
-            'description' => $this->valueOrNull($data, 'description'),
-            'slug' => Str::slug($data['name'], '-'),
-        ]);
+        $label = Label::where('account_id', $data['account_id'])
+            ->findOrFail($data['label_id']);
+
+        $label->delete();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'label_created',
+            'action_name' => 'label_destroyed',
             'objects' => json_encode([
                 'label_name' => $label->name,
             ]),
         ]);
-
-        return $label;
     }
 }

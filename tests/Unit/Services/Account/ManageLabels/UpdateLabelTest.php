@@ -83,6 +83,8 @@ class UpdateLabelTest extends TestCase
             'author_id' => $author->id,
             'label_id' => $label->id,
             'name' => 'label name',
+            'bg_color' => 'bg-zinc-700',
+            'text_color' => 'bg-zinc-700',
         ];
 
         $label = (new UpdateLabel)->execute($request);
@@ -91,6 +93,8 @@ class UpdateLabelTest extends TestCase
             'id' => $label->id,
             'account_id' => $account->id,
             'name' => 'label name',
+            'bg_color' => 'bg-zinc-700',
+            'text_color' => 'bg-zinc-700',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {

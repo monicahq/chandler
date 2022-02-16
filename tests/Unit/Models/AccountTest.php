@@ -100,17 +100,6 @@ class AccountTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_labels()
-    {
-        $account = Account::factory()->create();
-        Label::factory(2)->create([
-            'account_id' => $account->id,
-        ]);
-
-        $this->assertTrue($account->labels()->exists());
-    }
-
-    /** @test */
     public function it_has_many_contact_information_types()
     {
         $account = Account::factory()->create();

@@ -63,6 +63,8 @@ class CreateLabelTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'name' => 'label name',
+            'bg_color' => 'bg-zinc-700',
+            'text_color' => 'bg-zinc-700',
         ];
 
         $label = (new CreateLabel)->execute($request);
@@ -71,6 +73,8 @@ class CreateLabelTest extends TestCase
             'id' => $label->id,
             'account_id' => $account->id,
             'name' => 'label name',
+            'bg_color' => 'bg-zinc-700',
+            'text_color' => 'bg-zinc-700',
         ]);
 
         $this->assertInstanceOf(

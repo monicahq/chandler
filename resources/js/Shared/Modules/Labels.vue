@@ -1,0 +1,218 @@
+<style lang="scss" scoped>
+.icon-sidebar {
+  top: -2px;
+}
+
+.icon-note {
+  top: -1px;
+}
+
+.label-list {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  li:last-child {
+    border-bottom: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  li:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>
+
+<template>
+  <div class="mb-4">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
+      <div class="mb-2 text-xs sm:mb-0">Labels</div>
+      <inertia-link :href="data.url.edit" class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </inertia-link>
+    </div>
+
+    <!-- list of dates -->
+    <ul v-for="date in data.dates" :key="date.id" class="">
+      <li class="">
+        <span class="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-700 bg-teal-200 last:mr-0 mr-2">
+          lightBlue
+        </span>
+      </li>
+    </ul>
+
+    <!-- blank state -->
+    <p class="text-sm text-gray-600">Not set</p>
+
+    <!-- edit labels -->
+    <div class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <div class="border-b border-gray-200 p-2">
+        <errors :errors="form.errors" />
+
+        <text-input
+          :ref="'newPage'"
+          v-model="form.search"
+          :type="'text'"
+          :placeholder="'Filter list'"
+          :autofocus="true"
+          :input-class="'block w-full'"
+          :required="true"
+          :autocomplete="false"
+          @esc-key-pressed="createPageModalShown = false" />
+      </div>
+
+      <!-- existing labels -->
+      <ul class="overflow-auto bg-white label-list">
+        <li v-for="label in filteredLabels" :key="label.id" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+          {{ label.name}}
+        </li>
+        <li v-if="filteredLabels.length == 0 && form.search.length !=''" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+          Create new label <span class="italic">"{{ form.search }}"</span>
+        </li>
+        <li v-if="filteredLabels.length == 0 && form.search.length ==''" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+          Please type a few characters to create a new label.
+        </li>
+      </ul>
+    </div>
+
+    <!-- blank state -->
+    <p v-if="data.dates.length == 0" class="text-sm text-gray-600">Not set</p>
+  </div>
+</template>
+
+<script>
+import PrettyButton from '@/Shared/Form/PrettyButton';
+import PrettySpan from '@/Shared/Form/PrettySpan';
+import TextInput from '@/Shared/Form/TextInput';
+import Errors from '@/Shared/Form/Errors';
+
+export default {
+  components: {
+    PrettyButton,
+    PrettySpan,
+    TextInput,
+    Errors,
+  },
+
+  props: {
+    data: {
+      type: Object,
+      default: null,
+    },
+  },
+
+  data() {
+    return {
+      loadingState: '',
+      editLabelModalShown: false,
+      localLabels: [],
+      form: {
+        search: '',
+        name: '',
+        errors: [],
+      },
+    };
+  },
+
+  mounted() {
+    this.localLabels = this.data.dates;
+  },
+
+  computed: {
+    filteredLabels() {
+      return this.localLabels.filter(label => {
+         return label.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+      });
+    },
+  },
+
+  methods: {
+    showEditModal() {
+      this.form.name = '';
+      this.editLabelModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.label.focus();
+      });
+    },
+
+    updateDateModal(date) {
+      this.form.label = date.label;
+      this.form.choice = date.choice;
+      this.form.day = date.day;
+      this.form.month = date.month;
+      this.form.date = date.completeDate;
+      this.form.age = date.age;
+      this.editedDateId = date.id;
+    },
+
+    showAge() {
+      this.$nextTick(() => {
+        this.$refs.age.focus();
+      });
+    },
+
+    submit() {
+      this.loadingState = 'loading';
+
+      axios
+        .post(this.data.url.store, this.form)
+        .then((response) => {
+          this.flash('The date has been added', 'success');
+          this.localDates.unshift(response.data.data);
+          this.loadingState = null;
+          this.editLabelModalShown = false;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    update(date) {
+      this.loadingState = 'loading';
+
+      axios
+        .put(date.url.update, this.form)
+        .then((response) => {
+          this.flash('The date has been updated', 'success');
+          this.localDates[this.localDates.findIndex((x) => x.id === date.id)] = response.data.data;
+          this.loadingState = null;
+          this.editedDateId = 0;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroy(date) {
+      if (confirm('Are you sure? This is permanent.')) {
+        axios
+          .delete(date.url.destroy)
+          .then((response) => {
+            this.flash('The date has been deleted', 'success');
+            var id = this.localDates.findIndex((x) => x.id === date.id);
+            this.localDates.splice(id, 1);
+          })
+          .catch((error) => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+      }
+    },
+  },
+};
+</script>
