@@ -6,11 +6,10 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageNote\CreateNote;
 use App\Services\Contact\ManageNote\UpdateNote;
 use App\Services\Contact\ManageNote\DestroyNote;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Services\Account\ManageLabels\CreateLabel;
+use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 
 class ContactModuleLabelController extends Controller
 {

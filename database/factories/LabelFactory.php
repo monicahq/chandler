@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Label;
-use App\Models\Account;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

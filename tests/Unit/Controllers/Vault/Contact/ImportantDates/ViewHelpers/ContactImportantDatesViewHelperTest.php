@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Controllers\Vault\Contact\ImportantDates\ViewHelpers;
 
-use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactDate;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 
 class ContactImportantDatesViewHelperTest extends TestCase
 {
@@ -46,8 +46,8 @@ class ContactImportantDatesViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/dates',
-                'contact' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id,
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/dates',
+                'contact' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id,
             ],
             $array['url']
         );
@@ -78,8 +78,8 @@ class ContactImportantDatesViewHelperTest extends TestCase
                 'month' => '',
                 'day' => '',
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/dates/'.$date->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/dates/'.$date->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/dates/'.$date->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/dates/'.$date->id,
                 ],
             ],
             $array

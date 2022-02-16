@@ -4,7 +4,6 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Label;
 use App\Models\Gender;
 use App\Models\Module;
 use App\Models\Account;

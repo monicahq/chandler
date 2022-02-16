@@ -3,11 +3,11 @@
 namespace App\Services\Vault\ManageLabels;
 
 use App\Models\Label;
+use App\Models\Vault;
 use Illuminate\Support\Str;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\Vault;
 
 class CreateLabel extends BaseService implements ServiceInterface
 {
@@ -53,9 +53,7 @@ class CreateLabel extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        Vault::
-
-        $label = Label::create([
+        Vault::$label = Label::create([
             'vault_id' => $data['vault_id'],
             'name' => $data['name'],
             'description' => $this->valueOrNull($data, 'description'),
