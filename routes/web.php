@@ -92,7 +92,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
 
                     // labels
-
                 });
             });
 
