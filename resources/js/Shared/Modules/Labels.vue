@@ -47,7 +47,7 @@
     <!-- list of dates -->
     <ul v-for="date in data.dates" :key="date.id" class="">
       <li class="">
-        <span class="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-700 bg-teal-200 last:mr-0 mr-2">
+        <span class="mr-2 inline-block rounded bg-teal-200 py-1 px-2 text-xs font-semibold text-teal-700 last:mr-0">
           lightBlue
         </span>
       </li>
@@ -74,14 +74,21 @@
       </div>
 
       <!-- existing labels -->
-      <ul class="overflow-auto bg-white label-list">
-        <li v-for="label in filteredLabels" :key="label.id" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
-          {{ label.name}}
+      <ul class="label-list overflow-auto bg-white">
+        <li
+          v-for="label in filteredLabels"
+          :key="label.id"
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          {{ label.name }}
         </li>
-        <li v-if="filteredLabels.length == 0 && form.search.length !=''" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+        <li
+          v-if="filteredLabels.length == 0 && form.search.length != ''"
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           Create new label <span class="italic">"{{ form.search }}"</span>
         </li>
-        <li v-if="filteredLabels.length == 0 && form.search.length ==''" class="border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+        <li
+          v-if="filteredLabels.length == 0 && form.search.length == ''"
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           Please type a few characters to create a new label.
         </li>
       </ul>
@@ -132,8 +139,8 @@ export default {
 
   computed: {
     filteredLabels() {
-      return this.localLabels.filter(label => {
-         return label.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+      return this.localLabels.filter((label) => {
+        return label.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
       });
     },
   },
