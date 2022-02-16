@@ -53,7 +53,7 @@ class AssignLabel extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->label = Label::where('account_id', $data['account_id'])
+        $this->label = Label::where('vault_id', $data['vault_id'])
             ->findOrFail($data['label_id']);
 
         $this->contact->labels()->syncWithoutDetaching($this->label);

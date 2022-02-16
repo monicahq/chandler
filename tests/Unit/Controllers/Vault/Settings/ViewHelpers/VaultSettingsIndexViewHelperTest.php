@@ -32,7 +32,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
 
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertEquals(
-            5,
+            6,
             count($array)
         );
         $this->assertArrayHasKey('templates', $array);
@@ -40,6 +40,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('users_in_account', $array);
         $this->assertArrayHasKey('url', $array);
         $this->assertArrayHasKey('labels', $array);
+        $this->assertArrayHasKey('label_colors', $array);
         $this->assertEquals(
             [
                 0 => [

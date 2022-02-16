@@ -205,10 +205,6 @@ export default {
       this.editLabelModalShownId = label.id;
       this.form.bg_color = label.bg_color;
       this.form.text_color = label.text_color;
-
-      this.$nextTick(() => {
-        this.$refs[`rename${label.id}`].focus();
-      });
     },
 
     submit() {

@@ -90,6 +90,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('notes', [ContactModuleNoteController::class, 'store'])->name('contact.note.store');
                     Route::put('notes/{note}', [ContactModuleNoteController::class, 'update'])->name('contact.note.update');
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
+
+                    // labels
+
                 });
             });
 
