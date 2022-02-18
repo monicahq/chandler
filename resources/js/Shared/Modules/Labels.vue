@@ -81,7 +81,7 @@
         <li
           v-for="label in filteredLabels"
           :key="label.id"
-           @click="set(label)"
+          @click="set(label)"
           class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           <div>
             <span class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></span>
