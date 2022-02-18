@@ -29,6 +29,10 @@ class ModuleLabelViewHelper
             'labels_in_contact' => $labelsAssociatedWithContactCollection,
             'labels_in_vault' => $labelsInVaultCollection,
             'url' => [
+                'store' => route('contact.label.store', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'update' => route('contact.date.index', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,

@@ -28,7 +28,7 @@
   <div class="mb-4">
     <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
       <div class="mb-2 text-xs sm:mb-0">Labels</div>
-      <inertia-link :href="data.url.edit" class="relative">
+      <span v-if="!editLabelModalShown" @click="showEditModal" class="relative cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600"
@@ -41,25 +41,14 @@
             stroke-width="2"
             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
-      </inertia-link>
-    </div>
-
-    <!-- list of labels -->
-    <div class="flex flex-wrap">
-      <span
-        v-for="label in localLabels"
-        :key="label.id"
-        class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0"
-        :class="label.bg_color + ' ' + label.text_color">
-        {{ label.name }}
       </span>
-    </div>
 
-    <!-- blank state -->
-    <p v-if="localLabels.length == 0" class="text-sm text-gray-600">Not set</p>
+      <!-- close button -->
+      <span v-if="editLabelModalShown" @click="editLabelModalShown = false" class="text-gray-300 text-xs cursor-pointer">Close</span>
+    </div>
 
     <!-- edit labels -->
-    <div class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div v-if="editLabelModalShown" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <!-- filter list of labels -->
       <div class="border-b border-gray-200 p-2">
         <errors :errors="form.errors" />
@@ -102,7 +91,8 @@
         <!-- case if the label does not exist and needs to be created -->
         <li
           v-if="filteredLabels.length == 0 && form.search.length != ''"
-          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50"
+          @click="store()">
           Create new label <span class="italic">"{{ form.search }}"</span>
         </li>
 
@@ -114,6 +104,20 @@
         </li>
       </ul>
     </div>
+
+    <!-- list of labels -->
+    <div class="flex flex-wrap">
+      <span
+        v-for="label in localLabels"
+        :key="label.id"
+        class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0"
+        :class="label.bg_color + ' ' + label.text_color">
+        {{ label.name }}
+      </span>
+    </div>
+
+    <!-- blank state -->
+    <p v-if="localLabels.length == 0" class="text-sm text-gray-600">Not set</p>
 
     <!-- blank state -->
   </div>
@@ -176,19 +180,17 @@ export default {
       });
     },
 
-    submit() {
-      this.loadingState = 'loading';
+    store() {
+      this.form.name = this.form.search;
 
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The date has been added', 'success');
-          this.localDates.unshift(response.data.data);
-          this.loadingState = null;
-          this.editLabelModalShown = false;
+          this.form.search = '';
+          this.localLabelsInVault.push(response.data.data);
+          this.localLabels.push(response.data.data);
         })
         .catch((error) => {
-          this.loadingState = null;
           this.form.errors = error.response.data;
         });
     },
@@ -202,7 +204,6 @@ export default {
       axios
         .put(label.url.update)
         .then((response) => {
-          this.flash('The label has been set', 'success');
           this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
           this.localLabels.push(response.data.data);
         })
@@ -215,7 +216,6 @@ export default {
       axios
         .delete(label.url.destroy)
         .then((response) => {
-          this.flash('The label has been removed', 'success');
           this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
 
           var id = this.localLabels.findIndex((x) => x.id === label.id);
