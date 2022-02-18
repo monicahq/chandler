@@ -6,11 +6,10 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Vault\ManageLabels\CreateLabel;
 use App\Services\Contact\AssignLabel\AssignLabel;
 use App\Services\Contact\AssignLabel\RemoveLabel;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
-use App\Services\Vault\ManageLabels\CreateLabel;
 
 class ContactModuleLabelController extends Controller
 {
