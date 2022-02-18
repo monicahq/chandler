@@ -44,20 +44,20 @@
       </inertia-link>
     </div>
 
-    <!-- list of dates -->
-    <ul v-for="date in data.dates" :key="date.id" class="">
-      <li class="">
-        <span class="mr-2 inline-block rounded bg-teal-200 py-1 px-2 text-xs font-semibold text-teal-700 last:mr-0">
-          lightBlue
-        </span>
-      </li>
-    </ul>
+    <!-- list of labels -->
+    <div class="flex flex-wrap">
+      <span v-for="label in localLabels" :key="label.id" class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0" :class="label.bg_color + ' ' + label.text_color">
+        {{ label.name }}
+      </span>
+    </div>
 
     <!-- blank state -->
     <p class="text-sm text-gray-600">Not set</p>
 
     <!-- edit labels -->
     <div class="mb-6 rounded-lg border border-gray-200 bg-white">
+
+      <!-- filter list of labels -->
       <div class="border-b border-gray-200 p-2">
         <errors :errors="form.errors" />
 
@@ -70,22 +70,35 @@
           :input-class="'block w-full'"
           :required="true"
           :autocomplete="false"
-          @esc-key-pressed="createPageModalShown = false" />
+          @esc-key-pressed="editLabelModalShown = false" />
       </div>
 
-      <!-- existing labels -->
-      <ul class="label-list overflow-auto bg-white">
+      <!-- labels in vault -->
+      <ul class="label-list overflow-auto bg-white" :class="filteredLabels.length > 0 ? 'h-40' : ''">
         <li
           v-for="label in filteredLabels"
           :key="label.id"
-          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-          {{ label.name }}
+          @click="set(label)"
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50 flex items-center justify-between">
+
+          <div>
+            <span class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></span>
+            <span>{{ label.name }}</span>
+          </div>
+
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
         </li>
+
+        <!-- case if the label does not exist and needs to be created -->
         <li
           v-if="filteredLabels.length == 0 && form.search.length != ''"
           class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           Create new label <span class="italic">"{{ form.search }}"</span>
         </li>
+
+        <!-- blank state when there is no label at all -->
         <li
           v-if="filteredLabels.length == 0 && form.search.length == ''"
           class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
@@ -95,7 +108,7 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="data.dates.length == 0" class="text-sm text-gray-600">Not set</p>
+
   </div>
 </template>
 
@@ -125,6 +138,7 @@ export default {
       loadingState: '',
       editLabelModalShown: false,
       localLabels: [],
+      localLabelsInVault: [],
       form: {
         search: '',
         name: '',
@@ -133,14 +147,15 @@ export default {
     };
   },
 
-  mounted() {
-    this.localLabels = this.data.dates;
+  created() {
+    this.localLabels = this.data.labels_in_contact;
+    this.localLabelsInVault = this.data.labels_in_vault;
   },
 
   computed: {
     filteredLabels() {
-      return this.localLabels.filter((label) => {
-        return label.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+      return this.localLabelsInVault.filter((label) => {
+        return label.name.toLowerCase().indexOf(this.form.search.toLowerCase()) > -1;
       });
     },
   },
@@ -152,22 +167,6 @@ export default {
 
       this.$nextTick(() => {
         this.$refs.label.focus();
-      });
-    },
-
-    updateDateModal(date) {
-      this.form.label = date.label;
-      this.form.choice = date.choice;
-      this.form.day = date.day;
-      this.form.month = date.month;
-      this.form.date = date.completeDate;
-      this.form.age = date.age;
-      this.editedDateId = date.id;
-    },
-
-    showAge() {
-      this.$nextTick(() => {
-        this.$refs.age.focus();
       });
     },
 
@@ -188,19 +187,17 @@ export default {
         });
     },
 
-    update(date) {
+    set(label) {
       this.loadingState = 'loading';
 
       axios
-        .put(date.url.update, this.form)
+        .put(label.url.update)
         .then((response) => {
-          this.flash('The date has been updated', 'success');
-          this.localDates[this.localDates.findIndex((x) => x.id === date.id)] = response.data.data;
-          this.loadingState = null;
-          this.editedDateId = 0;
+          this.flash('The label has been set', 'success');
+          //this.localLabels[this.localLabels.findIndex((x) => x.id === date.id)] = response.data.data;
+          this.localLabels.push(response.data.data);
         })
         .catch((error) => {
-          this.loadingState = null;
           this.form.errors = error.response.data;
         });
     },

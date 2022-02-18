@@ -48,8 +48,9 @@ class AssignLabel extends BaseService implements ServiceInterface
      * Assign a label to the contact.
      *
      * @param  array  $data
+     * @return Label
      */
-    public function execute(array $data): void
+    public function execute(array $data): Label
     {
         $this->validateRules($data);
 
@@ -62,6 +63,8 @@ class AssignLabel extends BaseService implements ServiceInterface
         $this->contact->save();
 
         $this->log();
+
+        return $this->label;
     }
 
     private function log(): void

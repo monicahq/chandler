@@ -54,7 +54,7 @@
 
                 <important-dates v-if="module.type == 'important_dates'" :data="importantDates" />
 
-                <labels v-if="module.type == 'labels'" :data="importantDates" />
+                <labels v-if="module.type == 'labels'" :data="labels" />
               </div>
             </div>
 
@@ -131,6 +131,7 @@ export default {
       contactName: [],
       genderPronoun: [],
       importantDates: [],
+      labels: [],
       notes: [],
     };
   },
@@ -159,6 +160,13 @@ export default {
         this.importantDates =
           this.data.contact_information[
             this.data.contact_information.findIndex((x) => x.type == 'important_dates')
+          ].data;
+      }
+
+      if (this.data.contact_information.findIndex((x) => x.type == 'labels') > -1) {
+        this.labels =
+          this.data.contact_information[
+            this.data.contact_information.findIndex((x) => x.type == 'labels')
           ].data;
       }
     }

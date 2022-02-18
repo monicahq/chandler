@@ -35,6 +35,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -92,6 +93,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
 
                     // labels
+                    Route::post('labels', [ContactModuleLabelController::class, 'store'])->name('contact.label.store');
+                    Route::put('labels/{label}', [ContactModuleLabelController::class, 'update'])->name('contact.label.update');
+                    Route::delete('labels/{label}', [ContactModuleLabelController::class, 'destroy'])->name('contact.label.destroy');
                 });
             });
 

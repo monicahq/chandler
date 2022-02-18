@@ -13,6 +13,7 @@ use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarVi
 use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
 
 class ContactShowViewHelper
 {
@@ -89,6 +90,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_IMPORTANT_DATES) {
                 $data = ModuleImportantDatesViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_LABELS) {
+                $data = ModuleLabelViewHelper::data($contact);
             }
 
             $modulesCollection->push([

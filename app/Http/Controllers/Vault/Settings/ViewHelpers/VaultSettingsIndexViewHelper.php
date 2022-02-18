@@ -47,16 +47,24 @@ class VaultSettingsIndexViewHelper
             'text_color' => 'text-neutral-800',
         ]);
         $labelColorsCollection->push([
-            'bg_color' => 'bg-red-500',
-            'text_color' => 'text-red-800',
+            'bg_color' => 'bg-red-200',
+            'text_color' => 'text-red-600',
         ]);
         $labelColorsCollection->push([
-            'bg_color' => 'bg-amber-300',
-            'text_color' => 'text-amber-800',
+            'bg_color' => 'bg-amber-200',
+            'text_color' => 'text-amber-600',
         ]);
         $labelColorsCollection->push([
-            'bg_color' => 'bg-lime-600',
-            'text_color' => 'text-lime-900',
+            'bg_color' => 'bg-emerald-200',
+            'text_color' => 'text-emerald-600',
+        ]);
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-slate-200',
+            'text_color' => 'text-slate-600',
+        ]);
+        $labelColorsCollection->push([
+            'bg_color' => 'bg-sky-200',
+            'text_color' => 'text-sky-600',
         ]);
 
         return [

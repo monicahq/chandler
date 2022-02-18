@@ -56,7 +56,7 @@
               type="radio"
               class="h-4 w-4 border-gray-300 text-sky-500"
               @click="form.text_color = color.text_color" />
-            <label :for="color.bg_color" class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
+            <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
               <div class="rounded p-4" :class="color.bg_color"></div>
             </label>
           </div>
@@ -121,7 +121,7 @@
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500"
                   @click="form.text_color = color.text_color" />
-                <label :for="color.bg_color" class="ml-3 inline-block cursor-pointer text-sm font-medium text-gray-700">
+                <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
                   <div class="rounded p-4" :class="color.bg_color"></div>
                 </label>
               </div>
