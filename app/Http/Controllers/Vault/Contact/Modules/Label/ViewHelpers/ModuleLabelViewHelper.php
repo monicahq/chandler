@@ -14,14 +14,19 @@ class ModuleLabelViewHelper
 {
     public static function data(Contact $contact): array
     {
-        $labels = $contact->vault->labels;
+        $labelsInVault = $contact->vault->labels;
+        $labelsInContact = $contact->labels;
 
-        $labelsInVaultCollection = $labels->map(function ($label) use ($contact) {
-            return self::dtoLabel($label, $contact);
+        $labelsInVaultCollection = $labelsInVault->map(function ($label) use ($contact, $labelsInContact) {
+            $taken = false;
+            if ($labelsInContact->contains($label)) {
+                $taken = true;
+            }
+
+            return self::dtoLabel($label, $contact, $taken);
         });
 
-        $labels = $contact->labels;
-        $labelsAssociatedWithContactCollection = $labels->map(function ($label) use ($contact) {
+        $labelsAssociatedWithContactCollection = $labelsInContact->map(function ($label) use ($contact) {
             return self::dtoLabel($label, $contact);
         });
 
@@ -37,13 +42,14 @@ class ModuleLabelViewHelper
         ];
     }
 
-    public static function dtoLabel(Label $label, Contact $contact): array
+    public static function dtoLabel(Label $label, Contact $contact, bool $taken = false): array
     {
         return [
             'id' => $label->id,
             'name' => $label->name,
             'bg_color' => $label->bg_color,
             'text_color' => $label->text_color,
+            'taken' => $taken,
             'url' => [
                 'update' => route('contact.label.update', [
                     'vault' => $contact->vault_id,

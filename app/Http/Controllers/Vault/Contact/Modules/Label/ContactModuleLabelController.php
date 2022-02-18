@@ -12,6 +12,7 @@ use App\Services\Contact\ManageNote\DestroyNote;
 use App\Services\Account\ManageLabels\CreateLabel;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Services\Contact\AssignLabel\AssignLabel;
+use App\Services\Contact\AssignLabel\RemoveLabel;
 
 class ContactModuleLabelController extends Controller
 {
@@ -46,28 +47,28 @@ class ContactModuleLabelController extends Controller
         ];
 
         $label = (new AssignLabel)->execute($data);
-
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleLabelViewHelper::dtoLabel($label, $contact),
+            'data' => ModuleLabelViewHelper::dtoLabel($label, $contact, true),
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $noteId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $labelId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'note_id' => $noteId,
+            'label_id' => $labelId,
         ];
 
-        (new DestroyNote)->execute($data);
+        $label = (new RemoveLabel)->execute($data);
+        $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => true,
+            'data' => ModuleLabelViewHelper::dtoLabel($label, $contact, false),
         ], 200);
     }
 }

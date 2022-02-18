@@ -56,7 +56,7 @@
     </div>
 
     <!-- blank state -->
-    <p class="text-sm text-gray-600">Not set</p>
+    <p v-if="localLabels.length == 0" class="text-sm text-gray-600">Not set</p>
 
     <!-- edit labels -->
     <div class="mb-6 rounded-lg border border-gray-200 bg-white">
@@ -81,14 +81,15 @@
         <li
           v-for="label in filteredLabels"
           :key="label.id"
-          @click="set(label)"
-          class="flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-          <div>
+          class="flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 cursor-pointer">
+
+          <div @click="set(label)">
             <span class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></span>
             <span>{{ label.name }}</span>
           </div>
 
           <svg
+            v-if="label.taken"
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6 text-green-700"
             fill="none"
@@ -141,7 +142,6 @@ export default {
 
   data() {
     return {
-      loadingState: '',
       editLabelModalShown: false,
       localLabels: [],
       localLabelsInVault: [],
@@ -194,13 +194,16 @@ export default {
     },
 
     set(label) {
-      this.loadingState = 'loading';
+      if (label.taken) {
+        this.remove(label);
+        return;
+      }
 
       axios
         .put(label.url.update)
         .then((response) => {
           this.flash('The label has been set', 'success');
-          //this.localLabels[this.localLabels.findIndex((x) => x.id === date.id)] = response.data.data;
+          this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
           this.localLabels.push(response.data.data);
         })
         .catch((error) => {
@@ -208,20 +211,19 @@ export default {
         });
     },
 
-    destroy(date) {
-      if (confirm('Are you sure? This is permanent.')) {
-        axios
-          .delete(date.url.destroy)
-          .then((response) => {
-            this.flash('The date has been deleted', 'success');
-            var id = this.localDates.findIndex((x) => x.id === date.id);
-            this.localDates.splice(id, 1);
-          })
-          .catch((error) => {
-            this.loadingState = null;
-            this.form.errors = error.response.data;
-          });
-      }
+    remove(label) {
+      axios
+        .delete(label.url.destroy)
+        .then((response) => {
+          this.flash('The label has been removed', 'success');
+          this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
+
+          var id = this.localLabels.findIndex((x) => x.id === label.id);
+          this.localLabels.splice(id, 1);
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
   },
 };
