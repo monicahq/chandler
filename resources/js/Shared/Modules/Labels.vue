@@ -44,7 +44,9 @@
       </span>
 
       <!-- close button -->
-      <span v-if="editLabelModalShown" @click="editLabelModalShown = false" class="text-gray-300 text-xs cursor-pointer">Close</span>
+      <span v-if="editLabelModalShown" @click="editLabelModalShown = false" class="cursor-pointer text-xs text-gray-300"
+        >Close</span
+      >
     </div>
 
     <!-- edit labels -->
