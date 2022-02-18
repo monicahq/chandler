@@ -76,7 +76,7 @@
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
             <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></div>
-            {{ label.name }}
+            <span class="mr-2">{{ label.name }}</span>
             <span v-if="label.count > 0" class="text-xs text-gray-500">({{ label.count }} contacts)</span>
           </span>
 

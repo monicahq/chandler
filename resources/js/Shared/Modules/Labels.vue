@@ -45,8 +45,9 @@
 
       <!-- close button -->
       <span v-if="editLabelModalShown" @click="editLabelModalShown = false" class="cursor-pointer text-xs text-gray-300"
-        >Close</span
-      >
+        >
+        Close
+      </span>
     </div>
 
     <!-- edit labels -->
@@ -93,7 +94,7 @@
         <!-- case if the label does not exist and needs to be created -->
         <li
           v-if="filteredLabels.length == 0 && form.search.length != ''"
-          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50"
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50 cursor-pointer"
           @click="store()">
           Create new label <span class="italic">"{{ form.search }}"</span>
         </li>
@@ -101,7 +102,7 @@
         <!-- blank state when there is no label at all -->
         <li
           v-if="filteredLabels.length == 0 && form.search.length == ''"
-          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50 text-sm text-gray-600">
           Please type a few characters to create a new label.
         </li>
       </ul>
@@ -120,8 +121,6 @@
 
     <!-- blank state -->
     <p v-if="localLabels.length == 0" class="text-sm text-gray-600">Not set</p>
-
-    <!-- blank state -->
   </div>
 </template>
 
