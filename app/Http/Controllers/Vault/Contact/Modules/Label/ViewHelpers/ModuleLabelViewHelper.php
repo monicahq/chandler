@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers;
 
-use App\Models\User;
-use App\Models\Contact;
-use App\Helpers\AgeHelper;
 use App\Models\Label;
-use App\Models\Vault;
-use Illuminate\Support\Collection;
-use PhpParser\ErrorHandler\Collecting;
+use App\Models\Contact;
 
 class ModuleLabelViewHelper
 {
