@@ -165,9 +165,7 @@ export default {
 
       if (this.data.contact_information.findIndex((x) => x.type == 'labels') > -1) {
         this.labels =
-          this.data.contact_information[
-            this.data.contact_information.findIndex((x) => x.type == 'labels')
-          ].data;
+          this.data.contact_information[this.data.contact_information.findIndex((x) => x.type == 'labels')].data;
       }
     }
 

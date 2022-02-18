@@ -46,7 +46,11 @@
 
     <!-- list of labels -->
     <div class="flex flex-wrap">
-      <span v-for="label in localLabels" :key="label.id" class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0" :class="label.bg_color + ' ' + label.text_color">
+      <span
+        v-for="label in localLabels"
+        :key="label.id"
+        class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0"
+        :class="label.bg_color + ' ' + label.text_color">
         {{ label.name }}
       </span>
     </div>
@@ -56,7 +60,6 @@
 
     <!-- edit labels -->
     <div class="mb-6 rounded-lg border border-gray-200 bg-white">
-
       <!-- filter list of labels -->
       <div class="border-b border-gray-200 p-2">
         <errors :errors="form.errors" />
@@ -79,14 +82,18 @@
           v-for="label in filteredLabels"
           :key="label.id"
           @click="set(label)"
-          class="border-b border-gray-200 px-3 py-2 hover:bg-slate-50 flex items-center justify-between">
-
+          class="flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           <div>
             <span class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></span>
             <span>{{ label.name }}</span>
           </div>
 
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-green-700"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
           </svg>
         </li>
@@ -108,7 +115,6 @@
     </div>
 
     <!-- blank state -->
-
   </div>
 </template>
 
