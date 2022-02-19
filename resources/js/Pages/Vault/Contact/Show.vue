@@ -85,6 +85,8 @@
             <div v-if="data.modules.length > 0">
               <div v-for="module in data.modules" :key="module.id">
                 <notes v-if="module.type == 'notes'" :data="notes" />
+
+                <reminders v-if="module.type == 'reminders'" :data="notes" />
               </div>
             </div>
           </div>
@@ -102,6 +104,7 @@ import Avatar from '@/Shared/Modules/Avatar';
 import Notes from '@/Shared/Modules/Notes';
 import ImportantDates from '@/Shared/Modules/ImportantDates';
 import Labels from '@/Shared/Modules/Labels';
+import Reminders from '@/Shared/Modules/Reminders';
 
 export default {
   components: {
@@ -112,6 +115,7 @@ export default {
     Notes,
     ImportantDates,
     Labels,
+    Reminders,
   },
 
   props: {

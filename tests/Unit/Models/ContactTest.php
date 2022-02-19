@@ -14,6 +14,7 @@ use App\Models\ContactLog;
 use App\Models\ContactDate;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
+use App\Models\ContactReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
@@ -134,5 +135,16 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->dates()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_reminders(): void
+    {
+        $ross = Contact::factory()->create();
+        ContactReminder::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->reminders()->exists());
     }
 }

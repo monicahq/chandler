@@ -7,6 +7,22 @@
 .icon-note {
   top: -1px;
 }
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 </style>
 
 <template>
@@ -14,7 +30,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative">
+        <span class="relative mr-1">
           <svg
             class="icon-sidebar relative inline h-4 w-4"
             viewBox="0 0 24 24"
@@ -31,7 +47,7 @@
           </svg>
         </span>
 
-        Reminders
+        <span class="font-semibold">Reminders</span>
       </div>
       <pretty-button
         :text="'Add a reminder'"
@@ -48,9 +64,26 @@
         <li
           v-for="reminder in localReminders"
           :key="reminder.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50">
-          <span>10 Aug 2020</span>
-          <span>birthdate</span>
+          class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+          <div class="flex items-center">
+            <span class="mr-2 text-sm text-gray-500">10 Aug 2020</span>
+            <span class="mr-2">birthdate</span>
+
+            <!-- recurring icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </div>
+
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="updateGenderModal(gender)">
+              Edit
+            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(gender)">Delete</li>
+          </ul>
         </li>
       </ul>
     </div>
