@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 
-use App\Helpers\AgeHelper;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Contact;
-use App\Helpers\DateHelper;
+use App\Helpers\AgeHelper;
 use App\Models\ContactReminder;
-use Illuminate\Support\Str;
 
 class ModuleRemindersViewHelper
 {
