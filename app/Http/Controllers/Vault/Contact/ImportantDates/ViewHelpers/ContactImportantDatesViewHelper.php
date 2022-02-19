@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
 use App\Helpers\DateHelper;
-use App\Models\ContactImportantDate;
 use Illuminate\Support\Str;
+use App\Models\ContactImportantDate;
 
 class ContactImportantDatesViewHelper
 {

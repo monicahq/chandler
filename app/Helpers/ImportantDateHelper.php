@@ -2,9 +2,9 @@
 
 namespace App\Helpers;
 
-use App\Models\ContactImportantDate;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\ContactImportantDate;
 
 class ImportantDateHelper
 {
@@ -22,23 +22,23 @@ class ImportantDateHelper
 
         // case: full date
         if ($date->day && $date->month && $date->year) {
-            $age = Carbon::parse($date->year . '-' . $date->month . '-' . $date->day)->age;
+            $age = Carbon::parse($date->year.'-'.$date->month.'-'.$date->day)->age;
         }
 
         // case: only know the age. In this case, we have stored a year.
-        if (!$date->day && !$date->month && $date->year) {
+        if (! $date->day && ! $date->month && $date->year) {
             $age = Carbon::createFromFormat('Y', $date->year)->age;
         }
 
         // case: only know the month and day. In this case, we can't calculate
         //the age at all
-        if ($date->day && $date->month && !$date->year) {
+        if ($date->day && $date->month && ! $date->year) {
             return null;
         }
 
         // case: date is empty. this shouldn't happen, but we'll cover the case
         // nonetheless
-        if (!$date->day && !$date->month && !$date->year) {
+        if (! $date->day && ! $date->month && ! $date->year) {
             return null;
         }
 
@@ -61,17 +61,17 @@ class ImportantDateHelper
 
         // case: full date
         if ($date->day && $date->month && $date->year) {
-            $dateAsString = Carbon::parse($date->year . '-' . $date->month . '-' . $date->day)->isoFormat($user->date_format);
+            $dateAsString = Carbon::parse($date->year.'-'.$date->month.'-'.$date->day)->isoFormat($user->date_format);
         }
 
         // case: only know the age. In this case, we have stored a year.
-        if (!$date->day && !$date->month && $date->year) {
+        if (! $date->day && ! $date->month && $date->year) {
             $dateAsString = $date->year;
         }
 
         // case: only know the month and day.
-        if ($date->day && $date->month && !$date->year) {
-            $date = Carbon::parse('1900-' . $date->month . '-' . $date->day);
+        if ($date->day && $date->month && ! $date->year) {
+            $date = Carbon::parse('1900-'.$date->month.'-'.$date->day);
 
             switch ($user->date_format) {
                 case 'MMM DD, YYYY':
@@ -98,7 +98,7 @@ class ImportantDateHelper
 
         // case: date is empty. this shouldn't happen, but we'll cover the case
         // nonetheless
-        if (!$date->day && !$date->month && !$date->year) {
+        if (! $date->day && ! $date->month && ! $date->year) {
             return null;
         }
 

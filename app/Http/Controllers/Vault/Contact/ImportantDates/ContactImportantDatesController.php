@@ -10,10 +10,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 
 class ContactImportantDatesController extends Controller
