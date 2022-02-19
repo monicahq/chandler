@@ -24,6 +24,7 @@ use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use App\Services\Vault\ManageLabels\CreateLabel;
 
 class SetupAccount implements ShouldQueue
 {

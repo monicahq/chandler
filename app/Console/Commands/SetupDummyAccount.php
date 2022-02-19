@@ -57,6 +57,7 @@ class SetupDummyAccount extends Command
         $this->createVaults();
         $this->createContacts();
         $this->createNotes();
+        $this->createLabels();
         $this->stop();
     }
 

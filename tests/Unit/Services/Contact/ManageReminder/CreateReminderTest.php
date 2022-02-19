@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageNote;
+namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Services\Contact\ManageNote\CreateNote;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Models\ContactReminder;
+use App\Services\Contact\ManageReminder\CreateReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CreateNoteTest extends TestCase
+class CreateReminderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_note(): void
+    public function it_creates_a_reminder(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -39,7 +41,7 @@ class CreateNoteTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateNote)->execute($request);
+        (new CreateReminder)->execute($request);
     }
 
     /** @test */
@@ -91,33 +93,29 @@ class CreateNoteTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'title' => 'super title',
-            'body' => 'super body',
+            'name' => 'birthdate',
+            'date_to_be_reminded_of' => '1981-10-29',
+            'frequency' => ContactReminder::TYPE_ONE_TIME,
+            'frequency_number' => null,
         ];
 
-        $note = (new CreateNote)->execute($request);
+        $reminder = (new CreateReminder)->execute($request);
 
-        $this->assertDatabaseHas('notes', [
-            'id' => $note->id,
+        $this->assertDatabaseHas('contact_reminders', [
+            'id' => $reminder->id,
             'contact_id' => $contact->id,
-            'author_id' => $author->id,
-            'author_name' => $author->name,
-            'title' => 'super title',
-            'body' => 'super body',
-        ]);
-
-        $this->assertDatabaseHas('contact_feed_items', [
-            'contact_id' => $contact->id,
-            'feedable_id' => $note->id,
-            'feedable_type' => 'App\Models\Note',
+            'name' => 'birthdate',
+            'date_to_be_reminded_of' => '1981-10-29 00:00:00',
+            'frequency' => ContactReminder::TYPE_ONE_TIME,
+            'frequency_number' => null,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'note_created';
+            return $job->auditLog['action_name'] === 'contact_reminder_created';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'note_created';
+            return $job->contactLog['action_name'] === 'contact_reminder_created';
         });
     }
 }
