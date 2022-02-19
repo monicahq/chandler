@@ -15,12 +15,29 @@
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative">
-          <svg class="icon-sidebar relative inline h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3H6ZM5 18V7H19V18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z" fill="currentColor" /></svg>
+          <svg
+            class="icon-sidebar relative inline h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z"
+              fill="currentColor" />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H18C19.6569 21 21 19.6569 21 18V6C21 4.34315 19.6569 3 18 3H6ZM5 18V7H19V18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z"
+              fill="currentColor" />
+          </svg>
         </span>
 
         Reminders
       </div>
-      <pretty-button :text="'Add a reminder'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
+      <pretty-button
+        :text="'Add a reminder'"
+        :icon="'plus'"
+        :classes="'sm:w-fit w-full'"
+        @click="showCreateNoteModal" />
     </div>
 
     <!-- add a reminder modal -->
@@ -28,7 +45,10 @@
     <!-- reminders -->
     <div v-if="localReminders.length > 0">
       <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
-        <li v-for="reminder in localReminders" :key="reminder.id" class="item-list border-b border-gray-200 hover:bg-slate-50 flex items-center justify-between">
+        <li
+          v-for="reminder in localReminders"
+          :key="reminder.id"
+          class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50">
           <span>10 Aug 2020</span>
           <span>birthdate</span>
         </li>
