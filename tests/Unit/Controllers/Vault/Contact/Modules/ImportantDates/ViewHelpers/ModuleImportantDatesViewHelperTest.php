@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\ContactImportantDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
+use Carbon\Carbon;
 
 class ModuleImportantDatesViewHelperTest extends TestCase
 {
@@ -16,11 +17,15 @@ class ModuleImportantDatesViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
+
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
         $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
-            'date' => 1981,
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
         ]);
 
         $array = ModuleImportantDatesViewHelper::data($contact, $user);
@@ -38,9 +43,9 @@ class ModuleImportantDatesViewHelperTest extends TestCase
                 0 => [
                     'id' => $date->id,
                     'label' => $date->label,
-                    'date' => '1981',
+                    'date' => 'Oct 29, 1981',
                     'type' => ContactImportantDate::TYPE_BIRTHDATE,
-                    'age' => 41,
+                    'age' => 36,
                 ],
             ],
             $array['dates']->toArray()

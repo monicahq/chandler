@@ -18,6 +18,13 @@ class ContactImportantDate extends Model
     const TYPE_BIRTHDATE = 'birthdate';
 
     /**
+     * Possible type of dates.
+     */
+    const TYPE_FULL_DATE = 'full_date';
+    const TYPE_MONTH_DAY = 'month_day';
+    const TYPE_YEAR = 'year';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

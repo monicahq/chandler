@@ -142,13 +142,7 @@ class SetupDummyAccount extends Command
         foreach (Vault::all() as $vault) {
             for ($i = 0; $i < rand(2, 13); $i++) {
                 $date = $this->faker->dateTimeThisCentury();
-                $date = Carbon::parse($date);
-
-                if (rand(1, 2) == 1) {
-                    $birthDate = $date->isoFormat('Y');
-                } else {
-                    $birthDate = $date->isoFormat('MM-DD');
-                }
+                $birthDate = Carbon::parse($date);
 
                 $contact = (new CreateContact)->execute([
                     'account_id' => $this->user->account_id,
@@ -167,7 +161,9 @@ class SetupDummyAccount extends Command
                     'vault_id' => $vault->id,
                     'contact_id' => $contact->id,
                     'label' => 'Birthdate',
-                    'date' => $birthDate,
+                    'day' => $birthDate->day,
+                    'month' => $birthDate->month,
+                    'year' => rand(1,2) == 1 ? $birthDate->year : null,
                     'type' => ContactImportantDate::TYPE_BIRTHDATE,
                 ]);
             }

@@ -25,9 +25,9 @@ class CreateContactImportantDate extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'label' => 'required|string|max:255',
-            'day' => 'required|integer',
-            'month' => 'required|integer',
-            'year' => 'required|integer',
+            'day' => 'nullable|integer',
+            'month' => 'nullable|integer',
+            'year' => 'nullable|integer',
             'type' => 'nullable|string|max:255',
         ];
     }
