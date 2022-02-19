@@ -27,7 +27,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
             'contact_id' => 'required|integer|exists:contacts,id',
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
             'name' => 'required|string|max:255',
-            'date_to_be_reminded_of' => 'required|date_format:Y-m-d',
+            'date_to_be_reminded_of' => 'required|string:255',
             'frequency' => 'required|string:255',
             'frequency_number' => 'nullable|integer',
         ];

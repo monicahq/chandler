@@ -26,7 +26,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'name' => 'required|string|max:255',
-            'date_to_be_reminded_of' => 'required|date_format:Y-m-d',
+            'date_to_be_reminded_of' => 'required|string:255',
             'frequency' => 'required|string:255',
             'frequency_number' => 'nullable|integer',
         ];

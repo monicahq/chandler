@@ -34,15 +34,6 @@ class ContactReminder extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'date_to_be_reminded_of',
-    ];
-
-    /**
      * Get the contact associated with the contact date.
      *
      * @return BelongsTo

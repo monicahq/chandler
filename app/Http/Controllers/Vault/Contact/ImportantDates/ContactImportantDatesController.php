@@ -15,6 +15,8 @@ use App\Services\Contact\ManageContactDate\UpdateContactDate;
 use App\Services\Contact\ManageContactDate\DestroyContactDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use App\Models\ContactReminder;
+use App\Services\Contact\ManageReminder\CreateReminder;
 
 class ContactImportantDatesController extends Controller
 {
@@ -32,30 +34,44 @@ class ContactImportantDatesController extends Controller
     public function store(Request $request, int $vaultId, int $contactId)
     {
         if ($request->input('choice') === 'exactDate') {
-            $date = Carbon::parse($request->input('date'))->format('Y-m-d');
+            $carbonDate = Carbon::parse($request->input('date'))->format('Y-m-d');
         }
 
         if ($request->input('choice') === 'monthDay') {
             $month = Str::padLeft($request->input('month'), 2, '0');
             $day = Str::padLeft($request->input('day'), 2, '0');
-            $date = $month.'-'.$day;
+            $carbonDate = $month.'-'.$day;
         }
 
         if ($request->input('choice') === 'age') {
-            $date = Carbon::now()->subYears($request->input('age'))->format('Y');
+            $carbonDate = Carbon::now()->subYears($request->input('age'))->format('Y');
         }
 
-        $data = [
+        $date = (new CreateContactDate)->execute([
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
             'label' => $request->input('label'),
-            'date' => $date,
+            'date' => $carbonDate,
             'type' => $request->input('type'),
-        ];
+        ]);
 
-        $date = (new CreateContactDate)->execute($data);
+        // add a reminder if specified
+        if ($request->input('reminder') &&
+            $request->input('choice') != 'age'
+        ) {
+            (new CreateReminder)->execute([
+                'account_id' => Auth::user()->account_id,
+                'author_id' => Auth::user()->id,
+                'vault_id' => $vaultId,
+                'contact_id' => $contactId,
+                'name' => $request->input('label'),
+                'date_to_be_reminded_of' => $carbonDate,
+                'frequency' => $request->input('reminderChoice'),
+                'frequency_number' => 1,
+            ]);
+        }
 
         $contact = Contact::find($contactId);
 

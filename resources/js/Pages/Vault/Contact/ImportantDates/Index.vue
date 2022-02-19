@@ -161,7 +161,7 @@
               </div>
 
               <!-- case: I know the age -->
-              <div class="mb-2 flex items-center">
+              <div class="flex items-center mb-2">
                 <input
                   id="age"
                   v-model="form.choice"
@@ -185,6 +185,49 @@
                   :input-class="'block'"
                   :required="true"
                   :autocomplete="false" />
+              </div>
+            </div>
+
+            <!-- reminders -->
+            <div v-if="form.choice != 'age'" class="border-t border-gray-200 p-5">
+              <div class="flex items-center">
+                <input
+                  v-model="form.reminder"
+                  @click="showReminderOptions"
+                  id="reminder"
+                  name="reminder"
+                  type="checkbox"
+                  class="relative h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <label for="reminder" class="ml-2 block cursor-pointer text-sm text-gray-900"> Create a reminder </label>
+              </div>
+
+              <!-- reminder options -->
+              <div v-if="form.reminder" class="mt-4 ml-4">
+                <div class="mb-2 flex items-center">
+                  <input
+                    id="recurring_year"
+                    v-model="form.reminderChoice"
+                    value="recurring_year"
+                    name="reminder-frequency"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="recurring_year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    Remind me about this date every year
+                  </label>
+                </div>
+
+                <div class="flex items-center">
+                  <input
+                    id="one_time"
+                    v-model="form.reminderChoice"
+                    value="one_time"
+                    name="reminder-frequency"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    Remind me about this date just once, in one year from now
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -379,6 +422,8 @@ export default {
         label: '',
         date: '',
         age: '',
+        reminder: false,
+        reminderChoice: '',
         errors: [],
       },
     };
@@ -391,7 +436,7 @@ export default {
   methods: {
     showCreateModal() {
       this.form.label = '';
-      this.form.choice = '';
+      this.form.choice = 'exactDate';
       this.form.day = '';
       this.form.month = '';
       this.form.date = '';
@@ -417,6 +462,11 @@ export default {
       this.$nextTick(() => {
         this.$refs.age.focus();
       });
+    },
+
+    showReminderOptions() {
+      this.form.reminder = true;
+      this.form.reminderChoice = 'recurring_year';
     },
 
     submit() {
