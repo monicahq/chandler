@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\ContactDate;
 use App\Models\ContactReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

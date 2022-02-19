@@ -1624,11 +1624,11 @@ class AuditLogHelperTest extends TestCase
             ]),
         ]);
 
-        $url = env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id;
+        $url = env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id;
         $loggedUser = User::factory()->create();
         $sentence = AuditLogHelper::process($log, $loggedUser);
         $this->assertEquals(
-            'Created the reminder called birthdate for the contact <a href="' . $url . '">' . $contact->getName($loggedUser) . '</a>',
+            'Created the reminder called birthdate for the contact <a href="'.$url.'">'.$contact->getName($loggedUser).'</a>',
             $sentence
         );
     }

@@ -3,19 +3,17 @@
 namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Tests\TestCase;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
+use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
-use App\Services\Contact\ManageNote\UpdateNote;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\ContactReminder;
 use App\Services\Contact\ManageReminder\UpdateReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -2,16 +2,12 @@
 
 namespace App\Services\Contact\ManageReminder;
 
-use App\Models\Contact;
+use Carbon\Carbon;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
-use App\Models\RelationshipType;
-use App\Helpers\RelationshipHelper;
-use App\Interfaces\ServiceInterface;
 use App\Models\ContactReminder;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Interfaces\ServiceInterface;
 
 class CreateReminder extends BaseService implements ServiceInterface
 {

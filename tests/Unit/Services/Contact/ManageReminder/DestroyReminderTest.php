@@ -3,21 +3,18 @@
 namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Tests\TestCase;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
+use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\ContactReminder;
-use App\Services\Contact\ManageNote\DestroyNote;
-use App\Services\Contact\ManageReminder\DestroyReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Services\Contact\ManageReminder\DestroyReminder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyReminderTest extends TestCase
