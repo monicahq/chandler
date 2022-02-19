@@ -161,7 +161,7 @@
               </div>
 
               <!-- case: I know the age -->
-              <div class="flex items-center mb-2">
+              <div class="mb-2 flex items-center">
                 <input
                   id="age"
                   v-model="form.choice"
@@ -198,7 +198,9 @@
                   name="reminder"
                   type="checkbox"
                   class="relative h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="reminder" class="ml-2 block cursor-pointer text-sm text-gray-900"> Create a reminder </label>
+                <label for="reminder" class="ml-2 block cursor-pointer text-sm text-gray-900">
+                  Create a reminder
+                </label>
               </div>
 
               <!-- reminder options -->
