@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 
@@ -19,7 +19,7 @@ class ContactImportantDatesViewHelperTest extends TestCase
     {
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
             'date' => 1981,
         ]);
@@ -59,7 +59,7 @@ class ContactImportantDatesViewHelperTest extends TestCase
         Carbon::setTestNow(Carbon::create(2022, 1, 1));
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
             'date' => 1981,
         ]);

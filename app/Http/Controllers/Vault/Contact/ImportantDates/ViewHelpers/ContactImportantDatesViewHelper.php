@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
 use App\Helpers\DateHelper;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use Illuminate\Support\Str;
 
 class ContactImportantDatesViewHelper
@@ -40,7 +40,7 @@ class ContactImportantDatesViewHelper
         ];
     }
 
-    public static function dto(Contact $contact, ContactDate $date, User $user): array
+    public static function dto(Contact $contact, ContactImportantDate $date, User $user): array
     {
         $choice = '';
         $completeDate = '';

@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageContactDate\CreateContactDate;
-use App\Services\Contact\ManageContactDate\UpdateContactDate;
-use App\Services\Contact\ManageContactDate\DestroyContactDate;
+use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
+use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
+use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
 
@@ -55,7 +55,7 @@ class ContactImportantDatesController extends Controller
             'type' => $request->input('type'),
         ];
 
-        $date = (new CreateContactDate)->execute($data);
+        $date = (new CreateContactImportantDate)->execute($data);
 
         $contact = Contact::find($contactId);
 
@@ -85,13 +85,13 @@ class ContactImportantDatesController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_date_id' => $dateId,
+            'contact_important_date_id' => $dateId,
             'label' => $request->input('label'),
             'date' => $date,
             'type' => $request->input('type'),
         ];
 
-        $date = (new UpdateContactDate)->execute($data);
+        $date = (new UpdateContactImportantDate)->execute($data);
 
         $contact = Contact::find($contactId);
 
@@ -107,10 +107,10 @@ class ContactImportantDatesController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_date_id' => $dateId,
+            'contact_important_date_id' => $dateId,
         ];
 
-        (new DestroyContactDate)->execute($data);
+        (new DestroyContactImportantDate)->execute($data);
 
         return response()->json([
             'data' => true,

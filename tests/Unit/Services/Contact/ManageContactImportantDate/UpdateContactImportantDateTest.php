@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageContactDate;
+namespace Tests\Unit\Services\Contact\ManageContactImportantDate;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
@@ -15,9 +15,9 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactDate\UpdateContactDate;
+use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
 
-class UpdateContactDateTest extends TestCase
+class UpdateContactImportantDateTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -28,7 +28,7 @@ class UpdateContactDateTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
@@ -43,7 +43,7 @@ class UpdateContactDateTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateContactDate)->execute($request);
+        (new UpdateContactImportantDate)->execute($request);
     }
 
     /** @test */
@@ -56,7 +56,7 @@ class UpdateContactDateTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
@@ -72,7 +72,7 @@ class UpdateContactDateTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
@@ -88,7 +88,7 @@ class UpdateContactDateTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
         ]);
 
@@ -104,12 +104,12 @@ class UpdateContactDateTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $date = ContactDate::factory()->create();
+        $date = ContactImportantDate::factory()->create();
 
         $this->executeService($regis, $regis->account, $vault, $contact, $date);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactDate $date): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactImportantDate $date): void
     {
         Queue::fake();
 
@@ -118,23 +118,27 @@ class UpdateContactDateTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'contact_date_id' => $date->id,
+            'contact_important_date_id' => $date->id,
             'label' => 'birthdate',
-            'date' => '1981-10-29',
-            'type' => ContactDate::TYPE_BIRTHDATE,
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
+            'type' => ContactImportantDate::TYPE_BIRTHDATE,
         ];
 
-        $date = (new UpdateContactDate)->execute($request);
+        $date = (new UpdateContactImportantDate)->execute($request);
 
-        $this->assertDatabaseHas('contact_dates', [
+        $this->assertDatabaseHas('contact_important_dates', [
             'contact_id' => $contact->id,
             'label' => 'birthdate',
-            'date' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'type' => 'birthdate',
         ]);
 
         $this->assertInstanceOf(
-            ContactDate::class,
+            ContactImportantDate::class,
             $date
         );
 

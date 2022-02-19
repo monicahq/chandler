@@ -5,7 +5,7 @@ namespace Tests\Unit\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelper
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
 
@@ -18,7 +18,7 @@ class ModuleImportantDatesViewHelperTest extends TestCase
     {
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
-        $date = ContactDate::factory()->create([
+        $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
             'date' => 1981,
         ]);
@@ -39,7 +39,7 @@ class ModuleImportantDatesViewHelperTest extends TestCase
                     'id' => $date->id,
                     'label' => $date->label,
                     'date' => '1981',
-                    'type' => ContactDate::TYPE_BIRTHDATE,
+                    'type' => ContactImportantDate::TYPE_BIRTHDATE,
                     'age' => 41,
                 ],
             ],

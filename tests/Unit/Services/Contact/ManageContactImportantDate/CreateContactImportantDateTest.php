@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageContactDate;
+namespace Tests\Unit\Services\Contact\ManageContactImportantDate;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
@@ -15,9 +15,9 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactDate\CreateContactDate;
+use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 
-class CreateContactDateTest extends TestCase
+class CreateContactImportantDateTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -40,7 +40,7 @@ class CreateContactDateTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateContactDate)->execute($request);
+        (new CreateContactImportantDate)->execute($request);
     }
 
     /** @test */
@@ -93,21 +93,25 @@ class CreateContactDateTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'label' => 'birthdate',
-            'date' => '1981-10-29',
-            'type' => ContactDate::TYPE_BIRTHDATE,
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
+            'type' => ContactImportantDate::TYPE_BIRTHDATE,
         ];
 
-        $date = (new CreateContactDate)->execute($request);
+        $date = (new CreateContactImportantDate)->execute($request);
 
-        $this->assertDatabaseHas('contact_dates', [
+        $this->assertDatabaseHas('contact_important_dates', [
             'contact_id' => $contact->id,
             'label' => 'birthdate',
-            'date' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'type' => 'birthdate',
         ]);
 
         $this->assertInstanceOf(
-            ContactDate::class,
+            ContactImportantDate::class,
             $date
         );
 

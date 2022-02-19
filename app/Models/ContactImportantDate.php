@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ContactDate extends Model
+class ContactImportantDate extends Model
 {
     use HasFactory;
 
-    protected $table = 'contact_dates';
+    protected $table = 'contact_important_dates';
 
     /**
      * Possible type.
@@ -25,7 +25,9 @@ class ContactDate extends Model
     protected $fillable = [
         'contact_id',
         'label',
-        'date',
+        'day',
+        'month',
+        'year',
         'type',
     ];
 

@@ -11,7 +11,7 @@ use App\Models\Contact;
 use App\Models\Pronoun;
 use App\Models\Template;
 use App\Models\ContactLog;
-use App\Models\ContactDate;
+use App\Models\ContactImportantDate;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -129,7 +129,7 @@ class ContactTest extends TestCase
     public function it_has_many_dates(): void
     {
         $ross = Contact::factory()->create();
-        ContactDate::factory()->count(2)->create([
+        ContactImportantDate::factory()->count(2)->create([
             'contact_id' => $ross->id,
         ]);
 
