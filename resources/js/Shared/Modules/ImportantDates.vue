@@ -30,7 +30,7 @@
 
     <!-- list of dates -->
     <ul v-for="date in data.dates" :key="date.id" class="">
-      <li class="flex justify-between items-center mb-1 hover:bg-slate-50">
+      <li class="mb-1 flex items-center justify-between hover:bg-slate-50">
         <span class="">{{ date.label }}</span>
         <span class="text-xs">
           {{ date.date }} <span v-if="date.age" class="text-gray-400">({{ date.age }})</span>
