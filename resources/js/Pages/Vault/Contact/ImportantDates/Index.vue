@@ -124,7 +124,15 @@
                 </label>
               </div>
               <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
-                <a-date-picker v-model:value="form.date" class="" />
+                <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <input
+                      class="bg-white border px-2 py-1 rounded"
+                      :value="inputValue"
+                      v-on="inputEvents"
+                    />
+                  </template>
+                </v-date-picker>
               </div>
 
               <!-- case: date and month -->
@@ -248,7 +256,15 @@
                     </label>
                   </div>
                   <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
-                    <a-date-picker v-model:value="form.date" class="" />
+                    <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig" :update-on-input="false">
+                      <template v-slot="{ inputValue, inputEvents }">
+                        <input
+                          class="bg-white border px-2 py-1 rounded"
+                          :value="inputValue"
+                          v-on="inputEvents"
+                        />
+                      </template>
+                    </v-date-picker>
                   </div>
 
                   <!-- case: date and month -->
@@ -372,6 +388,10 @@ export default {
       editedDateId: 0,
       createDateModalShown: false,
       localDates: [],
+      modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD',
+      },
       form: {
         choice: '',
         month: '',
