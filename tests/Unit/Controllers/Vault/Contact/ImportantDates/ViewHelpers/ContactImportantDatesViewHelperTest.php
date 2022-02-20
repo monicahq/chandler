@@ -21,7 +21,9 @@ class ContactImportantDatesViewHelperTest extends TestCase
         $user = User::factory()->create();
         $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
-            'date' => 1981,
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
         ]);
 
         $array = ContactImportantDatesViewHelper::data($contact, $user);
@@ -61,7 +63,9 @@ class ContactImportantDatesViewHelperTest extends TestCase
         $user = User::factory()->create();
         $date = ContactImportantDate::factory()->create([
             'contact_id' => $contact->id,
-            'date' => 1981,
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
         ]);
 
         $array = ContactImportantDatesViewHelper::dto($contact, $date, $user);
@@ -70,13 +74,13 @@ class ContactImportantDatesViewHelperTest extends TestCase
             [
                 'id' => $date->id,
                 'label' => $date->label,
-                'date' => '1981',
+                'date' => 'Oct 29, 1981',
                 'type' => 'birthdate',
-                'age' => '41',
-                'choice' => 'age',
-                'completeDate' => '',
-                'month' => '',
-                'day' => '',
+                'age' => '40',
+                'choice' => 'full_date',
+                'completeDate' => '1981-10-29',
+                'month' => 10,
+                'day' => 29,
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/dates/'.$date->id,
                     'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/dates/'.$date->id,
