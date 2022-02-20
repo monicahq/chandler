@@ -49,7 +49,7 @@ class ContactImportantDatesController extends Controller
             $year = Carbon::now()->subYears($request->input('age'))->format('Y');
         }
 
-        $date = (new CreateContactDate)->execute([
+        $date = (new CreateContactImportantDate)->execute([
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
@@ -60,8 +60,6 @@ class ContactImportantDatesController extends Controller
             'year' => $year,
             'type' => $request->input('type'),
         ]);
-
-        $date = (new CreateContactImportantDate)->execute($data);
 
         $contact = Contact::find($contactId);
 
