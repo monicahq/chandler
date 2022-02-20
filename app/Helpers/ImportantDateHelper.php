@@ -103,20 +103,20 @@ class ImportantDateHelper
      * The type can be:
      * - fullDate
      * - monthDay
-     * - year
+     * - year.
      *
-     * @param ContactImportantDate $date
+     * @param  ContactImportantDate  $date
      * @return string|null
      */
     public static function determineType(ContactImportantDate $date): ?string
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
         // case: date is empty. this shouldn't happen, but we'll cover the case
         // nonetheless
-        if (!$date->day && !$date->month && !$date->year) {
+        if (! $date->day && ! $date->month && ! $date->year) {
             return null;
         }
 
@@ -126,13 +126,13 @@ class ImportantDateHelper
         }
 
         // case: only know the year.
-        if (!$date->day && !$date->month && $date->year) {
+        if (! $date->day && ! $date->month && $date->year) {
             $type = ContactImportantDate::TYPE_YEAR;
         }
 
         // case: only know the month and day. In this case, we can't calculate
         //the age at all
-        if ($date->day && $date->month && !$date->year) {
+        if ($date->day && $date->month && ! $date->year) {
             $type = ContactImportantDate::TYPE_MONTH_DAY;
         }
 

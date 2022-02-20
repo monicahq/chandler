@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
-use Carbon\Carbon;
 
 class ModuleImportantDatesViewHelperTest extends TestCase
 {

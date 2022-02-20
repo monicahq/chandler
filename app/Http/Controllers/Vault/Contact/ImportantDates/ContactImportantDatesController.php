@@ -6,16 +6,15 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ContactImportantDate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
-use App\Models\ContactImportantDate;
 
 class ContactImportantDatesController extends Controller
 {

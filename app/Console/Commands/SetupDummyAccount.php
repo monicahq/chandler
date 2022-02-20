@@ -163,7 +163,7 @@ class SetupDummyAccount extends Command
                     'label' => 'Birthdate',
                     'day' => $birthDate->day,
                     'month' => $birthDate->month,
-                    'year' => rand(1,2) == 1 ? $birthDate->year : null,
+                    'year' => rand(1, 2) == 1 ? $birthDate->year : null,
                     'type' => ContactImportantDate::TYPE_BIRTHDATE,
                 ]);
             }
