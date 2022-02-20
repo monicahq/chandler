@@ -28,9 +28,9 @@ class UpdateContactImportantDate extends BaseService implements ServiceInterface
             'contact_id' => 'required|integer|exists:contacts,id',
             'contact_important_date_id' => 'required|integer|exists:contact_important_dates,id',
             'label' => 'required|string|max:255',
-            'day' => 'required|integer',
-            'month' => 'required|integer',
-            'year' => 'required|integer',
+            'day' => 'nullable|integer',
+            'month' => 'nullable|integer',
+            'year' => 'nullable|integer',
             'type' => 'nullable|string|max:255',
         ];
     }
