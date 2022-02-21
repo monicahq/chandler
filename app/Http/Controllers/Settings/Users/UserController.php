@@ -10,6 +10,10 @@ use App\Services\Account\ManageUsers\InviteUser;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
+use App\Models\User;
+use App\Services\Account\ManageUsers\DestroyUser;
+use App\Services\Account\ManageUsers\GiveAdministratorPrivilege;
+use App\Services\Account\ManageUsers\RemoveAdministratorPrivilege;
 
 class UserController extends Controller
 {
@@ -35,6 +39,7 @@ class UserController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'email' => $request->input('email'),
+            'is_administrator' => $request->input('administrator') === 'true' ? true : false,
         ];
 
         (new InviteUser)->execute($data);
@@ -42,5 +47,39 @@ class UserController extends Controller
         return response()->json([
             'data' => route('settings.user.index'),
         ], 201);
+    }
+
+    public function update(Request $request, int $userId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'user_id' => $userId,
+        ];
+
+        if ($request->input('administrator') === 'true') {
+            $user = (new GiveAdministratorPrivilege)->execute($data);
+        } else {
+            $user = (new RemoveAdministratorPrivilege)->execute($data);
+        }
+
+        return response()->json([
+            'data' => UserIndexViewHelper::dtoUser($user, Auth::user()),
+        ], 200);
+    }
+
+    public function destroy(Request $request, int $userId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'user_id' => $userId,
+        ];
+
+        (new DestroyUser)->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 200);
     }
 }
