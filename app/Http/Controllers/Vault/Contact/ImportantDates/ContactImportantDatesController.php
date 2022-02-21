@@ -15,6 +15,8 @@ use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use App\Models\ContactReminder;
+use App\Services\Contact\ManageReminder\CreateReminder;
 
 class ContactImportantDatesController extends Controller
 {
@@ -60,6 +62,21 @@ class ContactImportantDatesController extends Controller
             'year' => $year,
             'type' => $request->input('type'),
         ]);
+
+        if ($request->input('reminder')) {
+            (new CreateReminder)->execute([
+                'account_id' => Auth::user()->account_id,
+                'author_id' => Auth::user()->id,
+                'vault_id' => $vaultId,
+                'contact_id' => $contactId,
+                'name' => $request->input('label'),
+                'day' => $day,
+                'month' => $month,
+                'year' => $year,
+                'frequency' => $request->input('reminderChoice'),
+                'frequency_number' => 1,
+            ]);
+        }
 
         $contact = Contact::find($contactId);
 

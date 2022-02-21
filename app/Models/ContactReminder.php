@@ -28,7 +28,9 @@ class ContactReminder extends Model
     protected $fillable = [
         'contact_id',
         'name',
-        'date_to_be_reminded_of',
+        'day',
+        'month',
+        'year',
         'frequency',
         'frequency_number',
     ];

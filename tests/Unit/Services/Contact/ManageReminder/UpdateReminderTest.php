@@ -122,7 +122,9 @@ class UpdateReminderTest extends TestCase
             'contact_id' => $contact->id,
             'contact_reminder_id' => $reminder->id,
             'name' => 'birthdate',
-            'date_to_be_reminded_of' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'frequency' => ContactReminder::TYPE_ONE_TIME,
             'frequency_number' => null,
         ];
@@ -133,7 +135,9 @@ class UpdateReminderTest extends TestCase
             'id' => $reminder->id,
             'contact_id' => $contact->id,
             'name' => 'birthdate',
-            'date_to_be_reminded_of' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'frequency' => ContactReminder::TYPE_ONE_TIME,
             'frequency_number' => null,
         ]);

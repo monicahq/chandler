@@ -25,7 +25,9 @@ class ContactReminderFactory extends Factory
         return [
             'contact_id' => Contact::factory(),
             'name' => $this->faker->sentence(),
-            'date_to_be_reminded_of' => $this->faker->dateTimeThisDecade(),
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'frequency' => ContactReminder::TYPE_ONE_TIME,
             'frequency_number' => 1,
         ];

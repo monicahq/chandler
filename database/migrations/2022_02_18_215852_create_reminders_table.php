@@ -20,7 +20,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('contact_id')->nullable();
             $table->string('name');
-            $table->string('date_to_be_reminded_of'); // I KNOW - it's a string, not a date. It's on purpose.
+            $table->integer('day')->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('year')->nullable();
             $table->string('frequency');
             $table->integer('frequency_number')->nullable();
             $table->timestamps();

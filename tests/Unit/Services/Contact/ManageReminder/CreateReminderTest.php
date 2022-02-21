@@ -93,7 +93,9 @@ class CreateReminderTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'name' => 'birthdate',
-            'date_to_be_reminded_of' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'frequency' => ContactReminder::TYPE_ONE_TIME,
             'frequency_number' => null,
         ];
@@ -104,7 +106,9 @@ class CreateReminderTest extends TestCase
             'id' => $reminder->id,
             'contact_id' => $contact->id,
             'name' => 'birthdate',
-            'date_to_be_reminded_of' => '1981-10-29',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
             'frequency' => ContactReminder::TYPE_ONE_TIME,
             'frequency_number' => null,
         ]);

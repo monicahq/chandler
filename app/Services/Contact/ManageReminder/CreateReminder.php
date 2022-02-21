@@ -26,7 +26,9 @@ class CreateReminder extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'name' => 'required|string|max:255',
-            'date_to_be_reminded_of' => 'required|string:255',
+            'day' => 'nullable|integer',
+            'month' => 'nullable|integer',
+            'year' => 'nullable|integer',
             'frequency' => 'required|string:255',
             'frequency_number' => 'nullable|integer',
         ];
@@ -60,7 +62,9 @@ class CreateReminder extends BaseService implements ServiceInterface
         $this->reminder = ContactReminder::create([
             'contact_id' => $data['contact_id'],
             'name' => $data['name'],
-            'date_to_be_reminded_of' => $data['date_to_be_reminded_of'],
+            'day' => $this->valueOrNull($data, 'day'),
+            'month' => $this->valueOrNull($data, 'month'),
+            'year' => $this->valueOrNull($data, 'year'),
             'frequency' => $data['frequency'],
             'frequency_number' => $this->valueOrNull($data, 'frequency_number'),
         ]);

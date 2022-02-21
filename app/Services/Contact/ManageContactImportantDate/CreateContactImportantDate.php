@@ -60,9 +60,9 @@ class CreateContactImportantDate extends BaseService implements ServiceInterface
         $this->date = ContactImportantDate::create([
             'contact_id' => $data['contact_id'],
             'label' => $data['label'],
-            'day' => $data['day'],
-            'month' => $data['month'],
-            'year' => $data['year'],
+            'day' => $this->valueOrNull($data, 'day'),
+            'month' => $this->valueOrNull($data, 'month'),
+            'year' => $this->valueOrNull($data, 'year'),
             'type' => $this->valueOrNull($data, 'type'),
         ]);
 

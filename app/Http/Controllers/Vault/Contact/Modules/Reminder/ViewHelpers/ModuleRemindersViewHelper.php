@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\AgeHelper;
+use App\Helpers\DateHelper;
+use App\Helpers\ImportantDateHelper;
 use App\Models\ContactReminder;
 
 class ModuleRemindersViewHelper
@@ -17,7 +19,7 @@ class ModuleRemindersViewHelper
         });
 
         return [
-            'notes' => $remindersCollection,
+            'reminders' => $remindersCollection,
             'url' => [
                 'store' => route('contact.note.store', [
                     'vault' => $contact->vault_id,
@@ -35,14 +37,10 @@ class ModuleRemindersViewHelper
     {
         return [
             'id' => $reminder->id,
-            'name',
-            'date_to_be_reminded_of',
-            'frequency',
-            'frequency_number',
-
             'name' => $reminder->name,
-            'date' => AgeHelper::formatDate($reminder->date, $user),
-
+            'date_to_be_reminded_of' => ImportantDateHelper::format($reminder->date_to_be_reminded_of, $user),
+            'frequency' => $reminder->frequency,
+            'frequency_number' => $reminder->frequency_number,
             'url' => [
                 'update' => route('contact.note.update', [
                     'vault' => $contact->vault_id,
