@@ -4,14 +4,12 @@ namespace Tests\Unit\Services\Account\ManageUsers;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Vault;
 use App\Models\Account;
-use App\Mail\UserInvited;
 use App\Jobs\CreateAuditLog;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Vault;
 use App\Services\Account\ManageUsers\DestroyUser;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

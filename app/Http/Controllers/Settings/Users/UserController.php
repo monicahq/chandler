@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageUsers\InviteUser;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
-use App\Models\User;
 use App\Services\Account\ManageUsers\DestroyUser;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManageUsers\GiveAdministratorPrivilege;
 use App\Services\Account\ManageUsers\RemoveAdministratorPrivilege;
+use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
+use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
 
 class UserController extends Controller
 {
