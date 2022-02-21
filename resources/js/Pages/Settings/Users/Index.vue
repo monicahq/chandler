@@ -68,7 +68,11 @@
                   {{ user.email }}
 
                   <!-- is administrator -->
-                  <span v-if="user.is_account_administrator" class="bg-neutral-200 text-neutral-500 text-xs ml-2 rounded px-2 py-1">administrator</span>
+                  <span
+                    v-if="user.is_account_administrator"
+                    class="ml-2 rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500"
+                    >administrator</span
+                  >
                 </span>
 
                 <!-- case : invitation sent -->
@@ -97,7 +101,11 @@
                 <span class="block">
                   {{ user.name }}
                   <!-- is administrator -->
-                  <span v-if="user.is_account_administrator" class="bg-neutral-200 text-neutral-500 text-xs ml-2 rounded px-2 py-1">administrator</span>
+                  <span
+                    v-if="user.is_account_administrator"
+                    class="ml-2 rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500"
+                    >administrator</span
+                  >
                 </span>
 
                 <span class="text-sm text-gray-400">{{ user.email }}</span>
@@ -105,15 +113,15 @@
 
               <!-- actions -->
               <ul v-if="!user.is_logged_user" class="text-sm">
-                <li @click="showEditModal(user)" class="cursor-pointer mr-4 inline text-sky-500 hover:text-blue-900">Edit</li>
-                <li @click="destroy(user)" class="cursor-pointer inline text-red-500 hover:text-red-900">Delete</li>
+                <li @click="showEditModal(user)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                  Edit
+                </li>
+                <li @click="destroy(user)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
               </ul>
             </div>
 
             <!-- edit user -->
-            <form
-              v-if="editModalshownId == user.id"
-              @submit.prevent="update(user)">
+            <form v-if="editModalshownId == user.id" @submit.prevent="update(user)">
               <div class="border-b border-gray-200 p-5">
                 <errors :errors="form.errors" />
 
@@ -143,7 +151,8 @@
                   <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                     Administrator
                     <span class="ml-4 font-normal text-gray-500">
-                      Can do everything, including adding or removing other users, managing billing and closing the account.
+                      Can do everything, including adding or removing other users, managing billing and closing the
+                      account.
                     </span>
                   </label>
                 </div>
@@ -230,11 +239,7 @@ export default {
     },
 
     destroy(user) {
-      if (
-        confirm(
-          "Are you sure? This can't be recovered.",
-        )
-      ) {
+      if (confirm("Are you sure? This can't be recovered.")) {
         axios
           .delete(user.url.destroy)
           .then((response) => {
@@ -242,8 +247,7 @@ export default {
             var id = this.localUsers.findIndex((x) => x.id === user.id);
             this.localUsers.splice(id, 1);
           })
-          .catch((error) => {}
-        );
+          .catch((error) => {});
       }
     },
   },

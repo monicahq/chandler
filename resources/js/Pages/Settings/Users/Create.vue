@@ -52,7 +52,8 @@
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5">
             <h1 class="mb-1 text-center text-2xl font-medium">Invite someone</h1>
             <p class="text-center">
-              This user will be part of your account, but won't get access to all the vaults in this account unless you give specific access to them. This person will be able to create vaults as well.
+              This user will be part of your account, but won't get access to all the vaults in this account unless you
+              give specific access to them. This person will be able to create vaults as well.
             </p>
           </div>
 
@@ -103,7 +104,8 @@
                 <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                   Administrator
                   <span class="ml-4 font-normal text-gray-500">
-                    Can do everything, including adding or removing other users, managing billing and closing the account.
+                    Can do everything, including adding or removing other users, managing billing and closing the
+                    account.
                   </span>
                 </label>
               </div>
