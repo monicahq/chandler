@@ -84,20 +84,18 @@ class DestroyUser extends BaseService implements ServiceInterface
      */
     private function destroyAllVaults(): void
     {
-        $vaultsUserIsManagerOf = Vault::where('account_id', $this->data['account_id'])
-            ->with(['users' => function ($query) {
-                $query->wherePivot('permission', Vault::PERMISSION_MANAGE);
-            }])
+        $vaultsUserIsManagerOf = DB::table('user_vault')->where('user_id', $this->user->id)
+            ->where('permission', Vault::PERMISSION_MANAGE)
             ->get();
 
         foreach ($vaultsUserIsManagerOf as $vault) {
             $users = DB::table('user_vault')->where('user_id', '!=', $this->user->id)
-                ->where('vault_id', $vault->id)
+                ->where('vault_id', $vault->vault_id)
                 ->where('permission', Vault::PERMISSION_MANAGE)
                 ->count();
 
             if ($users === 0) {
-                $vault->delete();
+                DB::table('vaults')->where('id', $vault->vault_id)->delete();
             }
         }
     }

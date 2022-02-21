@@ -127,16 +127,15 @@ class DestroyUserTest extends TestCase
         $this->assertDatabaseHas('vaults', [
             'id' => $vaultEditor->id,
         ]);
-        $this->assertDatabaseHas('user_vault', [
-            'vault_id' => $vaultEditor->id,
-            'user_id' => $user->id,
-        ]);
         $this->assertDatabaseHas('vaults', [
             'id' => $vaultViewer->id,
         ]);
+
+        $this->assertDatabaseHas('user_vault', [
+            'vault_id' => $vaultEditor->id,
+        ]);
         $this->assertDatabaseHas('user_vault', [
             'vault_id' => $vaultViewer->id,
-            'user_id' => $user->id,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
