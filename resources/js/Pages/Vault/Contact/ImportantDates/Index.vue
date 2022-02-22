@@ -141,7 +141,7 @@
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500" />
                 <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                  I only know the date and month, not the year
+                  I only know the day and month, not the year
                 </label>
               </div>
               <div v-if="form.choice == 'month_day'" class="ml-6 flex">
@@ -318,7 +318,7 @@
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-sky-500" />
                     <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I only know the date and month, not the year
+                      I only know the day and month, not the year
                     </label>
                   </div>
                   <div v-if="form.choice == 'month_day'" class="ml-6 flex">

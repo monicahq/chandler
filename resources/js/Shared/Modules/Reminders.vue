@@ -23,6 +23,12 @@
     border-bottom-right-radius: 8px;
   }
 }
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
 </style>
 
 <template>
@@ -53,10 +59,161 @@
         :text="'Add a reminder'"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
-        @click="showCreateNoteModal" />
+        @click="showCreateReminderModal" />
     </div>
 
     <!-- add a reminder modal -->
+    <form
+      v-if="addReminderModalShown"
+      class="mb-6 rounded-lg border border-gray-200 bg-white"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200">
+        <div v-if="form.errors.length > 0" class="p-5">
+          <errors :errors="form.errors" />
+        </div>
+
+        <!-- name -->
+        <div class="border-b border-gray-200 p-5">
+          <text-input
+            :ref="'label'"
+            v-model="form.label"
+            :label="'Name of the reminder'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="true"
+            :autocomplete="false"
+            :maxlength="255"
+            @esc-key-pressed="addReminderModalShown = false" />
+        </div>
+
+        <div class="border-b border-gray-200 p-5">
+          <!-- case: I know the exact date -->
+          <div class="mb-2 flex items-center">
+            <input
+              id="full_date"
+              v-model="form.choice"
+              value="full_date"
+              name="date"
+              type="radio"
+              class="h-4 w-4 border-gray-300 text-sky-500" />
+            <label for="full_date" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              I know the exact date, including the year
+            </label>
+          </div>
+          <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
+            <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
+              <template v-slot="{ inputValue, inputEvents }">
+                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+              </template>
+            </v-date-picker>
+          </div>
+
+          <!-- case: date and month -->
+          <div class="flex items-center">
+            <input
+              id="month_day"
+              v-model="form.choice"
+              value="month_day"
+              name="date"
+              type="radio"
+              class="h-4 w-4 border-gray-300 text-sky-500" />
+            <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              I only know the day and month, not the year
+            </label>
+          </div>
+          <div v-if="form.choice == 'month_day'" class="mt-2 ml-6 flex">
+            <dropdown
+              v-model="form.month"
+              :data="data.months"
+              :required="true"
+              :div-outer-class="'mb-5 mr-2'"
+              :placeholder="'Choose a value'"
+              :dropdown-class="'block w-full'"
+              :label="'Month'" />
+
+            <dropdown
+              v-model="form.day"
+              :data="data.days"
+              :required="true"
+              :div-outer-class="'mb-5'"
+              :placeholder="'Choose a value'"
+              :dropdown-class="'block w-full'"
+              :label="'Day'" />
+          </div>
+        </div>
+
+        <!-- reminder options -->
+        <div class="p-5">
+          <p class="mb-1">How often should we remind you about this date?</p>
+          <p class="text-gray-600 text-sm mb-1">If the date is in the past, the next occurence of the date will be next year.</p>
+
+          <div class="mt-4 ml-4">
+            <div class="mb-2 flex items-center">
+              <input
+                id="recurring_year"
+                v-model="form.reminderChoice"
+                value="recurring_year"
+                name="reminder-frequency"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="recurring_year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                Only once, when the next occurence of the date occurs.
+              </label>
+            </div>
+
+            <div class="mb-2 flex items-center">
+              <input
+                id="recurring_year"
+                v-model="form.reminderChoice"
+                value="recurring_year"
+                name="reminder-frequency"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="recurring_year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 flex items-center">
+                <span class="mr-2">Every</span>
+
+                <select
+                  :id="id"
+                  v-model="selectedId"
+                  class="mr-2 py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"
+                  :required="required"
+                  @change="change">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+
+                <select
+                  :id="id"
+                  v-model="selectedId"
+                  class="mr-2 py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"
+                  :required="required"
+                  @change="change">
+                  <option value="day">day</option>
+                  <option value="month">month</option>
+                  <option value="year">year</option>
+                </select>
+
+                <span>when the next occurence of the date occurs.</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between p-5">
+        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="addReminderModalShown = false" />
+        <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+      </div>
+    </form>
 
     <!-- reminders -->
     <div v-if="localReminders.length > 0">
@@ -142,7 +299,7 @@ export default {
       loadingState: '',
       titleFieldShown: false,
       emotionFieldShown: false,
-      createNoteModalShown: false,
+      addReminderModalShown: false,
       localReminders: [],
       editedNoteId: 0,
       form: {
@@ -159,11 +316,18 @@ export default {
   },
 
   methods: {
-    showCreateNoteModal() {
+    showCreateReminderModal() {
       this.form.errors = [];
-      this.form.title = '';
-      this.form.body = '';
-      this.createNoteModalShown = true;
+      this.form.label = '';
+      this.form.choice = 'full_date';
+      this.form.day = '';
+      this.form.month = '';
+      this.form.date = '';
+      this.addReminderModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.label.focus();
+      });
     },
 
     showEmotionField() {
@@ -176,15 +340,6 @@ export default {
       this.form.title = reminder.title;
       this.form.body = reminder.body;
       this.form.emotion = reminder.emotion.id;
-    },
-
-    showTitleField() {
-      this.titleFieldShown = true;
-      this.form.title = '';
-
-      this.$nextTick(() => {
-        this.$refs.newTitle.focus();
-      });
     },
 
     showFullBody(note) {
@@ -200,7 +355,7 @@ export default {
           this.flash('The note has been created', 'success');
           this.localReminders.unshift(response.data.data);
           this.loadingState = '';
-          this.createNoteModalShown = false;
+          this.addReminderModalShown = false;
         })
         .catch((error) => {
           this.loadingState = '';

@@ -11,7 +11,11 @@ class ModuleRemindersViewHelper
 {
     public static function data(Contact $contact, User $user): array
     {
-        $reminders = $contact->reminders()->get();
+        $reminders = $contact->reminders()
+            ->orderBy('month')
+            ->orderBy('day')
+            ->get();
+
         $remindersCollection = $reminders->map(function ($reminder) use ($contact, $user) {
             return self::dto($contact, $reminder, $user);
         });
