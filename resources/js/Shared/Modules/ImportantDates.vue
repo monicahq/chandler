@@ -33,7 +33,7 @@
       <li class="mb-1 flex items-center justify-between hover:bg-slate-50">
         <span class="text-sm">{{ date.label }}</span>
         <span class="text-sm">
-          {{ date.date }} <span v-if="date.age" class="text-gray-400 text-xs">({{ date.age }})</span>
+          {{ date.date }} <span v-if="date.age" class="text-xs text-gray-400">({{ date.age }})</span>
         </span>
       </li>
     </ul>
