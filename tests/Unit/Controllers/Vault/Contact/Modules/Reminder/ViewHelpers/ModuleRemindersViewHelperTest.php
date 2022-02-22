@@ -3,16 +3,12 @@
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 
 use function env;
-use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Contact;
-use App\Models\Emotion;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
 use App\Models\ContactReminder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
 
 class ModuleRemindersViewHelperTest extends TestCase
 {
@@ -77,8 +73,8 @@ class ModuleRemindersViewHelperTest extends TestCase
                 'choice' => 'full_date',
                 'reminder_choice' => 'one_time',
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/reminders/' . $reminder->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/reminders/' . $reminder->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/reminders/'.$reminder->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/reminders/'.$reminder->id,
                 ],
             ],
             $array
