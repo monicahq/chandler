@@ -146,37 +146,41 @@ select {
         <!-- reminder options -->
         <div class="p-5">
           <p class="mb-1">How often should we remind you about this date?</p>
-          <p class="text-gray-600 text-sm mb-1">If the date is in the past, the next occurence of the date will be next year.</p>
+          <p class="mb-1 text-sm text-gray-600">
+            If the date is in the past, the next occurence of the date will be next year.
+          </p>
 
           <div class="mt-4 ml-4">
             <div class="mb-2 flex items-center">
               <input
-                id="recurring_year"
+                id="one_time"
                 v-model="form.reminderChoice"
-                value="recurring_year"
+                value="one_time"
                 name="reminder-frequency"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="recurring_year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                 Only once, when the next occurence of the date occurs.
               </label>
             </div>
 
             <div class="mb-2 flex items-center">
               <input
-                id="recurring_year"
+                id="recurring"
                 v-model="form.reminderChoice"
-                value="recurring_year"
+                value="recurring"
                 name="reminder-frequency"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="recurring_year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 flex items-center">
+              <label
+                for="recurring"
+                class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
                 <span class="mr-2">Every</span>
 
                 <select
                   :id="id"
-                  v-model="selectedId"
-                  class="mr-2 py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"
+                  v-model="form.frequencyNumber"
+                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                   :required="required"
                   @change="change">
                   <option value="1">1</option>
@@ -193,16 +197,16 @@ select {
 
                 <select
                   :id="id"
-                  v-model="selectedId"
-                  class="mr-2 py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm"
+                  v-model="form.frequencyType"
+                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                   :required="required"
                   @change="change">
-                  <option value="day">day</option>
-                  <option value="month">month</option>
-                  <option value="year">year</option>
+                  <option value="recurring_day">day</option>
+                  <option value="recurring_month">month</option>
+                  <option value="recurring_year">year</option>
                 </select>
 
-                <span>when the next occurence of the date occurs.</span>
+                <span>after the next occurence of the date.</span>
               </label>
             </div>
           </div>
@@ -221,35 +225,196 @@ select {
         <li
           v-for="reminder in localReminders"
           :key="reminder.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-          <div class="flex items-center">
-            <span class="mr-2 text-sm text-gray-500">{{ reminder.date_to_be_reminded_of }}</span>
-            <span class="mr-2">{{ reminder.name }}</span>
+          class="item-list hover:bg-slate-50 border-b border-gray-200">
 
-            <!-- recurring icon -->
-            <a-tooltip placement="topLeft" title="Recurring" arrow-point-at-center>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-            </a-tooltip>
+          <!-- reminder -->
+          <div class="px-3 py-2 flex items-center justify-between">
+            <div class="flex items-center">
+              <span class="mr-2 text-sm text-gray-500">{{ reminder.date }}</span>
+              <span class="mr-2">{{ reminder.label }}</span>
+
+              <!-- recurring icon -->
+              <a-tooltip v-if="reminder.type != 'one_time'" placement="topLeft" title="Recurring" arrow-point-at-center>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </a-tooltip>
+            </div>
+
+            <!-- actions -->
+            <ul class="text-sm">
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="showEditReminderModal(reminder)">
+                Edit
+              </li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(reminder)">Delete</li>
+            </ul>
           </div>
 
-          <!-- actions -->
-          <ul class="text-sm">
-            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateGenderModal(gender)">
-              Edit
-            </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(gender)">Delete</li>
-          </ul>
+          <!-- edit reminder modal -->
+          <form
+            v-if="editedReminderId == reminder.id"
+            class="mb-6 bg-white"
+            @submit.prevent="update(reminder)">
+            <div class="border-b border-gray-200">
+              <div v-if="form.errors.length > 0" class="p-5">
+                <errors :errors="form.errors" />
+              </div>
+
+              <!-- name -->
+              <div class="border-b border-gray-200 p-5">
+                <text-input
+                  :ref="'label' + reminder.id"
+                  v-model="form.label"
+                  :label="'Name of the reminder'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="true"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="addReminderModalShown = false" />
+              </div>
+
+              <div class="border-b border-gray-200 p-5">
+                <!-- case: I know the exact date -->
+                <div class="mb-2 flex items-center">
+                  <input
+                    id="full_date"
+                    v-model="form.choice"
+                    value="full_date"
+                    name="date"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="full_date" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    I know the exact date, including the year
+                  </label>
+                </div>
+                <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
+                  <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
+                    <template v-slot="{ inputValue, inputEvents }">
+                      <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                    </template>
+                  </v-date-picker>
+                </div>
+
+                <!-- case: date and month -->
+                <div class="flex items-center">
+                  <input
+                    id="month_day"
+                    v-model="form.choice"
+                    value="month_day"
+                    name="date"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    I only know the day and month, not the year
+                  </label>
+                </div>
+                <div v-if="form.choice == 'month_day'" class="mt-2 ml-6 flex">
+                  <dropdown
+                    v-model="form.month"
+                    :data="data.months"
+                    :required="true"
+                    :div-outer-class="'mb-5 mr-2'"
+                    :placeholder="'Choose a value'"
+                    :dropdown-class="'block w-full'"
+                    :label="'Month'" />
+
+                  <dropdown
+                    v-model="form.day"
+                    :data="data.days"
+                    :required="true"
+                    :div-outer-class="'mb-5'"
+                    :placeholder="'Choose a value'"
+                    :dropdown-class="'block w-full'"
+                    :label="'Day'" />
+                </div>
+              </div>
+
+              <!-- reminder options -->
+              <div class="p-5">
+                <p class="mb-1">How often should we remind you about this date?</p>
+                <p class="mb-1 text-sm text-gray-600">
+                  If the date is in the past, the next occurence of the date will be next year.
+                </p>
+
+                <div class="mt-4 ml-4">
+                  <div class="mb-2 flex items-center">
+                    <input
+                      id="one_time"
+                      v-model="form.reminderChoice"
+                      value="one_time"
+                      name="reminder-frequency"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      Only once, when the next occurence of the date occurs.
+                    </label>
+                  </div>
+
+                  <div class="mb-2 flex items-center">
+                    <input
+                      id="recurring"
+                      v-model="form.reminderChoice"
+                      value="recurring"
+                      name="reminder-frequency"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label
+                      for="recurring"
+                      class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
+                      <span class="mr-2">Every</span>
+
+                      <select
+                        :id="id"
+                        v-model="form.frequencyNumber"
+                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                        :required="required"
+                        @change="change">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                      </select>
+
+                      <select
+                        :id="id"
+                        v-model="form.frequencyType"
+                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                        :required="required"
+                        @change="change">
+                        <option value="recurring_day">day</option>
+                        <option value="recurring_month">month</option>
+                        <option value="recurring_year">year</option>
+                      </select>
+
+                      <span>after the next occurence of the date.</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between p-5">
+              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedReminderId = 0" />
+              <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+            </div>
+          </form>
         </li>
       </ul>
     </div>
@@ -266,7 +431,7 @@ import HoverMenu from '@/Shared/HoverMenu';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
+import Dropdown from '@/Shared/Form/Dropdown';
 import Errors from '@/Shared/Form/Errors';
 
 export default {
@@ -275,7 +440,7 @@ export default {
     PrettyButton,
     PrettySpan,
     TextInput,
-    TextArea,
+    Dropdown,
     Errors,
   },
 
@@ -301,11 +466,16 @@ export default {
       emotionFieldShown: false,
       addReminderModalShown: false,
       localReminders: [],
-      editedNoteId: 0,
+      editedReminderId: 0,
       form: {
-        title: '',
-        body: '',
-        emotion: '',
+        label: '',
+        reminderChoice: '',
+        day: '',
+        month: '',
+        choice: '',
+        date: '',
+        frequencyType: '',
+        frequencyNumber: 0,
         errors: [],
       },
     };
@@ -322,7 +492,10 @@ export default {
       this.form.choice = 'full_date';
       this.form.day = '';
       this.form.month = '';
+      this.form.reminderChoice = 'recurring';
       this.form.date = '';
+      this.form.frequencyType = 'recurring_year';
+      this.form.frequencyNumber = 1;
       this.addReminderModalShown = true;
 
       this.$nextTick(() => {
@@ -330,20 +503,17 @@ export default {
       });
     },
 
-    showEmotionField() {
-      this.form.emotion = '';
-      this.emotionFieldShown = true;
-    },
-
-    showEditNoteModal(note) {
-      this.editedNoteId = reminder.id;
-      this.form.title = reminder.title;
-      this.form.body = reminder.body;
-      this.form.emotion = reminder.emotion.id;
-    },
-
-    showFullBody(note) {
-      this.localReminders[this.localReminders.findIndex((x) => x.id === reminder.id)].show_full_content = true;
+    showEditReminderModal(reminder) {
+      this.form.errors = [];
+      this.editedReminderId = reminder.id;
+      this.form.label = reminder.label;
+      this.form.day = reminder.day;
+      this.form.month = reminder.month;
+      this.form.date = reminder.date;
+      this.form.reminderChoice = reminder.reminder_choice;
+      this.form.frequencyNumber = reminder.frequency_number;
+      this.form.frequencyType = reminder.type;
+      this.form.choice = reminder.choice;
     },
 
     submit() {
@@ -352,7 +522,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The note has been created', 'success');
+          this.flash('The reminder has been created', 'success');
           this.localReminders.unshift(response.data.data);
           this.loadingState = '';
           this.addReminderModalShown = false;
@@ -363,16 +533,16 @@ export default {
         });
     },
 
-    update(note) {
+    update(reminder) {
       this.loadingState = 'loading';
 
       axios
         .put(reminder.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash('The note has been edited', 'success');
+          this.flash('The reminder has been edited', 'success');
           this.localReminders[this.localReminders.findIndex((x) => x.id === reminder.id)] = response.data.data;
-          this.editedNoteId = 0;
+          this.editedReminderId = 0;
         })
         .catch((error) => {
           this.loadingState = '';
@@ -380,12 +550,12 @@ export default {
         });
     },
 
-    destroy(note) {
-      if (confirm('Are you sure? This will delete the note permanently.')) {
+    destroy(reminder) {
+      if (confirm('Are you sure? This will delete the reminder permanently.')) {
         axios
           .delete(reminder.url.destroy)
           .then((response) => {
-            this.flash('The note has been deleted', 'success');
+            this.flash('The reminder has been deleted', 'success');
             var id = this.localReminders.findIndex((x) => x.id === reminder.id);
             this.localReminders.splice(id, 1);
           })

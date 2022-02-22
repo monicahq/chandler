@@ -92,7 +92,7 @@ class CreateReminderTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'name' => 'birthdate',
+            'label' => 'birthdate',
             'day' => 29,
             'month' => 10,
             'year' => 1981,
@@ -105,7 +105,7 @@ class CreateReminderTest extends TestCase
         $this->assertDatabaseHas('contact_reminders', [
             'id' => $reminder->id,
             'contact_id' => $contact->id,
-            'name' => 'birthdate',
+            'label' => 'birthdate',
             'day' => 29,
             'month' => 10,
             'year' => 1981,

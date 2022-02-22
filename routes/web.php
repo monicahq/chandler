@@ -36,6 +36,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -96,6 +97,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('labels', [ContactModuleLabelController::class, 'store'])->name('contact.label.store');
                     Route::put('labels/{label}', [ContactModuleLabelController::class, 'update'])->name('contact.label.update');
                     Route::delete('labels/{label}', [ContactModuleLabelController::class, 'destroy'])->name('contact.label.destroy');
+
+                    // reminders
+                    Route::post('reminders', [ContactModuleReminderController::class, 'store'])->name('contact.reminder.store');
+                    Route::put('reminders/{reminder}', [ContactModuleReminderController::class, 'update'])->name('contact.reminder.update');
+                    Route::delete('reminders/{reminder}', [ContactModuleReminderController::class, 'destroy'])->name('contact.reminder.destroy');
                 });
             });
 

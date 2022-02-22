@@ -68,7 +68,7 @@ class ContactImportantDatesController extends Controller
                 'author_id' => Auth::user()->id,
                 'vault_id' => $vaultId,
                 'contact_id' => $contactId,
-                'name' => $request->input('label'),
+                'label' => $request->input('label'),
                 'day' => $day,
                 'month' => $month,
                 'year' => $year,

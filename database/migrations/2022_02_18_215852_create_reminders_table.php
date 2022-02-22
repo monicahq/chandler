@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('contact_reminders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id')->nullable();
-            $table->string('name');
+            $table->string('label');
             $table->integer('day')->nullable();
             $table->integer('month')->nullable();
             $table->integer('year')->nullable();

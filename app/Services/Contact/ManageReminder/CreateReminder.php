@@ -25,7 +25,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
             'day' => 'nullable|integer',
             'month' => 'nullable|integer',
             'year' => 'nullable|integer',
@@ -61,7 +61,7 @@ class CreateReminder extends BaseService implements ServiceInterface
 
         $this->reminder = ContactReminder::create([
             'contact_id' => $data['contact_id'],
-            'name' => $data['name'],
+            'label' => $data['label'],
             'day' => $this->valueOrNull($data, 'day'),
             'month' => $this->valueOrNull($data, 'month'),
             'year' => $this->valueOrNull($data, 'year'),
@@ -87,7 +87,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'reminder_name' => $this->reminder->name,
+                'reminder_name' => $this->reminder->label,
             ]),
         ]);
 
@@ -97,7 +97,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'author_name' => $this->author->name,
             'action_name' => 'contact_reminder_created',
             'objects' => json_encode([
-                'reminder_name' => $this->reminder->name,
+                'reminder_name' => $this->reminder->label,
             ]),
         ]);
     }

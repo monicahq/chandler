@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Helpers\ContactReminderHelper;
+use App\Helpers\DateHelper;
 
 class ModuleRemindersViewHelper
 {
@@ -17,17 +18,15 @@ class ModuleRemindersViewHelper
             ->get();
 
         $remindersCollection = $reminders->map(function ($reminder) use ($contact, $user) {
-            return self::dto($contact, $reminder, $user);
+            return self::dtoReminder($contact, $reminder, $user);
         });
 
         return [
             'reminders' => $remindersCollection,
+            'months' => DateHelper::getMonths(),
+            'days' => DateHelper::getDays(),
             'url' => [
-                'store' => route('contact.note.store', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                ]),
-                'index' => route('contact.note.index', [
+                'store' => route('contact.reminder.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -35,24 +34,34 @@ class ModuleRemindersViewHelper
         ];
     }
 
-    public static function dto(Contact $contact, ContactReminder $reminder, User $user): array
+    public static function dtoReminder(Contact $contact, ContactReminder $reminder, User $user): array
     {
+        // determine the type
+        $choice = 'full_date';
+        if (! $reminder->year) {
+            $choice = 'month_day';
+        }
+
         return [
             'id' => $reminder->id,
-            'name' => $reminder->name,
-            'date_to_be_reminded_of' => ContactReminderHelper::formatDate($reminder, $user),
+            'label' => $reminder->label,
+            'date' => ContactReminderHelper::formatDate($reminder, $user),
             'type' => $reminder->type,
             'frequency_number' => $reminder->frequency_number,
+            'day' => $reminder->day,
+            'month' => $reminder->month,
+            'choice' => $choice,
+            'reminder_choice' => $reminder->type == ContactReminder::TYPE_ONE_TIME ? ContactReminder::TYPE_ONE_TIME : 'recurring',
             'url' => [
-                'update' => route('contact.note.update', [
+                'update' => route('contact.reminder.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'note' => $reminder->id,
+                    'reminder' => $reminder->id,
                 ]),
-                'destroy' => route('contact.note.destroy', [
+                'destroy' => route('contact.reminder.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'note' => $reminder->id,
+                    'reminder' => $reminder->id,
                 ]),
             ],
         ];

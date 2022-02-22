@@ -26,7 +26,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
             'day' => 'nullable|integer',
             'month' => 'nullable|integer',
             'year' => 'nullable|integer',
@@ -63,7 +63,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
         $this->reminder = ContactReminder::where('contact_id', $data['contact_id'])
             ->findOrFail($data['contact_reminder_id']);
 
-        $this->reminder->name = $data['name'];
+        $this->reminder->label = $data['label'];
         $this->reminder->day = $data['day'];
         $this->reminder->month = $data['month'];
         $this->reminder->year = $data['year'];
@@ -89,7 +89,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'reminder_name' => $this->reminder->name,
+                'reminder_name' => $this->reminder->label,
             ]),
         ]);
 
@@ -99,7 +99,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
             'author_name' => $this->author->name,
             'action_name' => 'contact_reminder_updated',
             'objects' => json_encode([
-                'reminder_name' => $this->reminder->name,
+                'reminder_name' => $this->reminder->label,
             ]),
         ]);
     }
