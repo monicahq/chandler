@@ -29,7 +29,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'day' => 'nullable|integer',
             'month' => 'nullable|integer',
             'year' => 'nullable|integer',
-            'frequency' => 'required|string:255',
+            'type' => 'required|string:255',
             'frequency_number' => 'nullable|integer',
         ];
     }
@@ -65,7 +65,7 @@ class CreateReminder extends BaseService implements ServiceInterface
             'day' => $this->valueOrNull($data, 'day'),
             'month' => $this->valueOrNull($data, 'month'),
             'year' => $this->valueOrNull($data, 'year'),
-            'frequency' => $data['frequency'],
+            'type' => $data['type'],
             'frequency_number' => $this->valueOrNull($data, 'frequency_number'),
         ]);
 

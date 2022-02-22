@@ -37,7 +37,7 @@ class ModuleRemindersViewHelper
             'id' => $reminder->id,
             'name' => $reminder->name,
             'date_to_be_reminded_of' => ImportantDateHelper::format($reminder->date_to_be_reminded_of, $user),
-            'frequency' => $reminder->frequency,
+            'type' => $reminder->type,
             'frequency_number' => $reminder->frequency_number,
             'url' => [
                 'update' => route('contact.note.update', [

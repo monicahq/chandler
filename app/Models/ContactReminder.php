@@ -31,7 +31,7 @@ class ContactReminder extends Model
         'day',
         'month',
         'year',
-        'frequency',
+        'type',
         'frequency_number',
     ];
 

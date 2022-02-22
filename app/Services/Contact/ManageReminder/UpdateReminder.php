@@ -30,7 +30,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
             'day' => 'nullable|integer',
             'month' => 'nullable|integer',
             'year' => 'nullable|integer',
-            'frequency' => 'required|string:255',
+            'type' => 'required|string:255',
             'frequency_number' => 'nullable|integer',
         ];
     }
@@ -67,7 +67,7 @@ class UpdateReminder extends BaseService implements ServiceInterface
         $this->reminder->day = $data['day'];
         $this->reminder->month = $data['month'];
         $this->reminder->year = $data['year'];
-        $this->reminder->frequency = $data['frequency'];
+        $this->reminder->type = $data['type'];
         $this->reminder->frequency_number = $this->valueOrNull($data, 'frequency_number');
         $this->reminder->save();
 

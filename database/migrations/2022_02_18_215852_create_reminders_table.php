@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('day')->nullable();
             $table->integer('month')->nullable();
             $table->integer('year')->nullable();
-            $table->string('frequency');
+            $table->string('type');
             $table->integer('frequency_number')->nullable();
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');

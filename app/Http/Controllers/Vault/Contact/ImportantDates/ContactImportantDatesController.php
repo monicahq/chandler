@@ -72,7 +72,7 @@ class ContactImportantDatesController extends Controller
                 'day' => $day,
                 'month' => $month,
                 'year' => $year,
-                'frequency' => $request->input('reminderChoice'),
+                'type' => $request->input('reminderChoice'),
                 'frequency_number' => 1,
             ]);
         }
