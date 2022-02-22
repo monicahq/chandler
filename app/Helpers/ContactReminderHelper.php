@@ -2,10 +2,9 @@
 
 namespace App\Helpers;
 
-use App\Models\ContactReminder;
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Collection;
+use App\Models\ContactReminder;
 
 class ContactReminderHelper
 {
@@ -19,16 +18,16 @@ class ContactReminderHelper
      */
     public static function formatDate(ContactReminder $reminder, User $user): ?string
     {
-        if (!$reminder->day && !$reminder->month && !$reminder->year) {
+        if (! $reminder->day && ! $reminder->month && ! $reminder->year) {
             return null;
         }
 
-        if (!$reminder->day && !$reminder->month && $reminder->year) {
+        if (! $reminder->day && ! $reminder->month && $reminder->year) {
             return null;
         }
 
-        if ($reminder->day && $reminder->month && !$reminder->year) {
-            $carbonDate = Carbon::parse('1900-' . $reminder->month . '-' . $reminder->day);
+        if ($reminder->day && $reminder->month && ! $reminder->year) {
+            $carbonDate = Carbon::parse('1900-'.$reminder->month.'-'.$reminder->day);
 
             switch ($user->date_format) {
                 case 'MMM DD, YYYY':
@@ -54,7 +53,7 @@ class ContactReminderHelper
         }
 
         if ($reminder->day && $reminder->month && $reminder->year) {
-            $reminderAsString = Carbon::parse($reminder->year . '-' . $reminder->month . '-' . $reminder->day)->isoFormat($user->date_format);
+            $reminderAsString = Carbon::parse($reminder->year.'-'.$reminder->month.'-'.$reminder->day)->isoFormat($user->date_format);
         }
 
         return $reminderAsString;

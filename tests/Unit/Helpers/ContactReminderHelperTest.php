@@ -2,13 +2,11 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Helpers\ContactReminderHelper;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use App\Helpers\ImportantDateHelper;
-use App\Models\ContactImportantDate;
 use App\Models\ContactReminder;
+use App\Helpers\ContactReminderHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactReminderHelperTest extends TestCase
