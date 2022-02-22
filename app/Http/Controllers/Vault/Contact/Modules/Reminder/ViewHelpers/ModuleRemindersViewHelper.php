@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 
+use App\Helpers\ContactReminderHelper;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactReminder;
@@ -36,7 +37,7 @@ class ModuleRemindersViewHelper
         return [
             'id' => $reminder->id,
             'name' => $reminder->name,
-            'date_to_be_reminded_of' => ImportantDateHelper::format($reminder->date_to_be_reminded_of, $user),
+            'date_to_be_reminded_of' => ContactReminderHelper::formatDate($reminder, $user),
             'type' => $reminder->type,
             'frequency_number' => $reminder->frequency_number,
             'url' => [

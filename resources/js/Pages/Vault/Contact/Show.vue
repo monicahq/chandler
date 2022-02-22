@@ -86,7 +86,7 @@
               <div v-for="module in data.modules" :key="module.id">
                 <notes v-if="module.type == 'notes'" :data="notes" />
 
-                <reminders v-if="module.type == 'reminders'" :data="notes" />
+                <reminders v-if="module.type == 'reminders'" :data="reminders" />
               </div>
             </div>
           </div>
@@ -137,11 +137,11 @@ export default {
       importantDates: [],
       labels: [],
       notes: [],
+      reminders: [],
     };
   },
 
   created() {
-    // contact information page
     if (this.data.contact_information.length > 0) {
       if (this.data.contact_information.findIndex((x) => x.type == 'contact_names') > -1) {
         this.contactName =
@@ -177,6 +177,10 @@ export default {
     if (this.data.modules.length > 0) {
       if (this.data.modules.findIndex((x) => x.type == 'notes') > -1) {
         this.notes = this.data.modules[this.data.modules.findIndex((x) => x.type == 'notes')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'reminders') > -1) {
+        this.reminders = this.data.modules[this.data.modules.findIndex((x) => x.type == 'reminders')].data;
       }
     }
   },
