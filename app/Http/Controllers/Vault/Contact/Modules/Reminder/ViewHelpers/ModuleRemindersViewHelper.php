@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 
-use App\Helpers\ContactReminderHelper;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactReminder;
-use App\Helpers\ImportantDateHelper;
+use App\Helpers\ContactReminderHelper;
 
 class ModuleRemindersViewHelper
 {
