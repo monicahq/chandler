@@ -225,10 +225,9 @@ select {
         <li
           v-for="reminder in localReminders"
           :key="reminder.id"
-          class="item-list hover:bg-slate-50 border-b border-gray-200">
-
+          class="item-list border-b border-gray-200 hover:bg-slate-50">
           <!-- reminder -->
-          <div class="px-3 py-2 flex items-center justify-between">
+          <div class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
               <span class="mr-2 text-sm text-gray-500">{{ reminder.date }}</span>
               <span class="mr-2">{{ reminder.label }}</span>
@@ -252,7 +251,9 @@ select {
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="showEditReminderModal(reminder)">
+              <li
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+                @click="showEditReminderModal(reminder)">
                 Edit
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(reminder)">Delete</li>
@@ -260,10 +261,7 @@ select {
           </div>
 
           <!-- edit reminder modal -->
-          <form
-            v-if="editedReminderId == reminder.id"
-            class="mb-6 bg-white"
-            @submit.prevent="update(reminder)">
+          <form v-if="editedReminderId == reminder.id" class="mb-6 bg-white" @submit.prevent="update(reminder)">
             <div class="border-b border-gray-200">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
