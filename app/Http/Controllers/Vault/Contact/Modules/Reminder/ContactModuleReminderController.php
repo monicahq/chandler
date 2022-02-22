@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Reminder;
 
+use Carbon\Carbon;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Models\ContactReminder;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Vault\ManageLabels\CreateLabel;
-use App\Services\Contact\AssignLabel\AssignLabel;
-use App\Services\Contact\AssignLabel\RemoveLabel;
-use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
-use App\Models\ContactReminder;
 use App\Services\Contact\ManageReminder\CreateReminder;
-use App\Services\Contact\ManageReminder\DestroyReminder;
 use App\Services\Contact\ManageReminder\UpdateReminder;
-use Carbon\Carbon;
+use App\Services\Contact\ManageReminder\DestroyReminder;
+use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
 
 class ContactModuleReminderController extends Controller
 {

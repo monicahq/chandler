@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;
+use App\Helpers\DateHelper;
 use App\Models\ContactReminder;
 use App\Helpers\ContactReminderHelper;
-use App\Helpers\DateHelper;
 
 class ModuleRemindersViewHelper
 {
