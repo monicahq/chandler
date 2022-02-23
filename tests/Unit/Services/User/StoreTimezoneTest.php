@@ -5,10 +5,9 @@ namespace Tests\Unit\Services\User;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
+use App\Services\User\StoreTimezone;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\User\StoreNameOrderPreference;
-use App\Services\User\StoreTimezone;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

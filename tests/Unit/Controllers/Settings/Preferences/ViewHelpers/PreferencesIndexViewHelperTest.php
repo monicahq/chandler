@@ -135,7 +135,7 @@ class PreferencesIndexViewHelperTest extends TestCase
             [
                 'timezone' => 'UTC',
                 'url' => [
-                    'store' => env('APP_URL') . '/settings/preferences/timezone',
+                    'store' => env('APP_URL').'/settings/preferences/timezone',
                 ],
             ],
             $array

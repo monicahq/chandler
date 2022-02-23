@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Settings\Preferences;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Services\User\StoreDateFormatPreference;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use App\Services\User\StoreTimezone;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 
 class PreferencesTimezoneController extends Controller
 {
