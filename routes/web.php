@@ -37,6 +37,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -137,6 +138,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('', [PreferencesController::class, 'index'])->name('index');
             Route::post('name', [PreferencesNameOrderController::class, 'store'])->name('name.store');
             Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
+            Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
         });
 
         // only for administrators
