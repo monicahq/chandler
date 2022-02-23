@@ -40,11 +40,14 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('user_notifications_channels', function (Blueprint $table) {
+        Schema::create('user_notification_channels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('type');
-            $table->boolean('')->default(false);
+            $table->string('label');
+            $table->text('content');
+            $table->boolean('active')->default(false);
+            $table->boolean('verified')->default(false);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -59,5 +62,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('contact_reminders');
         Schema::dropIfExists('scheduled_contact_reminders');
+        Schema::dropIfExists('user_notification_channels');
     }
 };

@@ -8,6 +8,7 @@ use App\Models\Emotion;
 use App\Models\Template;
 use App\Models\Information;
 use App\Models\TemplatePage;
+use App\Models\UserNotificationChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\SerializesModels;
@@ -24,6 +25,7 @@ use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 
 class SetupAccount implements ShouldQueue
 {
@@ -65,11 +67,28 @@ class SetupAccount implements ShouldQueue
      */
     public function handle()
     {
+        $this->addNotificationChannel();
         $this->addTemplate();
         $this->addTemplatePageContactInformation();
         $this->addTemplatePageFeed();
         $this->addTemplatePageSocial();
         $this->addFirstInformation();
+    }
+
+    /**
+     * Add the first notification channel based on the email address of the user.
+     *
+     * @return void
+     */
+    private function addNotificationChannel(): void
+    {
+        (new CreateUserNotificationChannel)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'label' => trans('app.notification_channel_email'),
+            'type' => UserNotificationChannel::TYPE_EMAIL,
+            'content' => $this->user->email,
+        ]);
     }
 
     /**

@@ -17,6 +17,13 @@ class SetupAccountTest extends TestCase
 
         SetupAccount::dispatch($regis);
 
+        $this->assertDatabaseHas('user_notification_channels', [
+            'user_id' => $regis->id,
+            'label' => trans('app.notification_channel_email'),
+            'type' => 'email',
+            'content' => $regis->email,
+        ]);
+
         $this->assertDatabaseHas('templates', [
             'account_id' => $regis->account_id,
             'name' => 'Default template',

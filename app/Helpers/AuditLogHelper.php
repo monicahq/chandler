@@ -249,6 +249,10 @@ class AuditLogHelper
                 $sentence = AuditLogHelper::contactReminderDestroyed($log, $user);
                 break;
 
+            case 'user_notification_channel_created':
+                $sentence = AuditLogHelper::userNotificationChannelCreated($log, $user);
+                break;
+
             default:
                 $sentence = 'No translation';
                 break;
@@ -1152,6 +1156,16 @@ class AuditLogHelper
                 'contact_name' => $log->object->{'contact_name'},
             ]);
         }
+
+        return $sentence;
+    }
+
+    private static function userNotificationChannelCreated(AuditLog $log, User $user): string
+    {
+        $sentence = trans('log.user_notification_channel_created', [
+            'label' => $log->object->{'label'},
+            'type' => $log->object->{'type'},
+        ]);
 
         return $sentence;
     }

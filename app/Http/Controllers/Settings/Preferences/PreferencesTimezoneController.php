@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Settings\Preferences;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\User\StoreTimezone;
+use App\Services\User\Preferences\StoreTimezone;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 

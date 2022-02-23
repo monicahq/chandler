@@ -1,25 +1,25 @@
 <?php
 
-namespace Tests\Unit\Services\User;
+namespace Tests\Unit\Services\User\Preferences;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
+use App\Services\User\Preferences\StoreTimezone;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\User\StoreDateFormatPreference;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class StoreDateFormatPreferenceTest extends TestCase
+class StoreTimezoneTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_stores_the_date_format_preference(): void
+    public function it_stores_the_timezone(): void
     {
         $ross = $this->createUser();
-        $this->executeService($ross, $ross->account);
+        $this->executeService($ross, '%name%', $ross->account);
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class StoreDateFormatPreferenceTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new StoreDateFormatPreference)->execute($request);
+        (new StoreTimezone)->execute($request);
     }
 
     /** @test */
@@ -40,25 +40,25 @@ class StoreDateFormatPreferenceTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
-        $this->executeService($ross, $account);
+        $this->executeService($ross, '%user%', $account);
     }
 
-    private function executeService(User $author, Account $account): void
+    private function executeService(User $author, string $nameOrder, Account $account): void
     {
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'date_format' => 'Y',
+            'timezone' => 'UTC',
         ];
 
-        $user = (new StoreDateFormatPreference)->execute($request);
+        $user = (new StoreTimezone)->execute($request);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'account_id' => $account->id,
-            'date_format' => 'Y',
+            'timezone' => 'UTC',
         ]);
 
         $this->assertInstanceOf(
