@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
+use App\Models\User;
 use App\Models\ContactReminder;
 use App\Models\ScheduledContactReminder;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ScheduledContactReminderFactory extends Factory
