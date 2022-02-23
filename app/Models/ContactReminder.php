@@ -55,5 +55,4 @@ class ContactReminder extends Model
     {
         return $this->hasMany(ScheduledContactReminder::class);
     }
-
 }

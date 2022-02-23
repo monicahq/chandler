@@ -3,9 +3,7 @@
 namespace App\Services\Contact\ManageReminder;
 
 use Carbon\Carbon;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Models\ScheduledContactReminder;
