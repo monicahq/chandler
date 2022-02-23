@@ -11,6 +11,6 @@ body {
 }
 
 .bulleted-list li:not(:last-child):after {
-    padding-left: 4px;
-    content: '•';
+  padding-left: 4px;
+  content: '•';
 }

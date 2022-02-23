@@ -45,7 +45,6 @@
 
     <main class="relative sm:mt-20">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-
         <!-- title + cta -->
         <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0"><span class="mr-1">🛰️</span> Configure how we should notify you</h3>
@@ -68,14 +67,12 @@
           </svg>
 
           <div>
-            <p>
-              You can be notified through different channels: emails, a Telegram message, on Facebook. You decide.
-            </p>
+            <p>You can be notified through different channels: emails, a Telegram message, on Facebook. You decide.</p>
           </div>
         </div>
 
         <!-- normal mode -->
-        <div class="mb-3 items-center flex justify-between">
+        <div class="mb-3 flex items-center justify-between">
           <span>Via email</span>
 
           <pretty-button
@@ -85,16 +82,28 @@
             @click="showAddressTypeModal" />
         </div>
         <ul v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li v-for="email in localEmails" :key="email.id" class="item-list border-b border-gray-200 hover:bg-slate-50 flex items-center justify-between px-5 py-2">
+          <li
+            v-for="email in localEmails"
+            :key="email.id"
+            class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
             <div class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="mr-2 inline h-4 w-4 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
 
               <!-- email address + label -->
               <div>
-                <span class="block mb-0">{{ email.content }}</span>
-                <ul class="text-sm text-gray-500 mr-2 bulleted-list">
+                <span class="mb-0 block">{{ email.content }}</span>
+                <ul class="bulleted-list mr-2 text-sm text-gray-500">
                   <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
                   <li class="inline">Sent at 9:00pm</li>
                 </ul>
@@ -115,10 +124,7 @@
                 @click="updateAdressTypeModal(addressType)">
                 Activate
               </li>
-              <li
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
-                View log
-              </li>
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
                 Delete
               </li>
@@ -128,11 +134,20 @@
 
         <p>Via Telegram</p>
         <ul v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li class="item-list border-b border-gray-200 hover:bg-slate-50 flex items-center justify-between">
+          <li class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50">
             <span>r@c.com</span>
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
             </svg>
           </li>
         </ul>
