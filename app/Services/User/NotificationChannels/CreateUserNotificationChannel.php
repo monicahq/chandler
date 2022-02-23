@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
+use App\Jobs\SendVerificationEmailChannel;
 use App\Models\UserNotificationChannel;
 
 class CreateUserNotificationChannel extends BaseService implements ServiceInterface
@@ -52,6 +53,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
         $this->data = $data;
         $this->validate();
         $this->create();
+        $this->verifyChannel();
         $this->log();
 
         return $this->userNotificationChannel;
@@ -72,6 +74,14 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
         ]);
     }
 
+    private function verifyChannel(): void
+    {
+        if ($this->data['type'] === UserNotificationChannel::TYPE_EMAIL) {
+            // we need to verify the email address by sending a verification email
+            SendVerificationEmailChannel::dispatch($this->userNotificationChannel);
+        }
+    }
+
     private function log(): void
     {
         CreateAuditLog::dispatch([
@@ -83,6 +93,6 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
                 'label' => $this->userNotificationChannel->label,
                 'type' => $this->userNotificationChannel->type,
             ]),
-        ]);
+        ])->onQueue('low');
     }
 }

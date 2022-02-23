@@ -28,7 +28,8 @@ class UserNotificationChannel extends Model
         'label',
         'content',
         'active',
-        'verified',
+        'verified_at',
+        'email_verification_link',
     ];
 
     /**
@@ -38,7 +39,15 @@ class UserNotificationChannel extends Model
      */
     protected $casts = [
         'active' => 'boolean',
-        'verified' => 'boolean',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'verified_at',
     ];
 
     /**

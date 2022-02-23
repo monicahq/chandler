@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\User\NotificationChannels;
 
+use App\Jobs\SendVerificationEmailChannel;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
@@ -12,6 +13,8 @@ use Illuminate\Validation\ValidationException;
 use App\Services\User\Preferences\StoreDateFormatPreference;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Mail;
 
 class CreateUserNotificationChannelTest extends TestCase
 {
@@ -21,7 +24,14 @@ class CreateUserNotificationChannelTest extends TestCase
     public function it_creates_the_channel(): void
     {
         $ross = $this->createUser();
-        $this->executeService($ross, $ross->account);
+        $this->executeService($ross, $ross->account, 'slack');
+    }
+
+    /** @test */
+    public function it_creates_the_channel_with_email(): void
+    {
+        $ross = $this->createUser();
+        $this->executeService($ross, $ross->account, 'email');
     }
 
     /** @test */
@@ -42,18 +52,19 @@ class CreateUserNotificationChannelTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
-        $this->executeService($ross, $account);
+        $this->executeService($ross, $account, 'slack');
     }
 
-    private function executeService(User $author, Account $account): void
+    private function executeService(User $author, Account $account, string $channelType): void
     {
         Queue::fake();
+        Bus::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
             'label' => 'label',
-            'type' => 'email',
+            'type' => $channelType,
             'content' => 'admin@admin.com',
         ];
 
@@ -63,7 +74,7 @@ class CreateUserNotificationChannelTest extends TestCase
             'id' => $channel->id,
             'user_id' => $author->id,
             'label' => 'label',
-            'type' => 'email',
+            'type' => $channelType,
             'content' => 'admin@admin.com',
         ]);
 
@@ -71,5 +82,9 @@ class CreateUserNotificationChannelTest extends TestCase
             UserNotificationChannel::class,
             $channel
         );
+
+        if ($channelType == UserNotificationChannel::TYPE_EMAIL) {
+            Bus::assertDispatched(SendVerificationEmailChannel::class);
+        }
     }
 }

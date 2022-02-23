@@ -30,7 +30,7 @@ class UserNotificationChannelFactory extends Factory
             'label' => $this->faker->word(),
             'content' => 'admin@admin.com',
             'active' => true,
-            'verified' => true,
+            'verified_at' => null,
         ];
     }
 }

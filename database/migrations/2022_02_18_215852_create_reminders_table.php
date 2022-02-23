@@ -47,7 +47,8 @@ return new class extends Migration
             $table->string('label');
             $table->text('content');
             $table->boolean('active')->default(false);
-            $table->boolean('verified')->default(false);
+            $table->datetime('verified_at')->nullable();
+            $table->string('email_verification_link')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
