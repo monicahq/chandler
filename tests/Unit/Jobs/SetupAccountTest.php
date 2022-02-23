@@ -5,6 +5,7 @@ namespace Tests\Unit\Jobs;
 use Tests\TestCase;
 use App\Jobs\SetupAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Mail;
 
 class SetupAccountTest extends TestCase
 {
@@ -13,6 +14,7 @@ class SetupAccountTest extends TestCase
     /** @test */
     public function it_sets_an_account_up(): void
     {
+        Mail::fake();
         $regis = $this->createAdministrator();
 
         SetupAccount::dispatch($regis);
@@ -22,6 +24,7 @@ class SetupAccountTest extends TestCase
             'label' => trans('app.notification_channel_email'),
             'type' => 'email',
             'content' => $regis->email,
+            'active' => true,
         ]);
 
         $this->assertDatabaseHas('templates', [

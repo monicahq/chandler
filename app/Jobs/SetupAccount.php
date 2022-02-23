@@ -26,6 +26,7 @@ use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
+use Carbon\Carbon;
 
 class SetupAccount implements ShouldQueue
 {
@@ -82,13 +83,18 @@ class SetupAccount implements ShouldQueue
      */
     private function addNotificationChannel(): void
     {
-        (new CreateUserNotificationChannel)->execute([
+        $channel = (new CreateUserNotificationChannel)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('app.notification_channel_email'),
             'type' => UserNotificationChannel::TYPE_EMAIL,
             'content' => $this->user->email,
+            'verify_email' => false,
         ]);
+
+        $channel->verified_at = Carbon::now();
+        $channel->active = true;
+        $channel->save();
     }
 
     /**

@@ -29,6 +29,7 @@ class UserNotificationChannel extends Model
         'content',
         'active',
         'verified_at',
+        'preferred_time',
         'email_verification_link',
     ];
 

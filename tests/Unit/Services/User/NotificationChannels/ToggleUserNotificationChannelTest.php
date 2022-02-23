@@ -14,24 +14,22 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
+use App\Services\User\NotificationChannels\ToggleUserNotificationChannel;
 use Illuminate\Support\Facades\Mail;
 
-class CreateUserNotificationChannelTest extends TestCase
+class ToggleUserNotificationChannelTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_the_channel(): void
+    public function it_toggles_the_channel(): void
     {
         $ross = $this->createUser();
-        $this->executeService($ross, $ross->account, 'slack');
-    }
-
-    /** @test */
-    public function it_creates_the_channel_with_email(): void
-    {
-        $ross = $this->createUser();
-        $this->executeService($ross, $ross->account, 'email');
+        $channel = UserNotificationChannel::factory()->create([
+            'user_id' => $ross->id,
+            'active' => false,
+        ]);
+        $this->executeService($ross, $channel);
     }
 
     /** @test */
@@ -42,42 +40,37 @@ class CreateUserNotificationChannelTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateUserNotificationChannel)->execute($request);
+        (new ToggleUserNotificationChannel)->execute($request);
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_belong_to_account(): void
+    public function it_fails_if_notification_channel_doesnt_belong_to_user(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $account = $this->createAccount();
-        $this->executeService($ross, $account, 'slack');
+        $channel = UserNotificationChannel::factory()->create([
+            'active' => false,
+        ]);
+        $this->executeService($ross, $channel);
     }
 
-    private function executeService(User $author, Account $account, string $channelType): void
+    private function executeService(User $author, UserNotificationChannel $channel): void
     {
         Queue::fake();
-        Bus::fake();
-        Mail::fake();
 
         $request = [
-            'account_id' => $account->id,
+            'account_id' => $author->account_id,
             'author_id' => $author->id,
-            'label' => 'label',
-            'type' => $channelType,
-            'content' => 'admin@admin.com',
-            'verify_email' => true,
+            'user_notification_channel_id' => $channel->id,
         ];
 
-        $channel = (new CreateUserNotificationChannel)->execute($request);
+        $channel = (new ToggleUserNotificationChannel)->execute($request);
 
         $this->assertDatabaseHas('user_notification_channels', [
             'id' => $channel->id,
             'user_id' => $author->id,
-            'label' => 'label',
-            'type' => $channelType,
-            'content' => 'admin@admin.com',
+            'active' => true,
         ]);
 
         $this->assertInstanceOf(
@@ -85,8 +78,8 @@ class CreateUserNotificationChannelTest extends TestCase
             $channel
         );
 
-        if ($channelType == UserNotificationChannel::TYPE_EMAIL) {
-            Bus::assertDispatched(SendVerificationEmailChannel::class);
-        }
+        Queue::assertPushed(CreateAuditLog::class, function ($job) {
+            return $job->auditLog['action_name'] === 'user_notification_channel_toggled';
+        });
     }
 }

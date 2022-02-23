@@ -25,6 +25,12 @@
                 User preferences
               </inertia-link>
             </li>
+            <li>
+              <span class="mr-2">📡</span>
+              <inertia-link :href="data.url.notifications.index" class="text-sky-500 hover:text-blue-900">
+                Notification channels
+              </inertia-link>
+            </li>
           </ul>
         </div>
 

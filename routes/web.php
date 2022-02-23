@@ -7,6 +7,7 @@ use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Vault\Contact\ContactController;
 use App\Http\Controllers\Vault\Search\VaultSearchController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsUserController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsLabelController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
+use App\Http\Controllers\Settings\Notifications\NotificationsController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
@@ -139,6 +141,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('name', [PreferencesNameOrderController::class, 'store'])->name('name.store');
             Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
             Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
+        });
+
+        // notifications
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::get('', [NotificationsController::class, 'index'])->name('index');
+            Route::post('', [NotificationsController::class, 'store'])->name('store');
+            Route::post('date', [NotificationsController::class, 'store'])->name('date.store');
+            Route::post('timezone', [NotificationsController::class, 'store'])->name('timezone.store');
         });
 
         // only for administrators

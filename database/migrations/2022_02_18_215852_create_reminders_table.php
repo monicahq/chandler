@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('label');
             $table->text('content');
+            $table->time('preferred_time')->nullable();
             $table->boolean('active')->default(false);
             $table->datetime('verified_at')->nullable();
             $table->string('email_verification_link')->nullable();

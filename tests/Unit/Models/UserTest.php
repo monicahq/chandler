@@ -5,6 +5,7 @@ namespace Tests\Unit\Models;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\User;
+use App\Models\UserNotificationChannel;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -42,6 +43,17 @@ class UserTest extends TestCase
         ]);
 
         $this->assertTrue($regis->notes()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_notification_channels(): void
+    {
+        $regis = User::factory()->create();
+        UserNotificationChannel::factory()->count(2)->create([
+            'user_id' => $regis->id,
+        ]);
+
+        $this->assertTrue($regis->notificationChannels()->exists());
     }
 
     /** @test */

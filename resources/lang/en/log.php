@@ -113,4 +113,5 @@ return [
     // users
     'user_invited' => 'Invited :user_email to the account',
     'user_notification_channel_created' => 'Added a new notification channel called :label of the type :type',
+    'user_notification_channel_toggled' => 'Toggled the notification channel called :label of the type :type',
 ];
