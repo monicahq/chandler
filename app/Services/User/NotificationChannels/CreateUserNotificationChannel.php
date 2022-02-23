@@ -3,11 +3,11 @@
 namespace App\Services\User\NotificationChannels;
 
 use App\Models\User;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\SendVerificationEmailChannel;
 use App\Models\UserNotificationChannel;
+use App\Jobs\SendVerificationEmailChannel;
 
 class CreateUserNotificationChannel extends BaseService implements ServiceInterface
 {

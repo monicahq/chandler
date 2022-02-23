@@ -8,10 +8,10 @@ use App\Models\Emotion;
 use App\Models\Template;
 use App\Models\Information;
 use App\Models\TemplatePage;
-use App\Models\UserNotificationChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\SerializesModels;
+use App\Models\UserNotificationChannel;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,9 +23,9 @@ use App\Services\Account\ManageTemplate\CreateTemplatePage;
 use App\Services\Account\ManageAddressTypes\CreateAddressType;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
+use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 
 class SetupAccount implements ShouldQueue
 {

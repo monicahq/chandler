@@ -3,8 +3,6 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\ContactReminder;
-use App\Models\ScheduledContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

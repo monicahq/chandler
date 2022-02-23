@@ -2,16 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Mail\UserNotificationChannelEmailCreated;
-use App\Models\User;
-use App\Models\UserNotificationChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use App\Models\UserNotificationChannel;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\UserNotificationChannelEmailCreated;
 
 class SendVerificationEmailChannel implements ShouldQueue
 {
@@ -22,7 +20,7 @@ class SendVerificationEmailChannel implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param UserNotificationChannel $channel
+     * @param  UserNotificationChannel  $channel
      * @return void
      */
     public function __construct(UserNotificationChannel $channel)
@@ -37,7 +35,7 @@ class SendVerificationEmailChannel implements ShouldQueue
      */
     public function handle()
     {
-        if ($this->channel->type !==  UserNotificationChannel::TYPE_EMAIL) {
+        if ($this->channel->type !== UserNotificationChannel::TYPE_EMAIL) {
             return;
         }
 

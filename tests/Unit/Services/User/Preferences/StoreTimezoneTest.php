@@ -5,9 +5,9 @@ namespace Tests\Unit\Services\User\Preferences;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
-use App\Services\User\Preferences\StoreTimezone;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
+use App\Services\User\Preferences\StoreTimezone;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

@@ -3,14 +3,11 @@
 namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Contact;
-use App\Jobs\CreateContactLog;
+use Illuminate\Support\Facades\Mail;
+use App\Models\UserNotificationChannel;
 use App\Jobs\SendVerificationEmailChannel;
 use App\Mail\UserNotificationChannelEmailCreated;
-use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Mail;
 
 class SendVerificationEmailChannelTest extends TestCase
 {
@@ -27,7 +24,7 @@ class SendVerificationEmailChannelTest extends TestCase
         ]);
         SendVerificationEmailChannel::dispatch($channel);
 
-        Mail::assertSent(UserNotificationChannelEmailCreated::class, function ($mail) use ($channel) {
+        Mail::assertSent(UserNotificationChannelEmailCreated::class, function ($mail) {
             return $mail->hasTo('admin@admin.com');
         });
     }

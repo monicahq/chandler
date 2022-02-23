@@ -2,19 +2,17 @@
 
 namespace Tests\Unit\Services\User\NotificationChannels;
 
-use App\Jobs\SendVerificationEmailChannel;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
-use App\Models\UserNotificationChannel;
-use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
+use App\Models\UserNotificationChannel;
+use App\Jobs\SendVerificationEmailChannel;
 use Illuminate\Validation\ValidationException;
-use App\Services\User\Preferences\StoreDateFormatPreference;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Mail;
+use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 
 class CreateUserNotificationChannelTest extends TestCase
 {
