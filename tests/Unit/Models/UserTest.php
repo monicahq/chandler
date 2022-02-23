@@ -5,8 +5,8 @@ namespace Tests\Unit\Models;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\User;
-use App\Models\UserNotificationChannel;
 use App\Models\Vault;
+use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase

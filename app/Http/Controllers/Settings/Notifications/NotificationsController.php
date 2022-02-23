@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Settings\Notifications;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
+use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsController extends Controller
 {

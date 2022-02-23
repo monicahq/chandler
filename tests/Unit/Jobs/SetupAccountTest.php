@@ -4,8 +4,8 @@ namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
 use App\Jobs\SetupAccount;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SetupAccountTest extends TestCase
 {

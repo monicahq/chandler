@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\Settings\Notifications\ViewHelpers;
 
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Contact;
-use App\Helpers\NameHelper;
 use App\Models\UserNotificationChannel;
 
 class NotificationsIndexViewHelper

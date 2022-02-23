@@ -7,7 +7,6 @@ use App\Http\Controllers\Vault\VaultController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Vault\Contact\ContactController;
 use App\Http\Controllers\Vault\Search\VaultSearchController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsController;

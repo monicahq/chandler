@@ -3,14 +3,11 @@
 namespace Tests\Unit\Controllers\Settings\Notifications\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use App\Models\UserNotificationChannel;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsIndexViewHelperTest extends TestCase
 {
@@ -36,8 +33,8 @@ class NotificationsIndexViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'back' => env('APP_URL') . '/settings',
+                'settings' => env('APP_URL').'/settings',
+                'back' => env('APP_URL').'/settings',
             ],
             $array['url']
         );
@@ -64,7 +61,7 @@ class NotificationsIndexViewHelperTest extends TestCase
                 'active' => $channel->active,
                 'verified_at' => '2020-01-01 00:00:00',
                 'url' => [
-                    'store' => env('APP_URL') . '/settings/notifications',
+                    'store' => env('APP_URL').'/settings/notifications',
                 ],
             ],
             $array

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Module;
 use App\Models\Emotion;
@@ -26,7 +27,6 @@ use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use Carbon\Carbon;
 
 class SetupAccount implements ShouldQueue
 {

@@ -7,7 +7,6 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
-use App\Jobs\SendVerificationEmailChannel;
 
 class ToggleUserNotificationChannel extends BaseService implements ServiceInterface
 {
@@ -65,7 +64,7 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
 
     private function toggle(): void
     {
-        $this->userNotificationChannel->active = !$this->userNotificationChannel->active;
+        $this->userNotificationChannel->active = ! $this->userNotificationChannel->active;
         $this->userNotificationChannel->save();
     }
 
