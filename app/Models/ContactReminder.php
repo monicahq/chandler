@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -36,7 +37,7 @@ class ContactReminder extends Model
     ];
 
     /**
-     * Get the contact associated with the contact date.
+     * Get the contact associated with the contact reminder.
      *
      * @return BelongsTo
      */
@@ -44,4 +45,15 @@ class ContactReminder extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    /**
+     * Get the scheduled reminders associated with the contact reminder.
+     *
+     * @return HasMany
+     */
+    public function scheduledContactReminders()
+    {
+        return $this->hasMany(ScheduledContactReminder::class);
+    }
+
 }
