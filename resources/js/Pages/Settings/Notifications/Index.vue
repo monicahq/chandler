@@ -133,11 +133,7 @@
               </li>
 
               <!-- text saying that the email has been sent -->
-              <li
-                v-if="testEmailSentId == email.id"
-                class="mr-4 inline">
-                Test email sent!
-              </li>
+              <li v-if="testEmailSentId == email.id" class="mr-4 inline">Test email sent!</li>
 
               <!-- view log -->
               <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
