@@ -24,6 +24,7 @@ class NotificationsIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
+                'store' => route('settings.notifications.store'),
             ],
         ];
     }
@@ -39,7 +40,10 @@ class NotificationsIndexViewHelper
             'verified_at' => $channel->verified_at ? $channel->verified_at->format('Y-m-d H:i:s') : null,
             'url' => [
                 'store' => route('settings.notifications.store'),
-                'test' => route('settings.notifications.test.store', [
+                'send_test' => route('settings.notifications.test.store', [
+                    'notification' => $channel->id,
+                ]),
+                'toggle' => route('settings.notifications.toggle.update', [
                     'notification' => $channel->id,
                 ]),
             ],

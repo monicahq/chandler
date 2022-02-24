@@ -257,6 +257,10 @@ class AuditLogHelper
                 $sentence = AuditLogHelper::userNotificationChannelToggled($log, $user);
                 break;
 
+            case 'user_notification_channel_verified':
+                $sentence = AuditLogHelper::userNotificationChannelVerified($log, $user);
+                break;
+
             default:
                 $sentence = 'No translation';
                 break;
@@ -1177,6 +1181,16 @@ class AuditLogHelper
     private static function userNotificationChannelToggled(AuditLog $log, User $user): string
     {
         $sentence = trans('log.user_notification_channel_toggled', [
+            'label' => $log->object->{'label'},
+            'type' => $log->object->{'type'},
+        ]);
+
+        return $sentence;
+    }
+
+    private static function userNotificationChannelVerified(AuditLog $log, User $user): string
+    {
+        $sentence = trans('log.user_notification_channel_verified', [
             'label' => $log->object->{'label'},
             'type' => $log->object->{'type'},
         ]);

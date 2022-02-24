@@ -20,6 +20,8 @@ use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Notifications\NotificationsController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
+use App\Http\Controllers\Settings\Notifications\NotificationsToggleController;
+use App\Http\Controllers\Settings\Notifications\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
 use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
@@ -147,7 +149,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('', [NotificationsController::class, 'index'])->name('index');
             Route::post('', [NotificationsController::class, 'store'])->name('store');
+            Route::get('{notification}/verify/{uuid}', [NotificationsVerificationController::class, 'store'])->name('verification.store');
             Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
+            Route::put('{notification}/toggle', [NotificationsToggleController::class, 'update'])->name('toggle.update');
         });
 
         // only for administrators

@@ -35,6 +35,7 @@ class NotificationsIndexViewHelperTest extends TestCase
             [
                 'settings' => env('APP_URL').'/settings',
                 'back' => env('APP_URL').'/settings',
+                'store' => env('APP_URL').'/settings/notifications',
             ],
             $array['url']
         );
@@ -62,7 +63,8 @@ class NotificationsIndexViewHelperTest extends TestCase
                 'verified_at' => '2020-01-01 00:00:00',
                 'url' => [
                     'store' => env('APP_URL').'/settings/notifications',
-                    'test' => env('APP_URL').'/settings/notifications/'.$channel->id.'/test',
+                    'send_test' => env('APP_URL').'/settings/notifications/'.$channel->id.'/test',
+                    'toggle' => env('APP_URL').'/settings/notifications/'.$channel->id.'/toggle',
                 ],
             ],
             $array

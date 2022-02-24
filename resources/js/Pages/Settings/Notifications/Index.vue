@@ -1,19 +1,4 @@
 <style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
 </style>
 
 <template>
@@ -70,81 +55,8 @@
           </div>
         </div>
 
-        <!-- normal mode -->
-        <div class="mb-3 flex items-center justify-between">
-          <span>Via email</span>
-
-          <pretty-button
-            v-if="!createAddressTypeModalShown"
-            :text="'Add an email'"
-            :icon="'plus'"
-            @click="showAddressTypeModal" />
-        </div>
-        <ul v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li
-            v-for="email in localEmails"
-            :key="email.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="mr-2 inline h-4 w-4 text-green-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-
-              <!-- email address + label -->
-              <div>
-                <span class="mb-0 block">{{ email.content }}</span>
-                <ul class="bulleted-list mr-2 text-sm text-gray-500">
-                  <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
-                  <li class="inline">Sent at 9:00pm</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- actions -->
-            <ul class="text-sm">
-              <li
-                v-if="email.active"
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="updateAdressTypeModal(addressType)">
-                Deactivate
-              </li>
-              <li
-                v-if="!email.active"
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="updateAdressTypeModal(addressType)">
-                Activate
-              </li>
-
-              <!-- link to send a test email, if not already sent -->
-              <li
-                v-if="testEmailSentId != email.id"
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="sendTest(email)">
-                Send test
-              </li>
-
-              <!-- text saying that the email has been sent -->
-              <li v-if="testEmailSentId == email.id" class="mr-4 inline">Test email sent!</li>
-
-              <!-- view log -->
-              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
-
-              <!-- delete email -->
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-                Delete
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <!-- Email notifications -->
+        <emails :data="data" />
       </div>
     </main>
   </layout>
@@ -156,6 +68,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import Errors from '@/Shared/Form/Errors';
+import Emails from '@/Pages/Settings/Notifications/Partials/Emails';
 
 export default {
   components: {
@@ -164,6 +77,7 @@ export default {
     PrettySpan,
     TextInput,
     Errors,
+    Emails,
   },
 
   props: {

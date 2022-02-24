@@ -1744,4 +1744,23 @@ class AuditLogHelperTest extends TestCase
             $sentence
         );
     }
+
+    /** @test */
+    public function user_notification_channel_verified(): void
+    {
+        $log = AuditLog::factory()->create([
+            'action_name' => 'user_notification_channel_verified',
+            'objects' => json_encode([
+                'label' => 'mon email',
+                'type' => 'email',
+            ]),
+        ]);
+
+        $loggedUser = User::factory()->create();
+        $sentence = AuditLogHelper::process($log, $loggedUser);
+        $this->assertEquals(
+            'Verified the notification channel called mon email of the type email',
+            $sentence
+        );
+    }
 }

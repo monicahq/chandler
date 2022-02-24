@@ -2,6 +2,8 @@
 
 namespace App\Services\User\NotificationChannels;
 
+use Illuminate\Support\Str;
+use App\Exceptions\EmailAlreadyExistException;
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
@@ -63,6 +65,13 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
     private function validate(): void
     {
         $this->validateRules($this->data);
+
+        $exists = UserNotificationChannel::where('content', $this->data['content'])
+            ->exists();
+
+        if ($exists) {
+            throw new EmailAlreadyExistException('The email is already taken. Please choose another one.');
+        }
     }
 
     private function create(): void
@@ -73,6 +82,16 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
             'type' => $this->data['type'],
             'content' => $this->data['content'],
         ]);
+
+        if ($this->data['verify_email']) {
+            $uuid = Str::uuid();
+
+            $this->userNotificationChannel->email_verification_link = route('settings.notifications.verification.store', [
+                'notification' => $this->userNotificationChannel->id,
+                'uuid' => $uuid,
+            ]);
+            $this->userNotificationChannel->save();
+        }
     }
 
     private function verifyChannel(): void

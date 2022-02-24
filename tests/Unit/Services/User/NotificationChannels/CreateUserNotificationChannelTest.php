@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\User\NotificationChannels;
 
+use App\Exceptions\EmailAlreadyExistException;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use App\Models\UserNotificationChannel;
 use App\Jobs\SendVerificationEmailChannel;
+use App\Models\UserNotificationSent;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -52,6 +54,18 @@ class CreateUserNotificationChannelTest extends TestCase
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
         $this->executeService($ross, $account, 'slack');
+    }
+
+    /** @test */
+    public function it_fails_if_email_already_exists_in_the_account(): void
+    {
+        $this->expectException(EmailAlreadyExistException::class);
+
+        $ross = $this->createAdministrator();
+        UserNotificationChannel::factory()->create([
+            'content' => 'admin@admin.com',
+        ]);
+        $this->executeService($ross, $ross->account, 'email');
     }
 
     private function executeService(User $author, Account $account, string $channelType): void
