@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -59,5 +60,16 @@ class UserNotificationChannel extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the user notification sent records associated with the user
+     * notification channel.
+     *
+     * @return HasMany
+     */
+    public function userNotificationSent()
+    {
+        return $this->hasMany(UserNotificationSent::class);
     }
 }

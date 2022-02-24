@@ -39,6 +39,9 @@ class NotificationsIndexViewHelper
             'verified_at' => $channel->verified_at ? $channel->verified_at->format('Y-m-d H:i:s') : null,
             'url' => [
                 'store' => route('settings.notifications.store'),
+                'test' => route('settings.notifications.test.store', [
+                    'notification' => $channel->id,
+                ]),
             ],
         ];
     }

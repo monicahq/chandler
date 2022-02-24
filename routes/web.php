@@ -18,6 +18,7 @@ use App\Http\Controllers\Vault\Settings\VaultSettingsUserController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsLabelController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Notifications\NotificationsController;
+use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
@@ -146,8 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('', [NotificationsController::class, 'index'])->name('index');
             Route::post('', [NotificationsController::class, 'store'])->name('store');
-            Route::post('date', [NotificationsController::class, 'store'])->name('date.store');
-            Route::post('timezone', [NotificationsController::class, 'store'])->name('timezone.store');
+            Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
         });
 
         // only for administrators

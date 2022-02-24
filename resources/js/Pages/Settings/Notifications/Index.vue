@@ -46,9 +46,8 @@
     <main class="relative sm:mt-20">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
-        <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
+        <div class="mb-3 mt-8 sm:mt-0">
           <h3 class="mb-4 sm:mb-0"><span class="mr-1">🛰️</span> Configure how we should notify you</h3>
-          <pretty-button v-if="!editMode" :text="'Edit'" @click="enableEditMode" />
         </div>
 
         <!-- help text -->
@@ -124,31 +123,30 @@
                 @click="updateAdressTypeModal(addressType)">
                 Activate
               </li>
+
+              <!-- link to send a test email, if not already sent -->
+              <li
+                v-if="testEmailSentId != email.id"
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+                @click="sendTest(email)">
+                Send test
+              </li>
+
+              <!-- text saying that the email has been sent -->
+              <li
+                v-if="testEmailSentId == email.id"
+                class="mr-4 inline">
+                Test email sent!
+              </li>
+
+              <!-- view log -->
               <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
+
+              <!-- delete email -->
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
                 Delete
               </li>
             </ul>
-          </li>
-        </ul>
-
-        <p>Via Telegram</p>
-        <ul v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50">
-            <span>r@c.com</span>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
           </li>
         </ul>
       </div>
@@ -187,6 +185,7 @@ export default {
     return {
       loadingState: '',
       localEmails: [],
+      testEmailSentId: 0,
       form: {
         name: '',
         errors: [],
@@ -196,6 +195,75 @@ export default {
 
   mounted() {
     this.localEmails = this.data.emails;
+  },
+
+  methods: {
+    showAddressTypeModal() {
+      this.form.name = '';
+      this.createAddressTypeModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.newAddressType.focus();
+      });
+    },
+
+    updateAdressTypeModal(addressType) {
+      this.form.name = addressType.name;
+      this.renameAddressTypeModalShownId = addressType.id;
+
+      this.$nextTick(() => {
+        this.$refs[`rename${addressType.id}`].focus();
+      });
+    },
+
+    sendTest(channel) {
+      axios
+        .post(channel.url.test)
+        .then((response) => {
+          this.flash('The test email has been sent', 'success');
+          this.testEmailSentId = channel.id;
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
+
+    update(addressType) {
+      this.loadingState = 'loading';
+
+      axios
+        .put(addressType.url.update, this.form)
+        .then((response) => {
+          this.flash('The address type has been updated', 'success');
+          this.localAddressTypes[this.localAddressTypes.findIndex((x) => x.id === addressType.id)] = response.data.data;
+          this.loadingState = null;
+          this.renameAddressTypeModalShownId = 0;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroy(addressType) {
+      if (
+        confirm(
+          "Are you sure? This will remove the address types from all contacts, but won't delete the contacts themselves.",
+        )
+      ) {
+        axios
+          .delete(addressType.url.destroy)
+          .then((response) => {
+            this.flash('The address type has been deleted', 'success');
+            var id = this.localAddressTypes.findIndex((x) => x.id === addressType.id);
+            this.localAddressTypes.splice(id, 1);
+          })
+          .catch((error) => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+      }
+    },
   },
 };
 </script>

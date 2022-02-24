@@ -6,9 +6,14 @@ use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
+use App\Mail\TestEmailSent;
 use App\Models\UserNotificationChannel;
+use App\Models\UserNotificationSent;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Mail;
 
-class ToggleUserNotificationChannel extends BaseService implements ServiceInterface
+class SendTestEmail extends BaseService implements ServiceInterface
 {
     private array $data;
     private UserNotificationChannel $userNotificationChannel;
@@ -40,7 +45,7 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
     }
 
     /**
-     * Mark the given user notification channel active or inactive.
+     * Send a test email.
      *
      * @param  array  $data
      * @return UserNotificationChannel
@@ -49,7 +54,7 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
     {
         $this->data = $data;
         $this->validate();
-        $this->toggle();
+        $this->send();
         $this->log();
 
         return $this->userNotificationChannel;
@@ -58,27 +63,28 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
     private function validate(): void
     {
         $this->validateRules($this->data);
+
         $this->userNotificationChannel = UserNotificationChannel::where('user_id', $this->data['author_id'])
             ->findOrFail($this->data['user_notification_channel_id']);
+
+        if ($this->userNotificationChannel->type !== UserNotificationChannel::TYPE_EMAIL) {
+            throw new Exception('Only email can be sent.');
+        }
     }
 
-    private function toggle(): void
+    private function send(): void
     {
-        $this->userNotificationChannel->active = ! $this->userNotificationChannel->active;
-        $this->userNotificationChannel->save();
+        Mail::to($this->userNotificationChannel->content)->send(
+            new TestEmailSent($this->userNotificationChannel)
+        );
     }
 
     private function log(): void
     {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'user_notification_channel_toggled',
-            'objects' => json_encode([
-                'label' => $this->userNotificationChannel->label,
-                'type' => $this->userNotificationChannel->type,
-            ]),
-        ])->onQueue('low');
+        UserNotificationSent::create([
+            'user_notification_channel_id' => $this->userNotificationChannel->id,
+            'sent_at' => Carbon::now(),
+            'subject_line' => trans('email.notification_test_email'),
+        ]);
     }
 }
