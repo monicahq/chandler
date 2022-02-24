@@ -149,9 +149,7 @@
 
     <!-- blank state -->
     <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">
-        Add an email to be notified when a reminder occurs.
-      </p>
+      <p class="p-5 text-center">Add an email to be notified when a reminder occurs.</p>
     </div>
   </div>
 </template>
@@ -265,11 +263,7 @@ export default {
     },
 
     destroy(channel) {
-      if (
-        confirm(
-          "Are you sure? You can always add the email back later on if you want.",
-        )
-      ) {
+      if (confirm('Are you sure? You can always add the email back later on if you want.')) {
         axios
           .delete(channel.url.destroy)
           .then((response) => {
