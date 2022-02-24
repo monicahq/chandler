@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\UserNotificationChannel;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 use App\Services\User\NotificationChannels\DestroyUserNotificationChannel;
+use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsController extends Controller
 {
