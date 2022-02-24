@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Settings\Notifications\Logs\ViewHelpers;
 
-use App\Helpers\DateHelper;
 use App\Models\User;
+use App\Helpers\DateHelper;
 use App\Models\UserNotificationChannel;
 
 class NotificationsLogIndexViewHelper
@@ -23,7 +23,7 @@ class NotificationsLogIndexViewHelper
         return [
             'channel' => [
                 'id' => $channel->id,
-                'type' => trans('app.notification_channel_type_'. $channel->type),
+                'type' => trans('app.notification_channel_type_'.$channel->type),
                 'label' => $channel->label,
             ],
             'notifications' => $notificationsCollection,
