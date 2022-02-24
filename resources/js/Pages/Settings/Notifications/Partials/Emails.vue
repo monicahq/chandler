@@ -211,7 +211,7 @@ select {
             <span class="mb-0 block">{{ email.content }}</span>
             <ul class="bulleted-list mr-2 text-sm text-gray-500">
               <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
-              <li class="inline">Sent at 9:00pm</li>
+              <li class="inline">Sent at {{ email.preferred_time }}</li>
             </ul>
           </div>
         </div>
