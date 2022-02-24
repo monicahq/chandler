@@ -3,8 +3,8 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
+use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserNotificationChannelTest extends TestCase

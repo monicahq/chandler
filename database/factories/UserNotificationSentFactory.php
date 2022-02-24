@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
-use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
+use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserNotificationSentFactory extends Factory
