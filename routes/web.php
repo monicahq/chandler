@@ -18,6 +18,7 @@ use App\Http\Controllers\Vault\Settings\VaultSettingsUserController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsLabelController;
 use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Notifications\NotificationsController;
+use App\Http\Controllers\Settings\Notifications\NotificationsLogController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
@@ -153,6 +154,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
             Route::put('{notification}/toggle', [NotificationsToggleController::class, 'update'])->name('toggle.update');
             Route::delete('{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
+
+            // notification logs
+            Route::get('{notification}/logs', [NotificationsLogController::class, 'index'])->name('log.index');
         });
 
         // only for administrators
