@@ -24,7 +24,7 @@ class NotificationsController extends Controller
 
     public function store(Request $request)
     {
-        $time = $request->input('hours') . ':' . $request->input('minutes');
+        $time = $request->input('hours').':'.$request->input('minutes');
 
         $data = [
             'account_id' => Auth::user()->account_id,
