@@ -91,7 +91,6 @@ class CreateUserNotificationChannelTest extends TestCase
             'label' => 'label',
             'type' => $channelType,
             'content' => 'admin@admin.com',
-            'preferred_time' => '09:00',
         ]);
 
         $this->assertInstanceOf(
