@@ -85,6 +85,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
             'preferred_time' => $this->data['preferred_time'],
         ]);
 
+        // add a verification link if the channel is email
         if ($this->data['verify_email']) {
             $uuid = Str::uuid();
 
@@ -100,7 +101,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
     {
         if ($this->data['type'] === UserNotificationChannel::TYPE_EMAIL && $this->data['verify_email']) {
             // we need to verify the email address by sending a verification email
-            SendVerificationEmailChannel::dispatch($this->userNotificationChannel);
+            SendVerificationEmailChannel::dispatch($this->userNotificationChannel)->onQueue('high');
         }
     }
 
