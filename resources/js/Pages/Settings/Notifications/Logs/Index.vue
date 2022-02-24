@@ -37,8 +37,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline mr-2">
-              <inertia-link :href="data.url.channels" class="text-sky-500 hover:text-blue-900"> Notification channels </inertia-link>
+            <li class="mr-2 inline">
+              <inertia-link :href="data.url.channels" class="text-sky-500 hover:text-blue-900">
+                Notification channels
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -50,9 +52,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">
-              Log details
-            </li>
+            <li class="inline">Log details</li>
           </ul>
         </div>
       </div>
@@ -62,9 +62,9 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-3 mt-8 sm:mt-0">
-          <h3 class="mb-4 sm:mb-0 text-center">History of the notification sent</h3>
+          <h3 class="mb-4 text-center sm:mb-0">History of the notification sent</h3>
           <ul class="bulleted-list text-center">
-            <li class="inline mr-2"><span class="text-gray-500">Type:</span> {{ data.channel.type }}</li>
+            <li class="mr-2 inline"><span class="text-gray-500">Type:</span> {{ data.channel.type }}</li>
             <li class="inline"><span class="text-gray-500">Label:</span> {{ data.channel.label }}</li>
           </ul>
         </div>
@@ -85,7 +85,10 @@
           </svg>
 
           <div>
-            <p>This page shows all the notifications that have been sent in this channel in the past. It primeraly serves as a way to debug in case you don't receive the notification you've set up.</p>
+            <p>
+              This page shows all the notifications that have been sent in this channel in the past. It primeraly serves
+              as a way to debug in case you don't receive the notification you've set up.
+            </p>
           </div>
         </div>
 
@@ -94,8 +97,7 @@
             v-for="notification in data.notifications"
             :key="notification.id"
             class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-
-            <span class="mr-2 text-gray-500 text-sm">{{ notification.sent_at }}</span>
+            <span class="mr-2 text-sm text-gray-500">{{ notification.sent_at }}</span>
             <span>{{ notification.subject_line }}</span>
           </li>
         </ul>
