@@ -152,6 +152,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('{notification}/verify/{uuid}', [NotificationsVerificationController::class, 'store'])->name('verification.store');
             Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
             Route::put('{notification}/toggle', [NotificationsToggleController::class, 'update'])->name('toggle.update');
+            Route::delete('{notification}', [NotificationsController::class, 'destroy'])->name('destroy');
         });
 
         // only for administrators

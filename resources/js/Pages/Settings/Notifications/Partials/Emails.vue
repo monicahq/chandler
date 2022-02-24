@@ -71,7 +71,7 @@
     </form>
 
     <!-- list of emails -->
-    <ul class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <ul v-if="localEmails.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <li
         v-for="email in localEmails"
         :key="email.id"
@@ -133,7 +133,7 @@
           <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
 
           <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
+          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">Delete</li>
         </ul>
 
         <!-- actions when the email has NOT been verified -->
@@ -142,10 +142,17 @@
           <li class="mr-4 inline">Verification email sent</li>
 
           <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
+          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">Delete</li>
         </ul>
       </li>
     </ul>
+
+    <!-- blank state -->
+    <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">
+        Add an email to be notified when a reminder occurs.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -201,7 +208,7 @@ export default {
 
     sendTest(channel) {
       axios
-        .post(channel.url.test)
+        .post(channel.url.send_test)
         .then((response) => {
           this.flash('The test email has been sent', 'success');
           this.testEmailSentId = channel.id;
@@ -257,18 +264,18 @@ export default {
         });
     },
 
-    destroy(addressType) {
+    destroy(channel) {
       if (
         confirm(
-          "Are you sure? This will remove the address types from all contacts, but won't delete the contacts themselves.",
+          "Are you sure? You can always add the email back later on if you want.",
         )
       ) {
         axios
-          .delete(addressType.url.destroy)
+          .delete(channel.url.destroy)
           .then((response) => {
-            this.flash('The address type has been deleted', 'success');
-            var id = this.localAddressTypes.findIndex((x) => x.id === addressType.id);
-            this.localAddressTypes.splice(id, 1);
+            this.flash('The email address has been deleted', 'success');
+            var id = this.localEmails.findIndex((x) => x.id === channel.id);
+            this.localEmails.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;

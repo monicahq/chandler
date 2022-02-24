@@ -115,4 +115,5 @@ return [
     'user_notification_channel_created' => 'Added a new notification channel called :label of the type :type',
     'user_notification_channel_toggled' => 'Toggled the notification channel called :label of the type :type',
     'user_notification_channel_verified' => 'Verified the notification channel called :label of the type :type',
+    'user_notification_channel_destroyed' => 'Deleted the notification channel called :label of the type :type',
 ];

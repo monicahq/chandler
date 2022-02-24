@@ -10,6 +10,7 @@ use App\Models\UserNotificationChannel;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
 use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
+use App\Services\User\NotificationChannels\DestroyUserNotificationChannel;
 
 class NotificationsController extends Controller
 {
@@ -36,6 +37,21 @@ class NotificationsController extends Controller
 
         return response()->json([
             'data' => NotificationsIndexViewHelper::dtoEmail($channel, Auth::user()),
+        ], 200);
+    }
+
+    public function destroy(Request $request, int $channelId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'user_notification_channel_id' => $channelId,
+        ];
+
+        (new DestroyUserNotificationChannel)->execute($data);
+
+        return response()->json([
+            'data' => true,
         ], 200);
     }
 }

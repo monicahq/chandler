@@ -261,6 +261,10 @@ class AuditLogHelper
                 $sentence = AuditLogHelper::userNotificationChannelVerified($log, $user);
                 break;
 
+            case 'user_notification_channel_destroyed':
+                $sentence = AuditLogHelper::userNotificationChannelDestroyed($log, $user);
+                break;
+
             default:
                 $sentence = 'No translation';
                 break;
@@ -1191,6 +1195,16 @@ class AuditLogHelper
     private static function userNotificationChannelVerified(AuditLog $log, User $user): string
     {
         $sentence = trans('log.user_notification_channel_verified', [
+            'label' => $log->object->{'label'},
+            'type' => $log->object->{'type'},
+        ]);
+
+        return $sentence;
+    }
+
+    private static function userNotificationChannelDestroyed(AuditLog $log, User $user): string
+    {
+        $sentence = trans('log.user_notification_channel_destroyed', [
             'label' => $log->object->{'label'},
             'type' => $log->object->{'type'},
         ]);
