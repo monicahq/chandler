@@ -21,17 +21,13 @@
     <div class="mb-3 flex items-center justify-between">
       <span>Via email</span>
 
-      <pretty-button
-        v-if="!addEmailModalShown"
-        :text="'Add an email'"
-        :icon="'plus'"
-        @click="showAddEmailModal" />
+      <pretty-button v-if="!addEmailModalShown" :text="'Add an email'" :icon="'plus'" @click="showAddEmailModal" />
     </div>
 
     <!-- add modal -->
     <form
       v-if="addEmailModalShown"
-      class="item-list border-b border-gray-200 hover:bg-slate-50 mb-6 rounded-lg border bg-white"
+      class="item-list mb-6 rounded-lg border border-b border-gray-200 bg-white hover:bg-slate-50"
       @submit.prevent="store()">
       <div class="border-b border-gray-200 p-5">
         <errors :errors="form.errors" />
@@ -62,7 +58,10 @@
       </div>
 
       <div class="border-b border-gray-200 p-5">
-        <p><span class="mr-1">⚠️</span> We'll send an email to this email address that you will need to confirm before we can send notifications to this address.</p>
+        <p>
+          <span class="mr-1">⚠️</span> We'll send an email to this email address that you will need to confirm before we
+          can send notifications to this address.
+        </p>
       </div>
 
       <div class="flex justify-between p-5">
@@ -105,7 +104,6 @@
 
         <!-- actions when the email has been verified -->
         <ul v-if="email.verified_at" class="text-sm">
-
           <!-- activate/deactivate -->
           <li
             v-if="email.active"
@@ -135,9 +133,7 @@
           <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">View log</li>
 
           <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-            Delete
-          </li>
+          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
         </ul>
 
         <!-- actions when the email has NOT been verified -->
@@ -146,9 +142,7 @@
           <li class="mr-4 inline">Verification email sent</li>
 
           <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-            Delete
-          </li>
+          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
         </ul>
       </li>
     </ul>
