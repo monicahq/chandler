@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Settings\Notifications;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\NotificationChannels\SendTestEmail;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Services\User\NotificationChannels\VerifyUserNotificationChannelEmailAddress;
-use Inertia\Inertia;
+use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsVerificationController extends Controller
 {

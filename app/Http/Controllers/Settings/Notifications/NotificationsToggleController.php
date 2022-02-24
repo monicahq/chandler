@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Settings\Notifications;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\NotificationChannels\SendTestEmail;
 use App\Services\User\NotificationChannels\ToggleUserNotificationChannel;
+use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsToggleController extends Controller
 {

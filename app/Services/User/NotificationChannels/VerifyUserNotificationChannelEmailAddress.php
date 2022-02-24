@@ -2,17 +2,12 @@
 
 namespace App\Services\User\NotificationChannels;
 
-use Exception;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Mail\TestEmailSent;
+use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Models\UserNotificationSent;
-use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationChannel;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VerifyUserNotificationChannelEmailAddress extends BaseService implements ServiceInterface
 {
