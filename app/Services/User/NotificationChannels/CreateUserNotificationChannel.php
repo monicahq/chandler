@@ -30,6 +30,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
             'type' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'verify_email' => 'nullable|boolean',
+            'preferred_time' => 'nullable|date_format:H:i',
         ];
     }
 
@@ -81,6 +82,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
             'label' => $this->data['label'],
             'type' => $this->data['type'],
             'content' => $this->data['content'],
+            'preferred_time' => $this->data['preferred_time'],
         ]);
 
         if ($this->data['verify_email']) {
