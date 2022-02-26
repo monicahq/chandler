@@ -29,24 +29,29 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
 
     /**
      * Schedule a contact reminder.
+     * For each user in the vault, a scheduled reminder is created.
      * This service SHOULD NOT BE CALLED FROM THE CLIENTS, ever.
      * It is called by other services.
-     * For each user in the vault, a scheduled reminder is created.
      *
      * @param  array  $data
-     * @return ScheduledContactReminder
+     * @return void
      */
-    public function execute(array $data): ScheduledContactReminder
+    public function execute(array $data): void
     {
         $this->validateRules($data);
         $this->data = $data;
 
         $this->getDate();
         $this->schedule();
-
-        return $this->scheduledContactReminder;
     }
 
+    /**
+     * A ContactReminder can be either a complete date, or only a day/month.
+     * If it is only a day/month, we need to add a fake year so we can still
+     * manipulate the date as a Carbon object.
+     *
+     * @return void
+     */
     private function getDate(): void
     {
         $this->contactReminder = ContactReminder::findOrFail($this->data['contact_reminder_id']);
@@ -63,13 +68,32 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
         // is the date in the past? if so, we need to schedule the reminder
         // for next year
         if ($this->upcomingDate->isPast()) {
-            $this->upcomingDate->year = Carbon::now()->addYear()->year;
+
+            $this->upcomingDate->year = Carbon::now()->year;
+            if ($this->upcomingDate->isPast()) {
+                $this->upcomingDate->year = Carbon::now()->addYear()->year;
+            }
         }
 
-        $this->scheduledContactReminder = ScheduledContactReminder::create([
-            'contact_id' => $this->contactReminder->id,
-            'contact_reminder_id' => $this->contactReminder->id,
-            'triggered_at' => $this->upcomingDate,
-        ]);
+        $users = $this->contactReminder->contact->vault->users;
+
+        foreach ($users as $user) {
+
+            // we'll loop through all the user notification channel of this user
+            // and schedule the reminder for each of them
+            $notificationChannels = $user->notificationChannels;
+            foreach ($notificationChannels as $channel) {
+                $this->upcomingDate->shiftTimezone($user->timezone);
+                $this->upcomingDate->hour = $channel->preferred_time->hour;
+                $this->upcomingDate->minute = $channel->preferred_time->minute;
+
+                $this->scheduledContactReminder = ScheduledContactReminder::create([
+                    'contact_reminder_id' => $this->contactReminder->id,
+                    'user_notification_channel_id' => $channel->id,
+                    'user_id' => $user->id,
+                    'triggered_at' => $this->upcomingDate->tz('UTC'),
+                ]);
+            }
+        }
     }
 }

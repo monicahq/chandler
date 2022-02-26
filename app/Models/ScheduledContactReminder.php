@@ -19,6 +19,7 @@ class ScheduledContactReminder extends Model
      */
     protected $fillable = [
         'contact_reminder_id',
+        'user_notification_channel_id',
         'triggered_at',
         'triggered',
     ];
@@ -52,12 +53,12 @@ class ScheduledContactReminder extends Model
     }
 
     /**
-     * Get the user associated with the scheduled contact reminder.
+     * Get the user notification channel associated with the scheduled contact reminder.
      *
      * @return BelongsTo
      */
-    public function user()
+    public function userNotificationChannel()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserNotificationChannel::class);
     }
 }
