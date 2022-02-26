@@ -4,7 +4,6 @@ namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\ContactReminder;
