@@ -101,9 +101,33 @@ class ScheduleContactReminderTest extends TestCase
         $this->executeService($contactReminder, $channel, '2018-10-02 07:00:00');
     }
 
-    //public function it_schedules_a_reminder_of_date_in_the_future_in_utc(): void
+    /** @test */
+    public function it_schedules_a_reminder_of_date_in_the_future_in_utc(): void
+    {
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
 
-    //public function it_doesnt_schedule_a_reminder_if_no_user_notification_channel_is_defined(): void
+        $regis = $this->createUser();
+        $regis->timezone = 'Asia/Sakhalin';
+        $regis->save();
+
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+
+        $contactReminder = ContactReminder::factory()->create([
+            'contact_id' => $contact->id,
+            'type' => ContactReminder::TYPE_ONE_TIME,
+            'day' => 2,
+            'month' => 10,
+            'year' => 2200,
+        ]);
+        $channel = UserNotificationChannel::factory()->create([
+            'user_id' => $regis->id,
+            'preferred_time' => '18:00',
+        ]);
+
+        $this->executeService($contactReminder, $channel, '2200-10-02 07:00:00');
+    }
 
     /** @test */
     public function it_fails_if_wrong_parameters_are_given(): void
