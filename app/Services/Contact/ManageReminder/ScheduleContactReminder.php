@@ -68,7 +68,6 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
         // is the date in the past? if so, we need to schedule the reminder
         // for next year
         if ($this->upcomingDate->isPast()) {
-
             $this->upcomingDate->year = Carbon::now()->year;
             if ($this->upcomingDate->isPast()) {
                 $this->upcomingDate->year = Carbon::now()->addYear()->year;

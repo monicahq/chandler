@@ -2,23 +2,16 @@
 
 namespace Tests\Unit\Services\Contact\ManageReminder;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Account;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
 use App\Models\UserNotificationChannel;
-use App\Services\Contact\ManageReminder\CreateReminder;
-use App\Services\Contact\ManageReminder\ScheduleContactReminder;
-use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Contact\ManageReminder\ScheduleContactReminder;
 
 class ScheduleContactReminderTest extends TestCase
 {
@@ -111,7 +104,6 @@ class ScheduleContactReminderTest extends TestCase
     //public function it_schedules_a_reminder_of_date_in_the_future_in_utc(): void
 
     //public function it_doesnt_schedule_a_reminder_if_no_user_notification_channel_is_defined(): void
-
 
     /** @test */
     public function it_fails_if_wrong_parameters_are_given(): void
