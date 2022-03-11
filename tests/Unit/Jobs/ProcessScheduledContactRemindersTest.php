@@ -38,4 +38,27 @@ class ProcessScheduledContactRemindersTest extends TestCase
 
         Bus::assertDispatched(SendEmailNotification::class);
     }
+
+    /** @test */
+    public function it_cant_process_the_scheduled_contact_reminders(): void
+    {
+        Bus::fake();
+
+        Carbon::setTestNow(Carbon::create(2018, 1, 1, 0, 0, 0));
+
+        $contactReminder = ContactReminder::factory()->create([
+            'type' => UserNotificationChannel::TYPE_EMAIL,
+        ]);
+
+        ScheduledContactReminder::factory()->create([
+            'contact_reminder_id' => $contactReminder->id,
+            'scheduled_at' => Carbon::now()->addMinutes(10),
+        ]);
+
+        $job = new ProcessScheduledContactReminders();
+        $job->dispatch();
+        $job->handle();
+
+        Bus::assertNotDispatched(SendEmailNotification::class);
+    }
 }
