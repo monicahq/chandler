@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
+use Illuminate\Support\Facades\DB;
 
 class ToggleUserNotificationChannel extends BaseService implements ServiceInterface
 {
@@ -50,6 +51,7 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
         $this->data = $data;
         $this->validate();
         $this->toggle();
+        $this->updateScheduledReminders();
         $this->log();
 
         return $this->userNotificationChannel;
@@ -66,6 +68,39 @@ class ToggleUserNotificationChannel extends BaseService implements ServiceInterf
     {
         $this->userNotificationChannel->active = ! $this->userNotificationChannel->active;
         $this->userNotificationChannel->save();
+    }
+
+    /**
+     * If the notification channel is deactivated, we need to delete all the
+     * upcoming scheduled reminders for that channel.
+     * If the notification channel is reactivated, we need to reschedule all
+     * the contact reminders for this channel specifically.
+     *
+     * @return void
+     */
+    private function updateScheduledReminders(): void
+    {
+        if ($this->userNotificationChannel->active) {
+            $this->rescheduledReminders();
+        } else {
+            $this->deleteScheduledReminders();
+        }
+    }
+
+    private function deleteScheduledReminders(): void
+    {
+        DB::table('scheduled_contact_reminders')
+            ->where('user_notification_channel_id', $this->userNotificationChannel->id)
+            ->delete();
+    }
+
+    private function rescheduledReminders(): void
+    {
+        (new ScheduleAllContactRemindersForNotificationChannel)->execute([
+            'account_id' => $this->data['account_id'],
+            'author_id' => $this->data['author_id'],
+            'user_notification_channel_id' => $this->userNotificationChannel->id,
+        ]);
     }
 
     private function log(): void

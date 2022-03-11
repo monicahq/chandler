@@ -11,7 +11,6 @@ use App\Models\ScheduledContactReminder;
 class ScheduleContactReminder extends BaseService implements ServiceInterface
 {
     private ContactReminder $contactReminder;
-    private ScheduledContactReminder $scheduledContactReminder;
     private array $data;
     private Carbon $upcomingDate;
 
@@ -77,8 +76,7 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
         $users = $this->contactReminder->contact->vault->users;
 
         foreach ($users as $user) {
-
-            // we'll loop through all the user notification channel of this user
+            // we'll loop through all the user notification channels of this user
             // and schedule the reminder for each of them
             $notificationChannels = $user->notificationChannels;
             foreach ($notificationChannels as $channel) {
