@@ -4,14 +4,12 @@ namespace App\Jobs\Notifications;
 
 use App\Mail\SendReminder;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use App\Models\ScheduledContactReminder;
-use App\Notifications\SendEmailReminder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 
 class SendEmailNotification implements ShouldQueue
 {

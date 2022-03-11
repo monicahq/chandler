@@ -2,17 +2,15 @@
 
 namespace Tests\Unit\Jobs;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\Notifications\SendEmailNotification;
-use App\Jobs\ProcessScheduledContactReminders;
-use App\Models\ContactReminder;
-use App\Models\ScheduledContactReminder;
-use App\Models\UserNotificationChannel;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
+use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Bus;
+use App\Models\UserNotificationChannel;
+use App\Models\ScheduledContactReminder;
+use App\Jobs\ProcessScheduledContactReminders;
+use App\Jobs\Notifications\SendEmailNotification;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ProcessScheduledContactRemindersTest extends TestCase
 {

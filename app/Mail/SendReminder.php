@@ -2,13 +2,12 @@
 
 namespace App\Mail;
 
-use App\Helpers\NameHelper;
-use App\Models\ScheduledContactReminder;
 use App\Models\User;
+use App\Helpers\NameHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\ScheduledContactReminder;
 
 class SendReminder extends Mailable
 {
