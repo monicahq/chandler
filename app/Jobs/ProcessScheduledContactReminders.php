@@ -2,17 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Notifications\SendEmailNotification;
-use App\Models\ScheduledContactReminder;
-use App\Models\UserNotificationChannel;
-use App\Models\UserNotificationSent;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Queue\SerializesModels;
+use App\Models\UserNotificationChannel;
+use App\Models\ScheduledContactReminder;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use App\Jobs\Notifications\SendEmailNotification;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {
@@ -31,7 +29,7 @@ class ProcessScheduledContactReminders implements ShouldQueue
         $currentDate = Carbon::now();
         $currentDate->second = 0;
 
-        $scheduledReminders = ScheduledContactReminder::where('scheduled_at', '<=' ,$currentDate)
+        $scheduledReminders = ScheduledContactReminder::where('scheduled_at', '<=', $currentDate)
             ->with('userNotificationChannel')
             ->get();
 

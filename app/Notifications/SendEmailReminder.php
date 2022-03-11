@@ -3,11 +3,10 @@
 namespace App\Notifications;
 
 use App\Helpers\NameHelper;
-use App\Models\ScheduledContactReminder;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\ScheduledContactReminder;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class SendEmailReminder extends Notification
 {
@@ -54,7 +53,7 @@ class SendEmailReminder extends Notification
         ]);
 
         return (new MailMessage)
-            ->subject('Reminder about ' . $name)
+            ->subject('Reminder about '.$name)
             ->greeting('Hi!')
             ->line('Reminder about '.$name.'.')
             ->line($reminder->label)
