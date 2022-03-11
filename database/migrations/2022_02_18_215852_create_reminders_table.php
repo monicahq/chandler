@@ -47,8 +47,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('contact_reminder_id');
             $table->unsignedBigInteger('user_notification_channel_id');
-            $table->datetime('triggered_at');
-            $table->boolean('triggered')->default(false);
+            $table->datetime('scheduled_at');
+            $table->datetime('triggered_at')->nullable();
             $table->timestamps();
             $table->foreign('contact_reminder_id')->references('id')->on('contact_reminders')->onDelete('cascade');
             $table->foreign('user_notification_channel_id')->references('id')->on('user_notification_channels')->onDelete('cascade');

@@ -149,7 +149,7 @@ class ScheduleContactReminderTest extends TestCase
 
         $this->assertDatabaseHas('scheduled_contact_reminders', [
             'user_notification_channel_id' => $channel->id,
-            'triggered_at' => $expectedDate,
+            'scheduled_at' => $expectedDate,
         ]);
     }
 }

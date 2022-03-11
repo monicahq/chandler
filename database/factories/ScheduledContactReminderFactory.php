@@ -26,8 +26,8 @@ class ScheduledContactReminderFactory extends Factory
         return [
             'user_notification_channel_id' => UserNotificationChannel::factory(),
             'contact_reminder_id' => ContactReminder::factory(),
+            'scheduled_at' => $this->faker->dateTimeThisCentury(),
             'triggered_at' => $this->faker->dateTimeThisCentury(),
-            'triggered' => false,
         ];
     }
 }

@@ -20,8 +20,8 @@ class ScheduledContactReminder extends Model
     protected $fillable = [
         'contact_reminder_id',
         'user_notification_channel_id',
+        'scheduled_at',
         'triggered_at',
-        'triggered',
     ];
 
     /**
@@ -30,16 +30,8 @@ class ScheduledContactReminder extends Model
      * @var array
      */
     protected $dates = [
+        'scheduled_at',
         'triggered_at',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'triggered' => 'boolean',
     ];
 
     /**

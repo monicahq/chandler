@@ -90,7 +90,7 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
                     'contact_reminder_id' => $this->contactReminder->id,
                     'user_notification_channel_id' => $channel->id,
                     'user_id' => $user->id,
-                    'triggered_at' => $this->upcomingDate->tz('UTC'),
+                    'scheduled_at' => $this->upcomingDate->tz('UTC'),
                 ]);
             }
         }
