@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Notifications;
 
+use App\Mail\SendReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\ScheduledContactReminder;
@@ -9,6 +10,7 @@ use App\Notifications\SendEmailReminder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 class SendEmailNotification implements ShouldQueue
@@ -35,8 +37,9 @@ class SendEmailNotification implements ShouldQueue
     public function handle()
     {
         $emailAddress = $this->scheduledReminder->userNotificationChannel->content;
+        $user = $this->scheduledReminder->userNotificationChannel->user;
 
-        Notification::route('mail', $emailAddress)
-            ->notify(new SendEmailReminder($this->scheduledReminder));
+        Mail::to($emailAddress)
+            ->queue(new SendReminder($this->scheduledReminder, $user));
     }
 }
