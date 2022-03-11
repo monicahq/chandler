@@ -98,10 +98,9 @@ class ScheduleAllContactRemindersForNotificationChannel extends BaseService impl
             $upcomingDate->hour = $this->userNotificationChannel->preferred_time->hour;
             $upcomingDate->minute = $this->userNotificationChannel->preferred_time->minute;
 
-            $this->scheduledContactReminder = ScheduledContactReminder::create([
+            ScheduledContactReminder::create([
                 'contact_reminder_id' => $contactReminder->id,
                 'user_notification_channel_id' => $this->userNotificationChannel->id,
-                'user_id' => $this->userNotificationChannel->user->id,
                 'scheduled_at' => $upcomingDate->tz('UTC'),
             ]);
         }

@@ -87,7 +87,6 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
                 $this->scheduledContactReminder = ScheduledContactReminder::create([
                     'contact_reminder_id' => $this->contactReminder->id,
                     'user_notification_channel_id' => $channel->id,
-                    'user_id' => $user->id,
                     'scheduled_at' => $this->upcomingDate->tz('UTC'),
                 ]);
             }
