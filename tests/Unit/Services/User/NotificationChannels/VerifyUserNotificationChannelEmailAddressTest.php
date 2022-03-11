@@ -2,18 +2,14 @@
 
 namespace Tests\Unit\Services\User\NotificationChannels;
 
-use Exception;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use App\Mail\TestEmailSent;
-use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\NotificationChannels\SendTestEmail;
 use App\Services\User\NotificationChannels\VerifyUserNotificationChannelEmailAddress;
-use Carbon\Carbon;
 
 class VerifyUserNotificationChannelEmailAddressTest extends TestCase
 {

@@ -2,19 +2,19 @@
 
 namespace Tests\Unit\Services\User\NotificationChannels;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use App\Jobs\CreateAuditLog;
+use App\Models\Vault;
 use App\Models\Contact;
+use App\Jobs\CreateAuditLog;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
 use App\Models\UserNotificationChannel;
-use App\Models\Vault;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\User\NotificationChannels\ToggleUserNotificationChannel;
-use Carbon\Carbon;
 
 class ToggleUserNotificationChannelTest extends TestCase
 {

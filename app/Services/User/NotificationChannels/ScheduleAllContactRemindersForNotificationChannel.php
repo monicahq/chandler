@@ -2,15 +2,14 @@
 
 namespace App\Services\User\NotificationChannels;
 
-use App\Models\User;
-use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
-use App\Models\ScheduledContactReminder;
-use App\Models\UserNotificationChannel;
-use App\Models\Vault;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Vault;
+use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
+use App\Models\UserNotificationChannel;
+use App\Models\ScheduledContactReminder;
 
 class ScheduleAllContactRemindersForNotificationChannel extends BaseService implements ServiceInterface
 {
@@ -81,10 +80,10 @@ class ScheduleAllContactRemindersForNotificationChannel extends BaseService impl
             ->get();
 
         foreach ($contactReminders as $contactReminder) {
-            if (!$contactReminder->year) {
-                $upcomingDate = Carbon::parse('1900-' . $contactReminder->month . '-' . $contactReminder->day);
+            if (! $contactReminder->year) {
+                $upcomingDate = Carbon::parse('1900-'.$contactReminder->month.'-'.$contactReminder->day);
             } else {
-                $upcomingDate = Carbon::parse($contactReminder->year . '-' . $contactReminder->month . '-' . $contactReminder->day);
+                $upcomingDate = Carbon::parse($contactReminder->year.'-'.$contactReminder->month.'-'.$contactReminder->day);
             }
 
             if ($upcomingDate->isPast()) {

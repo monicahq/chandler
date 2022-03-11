@@ -5,9 +5,9 @@ namespace App\Services\User\NotificationChannels;
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
-use Illuminate\Support\Facades\DB;
 
 class ToggleUserNotificationChannel extends BaseService implements ServiceInterface
 {

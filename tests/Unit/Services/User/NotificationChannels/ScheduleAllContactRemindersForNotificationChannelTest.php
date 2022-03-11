@@ -8,9 +8,7 @@ use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Services\Contact\ManageReminder\ScheduleContactReminder;
 use App\Services\User\NotificationChannels\ScheduleAllContactRemindersForNotificationChannel;
 
 class ScheduleAllContactRemindersForNotificationChannelTest extends TestCase
