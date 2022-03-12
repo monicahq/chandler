@@ -30,6 +30,7 @@ class ProcessScheduledContactRemindersTest extends TestCase
         ScheduledContactReminder::factory()->create([
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => Carbon::now(),
+            'triggered_at' => null,
         ]);
 
         $job = new ProcessScheduledContactReminders();
