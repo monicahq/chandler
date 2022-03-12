@@ -49,7 +49,7 @@ class SendEmailNotification implements ShouldQueue
         UserNotificationSent::create([
             'user_notification_channel_id' => $this->scheduledReminder->userNotificationChannel->id,
             'sent_at' => Carbon::now(),
-            'subject_line' => $this->scheduledContactReminder->reminder->label,
+            'subject_line' => $this->scheduledReminder->reminder->label,
         ]);
     }
 }

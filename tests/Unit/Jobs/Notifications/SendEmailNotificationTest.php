@@ -29,6 +29,12 @@ class SendEmailNotificationTest extends TestCase
 
         SendEmailNotification::dispatch($scheduledContactReminder);
 
-        Mail::assertSent(SendReminder::class);
+        Mail::assertQueued(SendReminder::class);
+
+        $this->assertDatabaseHas('user_notification_sent', [
+            'user_notification_channel_id' => $channel->id,
+            'sent_at' => now(),
+            'subject_line' => $scheduledContactReminder->reminder->label,
+        ]);
     }
 }
