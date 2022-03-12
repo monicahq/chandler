@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use App\Models\ScheduledContactReminder;
+use App\Models\UserNotificationSent;
+use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,10 +17,12 @@ class SendEmailNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private ScheduledContactReminder $scheduledReminder;
+    public ScheduledContactReminder $scheduledReminder;
 
     /**
      * Create a new job instance.
+     *
+     * @param ScheduledContactReminder  $scheduledReminder
      *
      * @return void
      */
@@ -39,5 +43,14 @@ class SendEmailNotification implements ShouldQueue
 
         Mail::to($emailAddress)
             ->queue(new SendReminder($this->scheduledReminder, $user));
+
+        $this->scheduledReminder->triggered_at = Carbon::now();
+        $this->scheduledReminder->save();
+
+        UserNotificationSent::create([
+            'user_notification_channel_id' => $this->scheduledReminder->userNotificationChannel->id,
+            'sent_at' => Carbon::now(),
+            'subject_line' => $this->scheduledContactReminder->reminder->label,
+        ]);
     }
 }

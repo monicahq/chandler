@@ -39,6 +39,7 @@ class ProcessScheduledContactReminders implements ShouldQueue
         $currentDate->second = 0;
 
         $scheduledReminders = ScheduledContactReminder::where('scheduled_at', '<=', $currentDate)
+            ->where('triggered_at', null)
             ->with('userNotificationChannel')
             ->get();
 
