@@ -41,7 +41,9 @@ class SendEmailNotification implements ShouldQueue
         $user = $this->scheduledReminder->userNotificationChannel->user;
 
         Mail::to($emailAddress)
-            ->queue(new SendReminder($this->scheduledReminder, $user));
+            ->queue((new SendReminder($this->scheduledReminder, $user))
+                ->onQueue('low')
+            );
 
         $this->scheduledReminder->triggered_at = Carbon::now();
         $this->scheduledReminder->save();

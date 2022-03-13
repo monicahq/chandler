@@ -7,6 +7,7 @@ use App\Services\BaseService;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Models\ScheduledContactReminder;
+use Illuminate\Support\Facades\Log;
 
 class RescheduleContactReminder extends BaseService implements ServiceInterface
 {
