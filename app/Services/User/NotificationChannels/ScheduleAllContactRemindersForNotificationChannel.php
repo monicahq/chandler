@@ -5,11 +5,10 @@ namespace App\Services\User\NotificationChannels;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Contact;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
-use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use App\Models\ScheduledContactReminder;
 
