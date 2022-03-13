@@ -4,15 +4,10 @@ namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Vault;
-use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\ScheduledContactReminder;
-use App\Models\UserNotificationChannel;
-use App\Services\Contact\ManageReminder\RescheduleContactReminder;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Services\Contact\ManageReminder\ScheduleContactReminder;
+use App\Services\Contact\ManageReminder\RescheduleContactReminder;
 
 class RescheduleContactReminderTest extends TestCase
 {
