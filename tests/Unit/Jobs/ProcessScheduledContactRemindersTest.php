@@ -24,10 +24,10 @@ class ProcessScheduledContactRemindersTest extends TestCase
         Carbon::setTestNow(Carbon::create(2018, 1, 1, 0, 0, 0));
 
         $contactReminder = ContactReminder::factory()->create([
-            'type' => UserNotificationChannel::TYPE_EMAIL,
+            'type' => ContactReminder::TYPE_RECURRING_DAY,
         ]);
 
-        ScheduledContactReminder::factory()->create([
+        $scheduledContactReminder = ScheduledContactReminder::factory()->create([
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => Carbon::now(),
             'triggered_at' => null,
@@ -38,6 +38,12 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $job->handle();
 
         Bus::assertDispatched(SendEmailNotification::class);
+
+        $this->assertDatabaseHas('scheduled_contact_reminders', [
+            'user_notification_channel_id' => $scheduledContactReminder->user_notification_channel_id,
+            'scheduled_at' => '2018-01-02 00:00:00',
+            'triggered_at' => null,
+        ]);
     }
 
     /** @test */

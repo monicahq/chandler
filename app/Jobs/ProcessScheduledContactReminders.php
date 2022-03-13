@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
+use App\Services\Contact\ManageReminder\RescheduleContactReminder;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {
@@ -47,6 +48,10 @@ class ProcessScheduledContactReminders implements ShouldQueue
             if ($scheduledReminder->userNotificationChannel->type == UserNotificationChannel::TYPE_EMAIL) {
                 SendEmailNotification::dispatch($scheduledReminder)->onQueue('low');
             }
+
+            (new RescheduleContactReminder)->execute([
+                'scheduled_contact_reminder_id' => $scheduledReminder->id,
+            ]);
         }
     }
 }
