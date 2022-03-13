@@ -8,6 +8,8 @@ use App\Models\Vault;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
+use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use App\Models\ScheduledContactReminder;
 
@@ -77,6 +79,7 @@ class ScheduleAllContactRemindersForNotificationChannel extends BaseService impl
             ->join('contacts', 'contacts.id', '=', 'contact_reminders.contact_id')
             ->join('vaults', 'vaults.id', '=', 'contacts.vault_id')
             ->whereIn('vaults.id', $vaults)
+            ->select('contact_reminders.id as id', 'contact_reminders.day as day', 'contact_reminders.year as year', 'contact_reminders.month as month', )
             ->get();
 
         foreach ($contactReminders as $contactReminder) {

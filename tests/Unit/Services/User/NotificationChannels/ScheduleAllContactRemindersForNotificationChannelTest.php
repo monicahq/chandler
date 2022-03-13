@@ -28,7 +28,7 @@ class ScheduleAllContactRemindersForNotificationChannelTest extends TestCase
         $vaultA = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vaultA);
         $contact = Contact::factory()->create(['vault_id' => $vaultA->id]);
 
-        $reminderA = ContactReminder::factory()->create([
+        $contactReminderA = ContactReminder::factory()->create([
             'contact_id' => $contact->id,
             'type' => ContactReminder::TYPE_ONE_TIME,
             'day' => 2,
@@ -40,7 +40,7 @@ class ScheduleAllContactRemindersForNotificationChannelTest extends TestCase
         $vaultB = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vaultB);
         $contact = Contact::factory()->create(['vault_id' => $vaultB->id]);
 
-        $reminderB = ContactReminder::factory()->create([
+        $contactReminderB = ContactReminder::factory()->create([
             'contact_id' => $contact->id,
             'type' => ContactReminder::TYPE_ONE_TIME,
             'day' => 2,
@@ -52,21 +52,19 @@ class ScheduleAllContactRemindersForNotificationChannelTest extends TestCase
             'preferred_time' => '18:00',
         ]);
 
-        $request = [
+        (new ScheduleAllContactRemindersForNotificationChannel)->execute([
             'account_id' => $regis->account_id,
             'author_id' => $regis->id,
             'user_notification_channel_id' => $channel->id,
-        ];
-
-        (new ScheduleAllContactRemindersForNotificationChannel)->execute($request);
+        ]);
 
         $this->assertDatabaseHas('scheduled_contact_reminders', [
-            'contact_reminder_id' => $reminderA->id,
+            'contact_reminder_id' => $contactReminderA->id,
             'user_notification_channel_id' => $channel->id,
             'scheduled_at' => '2018-10-02 18:00:00',
         ]);
         $this->assertDatabaseHas('scheduled_contact_reminders', [
-            'contact_reminder_id' => $reminderB->id,
+            'contact_reminder_id' => $contactReminderB->id,
             'user_notification_channel_id' => $channel->id,
             'scheduled_at' => '2018-10-02 18:00:00',
         ]);
