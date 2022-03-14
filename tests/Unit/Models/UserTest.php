@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\ContactReminder;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase
@@ -64,7 +64,6 @@ class UserTest extends TestCase
         $regis = User::factory()->create();
         $contactReminder = ContactReminder::factory()->create();
         $regis->contactReminders()->sync([$contactReminder->id => ['scheduled_at' => Carbon::now()]]);
-
 
         $this->assertTrue($regis->contactReminders()->exists());
     }

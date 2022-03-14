@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Models;
 
+use Carbon\Carbon;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\ContactReminder;
 use App\Models\ScheduledContactReminder;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactReminderTest extends TestCase

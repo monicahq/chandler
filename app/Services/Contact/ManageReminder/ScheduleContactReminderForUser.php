@@ -3,11 +3,10 @@
 namespace App\Services\Contact\ManageReminder;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Services\BaseService;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
-use App\Models\ScheduledContactReminder;
-use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ScheduleContactReminderForUser extends BaseService implements ServiceInterface

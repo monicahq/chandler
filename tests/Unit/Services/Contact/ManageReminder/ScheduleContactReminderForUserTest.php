@@ -4,10 +4,10 @@ namespace Tests\Unit\Services\Contact\ManageReminder;
 
 use Carbon\Carbon;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\ContactReminder;
-use App\Models\User;
 use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
