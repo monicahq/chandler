@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
+use Illuminate\Support\Facades\Hash;
 use App\Models\UserNotificationChannel;
 use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
-use Illuminate\Support\Facades\Hash;
 
 class AcceptInvitation extends BaseService implements ServiceInterface
 {
