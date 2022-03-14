@@ -108,39 +108,39 @@ main {
         </nav>
 
         <!-- vault sub menu -->
-        <nav v-if="insideVault" class="bg-white sm:border-b">
+        <nav v-if="insideVault" class="bg-white sm:border-b dark:border-slate-300/10 dark:bg-slate-900">
           <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
             <div class="flex items-baseline justify-between space-x-6">
               <div>
                 <inertia-link
                   :href="layoutData.vault.url.dashboard"
-                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Dashboard') }"
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
+                  :class="{ 'bg-blue-700 text-white dark:text-white': $page.component.startsWith('Vault/Dashboard') }"
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   Dashboard
                 </inertia-link>
 
                 <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   Reports
                 </inertia-link>
 
                 <inertia-link
                   :href="layoutData.vault.url.contacts"
                   :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   Contacts
                 </inertia-link>
 
                 <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   Gift center
                 </inertia-link>
 
                 <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   Loans & debts center
                 </inertia-link>
 

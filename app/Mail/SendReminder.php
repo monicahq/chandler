@@ -37,14 +37,13 @@ class SendReminder extends Mailable
         $contact = $this->scheduledContactReminder->reminder->contact;
         $contactName = NameHelper::formatContactName($this->user, $contact);
 
-        dd($contactName);
         $reason = $this->scheduledContactReminder->reminder->label;
 
         return $this->subject(trans('email.notification_reminder_email', ['name' => $contactName]))
             ->markdown('emails.notifications.reminder', [
                 'name' => $this->user->name,
                 'reason' => $reason,
-                '$contactName' => $contactName,
+                'contactName' => $contactName,
             ]);
     }
 }

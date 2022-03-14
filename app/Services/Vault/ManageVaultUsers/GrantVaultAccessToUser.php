@@ -57,6 +57,7 @@ class GrantVaultAccessToUser extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
         $this->grant();
+        $this->scheduleExistingContactReminders();
 
         $this->log();
 
@@ -88,6 +89,17 @@ class GrantVaultAccessToUser extends BaseService implements ServiceInterface
             'permission' => $this->data['permission'],
             'contact_id' => $contact->id,
         ]);
+    }
+
+    /**
+     * When we add a user to a vault, we need to make sure the user will get
+     * all the contact reminders that exist in this vault.
+     *
+     * @return void
+     */
+    private function scheduleExistingContactReminders(): void
+    {
+        $userNotificationChannels
     }
 
     private function log(): void
