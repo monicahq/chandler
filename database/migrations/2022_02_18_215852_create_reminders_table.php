@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->string('type');
             $table->integer('frequency_number')->nullable();
+            $table->datetime('last_triggered_at')->nullable();
+            $table->integer('number_times_triggered')->default(0);
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
@@ -43,6 +45,16 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create('contact_reminder_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('contact_reminder_id');
+            $table->datetime('scheduled_at');
+            $table->boolean('triggered')->default(false);
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('contact_reminder_id')->references('id')->on('contact_reminders')->onDelete('cascade');
+        });
+
         Schema::create('scheduled_contact_reminders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_reminder_id');
@@ -58,7 +70,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_notification_channel_id')->nullable();
             $table->datetime('sent_at');
-            $table->text('subject_line');
+            $table->string('subject_line');
+            $table->text('payload');
             $table->timestamps();
             $table->foreign('user_notification_channel_id')->references('id')->on('user_notification_channels')->onDelete('cascade');
         });

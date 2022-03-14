@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ContactReminder extends Model
@@ -34,6 +35,8 @@ class ContactReminder extends Model
         'year',
         'type',
         'frequency_number',
+        'last_triggered_at',
+        'number_times_triggered',
     ];
 
     /**
@@ -44,6 +47,16 @@ class ContactReminder extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    /**
+     * Get the user records associated with the contact reminder.
+     *
+     * @return BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('scheduled_at', 'triggered');
     }
 
     /**

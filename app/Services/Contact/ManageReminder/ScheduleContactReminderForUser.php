@@ -7,12 +7,15 @@ use App\Services\BaseService;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Models\ScheduledContactReminder;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ScheduleContactReminder extends BaseService implements ServiceInterface
+class ScheduleContactReminderForUser extends BaseService implements ServiceInterface
 {
     private ContactReminder $contactReminder;
     private array $data;
     private Carbon $upcomingDate;
+    private User $user;
 
     /**
      * Get the validation rules that apply to the service.
@@ -23,11 +26,12 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
     {
         return [
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
+            'user_id' => 'required|integer|exists:users,id',
         ];
     }
 
     /**
-     * Schedule a contact reminder.
+     * Schedule a contact reminder for the given user, on his timezone.
      * For each user in the vault, a scheduled reminder is created.
      * This service SHOULD NOT BE CALLED FROM THE CLIENTS, ever.
      * It is called by other services.
@@ -39,6 +43,12 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
         $this->data = $data;
+
+        $this->contactReminder = ContactReminder::findOrFail($this->data['contact_reminder_id']);
+        $this->user = User::findOrFail($this->data['user_id']);
+        if ($this->user->account_id != $this->contactReminder->contact->vault->account_id) {
+            throw new ModelNotFoundException('The user does not belong to the vault\'s account.');
+        }
 
         $this->getDate();
         $this->schedule();
@@ -53,8 +63,6 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
      */
     private function getDate(): void
     {
-        $this->contactReminder = ContactReminder::findOrFail($this->data['contact_reminder_id']);
-
         if (! $this->contactReminder->year) {
             $this->upcomingDate = Carbon::parse('1900-'.$this->contactReminder->month.'-'.$this->contactReminder->day);
         } else {
@@ -73,23 +81,13 @@ class ScheduleContactReminder extends BaseService implements ServiceInterface
             }
         }
 
-        $users = $this->contactReminder->contact->vault->users;
+        $notificationChannels = $this->user->notificationChannels;
+        foreach ($notificationChannels as $channel) {
+            $this->upcomingDate->shiftTimezone($this->user->timezone);
+            $this->upcomingDate->hour = $channel->preferred_time->hour;
+            $this->upcomingDate->minute = $channel->preferred_time->minute;
 
-        foreach ($users as $user) {
-            // we'll loop through all the user notification channels of this user
-            // and schedule the reminder for each of them
-            $notificationChannels = $user->notificationChannels;
-            foreach ($notificationChannels as $channel) {
-                $this->upcomingDate->shiftTimezone($user->timezone);
-                $this->upcomingDate->hour = $channel->preferred_time->hour;
-                $this->upcomingDate->minute = $channel->preferred_time->minute;
-
-                $this->scheduledContactReminder = ScheduledContactReminder::create([
-                    'contact_reminder_id' => $this->contactReminder->id,
-                    'user_notification_channel_id' => $channel->id,
-                    'scheduled_at' => $this->upcomingDate->tz('UTC'),
-                ]);
-            }
+            $this->contactReminder->users()->sync([$this->user->id => ['scheduled_at' => $this->upcomingDate->tz('UTC')]]);
         }
     }
 }
