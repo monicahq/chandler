@@ -4,9 +4,7 @@ namespace Tests\Unit\Models;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\ContactReminder;
-use App\Models\ScheduledContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

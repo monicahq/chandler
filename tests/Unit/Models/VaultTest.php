@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Contact;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
 use App\Models\Vault;
+use App\Models\Contact;
 use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

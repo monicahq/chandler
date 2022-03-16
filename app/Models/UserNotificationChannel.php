@@ -74,7 +74,6 @@ class UserNotificationChannel extends Model
         return $this->hasMany(UserNotificationSent::class);
     }
 
-
     /**
      * Get the contact reminder records associated with the user.
      *

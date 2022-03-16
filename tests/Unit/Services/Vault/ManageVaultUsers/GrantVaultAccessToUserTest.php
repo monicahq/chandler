@@ -2,22 +2,22 @@
 
 namespace Tests\Unit\Services\Vault\ManageVaultUsers;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
+use App\Models\ContactReminder;
 use App\Exceptions\SameUserException;
 use Illuminate\Support\Facades\Queue;
+use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\ContactReminder;
-use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Services\Vault\ManageVaultUsers\GrantVaultAccessToUser;
-use Carbon\Carbon;
 
 class GrantVaultAccessToUserTest extends TestCase
 {

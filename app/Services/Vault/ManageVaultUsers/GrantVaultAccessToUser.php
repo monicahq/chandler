@@ -8,9 +8,9 @@ use App\Models\Contact;
 use App\Helpers\VaultHelper;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Exceptions\SameUserException;
-use App\Models\ContactReminder;
 use App\Services\Contact\ManageReminder\ScheduleContactReminderForUser;
 
 class GrantVaultAccessToUser extends BaseService implements ServiceInterface
@@ -108,7 +108,7 @@ class GrantVaultAccessToUser extends BaseService implements ServiceInterface
             // the reminder will be scheduled again, which we don't want.
             if ($contactReminder->type === ContactReminder::TYPE_ONE_TIME &&
                 $contactReminder->number_times_triggered !== 0) {
-                    continue;
+                continue;
             }
 
             (new ScheduleContactReminderForUser)->execute([

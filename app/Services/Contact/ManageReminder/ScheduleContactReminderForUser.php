@@ -87,7 +87,7 @@ class ScheduleContactReminderForUser extends BaseService implements ServiceInter
             $this->upcomingDate->minute = $channel->preferred_time->minute;
 
             $this->contactReminder->userNotificationChannels()->sync([$channel->id => [
-                'scheduled_at' => $this->upcomingDate->tz('UTC')
+                'scheduled_at' => $this->upcomingDate->tz('UTC'),
             ]]);
         }
     }

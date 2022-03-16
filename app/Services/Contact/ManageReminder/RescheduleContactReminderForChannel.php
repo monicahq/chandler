@@ -5,11 +5,10 @@ namespace App\Services\Contact\ManageReminder;
 use Carbon\Carbon;
 use App\Services\BaseService;
 use App\Models\ContactReminder;
+use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
-use App\Models\ScheduledContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\DB;
 
 class RescheduleContactReminderForChannel extends BaseService implements ServiceInterface
 {
@@ -77,7 +76,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         }
 
         $this->contactReminder->userNotificationChannels()->sync([$this->userNotificationChannel->id => [
-            'scheduled_at' => $this->upcomingDate
+            'scheduled_at' => $this->upcomingDate,
         ]]);
     }
 }

@@ -4,15 +4,14 @@ namespace App\Jobs;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\SerializesModels;
 use App\Models\UserNotificationChannel;
-use App\Models\ScheduledContactReminder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
 use App\Services\Contact\ManageReminder\RescheduleContactReminder;
-use Illuminate\Support\Facades\DB;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {
