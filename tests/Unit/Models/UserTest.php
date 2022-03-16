@@ -59,16 +59,6 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_contact_reminders(): void
-    {
-        $regis = User::factory()->create();
-        $contactReminder = ContactReminder::factory()->create();
-        $regis->contactReminders()->sync([$contactReminder->id => ['scheduled_at' => Carbon::now()]]);
-
-        $this->assertTrue($regis->contactReminders()->exists());
-    }
-
-    /** @test */
     public function it_returns_the_name_attribute(): void
     {
         $rachel = User::factory()->create([

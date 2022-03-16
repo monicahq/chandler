@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
 use App\Services\Contact\ManageReminder\RescheduleContactReminder;
+use Illuminate\Support\Facades\DB;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {
@@ -39,13 +40,15 @@ class ProcessScheduledContactReminders implements ShouldQueue
         $currentDate = Carbon::now();
         $currentDate->second = 0;
 
-        $scheduledReminders = ScheduledContactReminder::where('scheduled_at', '<=', $currentDate)
+        $scheduledContactReminders = DB::table('contact_reminder_user_notification_channels')
+            ->where('scheduled_at', '<=', $currentDate)
             ->where('triggered_at', null)
-            ->with('userNotificationChannel')
             ->get();
 
-        foreach ($scheduledReminders as $scheduledReminder) {
-            if ($scheduledReminder->userNotificationChannel->type == UserNotificationChannel::TYPE_EMAIL) {
+        foreach ($scheduledContactReminders as $scheduledReminder) {
+            $channel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
+
+            if ($channel->type == UserNotificationChannel::TYPE_EMAIL) {
                 SendEmailNotification::dispatch($scheduledReminder)->onQueue('low');
             }
 

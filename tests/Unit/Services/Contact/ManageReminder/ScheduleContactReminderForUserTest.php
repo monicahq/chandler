@@ -149,8 +149,8 @@ class ScheduleContactReminderForUserTest extends TestCase
 
         (new ScheduleContactReminderForUser)->execute($request);
 
-        $this->assertDatabaseHas('contact_reminder_user', [
-            'user_id' => $user->id,
+        $this->assertDatabaseHas('contact_reminder_user_notification_channels', [
+            'user_notification_channel_id' => $channel->id,
             'contact_reminder_id' => $reminder->id,
             'scheduled_at' => $expectedDate,
         ]);

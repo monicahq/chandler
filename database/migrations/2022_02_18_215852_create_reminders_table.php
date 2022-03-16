@@ -45,13 +45,14 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('contact_reminder_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+        Schema::create('contact_reminder_user_notification_channels', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_notification_channel_id');
             $table->unsignedBigInteger('contact_reminder_id');
             $table->datetime('scheduled_at');
             $table->boolean('triggered')->default(false);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_notification_channel_id')->references('id')->on('user_notification_channels')->onDelete('cascade');
             $table->foreign('contact_reminder_id')->references('id')->on('contact_reminders')->onDelete('cascade');
         });
 

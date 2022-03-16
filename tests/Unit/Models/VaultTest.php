@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Contact;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
@@ -42,6 +43,17 @@ class VaultTest extends TestCase
         $vault->users()->sync([$dwight->id => ['permission' => Vault::PERMISSION_MANAGE]]);
 
         $this->assertTrue($vault->users()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_contacts(): void
+    {
+        $vault = Vault::factory()->create();
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->contacts()->exists());
     }
 
     /** @test */

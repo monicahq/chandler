@@ -73,4 +73,15 @@ class UserNotificationChannel extends Model
     {
         return $this->hasMany(UserNotificationSent::class);
     }
+
+
+    /**
+     * Get the contact reminder records associated with the user.
+     *
+     * @return BelongsToMany
+     */
+    public function contactReminders()
+    {
+        return $this->belongsToMany(ContactReminder::class, 'contact_reminder_user_notification_channels')->withTimestamps()->withPivot('scheduled_at', 'triggered');
+    }
 }

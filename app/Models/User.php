@@ -96,16 +96,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the contact reminder records associated with the user.
-     *
-     * @return BelongsToMany
-     */
-    public function contactReminders()
-    {
-        return $this->belongsToMany(ContactReminder::class)->withTimestamps()->withPivot('scheduled_at', 'triggered');
-    }
-
-    /**
      * Get the name of the user.
      *
      * @param  mixed  $value
