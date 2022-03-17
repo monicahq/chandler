@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Services\BaseService;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\App;
 use App\Models\UserNotificationChannel;
 use App\Jobs\Notifications\SendEmailNotification;
 use App\Services\Contact\ManageReminder\RescheduleContactReminderForChannel;
-use Illuminate\Support\Facades\Log;
 
 class TestReminders extends Command
 {
