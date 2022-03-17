@@ -98,11 +98,11 @@ class GrantVaultAccessToUser extends BaseService implements ServiceInterface
      */
     private function scheduleContactReminders(): void
     {
-        $contactIds = $this->vault->contacts()->pluck('id')->toArray();
-        $contactReminders = ContactReminder::whereIn('id', $contactIds)
-            ->get();
+        $contactIds = $this->vault->contacts->pluck('id')->toArray();
+        $contactReminders = ContactReminder::whereIn('contact_id', $contactIds)->get();
 
         foreach ($contactReminders as $contactReminder) {
+
             // if the contact reminder is a one time reminder, we need to make
             // sure the `number_times_triggered` is equal to 0, as otherwise,
             // the reminder will be scheduled again, which we don't want.

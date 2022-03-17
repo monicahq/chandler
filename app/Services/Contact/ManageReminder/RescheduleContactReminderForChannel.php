@@ -28,7 +28,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         return [
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
             'user_notification_channel_id' => 'required|integer|exists:user_notification_channels,id',
-            'contact_reminder_scheduled_id' => 'required|integer',
+            'contact_reminder_scheduled_id' => 'required|integer|exists:contact_reminder_scheduled,id',
         ];
     }
 
@@ -43,7 +43,6 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
      */
     public function execute(array $data): void
     {
-        Log::info($data);
         $this->validateRules($data);
         $this->data = $data;
 
@@ -64,7 +63,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         $record = DB::table('contact_reminder_scheduled')
             ->where('id', $this->data['contact_reminder_scheduled_id'])
             ->first();
-        Log::info($this->data['contact_reminder_scheduled_id']);
+
         $this->upcomingDate = Carbon::createFromFormat('Y-m-d H:i:s', $record->scheduled_at);
 
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_DAY) {
@@ -79,7 +78,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
             $this->upcomingDate = $this->upcomingDate->addYear();
         }
 
-        $this->contactReminder->userNotificationChannels()->sync([$this->userNotificationChannel->id => [
+        $this->contactReminder->userNotificationChannels()->syncWithoutDetaching([$this->userNotificationChannel->id => [
             'scheduled_at' => $this->upcomingDate,
         ]]);
     }
