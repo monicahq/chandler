@@ -4,11 +4,10 @@ namespace Tests\Unit\Jobs\Notifications;
 
 use Tests\TestCase;
 use App\Mail\SendReminder;
+use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationChannel;
-use App\Models\ScheduledContactReminder;
 use App\Jobs\Notifications\SendEmailNotification;
-use App\Models\ContactReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SendEmailNotificationTest extends TestCase

@@ -4,11 +4,10 @@ namespace App\Mail;
 
 use App\Models\User;
 use App\Helpers\NameHelper;
-use App\Models\ContactReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use App\Models\ContactReminder;
 use Illuminate\Queue\SerializesModels;
-use App\Models\ScheduledContactReminder;
 
 class SendReminder extends Mailable
 {

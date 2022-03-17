@@ -4,12 +4,11 @@ namespace App\Jobs\Notifications;
 
 use Carbon\Carbon;
 use App\Mail\SendReminder;
-use App\Models\ContactReminder;
 use Illuminate\Bus\Queueable;
+use App\Models\ContactReminder;
 use App\Models\UserNotificationSent;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
-use App\Models\ScheduledContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,8 +24,8 @@ class SendEmailNotification implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  int $userNotificationChannelId
-     * @param  int $contactReminderId
+     * @param  int  $userNotificationChannelId
+     * @param  int  $contactReminderId
      * @return void
      */
     public function __construct(int $userNotificationChannelId, int $contactReminderId)

@@ -11,7 +11,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
-use App\Services\Contact\ManageReminder\RescheduleContactReminder;
 use App\Services\Contact\ManageReminder\RescheduleContactReminderForChannel;
 
 class ProcessScheduledContactReminders implements ShouldQueue

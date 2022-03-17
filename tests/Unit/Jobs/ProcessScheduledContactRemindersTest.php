@@ -5,13 +5,12 @@ namespace Tests\Unit\Jobs;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\ContactReminder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
 use App\Models\UserNotificationChannel;
-use App\Models\ScheduledContactReminder;
 use App\Jobs\ProcessScheduledContactReminders;
 use App\Jobs\Notifications\SendEmailNotification;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
 
 class ProcessScheduledContactRemindersTest extends TestCase
 {
