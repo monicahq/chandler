@@ -53,7 +53,7 @@ class TestReminders extends Command
             (new RescheduleContactReminderForChannel)->execute([
                 'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
                 'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
-                'contact_reminder_user_notification_channel_id' => $scheduledReminder->id,
+                'contact_reminder_scheduled_id' => $scheduledReminder->id,
             ]);
         }
     }

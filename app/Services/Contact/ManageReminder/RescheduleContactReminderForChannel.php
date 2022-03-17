@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class RescheduleContactReminderForChannel extends BaseService implements ServiceInterface
 {
@@ -27,7 +28,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         return [
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
             'user_notification_channel_id' => 'required|integer|exists:user_notification_channels,id',
-            'contact_reminder_user_notification_channel_id' => 'required|integer|exists:contact_reminder_scheduled,id',
+            'contact_reminder_scheduled_id' => 'required|integer',
         ];
     }
 
@@ -42,6 +43,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
      */
     public function execute(array $data): void
     {
+        Log::info($data);
         $this->validateRules($data);
         $this->data = $data;
 
@@ -60,9 +62,9 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
     private function schedule(): void
     {
         $record = DB::table('contact_reminder_scheduled')
-            ->where('id', $this->data['contact_reminder_user_notification_channel_id'])
+            ->where('id', $this->data['contact_reminder_scheduled_id'])
             ->first();
-
+Log::info($this->data['contact_reminder_scheduled_id']);
         $this->upcomingDate = Carbon::createFromFormat('Y-m-d H:i:s', $record->scheduled_at);
 
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_DAY) {

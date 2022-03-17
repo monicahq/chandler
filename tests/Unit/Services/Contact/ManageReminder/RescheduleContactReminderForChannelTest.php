@@ -40,7 +40,7 @@ class RescheduleContactReminderForChannelTest extends TestCase
         (new RescheduleContactReminderForChannel)->execute([
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
-            'contact_reminder_user_notification_channel_id' => $id,
+            'contact_reminder_scheduled_id' => $id,
         ]);
 
         $this->assertDatabaseMissing('contact_reminder_scheduled', [
@@ -75,7 +75,7 @@ class RescheduleContactReminderForChannelTest extends TestCase
         (new RescheduleContactReminderForChannel)->execute([
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
-            'contact_reminder_user_notification_channel_id' => $id,
+            'contact_reminder_scheduled_id' => $id,
         ]);
 
         $this->assertDatabaseHas('contact_reminder_scheduled', [
@@ -110,7 +110,7 @@ class RescheduleContactReminderForChannelTest extends TestCase
         (new RescheduleContactReminderForChannel)->execute([
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
-            'contact_reminder_user_notification_channel_id' => $id,
+            'contact_reminder_scheduled_id' => $id,
         ]);
 
         $this->assertDatabaseHas('contact_reminder_scheduled', [
@@ -145,7 +145,7 @@ class RescheduleContactReminderForChannelTest extends TestCase
         (new RescheduleContactReminderForChannel)->execute([
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
-            'contact_reminder_user_notification_channel_id' => $id,
+            'contact_reminder_scheduled_id' => $id,
         ]);
 
         $this->assertDatabaseHas('contact_reminder_scheduled', [
@@ -183,7 +183,7 @@ class RescheduleContactReminderForChannelTest extends TestCase
         (new RescheduleContactReminderForChannel)->execute([
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
-            'contact_reminder_user_notification_channel_id' => $id,
+            'contact_reminder_scheduled_id' => $id,
         ]);
 
         $this->assertDatabaseMissing('contact_reminder_scheduled', [
