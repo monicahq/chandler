@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use App\Services\BaseService;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
 
 class RescheduleContactReminderForChannel extends BaseService implements ServiceInterface
 {
@@ -64,7 +64,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         $record = DB::table('contact_reminder_scheduled')
             ->where('id', $this->data['contact_reminder_scheduled_id'])
             ->first();
-Log::info($this->data['contact_reminder_scheduled_id']);
+        Log::info($this->data['contact_reminder_scheduled_id']);
         $this->upcomingDate = Carbon::createFromFormat('Y-m-d H:i:s', $record->scheduled_at);
 
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_DAY) {
