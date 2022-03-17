@@ -88,7 +88,7 @@ class ToggleUserNotificationChannelTest extends TestCase
             $channel
         );
 
-        $this->assertDatabaseHas('contact_reminder_user_notification_channels', [
+        $this->assertDatabaseHas('contact_reminder_scheduled', [
             'contact_reminder_id' => $contactReminder->id,
             'user_notification_channel_id' => $channel->id,
             'scheduled_at' => '2018-10-02 09:00:00',

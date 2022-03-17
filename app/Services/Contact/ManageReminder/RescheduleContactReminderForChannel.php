@@ -27,7 +27,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         return [
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
             'user_notification_channel_id' => 'required|integer|exists:user_notification_channels,id',
-            'contact_reminder_user_notification_channel_id' => 'required|integer|exists:contact_reminder_user_notification_channels,id',
+            'contact_reminder_user_notification_channel_id' => 'required|integer|exists:contact_reminder_scheduled,id',
         ];
     }
 
@@ -45,7 +45,7 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
         $this->validateRules($data);
         $this->data = $data;
 
-        $this->contactReminder = ContactReminder::findOrFail($this->data['scheduled_contact_reminder_id']);
+        $this->contactReminder = ContactReminder::findOrFail($this->data['contact_reminder_id']);
         $this->userNotificationChannel = UserNotificationChannel::findOrFail($this->data['user_notification_channel_id']);
 
         if (! $this->userNotificationChannel->active) {
@@ -59,20 +59,22 @@ class RescheduleContactReminderForChannel extends BaseService implements Service
 
     private function schedule(): void
     {
-        $record = DB::table('contact_reminder_user_notification_channels')
+        $record = DB::table('contact_reminder_scheduled')
             ->where('id', $this->data['contact_reminder_user_notification_channel_id'])
             ->first();
 
+        $this->upcomingDate = Carbon::createFromFormat('Y-m-d H:i:s', $record->scheduled_at);
+
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_DAY) {
-            $this->upcomingDate = $record->scheduled_at->addDay();
+            $this->upcomingDate = $this->upcomingDate->addDay();
         }
 
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_MONTH) {
-            $this->upcomingDate = $record->scheduled_at->addMonth();
+            $this->upcomingDate = $this->upcomingDate->addMonth();
         }
 
         if ($this->contactReminder->type === ContactReminder::TYPE_RECURRING_YEAR) {
-            $this->upcomingDate = $this->contactReminder->scheduled_at->addYear();
+            $this->upcomingDate = $this->upcomingDate->addYear();
         }
 
         $this->contactReminder->userNotificationChannels()->sync([$this->userNotificationChannel->id => [

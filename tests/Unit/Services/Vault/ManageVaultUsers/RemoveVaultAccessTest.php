@@ -146,7 +146,7 @@ class RemoveVaultAccessTest extends TestCase
             'id' => $contact->id,
         ]);
 
-        $this->assertDatabaseMissing('contact_reminder_user_notification_channels', [
+        $this->assertDatabaseMissing('contact_reminder_scheduled', [
             'user_notification_channel_id' => $channel->id,
             'contact_reminder_id' => $contactReminder->id,
         ]);

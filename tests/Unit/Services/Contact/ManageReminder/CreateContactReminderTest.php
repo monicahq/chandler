@@ -120,7 +120,7 @@ class CreateContactReminderTest extends TestCase
             'frequency_number' => null,
         ]);
 
-        $this->assertDatabaseHas('contact_reminder_user_notification_channels', [
+        $this->assertDatabaseHas('contact_reminder_scheduled', [
             'user_notification_channel_id' => $userNotificationChannel->id,
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => '2018-10-29 09:00:00',

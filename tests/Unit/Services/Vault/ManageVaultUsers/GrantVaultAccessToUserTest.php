@@ -153,7 +153,7 @@ class GrantVaultAccessToUserTest extends TestCase
             'contact_id' => $contact->id,
         ]);
 
-        $this->assertDatabaseHas('contact_reminder_user_notification_channels', [
+        $this->assertDatabaseHas('contact_reminder_scheduled', [
             'user_notification_channel_id' => $channel->id,
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => '2018-10-02 09:00:00',

@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
 use App\Services\Contact\ManageReminder\RescheduleContactReminder;
+use App\Services\Contact\ManageReminder\RescheduleContactReminderForChannel;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {
@@ -39,7 +40,7 @@ class ProcessScheduledContactReminders implements ShouldQueue
         $currentDate = Carbon::now();
         $currentDate->second = 0;
 
-        $scheduledContactReminders = DB::table('contact_reminder_user_notification_channels')
+        $scheduledContactReminders = DB::table('contact_reminder_scheduled')
             ->where('scheduled_at', '<=', $currentDate)
             ->where('triggered_at', null)
             ->get();
@@ -48,12 +49,28 @@ class ProcessScheduledContactReminders implements ShouldQueue
             $channel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
 
             if ($channel->type == UserNotificationChannel::TYPE_EMAIL) {
-                SendEmailNotification::dispatch($scheduledReminder)->onQueue('low');
+                SendEmailNotification::dispatch(
+                    $scheduledReminder->user_notification_channel_id,
+                    $scheduledReminder->contact_reminder_id
+                )->onQueue('low');
             }
 
-            (new RescheduleContactReminder)->execute([
-                'scheduled_contact_reminder_id' => $scheduledReminder->id,
+            $this->updateScheduledContactReminderTriggeredAt($scheduledReminder->id);
+
+            (new RescheduleContactReminderForChannel)->execute([
+                'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
+                'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
+                'contact_reminder_user_notification_channel_id' => $scheduledReminder->id,
             ]);
         }
+    }
+
+    private function updateScheduledContactReminderTriggeredAt(int $id): void
+    {
+        DB::table('contact_reminder_scheduled')
+            ->where('id', $id)
+            ->update([
+                'triggered_at' => Carbon::now(),
+            ]);
     }
 }

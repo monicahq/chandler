@@ -96,7 +96,7 @@ class RemoveVaultAccess extends BaseService implements ServiceInterface
     {
         $userNotificationChannelIds = $this->user->notificationChannels()->pluck('id')->toArray();
 
-        DB::table('contact_reminder_user_notification_channels')
+        DB::table('contact_reminder_scheduled')
             ->whereIn('user_notification_channel_id', $userNotificationChannelIds)
             ->delete();
     }

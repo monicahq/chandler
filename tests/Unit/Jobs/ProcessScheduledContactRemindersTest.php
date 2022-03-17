@@ -11,6 +11,7 @@ use App\Models\ScheduledContactReminder;
 use App\Jobs\ProcessScheduledContactReminders;
 use App\Jobs\Notifications\SendEmailNotification;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
 
 class ProcessScheduledContactRemindersTest extends TestCase
 {
@@ -26,8 +27,12 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $contactReminder = ContactReminder::factory()->create([
             'type' => ContactReminder::TYPE_RECURRING_DAY,
         ]);
-
-        $scheduledContactReminder = ScheduledContactReminder::factory()->create([
+        $channel = UserNotificationChannel::factory()->create([
+            'type' => UserNotificationChannel::TYPE_EMAIL,
+            'content' => 'admin@admin.com',
+        ]);
+        DB::table('contact_reminder_scheduled')->insertGetId([
+            'user_notification_channel_id' => $channel->id,
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => Carbon::now(),
             'triggered_at' => null,
@@ -38,12 +43,6 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $job->handle();
 
         Bus::assertDispatched(SendEmailNotification::class);
-
-        $this->assertDatabaseHas('scheduled_contact_reminders', [
-            'user_notification_channel_id' => $scheduledContactReminder->user_notification_channel_id,
-            'scheduled_at' => '2018-01-02 00:00:00',
-            'triggered_at' => null,
-        ]);
     }
 
     /** @test */
@@ -56,10 +55,15 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $contactReminder = ContactReminder::factory()->create([
             'type' => UserNotificationChannel::TYPE_EMAIL,
         ]);
-
-        ScheduledContactReminder::factory()->create([
+        $channel = UserNotificationChannel::factory()->create([
+            'type' => UserNotificationChannel::TYPE_EMAIL,
+            'content' => 'admin@admin.com',
+        ]);
+        DB::table('contact_reminder_scheduled')->insertGetId([
+            'user_notification_channel_id' => $channel->id,
             'contact_reminder_id' => $contactReminder->id,
             'scheduled_at' => Carbon::now()->addMinutes(10),
+            'triggered_at' => null,
         ]);
 
         $job = new ProcessScheduledContactReminders();
