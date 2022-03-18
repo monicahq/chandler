@@ -15,7 +15,6 @@ use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemind
 use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
-use Tests\Unit\Models\TemplatePageTest;
 
 class ContactShowViewHelper
 {
