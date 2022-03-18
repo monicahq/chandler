@@ -118,6 +118,7 @@ class GrantVaultAccessToUserTest extends TestCase
             'day' => 2,
             'month' => 10,
             'year' => 1090,
+            'number_times_triggered' => 0,
         ]);
 
         $request = [

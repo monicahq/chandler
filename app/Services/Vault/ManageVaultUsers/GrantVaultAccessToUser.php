@@ -107,7 +107,7 @@ class GrantVaultAccessToUser extends BaseService implements ServiceInterface
             // sure the `number_times_triggered` is equal to 0, as otherwise,
             // the reminder will be scheduled again, which we don't want.
             if ($contactReminder->type === ContactReminder::TYPE_ONE_TIME &&
-                $contactReminder->number_times_triggered !== 0) {
+                $contactReminder->number_times_triggered != 0) {
                 continue;
             }
 
