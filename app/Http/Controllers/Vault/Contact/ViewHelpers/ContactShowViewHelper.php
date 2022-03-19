@@ -8,12 +8,12 @@ use App\Models\Contact;
 use App\Models\TemplatePage;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers\ModuleFeedViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers\ModuleFeedViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
 
