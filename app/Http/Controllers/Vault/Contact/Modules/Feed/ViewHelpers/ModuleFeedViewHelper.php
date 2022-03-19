@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;
-use App\Helpers\DateHelper;
-use App\Models\ContactReminder;
-use App\Helpers\ContactReminderHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 use App\Models\ContactFeedItem;
+use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
 
 class ModuleFeedViewHelper
 {
