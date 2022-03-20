@@ -25,7 +25,12 @@
 <template>
   <div class="timeline-item relative flex items-center">
     <div class="icon z-10 mr-3 flex items-center justify-center rounded-full bg-gray-200">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-stone-500	" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 text-stone-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         <path
           stroke-linecap="round"
