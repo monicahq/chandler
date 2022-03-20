@@ -5,8 +5,8 @@ namespace App\Services\Contact\ManageContactImportantDate;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
-use App\Interfaces\ServiceInterface;
 use App\Models\ContactFeedItem;
+use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDate;
 
 class CreateContactImportantDate extends BaseService implements ServiceInterface
