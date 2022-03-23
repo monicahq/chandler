@@ -31,6 +31,16 @@ return new class extends Migration
             $table->foreign('loaner_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('loanee_id')->references('id')->on('contacts')->onDelete('cascade');
         });
+
+        Schema::create('contact_loan', function (Blueprint $table) {
+            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('loaner_id');
+            $table->unsignedBigInteger('loanee_id');
+            $table->timestamps();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('loaner_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('loanee_id')->references('id')->on('contacts')->onDelete('cascade');
+        });
     }
 
     /**

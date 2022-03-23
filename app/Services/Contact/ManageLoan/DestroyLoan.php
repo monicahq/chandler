@@ -8,10 +8,11 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use App\Models\Loan;
 
 class DestroyLoan extends BaseService implements ServiceInterface
 {
-    private Note $note;
+    private Loan $loan;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,7 +26,7 @@ class DestroyLoan extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'note_id' => 'required|integer|exists:notes,id',
+            'loan_id' => 'required|integer|exists:loans,id',
         ];
     }
 
@@ -45,7 +46,7 @@ class DestroyLoan extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a note.
+     * Destroy a loan.
      *
      * @param  array  $data
      */
@@ -53,12 +54,12 @@ class DestroyLoan extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->note = Note::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['note_id']);
+        $this->loan = Loan::where('contact_id', $data['contact_id'])
+            ->findOrFail($data['loan_id']);
 
         $this->removeContactFeedItem();
 
-        $this->note->delete();
+        $this->loan->delete();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
@@ -72,7 +73,7 @@ class DestroyLoan extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
+            'action_name' => 'loan_destroyed',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
@@ -83,13 +84,13 @@ class DestroyLoan extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
+            'action_name' => 'loan_destroyed',
             'objects' => json_encode([]),
         ])->onQueue('low');
     }
 
     private function removeContactFeedItem(): void
     {
-        $this->note->feedItem->delete();
+        $this->loan->feedItem->delete();
     }
 }

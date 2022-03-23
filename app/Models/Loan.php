@@ -71,4 +71,12 @@ class Loan extends Model
     {
         return $this->belongsTo(Contact::class, 'loanee_id');
     }
+
+    /**
+     * Get the loan's feed item.
+     */
+    public function feedItem()
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
+    }
 }

@@ -81,15 +81,16 @@ class CreateLoan extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         $this->loaner = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail('id', $this->data['loaner_id']);
+            ->findOrFail($this->data['loaner_id']);
 
         $this->loanee = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail('id', $this->data['loanee_id']);
+            ->findOrFail($this->data['loanee_id']);
     }
 
     private function create(): void
     {
         $this->loan = Loan::create([
+            'contact_id' => $this->contact->id,
             'type' => $this->data['type'],
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),
@@ -129,7 +130,7 @@ class CreateLoan extends BaseService implements ServiceInterface
     {
         $feedItem = ContactFeedItem::create([
             'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_NOTE_CREATED,
+            'action' => ContactFeedItem::ACTION_LOAN_CREATED,
         ]);
         $this->loan->feedItem()->save($feedItem);
     }

@@ -9,10 +9,16 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
+use App\Models\ContactFeedItem;
+use App\Models\Loan;
 
 class UpdateLoan extends BaseService implements ServiceInterface
 {
-    private Note $note;
+    private Loan $loan;
+    private Contact $loaner;
+    private Contact $loanee;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -26,10 +32,14 @@ class UpdateLoan extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'note_id' => 'required|integer|exists:notes,id',
-            'emotion_id' => 'nullable|integer|exists:emotions,id',
-            'title' => 'nullable|string|max:255',
-            'body' => 'required|string|max:65535',
+            'loan_id' => 'required|integer|exists:loans,id',
+            'type' => 'required|string|max:255',
+            'name' => 'required|string|max:65535',
+            'description' => 'nullable|string|max:65535',
+            'loaner_id' => 'required|integer|exists:contacts,id',
+            'loanee_id' => 'required|integer|exists:contacts,id',
+            'amount_lent' => 'nullable|integer',
+            'loaned_at' => 'nullable|date_format:Y-m-d',
         ];
     }
 
@@ -49,35 +59,49 @@ class UpdateLoan extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a note.
+     * Update a loan.
      *
      * @param  array  $data
-     * @return Note
+     * @return Loan
      */
-    public function execute(array $data): Note
+    public function execute(array $data): Loan
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
+        $this->update();
+        $this->createFeedItem();
+        $this->log();
 
-        $this->note = Note::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['note_id']);
+        return $this->loan;
+    }
 
-        if ($this->valueOrNull($data, 'emotion_id')) {
-            Emotion::where('account_id', $data['account_id'])
-            ->where('id', $data['emotion_id'])
-            ->firstOrFail();
-        }
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
 
-        $this->note->body = $data['body'];
-        $this->note->title = $this->valueOrNull($data, 'title');
-        $this->note->emotion_id = $this->valueOrNull($data, 'emotion_id');
-        $this->note->save();
+        $this->loan = Loan::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['loan_id']);
+
+        $this->loaner = Contact::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['loaner_id']);
+
+        $this->loanee = Contact::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['loanee_id']);
+    }
+
+    private function update(): void
+    {
+        $this->loan->type = $this->data['type'];
+        $this->loan->name = $this->data['name'];
+        $this->loan->description = $this->valueOrNull($this->data, 'description');
+        $this->loan->amount_lent = $this->valueOrNull($this->data, 'amount_lent');
+        $this->loan->loaner_id = $this->loaner->id;
+        $this->loan->loanee_id = $this->loanee->id;
+        $this->loan->loaned_at = $this->valueOrNull($this->data, 'loaned_at');
+        $this->loan->save();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-
-        $this->log();
-
-        return $this->note;
     }
 
     private function log(): void
@@ -86,11 +110,11 @@ class UpdateLoan extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
+            'action_name' => 'loan_updated',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'note_id' => $this->note->id,
+                'loan_name' => $this->loan->name,
             ]),
         ])->onQueue('low');
 
@@ -98,10 +122,19 @@ class UpdateLoan extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
+            'action_name' => 'loan_updated',
             'objects' => json_encode([
-                'note_id' => $this->note->id,
+                'loan_name' => $this->loan->name,
             ]),
         ])->onQueue('low');
+    }
+
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_LOAN_UPDATED,
+        ]);
+        $this->loan->feedItem()->save($feedItem);
     }
 }
