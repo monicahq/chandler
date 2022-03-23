@@ -265,6 +265,10 @@ class AuditLogHelper
                 $sentence = AuditLogHelper::userNotificationChannelDestroyed($log, $user);
                 break;
 
+            case 'loan_created':
+                $sentence = AuditLogHelper::loanCreated($log, $user);
+                break;
+
             default:
                 $sentence = 'No translation';
                 break;
@@ -1208,6 +1212,29 @@ class AuditLogHelper
             'label' => $log->object->{'label'},
             'type' => $log->object->{'type'},
         ]);
+
+        return $sentence;
+    }
+
+    private static function loanCreated(AuditLog $log, User $user): string
+    {
+        $contact = Contact::find($log->object->{'contact_id'});
+
+        if ($contact) {
+            $sentence = trans('log.loan_created', [
+                'contact_url' => route('contact.show', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
+                'contact_name' => NameHelper::formatContactName($user, $contact),
+                'loan_name' => $log->object->{'loan_name'},
+            ]);
+        } else {
+            $sentence = trans('log.loan_created_object_deleted', [
+                'contact_name' => $log->object->{'contact_name'},
+                'loan_name' => $log->object->{'loan_name'},
+            ]);
+        }
 
         return $sentence;
     }

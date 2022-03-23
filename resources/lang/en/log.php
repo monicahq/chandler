@@ -99,6 +99,8 @@ return [
     'contact_reminder_updated_object_deleted' => 'Updated the reminder called :reminder_name for the contact :contact_name (deleted)',
     'contact_reminder_destroyed' => 'Deleted a reminder for the contact <a href=":contact_url">:contact_name</a>',
     'contact_reminder_destroyed_object_deleted' => 'Deleted a reminder for the contact :contact_name (deleted)',
+    'loan_created' => 'Added a loan called :loan_name for the contact <a href=":contact_url">:contact_name</a>',
+    'loan_created_object_deleted' => 'Added a loan called :loan_name for the contact :contact_name (deleted)',
 
     // relationships
     'relationship_set' => 'Set the contact <a href=":contact_url">:contact_name</a> as :relationship_name of <a href=":other_contact_url">:other_contact_name</a>',
