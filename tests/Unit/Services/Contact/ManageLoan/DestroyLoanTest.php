@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services\Contact\ManageLoan;
 
 use Tests\TestCase;
-use App\Models\Note;
+use App\Models\Loan;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
@@ -14,9 +14,7 @@ use App\Models\ContactFeedItem;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Loan;
 use App\Services\Contact\ManageLoan\DestroyLoan;
-use App\Services\Contact\ManageNote\DestroyNote;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

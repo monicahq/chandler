@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services\Contact\ManageLoan;
 
 use Tests\TestCase;
-use App\Models\Note;
+use App\Models\Loan;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
@@ -13,10 +13,8 @@ use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
-use App\Services\Contact\ManageNote\UpdateNote;
-use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Loan;
 use App\Services\Contact\ManageLoan\UpdateLoan;
+use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

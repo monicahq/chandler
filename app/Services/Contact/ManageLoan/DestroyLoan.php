@@ -3,12 +3,11 @@
 namespace App\Services\Contact\ManageLoan;
 
 use Carbon\Carbon;
-use App\Models\Note;
+use App\Models\Loan;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
-use App\Models\Loan;
 
 class DestroyLoan extends BaseService implements ServiceInterface
 {
