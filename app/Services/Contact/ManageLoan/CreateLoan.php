@@ -3,15 +3,13 @@
 namespace App\Services\Contact\ManageLoan;
 
 use Carbon\Carbon;
-use App\Models\Note;
-use App\Models\Emotion;
+use App\Models\Loan;
+use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
-use App\Models\Loan;
 
 class CreateLoan extends BaseService implements ServiceInterface
 {

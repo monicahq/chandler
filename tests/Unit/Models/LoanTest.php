@@ -3,8 +3,6 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\Note;
-use App\Models\Emotion;
 use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
