@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
+use App\Models\Loan;
 use App\Models\Note;
 use App\Models\Label;
 use App\Models\Gender;
@@ -15,7 +16,6 @@ use App\Models\ContactReminder;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use App\Models\ContactImportantDate;
-use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
