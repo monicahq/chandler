@@ -15,6 +15,7 @@ use App\Models\ContactReminder;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use App\Models\ContactImportantDate;
+use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
@@ -146,5 +147,29 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->reminders()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_loans_as_loaner(): void
+    {
+        $ross = Contact::factory()->create([]);
+        $monica = Contact::factory()->create();
+        $loan = Loan::factory()->create();
+
+        $ross->loanAsLoaner()->sync([$loan->id => ['loanee_id' => $monica->id]]);
+
+        $this->assertTrue($ross->loanAsLoaner()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_loans_as_loanee(): void
+    {
+        $ross = Contact::factory()->create([]);
+        $monica = Contact::factory()->create();
+        $loan = Loan::factory()->create();
+
+        $ross->loanAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
+
+        $this->assertTrue($ross->loanAsLoanee()->exists());
     }
 }

@@ -17,20 +17,4 @@ class LoanTest extends TestCase
 
         $this->assertTrue($loan->contact()->exists());
     }
-
-    /** @test */
-    public function it_has_one_loaner()
-    {
-        $loan = Loan::factory()->create();
-
-        $this->assertTrue($loan->loaner()->exists());
-    }
-
-    /** @test */
-    public function it_has_one_loanee()
-    {
-        $loan = Loan::factory()->create();
-
-        $this->assertTrue($loan->loanee()->exists());
-    }
 }

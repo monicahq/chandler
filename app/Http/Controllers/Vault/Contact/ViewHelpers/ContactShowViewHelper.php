@@ -153,6 +153,10 @@ class ContactShowViewHelper
                 $data = ModuleRemindersViewHelper::data($contact, $user);
             }
 
+            if ($module->type == Module::TYPE_LOANS) {
+                $data = ModuleRemindersViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,

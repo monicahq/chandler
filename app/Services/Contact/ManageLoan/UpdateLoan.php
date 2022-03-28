@@ -93,10 +93,10 @@ class UpdateLoan extends BaseService implements ServiceInterface
         $this->loan->name = $this->data['name'];
         $this->loan->description = $this->valueOrNull($this->data, 'description');
         $this->loan->amount_lent = $this->valueOrNull($this->data, 'amount_lent');
-        $this->loan->loaner_id = $this->loaner->id;
-        $this->loan->loanee_id = $this->loanee->id;
         $this->loan->loaned_at = $this->valueOrNull($this->data, 'loaned_at');
         $this->loan->save();
+
+        $this->loaner->loanAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $this->loanee->id]]);
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();

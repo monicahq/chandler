@@ -28,8 +28,6 @@ class Loan extends Model
         'name',
         'description',
         'amount_lent',
-        'loaner_id',
-        'loanee_id',
         'loaned_at',
     ];
 
@@ -50,26 +48,6 @@ class Loan extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
-    }
-
-    /**
-     * Get the contact who gave the loan.
-     *
-     * @return BelongsTo
-     */
-    public function loaner()
-    {
-        return $this->belongsTo(Contact::class, 'loaner_id');
-    }
-
-    /**
-     * Get the contact who received the loan.
-     *
-     * @return BelongsTo
-     */
-    public function loanee()
-    {
-        return $this->belongsTo(Contact::class, 'loanee_id');
     }
 
     /**

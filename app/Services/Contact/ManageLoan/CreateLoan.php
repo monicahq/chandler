@@ -95,10 +95,10 @@ class CreateLoan extends BaseService implements ServiceInterface
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),
             'amount_lent' => $this->valueOrNull($this->data, 'amount_lent'),
-            'loaner_id' => $this->loaner->id,
-            'loanee_id' => $this->loanee->id,
             'loaned_at' => $this->valueOrNull($this->data, 'loaned_at'),
         ]);
+
+        $this->loaner->loanAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $this->loanee->id]]);
     }
 
     private function log(): void

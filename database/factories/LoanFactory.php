@@ -28,8 +28,6 @@ class LoanFactory extends Factory
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'amount_lent' => $this->faker->randomNumber(),
-            'loaner_id' => Contact::factory(),
-            'loanee_id' => Contact::factory(),
             'loaned_at' => $this->faker->dateTimeThisCentury(),
         ];
     }

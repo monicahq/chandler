@@ -89,6 +89,8 @@
                 <reminders v-if="module.type == 'reminders'" :data="reminders" />
 
                 <feed v-if="module.type == 'feed'" :data="feed" />
+
+                <loans v-if="module.type == 'loans'" :data="notes" />
               </div>
             </div>
           </div>
@@ -108,6 +110,7 @@ import ImportantDates from '@/Shared/Modules/ImportantDates';
 import Labels from '@/Shared/Modules/Labels';
 import Reminders from '@/Shared/Modules/Reminders';
 import Feed from '@/Shared/Modules/Feed';
+import Loans from '@/Shared/Modules/Loans';
 
 export default {
   components: {
@@ -120,6 +123,7 @@ export default {
     Labels,
     Reminders,
     Feed,
+    Loans,
   },
 
   props: {

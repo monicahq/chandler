@@ -182,8 +182,6 @@ class UpdateLoanTest extends TestCase
             'type' => Loan::TYPE_DEBT,
             'name' => 'resto',
             'description' => 'This is incredible',
-            'loaner_id' => $loaner->id,
-            'loanee_id' => $loanee->id,
             'amount_lent' => 123,
             'loaned_at' => '2020-01-01 00:00:00',
         ]);
@@ -192,6 +190,12 @@ class UpdateLoanTest extends TestCase
             'contact_id' => $contact->id,
             'feedable_id' => $loan->id,
             'feedable_type' => 'App\Models\Loan',
+        ]);
+
+        $this->assertDatabaseHas('contact_loan', [
+            'loan_id' => $loan->id,
+            'loaner_id' => $loaner->id,
+            'loanee_id' => $loanee->id,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
