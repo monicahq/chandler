@@ -15,8 +15,17 @@
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon-sidebar relative inline h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon-sidebar relative inline h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </span>
 
@@ -28,7 +37,7 @@
     <div>
       <ul class="mb-4">
         <!-- show all -->
-        <li class="inline-block mr-5">
+        <li class="mr-5 inline-block">
           <div class="mb-2 flex items-center">
             <input
               id="nickname"
@@ -37,14 +46,12 @@
               name="name-order"
               type="radio"
               class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-              Show all
-            </label>
+            <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700"> Show all </label>
           </div>
         </li>
 
         <!-- only things I've borrewed -->
-        <li class="inline-block mr-5">
+        <li class="mr-5 inline-block">
           <div class="mb-2 flex items-center">
             <input
               id="nickname"
@@ -78,7 +85,6 @@
 
       <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
         <li class="item-list border-b border-gray-200 hover:bg-slate-50">
-
           <div class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
               <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
@@ -87,10 +93,7 @@
 
             <!-- actions -->
             <ul class="text-sm">
-              <li
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
-                Edit
-              </li>
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Edit</li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
             </ul>
           </div>
