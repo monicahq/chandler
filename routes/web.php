@@ -44,6 +44,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -243,6 +244,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('modules', [PersonalizeModulesController::class, 'store'])->name('module.store');
                 Route::put('modules/{module}', [PersonalizeModulesController::class, 'update'])->name('module.update');
                 Route::delete('modules/{module}', [PersonalizeModulesController::class, 'destroy'])->name('module.destroy');
+
+                // currencies
+                Route::get('currencies', [PersonalizeCurrencyController::class, 'index'])->name('currency.index');
+                Route::put('currencies/{currency}', [PersonalizeCurrencyController::class, 'update'])->name('currency.update');
             });
 
             // cancel

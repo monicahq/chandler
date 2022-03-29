@@ -15,6 +15,7 @@ use App\Models\AddressType;
 use App\Models\PetCategory;
 use App\Models\RelationshipGroupType;
 use App\Models\ContactInformationType;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase
@@ -140,5 +141,16 @@ class AccountTest extends TestCase
         ]);
 
         $this->assertTrue($account->emotions()->exists());
+    }
+
+    /** @test */
+    public function it_belongs_to_many_currencies(): void
+    {
+        $account = Account::factory()->create();
+        $currency = Currency::factory()->create();
+
+        $account->currencies()->sync([$currency->id => ['active' => true]]);
+
+        $this->assertTrue($account->currencies()->exists());
     }
 }
