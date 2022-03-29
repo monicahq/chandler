@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers;
 
-use App\Models\Gender;
 use App\Models\Account;
 use App\Models\Currency;
 

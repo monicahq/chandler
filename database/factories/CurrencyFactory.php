@@ -2,9 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\Currency;
-use App\Models\GroupType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CurrencyFactory extends Factory

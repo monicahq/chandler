@@ -3,8 +3,8 @@
 namespace Tests\Unit\Jobs;
 
 use Tests\TestCase;
-use App\Jobs\SetupAccount;
 use App\Models\Currency;
+use App\Jobs\SetupAccount;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

@@ -33,6 +33,7 @@ use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesControll
 use App\Http\Controllers\Settings\Notifications\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
+use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
@@ -44,7 +45,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
