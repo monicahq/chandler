@@ -31,6 +31,7 @@ return new class extends Migration
         });
 
         Schema::create('account_currencies', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('currency_id');
             $table->unsignedBigInteger('account_id');
             $table->boolean('active')->default(true);

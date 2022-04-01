@@ -94,12 +94,17 @@
             v-for="currency in localCurrencies"
             :key="currency.id"
             class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-            <div class="flex justify-between">
+            <div class="flex justify-between" :class="!currency.active ? 'bg-slate-200' : ''">
               <div>
                 <span class="mr-2 text-sm text-gray-500">{{ currency.code }}</span>
                 <span>{{ currency.name }}</span>
               </div>
-              <span class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Disable </span>
+
+              <!-- enable -->
+              <span v-if="!currency.active" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Enable </span>
+
+              <!-- disable -->
+              <span v-else class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Disable </span>
             </div>
           </li>
         </ul>
