@@ -8,6 +8,7 @@ use App\Models\Account;
 use App\Models\Currency;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
+use Illuminate\Support\Facades\DB;
 
 class PersonalizeCurrencyIndexViewHelperTest extends TestCase
 {
@@ -39,14 +40,15 @@ class PersonalizeCurrencyIndexViewHelperTest extends TestCase
     {
         $currency = Currency::factory()->create();
         $account = Account::factory()->create();
-        $account->currencies()->attach($currency->id, ['active' => true]);
-        $array = PersonalizeCurrencyIndexViewHelper::dtoCurrency($currency);
+        $account->currencies()->attach($currency->id, ['active' => false]);
+
+        $array = PersonalizeCurrencyIndexViewHelper::dtoCurrency($currency, $account);
         $this->assertEquals(
             [
                 'id' => $currency->id,
                 'code' => $currency->code,
                 'name' => 'Canadian Dollar',
-                'active' => true,
+                'active' => false,
                 'url' => [
                     'update' => env('APP_URL').'/settings/personalize/currencies/'.$currency->id,
                 ],

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Currency;
+use Illuminate\Support\Facades\DB;
 
 class PersonalizeCurrencyIndexViewHelper
 {
@@ -15,7 +16,7 @@ class PersonalizeCurrencyIndexViewHelper
 
         $collection = collect();
         foreach ($currencies as $currency) {
-            $collection->push(self::dtoCurrency($currency));
+            $collection->push(self::dtoCurrency($currency, $account));
         }
 
         return [
@@ -27,13 +28,18 @@ class PersonalizeCurrencyIndexViewHelper
         ];
     }
 
-    public static function dtoCurrency(Currency $currency): array
+    public static function dtoCurrency(Currency $currency, Account $account): array
     {
+        $record = DB::table('account_currencies')
+            ->where('account_id', $account->id)
+            ->where('currency_id', $currency->id)
+            ->first();
+
         return [
             'id' => $currency->id,
             'code' => $currency->code,
             'name' => trans('currencies.'.$currency->code),
-            'active' => $currency->pivot->active,
+            'active' => $record->active,
             'url' => [
                 'update' => route('settings.personalize.currency.update', [
                     'currency' => $currency->id,
