@@ -49,7 +49,7 @@ class PersonalizeCurrencyIndexViewHelperTest extends TestCase
                 'id' => $currency->id,
                 'code' => $currency->code,
                 'name' => 'Canadian Dollar',
-                'active' => false,
+                'active' => 0,
                 'url' => [
                     'update' => env('APP_URL').'/settings/personalize/currencies/'.$currency->id,
                 ],
