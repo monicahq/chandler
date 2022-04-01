@@ -8,7 +8,6 @@ use App\Models\Account;
 use App\Models\Currency;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
-use Illuminate\Support\Facades\DB;
 
 class PersonalizeCurrencyIndexViewHelperTest extends TestCase
 {
