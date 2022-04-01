@@ -6,15 +6,11 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageGenders\UpdateGender;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
-use App\Models\Account;
-use App\Models\Currency;
-use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
-use App\Services\Account\ManageCurrencies\EnableAllCurrencies;
 use App\Services\Account\ManageCurrencies\ToggleCurrency;
+use App\Services\Account\ManageCurrencies\EnableAllCurrencies;
+use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
+use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 
 class PersonalizeCurrencyController extends Controller
 {

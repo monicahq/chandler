@@ -3,12 +3,9 @@
 namespace App\Services\Account\ManageCurrencies;
 
 use App\Models\User;
-use App\Models\Gender;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
-use App\Models\Currency;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
 
 class DisableAllCurrencies extends BaseService implements ServiceInterface
 {
