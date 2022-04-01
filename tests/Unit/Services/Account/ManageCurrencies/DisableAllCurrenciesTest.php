@@ -4,18 +4,13 @@ namespace Tests\Unit\Services\Account\ManageCurrencies;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Gender;
 use App\Models\Account;
-use App\Jobs\CreateAuditLog;
-use Illuminate\Support\Facades\Queue;
+use App\Models\Currency;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Currency;
-use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
-use App\Services\Account\ManageCurrencies\ToggleCurrency;
-use App\Services\Account\ManageGenders\CreateGender;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
 
 class DisableAllCurrenciesTest extends TestCase
 {
