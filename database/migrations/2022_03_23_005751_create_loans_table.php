@@ -24,7 +24,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('amount_lent')->nullable();
             $table->datetime('loaned_at')->nullable();
-            $table->datetime('loaned_at')->nullable();
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
