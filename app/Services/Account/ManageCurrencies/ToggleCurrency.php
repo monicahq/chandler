@@ -3,12 +3,10 @@
 namespace App\Services\Account\ManageCurrencies;
 
 use App\Models\User;
-use App\Models\Gender;
-use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
 use App\Models\Currency;
+use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
 
 class ToggleCurrency extends BaseService implements ServiceInterface
 {
@@ -58,7 +56,7 @@ class ToggleCurrency extends BaseService implements ServiceInterface
             ->where('account_id', $data['account_id'])
             ->where('currency_id', $data['currency_id'])
             ->update([
-                'active' => !$record->active,
+                'active' => ! $record->active,
             ]);
     }
 }
