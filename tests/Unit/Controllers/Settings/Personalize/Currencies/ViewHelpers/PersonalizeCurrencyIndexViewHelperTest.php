@@ -29,6 +29,8 @@ class PersonalizeCurrencyIndexViewHelperTest extends TestCase
             [
                 'settings' => env('APP_URL').'/settings',
                 'personalize' => env('APP_URL').'/settings/personalize',
+                'enable_all' => env('APP_URL').'/settings/personalize/currencies',
+                'disable_all' => env('APP_URL'). '/settings/personalize/currencies',
             ],
             $array['url']
         );

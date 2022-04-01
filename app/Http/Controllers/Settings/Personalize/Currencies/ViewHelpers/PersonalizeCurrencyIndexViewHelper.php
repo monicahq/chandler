@@ -24,6 +24,8 @@ class PersonalizeCurrencyIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
+                'enable_all' => route('settings.personalize.currency.store'),
+                'disable_all' => route('settings.personalize.currency.destroy'),
             ],
         ];
     }

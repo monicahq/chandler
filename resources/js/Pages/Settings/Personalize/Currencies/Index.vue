@@ -88,23 +88,40 @@
           </div>
         </div>
 
+        <div class="text-right mb-3">
+          <ul>
+            <li class="inline mr-2">
+              <span @click="enableAll" class="inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Enable all
+              </span>
+            </li>
+            <li class="inline">
+              <span @click="disableAll" class="inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Disable all
+              </span>
+            </li>
+          </ul>
+        </div>
+
         <!-- list of currencies -->
         <ul v-if="localCurrencies.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
           <li
             v-for="currency in localCurrencies"
             :key="currency.id"
-            class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-            <div class="flex justify-between" :class="!currency.active ? 'bg-slate-200' : ''">
+            class="item-list border-b border-gray-200 hover:bg-slate-50">
+            <div class="flex justify-between px-3 py-2" :class="!currency.active ? 'bg-slate-200' : ''">
               <div>
                 <span class="mr-2 text-sm text-gray-500">{{ currency.code }}</span>
                 <span>{{ currency.name }}</span>
               </div>
 
               <!-- enable -->
-              <span v-if="!currency.active" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Enable </span>
+              <span v-if="!currency.active" @click="update(currency)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Enable
+              </span>
 
               <!-- disable -->
-              <span v-else class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Disable </span>
+              <span v-else @click="update(currency)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Disable </span>
             </div>
           </li>
         </ul>
@@ -147,9 +164,6 @@ export default {
 
   data() {
     return {
-      loadingState: '',
-      createGenderModalShown: false,
-      renameGenderModalShownId: 0,
       localCurrencies: [],
       form: {
         name: '',
@@ -164,17 +178,42 @@ export default {
 
   methods: {
     update(currency) {
-      this.loadingState = 'loading';
 
       axios
         .put(currency.url.update, this.form)
         .then((response) => {
           this.flash('The currency has been updated', 'success');
-          this.localCurrencies[this.localCurrencies.findIndex((x) => x.id === currency.id)] = response.data.data;
-          this.loadingState = null;
+          this.localCurrencies[this.localCurrencies.findIndex((x) => x.id === currency.id)].active = !currency.active;
         })
         .catch((error) => {
-          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    enableAll() {
+      axios
+        .post(this.data.url.enable_all)
+        .then((response) => {
+          this.flash('The currencies have been updated', 'success');
+          this.localCurrencies.forEach(entry => {
+            entry.active = true;
+          });
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
+
+    disableAll() {
+      axios
+        .delete(this.data.url.disable_all)
+        .then((response) => {
+          this.flash('The currencies have been updated', 'success');
+          this.localCurrencies.forEach(entry => {
+            entry.active = false;
+          });
+        })
+        .catch((error) => {
           this.form.errors = error.response.data;
         });
     },

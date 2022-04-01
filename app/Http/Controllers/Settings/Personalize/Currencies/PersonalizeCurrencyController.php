@@ -10,6 +10,11 @@ use App\Services\Account\ManageGenders\UpdateGender;
 use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
+use App\Models\Account;
+use App\Models\Currency;
+use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
+use App\Services\Account\ManageCurrencies\EnableAllCurrencies;
+use App\Services\Account\ManageCurrencies\ToggleCurrency;
 
 class PersonalizeCurrencyController extends Controller
 {
@@ -26,14 +31,41 @@ class PersonalizeCurrencyController extends Controller
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'gender_id' => $currencyId,
-            'name' => $request->input('name'),
+            'currency_id' => $currencyId,
         ];
 
-        $gender = (new UpdateGender)->execute($data);
+        (new ToggleCurrency)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGenderIndexViewHelper::dtoGender($gender),
+            'data' => true,
         ], 200);
+    }
+
+    public function store(Request $request)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+        ];
+
+        (new EnableAllCurrencies)->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 201);
+    }
+
+    public function destroy(Request $request)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+        ];
+
+        (new DisableAllCurrencies)->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 201);
     }
 }

@@ -11,17 +11,18 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Currency;
+use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
 use App\Services\Account\ManageCurrencies\ToggleCurrency;
 use App\Services\Account\ManageGenders\CreateGender;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ToggleCurrencyTest extends TestCase
+class DisableAllCurrenciesTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_toggles_a_currency(): void
+    public function it_disables_all_currencies(): void
     {
         $ross = $this->createAdministrator();
         $this->executeService($ross, $ross->account);
@@ -35,7 +36,7 @@ class ToggleCurrencyTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new ToggleCurrency)->execute($request);
+        (new DisableAllCurrencies)->execute($request);
     }
 
     /** @test */
@@ -60,21 +61,18 @@ class ToggleCurrencyTest extends TestCase
     private function executeService(User $author, Account $account): void
     {
         $currency = Currency::factory()->create();
-
-        $account->currencies()->attach($currency->id, ['active' => false]);
+        $account->currencies()->attach($currency->id, ['active' => true]);
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'currency_id' => $currency->id,
         ];
 
-        (new ToggleCurrency)->execute($request);
+        (new DisableAllCurrencies)->execute($request);
 
         $this->assertDatabaseHas('account_currencies', [
             'account_id' => $account->id,
-            'currency_id' => $currency->id,
-            'active' => true,
+            'active' => false,
         ]);
     }
 }

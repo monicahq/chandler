@@ -248,6 +248,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 // currencies
                 Route::get('currencies', [PersonalizeCurrencyController::class, 'index'])->name('currency.index');
                 Route::put('currencies/{currency}', [PersonalizeCurrencyController::class, 'update'])->name('currency.update');
+                Route::post('currencies', [PersonalizeCurrencyController::class, 'store'])->name('currency.store');
+                Route::delete('currencies', [PersonalizeCurrencyController::class, 'destroy'])->name('currency.destroy');
             });
 
             // cancel
