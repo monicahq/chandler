@@ -88,9 +88,9 @@
           </div>
         </div>
 
-        <div class="text-right mb-3">
+        <div class="mb-3 text-right">
           <ul>
-            <li class="inline mr-2">
+            <li class="mr-2 inline">
               <span @click="enableAll" class="inline cursor-pointer text-sky-500 hover:text-blue-900">
                 Enable all
               </span>
@@ -116,12 +116,20 @@
               </div>
 
               <!-- enable -->
-              <span v-if="!currency.active" @click="update(currency)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+              <span
+                v-if="!currency.active"
+                @click="update(currency)"
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
                 Enable
               </span>
 
               <!-- disable -->
-              <span v-else @click="update(currency)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"> Disable </span>
+              <span
+                v-else
+                @click="update(currency)"
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Disable
+              </span>
             </div>
           </li>
         </ul>
@@ -178,7 +186,6 @@ export default {
 
   methods: {
     update(currency) {
-
       axios
         .put(currency.url.update, this.form)
         .then((response) => {
@@ -195,7 +202,7 @@ export default {
         .post(this.data.url.enable_all)
         .then((response) => {
           this.flash('The currencies have been updated', 'success');
-          this.localCurrencies.forEach(entry => {
+          this.localCurrencies.forEach((entry) => {
             entry.active = true;
           });
         })
@@ -209,7 +216,7 @@ export default {
         .delete(this.data.url.disable_all)
         .then((response) => {
           this.flash('The currencies have been updated', 'success');
-          this.localCurrencies.forEach(entry => {
+          this.localCurrencies.forEach((entry) => {
             entry.active = false;
           });
         })
