@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers;
 
-use App\Models\Label;
-use App\Models\Contact;
 use App\Models\Loan;
 use App\Models\User;
+use App\Models\Contact;
 
 class ModuleLoanViewHelper
 {
