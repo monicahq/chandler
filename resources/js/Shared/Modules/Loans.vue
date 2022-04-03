@@ -67,7 +67,9 @@
                     name="name-order"
                     type="radio"
                     class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700"> The loan is an object </label>
+                  <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    The loan is an object
+                  </label>
                 </div>
               </li>
 
@@ -104,7 +106,7 @@
           </div>
 
           <!-- amount + currency -->
-          <div class="border-b border-gray-200 p-5 flex">
+          <div class="flex border-b border-gray-200 p-5">
             <text-input
               :ref="'label'"
               v-model="form.label"
@@ -262,19 +264,25 @@
       </ul>
 
       <!-- list of loans -->
-      <div class="flex mb-5">
-        <div class="flex items-center mr-3">
+      <div class="mb-5 flex">
+        <div class="mr-3 flex items-center">
           <small-contact :show-name="false" :preview-contact-size="30" />
 
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
 
           <small-contact :show-name="false" :preview-contact-size="30" />
         </div>
 
-        <div class="item-list rounded-lg border border-gray-200 bg-white hover:bg-slate-50 w-full">
-          <div class="px-3 py-2 border-b border-gray-200">
+        <div class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
+          <div class="border-b border-gray-200 px-3 py-2">
             <div class="flex items-center justify-between">
               <span class="mr-2">ldaskjflasdkjf</span>
               <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
@@ -294,18 +302,24 @@
       </div>
 
       <div class="flex">
-        <div class="flex items-center mr-3">
+        <div class="mr-3 flex items-center">
           <small-contact :show-name="false" :preview-contact-size="30" />
 
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
 
           <small-contact :show-name="false" :preview-contact-size="30" />
         </div>
 
-        <div class="item-list rounded-lg border border-gray-200 bg-white hover:bg-slate-50 w-full">
-          <div class="px-3 py-2 border-b border-gray-200">
+        <div class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
+          <div class="border-b border-gray-200 px-3 py-2">
             <div class="flex items-center justify-between">
               <span class="mr-2">ldaskjflasdkjf</span>
               <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
