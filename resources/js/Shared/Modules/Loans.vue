@@ -7,6 +7,15 @@
 .icon-note {
   top: -1px;
 }
+
+.item-list {
+  &:hover {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 </style>
 
 <template>
@@ -35,6 +44,175 @@
     </div>
 
     <div>
+      <!-- add a loan modal -->
+      <form
+        v-if="createLoanModalShown"
+        class="mb-6 rounded-lg border border-gray-200 bg-white"
+        @submit.prevent="submit()">
+        <div class="border-b border-gray-200">
+          <div v-if="form.errors.length > 0" class="p-5">
+            <errors :errors="form.errors" />
+          </div>
+
+          <!-- loan options -->
+          <div class="border-b border-gray-200 p-5">
+            <ul class="">
+              <!-- show all -->
+              <li class="mr-5 inline-block">
+                <div class="flex items-center">
+                  <input
+                    id="nickname"
+                    v-model="form.nameOrder"
+                    value="%nickname%"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700"> The loan is an object </label>
+                </div>
+              </li>
+
+              <li class="mr-5 inline-block">
+                <div class="flex items-center">
+                  <input
+                    id="nickname"
+                    v-model="form.nameOrder"
+                    value="%nickname%"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    The loan is monetary
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- name -->
+          <div class="border-b border-gray-200 p-5">
+            <text-input
+              :ref="'label'"
+              v-model="form.label"
+              :label="'What is the loan?'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'block w-full'"
+              :required="true"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createLoanModalShown = false" />
+          </div>
+
+          <!-- amount + currency -->
+          <div class="border-b border-gray-200 p-5 flex">
+            <text-input
+              :ref="'label'"
+              v-model="form.label"
+              :label="'How much money was lent?'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'mr-2'"
+              :required="true"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createLoanModalShown = false" />
+
+            <dropdown
+              v-model="form.pronoun_id"
+              :data="data.pronouns"
+              :required="false"
+              :div-outer-class="'mb-5'"
+              :placeholder="'Choose a value'"
+              :dropdown-class=""
+              :label="'Currency'" />
+          </div>
+
+          <!-- loaned at -->
+          <div class="border-b border-gray-200 p-5">
+            <p class="mb-2 block text-sm">When was the loan made?</p>
+
+            <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
+              <template v-slot="{ inputValue, inputEvents }">
+                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+              </template>
+            </v-date-picker>
+          </div>
+
+          <div class="p-5">
+            <p class="mb-1">How often should we remind you about this date?</p>
+            <p class="mb-1 text-sm text-gray-600">
+              If the date is in the past, the next occurence of the date will be next year.
+            </p>
+
+            <div class="mt-4 ml-4">
+              <div class="mb-2 flex items-center">
+                <input
+                  id="one_time"
+                  v-model="form.reminderChoice"
+                  value="one_time"
+                  name="reminder-frequency"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  Only once, when the next occurence of the date occurs.
+                </label>
+              </div>
+
+              <div class="mb-2 flex items-center">
+                <input
+                  id="recurring"
+                  v-model="form.reminderChoice"
+                  value="recurring"
+                  name="reminder-frequency"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                <label
+                  for="recurring"
+                  class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
+                  <span class="mr-2">Every</span>
+
+                  <select
+                    :id="id"
+                    v-model="form.frequencyNumber"
+                    class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                    :required="required"
+                    @change="change">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+
+                  <select
+                    :id="id"
+                    v-model="form.frequencyType"
+                    class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                    :required="required"
+                    @change="change">
+                    <option value="recurring_day">day</option>
+                    <option value="recurring_month">month</option>
+                    <option value="recurring_year">year</option>
+                  </select>
+
+                  <span>after the next occurence of the date.</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between p-5">
+          <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createLoanModalShown = false" />
+          <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        </div>
+      </form>
+
       <ul class="mb-4">
         <!-- show all -->
         <li class="mr-5 inline-block">
@@ -83,161 +261,67 @@
         </li>
       </ul>
 
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
-        <li class="item-list border-b border-gray-200 hover:bg-slate-50">
-          <div class="flex items-center justify-between px-3 py-2">
-            <div class="flex items-center">
-              <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
-              <span class="mr-2">ldaskjflasdkjf</span>
-            </div>
+      <!-- list of loans -->
+      <div class="flex mb-5">
+        <div class="flex items-center mr-3">
+          <small-contact :show-name="false" :preview-contact-size="30" />
 
-            <!-- actions -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+
+          <small-contact :show-name="false" :preview-contact-size="30" />
+        </div>
+
+        <div class="item-list rounded-lg border border-gray-200 bg-white hover:bg-slate-50 w-full">
+          <div class="px-3 py-2 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <span class="mr-2">ldaskjflasdkjf</span>
+              <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <div class="flex items-center justify-between px-3 py-2">
+            <!-- <small-contact /> -->
             <ul class="text-sm">
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
               <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Edit</li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
             </ul>
           </div>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </div>
 
-    <!-- loans -->
-    <div v-if="localNotes.length > 0">
-      <div v-for="note in localNotes" :key="note.id" class="mb-4 rounded border border-gray-200 last:mb-0">
-        <!-- body of the note, if not being edited -->
-        <div v-if="editedNoteId !== note.id">
-          <div v-if="note.title" class="font-semibol mb-1 border-b border-gray-200 p-3 text-xs text-gray-600">
-            {{ note.title }}
-          </div>
+      <div class="flex">
+        <div class="flex items-center mr-3">
+          <small-contact :show-name="false" :preview-contact-size="30" />
 
-          <!-- excerpt, if it exists -->
-          <div v-if="!note.show_full_content && note.body_excerpt" class="p-3">
-            {{ note.body_excerpt }}
-            <span class="cursor-pointer text-sky-500 hover:text-blue-900" @click="showFullBody(note)"> View all </span>
-          </div>
-          <!-- full body -->
-          <div v-else class="p-3">
-            {{ note.body }}
-          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
 
-          <!-- details -->
-          <div
-            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50">
-            <div>
-              <!-- emotion -->
-              <div v-if="note.emotion" class="relative mr-3 inline">
-                {{ note.emotion.name }}
-              </div>
-
-              <!-- date -->
-              <div class="relative mr-3 inline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-note relative inline h-3 w-3 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ note.written_at }}
-              </div>
-
-              <!-- author -->
-              <div class="relative mr-3 inline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-note relative inline h-3 w-3 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ note.author }}
-              </div>
-            </div>
-            <div>
-              <hover-menu
-                :show-edit="true"
-                :show-delete="true"
-                @edit="showEditNoteModal(note)"
-                @delete="destroy(note)" />
-            </div>
-          </div>
+          <small-contact :show-name="false" :preview-contact-size="30" />
         </div>
 
-        <!-- edit modal form -->
-        <form v-if="editedNoteId === note.id" class="bg-white" @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5">
-            <errors :errors="form.errors" />
-
-            <text-area
-              v-model="form.body"
-              :label="'Body'"
-              :rows="10"
-              :required="true"
-              :maxlength="65535"
-              :textarea-class="'block w-full mb-3'" />
-
-            <!-- title -->
-            <text-input
-              :ref="'newTitle'"
-              v-model="form.title"
-              :label="'Title'"
-              :type="'text'"
-              :input-class="'block w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="editedNoteId = 0" />
-
-            <!-- emotion -->
-            <div v-if="form.emotion" class="mt-2 block w-full">
-              <p class="mb-2">How did you feel?</p>
-              <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
-                <input
-                  :value="emotion.id"
-                  v-model="form.emotion"
-                  :id="emotion.type"
-                  name="emotion"
-                  type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
-              </div>
+        <div class="item-list rounded-lg border border-gray-200 bg-white hover:bg-slate-50 w-full">
+          <div class="px-3 py-2 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <span class="mr-2">ldaskjflasdkjf</span>
+              <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
             </div>
           </div>
 
-          <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedNoteId = 0" />
-            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
+          <!-- actions -->
+          <div class="flex items-center justify-between px-3 py-2">
+            <!-- <small-contact /> -->
+            <ul class="text-sm">
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
+              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Edit</li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
+            </ul>
           </div>
-        </form>
-      </div>
-
-      <!-- view all button -->
-      <div v-if="moduleMode" class="text-center">
-        <inertia-link :href="data.url.index" class="text-sky-500 hover:text-blue-900"> View all notes </inertia-link>
-      </div>
-
-      <!-- pagination -->
-      <div v-if="!moduleMode" class="flex justify-between text-center">
-        <inertia-link
-          v-show="paginator.previousPageUrl"
-          class="fl dib"
-          :href="paginator.previousPageUrl"
-          title="Previous">
-          &larr; Previous
-        </inertia-link>
-        <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">
-          Next &rarr;
-        </inertia-link>
+        </div>
       </div>
     </div>
 
@@ -255,6 +339,8 @@ import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
+import SmallContact from '@/Shared/SmallContact';
+import Dropdown from '@/Shared/Form/Dropdown';
 
 export default {
   components: {
@@ -264,6 +350,8 @@ export default {
     TextInput,
     TextArea,
     Errors,
+    SmallContact,
+    Dropdown,
   },
 
   props: {

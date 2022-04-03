@@ -51,6 +51,36 @@ class Loan extends Model
     }
 
     /**
+     * Get the currency associated with the loan.
+     *
+     * @return BelongsTo
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
+    /**
+     * Get the contact that did the loan.
+     *
+     * @return BelongsTo
+     */
+    public function loaners()
+    {
+        return $this->belongsToMany(Contact::class, 'contact_loan', 'loan_id', 'loaner_id');
+    }
+
+    /**
+     * Get the contact records the loan was made to.
+     *
+     * @return BelongsTo
+     */
+    public function loanees()
+    {
+        return $this->belongsToMany(Contact::class, 'contact_loan', 'loan_id', 'loanee_id');
+    }
+
+    /**
      * Get the loan's feed item.
      */
     public function feedItem()

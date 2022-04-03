@@ -150,6 +150,17 @@ class ContactTest extends TestCase
     }
 
     /** @test */
+    public function it_has_many_loans(): void
+    {
+        $ross = Contact::factory()->create();
+        Loan::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->loans()->exists());
+    }
+
+    /** @test */
     public function it_has_many_loans_as_loaner(): void
     {
         $ross = Contact::factory()->create([]);

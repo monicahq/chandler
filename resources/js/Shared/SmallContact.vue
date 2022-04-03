@@ -15,15 +15,16 @@
           </div>
         </div>
       </template>
-      <template #title>
-        <span>Lorraine Del Giacco</span>
+      <template v-if="showName" #title>
+        <span>{{ contact.name }}</span>
       </template>
       <div class="inline-flex items-center text-sm">
         <img
-          class="mr-2 inline rounded-full"
-          src="https://ucarecdn.com/2f86ee48-9258-4b5c-aaf5-82269edcf770/-/scale_crop/25x25/smart/"
+          class="inline rounded-full"
+          :class="showName ? 'mr-2' : ''"
+          :src="'https://ucarecdn.com/2f86ee48-9258-4b5c-aaf5-82269edcf770/-/scale_crop/' + previewContactSize + 'x' + previewContactSize + '/smart/'"
           alt="" />
-        <a class="colored-link" href="">Lorraine Del Giaccosldkfjalsdjkfs</a>
+        <a v-if="showName" class="colored-link" href="">{{ contact.name }}</a>
       </div>
     </a-popover>
   </div>
@@ -38,6 +39,18 @@ export default {
       type: String,
       default: '0px',
     },
+    contact: {
+      type: Object,
+      default: null,
+    },
+    previewContactSize: {
+      type: Number,
+      default: 18,
+    },
+    showName: {
+      type: Boolean,
+      default: true,
+    }
   },
 };
 </script>

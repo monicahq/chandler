@@ -23,9 +23,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('amount_lent')->nullable();
+            $table->unsignedBigInteger('currency_id')->nullable();
             $table->datetime('loaned_at')->nullable();
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
         });
 
         Schema::create('contact_loan', function (Blueprint $table) {
