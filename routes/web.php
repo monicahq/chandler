@@ -45,6 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Settings\Preferences\PreferencesNumberFormatController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -146,6 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('name', [PreferencesNameOrderController::class, 'store'])->name('name.store');
             Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
             Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
+            Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
         });
 
         // notifications
