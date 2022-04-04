@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use App\Models\Contact;
 
 class MonetaryNumberHelper
 {
@@ -31,32 +30,32 @@ class MonetaryNumberHelper
         switch ($user->number_format) {
             // 1,234.56
             case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
-                for ($i = 0; $i < $lengthThousands; ++$i) {
+                for ($i = 0; $i < $lengthThousands; $i++) {
                     if (($i % 3 == 0) && $i) {
-                        $formattedNumber = ',' . $formattedNumber;
+                        $formattedNumber = ','.$formattedNumber;
                     }
-                    $formattedNumber = $thousands[$lengthThousands - $i - 1] . $formattedNumber;
+                    $formattedNumber = $thousands[$lengthThousands - $i - 1].$formattedNumber;
                 }
-                $formattedNumber = $formattedNumber . '.'. $decimals;
+                $formattedNumber = $formattedNumber.'.'.$decimals;
                 break;
 
             // 1 234,56
             case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
-                for ($i = 0; $i < $lengthThousands; ++$i) {
+                for ($i = 0; $i < $lengthThousands; $i++) {
                     if (($i % 3 == 0) && $i) {
-                        $formattedNumber = ' ' . $formattedNumber;
+                        $formattedNumber = ' '.$formattedNumber;
                     }
-                    $formattedNumber = $thousands[$lengthThousands - $i - 1] . $formattedNumber;
+                    $formattedNumber = $thousands[$lengthThousands - $i - 1].$formattedNumber;
                 }
-                $formattedNumber = $formattedNumber . ',' . $decimals;
+                $formattedNumber = $formattedNumber.','.$decimals;
                 break;
 
             // 1234.56
             case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
-                for ($i = 0; $i < $lengthThousands; ++$i) {
-                    $formattedNumber = $thousands[$lengthThousands - $i - 1] . $formattedNumber;
+                for ($i = 0; $i < $lengthThousands; $i++) {
+                    $formattedNumber = $thousands[$lengthThousands - $i - 1].$formattedNumber;
                 }
-                $formattedNumber = $formattedNumber . '.' . $decimals;
+                $formattedNumber = $formattedNumber.'.'.$decimals;
                 break;
 
             default:

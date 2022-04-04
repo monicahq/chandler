@@ -162,7 +162,7 @@ class PreferencesIndexViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/settings/preferences/number',
+                'store' => env('APP_URL').'/settings/preferences/number',
             ],
             $array['url']
         );

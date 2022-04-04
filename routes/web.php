@@ -26,6 +26,7 @@ use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
 use App\Http\Controllers\Settings\Notifications\NotificationsToggleController;
 use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
+use App\Http\Controllers\Settings\Preferences\PreferencesNumberFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
@@ -45,7 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Http\Controllers\Settings\Preferences\PreferencesNumberFormatController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

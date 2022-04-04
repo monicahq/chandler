@@ -2,12 +2,9 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Helpers\MonetaryNumberHelper;
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Contact;
-use App\Helpers\NameHelper;
-use App\Helpers\NumberHelper;
+use App\Helpers\MonetaryNumberHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class MonetaryNumberHelperTest extends TestCase

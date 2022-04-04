@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Settings\Preferences;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\Preferences\StoreDateFormatPreference;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 use App\Services\User\Preferences\StoreNumberFormatPreference;
+use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 
 class PreferencesNumberFormatController extends Controller
 {

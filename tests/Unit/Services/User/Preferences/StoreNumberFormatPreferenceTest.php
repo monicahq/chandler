@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\Preferences\StoreDateFormatPreference;
 use App\Services\User\Preferences\StoreNumberFormatPreference;
 
 class StoreNumberFormatPreferenceTest extends TestCase

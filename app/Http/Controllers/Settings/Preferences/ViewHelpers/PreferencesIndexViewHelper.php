@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Settings\Preferences\ViewHelpers;
 
-use App\Helpers\MonetaryNumberHelper;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Contact;
