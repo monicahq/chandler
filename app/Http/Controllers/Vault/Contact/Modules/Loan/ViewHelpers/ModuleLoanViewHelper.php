@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers;
+namespace App\Http\Controllers\Vault\Contact\Modules\Loan\ViewHelpers;
 
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Contact;
+use App\Models\Currency;
 
 class ModuleLoanViewHelper
 {
@@ -16,15 +17,19 @@ class ModuleLoanViewHelper
             return self::dtoLoan($loan, $contact, $user);
         });
 
+        $currenciesCollection = $user->account->currencies()
+            ->where('active', true)->get()->map(function ($currency) {
+                return [
+                    'id' => $currency->id,
+                    'name' => $currency->code,
+                ];
+            });
+
         return [
-            'labels_in_contact' => $loansAssociatedWithContactCollection,
-            'labels_in_vault' => $loansInVaultCollection,
+            'loans' => $loansAssociatedWithContactCollection,
+            'currencies' => $currenciesCollection,
             'url' => [
-                'store' => route('contact.label.store', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                ]),
-                'update' => route('contact.date.index', [
+                'store' => route('contact.loan.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -35,13 +40,13 @@ class ModuleLoanViewHelper
     public static function dtoLoan(Loan $loan, Contact $contact, User $user): array
     {
         $loaners = $loan->loaners;
+        $loanees = $loan->loanees;
         $loanersCollection = $loaners->map(function ($loaner) use ($user) {
             return [
                 'id' => $loaner->id,
                 'name' => $loaner->getName($user),
             ];
         });
-        $loanees = $loan->loanees;
         $loaneesCollection = $loanees->map(function ($loanee) use ($user) {
             return [
                 'id' => $loanee->id,
@@ -57,17 +62,16 @@ class ModuleLoanViewHelper
             'amount_lent' => $loan->amount_lent,
             'loaners' => $loanersCollection,
             'loanees' => $loaneesCollection,
-
             'url' => [
-                'update' => route('contact.label.update', [
+                'update' => route('contact.loan.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'label' => $loan->id,
+                    'loan' => $loan->id,
                 ]),
-                'destroy' => route('contact.label.destroy', [
+                'destroy' => route('contact.loan.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'label' => $loan->id,
+                    'loan' => $loan->id,
                 ]),
             ],
         ];

@@ -111,6 +111,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('reminders', [ContactModuleReminderController::class, 'store'])->name('contact.reminder.store');
                     Route::put('reminders/{reminder}', [ContactModuleReminderController::class, 'update'])->name('contact.reminder.update');
                     Route::delete('reminders/{reminder}', [ContactModuleReminderController::class, 'destroy'])->name('contact.reminder.destroy');
+
+                    // loans
+                    Route::post('loans', [ContactModuleLoanController::class, 'store'])->name('contact.loan.store');
+                    Route::put('loans/{loan}', [ContactModuleLoanController::class, 'update'])->name('contact.loan.update');
+                    Route::delete('loans/{loan}', [ContactModuleLoanController::class, 'destroy'])->name('contact.loan.destroy');
                 });
             });
 

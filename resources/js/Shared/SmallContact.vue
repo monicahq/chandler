@@ -16,7 +16,7 @@
         </div>
       </template>
       <template v-if="showName" #title>
-        <span>{{ contact.name }}</span>
+        <span>FOU</span>
       </template>
       <div class="inline-flex items-center text-sm">
         <img
@@ -30,7 +30,7 @@
             '/smart/'
           "
           alt="" />
-        <a v-if="showName" class="colored-link" href="">{{ contact.name }}</a>
+        <a v-if="showName" class="colored-link" href="">FOU</a>
       </div>
     </a-popover>
   </div>

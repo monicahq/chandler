@@ -16,6 +16,7 @@ use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemind
 use App\Http\Controllers\Vault\Contact\Modules\ContactName\ViewHelpers\ModuleContactNameViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Http\Controllers\Vault\Contact\Modules\Loan\ViewHelpers\ModuleLoanViewHelper;
 
 class ContactShowViewHelper
 {
@@ -154,7 +155,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_LOANS) {
-                $data = ModuleRemindersViewHelper::data($contact, $user);
+                $data = ModuleLoanViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

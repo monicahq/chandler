@@ -450,10 +450,6 @@ export default {
       type: Object,
       default: null,
     },
-    moduleMode: {
-      type: Boolean,
-      default: true,
-    },
   },
 
   data() {

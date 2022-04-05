@@ -90,7 +90,7 @@
 
                 <feed v-if="module.type == 'feed'" :data="feed" />
 
-                <loans v-if="module.type == 'loans'" :data="notes" />
+                <loans v-if="module.type == 'loans'" :data="loans" />
               </div>
             </div>
           </div>
@@ -147,6 +147,7 @@ export default {
       labels: [],
       notes: [],
       reminders: [],
+      loans: [],
     };
   },
 
@@ -194,6 +195,10 @@ export default {
 
       if (this.data.modules.findIndex((x) => x.type == 'feed') > -1) {
         this.feed = this.data.modules[this.data.modules.findIndex((x) => x.type == 'feed')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'loans') > -1) {
+        this.loans = this.data.modules[this.data.modules.findIndex((x) => x.type == 'loans')].data;
       }
     }
   },
