@@ -131,7 +131,7 @@ export default {
     step: {
       type: String,
       default: 'any',
-    }
+    },
   },
   emits: ['update:modelValue'],
 
