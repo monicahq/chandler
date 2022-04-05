@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Vault\Contact\Modules\Loan\ViewHelpers;
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Contact;
-use App\Models\Currency;
 
 class ModuleLoanViewHelper
 {

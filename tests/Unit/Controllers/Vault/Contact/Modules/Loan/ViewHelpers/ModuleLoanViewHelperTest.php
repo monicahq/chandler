@@ -3,17 +3,14 @@
 namespace Tests\Unit\Controllers\Vault\Contact\Modules\Loan\ViewHelpers;
 
 use function env;
-
-use App\Http\Controllers\Vault\Contact\Modules\Loan\ViewHelpers\ModuleLoanViewHelper;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Note;
+use App\Models\Loan;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\Currency;
-use App\Models\Emotion;
-use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Contact\Modules\Loan\ViewHelpers\ModuleLoanViewHelper;
 
 class ModuleLoanViewHelperTest extends TestCase
 {
@@ -105,7 +102,7 @@ class ModuleLoanViewHelperTest extends TestCase
                 0 => [
                     'id' => $contact->id,
                     'name' => $contact->getName($user),
-                ]
+                ],
             ],
             $array['loaners']->toArray()
         );
@@ -114,14 +111,14 @@ class ModuleLoanViewHelperTest extends TestCase
                 0 => [
                     'id' => $otherContact->id,
                     'name' => $otherContact->getName($user),
-                ]
+                ],
             ],
             $array['loanees']->toArray()
         );
         $this->assertEquals(
             [
-                'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/loans/'.$loan->id,
-                'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/loans/'.$loan->id,
+                'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans/'.$loan->id,
+                'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans/'.$loan->id,
             ],
             $array['url']
         );
