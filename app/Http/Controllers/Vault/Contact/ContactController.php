@@ -17,6 +17,7 @@ use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
+use App\Services\User\Contact\UpdateContactView;
 
 class ContactController extends Controller
 {
@@ -86,6 +87,13 @@ class ContactController extends Controller
                 'contact' => $contactId,
             ]);
         }
+
+        (new UpdateContactView)->execute([
+            'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
+            'author_id' => Auth::user()->id,
+            'contact_id' => $contactId,
+        ]);
 
         return Inertia::render('Vault/Contact/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),

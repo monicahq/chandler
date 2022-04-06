@@ -46,6 +46,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Http\Controllers\Vault\Search\VaultMostConsultedContactsController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -131,9 +132,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
             });
 
-            // search
+            // global search in the vault
             Route::get('search', [VaultSearchController::class, 'index'])->name('vault.search.index');
             Route::post('search', [VaultSearchController::class, 'show'])->name('vault.search.show');
+
+            // contact search module
+            Route::get('search/user/contact/mostConsulted', [VaultMostConsultedContactsController::class, 'index'])->name('vault.user.search.mostconsulted');
+            Route::post('search/user/contacts', [ContactImportantDatesController::class, 'show'])->name('vault.user.search.show');
         });
     });
 

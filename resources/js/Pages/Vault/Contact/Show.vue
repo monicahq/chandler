@@ -67,6 +67,9 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
+
+            <contact-selector />
+
             <!-- all the pages -->
             <div class="mb-8 border-b border-gray-200">
               <ul>
@@ -108,6 +111,7 @@ import ImportantDates from '@/Shared/Modules/ImportantDates';
 import Labels from '@/Shared/Modules/Labels';
 import Reminders from '@/Shared/Modules/Reminders';
 import Feed from '@/Shared/Modules/Feed';
+import ContactSelector from '@/Shared/Form/ContactSelector';
 
 export default {
   components: {
@@ -120,6 +124,7 @@ export default {
     Labels,
     Reminders,
     Feed,
+    ContactSelector,
   },
 
   props: {
