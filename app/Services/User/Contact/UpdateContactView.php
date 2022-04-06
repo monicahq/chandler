@@ -4,8 +4,8 @@ namespace App\Services\User\Contact;
 
 use App\Models\User;
 use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
 
 class UpdateContactView extends BaseService implements ServiceInterface
 {

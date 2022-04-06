@@ -2,15 +2,12 @@
 
 namespace Tests\Unit\Controllers\Vault\Contact\ImportantDates\ViewHelpers;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
-use App\Http\Controllers\Vault\Search\ViewHelpers\VaultMostConsultedViewHelper;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\Vault\Search\ViewHelpers\VaultMostConsultedViewHelper;
 
 class VaultMostConsultedViewHelperTest extends TestCase
 {

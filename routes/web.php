@@ -21,6 +21,7 @@ use App\Http\Controllers\Settings\CancelAccount\CancelAccountController;
 use App\Http\Controllers\Settings\Notifications\NotificationsController;
 use App\Http\Controllers\Vault\Settings\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Notifications\NotificationsLogController;
+use App\Http\Controllers\Vault\Search\VaultMostConsultedContactsController;
 use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
@@ -46,7 +47,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Http\Controllers\Vault\Search\VaultMostConsultedContactsController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

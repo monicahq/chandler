@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Vault\Search\ViewHelpers;
 
-use App\Models\Note;
+use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
-use App\Helpers\DateHelper;
-use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +27,7 @@ class VaultMostConsultedViewHelper
 
             $contactsCollection->push([
                 'id' => $contact->id,
-                'name' => $contact->getName($user)
+                'name' => $contact->getName($user),
             ]);
         }
 

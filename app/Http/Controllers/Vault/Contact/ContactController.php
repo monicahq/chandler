@@ -8,6 +8,7 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\User\Contact\UpdateContactView;
 use App\Services\Contact\ManageContact\CreateContact;
 use App\Services\Contact\ManageContact\UpdateContact;
 use App\Services\Contact\ManageContact\DestroyContact;
@@ -17,7 +18,6 @@ use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactCreateViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowBlankViewHelper;
-use App\Services\User\Contact\UpdateContactView;
 
 class ContactController extends Controller
 {
