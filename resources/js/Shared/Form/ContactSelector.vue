@@ -30,7 +30,6 @@
 
 <template>
   <div :class="divOuterClass">
-
     <!-- input -->
     <div>
       <label v-if="label" class="mb-2 block text-sm" :for="id">
@@ -84,19 +83,19 @@
         <li
           v-for="contact in searchResults"
           :key="contact.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 flex items-center justify-between">
-            <inertia-link :href="contact.url">
-              {{ contact.name }}
-            </inertia-link>
+          class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50">
+          <inertia-link :href="contact.url">
+            {{ contact.name }}
+          </inertia-link>
 
-            <!-- actions -->
-            <ul class="text-sm">
-              <li
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="showEditReminderModal(reminder)">
-                Add
-              </li>
-            </ul>
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="showEditReminderModal(reminder)">
+              Add
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
