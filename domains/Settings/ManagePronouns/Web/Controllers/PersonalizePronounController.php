@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Settings\ManagePronouns\Services\CreatePronoun;
 use App\Settings\ManagePronouns\Services\UpdatePronoun;
 use App\Settings\ManagePronouns\Services\DestroyPronoun;
-use App\Settings\ManagePronouns\Web\ViewHelpers\PersonalizePronounIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use App\Settings\ManagePronouns\Web\ViewHelpers\PersonalizePronounIndexViewHelper;
 
 class PersonalizePronounController extends Controller
 {

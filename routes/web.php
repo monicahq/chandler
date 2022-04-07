@@ -16,6 +16,7 @@ use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
@@ -45,7 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

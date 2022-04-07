@@ -10,8 +10,8 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Settings\ManagePronouns\Services\DestroyPronoun;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManagePronouns\Services\DestroyPronoun;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyPronounTest extends TestCase
