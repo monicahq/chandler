@@ -3,10 +3,9 @@
 namespace Tests\Unit\Domains\Vault\ManageVault\Web\ViewHelpers;
 
 use function env;
-
-use App\Vault\ManageVault\Web\ViewHelpers\VaultCreateViewHelper;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultCreateViewHelper;
 
 class VaultCreateViewHelperTest extends TestCase
 {

@@ -4,8 +4,8 @@ namespace App\Vault\ManageVaultSettings\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Vault\ManageVaultSettings\Services\UpdateVaultDefaultTemplate;
 use Illuminate\Support\Facades\Auth;
+use App\Vault\ManageVaultSettings\Services\UpdateVaultDefaultTemplate;
 
 class VaultSettingsTemplateController extends Controller
 {

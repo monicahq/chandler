@@ -11,8 +11,8 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Vault\ManageVaultSettings\Services\DestroyLabel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Vault\ManageVaultSettings\Services\DestroyLabel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyLabelTest extends TestCase

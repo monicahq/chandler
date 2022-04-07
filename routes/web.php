@@ -6,23 +6,30 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\Settings\Users\UserController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Vault\Contact\ContactController;
+use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Http\Controllers\Vault\Search\VaultSearchController;
 use App\Http\Controllers\Vault\Contact\ContactPageController;
 use App\Http\Controllers\Vault\Contact\ContactTemplateController;
+use App\Settings\CancelAccount\Controllers\CancelAccountController;
+use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Settings\Preferences\PreferencesController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Http\Controllers\Settings\Notifications\NotificationsController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Http\Controllers\Settings\Notifications\NotificationsLogController;
 use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
 use App\Http\Controllers\Settings\Notifications\NotificationsToggleController;
 use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNumberFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Http\Controllers\Settings\Notifications\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
@@ -39,13 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Settings\CancelAccount\Controllers\CancelAccountController;
-use App\Settings\ManageSettings\Web\Controllers\SettingsController;
-use App\Vault\ManageVault\Web\Controllers\VaultController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
