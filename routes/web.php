@@ -15,6 +15,7 @@ use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
@@ -24,12 +25,16 @@ use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateControlle
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
 use App\Http\Controllers\Settings\Personalize\AddressTypes\PersonalizeAddressTypeController;
@@ -41,11 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

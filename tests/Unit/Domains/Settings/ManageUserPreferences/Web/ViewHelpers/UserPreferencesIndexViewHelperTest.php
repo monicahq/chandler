@@ -6,8 +6,8 @@ use function env;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 
 class UserPreferencesIndexViewHelperTest extends TestCase
 {

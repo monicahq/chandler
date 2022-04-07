@@ -7,9 +7,9 @@ use App\Models\User;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Settings\ManageUserPreferences\Services\StoreTimezone;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Settings\ManageUserPreferences\Services\StoreTimezone;
 
 class StoreTimezoneTest extends TestCase
 {
