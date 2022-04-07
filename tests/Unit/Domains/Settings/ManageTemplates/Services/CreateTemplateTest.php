@@ -8,9 +8,9 @@ use App\Models\Account;
 use App\Models\Template;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Settings\ManageTemplates\Services\CreateTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Settings\ManageTemplates\Services\CreateTemplate;
 
 class CreateTemplateTest extends TestCase
 {

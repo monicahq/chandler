@@ -9,8 +9,8 @@ use App\Models\Module;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Settings\ManageTemplates\Services\DestroyModule;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManageTemplates\Services\DestroyModule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DestroyModuleTest extends TestCase

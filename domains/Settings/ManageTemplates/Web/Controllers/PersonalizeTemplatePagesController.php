@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Settings\ManageTemplates\Services\CreateTemplatePage;
 use App\Settings\ManageTemplates\Services\UpdateTemplatePage;
 use App\Settings\ManageTemplates\Services\DestroyTemplatePage;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
+use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 
 class PersonalizeTemplatePagesController extends Controller
 {

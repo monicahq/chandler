@@ -7,8 +7,8 @@ use Tests\TestCase;
 use App\Models\Module;
 use App\Models\Template;
 use App\Models\TemplatePage;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 
 class PersonalizeTemplatePageShowViewHelperTest extends TestCase
 {

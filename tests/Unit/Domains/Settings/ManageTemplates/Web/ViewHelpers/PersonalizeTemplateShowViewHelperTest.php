@@ -6,8 +6,8 @@ use function env;
 use Tests\TestCase;
 use App\Models\Template;
 use App\Models\TemplatePage;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
 
 class PersonalizeTemplateShowViewHelperTest extends TestCase
 {

@@ -7,13 +7,13 @@ use App\Models\Template;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Settings\ManageTemplates\Services\CreateTemplate;
 use App\Settings\ManageTemplates\Services\UpdateTemplate;
 use App\Settings\ManageTemplates\Services\DestroyTemplate;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateIndexViewHelper;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
+use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 
 class PersonalizeTemplatesController extends Controller
 {
