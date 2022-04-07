@@ -6,7 +6,7 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Vault\ManageLabels\CreateLabel;
+use App\Vault\ManageVaultSettings\Services\CreateLabel;
 use App\Services\Contact\AssignLabel\AssignLabel;
 use App\Services\Contact\AssignLabel\RemoveLabel;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;

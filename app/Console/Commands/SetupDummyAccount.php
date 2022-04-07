@@ -10,7 +10,7 @@ use Faker\Factory as Faker;
 use Illuminate\Console\Command;
 use App\Models\ContactImportantDate;
 use App\Services\Contact\ManageNote\CreateNote;
-use App\Services\Vault\ManageVault\CreateVault;
+use App\Vault\ManageVault\Services\CreateVault;
 use App\Services\Account\ManageAccount\CreateAccount;
 use App\Services\Contact\ManageContact\CreateContact;
 use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;

@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Services\User\NotificationChannels\VerifyUserNotificationChannelEmailAddress;
 use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 

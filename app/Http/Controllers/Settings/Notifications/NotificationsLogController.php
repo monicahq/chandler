@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserNotificationChannel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Notifications\Logs\ViewHelpers\NotificationsLogIndexViewHelper;
 
 class NotificationsLogController extends Controller

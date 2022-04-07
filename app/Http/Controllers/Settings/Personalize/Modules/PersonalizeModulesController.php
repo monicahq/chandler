@@ -11,7 +11,7 @@ use App\Services\Account\ManageTemplate\CreateTemplate;
 use App\Services\Account\ManageTemplate\UpdateTemplate;
 use App\Services\Account\ManageTemplate\DestroyTemplate;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers\PersonalizeModuleIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateShowViewHelper;
 use App\Http\Controllers\Settings\Personalize\Templates\ViewHelpers\PersonalizeTemplateIndexViewHelper;

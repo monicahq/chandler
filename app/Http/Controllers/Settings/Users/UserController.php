@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageUsers\InviteUser;
 use App\Services\Account\ManageUsers\DestroyUser;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManageUsers\GiveAdministratorPrivilege;
 use App\Services\Account\ManageUsers\RemoveAdministratorPrivilege;
 use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;

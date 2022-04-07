@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManagePronouns\CreatePronoun;
 use App\Services\Account\ManagePronouns\UpdatePronoun;
 use App\Services\Account\ManagePronouns\DestroyPronoun;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
 
 class PersonalizePronounController extends Controller

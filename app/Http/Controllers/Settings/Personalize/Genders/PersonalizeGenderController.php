@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageGenders\CreateGender;
 use App\Services\Account\ManageGenders\UpdateGender;
 use App\Services\Account\ManageGenders\DestroyGender;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 
 class PersonalizeGenderController extends Controller

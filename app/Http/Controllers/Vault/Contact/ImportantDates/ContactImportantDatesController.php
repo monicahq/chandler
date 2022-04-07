@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactImportantDate;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Contact\ManageReminder\CreateContactReminder;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
 use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;

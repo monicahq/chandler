@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
 use App\Services\Account\ManageContactInformationTypes\UpdateContactInformationType;
 use App\Services\Account\ManageContactInformationTypes\DestroyContactInformationType;

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Contact\ManageContact\CreateContact;
 use App\Services\Contact\ManageContact\UpdateContact;
 use App\Services\Contact\ManageContact\DestroyContact;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactEditViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactIndexViewHelper;

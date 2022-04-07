@@ -9,7 +9,7 @@ use App\Models\TemplatePage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Vault\Contact\ViewHelpers\ContactShowViewHelper;
 
 class ContactPageController extends Controller

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManagePronouns\DestroyPronoun;
 use App\Services\Account\ManageAddressTypes\CreateAddressType;
 use App\Services\Account\ManageAddressTypes\UpdateAddressType;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 
 class PersonalizeAddressTypeController extends Controller

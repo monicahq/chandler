@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManagePetCategories\UpdatePetCategory;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Services\Account\ManagePetCategories\DestroyPetCategory;
 use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManageCurrencies\ToggleCurrency;
 use App\Services\Account\ManageCurrencies\EnableAllCurrencies;
 use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
-use App\Http\Controllers\Vault\ViewHelpers\VaultIndexViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 
 class PersonalizeCurrencyController extends Controller

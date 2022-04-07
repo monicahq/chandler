@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Vault\ManageVaultUsers\ChangeVaultAccess;
+use App\Vault\ManageVaultSettings\Services\ChangeVaultAccess;
 
 class ChangeVaultAccessTest extends TestCase
 {
