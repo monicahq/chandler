@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Settings\ManageContactInformationTypes\Services\UpdateContactInformationType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Settings\ManageContactInformationTypes\Services\UpdateContactInformationType;
 
 class UpdateContactInformationTypeTest extends TestCase
 {
