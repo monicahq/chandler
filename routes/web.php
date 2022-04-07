@@ -30,7 +30,7 @@ use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeContro
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
-use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
@@ -38,13 +38,13 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestCon
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
-use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
-use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
-use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
-use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 
 Route::get('/', function () {
