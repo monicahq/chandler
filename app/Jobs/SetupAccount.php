@@ -26,8 +26,8 @@ use App\Settings\ManageAddressTypes\Services\CreateAddressType;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
+use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
 use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
-use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
 
 class SetupAccount implements ShouldQueue
 {

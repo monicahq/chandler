@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageContactInformationTypes;
+namespace Tests\Unit\Domains\Settings\ManageContactInformationTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -12,14 +12,14 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageContactInformationTypes\UpdateContactInformationType;
+use App\Settings\ManageContactInformationTypes\Services\DestroyContactInformationType;
 
-class UpdateContactInformationTypeTest extends TestCase
+class DestroyContactInformationTypeTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_type(): void
+    public function it_destroys_a_type(): void
     {
         $ross = $this->createAdministrator();
         $type = ContactInformationType::factory()->create([
@@ -36,7 +36,7 @@ class UpdateContactInformationTypeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateContactInformationType)->execute($request);
+        (new DestroyContactInformationType)->execute($request);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class UpdateContactInformationTypeTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $type = ContactInformationType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $account, $type);
     }
@@ -63,7 +63,7 @@ class UpdateContactInformationTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
+    public function it_fails_if_user_doesnt_have_right_permission_in_vault(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
@@ -82,19 +82,16 @@ class UpdateContactInformationTypeTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'contact_information_type_id' => $type->id,
-            'name' => 'type name',
         ];
 
-        $type = (new UpdateContactInformationType)->execute($request);
+        (new DestroyContactInformationType)->execute($request);
 
-        $this->assertDatabaseHas('contact_information_types', [
+        $this->assertDatabaseMissing('contact_information_types', [
             'id' => $type->id,
-            'account_id' => $account->id,
-            'name' => 'type name',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_information_type_updated';
+            return $job->auditLog['action_name'] === 'contact_information_type_destroyed';
         });
     }
 }

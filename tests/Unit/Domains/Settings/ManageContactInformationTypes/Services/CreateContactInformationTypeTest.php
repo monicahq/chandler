@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageContactInformationTypes;
+namespace Tests\Unit\Domains\Settings\ManageContactInformationTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
 
 class CreateContactInformationTypeTest extends TestCase
 {

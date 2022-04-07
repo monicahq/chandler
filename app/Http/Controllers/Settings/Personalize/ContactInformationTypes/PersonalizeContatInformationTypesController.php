@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageContactInformationTypes\CreateContactInformationType;
-use App\Services\Account\ManageContactInformationTypes\UpdateContactInformationType;
-use App\Services\Account\ManageContactInformationTypes\DestroyContactInformationType;
+use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
+use App\Settings\ManageContactInformationTypes\Services\UpdateContactInformationType;
+use App\Settings\ManageContactInformationTypes\Services\DestroyContactInformationType;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 
 class PersonalizeContatInformationTypesController extends Controller

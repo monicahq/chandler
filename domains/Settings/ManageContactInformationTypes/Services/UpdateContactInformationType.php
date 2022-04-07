@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services\Account\ManageContactInformationTypes;
+namespace App\Settings\ManageContactInformationTypes\Services;
 
-use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;

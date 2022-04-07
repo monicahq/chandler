@@ -37,7 +37,6 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestCon
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
-use App\Http\Controllers\Settings\Personalize\AddressTypes\PersonalizeAddressTypeController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
@@ -46,6 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
