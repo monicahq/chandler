@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageAddressTypes;
+namespace App\Settings\ManageAddressTypes\Services;
 
 use App\Models\User;
 use App\Models\AddressType;
@@ -8,7 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class CreateAddressType extends BaseService implements ServiceInterface
+class DestroyAddressType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -20,7 +20,7 @@ class CreateAddressType extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'name' => 'required|string|max:255',
+            'address_type_id' => 'required|integer|exists:address_types,id',
         ];
     }
 
@@ -38,30 +38,27 @@ class CreateAddressType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create an address type.
+     * Destroy an address type.
      *
      * @param  array  $data
-     * @return AddressType
      */
-    public function execute(array $data): AddressType
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $type = AddressType::create([
-            'account_id' => $data['account_id'],
-            'name' => $data['name'],
-        ]);
+        $type = AddressType::where('account_id', $data['account_id'])
+            ->findOrFail($data['address_type_id']);
+
+        $type->delete();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'address_type_created',
+            'action_name' => 'address_type_destroyed',
             'objects' => json_encode([
                 'name' => $type->name,
             ]),
         ])->onQueue('low');
-
-        return $type;
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\AddressTypes\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageAddressTypes\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\AddressType;
+use App\Settings\ManageAddressTypes\Web\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 
 class PersonalizeAddressTypeIndexViewHelperTest extends TestCase
 {

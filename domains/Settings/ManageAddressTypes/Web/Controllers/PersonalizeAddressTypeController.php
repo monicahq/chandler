@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\AddressTypes;
+namespace App\Settings\ManageAddressTypes\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Account\ManagePronouns\DestroyPronoun;
-use App\Services\Account\ManageAddressTypes\CreateAddressType;
-use App\Services\Account\ManageAddressTypes\UpdateAddressType;
+use App\Settings\ManageAddressTypes\Services\CreateAddressType;
+use App\Settings\ManageAddressTypes\Services\UpdateAddressType;
+use App\Settings\ManageAddressTypes\Web\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers\PersonalizeAddressTypeIndexViewHelper;
 
 class PersonalizeAddressTypeController extends Controller
 {

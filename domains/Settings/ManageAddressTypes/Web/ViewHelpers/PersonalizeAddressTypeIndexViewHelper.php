@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\AddressTypes\ViewHelpers;
+namespace App\Settings\ManageAddressTypes\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\AddressType;

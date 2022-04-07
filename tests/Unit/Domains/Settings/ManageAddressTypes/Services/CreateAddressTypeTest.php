@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageAddressTypes;
+namespace Tests\Unit\Domains\Settings\ManageAddressTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageAddressTypes\CreateAddressType;
+use App\Settings\ManageAddressTypes\Services\CreateAddressType;
 
 class CreateAddressTypeTest extends TestCase
 {

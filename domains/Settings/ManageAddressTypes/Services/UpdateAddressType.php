@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageAddressTypes;
+namespace App\Settings\ManageAddressTypes\Services;
 
 use App\Models\User;
 use App\Models\AddressType;
@@ -8,7 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class DestroyAddressType extends BaseService implements ServiceInterface
+class UpdateAddressType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -21,6 +21,7 @@ class DestroyAddressType extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'address_type_id' => 'required|integer|exists:address_types,id',
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -38,27 +39,31 @@ class DestroyAddressType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy an address type.
+     * Update an address type.
      *
      * @param  array  $data
+     * @return AddressType
      */
-    public function execute(array $data): void
+    public function execute(array $data): AddressType
     {
         $this->validateRules($data);
 
         $type = AddressType::where('account_id', $data['account_id'])
             ->findOrFail($data['address_type_id']);
 
-        $type->delete();
+        $type->name = $data['name'];
+        $type->save();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'address_type_destroyed',
+            'action_name' => 'address_type_updated',
             'objects' => json_encode([
                 'name' => $type->name,
             ]),
         ])->onQueue('low');
+
+        return $type;
     }
 }

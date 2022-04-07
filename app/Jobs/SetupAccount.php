@@ -22,7 +22,7 @@ use App\Services\Account\ManageTemplate\CreateModule;
 use App\Services\Account\ManagePronouns\CreatePronoun;
 use App\Services\Account\ManageTemplate\CreateTemplate;
 use App\Services\Account\ManageTemplate\CreateTemplatePage;
-use App\Services\Account\ManageAddressTypes\CreateAddressType;
+use App\Settings\ManageAddressTypes\Services\CreateAddressType;
 use App\Services\Account\ManagePetCategories\CreatePetCategory;
 use App\Services\Account\ManageTemplate\AssociateModuleToTemplatePage;
 use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;

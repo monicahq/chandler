@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageAddressTypes;
+namespace App\Settings\ManageAddressTypes\Services;
 
 use App\Models\User;
 use App\Models\AddressType;
@@ -8,7 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class UpdateAddressType extends BaseService implements ServiceInterface
+class CreateAddressType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -20,7 +20,6 @@ class UpdateAddressType extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'address_type_id' => 'required|integer|exists:address_types,id',
             'name' => 'required|string|max:255',
         ];
     }
@@ -39,7 +38,7 @@ class UpdateAddressType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update an address type.
+     * Create an address type.
      *
      * @param  array  $data
      * @return AddressType
@@ -48,17 +47,16 @@ class UpdateAddressType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = AddressType::where('account_id', $data['account_id'])
-            ->findOrFail($data['address_type_id']);
-
-        $type->name = $data['name'];
-        $type->save();
+        $type = AddressType::create([
+            'account_id' => $data['account_id'],
+            'name' => $data['name'],
+        ]);
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'address_type_updated',
+            'action_name' => 'address_type_created',
             'objects' => json_encode([
                 'name' => $type->name,
             ]),
