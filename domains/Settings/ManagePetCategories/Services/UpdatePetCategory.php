@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Services\Account\ManagePetCategories;
+namespace App\Settings\ManagePetCategories\Services;
 
-use App\Models\User;
 use App\Models\PetCategory;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class DestroyPetCategory extends BaseService implements ServiceInterface
+class UpdatePetCategory extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -20,6 +19,7 @@ class DestroyPetCategory extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'pet_category_id' => 'required|integer|exists:pet_categories,id',
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -37,17 +37,21 @@ class DestroyPetCategory extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a pet category.
+     * Update a pet category.
      *
      * @param  array  $data
+     * @return PetCategory
      */
-    public function execute(array $data): void
+    public function execute(array $data): PetCategory
     {
         $this->validateRules($data);
 
         $petCategory = PetCategory::where('account_id', $data['account_id'])
             ->findOrFail($data['pet_category_id']);
 
-        $petCategory->delete();
+        $petCategory->name = $data['name'];
+        $petCategory->save();
+
+        return $petCategory;
     }
 }

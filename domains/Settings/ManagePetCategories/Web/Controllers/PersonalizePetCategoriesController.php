@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\PetCategories;
+namespace App\Settings\ManagePetCategories\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManagePetCategories\CreatePetCategory;
-use App\Services\Account\ManagePetCategories\UpdatePetCategory;
+use App\Settings\ManagePetCategories\Services\CreatePetCategory;
+use App\Settings\ManagePetCategories\Services\UpdatePetCategory;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManagePetCategories\DestroyPetCategory;
-use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
+use App\Settings\ManagePetCategories\Services\DestroyPetCategory;
+use App\Settings\ManagePetCategories\Web\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 
 class PersonalizePetCategoriesController extends Controller
 {

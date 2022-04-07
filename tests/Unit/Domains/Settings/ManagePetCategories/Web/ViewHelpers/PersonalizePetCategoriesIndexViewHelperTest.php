@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\PetCategories\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManagePetCategories\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\PetCategory;
+use App\Settings\ManagePetCategories\Web\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 
 class PersonalizePetCategoriesIndexViewHelperTest extends TestCase
 {

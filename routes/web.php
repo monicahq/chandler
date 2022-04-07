@@ -39,13 +39,13 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatCo
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
-use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

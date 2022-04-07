@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManagePetCategories;
+namespace Tests\Unit\Domains\Settings\ManagePetCategories\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,14 +11,14 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManagePetCategories\DestroyPetCategory;
+use App\Settings\ManagePetCategories\Services\UpdatePetCategory;
 
-class DestroyPetCategoryTest extends TestCase
+class UpdatePetCategoryTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_destroys_a_gender(): void
+    public function it_updates_a_pet_category(): void
     {
         $ross = $this->createAdministrator();
         $petCategory = PetCategory::factory()->create([
@@ -35,7 +35,7 @@ class DestroyPetCategoryTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyPetCategory)->execute($request);
+        (new UpdatePetCategory)->execute($request);
     }
 
     /** @test */
@@ -46,7 +46,7 @@ class DestroyPetCategoryTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $petCategory = PetCategory::factory()->create([
-            'account_id' => $ross->account_id,
+            'account_id' => $ross->account->id,
         ]);
         $this->executeService($ross, $account, $petCategory);
     }
@@ -62,7 +62,7 @@ class DestroyPetCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_vault(): void
+    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
@@ -81,12 +81,15 @@ class DestroyPetCategoryTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'pet_category_id' => $petCategory->id,
+            'name' => 'gender name',
         ];
 
-        (new DestroyPetCategory)->execute($request);
+        $petCategory = (new UpdatePetCategory)->execute($request);
 
-        $this->assertDatabaseMissing('pet_categories', [
+        $this->assertDatabaseHas('pet_categories', [
             'id' => $petCategory->id,
+            'account_id' => $account->id,
+            'name' => 'gender name',
         ]);
     }
 }

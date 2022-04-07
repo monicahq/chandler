@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManagePetCategories;
+namespace Tests\Unit\Domains\Settings\ManagePetCategories\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManagePetCategories\CreatePetCategory;
+use App\Settings\ManagePetCategories\Services\CreatePetCategory;
 
 class CreatePetCategoryTest extends TestCase
 {

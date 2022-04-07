@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\PetCategories\ViewHelpers;
+namespace App\Settings\ManagePetCategories\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\PetCategory;
