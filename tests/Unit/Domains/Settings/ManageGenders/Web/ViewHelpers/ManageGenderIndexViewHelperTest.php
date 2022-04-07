@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\Genders\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageGenders\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\Gender;
+use App\Settings\ManageGenders\Web\ViewHelpers\ManageGenderIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 
-class PersonalizeGenderIndexViewHelperTest extends TestCase
+class ManageGenderIndexViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -16,7 +16,7 @@ class PersonalizeGenderIndexViewHelperTest extends TestCase
     public function it_gets_the_data_needed_for_the_view(): void
     {
         $gender = Gender::factory()->create();
-        $array = PersonalizeGenderIndexViewHelper::data($gender->account);
+        $array = ManageGenderIndexViewHelper::data($gender->account);
         $this->assertEquals(
             2,
             count($array)
@@ -36,7 +36,7 @@ class PersonalizeGenderIndexViewHelperTest extends TestCase
     public function it_gets_the_data_needed_for_the_data_transfer_object(): void
     {
         $gender = Gender::factory()->create();
-        $array = PersonalizeGenderIndexViewHelper::dtoGender($gender);
+        $array = ManageGenderIndexViewHelper::dtoGender($gender);
         $this->assertEquals(
             [
                 'id' => $gender->id,

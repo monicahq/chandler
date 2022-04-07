@@ -19,7 +19,6 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
-use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
@@ -46,6 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageM
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
+use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -191,10 +191,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('relationships/{groupType}/types/{type}', [PersonalizeRelationshipTypeController::class, 'destroy'])->name('relationship.type.destroy');
 
                 // genders
-                Route::get('genders', [PersonalizeGenderController::class, 'index'])->name('gender.index');
-                Route::post('genders', [PersonalizeGenderController::class, 'store'])->name('gender.store');
-                Route::put('genders/{gender}', [PersonalizeGenderController::class, 'update'])->name('gender.update');
-                Route::delete('genders/{gender}', [PersonalizeGenderController::class, 'destroy'])->name('gender.destroy');
+                Route::get('genders', [ManageGenderController::class, 'index'])->name('gender.index');
+                Route::post('genders', [ManageGenderController::class, 'store'])->name('gender.store');
+                Route::put('genders/{gender}', [ManageGenderController::class, 'update'])->name('gender.update');
+                Route::delete('genders/{gender}', [ManageGenderController::class, 'destroy'])->name('gender.destroy');
 
                 // pronouns
                 Route::get('pronouns', [PersonalizePronounController::class, 'index'])->name('pronoun.index');

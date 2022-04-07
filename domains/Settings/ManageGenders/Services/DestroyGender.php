@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Services\Account\ManageGenders;
+namespace App\Settings\ManageGenders\Services;
 
-use App\Models\User;
 use App\Models\Gender;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class CreateGender extends BaseService implements ServiceInterface
+class DestroyGender extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -20,7 +19,7 @@ class CreateGender extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'name' => 'required|string|max:255',
+            'gender_id' => 'required|integer|exists:genders,id',
         ];
     }
 
@@ -38,30 +37,27 @@ class CreateGender extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a gender.
+     * Destroy a gender.
      *
      * @param  array  $data
-     * @return Gender
      */
-    public function execute(array $data): Gender
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $gender = Gender::create([
-            'account_id' => $data['account_id'],
-            'name' => $data['name'],
-        ]);
+        $gender = Gender::where('account_id', $data['account_id'])
+            ->findOrFail($data['gender_id']);
+
+        $gender->delete();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'gender_created',
+            'action_name' => 'gender_destroyed',
             'objects' => json_encode([
                 'gender_name' => $gender->name,
             ]),
         ])->onQueue('low');
-
-        return $gender;
     }
 }

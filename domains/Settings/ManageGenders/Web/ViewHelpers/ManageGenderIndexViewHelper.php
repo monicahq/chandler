@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers;
+namespace App\Settings\ManageGenders\Web\ViewHelpers;
 
 use App\Models\Gender;
 use App\Models\Account;
 
-class PersonalizeGenderIndexViewHelper
+class ManageGenderIndexViewHelper
 {
     public static function data(Account $account): array
     {

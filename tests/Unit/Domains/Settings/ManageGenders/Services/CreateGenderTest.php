@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageGenders;
+namespace Tests\Unit\Domains\Settings\ManageGenders\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,22 +10,19 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManageGenders\UpdateGender;
+use App\Settings\ManageGenders\Services\CreateGender;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UpdateGenderTest extends TestCase
+class CreateGenderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_gender(): void
+    public function it_creates_a_gender(): void
     {
         $ross = $this->createAdministrator();
-        $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
-        ]);
-        $this->executeService($ross, $ross->account, $gender);
+        $this->executeService($ross, $ross->account);
     }
 
     /** @test */
@@ -36,7 +33,7 @@ class UpdateGenderTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateGender)->execute($request);
+        (new CreateGender)->execute($request);
     }
 
     /** @test */
@@ -45,47 +42,30 @@ class UpdateGenderTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $account = Account::factory()->create();
-        $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
-        ]);
-        $this->executeService($ross, $account, $gender);
+        $account = $this->createAccount();
+        $this->executeService($ross, $account);
     }
 
     /** @test */
-    public function it_fails_if_gender_doesnt_belong_to_account(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $ross = $this->createAdministrator();
-        $gender = Gender::factory()->create();
-        $this->executeService($ross, $ross->account, $gender);
-    }
-
-    /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
+    public function it_fails_if_user_is_not_administrator(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
         $ross = $this->createUser();
-        $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
-        ]);
-        $this->executeService($ross, $ross->account, $gender);
+        $this->executeService($ross, $ross->account);
     }
 
-    private function executeService(User $author, Account $account, Gender $gender): void
+    private function executeService(User $author, Account $account): void
     {
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'gender_id' => $gender->id,
             'name' => 'gender name',
         ];
 
-        $gender = (new UpdateGender)->execute($request);
+        $gender = (new CreateGender)->execute($request);
 
         $this->assertDatabaseHas('genders', [
             'id' => $gender->id,
@@ -93,8 +73,13 @@ class UpdateGenderTest extends TestCase
             'name' => 'gender name',
         ]);
 
+        $this->assertInstanceOf(
+            Gender::class,
+            $gender
+        );
+
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'gender_updated';
+            return $job->auditLog['action_name'] === 'gender_created';
         });
     }
 }

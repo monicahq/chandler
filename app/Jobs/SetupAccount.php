@@ -17,7 +17,7 @@ use App\Models\UserNotificationChannel;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Services\Account\ManageGenders\CreateGender;
+use App\Settings\ManageGenders\Services\CreateGender;
 use App\Services\Account\ManageTemplate\CreateModule;
 use App\Services\Account\ManagePronouns\CreatePronoun;
 use App\Services\Account\ManageTemplate\CreateTemplate;

@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Genders;
+namespace App\Settings\ManageGenders\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageGenders\CreateGender;
-use App\Services\Account\ManageGenders\UpdateGender;
-use App\Services\Account\ManageGenders\DestroyGender;
+use App\Settings\ManageGenders\Services\CreateGender;
+use App\Settings\ManageGenders\Services\UpdateGender;
+use App\Settings\ManageGenders\Services\DestroyGender;
+use App\Settings\ManageGenders\Web\ViewHelpers\ManageGenderIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Genders\ViewHelpers\PersonalizeGenderIndexViewHelper;
 
-class PersonalizeGenderController extends Controller
+class ManageGenderController extends Controller
 {
     public function index()
     {
         return Inertia::render('Settings/Personalize/Genders/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeGenderIndexViewHelper::data(Auth::user()->account),
+            'data' => ManageGenderIndexViewHelper::data(Auth::user()->account),
         ]);
     }
 
@@ -33,7 +33,7 @@ class PersonalizeGenderController extends Controller
         $gender = (new CreateGender)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGenderIndexViewHelper::dtoGender($gender),
+            'data' => ManageGenderIndexViewHelper::dtoGender($gender),
         ], 201);
     }
 
@@ -49,7 +49,7 @@ class PersonalizeGenderController extends Controller
         $gender = (new UpdateGender)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGenderIndexViewHelper::dtoGender($gender),
+            'data' => ManageGenderIndexViewHelper::dtoGender($gender),
         ], 200);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageGenders;
+namespace Tests\Unit\Domains\Settings\ManageGenders\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,16 +10,16 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManageGenders\DestroyGender;
+use App\Settings\ManageGenders\Services\UpdateGender;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class DestroyGenderTest extends TestCase
+class UpdateGenderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_destroys_a_gender(): void
+    public function it_updates_a_gender(): void
     {
         $ross = $this->createAdministrator();
         $gender = Gender::factory()->create([
@@ -36,7 +36,7 @@ class DestroyGenderTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyGender)->execute($request);
+        (new UpdateGender)->execute($request);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class DestroyGenderTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $gender = Gender::factory()->create([
-            'account_id' => $ross->account_id,
+            'account_id' => $ross->account->id,
         ]);
         $this->executeService($ross, $account, $gender);
     }
@@ -63,7 +63,7 @@ class DestroyGenderTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_vault(): void
+    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
@@ -82,16 +82,19 @@ class DestroyGenderTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'gender_id' => $gender->id,
+            'name' => 'gender name',
         ];
 
-        (new DestroyGender)->execute($request);
+        $gender = (new UpdateGender)->execute($request);
 
-        $this->assertDatabaseMissing('genders', [
+        $this->assertDatabaseHas('genders', [
             'id' => $gender->id,
+            'account_id' => $account->id,
+            'name' => 'gender name',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'gender_destroyed';
+            return $job->auditLog['action_name'] === 'gender_updated';
         });
     }
 }
