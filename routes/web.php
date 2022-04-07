@@ -28,24 +28,24 @@ use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelControlle
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
 use App\Http\Controllers\Settings\Personalize\AddressTypes\PersonalizeAddressTypeController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
 use App\Http\Controllers\Settings\Personalize\PetCategories\PersonalizePetCategoriesController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesController;
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

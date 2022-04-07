@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Settings\ManageNotificationChannels\Services\VerifyUserNotificationChannelEmailAddress;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
 use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper as ViewHelpersNotificationsIndexViewHelper;
 
 class NotificationsVerificationController extends Controller

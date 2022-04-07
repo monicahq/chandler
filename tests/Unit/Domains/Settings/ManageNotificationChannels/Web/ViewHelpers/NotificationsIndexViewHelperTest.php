@@ -6,8 +6,8 @@ use function env;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
-use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsIndexViewHelperTest extends TestCase
 {
