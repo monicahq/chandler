@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications\Logs\ViewHelpers;
+namespace App\Settings\ManageNotificationChannels\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Helpers\DateHelper;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Notifications\Logs\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\UserNotificationSent;
 use App\Models\UserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsLogIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Notifications\Logs\ViewHelpers\NotificationsLogIndexViewHelper;
 
 class NotificationsLogIndexViewHelperTest extends TestCase
 {
