@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications;
+namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserNotificationChannel;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
-use App\Services\User\NotificationChannels\DestroyUserNotificationChannel;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
+use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Services\DestroyUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsController extends Controller
 {

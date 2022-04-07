@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\User\NotificationChannels;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\NotificationChannels\ToggleUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Services\ToggleUserNotificationChannel;
 
 class ToggleUserNotificationChannelTest extends TestCase
 {

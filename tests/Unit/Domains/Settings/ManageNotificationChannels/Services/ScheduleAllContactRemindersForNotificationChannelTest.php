@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -9,7 +9,7 @@ use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Services\User\NotificationChannels\ScheduleAllContactRemindersForNotificationChannel;
+use App\Settings\ManageNotificationChannels\Services\ScheduleAllContactRemindersForNotificationChannel;
 
 class ScheduleAllContactRemindersForNotificationChannelTest extends TestCase
 {

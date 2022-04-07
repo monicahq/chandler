@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications;
+namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;

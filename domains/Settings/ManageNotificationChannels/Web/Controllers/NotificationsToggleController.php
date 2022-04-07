@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications;
+namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\NotificationChannels\ToggleUserNotificationChannel;
-use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
+use App\Settings\ManageNotificationChannels\Services\ToggleUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper;
 
 class NotificationsToggleController extends Controller
 {

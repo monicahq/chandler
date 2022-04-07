@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User\NotificationChannels;
+namespace App\Settings\ManageNotificationChannels\Services;
 
 use App\Models\User;
 use App\Jobs\CreateAuditLog;

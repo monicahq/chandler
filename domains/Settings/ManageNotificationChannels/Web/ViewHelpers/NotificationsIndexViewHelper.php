@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications\ViewHelpers;
+namespace App\Settings\ManageNotificationChannels\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Models\UserNotificationChannel;

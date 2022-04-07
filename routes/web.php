@@ -15,13 +15,9 @@ use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Settings\Preferences\PreferencesController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
-use App\Http\Controllers\Settings\Notifications\NotificationsController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
-use App\Http\Controllers\Settings\Notifications\NotificationsLogController;
-use App\Http\Controllers\Settings\Notifications\NotificationsTestController;
 use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
 use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
-use App\Http\Controllers\Settings\Notifications\NotificationsToggleController;
 use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
@@ -31,7 +27,6 @@ use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderControlle
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
-use App\Http\Controllers\Settings\Notifications\NotificationsVerificationController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
@@ -46,6 +41,11 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

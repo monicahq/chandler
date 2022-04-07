@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User\NotificationChannels;
+namespace App\Settings\ManageNotificationChannels\Services;
 
 use Carbon\Carbon;
 use App\Models\User;

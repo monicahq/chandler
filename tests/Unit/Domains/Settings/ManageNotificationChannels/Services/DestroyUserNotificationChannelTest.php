@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\User\NotificationChannels;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,8 +11,8 @@ use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\NotificationChannels\CreateUserNotificationChannel;
-use App\Services\User\NotificationChannels\DestroyUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
+use App\Settings\ManageNotificationChannels\Services\DestroyUserNotificationChannel;
 
 class DestroyUserNotificationChannelTest extends TestCase
 {

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications;
+namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\User\NotificationChannels\VerifyUserNotificationChannelEmailAddress;
+use App\Settings\ManageNotificationChannels\Services\VerifyUserNotificationChannelEmailAddress;
 use App\Http\Controllers\Settings\Notifications\ViewHelpers\NotificationsIndexViewHelper;
+use App\Settings\ManageNotificationChannels\Web\ViewHelpers\NotificationsIndexViewHelper as ViewHelpersNotificationsIndexViewHelper;
 
 class NotificationsVerificationController extends Controller
 {
@@ -25,7 +26,7 @@ class NotificationsVerificationController extends Controller
 
         return Inertia::render('Settings/Notifications/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => NotificationsIndexViewHelper::data(Auth::user()),
+            'data' => ViewHelpersNotificationsIndexViewHelper::data(Auth::user()),
         ]);
     }
 }

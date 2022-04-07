@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Notifications;
+namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\NotificationChannels\SendTestEmail;
+use App\Settings\ManageNotificationChannels\Services\SendTestEmail;
 
 class NotificationsTestController extends Controller
 {

@@ -1,24 +1,22 @@
 <?php
 
-namespace Tests\Unit\Services\User\NotificationChannels;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Services;
 
-use Exception;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
-use App\Mail\TestEmailSent;
-use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\NotificationChannels\SendTestEmail;
+use App\Settings\ManageNotificationChannels\Services\VerifyUserNotificationChannelEmailAddress;
 
-class SendTestEmailTest extends TestCase
+class VerifyUserNotificationChannelEmailAddressTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_sends_a_test_email(): void
+    public function it_verifies_the_user_notification_channel(): void
     {
         $ross = $this->createUser();
         $channel = UserNotificationChannel::factory()->create([
@@ -37,7 +35,7 @@ class SendTestEmailTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new SendTestEmail)->execute($request);
+        (new VerifyUserNotificationChannelEmailAddress)->execute($request);
     }
 
     /** @test */
@@ -50,39 +48,27 @@ class SendTestEmailTest extends TestCase
         $this->executeService($ross, $channel);
     }
 
-    /** @test */
-    public function it_fails_if_notification_channel_type_is_not_email(): void
-    {
-        $this->expectException(Exception::class);
-
-        $ross = $this->createUser();
-        $channel = UserNotificationChannel::factory()->create([
-            'user_id' => $ross->id,
-            'content' => 'admin@admin.com',
-            'type' => 'slack',
-        ]);
-        $this->executeService($ross, $channel);
-    }
-
     private function executeService(User $author, UserNotificationChannel $channel): void
     {
-        Mail::fake();
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
 
         $request = [
             'account_id' => $author->account_id,
             'author_id' => $author->id,
             'user_notification_channel_id' => $channel->id,
+            'uuid' => '21f74a1a-a157-11ec-b909-0242ac120002',
         ];
 
-        $channel = (new SendTestEmail)->execute($request);
+        $channel = (new VerifyUserNotificationChannelEmailAddress)->execute($request);
 
         $this->assertInstanceOf(
             UserNotificationChannel::class,
             $channel
         );
 
-        Mail::assertSent(TestEmailSent::class, function ($mail) {
-            return $mail->hasTo('admin@admin.com');
-        });
+        $this->assertDatabaseHas('user_notification_channels', [
+            'id' => $channel->id,
+            'verified_at' => Carbon::now(),
+        ]);
     }
 }

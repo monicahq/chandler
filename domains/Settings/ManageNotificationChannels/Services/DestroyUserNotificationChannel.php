@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services\User\NotificationChannels;
+namespace App\Settings\ManageNotificationChannels\Services;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
 
-class VerifyUserNotificationChannelEmailAddress extends BaseService implements ServiceInterface
+class DestroyUserNotificationChannel extends BaseService implements ServiceInterface
 {
     private array $data;
     private UserNotificationChannel $userNotificationChannel;
@@ -25,7 +24,6 @@ class VerifyUserNotificationChannelEmailAddress extends BaseService implements S
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'user_notification_channel_id' => 'required|integer|exists:user_notification_channels,id',
-            'uuid' => 'required|uuid',
         ];
     }
 
@@ -42,20 +40,17 @@ class VerifyUserNotificationChannelEmailAddress extends BaseService implements S
     }
 
     /**
-     * Verify the email address for the given user notification channel.
+     * Delete the new user notification channel.
      *
      * @param  array  $data
-     * @return UserNotificationChannel
+     * @return void
      */
-    public function execute(array $data): UserNotificationChannel
+    public function execute(array $data): void
     {
         $this->data = $data;
         $this->validate();
-        $this->verify();
-        $this->rescheduledReminders();
+        $this->destroy();
         $this->log();
-
-        return $this->userNotificationChannel;
     }
 
     private function validate(): void
@@ -66,19 +61,9 @@ class VerifyUserNotificationChannelEmailAddress extends BaseService implements S
             ->findOrFail($this->data['user_notification_channel_id']);
     }
 
-    private function verify(): void
+    private function destroy(): void
     {
-        $this->userNotificationChannel->verified_at = Carbon::now();
-        $this->userNotificationChannel->save();
-    }
-
-    private function rescheduledReminders(): void
-    {
-        (new ScheduleAllContactRemindersForNotificationChannel)->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->data['author_id'],
-            'user_notification_channel_id' => $this->userNotificationChannel->id,
-        ]);
+        $this->userNotificationChannel->delete();
     }
 
     private function log(): void
@@ -87,7 +72,7 @@ class VerifyUserNotificationChannelEmailAddress extends BaseService implements S
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'user_notification_channel_verified',
+            'action_name' => 'user_notification_channel_destroyed',
             'objects' => json_encode([
                 'label' => $this->userNotificationChannel->label,
                 'type' => $this->userNotificationChannel->type,
