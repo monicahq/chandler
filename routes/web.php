@@ -35,6 +35,7 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogCont
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
+use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagesController;
@@ -45,7 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
