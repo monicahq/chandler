@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services\Account\ManageCurrencies;
+namespace App\Settings\ManageCurrencies\Services;
 
-use App\Models\User;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;

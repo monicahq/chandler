@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageCurrencies;
+namespace Tests\Unit\Domains\Settings\ManageCurrencies\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
+use App\Settings\ManageCurrencies\Services\DisableAllCurrencies;
 
 class DisableAllCurrenciesTest extends TestCase
 {

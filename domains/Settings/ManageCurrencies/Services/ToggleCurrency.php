@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Services\Account\ManageCurrencies;
+namespace App\Settings\ManageCurrencies\Services;
 
-use App\Models\User;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 
-class EnableAllCurrencies extends BaseService implements ServiceInterface
+class ToggleCurrency extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -19,6 +18,7 @@ class EnableAllCurrencies extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
+            'currency_id' => 'required|integer|exists:currencies,id',
         ];
     }
 
@@ -36,7 +36,7 @@ class EnableAllCurrencies extends BaseService implements ServiceInterface
     }
 
     /**
-     * Enable all the currencies in the account.
+     * Toggle the currency in the account.
      *
      * @param  array  $data
      * @return void
@@ -45,10 +45,16 @@ class EnableAllCurrencies extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
+        $record = DB::table('account_currencies')
+            ->where('account_id', $data['account_id'])
+            ->where('currency_id', $data['currency_id'])
+            ->first();
+
         DB::table('account_currencies')
             ->where('account_id', $data['account_id'])
+            ->where('currency_id', $data['currency_id'])
             ->update([
-                'active' => true,
+                'active' => ! $record->active,
             ]);
     }
 }

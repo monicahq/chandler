@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers;
+namespace App\Settings\ManageCurrencies\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Currency;

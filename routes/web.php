@@ -28,7 +28,6 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsControl
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
-use App\Http\Controllers\Settings\Personalize\Currencies\PersonalizeCurrencyController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
@@ -46,6 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageP
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Currencies;
+namespace App\Settings\ManageCurrencies\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageCurrencies\ToggleCurrency;
-use App\Services\Account\ManageCurrencies\EnableAllCurrencies;
-use App\Services\Account\ManageCurrencies\DisableAllCurrencies;
+use App\Settings\ManageCurrencies\Services\ToggleCurrency;
+use App\Settings\ManageCurrencies\Services\EnableAllCurrencies;
+use App\Settings\ManageCurrencies\Services\DisableAllCurrencies;
+use App\Settings\ManageCurrencies\Web\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 
 class PersonalizeCurrencyController extends Controller
 {

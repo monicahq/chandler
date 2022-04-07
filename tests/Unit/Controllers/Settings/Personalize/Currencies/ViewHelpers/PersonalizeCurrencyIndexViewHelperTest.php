@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Models\Account;
 use App\Models\Currency;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Currencies\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
+use App\Settings\ManageCurrencies\Web\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 
 class PersonalizeCurrencyIndexViewHelperTest extends TestCase
 {
