@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Preferences\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Web\ViewHelpers;
 
 use function env;
 use Carbon\Carbon;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageUsers;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\ManageUsers\AcceptInvitation;
+use App\Settings\ManageUsers\Services\AcceptInvitation;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

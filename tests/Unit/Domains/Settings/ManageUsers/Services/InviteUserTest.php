@@ -1,30 +1,29 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageUsers;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Services;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
+use App\Mail\UserInvited;
 use App\Jobs\CreateAuditLog;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Settings\ManageUsers\Services\InviteUser;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageUsers\GiveAdministratorPrivilege;
 
-class GiveAdministratorPrivilegeTest extends TestCase
+class InviteUserTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_gives_the_administrator_privilege_to_another_user(): void
+    public function it_invites_another_user(): void
     {
         $author = $this->createAdministrator();
-        $anotherUser = User::factory()->create([
-            'account_id' => $author->account_id,
-        ]);
-        $this->executeService($author->account, $author, $anotherUser);
+        $this->executeService($author->account, $author);
     }
 
     /** @test */
@@ -32,32 +31,28 @@ class GiveAdministratorPrivilegeTest extends TestCase
     {
         $author = $this->createAdministrator();
         $account = Account::factory()->create();
-        $anotherUser = User::factory()->create([
-            'account_id' => $author->account_id,
-        ]);
         $this->expectException(ModelNotFoundException::class);
-        $this->executeService($account, $author, $anotherUser);
+        $this->executeService($account, $author);
     }
 
     /** @test */
-    public function it_fails_if_the_other_user_doesnt_belong_to_account(): void
+    public function it_fails_if_email_is_already_taken(): void
     {
         $author = $this->createAdministrator();
-        $anotherUser = User::factory()->create();
-        $this->expectException(ModelNotFoundException::class);
-        $this->executeService($author->account, $author, $anotherUser);
+        User::factory()->create([
+            'email' => 'admin@admin.com',
+        ]);
+        $this->expectException(ValidationException::class);
+        $this->executeService($author->account, $author);
     }
 
     /** @test */
     public function it_fails_if_user_is_not_account_administrator(): void
     {
         $author = $this->createUser();
-        $anotherUser = User::factory()->create([
-            'account_id' => $author->account_id,
-        ]);
 
         $this->expectException(NotEnoughPermissionException::class);
-        $this->executeService($author->account, $author, $anotherUser);
+        $this->executeService($author->account, $author);
     }
 
     /** @test */
@@ -68,28 +63,35 @@ class GiveAdministratorPrivilegeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new GiveAdministratorPrivilege)->execute($request);
+        (new InviteUser)->execute($request);
     }
 
-    private function executeService(Account $account, User $author, User $anotherUser): void
+    private function executeService(Account $account, User $author): void
     {
+        Mail::fake();
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'user_id' => $anotherUser->id,
+            'email' => 'admin@admin.com',
+            'is_administrator' => true,
         ];
 
-        (new GiveAdministratorPrivilege)->execute($request);
+        $newUser = (new InviteUser)->execute($request);
 
         $this->assertDatabaseHas('users', [
-            'id' => $anotherUser->id,
+            'id' => $newUser->id,
+            'email' => $newUser->email,
             'is_account_administrator' => true,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'administrator_privilege_given';
+            return $job->auditLog['action_name'] === 'user_invited';
+        });
+
+        Mail::assertQueued(UserInvited::class, function ($mail) use ($newUser) {
+            return $mail->hasTo($newUser->email);
         });
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Account\ManageUsers;
+namespace App\Settings\ManageUsers\Services;
 
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class GiveAdministratorPrivilege extends BaseService implements ServiceInterface
+class RemoveAdministratorPrivilege extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -37,7 +37,7 @@ class GiveAdministratorPrivilege extends BaseService implements ServiceInterface
     }
 
     /**
-     * Give the administrator permission to another user.
+     * Remove the administrator permission from another user.
      *
      * @param  array  $data
      * @return User
@@ -49,14 +49,18 @@ class GiveAdministratorPrivilege extends BaseService implements ServiceInterface
         $user = User::where('account_id', $data['account_id'])
             ->findOrFail($data['user_id']);
 
-        $user->is_account_administrator = true;
+        if ($user->id === $this->author->id) {
+            throw new \Exception(trans('account.exception_remove_your_own_permission'));
+        }
+
+        $user->is_account_administrator = false;
         $user->save();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'administrator_privilege_given',
+            'action_name' => 'administrator_privilege_removed',
             'objects' => json_encode([
                 'user_id' => $user->id,
                 'user_name' => $user->name,

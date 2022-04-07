@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Users;
+namespace App\Settings\ManageUsers\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageUsers\InviteUser;
-use App\Services\Account\ManageUsers\DestroyUser;
+use App\Settings\ManageUsers\Services\InviteUser;
+use App\Settings\ManageUsers\Services\DestroyUser;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageUsers\GiveAdministratorPrivilege;
-use App\Services\Account\ManageUsers\RemoveAdministratorPrivilege;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserCreateViewHelper;
+use App\Settings\ManageUsers\Services\GiveAdministratorPrivilege;
+use App\Settings\ManageUsers\Services\RemoveAdministratorPrivilege;
+use App\Settings\ManageUsers\Web\ViewHelpers\UserCreateViewHelper;
+use App\Settings\ManageUsers\Web\ViewHelpers\UserIndexViewHelper;
 
 class UserController extends Controller
 {

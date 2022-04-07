@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageUsers;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Services;
 
 use Exception;
 use Tests\TestCase;
@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageUsers\RemoveAdministratorPrivilege;
+use App\Settings\ManageUsers\Services\RemoveAdministratorPrivilege;
 
 class RemoveAdministratorPrivilegeTest extends TestCase
 {

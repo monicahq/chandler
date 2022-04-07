@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Users\ViewHelpers;
+namespace App\Settings\ManageUsers\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Helpers\DateHelper;

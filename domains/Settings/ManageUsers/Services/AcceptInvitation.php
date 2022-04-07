@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageUsers;
+namespace App\Settings\ManageUsers\Services;
 
 use Carbon\Carbon;
 use App\Models\User;

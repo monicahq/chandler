@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageUsers;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,7 +10,7 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManageUsers\DestroyUser;
+use App\Settings\ManageUsers\Services\DestroyUser;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

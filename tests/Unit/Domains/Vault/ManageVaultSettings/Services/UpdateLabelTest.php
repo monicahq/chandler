@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Vault\ManageLabels;
+namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
 use Tests\TestCase;
 use App\Models\User;

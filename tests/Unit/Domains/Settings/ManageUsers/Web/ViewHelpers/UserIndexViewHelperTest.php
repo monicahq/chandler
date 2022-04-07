@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Users\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\User;
+use App\Settings\ManageUsers\Web\ViewHelpers\UserIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Users\ViewHelpers\UserIndexViewHelper;
 
 class UserIndexViewHelperTest extends TestCase
 {

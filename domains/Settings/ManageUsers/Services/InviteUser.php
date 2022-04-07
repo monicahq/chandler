@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageUsers;
+namespace App\Settings\ManageUsers\Services;
 
 use App\Models\User;
 use App\Mail\UserInvited;
