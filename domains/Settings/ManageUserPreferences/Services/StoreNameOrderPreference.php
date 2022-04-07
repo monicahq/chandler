@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\User\Preferences;
+namespace App\Settings\ManageUserPreferences\Services;
 
 use App\Models\User;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class StoreNumberFormatPreference extends BaseService implements ServiceInterface
+class StoreNameOrderPreference extends BaseService implements ServiceInterface
 {
     private array $data;
 
@@ -20,7 +20,7 @@ class StoreNumberFormatPreference extends BaseService implements ServiceInterfac
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'number_format' => 'required|string|max:255',
+            'name_order' => 'required|string|max:255',
         ];
     }
 
@@ -37,7 +37,7 @@ class StoreNumberFormatPreference extends BaseService implements ServiceInterfac
     }
 
     /**
-     * Store date format preferences for the given user.
+     * Store name order preference for the given user.
      *
      * @param  array  $data
      * @return User
@@ -47,14 +47,27 @@ class StoreNumberFormatPreference extends BaseService implements ServiceInterfac
         $this->data = $data;
 
         $this->validateRules($data);
+        $this->checkNameOrderValidity();
         $this->updateUser();
 
         return $this->author;
     }
 
+    private function checkNameOrderValidity(): void
+    {
+        // there should be at least one variable in the name order
+        if (substr_count($this->data['name_order'], '%') < 1) {
+            throw new \Exception('The name order must contain at least one variable.');
+        }
+
+        if (substr_count($this->data['name_order'], '%') % 2 == 1) {
+            throw new \Exception('At least one % is missing to have a valid name order.');
+        }
+    }
+
     private function updateUser(): void
     {
-        $this->author->number_format = $this->data['number_format'];
+        $this->author->name_order = $this->data['name_order'];
         $this->author->save();
     }
 }

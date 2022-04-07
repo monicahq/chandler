@@ -6,10 +6,10 @@ use function env;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
 
-class PreferencesIndexViewHelperTest extends TestCase
+class UserPreferencesIndexViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -21,7 +21,7 @@ class PreferencesIndexViewHelperTest extends TestCase
             'date_format' => 'y',
         ]);
 
-        $array = PreferencesIndexViewHelper::data($user);
+        $array = UserPreferencesIndexViewHelper::data($user);
 
         $this->assertEquals(
             5,
@@ -49,7 +49,7 @@ class PreferencesIndexViewHelperTest extends TestCase
         $user = User::factory()->create([
             'name_order' => '%first_name% %last_name% (%nickname%)',
         ]);
-        $array = PreferencesIndexViewHelper::dtoNameOrder($user);
+        $array = UserPreferencesIndexViewHelper::dtoNameOrder($user);
         $this->assertEquals(
             [
                 'name_example' => 'James Bond (007)',
@@ -70,7 +70,7 @@ class PreferencesIndexViewHelperTest extends TestCase
             'date_format' => 'Y',
         ]);
 
-        $array = PreferencesIndexViewHelper::dtoDateFormat($user);
+        $array = UserPreferencesIndexViewHelper::dtoDateFormat($user);
         $this->assertEquals(
             4,
             count($array)
@@ -131,7 +131,7 @@ class PreferencesIndexViewHelperTest extends TestCase
         $user = User::factory()->create([
             'timezone' => 'UTC',
         ]);
-        $array = PreferencesIndexViewHelper::dtoTimezone($user);
+        $array = UserPreferencesIndexViewHelper::dtoTimezone($user);
         $this->assertEquals(
             [
                 'timezone' => 'UTC',
@@ -151,7 +151,7 @@ class PreferencesIndexViewHelperTest extends TestCase
             'number_format' => User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL,
         ]);
 
-        $array = PreferencesIndexViewHelper::dtoNumberFormat($user);
+        $array = UserPreferencesIndexViewHelper::dtoNumberFormat($user);
         $this->assertEquals(
             3,
             count($array)

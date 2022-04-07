@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User\Preferences;
+namespace App\Settings\ManageUserPreferences\Services;
 
 use App\Models\User;
 use App\Services\BaseService;

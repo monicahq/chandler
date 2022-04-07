@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Preferences;
+namespace App\Settings\ManageUserPreferences\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\Preferences\StoreDateFormatPreference;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
+use App\Settings\ManageUserPreferences\Services\StoreDateFormatPreference;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 
 class PreferencesDateFormatController extends Controller
 {
@@ -21,7 +21,7 @@ class PreferencesDateFormatController extends Controller
         $user = (new StoreDateFormatPreference)->execute($data);
 
         return response()->json([
-            'data' => PreferencesIndexViewHelper::dtoDateFormat($user),
+            'data' => UserPreferencesIndexViewHelper::dtoDateFormat($user),
         ], 200);
     }
 }

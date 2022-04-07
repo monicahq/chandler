@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Preferences;
+namespace App\Settings\ManageUserPreferences\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\Preferences\StoreTimezone;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
+use App\Settings\ManageUserPreferences\Services\StoreTimezone;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 
 class PreferencesTimezoneController extends Controller
 {
@@ -21,7 +21,7 @@ class PreferencesTimezoneController extends Controller
         $user = (new StoreTimezone)->execute($data);
 
         return response()->json([
-            'data' => PreferencesIndexViewHelper::dtoTimezone($user),
+            'data' => UserPreferencesIndexViewHelper::dtoTimezone($user),
         ], 200);
     }
 }

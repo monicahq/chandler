@@ -13,15 +13,10 @@ use App\Http\Controllers\Vault\Contact\ContactTemplateController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
-use App\Http\Controllers\Settings\Preferences\PreferencesController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
-use App\Http\Controllers\Settings\Preferences\PreferencesTimezoneController;
-use App\Http\Controllers\Settings\Preferences\PreferencesNameOrderController;
-use App\Http\Controllers\Settings\Preferences\PreferencesDateFormatController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
-use App\Http\Controllers\Settings\Preferences\PreferencesNumberFormatController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
 use App\Http\Controllers\Settings\Personalize\Genders\PersonalizeGenderController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
@@ -46,6 +41,11 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\User\Preferences;
+namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\Preferences\StoreNameOrderPreference;
+use App\Settings\ManageUserPreferences\Services\StoreNameOrderPreference;
 
 class StoreNameOrderPreferenceTest extends TestCase
 {

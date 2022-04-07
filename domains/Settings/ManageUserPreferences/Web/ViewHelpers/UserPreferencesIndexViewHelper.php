@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Preferences\ViewHelpers;
+namespace App\Settings\ManageUserPreferences\Web\ViewHelpers;
 
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\NameHelper;
 
-class PreferencesIndexViewHelper
+class UserPreferencesIndexViewHelper
 {
     public static function data(User $user): array
     {

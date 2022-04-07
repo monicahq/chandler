@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Preferences;
+namespace App\Settings\ManageUserPreferences\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\Preferences\StoreNumberFormatPreference;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
+use App\Settings\ManageUserPreferences\Services\StoreNumberFormatPreference;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 
 class PreferencesNumberFormatController extends Controller
 {
@@ -21,7 +21,7 @@ class PreferencesNumberFormatController extends Controller
         $user = (new StoreNumberFormatPreference)->execute($data);
 
         return response()->json([
-            'data' => PreferencesIndexViewHelper::dtoNumberFormat($user),
+            'data' => UserPreferencesIndexViewHelper::dtoNumberFormat($user),
         ], 200);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Services\User\Preferences;
+namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Services;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\User\Preferences\StoreTimezone;
+use App\Settings\ManageUserPreferences\Services\StoreTimezone;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\User\Preferences;
+namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\User\Preferences\StoreNumberFormatPreference;
+use App\Settings\ManageUserPreferences\Services\StoreDateFormatPreference;
 
-class StoreNumberFormatPreferenceTest extends TestCase
+class StoreDateFormatPreferenceTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_stores_the_number_format_preference(): void
+    public function it_stores_the_date_format_preference(): void
     {
         $ross = $this->createUser();
         $this->executeService($ross, $ross->account);
@@ -30,7 +30,7 @@ class StoreNumberFormatPreferenceTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new StoreNumberFormatPreference)->execute($request);
+        (new StoreDateFormatPreference)->execute($request);
     }
 
     /** @test */
@@ -50,15 +50,15 @@ class StoreNumberFormatPreferenceTest extends TestCase
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'number_format' => 'Y',
+            'date_format' => 'Y',
         ];
 
-        $user = (new StoreNumberFormatPreference)->execute($request);
+        $user = (new StoreDateFormatPreference)->execute($request);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'account_id' => $account->id,
-            'number_format' => 'Y',
+            'date_format' => 'Y',
         ]);
 
         $this->assertInstanceOf(

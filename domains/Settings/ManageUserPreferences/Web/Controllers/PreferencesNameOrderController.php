@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Preferences;
+namespace App\Settings\ManageUserPreferences\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\Preferences\StoreNameOrderPreference;
-use App\Http\Controllers\Settings\Preferences\ViewHelpers\PreferencesIndexViewHelper;
+use App\Settings\ManageUserPreferences\Services\StoreNameOrderPreference;
+use App\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 
 class PreferencesNameOrderController extends Controller
 {
@@ -21,7 +21,7 @@ class PreferencesNameOrderController extends Controller
         $user = (new StoreNameOrderPreference)->execute($data);
 
         return response()->json([
-            'data' => PreferencesIndexViewHelper::dtoNameOrder($user),
+            'data' => UserPreferencesIndexViewHelper::dtoNameOrder($user),
         ], 200);
     }
 }
