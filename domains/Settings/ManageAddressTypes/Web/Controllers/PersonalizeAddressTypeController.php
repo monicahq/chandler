@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManagePronouns\DestroyPronoun;
+use App\Settings\ManagePronouns\Services\DestroyPronoun;
 use App\Settings\ManageAddressTypes\Services\CreateAddressType;
 use App\Settings\ManageAddressTypes\Services\UpdateAddressType;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers;
+namespace App\Settings\ManagePronouns\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Pronoun;

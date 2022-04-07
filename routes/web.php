@@ -24,7 +24,6 @@ use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
-use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
@@ -46,6 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

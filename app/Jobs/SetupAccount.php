@@ -19,7 +19,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Services\Account\ManageTemplate\CreateModule;
 use App\Settings\ManageGenders\Services\CreateGender;
-use App\Services\Account\ManagePronouns\CreatePronoun;
+use App\Settings\ManagePronouns\Services\CreatePronoun;
 use App\Services\Account\ManageTemplate\CreateTemplate;
 use App\Services\Account\ManageTemplate\CreateTemplatePage;
 use App\Settings\ManageAddressTypes\Services\CreateAddressType;

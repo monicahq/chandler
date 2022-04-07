@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Pronouns;
+namespace App\Settings\ManagePronouns\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManagePronouns\CreatePronoun;
-use App\Services\Account\ManagePronouns\UpdatePronoun;
-use App\Services\Account\ManagePronouns\DestroyPronoun;
+use App\Settings\ManagePronouns\Services\CreatePronoun;
+use App\Settings\ManagePronouns\Services\UpdatePronoun;
+use App\Settings\ManagePronouns\Services\DestroyPronoun;
+use App\Settings\ManagePronouns\Web\ViewHelpers\PersonalizePronounIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\Pronouns\ViewHelpers\PersonalizePronounIndexViewHelper;
 
 class PersonalizePronounController extends Controller
 {

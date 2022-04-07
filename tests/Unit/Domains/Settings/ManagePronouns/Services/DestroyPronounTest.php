@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManagePronouns;
+namespace Tests\Unit\Domains\Settings\ManagePronouns\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,16 +10,16 @@ use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Account\ManagePronouns\UpdatePronoun;
+use App\Settings\ManagePronouns\Services\DestroyPronoun;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UpdatePronounTest extends TestCase
+class DestroyPronounTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_pronoun(): void
+    public function it_destroys_a_pronoun(): void
     {
         $ross = $this->createAdministrator();
         $pronoun = Pronoun::factory()->create([
@@ -36,7 +36,7 @@ class UpdatePronounTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdatePronoun)->execute($request);
+        (new DestroyPronoun)->execute($request);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class UpdatePronounTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $pronoun = Pronoun::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $account, $pronoun);
     }
@@ -63,7 +63,7 @@ class UpdatePronounTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
+    public function it_fails_if_user_doesnt_have_right_permission_in_vault(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
@@ -82,19 +82,16 @@ class UpdatePronounTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'pronoun_id' => $pronoun->id,
-            'name' => 'pronoun name',
         ];
 
-        $pronoun = (new UpdatePronoun)->execute($request);
+        (new DestroyPronoun)->execute($request);
 
-        $this->assertDatabaseHas('pronouns', [
+        $this->assertDatabaseMissing('pronouns', [
             'id' => $pronoun->id,
-            'account_id' => $account->id,
-            'name' => 'pronoun name',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'pronoun_updated';
+            return $job->auditLog['action_name'] === 'pronoun_destroyed';
         });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManagePronouns;
+namespace App\Settings\ManagePronouns\Services;
 
 use App\Models\User;
 use App\Models\Pronoun;
