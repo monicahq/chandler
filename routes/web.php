@@ -14,16 +14,19 @@ use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Settings\Personalize\PersonalizeController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
+use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Http\Controllers\Vault\Contact\Modules\Note\ContactModuleNoteController;
+use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Http\Controllers\Settings\Personalize\Pronouns\PersonalizePronounController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
+use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
@@ -42,10 +45,7 @@ use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageM
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
-use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
-use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
