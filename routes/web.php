@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Vault\Contact\ContactController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Http\Controllers\Vault\Search\VaultSearchController;
+use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Http\Controllers\Vault\Contact\ContactPageController;
 use App\Http\Controllers\Vault\Contact\ContactTemplateController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
@@ -45,7 +46,6 @@ use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelations
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
 use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
-use App\Settings\ManageUsers\Web\Controllers\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
