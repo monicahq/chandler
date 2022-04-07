@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers;
+namespace App\Settings\ManageContactInformationTypes\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\ContactInformationType;

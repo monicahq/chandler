@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\ContactInformationTypes;
+namespace App\Settings\ManageContactInformationTypes\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
 use App\Settings\ManageContactInformationTypes\Services\UpdateContactInformationType;
 use App\Settings\ManageContactInformationTypes\Services\DestroyContactInformationType;
-use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
+use App\Settings\ManageContactInformationTypes\Web\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 
 class PersonalizeContatInformationTypesController extends Controller
 {

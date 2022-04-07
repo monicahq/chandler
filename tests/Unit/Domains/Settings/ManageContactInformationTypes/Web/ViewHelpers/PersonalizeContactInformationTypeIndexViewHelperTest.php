@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageContactInformationTypes\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\ContactInformationType;
+use App\Settings\ManageContactInformationTypes\Web\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
 
 class PersonalizeContactInformationTypeIndexViewHelperTest extends TestCase
 {

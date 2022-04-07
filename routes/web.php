@@ -44,8 +44,8 @@ use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageM
 use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePagePositionController;
 use App\Http\Controllers\Settings\Personalize\Templates\PersonalizeTemplatePageModulesPositionController;
-use App\Http\Controllers\Settings\Personalize\ContactInformationTypes\PersonalizeContatInformationTypesController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
+use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
