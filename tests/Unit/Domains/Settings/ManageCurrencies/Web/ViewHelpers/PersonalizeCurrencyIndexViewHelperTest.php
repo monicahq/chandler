@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\Currencies\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageCurrencies\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
