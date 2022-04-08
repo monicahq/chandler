@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Search\ViewHelpers;
+namespace App\Vault\Search\Web\ViewHelpers;
 
 use App\Models\Note;
 use App\Models\Vault;

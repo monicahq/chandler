@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Search;
+namespace App\Vault\Search\Web\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Search\ViewHelpers\VaultSearchIndexViewHelper;
+use App\Vault\Search\Web\ViewHelpers\VaultSearchIndexViewHelper;
 
 class VaultSearchController extends Controller
 {

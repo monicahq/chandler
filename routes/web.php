@@ -6,7 +6,6 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Vault\Contact\ContactController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
-use App\Http\Controllers\Vault\Search\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Http\Controllers\Vault\Contact\ContactPageController;
 use App\Http\Controllers\Vault\Contact\ContactTemplateController;
@@ -46,6 +45,7 @@ use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationship
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Vault\Search\Web\Controllers\VaultSearchController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
