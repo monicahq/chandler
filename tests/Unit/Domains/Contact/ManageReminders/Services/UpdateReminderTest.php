@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Contact\ManageReminders\Services\UpdateReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Contact\ManageReminders\Services\UpdateReminder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UpdateReminderTest extends TestCase

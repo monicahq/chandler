@@ -23,6 +23,7 @@ use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -42,7 +43,6 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesC
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
-use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;

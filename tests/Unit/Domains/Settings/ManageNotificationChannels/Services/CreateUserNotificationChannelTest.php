@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use App\Models\UserNotificationChannel;
-use App\Settings\ManageNotificationChannels\Jobs\SendVerificationEmailChannel;
 use App\Exceptions\EmailAlreadyExistException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Settings\ManageNotificationChannels\Jobs\SendVerificationEmailChannel;
 use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
 
 class CreateUserNotificationChannelTest extends TestCase

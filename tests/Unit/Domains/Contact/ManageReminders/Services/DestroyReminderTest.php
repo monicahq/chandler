@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Contact\ManageReminders\Services\DestroyReminder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Contact\ManageReminders\Services\DestroyReminder;
 
 class DestroyReminderTest extends TestCase
 {
