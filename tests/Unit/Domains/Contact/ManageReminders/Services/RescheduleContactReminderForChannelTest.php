@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageReminder\RescheduleContactReminderForChannel;
+use App\Contact\ManageReminders\Services\RescheduleContactReminderForChannel;
 
 class RescheduleContactReminderForChannelTest extends TestCase
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Services;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
@@ -11,28 +12,26 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
+use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Services\Contact\ManageReminder\DestroyReminder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Contact\ManageReminders\Services\CreateContactReminder;
 
-class DestroyReminderTest extends TestCase
+class CreateContactReminderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_destroys_a_reminder(): void
+    public function it_creates_a_reminder(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $reminder = ContactReminder::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
+        $this->executeService($regis, $regis->account, $vault, $contact);
     }
 
     /** @test */
@@ -43,7 +42,7 @@ class DestroyReminderTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyReminder)->execute($request);
+        (new CreateContactReminder)->execute($request);
     }
 
     /** @test */
@@ -56,11 +55,8 @@ class DestroyReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $reminder = ContactReminder::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $account, $vault, $contact, $reminder);
+        $this->executeService($regis, $account, $vault, $contact);
     }
 
     /** @test */
@@ -72,11 +68,8 @@ class DestroyReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $reminder = ContactReminder::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
+        $this->executeService($regis, $regis->account, $vault, $contact);
     }
 
     /** @test */
@@ -88,51 +81,57 @@ class DestroyReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $reminder = ContactReminder::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
+        $this->executeService($regis, $regis->account, $vault, $contact);
     }
 
-    /** @test */
-    public function it_fails_if_reminder_does_not_exist(): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
     {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $reminder = ContactReminder::factory()->create();
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
-    }
-
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactReminder $reminder): void
-    {
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
         Queue::fake();
+
+        $userNotificationChannel = UserNotificationChannel::factory()->create([
+            'user_id' => $author->id,
+        ]);
 
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'contact_reminder_id' => $reminder->id,
+            'label' => 'birthdate',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
+            'type' => ContactReminder::TYPE_ONE_TIME,
+            'frequency_number' => null,
         ];
 
-        (new DestroyReminder)->execute($request);
+        $contactReminder = (new CreateContactReminder)->execute($request);
 
-        $this->assertDatabaseMissing('contact_reminders', [
-            'id' => $reminder->id,
+        $this->assertDatabaseHas('contact_reminders', [
+            'id' => $contactReminder->id,
+            'contact_id' => $contact->id,
+            'label' => 'birthdate',
+            'day' => 29,
+            'month' => 10,
+            'year' => 1981,
+            'type' => ContactReminder::TYPE_ONE_TIME,
+            'frequency_number' => null,
+        ]);
+
+        $this->assertDatabaseHas('contact_reminder_scheduled', [
+            'user_notification_channel_id' => $userNotificationChannel->id,
+            'contact_reminder_id' => $contactReminder->id,
+            'scheduled_at' => '2018-10-29 09:00:00',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_reminder_destroyed';
+            return $job->auditLog['action_name'] === 'contact_reminder_created';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_reminder_destroyed';
+            return $job->contactLog['action_name'] === 'contact_reminder_created';
         });
     }
 }

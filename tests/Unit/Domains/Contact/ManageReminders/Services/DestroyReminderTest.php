@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,19 +11,18 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
-use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Contact\ManageReminder\UpdateReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Contact\ManageReminders\Services\DestroyReminder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UpdateReminderTest extends TestCase
+class DestroyReminderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_reminder(): void
+    public function it_destroys_a_reminder(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -44,7 +43,7 @@ class UpdateReminderTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateReminder)->execute($request);
+        (new DestroyReminder)->execute($request);
     }
 
     /** @test */
@@ -97,7 +96,7 @@ class UpdateReminderTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_reminder_is_not_in_the_contact(): void
+    public function it_fails_if_reminder_does_not_exist(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
@@ -105,7 +104,6 @@ class UpdateReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $reminder = ContactInformationType::factory()->create();
         $reminder = ContactReminder::factory()->create();
 
         $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
@@ -121,33 +119,20 @@ class UpdateReminderTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'contact_reminder_id' => $reminder->id,
-            'label' => 'birthdate',
-            'day' => 29,
-            'month' => 10,
-            'year' => 1981,
-            'type' => ContactReminder::TYPE_ONE_TIME,
-            'frequency_number' => null,
         ];
 
-        $reminder = (new UpdateReminder)->execute($request);
+        (new DestroyReminder)->execute($request);
 
-        $this->assertDatabaseHas('contact_reminders', [
+        $this->assertDatabaseMissing('contact_reminders', [
             'id' => $reminder->id,
-            'contact_id' => $contact->id,
-            'label' => 'birthdate',
-            'day' => 29,
-            'month' => 10,
-            'year' => 1981,
-            'type' => ContactReminder::TYPE_ONE_TIME,
-            'frequency_number' => null,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_reminder_updated';
+            return $job->auditLog['action_name'] === 'contact_reminder_destroyed';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_reminder_updated';
+            return $job->contactLog['action_name'] === 'contact_reminder_destroyed';
         });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
+namespace App\Contact\ManageReminders\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;

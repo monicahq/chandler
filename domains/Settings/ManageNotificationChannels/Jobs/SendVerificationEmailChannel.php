@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Settings\ManageNotificationChannels\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;

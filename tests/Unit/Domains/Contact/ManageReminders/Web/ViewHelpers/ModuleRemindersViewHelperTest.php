@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
+use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 
 class ModuleRemindersViewHelperTest extends TestCase
 {

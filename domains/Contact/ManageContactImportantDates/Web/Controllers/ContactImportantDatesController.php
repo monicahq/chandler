@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ContactImportantDate;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageReminder\CreateContactReminder;
+use App\Contact\ManageReminders\Services\CreateContactReminder;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
 use App\Contact\ManageContactImportantDates\Services\UpdateContactImportantDate;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\ManageReminder;
+namespace App\Contact\ManageReminders\Services;
 
 use Carbon\Carbon;
 use App\Services\BaseService;

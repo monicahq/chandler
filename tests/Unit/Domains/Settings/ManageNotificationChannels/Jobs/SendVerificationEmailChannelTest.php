@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Jobs;
+namespace Tests\Unit\Domains\Settings\ManageNotificationChannels\Jobs;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationChannel;
-use App\Jobs\SendVerificationEmailChannel;
+use App\Settings\ManageNotificationChannels\Jobs\SendVerificationEmailChannel;
 use App\Mail\UserNotificationChannelEmailCreated;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

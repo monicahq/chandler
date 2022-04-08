@@ -8,7 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\UserNotificationChannel;
-use App\Jobs\SendVerificationEmailChannel;
+use App\Settings\ManageNotificationChannels\Jobs\SendVerificationEmailChannel;
 use App\Exceptions\EmailAlreadyExistException;
 
 class CreateUserNotificationChannel extends BaseService implements ServiceInterface

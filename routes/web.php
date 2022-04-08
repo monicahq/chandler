@@ -34,7 +34,6 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneContro
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
-use App\Http\Controllers\Vault\Contact\Modules\Reminder\ContactModuleReminderController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
@@ -43,6 +42,7 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesC
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;

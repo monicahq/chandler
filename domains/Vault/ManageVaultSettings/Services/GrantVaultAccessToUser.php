@@ -11,7 +11,7 @@ use App\Services\BaseService;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 use App\Exceptions\SameUserException;
-use App\Services\Contact\ManageReminder\ScheduleContactReminderForUser;
+use App\Contact\ManageReminders\Services\ScheduleContactReminderForUser;
 
 class GrantVaultAccessToUser extends BaseService implements ServiceInterface
 {

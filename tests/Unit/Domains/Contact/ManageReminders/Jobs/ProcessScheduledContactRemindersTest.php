@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Jobs;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Jobs;
 
+use App\Contact\ManageReminders\Jobs\ProcessScheduledContactReminders;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
 use App\Models\UserNotificationChannel;
-use App\Jobs\ProcessScheduledContactReminders;
 use App\Jobs\Notifications\SendEmailNotification;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Reminder;
+namespace App\Contact\ManageReminders\Web\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Contact;
@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\ContactReminder;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\ManageReminder\UpdateReminder;
-use App\Services\Contact\ManageReminder\DestroyReminder;
-use App\Services\Contact\ManageReminder\CreateContactReminder;
-use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;
+use App\Contact\ManageReminders\Services\UpdateReminder;
+use App\Contact\ManageReminders\Services\DestroyReminder;
+use App\Contact\ManageReminders\Services\CreateContactReminder;
+use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 
 class ContactModuleReminderController extends Controller
 {

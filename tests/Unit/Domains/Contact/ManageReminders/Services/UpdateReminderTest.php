@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Services;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
@@ -12,26 +11,29 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
-use App\Models\UserNotificationChannel;
+use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Contact\ManageReminders\Services\UpdateReminder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageReminder\CreateContactReminder;
 
-class CreateContactReminderTest extends TestCase
+class UpdateReminderTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_reminder(): void
+    public function it_updates_a_reminder(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $reminder = ContactReminder::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
     }
 
     /** @test */
@@ -42,7 +44,7 @@ class CreateContactReminderTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateContactReminder)->execute($request);
+        (new UpdateReminder)->execute($request);
     }
 
     /** @test */
@@ -55,8 +57,11 @@ class CreateContactReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $reminder = ContactReminder::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
 
-        $this->executeService($regis, $account, $vault, $contact);
+        $this->executeService($regis, $account, $vault, $contact, $reminder);
     }
 
     /** @test */
@@ -68,8 +73,11 @@ class CreateContactReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
+        $reminder = ContactReminder::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
     }
 
     /** @test */
@@ -81,24 +89,38 @@ class CreateContactReminderTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $reminder = ContactReminder::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
+    /** @test */
+    public function it_fails_if_reminder_is_not_in_the_contact(): void
     {
-        Carbon::setTestNow(Carbon::create(2018, 1, 1));
-        Queue::fake();
+        $this->expectException(ModelNotFoundException::class);
 
-        $userNotificationChannel = UserNotificationChannel::factory()->create([
-            'user_id' => $author->id,
-        ]);
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $reminder = ContactInformationType::factory()->create();
+        $reminder = ContactReminder::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $contact, $reminder);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactReminder $reminder): void
+    {
+        Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
+            'contact_reminder_id' => $reminder->id,
             'label' => 'birthdate',
             'day' => 29,
             'month' => 10,
@@ -107,10 +129,10 @@ class CreateContactReminderTest extends TestCase
             'frequency_number' => null,
         ];
 
-        $contactReminder = (new CreateContactReminder)->execute($request);
+        $reminder = (new UpdateReminder)->execute($request);
 
         $this->assertDatabaseHas('contact_reminders', [
-            'id' => $contactReminder->id,
+            'id' => $reminder->id,
             'contact_id' => $contact->id,
             'label' => 'birthdate',
             'day' => 29,
@@ -120,18 +142,12 @@ class CreateContactReminderTest extends TestCase
             'frequency_number' => null,
         ]);
 
-        $this->assertDatabaseHas('contact_reminder_scheduled', [
-            'user_notification_channel_id' => $userNotificationChannel->id,
-            'contact_reminder_id' => $contactReminder->id,
-            'scheduled_at' => '2018-10-29 09:00:00',
-        ]);
-
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_reminder_created';
+            return $job->auditLog['action_name'] === 'contact_reminder_updated';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_reminder_created';
+            return $job->contactLog['action_name'] === 'contact_reminder_updated';
         });
     }
 }

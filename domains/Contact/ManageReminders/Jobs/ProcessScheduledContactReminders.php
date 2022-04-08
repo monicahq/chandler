@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Contact\ManageReminders\Jobs;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\SendEmailNotification;
-use App\Services\Contact\ManageReminder\RescheduleContactReminderForChannel;
+use App\Contact\ManageReminders\Services\RescheduleContactReminderForChannel;
 
 class ProcessScheduledContactReminders implements ShouldQueue
 {

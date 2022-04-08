@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\ManageReminder;
+namespace App\Contact\ManageReminders\Services;
 
 use Carbon\Carbon;
 use App\Jobs\CreateAuditLog;
@@ -9,7 +9,7 @@ use App\Jobs\CreateContactLog;
 use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 
-class DestroyReminder extends BaseService implements ServiceInterface
+class UpdateReminder extends BaseService implements ServiceInterface
 {
     private ContactReminder $reminder;
 
@@ -26,6 +26,12 @@ class DestroyReminder extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'contact_reminder_id' => 'required|integer|exists:contact_reminders,id',
+            'label' => 'required|string|max:255',
+            'day' => 'nullable|integer',
+            'month' => 'nullable|integer',
+            'year' => 'nullable|integer',
+            'type' => 'required|string:255',
+            'frequency_number' => 'nullable|integer',
         ];
     }
 
@@ -45,23 +51,32 @@ class DestroyReminder extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a reminder.
+     * Update a reminder.
      *
      * @param  array  $data
+     * @return ContactReminder
      */
-    public function execute(array $data): void
+    public function execute(array $data): ContactReminder
     {
         $this->validateRules($data);
 
         $this->reminder = ContactReminder::where('contact_id', $data['contact_id'])
             ->findOrFail($data['contact_reminder_id']);
 
-        $this->reminder->delete();
+        $this->reminder->label = $data['label'];
+        $this->reminder->day = $data['day'];
+        $this->reminder->month = $data['month'];
+        $this->reminder->year = $data['year'];
+        $this->reminder->type = $data['type'];
+        $this->reminder->frequency_number = $this->valueOrNull($data, 'frequency_number');
+        $this->reminder->save();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
         $this->log();
+
+        return $this->reminder;
     }
 
     private function log(): void
@@ -70,10 +85,11 @@ class DestroyReminder extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'contact_reminder_destroyed',
+            'action_name' => 'contact_reminder_updated',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
+                'reminder_name' => $this->reminder->label,
             ]),
         ])->onQueue('low');
 
@@ -81,8 +97,10 @@ class DestroyReminder extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'contact_reminder_destroyed',
-            'objects' => json_encode([]),
+            'action_name' => 'contact_reminder_updated',
+            'objects' => json_encode([
+                'reminder_name' => $this->reminder->label,
+            ]),
         ])->onQueue('low');
     }
 }

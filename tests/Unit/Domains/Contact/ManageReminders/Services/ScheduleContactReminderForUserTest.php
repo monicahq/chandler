@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageReminder;
+namespace Tests\Unit\Domains\Contact\ManageReminders\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -11,7 +11,7 @@ use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Services\Contact\ManageReminder\ScheduleContactReminderForUser;
+use App\Contact\ManageReminders\Services\ScheduleContactReminderForUser;
 
 class ScheduleContactReminderForUserTest extends TestCase
 {
