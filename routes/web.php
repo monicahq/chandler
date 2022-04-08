@@ -40,10 +40,10 @@ use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesCon
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
+use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 
