@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
@@ -46,7 +47,6 @@ use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationship
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Vault\Search\Web\Controllers\VaultSearchController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
