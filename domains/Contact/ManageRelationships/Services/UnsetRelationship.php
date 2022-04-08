@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Services\Contact\SetPronoun;
+namespace App\Contact\ManageRelationships\Services;
 
-use App\Models\Pronoun;
+use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
+use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class RemovePronoun extends BaseService implements ServiceInterface
+class UnsetRelationship extends BaseService implements ServiceInterface
 {
-    private ?Pronoun $pronoun;
+    private RelationshipType $relationshipType;
 
     /**
      * Get the validation rules that apply to the service.
@@ -23,7 +25,9 @@ class RemovePronoun extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'relationship_type_id' => 'required|integer|exists:relationship_types,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'other_contact_id' => 'required|integer|exists:contacts,id',
         ];
     }
 
@@ -43,7 +47,7 @@ class RemovePronoun extends BaseService implements ServiceInterface
     }
 
     /**
-     * Unset a contact's pronoun.
+     * Unset an existing relationship between two contacts.
      *
      * @param  array  $data
      */
@@ -51,27 +55,39 @@ class RemovePronoun extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->pronoun = null;
-        if ($this->contact->pronoun) {
-            $this->pronoun = $this->contact->pronoun;
+        $otherContact = Contact::where('vault_id', $data['vault_id'])
+            ->findOrFail($data['other_contact_id']);
+
+        $this->relationshipType = RelationshipType::findOrFail($data['relationship_type_id']);
+        if ($this->relationshipType->groupType->account_id != $data['account_id']) {
+            throw new ModelNotFoundException;
         }
 
-        $this->contact->pronoun_id = null;
-        $this->contact->save();
+        $this->unsetRelationship($this->contact, $otherContact);
+        $this->unsetRelationship($otherContact, $this->contact);
 
-        $this->log();
+        $this->log($otherContact);
     }
 
-    private function log(): void
+    private function unsetRelationship(Contact $contact, Contact $otherContact): void
+    {
+        $contact->relationships()->detach([
+            $otherContact->id,
+        ]);
+    }
+
+    private function log(Contact $otherContact): void
     {
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'pronoun_unset',
+            'action_name' => 'relationship_unset',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
+                'other_contact_id' => $otherContact->id,
+                'other_contact_name' => $otherContact->name,
             ]),
         ])->onQueue('low');
 
@@ -79,9 +95,11 @@ class RemovePronoun extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'pronoun_unset',
+            'action_name' => 'relationship_unset',
             'objects' => json_encode([
-                'pronoun_name' => $this->pronoun ? $this->pronoun->name : null,
+                'contact_id' => $this->contact->id,
+                'contact_name' => $this->contact->name,
+                'relationship_name' => $this->relationshipType->name,
             ]),
         ])->onQueue('low');
     }

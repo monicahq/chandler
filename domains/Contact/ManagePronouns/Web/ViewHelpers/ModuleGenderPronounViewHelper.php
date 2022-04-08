@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\GenderPronoun\ViewHelpers;
+namespace App\Contact\ManagePronouns\Web\ViewHelpers;
 
 use App\Models\Contact;
 

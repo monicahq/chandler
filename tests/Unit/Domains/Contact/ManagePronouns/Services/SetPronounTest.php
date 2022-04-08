@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\SetPronoun;
+namespace Tests\Unit\Domains\Contact\ManagePronouns\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -12,7 +12,7 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Contact\SetPronoun\SetPronoun;
+use App\Contact\ManagePronouns\Services\SetPronoun;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Services\Contact\SetPronoun;
+namespace App\Contact\ManageContactAddresses\Services;
 
 use Carbon\Carbon;
-use App\Models\Pronoun;
+use App\Models\Address;
+use App\Models\AddressType;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
 
-class SetPronoun extends BaseService implements ServiceInterface
+class DestroyContactAddress extends BaseService implements ServiceInterface
 {
-    private Pronoun $pronoun;
+    private Address $address;
+    private AddressType $addressType;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,7 +27,7 @@ class SetPronoun extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'pronoun_id' => 'required|integer|exists:pronouns,id',
+            'address_id' => 'required|integer|exists:addresses,id',
         ];
     }
 
@@ -39,13 +41,13 @@ class SetPronoun extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
             'contact_must_belong_to_vault',
+            'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Set a contact's pronoun.
+     * Delete a contact address.
      *
      * @param  array  $data
      */
@@ -53,10 +55,11 @@ class SetPronoun extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->pronoun = Pronoun::where('account_id', $data['account_id'])
-            ->findOrFail($data['pronoun_id']);
+        $this->address = Address::where('contact_id', $this->contact->id)
+            ->findOrFail($data['address_id']);
 
-        $this->contact->pronoun_id = $this->pronoun->id;
+        $this->address->delete();
+
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
@@ -69,11 +72,10 @@ class SetPronoun extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'pronoun_set',
+            'action_name' => 'contact_address_destroyed',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'pronoun_name' => $this->pronoun->name,
             ]),
         ])->onQueue('low');
 
@@ -81,9 +83,8 @@ class SetPronoun extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'pronoun_set',
+            'action_name' => 'contact_address_destroyed',
             'objects' => json_encode([
-                'pronoun_name' => $this->pronoun->name,
             ]),
         ])->onQueue('low');
     }

@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Services\Contact\ManageRelationship;
+namespace App\Contact\ManagePronouns\Services;
 
-use App\Models\Contact;
+use Carbon\Carbon;
+use App\Models\Pronoun;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
-use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UnsetRelationship extends BaseService implements ServiceInterface
+class SetPronoun extends BaseService implements ServiceInterface
 {
-    private RelationshipType $relationshipType;
+    private Pronoun $pronoun;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,9 +24,8 @@ class UnsetRelationship extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'relationship_type_id' => 'required|integer|exists:relationship_types,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'other_contact_id' => 'required|integer|exists:contacts,id',
+            'pronoun_id' => 'required|integer|exists:pronouns,id',
         ];
     }
 
@@ -47,7 +45,7 @@ class UnsetRelationship extends BaseService implements ServiceInterface
     }
 
     /**
-     * Unset an existing relationship between two contacts.
+     * Set a contact's pronoun.
      *
      * @param  array  $data
      */
@@ -55,39 +53,27 @@ class UnsetRelationship extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $otherContact = Contact::where('vault_id', $data['vault_id'])
-            ->findOrFail($data['other_contact_id']);
+        $this->pronoun = Pronoun::where('account_id', $data['account_id'])
+            ->findOrFail($data['pronoun_id']);
 
-        $this->relationshipType = RelationshipType::findOrFail($data['relationship_type_id']);
-        if ($this->relationshipType->groupType->account_id != $data['account_id']) {
-            throw new ModelNotFoundException;
-        }
+        $this->contact->pronoun_id = $this->pronoun->id;
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
-        $this->unsetRelationship($this->contact, $otherContact);
-        $this->unsetRelationship($otherContact, $this->contact);
-
-        $this->log($otherContact);
+        $this->log();
     }
 
-    private function unsetRelationship(Contact $contact, Contact $otherContact): void
-    {
-        $contact->relationships()->detach([
-            $otherContact->id,
-        ]);
-    }
-
-    private function log(Contact $otherContact): void
+    private function log(): void
     {
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'relationship_unset',
+            'action_name' => 'pronoun_set',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'other_contact_id' => $otherContact->id,
-                'other_contact_name' => $otherContact->name,
+                'pronoun_name' => $this->pronoun->name,
             ]),
         ])->onQueue('low');
 
@@ -95,11 +81,9 @@ class UnsetRelationship extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'relationship_unset',
+            'action_name' => 'pronoun_set',
             'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-                'relationship_name' => $this->relationshipType->name,
+                'pronoun_name' => $this->pronoun->name,
             ]),
         ])->onQueue('low');
     }

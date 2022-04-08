@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageRelationship;
+namespace Tests\Unit\Domains\Contact\ManageRelationships\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -16,14 +16,14 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageRelationship\UnsetRelationship;
+use App\Contact\ManageRelationships\Services\SetRelationship;
 
-class UnsetRelationshipTest extends TestCase
+class SetRelationshipTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_unsets_relationship(): void
+    public function it_sets_relationship(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -35,11 +35,6 @@ class UnsetRelationshipTest extends TestCase
         RelationshipType::factory()->create([
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
-        ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
         ]);
 
         $this->executeService($regis, $regis->account, $type, $vault, $contact, $otherContact);
@@ -53,7 +48,7 @@ class UnsetRelationshipTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UnsetRelationship)->execute($request);
+        (new SetRelationship)->execute($request);
     }
 
     /** @test */
@@ -72,11 +67,6 @@ class UnsetRelationshipTest extends TestCase
         RelationshipType::factory()->create([
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
-        ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
         ]);
 
         $this->executeService($regis, $account, $type, $vault, $contact, $otherContact);
@@ -99,11 +89,6 @@ class UnsetRelationshipTest extends TestCase
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
         ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
-        ]);
 
         $this->executeService($regis, $account, $type, $vault, $contact, $otherContact);
     }
@@ -123,11 +108,6 @@ class UnsetRelationshipTest extends TestCase
         RelationshipType::factory()->create([
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
-        ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
         ]);
 
         $this->executeService($regis, $regis->account, $type, $vault, $contact, $otherContact);
@@ -149,11 +129,6 @@ class UnsetRelationshipTest extends TestCase
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
         ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
-        ]);
 
         $this->executeService($regis, $regis->account, $type, $vault, $contact, $otherContact);
     }
@@ -173,11 +148,6 @@ class UnsetRelationshipTest extends TestCase
         RelationshipType::factory()->create([
             'relationship_group_type_id' => $groupType->id,
             'name' => $type->name_reverse_relationship,
-        ]);
-        $contact->relationships()->syncWithoutDetaching([
-            $otherContact->id => [
-                'relationship_type_id' => $type->id,
-            ],
         ]);
 
         $this->executeService($regis, $regis->account, $type, $vault, $contact, $otherContact);
@@ -202,20 +172,20 @@ class UnsetRelationshipTest extends TestCase
             'other_contact_id' => $otherContact->id,
         ];
 
-        (new UnsetRelationship)->execute($request);
+        (new SetRelationship)->execute($request);
 
-        $this->assertDatabaseMissing('relationships', [
+        $this->assertDatabaseHas('relationships', [
             'relationship_type_id' => $type->id,
             'contact_id' => $contact->id,
             'related_contact_id' => $otherContact->id,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'relationship_unset';
+            return $job->auditLog['action_name'] === 'relationship_set';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'relationship_unset';
+            return $job->contactLog['action_name'] === 'relationship_set';
         });
     }
 }

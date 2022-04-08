@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\ManageRelationship;
+namespace App\Contact\ManageRelationships\Services;
 
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;

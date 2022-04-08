@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Services\Contact\ManageContactAddress;
+namespace App\Contact\ManagePronouns\Services;
 
-use Carbon\Carbon;
-use App\Models\Address;
-use App\Models\AddressType;
+use App\Models\Pronoun;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
 
-class DestroyContactAddress extends BaseService implements ServiceInterface
+class RemovePronoun extends BaseService implements ServiceInterface
 {
-    private Address $address;
-    private AddressType $addressType;
+    private ?Pronoun $pronoun;
 
     /**
      * Get the validation rules that apply to the service.
@@ -27,7 +24,6 @@ class DestroyContactAddress extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'address_id' => 'required|integer|exists:addresses,id',
         ];
     }
 
@@ -41,13 +37,13 @@ class DestroyContactAddress extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Delete a contact address.
+     * Unset a contact's pronoun.
      *
      * @param  array  $data
      */
@@ -55,12 +51,12 @@ class DestroyContactAddress extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->address = Address::where('contact_id', $this->contact->id)
-            ->findOrFail($data['address_id']);
+        $this->pronoun = null;
+        if ($this->contact->pronoun) {
+            $this->pronoun = $this->contact->pronoun;
+        }
 
-        $this->address->delete();
-
-        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->pronoun_id = null;
         $this->contact->save();
 
         $this->log();
@@ -72,7 +68,7 @@ class DestroyContactAddress extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'contact_address_destroyed',
+            'action_name' => 'pronoun_unset',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
@@ -83,8 +79,9 @@ class DestroyContactAddress extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'contact_address_destroyed',
+            'action_name' => 'pronoun_unset',
             'objects' => json_encode([
+                'pronoun_name' => $this->pronoun ? $this->pronoun->name : null,
             ]),
         ])->onQueue('low');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\ManageContactAddress;
+namespace App\Contact\ManageContactAddresses\Services;
 
 use Carbon\Carbon;
 use App\Models\Address;
