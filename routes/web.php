@@ -8,7 +8,6 @@ use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
-use App\Contact\ManageLoans\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
@@ -16,8 +15,10 @@ use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
+use App\Contact\ManageLoans\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
@@ -46,7 +47,6 @@ use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationship
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
