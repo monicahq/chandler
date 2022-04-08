@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\ImportantDates;
+namespace App\Contact\ManageContactImportantDates\Web\Controllers;
 
 use Carbon\Carbon;
 use Inertia\Inertia;
@@ -12,10 +12,10 @@ use App\Models\ContactImportantDate;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Contact\ManageReminder\CreateContactReminder;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
-use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
-use App\Services\Contact\ManageContactImportantDate\DestroyContactImportantDate;
-use App\Http\Controllers\Vault\Contact\ImportantDates\ViewHelpers\ContactImportantDatesViewHelper;
+use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
+use App\Contact\ManageContactImportantDates\Services\UpdateContactImportantDate;
+use App\Contact\ManageContactImportantDates\Services\DestroyContactImportantDate;
+use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ContactImportantDatesViewHelper;
 
 class ContactImportantDatesController extends Controller
 {

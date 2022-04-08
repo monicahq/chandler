@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
+namespace Tests\Unit\Domains\Contact\ManageContactImportantDates\Web\ViewHelpers;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
 
 class ModuleImportantDatesViewHelperTest extends TestCase
 {

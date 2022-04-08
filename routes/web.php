@@ -1,5 +1,10 @@
 <?php
 
+use App\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
+use App\Contact\ManageContact\Web\Controllers\ContactPageController;
+use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
+use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -7,14 +12,10 @@ use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
-use App\Contact\ManageContact\Web\Controllers\ContactController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
-use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
-use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
-use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
@@ -31,7 +32,6 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsControl
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
-use App\Http\Controllers\Vault\Contact\ImportantDates\ContactImportantDatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;

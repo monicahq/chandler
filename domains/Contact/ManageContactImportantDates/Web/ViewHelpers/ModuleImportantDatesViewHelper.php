@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\ImportantDates\ViewHelpers;
+namespace App\Contact\ManageContactImportantDates\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;

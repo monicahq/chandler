@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageContactImportantDate;
+namespace Tests\Unit\Domains\Contact\ManageContactImportantDates\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactImportantDate\UpdateContactImportantDate;
+use App\Contact\ManageContactImportantDates\Services\UpdateContactImportantDate;
 
 class UpdateContactImportantDateTest extends TestCase
 {

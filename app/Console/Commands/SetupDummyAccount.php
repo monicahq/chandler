@@ -13,7 +13,7 @@ use App\Services\Contact\ManageNote\CreateNote;
 use App\Vault\ManageVault\Services\CreateVault;
 use App\Contact\ManageContact\Services\CreateContact;
 use App\Settings\CreateAccount\Services\CreateAccount;
-use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
+use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
 
 class SetupDummyAccount extends Command
 {

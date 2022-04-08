@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Vault\ManageVaultUsers;
+namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
 use Carbon\Carbon;
 use Tests\TestCase;
