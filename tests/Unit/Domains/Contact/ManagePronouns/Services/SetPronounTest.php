@@ -12,8 +12,8 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Contact\ManagePronouns\Services\SetPronoun;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Contact\ManagePronouns\Services\SetPronoun;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
