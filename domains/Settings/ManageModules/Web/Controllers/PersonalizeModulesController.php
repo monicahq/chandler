@@ -4,9 +4,9 @@ namespace App\Settings\ManageModules\Web\Controllers;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Settings\ManageModules\Web\ViewHelpers\PersonalizeModuleIndexViewHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use App\Settings\ManageModules\Web\ViewHelpers\PersonalizeModuleIndexViewHelper;
 
 class PersonalizeModulesController extends Controller
 {
