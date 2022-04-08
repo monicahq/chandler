@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactName\Web\ViewHelpers;
 
-use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 
 class ModuleContactNameViewHelperTest extends TestCase
 {
