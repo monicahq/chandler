@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers;
+namespace App\Contact\ManageAvatar\Web\ViewHelpers;
 
 use App\Models\Contact;
 

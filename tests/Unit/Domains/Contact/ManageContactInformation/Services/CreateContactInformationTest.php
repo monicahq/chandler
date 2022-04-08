@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageContactInformation;
+namespace Tests\Unit\Domains\Contact\ManageContactInformation\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -9,33 +9,28 @@ use App\Models\Account;
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
-use App\Models\ContactInformation;
 use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactInformation\DestroyContactInformation;
+use App\Contact\ManageContactInformation\Services\CreateContactInformation;
 
-class DestroyContactInformationTest extends TestCase
+class CreateContactInformationTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_destroys_a_contact_information(): void
+    public function it_creates_a_contact_information(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = ContactInformationType::factory()->create(['account_id' => $regis->account_id]);
-        $information = ContactInformation::factory()->create([
-            'type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $information);
+        $this->executeService($regis, $regis->account, $vault, $contact, $type);
     }
 
     /** @test */
@@ -46,7 +41,7 @@ class DestroyContactInformationTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyContactInformation)->execute($request);
+        (new CreateContactInformation)->execute($request);
     }
 
     /** @test */
@@ -60,12 +55,8 @@ class DestroyContactInformationTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = ContactInformationType::factory()->create(['account_id' => $regis->account_id]);
-        $information = ContactInformation::factory()->create([
-            'type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $account, $vault, $contact, $type, $information);
+        $this->executeService($regis, $account, $vault, $contact, $type);
     }
 
     /** @test */
@@ -78,12 +69,8 @@ class DestroyContactInformationTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
         $type = ContactInformationType::factory()->create(['account_id' => $regis->account_id]);
-        $information = ContactInformation::factory()->create([
-            'type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $information);
+        $this->executeService($regis, $regis->account, $vault, $contact, $type);
     }
 
     /** @test */
@@ -96,12 +83,8 @@ class DestroyContactInformationTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = ContactInformationType::factory()->create(['account_id' => $regis->account_id]);
-        $information = ContactInformation::factory()->create([
-            'type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $information);
+        $this->executeService($regis, $regis->account, $vault, $contact, $type);
     }
 
     /** @test */
@@ -114,30 +97,11 @@ class DestroyContactInformationTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = ContactInformationType::factory()->create();
-        $information = ContactInformation::factory()->create([
-            'type_id' => $type->id,
-            'contact_id' => $contact->id,
-        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $information);
+        $this->executeService($regis, $regis->account, $vault, $contact, $type);
     }
 
-    /** @test */
-    public function it_fails_if_information_does_not_exist(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $type = ContactInformationType::factory()->create();
-        $information = ContactInformation::factory()->create();
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $type, $information);
-    }
-
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactInformationType $type, ContactInformation $information): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactInformationType $type): void
     {
         Queue::fake();
 
@@ -147,21 +111,22 @@ class DestroyContactInformationTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'contact_information_type_id' => $type->id,
-            'contact_information_id' => $information->id,
+            'data' => '45322322',
         ];
 
-        (new DestroyContactInformation)->execute($request);
+        $contactInfo = (new CreateContactInformation)->execute($request);
 
-        $this->assertDatabaseMissing('contact_information', [
-            'id' => $information->id,
+        $this->assertDatabaseHas('contact_information', [
+            'id' => $contactInfo->id,
+            'data' => 45322322,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_information_destroyed';
+            return $job->auditLog['action_name'] === 'contact_information_created';
         });
 
         Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_information_destroyed';
+            return $job->contactLog['action_name'] === 'contact_information_created';
         });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageContactInformation;
+namespace Tests\Unit\Domains\Contact\ManageContactInformation\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -8,6 +8,7 @@ use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
+use App\Jobs\CreateContactLog;
 use App\Models\ContactInformation;
 use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
@@ -15,14 +16,14 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Contact\ManageContactInformation\UpdateContactInformation;
+use App\Contact\ManageContactInformation\Services\DestroyContactInformation;
 
-class UpdateContactInformationTest extends TestCase
+class DestroyContactInformationTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_contact_information(): void
+    public function it_destroys_a_contact_information(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -45,7 +46,7 @@ class UpdateContactInformationTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateContactInformation)->execute($request);
+        (new DestroyContactInformation)->execute($request);
     }
 
     /** @test */
@@ -147,18 +148,20 @@ class UpdateContactInformationTest extends TestCase
             'contact_id' => $contact->id,
             'contact_information_type_id' => $type->id,
             'contact_information_id' => $information->id,
-            'data' => '45322322',
         ];
 
-        $contactInfo = (new UpdateContactInformation)->execute($request);
+        (new DestroyContactInformation)->execute($request);
 
-        $this->assertDatabaseHas('contact_information', [
-            'id' => $contactInfo->id,
-            'data' => 45322322,
+        $this->assertDatabaseMissing('contact_information', [
+            'id' => $information->id,
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_information_updated';
+            return $job->auditLog['action_name'] === 'contact_information_destroyed';
+        });
+
+        Queue::assertPushed(CreateContactLog::class, function ($job) {
+            return $job->contactLog['action_name'] === 'contact_information_destroyed';
         });
     }
 }

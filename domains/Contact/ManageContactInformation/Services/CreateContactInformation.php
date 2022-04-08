@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\ManageContactInformation;
+namespace App\Contact\ManageContactInformation\Services;
 
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
