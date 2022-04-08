@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers;
+namespace App\Contact\ManageLabels\Web\ViewHelpers;
 
 use App\Models\Label;
 use App\Models\Contact;

@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers\ModuleFeedViewHelper;
 use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
+use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Avatar\ViewHelpers\ModuleAvatarViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Reminder\ViewHelpers\ModuleRemindersViewHelper;

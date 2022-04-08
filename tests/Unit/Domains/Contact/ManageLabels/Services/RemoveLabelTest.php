@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\AssignLabel;
+namespace Tests\Unit\Domains\Contact\ManageLabels\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -13,7 +13,7 @@ use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Contact\AssignLabel\RemoveLabel;
+use App\Contact\ManageLabels\Services\RemoveLabel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

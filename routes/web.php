@@ -22,7 +22,6 @@ use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
-use App\Http\Controllers\Vault\Contact\Modules\Label\ContactModuleLabelController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
@@ -41,6 +40,7 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesC
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;

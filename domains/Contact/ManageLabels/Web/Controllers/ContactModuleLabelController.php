@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Label;
+namespace App\Contact\ManageLabels\Web\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Contact\AssignLabel\AssignLabel;
-use App\Services\Contact\AssignLabel\RemoveLabel;
+use App\Contact\ManageLabels\Services\AssignLabel;
+use App\Contact\ManageLabels\Services\RemoveLabel;
+use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Vault\ManageVaultSettings\Services\CreateLabel;
-use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
 
 class ContactModuleLabelController extends Controller
 {

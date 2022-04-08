@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contact\AssignLabel;
+namespace App\Contact\ManageLabels\Services;
 
 use Carbon\Carbon;
 use App\Models\Label;
