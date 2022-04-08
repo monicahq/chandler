@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageAccount;
+namespace Tests\Unit\Domains\Settings\CreateAccount\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -8,7 +8,7 @@ use App\Jobs\SetupAccount;
 use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Account\ManageAccount\CreateAccount;
+use App\Settings\CreateAccount\Services\CreateAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CreateAccountTest extends TestCase
