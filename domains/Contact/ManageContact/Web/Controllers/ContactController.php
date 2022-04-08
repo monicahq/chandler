@@ -16,7 +16,6 @@ use App\Contact\ManageContact\Web\ViewHelpers\ContactEditViewHelper;
 use App\Contact\ManageContact\Web\ViewHelpers\ContactShowViewHelper;
 use App\Contact\ManageContact\Web\ViewHelpers\ContactIndexViewHelper;
 use App\Contact\ManageContact\Web\ViewHelpers\ContactCreateViewHelper;
-use App\Contact\ManageContact\Web\ViewHelpers\ContactShowBlankViewHelper;
 
 class ContactController extends Controller
 {
