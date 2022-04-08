@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\ViewHelpers;
+namespace App\Settings\ManagePersonalization\Web\ViewHelpers;
 
 class PersonalizeIndexViewHelper
 {

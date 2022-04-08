@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize;
+namespace App\Settings\ManagePersonalization\Web\Controllers;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Settings\ManagePersonalization\Web\ViewHelpers\PersonalizeIndexViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Settings\Personalize\ViewHelpers\PersonalizeIndexViewHelper;
 
 class PersonalizeController extends Controller
 {
