@@ -15,6 +15,7 @@ use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
@@ -45,7 +46,6 @@ use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationship
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
