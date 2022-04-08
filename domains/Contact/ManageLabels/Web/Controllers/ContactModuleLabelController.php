@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Contact\ManageLabels\Services\AssignLabel;
 use App\Contact\ManageLabels\Services\RemoveLabel;
-use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Vault\ManageVaultSettings\Services\CreateLabel;
+use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 
 class ContactModuleLabelController extends Controller
 {
