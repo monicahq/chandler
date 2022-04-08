@@ -11,7 +11,7 @@ use Illuminate\Console\Command;
 use App\Models\ContactImportantDate;
 use App\Services\Contact\ManageNote\CreateNote;
 use App\Vault\ManageVault\Services\CreateVault;
-use App\Services\Contact\ManageContact\CreateContact;
+use App\Contact\ManageContact\Services\CreateContact;
 use App\Settings\CreateAccount\Services\CreateAccount;
 use App\Services\Contact\ManageContactImportantDate\CreateContactImportantDate;
 

@@ -1,14 +1,15 @@
 <?php
 
+use App\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
+use App\Contact\ManageContact\Web\Controllers\ContactPageController;
+use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\AcceptInvitationController;
-use App\Http\Controllers\Vault\Contact\ContactController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
-use App\Http\Controllers\Vault\Contact\ContactPageController;
-use App\Http\Controllers\Vault\Contact\ContactTemplateController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Http\Controllers\Vault\Contact\Notes\ContactNotesController;
@@ -85,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
-                    Route::get('no-template', [ContactController::class, 'blank'])->name('contact.blank');
+                    Route::get('no-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
