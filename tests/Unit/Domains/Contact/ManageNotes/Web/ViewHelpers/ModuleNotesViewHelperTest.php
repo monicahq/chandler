@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Controllers\Vault\Contact\Notes\ViewHelpers;
+namespace Tests\Unit\Domains\Contact\ManageNotes\Web\ViewHelpers;
 
 use function env;
 use Carbon\Carbon;
@@ -10,36 +10,32 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\Emotion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Vault\Contact\Notes\ViewHelpers\NotesIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
+use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 
-class NotesIndexViewHelperTest extends TestCase
+class ModuleNotesViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
-        $contact = Contact::factory()->create([
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-        ]);
+        $contact = Contact::factory()->create();
+        $user = User::factory()->create();
+
         Note::factory()->create([
             'contact_id' => $contact->id,
         ]);
         $emotion = Emotion::factory()->create([
             'account_id' => $contact->vault->account_id,
         ]);
-        $user = User::factory()->create();
 
-        $array = NotesIndexViewHelper::data($contact, Note::all(), $user);
+        $array = ModuleNotesViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            4,
+            3,
             count($array)
         );
 
-        $this->assertArrayHasKey('contact', $array);
         $this->assertArrayHasKey('notes', $array);
         $this->assertArrayHasKey('emotions', $array);
         $this->assertArrayHasKey('url', $array);
@@ -57,15 +53,8 @@ class NotesIndexViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'name' => 'John Doe',
-            ],
-            $array['contact']
-        );
-
-        $this->assertEquals(
-            [
                 'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/notes',
-                'contact' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id,
+                'index' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/notes',
             ],
             $array['url']
         );

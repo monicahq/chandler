@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Services\Contact\ManageNote;
+namespace App\Contact\ManageNotes\Services;
 
 use Carbon\Carbon;
 use App\Models\Note;
+use App\Models\Emotion;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
+use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
 
-class DestroyNote extends BaseService implements ServiceInterface
+class CreateNote extends BaseService implements ServiceInterface
 {
     private Note $note;
 
@@ -25,7 +27,9 @@ class DestroyNote extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'note_id' => 'required|integer|exists:notes,id',
+            'emotion_id' => 'nullable|integer|exists:emotions,id',
+            'title' => 'nullable|string|max:255',
+            'body' => 'required|string|max:65535',
         ];
     }
 
@@ -39,31 +43,44 @@ class DestroyNote extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Destroy a note.
+     * Create a note.
      *
      * @param  array  $data
+     * @return Note
      */
-    public function execute(array $data): void
+    public function execute(array $data): Note
     {
         $this->validateRules($data);
 
-        $this->note = Note::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['note_id']);
+        if ($this->valueOrNull($data, 'emotion_id')) {
+            Emotion::where('account_id', $data['account_id'])
+                ->where('id', $data['emotion_id'])
+                ->firstOrFail();
+        }
 
-        $this->removeContactFeedItem();
-
-        $this->note->delete();
+        $this->note = Note::create([
+            'contact_id' => $this->contact->id,
+            'author_id' => $this->author->id,
+            'author_name' => $this->author->name,
+            'title' => $this->valueOrNull($data, 'title'),
+            'body' => $data['body'],
+            'emotion_id' => $this->valueOrNull($data, 'emotion_id'),
+        ]);
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
         $this->log();
+
+        $this->createFeedItem();
+
+        return $this->note;
     }
 
     private function log(): void
@@ -72,10 +89,11 @@ class DestroyNote extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
+            'action_name' => 'note_created',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
+                'note_id' => $this->note->id,
             ]),
         ])->onQueue('low');
 
@@ -83,13 +101,19 @@ class DestroyNote extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
-            'objects' => json_encode([]),
+            'action_name' => 'note_created',
+            'objects' => json_encode([
+                'note_id' => $this->note->id,
+            ]),
         ])->onQueue('low');
     }
 
-    private function removeContactFeedItem(): void
+    private function createFeedItem(): void
     {
-        $this->note->feedItem->delete();
+        $feedItem = ContactFeedItem::create([
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_NOTE_CREATED,
+        ]);
+        $this->note->feedItem()->save($feedItem);
     }
 }

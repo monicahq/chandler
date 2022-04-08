@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers;
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Http\Controllers\Vault\Contact\Modules\Note\ViewHelpers\ModuleNotesViewHelper;
+use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 
 class ModuleFeedViewHelper
 {

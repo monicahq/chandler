@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageNote;
+namespace Tests\Unit\Domains\Contact\ManageNotes\Services;
 
 use Tests\TestCase;
 use App\Models\Note;
@@ -14,7 +14,7 @@ use App\Models\ContactFeedItem;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Services\Contact\ManageNote\DestroyNote;
+use App\Contact\ManageNotes\Services\DestroyNote;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

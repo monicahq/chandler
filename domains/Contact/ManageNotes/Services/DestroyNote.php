@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Services\Contact\ManageNote;
+namespace App\Contact\ManageNotes\Services;
 
 use Carbon\Carbon;
 use App\Models\Note;
-use App\Models\Emotion;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
 
-class UpdateNote extends BaseService implements ServiceInterface
+class DestroyNote extends BaseService implements ServiceInterface
 {
     private Note $note;
 
@@ -27,9 +26,6 @@ class UpdateNote extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'note_id' => 'required|integer|exists:notes,id',
-            'emotion_id' => 'nullable|integer|exists:emotions,id',
-            'title' => 'nullable|string|max:255',
-            'body' => 'required|string|max:65535',
         ];
     }
 
@@ -49,35 +45,25 @@ class UpdateNote extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a note.
+     * Destroy a note.
      *
      * @param  array  $data
-     * @return Note
      */
-    public function execute(array $data): Note
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
         $this->note = Note::where('contact_id', $data['contact_id'])
             ->findOrFail($data['note_id']);
 
-        if ($this->valueOrNull($data, 'emotion_id')) {
-            Emotion::where('account_id', $data['account_id'])
-            ->where('id', $data['emotion_id'])
-            ->firstOrFail();
-        }
+        $this->removeContactFeedItem();
 
-        $this->note->body = $data['body'];
-        $this->note->title = $this->valueOrNull($data, 'title');
-        $this->note->emotion_id = $this->valueOrNull($data, 'emotion_id');
-        $this->note->save();
+        $this->note->delete();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
         $this->log();
-
-        return $this->note;
     }
 
     private function log(): void
@@ -86,11 +72,10 @@ class UpdateNote extends BaseService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
+            'action_name' => 'note_destroyed',
             'objects' => json_encode([
                 'contact_id' => $this->contact->id,
                 'contact_name' => $this->contact->name,
-                'note_id' => $this->note->id,
             ]),
         ])->onQueue('low');
 
@@ -98,10 +83,13 @@ class UpdateNote extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
-            'objects' => json_encode([
-                'note_id' => $this->note->id,
-            ]),
+            'action_name' => 'note_destroyed',
+            'objects' => json_encode([]),
         ])->onQueue('low');
+    }
+
+    private function removeContactFeedItem(): void
+    {
+        $this->note->feedItem->delete();
     }
 }

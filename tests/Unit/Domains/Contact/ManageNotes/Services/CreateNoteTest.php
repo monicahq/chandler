@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Contact\ManageNote;
+namespace Tests\Unit\Domains\Contact\ManageNotes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,7 +11,7 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\Contact\ManageNote\CreateNote;
+use App\Contact\ManageNotes\Services\CreateNote;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

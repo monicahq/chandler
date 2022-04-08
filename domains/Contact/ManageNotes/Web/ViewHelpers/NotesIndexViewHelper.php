@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Notes\ViewHelpers;
+namespace App\Contact\ManageNotes\Web\ViewHelpers;
 
 use App\Models\Note;
 use App\Models\User;

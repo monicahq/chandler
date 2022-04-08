@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Notes;
+namespace App\Contact\ManageNotes\Web\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Vault;
@@ -10,7 +10,7 @@ use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Http\Controllers\Vault\Contact\Notes\ViewHelpers\NotesIndexViewHelper;
+use App\Contact\ManageNotes\Web\ViewHelpers\NotesIndexViewHelper;
 
 class ContactNotesController extends Controller
 {
