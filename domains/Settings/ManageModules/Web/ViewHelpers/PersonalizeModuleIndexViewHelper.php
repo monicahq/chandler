@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers;
+namespace App\Settings\ManageModules\Web\ViewHelpers;
 
 use App\Models\Module;
 use App\Models\Account;

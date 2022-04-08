@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\Modules\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageModules\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\Module;
+use App\Settings\ManageModules\Web\ViewHelpers\PersonalizeModuleIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Modules\ViewHelpers\PersonalizeModuleIndexViewHelper;
 
 class PersonalizeModuleIndexViewHelperTest extends TestCase
 {
