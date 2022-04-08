@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vault\Contact\Modules\Feed\ViewHelpers;
+namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
 use App\Models\User;
 use App\Models\Contact;
