@@ -1,20 +1,21 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageRelationshipTypes;
+namespace Tests\Unit\Domains\Settings\ManageRelationshipTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Jobs\CreateAuditLog;
+use App\Models\RelationshipType;
 use App\Models\RelationshipGroupType;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipType;
 
-class CreateRelationshipGroupTypeTest extends TestCase
+class CreateRelationshipTypeTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -22,7 +23,10 @@ class CreateRelationshipGroupTypeTest extends TestCase
     public function it_creates_a_relationship_type(): void
     {
         $ross = $this->createAdministrator();
-        $this->executeService($ross, $ross->account);
+        $group = RelationshipGroupType::factory()->create([
+            'account_id' => $ross->account->id,
+        ]);
+        $this->executeService($ross, $ross->account, $group);
     }
 
     /** @test */
@@ -33,7 +37,7 @@ class CreateRelationshipGroupTypeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateRelationshipGroupType())->execute($request);
+        (new CreateRelationshipType)->execute($request);
     }
 
     /** @test */
@@ -43,7 +47,10 @@ class CreateRelationshipGroupTypeTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
-        $this->executeService($ross, $account);
+        $group = RelationshipGroupType::factory()->create([
+            'account_id' => $ross->account->id,
+        ]);
+        $this->executeService($ross, $account, $group);
     }
 
     /** @test */
@@ -52,34 +59,40 @@ class CreateRelationshipGroupTypeTest extends TestCase
         $this->expectException(NotEnoughPermissionException::class);
 
         $ross = $this->createUser();
-        $this->executeService($ross, $ross->account);
+        $group = RelationshipGroupType::factory()->create([
+            'account_id' => $ross->account->id,
+        ]);
+        $this->executeService($ross, $ross->account, $group);
     }
 
-    private function executeService(User $author, Account $account): void
+    private function executeService(User $author, Account $account, RelationshipGroupType $groupType): void
     {
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
+            'relationship_group_type_id' => $groupType->id,
             'name' => 'type name',
+            'name_reverse_relationship' => 'reverse type name',
         ];
 
-        $type = (new CreateRelationshipGroupType)->execute($request);
+        $type = (new CreateRelationshipType)->execute($request);
 
-        $this->assertDatabaseHas('relationship_group_types', [
+        $this->assertDatabaseHas('relationship_types', [
             'id' => $type->id,
-            'account_id' => $account->id,
+            'relationship_group_type_id' => $groupType->id,
             'name' => 'type name',
+            'name_reverse_relationship' => 'reverse type name',
         ]);
 
         $this->assertInstanceOf(
-            RelationshipGroupType::class,
+            RelationshipType::class,
             $type
         );
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'relationship_group_type_created';
+            return $job->auditLog['action_name'] === 'relationship_type_created';
         });
     }
 }

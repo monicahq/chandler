@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services\Account\ManageRelationshipTypes;
+namespace App\Settings\ManageRelationshipTypes\Services;
 
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
 use App\Models\RelationshipGroupType;
 
-class DestroyRelationshipType extends BaseService implements ServiceInterface
+class UpdateRelationshipGroupType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -22,7 +21,7 @@ class DestroyRelationshipType extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'relationship_group_type_id' => 'required|integer|exists:relationship_group_types,id',
-            'relationship_type_id' => 'required|integer|exists:relationship_types,id',
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -40,31 +39,31 @@ class DestroyRelationshipType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a relationship type.
+     * Update a relationship type.
      *
      * @param  array  $data
+     * @return RelationshipGroupType
      */
-    public function execute(array $data): void
+    public function execute(array $data): RelationshipGroupType
     {
         $this->validateRules($data);
 
-        $group = RelationshipGroupType::where('account_id', $data['account_id'])
+        $type = RelationshipGroupType::where('account_id', $data['account_id'])
             ->findOrFail($data['relationship_group_type_id']);
 
-        $type = RelationshipType::where('relationship_group_type_id', $data['relationship_group_type_id'])
-            ->findOrFail($data['relationship_type_id']);
+        $type->name = $data['name'];
+        $type->save();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'relationship_type_destroyed',
+            'action_name' => 'relationship_group_type_updated',
             'objects' => json_encode([
                 'name' => $type->name,
-                'group_type_name' => $group->name,
             ]),
         ])->onQueue('low');
 
-        $type->delete();
+        return $type;
     }
 }

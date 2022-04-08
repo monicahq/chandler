@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageRelationshipTypes;
+namespace Tests\Unit\Domains\Settings\ManageRelationshipTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -13,14 +13,14 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipType;
+use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
 
-class UpdateRelationshipTypeTest extends TestCase
+class DestroyRelationshipTypeTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_type(): void
+    public function it_destroys_a_type(): void
     {
         $ross = $this->createAdministrator();
         $group = RelationshipGroupType::factory()->create([
@@ -40,7 +40,7 @@ class UpdateRelationshipTypeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateRelationshipType)->execute($request);
+        (new DestroyRelationshipType)->execute($request);
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class UpdateRelationshipTypeTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $group = RelationshipGroupType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $type = RelationshipType::factory()->create([
             'relationship_group_type_id' => $group->id,
@@ -73,7 +73,7 @@ class UpdateRelationshipTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_user_doesnt_have_right_permission_in_account(): void
+    public function it_fails_if_user_doesnt_have_right_permission_in_vault(): void
     {
         $this->expectException(NotEnoughPermissionException::class);
 
@@ -96,21 +96,16 @@ class UpdateRelationshipTypeTest extends TestCase
             'author_id' => $author->id,
             'relationship_group_type_id' => $group->id,
             'relationship_type_id' => $type->id,
-            'name' => 'type name',
-            'name_reverse_relationship' => 'reverse type name',
         ];
 
-        $type = (new UpdateRelationshipType)->execute($request);
+        (new DestroyRelationshipType)->execute($request);
 
-        $this->assertDatabaseHas('relationship_types', [
+        $this->assertDatabaseMissing('relationship_types', [
             'id' => $type->id,
-            'relationship_group_type_id' => $group->id,
-            'name' => 'type name',
-            'name_reverse_relationship' => 'reverse type name',
         ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'relationship_type_updated';
+            return $job->auditLog['action_name'] === 'relationship_type_destroyed';
         });
     }
 }

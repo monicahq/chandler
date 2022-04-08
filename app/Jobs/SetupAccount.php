@@ -25,7 +25,7 @@ use App\Settings\ManageTemplates\Services\CreateTemplatePage;
 use App\Settings\ManageAddressTypes\Services\CreateAddressType;
 use App\Settings\ManagePetCategories\Services\CreatePetCategory;
 use App\Settings\ManageTemplates\Services\AssociateModuleToTemplatePage;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipGroupType;
 use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
 use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
 

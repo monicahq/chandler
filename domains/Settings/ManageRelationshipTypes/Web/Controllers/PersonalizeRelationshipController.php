@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Relationships;
+namespace App\Settings\ManageRelationshipTypes\Web\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipGroupType;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
+use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipController extends Controller
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Controllers\Settings\Personalize\Relationships\ViewHelpers;
+namespace Tests\Unit\Domains\Settings\ManageRelationshipTypes\Web\ViewHelpers;
 
 use function env;
 use Tests\TestCase;
 use App\Models\RelationshipType;
 use App\Models\RelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipIndexViewHelperTest extends TestCase
 {

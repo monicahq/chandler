@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Account\ManageRelationshipTypes;
+namespace App\Settings\ManageRelationshipTypes\Services;
 
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
+use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
 use App\Models\RelationshipGroupType;
 
-class DestroyRelationshipGroupType extends BaseService implements ServiceInterface
+class UpdateRelationshipType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -19,8 +20,11 @@ class DestroyRelationshipGroupType extends BaseService implements ServiceInterfa
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'relationship_group_type_id' => 'required|integer|exists:relationship_group_types,id',
             'author_id' => 'required|integer|exists:users,id',
+            'relationship_group_type_id' => 'required|integer|exists:relationship_group_types,id',
+            'relationship_type_id' => 'required|integer|exists:relationship_types,id',
+            'name' => 'required|string|max:255',
+            'name_reverse_relationship' => 'required|string|max:255',
         ];
     }
 
@@ -38,27 +42,36 @@ class DestroyRelationshipGroupType extends BaseService implements ServiceInterfa
     }
 
     /**
-     * Destroy a relationship group type.
+     * Update a relationship type.
      *
      * @param  array  $data
+     * @return RelationshipType
      */
-    public function execute(array $data): void
+    public function execute(array $data): RelationshipType
     {
         $this->validateRules($data);
 
-        $type = RelationshipGroupType::where('account_id', $data['account_id'])
+        $group = RelationshipGroupType::where('account_id', $data['account_id'])
             ->findOrFail($data['relationship_group_type_id']);
+
+        $type = RelationshipType::where('relationship_group_type_id', $data['relationship_group_type_id'])
+            ->findOrFail($data['relationship_type_id']);
+
+        $type->name = $data['name'];
+        $type->name_reverse_relationship = $data['name_reverse_relationship'];
+        $type->save();
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'relationship_group_type_destroyed',
+            'action_name' => 'relationship_type_updated',
             'objects' => json_encode([
                 'name' => $type->name,
+                'group_type_name' => $group->name,
             ]),
         ])->onQueue('low');
 
-        $type->delete();
+        return $type;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers;
+namespace App\Settings\ManageRelationshipTypes\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\RelationshipType;

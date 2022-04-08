@@ -41,9 +41,9 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatCo
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
-use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipController;
+use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
-use App\Http\Controllers\Settings\Personalize\Relationships\PersonalizeRelationshipTypeController;
+use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 

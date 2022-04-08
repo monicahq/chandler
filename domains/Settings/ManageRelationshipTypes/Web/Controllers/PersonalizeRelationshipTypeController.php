@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Settings\Personalize\Relationships;
+namespace App\Settings\ManageRelationshipTypes\Web\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Account\ManageRelationshipTypes\CreateRelationshipType;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipType;
-use App\Services\Account\ManageRelationshipTypes\DestroyRelationshipType;
-use App\Http\Controllers\Settings\Personalize\Relationships\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
+use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipType;
+use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipType;
+use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
+use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 
 class PersonalizeRelationshipTypeController extends Controller
 {

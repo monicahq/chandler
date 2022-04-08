@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services\Account\ManageRelationshipTypes;
+namespace Tests\Unit\Domains\Settings\ManageRelationshipTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Services\Account\ManageRelationshipTypes\UpdateRelationshipGroupType;
+use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipGroupType;
 
 class UpdateRelationshipGroupTypeTest extends TestCase
 {

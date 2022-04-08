@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Account\ManageRelationshipTypes;
+namespace App\Settings\ManageRelationshipTypes\Services;
 
 use App\Models\User;
 use App\Jobs\CreateAuditLog;
@@ -9,7 +9,7 @@ use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
 use App\Models\RelationshipGroupType;
 
-class CreateRelationshipType extends BaseService implements ServiceInterface
+class DestroyRelationshipType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -22,8 +22,7 @@ class CreateRelationshipType extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'relationship_group_type_id' => 'required|integer|exists:relationship_group_types,id',
-            'name' => 'required|string|max:255',
-            'name_reverse_relationship' => 'required|string|max:255',
+            'relationship_type_id' => 'required|integer|exists:relationship_types,id',
         ];
     }
 
@@ -41,35 +40,31 @@ class CreateRelationshipType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a relationship type.
+     * Destroy a relationship type.
      *
      * @param  array  $data
-     * @return RelationshipType
      */
-    public function execute(array $data): RelationshipType
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
         $group = RelationshipGroupType::where('account_id', $data['account_id'])
             ->findOrFail($data['relationship_group_type_id']);
 
-        $type = RelationshipType::create([
-            'relationship_group_type_id' => $group->id,
-            'name' => $data['name'],
-            'name_reverse_relationship' => $data['name_reverse_relationship'],
-        ]);
+        $type = RelationshipType::where('relationship_group_type_id', $data['relationship_group_type_id'])
+            ->findOrFail($data['relationship_type_id']);
 
         CreateAuditLog::dispatch([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action_name' => 'relationship_type_created',
+            'action_name' => 'relationship_type_destroyed',
             'objects' => json_encode([
                 'name' => $type->name,
                 'group_type_name' => $group->name,
             ]),
         ])->onQueue('low');
 
-        return $type;
+        $type->delete();
     }
 }
