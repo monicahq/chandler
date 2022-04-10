@@ -5,8 +5,8 @@ namespace App\Vault\Search\Web\Controllers;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Vault\Search\Web\ViewHelpers\VaultMostConsultedViewHelper;
 use Illuminate\Support\Facades\Auth;
+use App\Vault\Search\Web\ViewHelpers\VaultMostConsultedViewHelper;
 
 class VaultMostConsultedContactsController extends Controller
 {

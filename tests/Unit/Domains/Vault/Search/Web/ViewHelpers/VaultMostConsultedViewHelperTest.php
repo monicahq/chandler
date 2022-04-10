@@ -5,9 +5,9 @@ namespace Tests\Unit\Domains\Vault\Search\Web\ViewHelpers;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Contact;
-use App\Vault\Search\Web\ViewHelpers\VaultMostConsultedViewHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Vault\Search\Web\ViewHelpers\VaultMostConsultedViewHelper;
 
 class VaultMostConsultedViewHelperTest extends TestCase
 {
