@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User\Contact;
+namespace App\Contact\ManageContact\Services;
 
 use App\Models\User;
 use App\Services\BaseService;

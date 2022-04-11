@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Contact\ManageContact\Services\CreateContact;
 use App\Contact\ManageContact\Services\UpdateContact;
 use App\Contact\ManageContact\Services\DestroyContact;
+use App\Contact\ManageContact\Services\UpdateContactView;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Contact\ManageContact\Web\ViewHelpers\ContactEditViewHelper;
 use App\Contact\ManageContact\Web\ViewHelpers\ContactShowViewHelper;
