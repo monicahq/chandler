@@ -8,6 +8,7 @@ use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Vault\Search\Web\Controllers\VaultContactSearchController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\CancelAccount\Controllers\CancelAccountController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
@@ -18,6 +19,7 @@ use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
 use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
@@ -137,9 +139,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
             });
 
-            // search
+            // global search in the vault
             Route::get('search', [VaultSearchController::class, 'index'])->name('vault.search.index');
             Route::post('search', [VaultSearchController::class, 'show'])->name('vault.search.show');
+
+            // contact search module
+            Route::get('search/user/contact/mostConsulted', [VaultMostConsultedContactsController::class, 'index'])->name('vault.user.search.mostconsulted');
+            Route::post('search/user/contacts', [VaultContactSearchController::class, 'index'])->name('vault.user.search.index');
         });
     });
 
