@@ -27,7 +27,6 @@ use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
-use App\Http\Controllers\Settings\Personalize\Modules\PersonalizeModulesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
@@ -47,6 +46,9 @@ use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationship
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
+use App\Vault\Search\Web\Controllers\VaultContactSearchController;
+use App\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -138,7 +140,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // contact search module
             Route::get('search/user/contact/mostConsulted', [VaultMostConsultedContactsController::class, 'index'])->name('vault.user.search.mostconsulted');
-            Route::post('search/user/contacts', [ContactImportantDatesController::class, 'show'])->name('vault.user.search.show');
+            Route::post('search/user/contacts', [VaultContactSearchController::class, 'index'])->name('vault.user.search.index');
         });
     });
 

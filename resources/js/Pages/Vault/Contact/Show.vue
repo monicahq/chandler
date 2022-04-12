@@ -67,8 +67,6 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
-            <contact-selector />
-
             <!-- all the pages -->
             <div class="mb-8 border-b border-gray-200">
               <ul>

@@ -46,10 +46,12 @@ class VaultMostConsultedViewHelperTest extends TestCase
                 0 => [
                     'id' => $mostViewedContact->id,
                     'name' => 'alexis saettler',
+                    'url' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $mostViewedContact->id,
                 ],
                 1 => [
                     'id' => $contact->id,
                     'name' => 'regis freyd',
+                    'url' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id,
                 ],
             ],
             $collection->toArray()
