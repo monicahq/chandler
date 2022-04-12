@@ -42,23 +42,24 @@
         <li
           v-for="contact in localContacts"
           :key="contact.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           <inertia-link :href="contact.url">
             {{ contact.name }}
           </inertia-link>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li
-              class="inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="remove(contact)">
-              Remove
-            </li>
+            <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="remove(contact)">Remove</li>
           </ul>
         </li>
       </ul>
 
-      <p v-if="displayAddContactButton" @click="showAddContactMode" class="mr-2 mb-3 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300">+ Add a contact</p>
+      <p
+        v-if="displayAddContactButton"
+        @click="showAddContactMode"
+        class="mr-2 mb-3 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300">
+        + Add a contact
+      </p>
     </div>
 
     <!-- mode to add a contact -->
@@ -93,20 +94,24 @@
       </div>
 
       <!-- blank state - case where we suggest most contacted contacts in the vault -->
-      <div v-if="localContacts.length == 0 && displayMostConsultedContacts && searchResults.length == 0 && form.searchTerm.length == 0" class="mb-6">
-        <p class="mb-2 text-center text-sm text-gray-600 mt-2">Maybe one of these contacts?</p>
+      <div
+        v-if="
+          localContacts.length == 0 &&
+          displayMostConsultedContacts &&
+          searchResults.length == 0 &&
+          form.searchTerm.length == 0
+        "
+        class="mb-6">
+        <p class="mb-2 mt-2 text-center text-sm text-gray-600">Maybe one of these contacts?</p>
         <ul class="rounded-lg border border-gray-200 bg-white">
-          <li v-for="contact in mostConsultedContacts"
+          <li
+            v-for="contact in mostConsultedContacts"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
             <inertia-link :href="contact.url" class="text-sky-500 hover:text-blue-900">{{ contact.name }}</inertia-link>
             <!-- actions -->
             <ul class="text-sm">
-              <li
-                class="inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="add(contact)">
-                Add
-              </li>
+              <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="add(contact)">Add</li>
             </ul>
           </li>
         </ul>
@@ -134,25 +139,23 @@
           <li
             v-for="contact in searchResults"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 hover:bg-slate-50 px-3 py-2">
+            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
             <inertia-link :href="contact.url">
               {{ contact.name }}
             </inertia-link>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li
-                class="inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="add(contact)">
-                Add
-              </li>
+              <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="add(contact)">Add</li>
             </ul>
           </li>
         </ul>
       </div>
 
       <!-- search results: no results found -->
-      <div v-if="searchResults.length == 0 && form.searchTerm.length >= 3" class="rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 mb-3">
+      <div
+        v-if="searchResults.length == 0 && form.searchTerm.length >= 3"
+        class="mb-3 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
         <p>No search results</p>
       </div>
     </div>
@@ -245,7 +248,7 @@ export default {
       if (!this.addContactMode) {
         return true;
       }
-    }
+    },
   },
 
   methods: {
@@ -270,7 +273,7 @@ export default {
     },
 
     add(contact) {
-      var id = this.localContacts.findIndex(x => x.id === contact.id);
+      var id = this.localContacts.findIndex((x) => x.id === contact.id);
 
       if (id == -1) {
         this.localContacts.push(contact);
@@ -281,7 +284,7 @@ export default {
     },
 
     remove(contact) {
-      var id = this.localContacts.findIndex(existingContact => existingContact.id === contact.id);
+      var id = this.localContacts.findIndex((existingContact) => existingContact.id === contact.id);
       this.localContacts.splice(id, 1);
 
       var id = this.form.contactsId.findIndex(contact.id);
@@ -295,7 +298,9 @@ export default {
         axios
           .post(this.searchUrl, this.form)
           .then((response) => {
-            this.searchResults = _.filter(response.data.data, contact => _.every(this.localContacts, e => contact.id !== e.id));
+            this.searchResults = _.filter(response.data.data, (contact) =>
+              _.every(this.localContacts, (e) => contact.id !== e.id),
+            );
             this.processingSearch = false;
           })
           .catch((error) => {
