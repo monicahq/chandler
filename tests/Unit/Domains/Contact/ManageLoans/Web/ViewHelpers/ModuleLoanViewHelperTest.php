@@ -19,6 +19,7 @@ class ModuleLoanViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
         $currency = Currency::factory()->create();
@@ -30,12 +31,13 @@ class ModuleLoanViewHelperTest extends TestCase
         $array = ModuleLoanViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            3,
+            4,
             count($array)
         );
 
         $this->assertArrayHasKey('loans', $array);
         $this->assertArrayHasKey('currencies', $array);
+        $this->assertArrayHasKey('current_date', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
@@ -44,6 +46,11 @@ class ModuleLoanViewHelperTest extends TestCase
                 'name' => 'CAD',
             ],
             $array['currencies']->toArray()[0]
+        );
+
+        $this->assertEquals(
+            '2018-01-01',
+            $array['current_date']
         );
 
         $this->assertEquals(
@@ -64,7 +71,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $loan = Loan::factory()->create([
             'contact_id' => $contact->id,
         ]);
-        $contact->loanAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
+        $contact->loansAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
 
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 

@@ -1,7 +1,7 @@
 <style lang="scss" scoped></style>
 
 <template>
-  <div class="relative inline" :style="'top: ' + top">
+  <div class="relative inline" :class="divOuterClass" :style="'top: ' + top">
     <a-popover placement="bottomLeft">
       <template #content>
         <div class="flex">
@@ -45,9 +45,9 @@ export default {
       type: String,
       default: '0px',
     },
-    contact: {
-      type: Object,
-      default: null,
+    contactId: {
+      type: Number,
+      default: 0,
     },
     previewContactSize: {
       type: Number,
@@ -56,6 +56,10 @@ export default {
     showName: {
       type: Boolean,
       default: true,
+    },
+    divOuterClass: {
+      type: String,
+      default: '',
     },
   },
 };

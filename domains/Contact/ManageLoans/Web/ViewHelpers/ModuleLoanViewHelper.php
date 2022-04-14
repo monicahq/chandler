@@ -5,12 +5,16 @@ namespace App\Contact\ManageLoans\Web\ViewHelpers;
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Contact;
+use Carbon\Carbon;
 
 class ModuleLoanViewHelper
 {
     public static function data(Contact $contact, User $user): array
     {
-        $loans = $contact->loans;
+        $loansAsLoaner = $contact->loansAsLoaner()->get()->unique('loan_id');
+        $loansAsLoanee = $contact->loansAsLoanee()->get()->unique('loan_id');
+
+        $loans = $loansAsLoaner->concat($loansAsLoanee);
 
         $loansAssociatedWithContactCollection = $loans->map(function ($loan) use ($contact, $user) {
             return self::dtoLoan($loan, $contact, $user);
@@ -27,6 +31,7 @@ class ModuleLoanViewHelper
         return [
             'loans' => $loansAssociatedWithContactCollection,
             'currencies' => $currenciesCollection,
+            'current_date' => Carbon::now()->format('Y-m-d'),
             'url' => [
                 'store' => route('contact.loan.store', [
                     'vault' => $contact->vault_id,

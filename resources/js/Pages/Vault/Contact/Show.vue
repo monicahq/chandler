@@ -90,7 +90,7 @@
 
                 <feed v-if="module.type == 'feed'" :data="feed" />
 
-                <loans v-if="module.type == 'loans'" :data="loans" />
+                <loans v-if="module.type == 'loans'" :data="loans" :layout-data="layoutData" />
               </div>
             </div>
           </div>

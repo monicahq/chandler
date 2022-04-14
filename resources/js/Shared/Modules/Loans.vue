@@ -141,6 +141,31 @@
             </v-date-picker>
           </div>
 
+          <!-- loaned by or to -->
+          <div class="border-b border-gray-200 flex items-center">
+            <contact-selector
+              :search-url="this.layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+              :display-most-consulted-contacts="false"
+              :label="'Who makes the loan?'"
+              :add-multiple-contacts="true"
+              :required="true"
+              :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
+              v-model="form.loaners"
+            />
+
+            <contact-selector
+              :search-url="this.layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+              :display-most-consulted-contacts="true"
+              :label="'Who the loan is for?'"
+              :add-multiple-contacts="true"
+              :required="true"
+              :div-outer-class="'p-5 flex-1'"
+              v-model="form.loanees"
+            />
+          </div>
+
           <!-- description -->
           <div class="p-5">
             <text-area
@@ -158,46 +183,14 @@
       </form>
 
       <!-- list of loans -->
-      <div class="mb-5 flex">
+      <div v-for="loan in localLoans" :key="loan.id" class="mb-5 flex">
         <div class="mr-3 flex items-center">
-          <small-contact :show-name="false" :preview-contact-size="30" />
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-
-          <small-contact :show-name="false" :preview-contact-size="30" />
-        </div>
-
-        <div class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
-          <div class="border-b border-gray-200 px-3 py-2">
-            <div class="flex items-center justify-between">
-              <span class="mr-2">ldaskjflasdkjf</span>
-              <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
+          <div class="flex -space-x-2 overflow-hidden">
+            <div v-for="loaner in loan.loaners" :key="loaner.id">
+              <small-contact :div-outer-class="'inline-block rounded-full ring-2 ring-white'" :show-name="false" :preview-contact-size="30" />
             </div>
+            <!-- <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
           </div>
-
-          <!-- actions -->
-          <div class="flex items-center justify-between px-3 py-2">
-            <!-- <small-contact /> -->
-            <ul class="text-sm">
-              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
-              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Edit</li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex">
-        <div class="mr-3 flex items-center">
-          <small-contact :show-name="false" :preview-contact-size="30" />
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +208,10 @@
         <div class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
           <div class="border-b border-gray-200 px-3 py-2">
             <div class="flex items-center justify-between">
-              <span class="mr-2">ldaskjflasdkjf</span>
+              <div>
+                <span class="mr-2 block">{{ loan.name }}</span>
+                <span v-if="loan.description">{{ loan.description }}</span>
+              </div>
               <span class="mr-2 text-sm text-gray-500">30 nov 2022</span>
             </div>
           </div>
@@ -248,6 +244,7 @@ import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
 import SmallContact from '@/Shared/SmallContact';
+import ContactSelector from '@/Shared/Form/ContactSelector';
 import Dropdown from '@/Shared/Form/Dropdown';
 
 export default {
@@ -260,9 +257,14 @@ export default {
     Errors,
     SmallContact,
     Dropdown,
+    ContactSelector,
   },
 
   props: {
+    layoutData: {
+      type: Object,
+      default: null,
+    },
     data: {
       type: Object,
       default: null,
@@ -283,10 +285,16 @@ export default {
         type: '',
         name: '',
         description: '',
-        loaned_at: '',
+        loaned_at: null,
         amount_lent: '',
         currency_id: '',
+        loaners: [],
+        loanees: [],
         errors: [],
+      },
+      modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD',
       },
     };
   },
@@ -294,6 +302,7 @@ export default {
   created() {
     this.localLoans = this.data.loans;
     this.form.type = 'object';
+    this.form.loaned_at = new Date(this.data.current_date);
   },
 
   methods: {
@@ -318,7 +327,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The note has been created', 'success');
+          this.flash('The loan has been created', 'success');
           this.localLoans.unshift(response.data.data);
           this.loadingState = '';
           this.createLoanModalShown = false;

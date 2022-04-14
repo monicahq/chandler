@@ -10,12 +10,13 @@ use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
+use Illuminate\Support\Collection;
 
 class CreateLoan extends BaseService implements ServiceInterface
 {
     private Loan $loan;
-    private Contact $loaner;
-    private Contact $loanee;
+    private Collection $loanersCollection;
+    private Collection $loaneesCollection;
     private array $data;
 
     /**
@@ -33,8 +34,8 @@ class CreateLoan extends BaseService implements ServiceInterface
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
-            'loaner_id' => 'required|integer|exists:contacts,id',
-            'loanee_id' => 'required|integer|exists:contacts,id',
+            'loaner_ids' => 'required',
+            'loanee_ids' => 'required',
             'amount_lent' => 'nullable|integer',
             'loaned_at' => 'nullable|date_format:Y-m-d',
         ];
@@ -80,11 +81,19 @@ class CreateLoan extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->loaner = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['loaner_id']);
+        $this->loanersCollection = collect();
+        foreach ($this->data['loaner_ids'] as $loanerId) {
+            $this->loanersCollection->push(Contact::where('vault_id', $this->data['vault_id'])
+                ->findOrFail($loanerId)
+            );
+        }
 
-        $this->loanee = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['loanee_id']);
+        $this->loaneesCollection = collect();
+        foreach ($this->data['loanee_ids'] as $loaneeId) {
+            $this->loaneesCollection->push(Contact::where('vault_id', $this->data['vault_id'])
+                ->findOrFail($loaneeId)
+            );
+        }
     }
 
     private function create(): void
@@ -98,7 +107,11 @@ class CreateLoan extends BaseService implements ServiceInterface
             'loaned_at' => $this->valueOrNull($this->data, 'loaned_at'),
         ]);
 
-        $this->loaner->loanAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $this->loanee->id]]);
+        foreach($this->loanersCollection as $loaner) {
+            foreach ($this->loaneesCollection as $loanee) {
+                $loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $loanee->id]]);
+            }
+        }
     }
 
     private function log(): void

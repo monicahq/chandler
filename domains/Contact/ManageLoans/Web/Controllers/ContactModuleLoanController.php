@@ -2,6 +2,8 @@
 
 namespace App\Contact\ManageLoans\Web\Controllers;
 
+use App\Contact\ManageLoans\Services\CreateLoan;
+use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +13,7 @@ use App\Services\Contact\AssignLabel\AssignLabel;
 use App\Services\Contact\AssignLabel\RemoveLabel;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
 
-class ContactModuleLabelController extends Controller
+class ContactModuleLoanController extends Controller
 {
     public function store(Request $request, int $vaultId, int $contactId)
     {
@@ -19,28 +21,22 @@ class ContactModuleLabelController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+            'type' => $request->input('type'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'bg_color' => 'bg-neutral-200',
-            'text_color' => 'text-neutral-800',
+            'loaner_ids' => $request->input('loaners'),
+            'loanee_ids' => $request->input('loanees'),
+            'amount_lent' => $request->input('amount_lent'),
+            'loaned_at' => $request->input('loaned_at'),
         ];
 
-        $label = (new CreateLabel)->execute($data);
-
-        $data = [
-            'account_id' => Auth::user()->account_id,
-            'author_id' => Auth::user()->id,
-            'vault_id' => $vaultId,
-            'contact_id' => $contactId,
-            'label_id' => $label->id,
-        ];
-
-        $label = (new AssignLabel)->execute($data);
+        $loan = (new CreateLoan)->execute($data);
 
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleLabelViewHelper::dtoLabel($label, $contact, true),
+            'data' => ModuleLoanViewHelper::dtoLoan($loan, $contact, Auth::user()),
         ], 201);
     }
 

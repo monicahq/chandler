@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domains\ManageLoans\Services;
+namespace Tests\Unit\Domains\Contact\ManageLoans\Services;
 
 use Tests\TestCase;
 use App\Models\Loan;
@@ -133,8 +133,8 @@ class CreateLoanTest extends TestCase
             'type' => Loan::TYPE_DEBT,
             'name' => 'Orgy',
             'description' => 'This is incredible',
-            'loaner_id' => $loaner->id,
-            'loanee_id' => $loanee->id,
+            'loaner_ids' => [$loaner->id],
+            'loanee_ids' => [$loanee->id],
             'amount_lent' => 123,
             'loaned_at' => '2020-01-01',
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domains\ManageLoans\Services;
+namespace Tests\Unit\Domains\Contact\ManageLoans\Services;
 
 use Tests\TestCase;
 use App\Models\Loan;

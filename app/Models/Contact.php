@@ -218,7 +218,7 @@ class Contact extends Model
      *
      * @return BelongsToMany
      */
-    public function loanAsLoaner()
+    public function loansAsLoaner()
     {
         return $this->belongsToMany(Loan::class, 'contact_loan', 'loaner_id');
     }
@@ -230,7 +230,7 @@ class Contact extends Model
      *
      * @return BelongsToMany
      */
-    public function loanAsLoanee()
+    public function loansAsLoanee()
     {
         return $this->belongsToMany(Loan::class, 'contact_loan', 'loanee_id');
     }

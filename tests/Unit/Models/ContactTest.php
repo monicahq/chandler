@@ -167,9 +167,9 @@ class ContactTest extends TestCase
         $monica = Contact::factory()->create();
         $loan = Loan::factory()->create();
 
-        $ross->loanAsLoaner()->sync([$loan->id => ['loanee_id' => $monica->id]]);
+        $ross->loansAsLoaner()->sync([$loan->id => ['loanee_id' => $monica->id]]);
 
-        $this->assertTrue($ross->loanAsLoaner()->exists());
+        $this->assertTrue($ross->loansAsLoaner()->exists());
     }
 
     /** @test */
@@ -179,8 +179,8 @@ class ContactTest extends TestCase
         $monica = Contact::factory()->create();
         $loan = Loan::factory()->create();
 
-        $ross->loanAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
+        $ross->loansAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
 
-        $this->assertTrue($ross->loanAsLoanee()->exists());
+        $this->assertTrue($ross->loansAsLoanee()->exists());
     }
 }
