@@ -142,7 +142,7 @@
           </div>
 
           <!-- loaned by or to -->
-          <div class="border-b border-gray-200 flex items-center">
+          <div class="flex items-center border-b border-gray-200">
             <contact-selector
               :search-url="this.layoutData.vault.url.search_contacts_only"
               :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
@@ -151,8 +151,7 @@
               :add-multiple-contacts="true"
               :required="true"
               :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
-              v-model="form.loaners"
-            />
+              v-model="form.loaners" />
 
             <contact-selector
               :search-url="this.layoutData.vault.url.search_contacts_only"
@@ -162,8 +161,7 @@
               :add-multiple-contacts="true"
               :required="true"
               :div-outer-class="'p-5 flex-1'"
-              v-model="form.loanees"
-            />
+              v-model="form.loanees" />
           </div>
 
           <!-- description -->
@@ -187,7 +185,10 @@
         <div class="mr-3 flex items-center">
           <div class="flex -space-x-2 overflow-hidden">
             <div v-for="loaner in loan.loaners" :key="loaner.id">
-              <small-contact :div-outer-class="'inline-block rounded-full ring-2 ring-white'" :show-name="false" :preview-contact-size="30" />
+              <small-contact
+                :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
+                :show-name="false"
+                :preview-contact-size="30" />
             </div>
             <!-- <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
           </div>
