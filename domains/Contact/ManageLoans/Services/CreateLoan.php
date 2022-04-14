@@ -9,8 +9,8 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
-use App\Interfaces\ServiceInterface;
 use Illuminate\Support\Collection;
+use App\Interfaces\ServiceInterface;
 
 class CreateLoan extends BaseService implements ServiceInterface
 {
@@ -107,7 +107,7 @@ class CreateLoan extends BaseService implements ServiceInterface
             'loaned_at' => $this->valueOrNull($this->data, 'loaned_at'),
         ]);
 
-        foreach($this->loanersCollection as $loaner) {
+        foreach ($this->loanersCollection as $loaner) {
             foreach ($this->loaneesCollection as $loanee) {
                 $loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $loanee->id]]);
             }

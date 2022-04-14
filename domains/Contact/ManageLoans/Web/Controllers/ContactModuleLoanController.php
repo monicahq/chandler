@@ -2,15 +2,14 @@
 
 namespace App\Contact\ManageLoans\Web\Controllers;
 
-use App\Contact\ManageLoans\Services\CreateLoan;
-use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Vault\ManageLabels\CreateLabel;
+use App\Contact\ManageLoans\Services\CreateLoan;
 use App\Services\Contact\AssignLabel\AssignLabel;
 use App\Services\Contact\AssignLabel\RemoveLabel;
+use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Http\Controllers\Vault\Contact\Modules\Label\ViewHelpers\ModuleLabelViewHelper;
 
 class ContactModuleLoanController extends Controller
