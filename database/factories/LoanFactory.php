@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Loan;
-use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoanFactory extends Factory
