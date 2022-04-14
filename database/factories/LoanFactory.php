@@ -23,7 +23,6 @@ class LoanFactory extends Factory
     public function definition()
     {
         return [
-            'contact_id' => Contact::factory(),
             'type' => Loan::TYPE_DEBT,
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),

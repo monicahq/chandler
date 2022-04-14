@@ -143,7 +143,6 @@ class CreateLoanTest extends TestCase
 
         $this->assertDatabaseHas('loans', [
             'id' => $loan->id,
-            'contact_id' => $contact->id,
             'type' => Loan::TYPE_DEBT,
             'name' => 'Orgy',
             'description' => 'This is incredible',

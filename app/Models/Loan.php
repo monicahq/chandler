@@ -23,7 +23,6 @@ class Loan extends Model
      * @var array
      */
     protected $fillable = [
-        'contact_id',
         'type',
         'name',
         'description',
@@ -39,16 +38,6 @@ class Loan extends Model
     protected $dates = [
         'loaned_at',
     ];
-
-    /**
-     * Get the contact associated with the loan.
-     *
-     * @return BelongsTo
-     */
-    public function contact()
-    {
-        return $this->belongsTo(Contact::class);
-    }
 
     /**
      * Get the currency associated with the loan.

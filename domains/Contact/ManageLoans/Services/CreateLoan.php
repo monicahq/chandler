@@ -99,7 +99,6 @@ class CreateLoan extends BaseService implements ServiceInterface
     private function create(): void
     {
         $this->loan = Loan::create([
-            'contact_id' => $this->contact->id,
             'type' => $this->data['type'],
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),
@@ -110,6 +109,12 @@ class CreateLoan extends BaseService implements ServiceInterface
         foreach ($this->loanersCollection as $loaner) {
             foreach ($this->loaneesCollection as $loanee) {
                 $loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $loanee->id]]);
+            }
+        }
+
+        foreach ($this->loaneesCollection as $loanee) {
+            foreach ($this->loanersCollection as $loaner) {
+                $loanee->loansAsLoanee()->syncWithoutDetaching([$this->loan->id => ['loaner_id' => $loaner->id]]);
             }
         }
     }

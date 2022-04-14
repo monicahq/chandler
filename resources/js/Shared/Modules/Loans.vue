@@ -190,7 +190,6 @@
                 :show-name="false"
                 :preview-contact-size="30" />
             </div>
-            <!-- <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> -->
           </div>
 
           <svg
@@ -203,7 +202,12 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
 
-          <small-contact :show-name="false" :preview-contact-size="30" />
+          <div v-for="loanee in loan.loanees" :key="loanee.id">
+            <small-contact
+              :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
+              :show-name="false"
+              :preview-contact-size="30" />
+          </div>
         </div>
 
         <div class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">

@@ -13,14 +13,6 @@ class LoanTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_has_one_contact()
-    {
-        $loan = Loan::factory()->create();
-
-        $this->assertTrue($loan->contact()->exists());
-    }
-
-    /** @test */
     public function it_has_one_currency()
     {
         $currency = Currency::factory()->create();

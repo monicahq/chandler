@@ -29,9 +29,7 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $loan = Loan::factory()->create();
         ContactFeedItem::factory()->create([
             'contact_id' => $contact->id,
             'feedable_id' => $loan->id,
@@ -62,27 +60,9 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $loan = Loan::factory()->create();
 
         $this->executeService($regis, $account, $vault, $contact, $loan);
-    }
-
-    /** @test */
-    public function it_fails_if_contact_doesnt_belong_to_vault(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create();
-        $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $loan);
     }
 
     /** @test */
@@ -94,9 +74,7 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $loan = Loan::factory()->create();
 
         $this->executeService($regis, $regis->account, $vault, $contact, $loan);
     }

@@ -202,16 +202,6 @@ class Contact extends Model
     }
 
     /**
-     * Get the loan records associated with the contact.
-     *
-     * @return HasMany
-     */
-    public function loans()
-    {
-        return $this->hasMany(Loan::class);
-    }
-
-    /**
      * Get the loans associated with the contact as the person who takes the
      * loan.
      * I know loaner is not a real word, but it's the best I could come up with.

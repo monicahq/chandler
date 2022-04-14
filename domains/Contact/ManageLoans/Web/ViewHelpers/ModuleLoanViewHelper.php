@@ -11,10 +11,10 @@ class ModuleLoanViewHelper
 {
     public static function data(Contact $contact, User $user): array
     {
-        $loansAsLoaner = $contact->loansAsLoaner()->get()->unique('loan_id');
-        $loansAsLoanee = $contact->loansAsLoanee()->get()->unique('loan_id');
+        $loansAsLoaner = $contact->loansAsLoaner()->get();
+        $loansAsLoanee = $contact->loansAsLoanee()->get();
 
-        $loans = $loansAsLoaner->concat($loansAsLoanee);
+        $loans = $loansAsLoaner->concat($loansAsLoanee)->unique('id');
 
         $loansAssociatedWithContactCollection = $loans->map(function ($loan) use ($contact, $user) {
             return self::dtoLoan($loan, $contact, $user);
@@ -43,8 +43,8 @@ class ModuleLoanViewHelper
 
     public static function dtoLoan(Loan $loan, Contact $contact, User $user): array
     {
-        $loaners = $loan->loaners;
-        $loanees = $loan->loanees;
+        $loaners = $loan->loaners->unique('id');
+        $loanees = $loan->loanees->unique('id');
         $loanersCollection = $loaners->map(function ($loaner) use ($user) {
             return [
                 'id' => $loaner->id,
