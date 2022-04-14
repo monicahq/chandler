@@ -142,7 +142,7 @@
           </div>
 
           <!-- loaned by or to -->
-          <div class="flex items-center border-b border-gray-200">
+          <div class="flex items-center items-stretch border-b border-gray-200">
             <contact-selector
               :search-url="this.layoutData.vault.url.search_contacts_only"
               :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
