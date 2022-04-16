@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use App\Models\ContactImportantDateType;
 use App\Models\Vault;
+use App\Models\ContactImportantDateType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactImportantDateTypeFactory extends Factory

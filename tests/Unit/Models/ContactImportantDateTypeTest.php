@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

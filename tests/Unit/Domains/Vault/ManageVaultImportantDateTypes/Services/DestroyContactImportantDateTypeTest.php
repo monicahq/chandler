@@ -4,18 +4,16 @@ namespace Tests\Unit\Domains\Vault\ManageVaultImportantDateTypes\Services;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Jobs\CreateAuditLog;
 use Illuminate\Support\Facades\Queue;
+use App\Models\ContactImportantDateType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\ContactImportantDateType;
-use App\Vault\ManageVaultImportantDateTypes\Services\DestroyContactImportantDateType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Vault\ManageVaultSettings\Services\DestroyLabel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Vault\ManageVaultImportantDateTypes\Services\DestroyContactImportantDateType;
 
 class DestroyContactImportantDateTypeTest extends TestCase
 {

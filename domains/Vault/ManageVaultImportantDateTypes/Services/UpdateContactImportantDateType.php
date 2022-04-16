@@ -2,8 +2,6 @@
 
 namespace App\Vault\ManageVaultImportantDateTypes\Services;
 
-use App\Models\Label;
-use Illuminate\Support\Str;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;

@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Contact;
-use App\Models\ContactImportantDateType;
 use App\Models\Template;
+use App\Models\ContactImportantDateType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class VaultTest extends TestCase
