@@ -8,6 +8,9 @@ use App\Models\Template;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
+use App\Models\ContactImportantDate;
+use App\Models\ContactImportantDateType;
+use App\Vault\ManageVaultImportantDateTypes\Services\CreateContactImportantDateType;
 
 class CreateVault extends BaseService implements ServiceInterface
 {
@@ -56,6 +59,7 @@ class CreateVault extends BaseService implements ServiceInterface
 
         $this->createVault();
         $this->createUserContact();
+        $this->populateDefaultContactImportantDateTypes();
         $this->log();
 
         return $this->vault;
@@ -89,6 +93,25 @@ class CreateVault extends BaseService implements ServiceInterface
         $this->vault->users()->save($this->author, [
             'permission' => Vault::PERMISSION_MANAGE,
             'contact_id' => $contact->id,
+        ]);
+    }
+
+    private function populateDefaultContactImportantDateTypes(): void
+    {
+        (new CreateContactImportantDateType)->execute([
+            'account_id' => $this->data['account_id'],
+            'author_id' => $this->author->id,
+            'vault_id' => $this->vault->id,
+            'label' => ContactImportantDate::TYPE_BIRTHDATE,
+            'can_be_deleted' => false,
+        ]);
+
+        (new CreateContactImportantDateType)->execute([
+            'account_id' => $this->data['account_id'],
+            'author_id' => $this->author->id,
+            'vault_id' => $this->vault->id,
+            'label' => ContactImportantDate::TYPE_DECEASED_DATE,
+            'can_be_deleted' => false,
         ]);
     }
 
