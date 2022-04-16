@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Contact;
+use App\Models\ContactImportantDateType;
 use App\Models\Template;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -65,5 +66,16 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->labels()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_important_date_types(): void
+    {
+        $vault = Vault::factory()->create();
+        $type = ContactImportantDateType::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->contactImportantDateTypes()->exists());
     }
 }
