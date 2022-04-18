@@ -83,12 +83,14 @@ class CreateVaultTest extends TestCase
 
         $this->assertDatabaseHas('contact_important_date_types', [
             'vault_id' => $vault->id,
-            'label' => ContactImportantDate::TYPE_BIRTHDATE,
+            'label' => 'Birthdate',
+            'internal_type' => ContactImportantDate::TYPE_BIRTHDATE,
             'can_be_deleted' => false,
         ]);
         $this->assertDatabaseHas('contact_important_date_types', [
             'vault_id' => $vault->id,
-            'label' => ContactImportantDate::TYPE_DECEASED_DATE,
+            'label' => 'Deceased date',
+            'internal_type' => ContactImportantDate::TYPE_DECEASED_DATE,
             'can_be_deleted' => false,
         ]);
 

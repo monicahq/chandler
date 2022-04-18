@@ -22,6 +22,7 @@ class UpdateContactImportantDateType extends BaseService implements ServiceInter
             'vault_id' => 'required|integer|exists:vaults,id',
             'contact_important_date_type_id' => 'required|integer|exists:contact_important_date_types,id',
             'label' => 'required|string|max:255',
+            'internal_type' => 'nullable|string|max:255',
             'can_be_deleted' => 'nullable|boolean',
         ];
     }
@@ -55,6 +56,7 @@ class UpdateContactImportantDateType extends BaseService implements ServiceInter
 
         $type->label = $data['label'];
         $type->can_be_deleted = $this->valueOrTrue($data, 'can_be_deleted');
+        $type->internal_type = $this->valueOrNull($data, 'internal_type');
         $type->save();
 
         CreateAuditLog::dispatch([

@@ -21,6 +21,7 @@ class CreateContactImportantDateType extends BaseService implements ServiceInter
             'author_id' => 'required|integer|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'label' => 'required|string|max:255',
+            'internal_type' => 'nullable|string|max:255',
             'can_be_deleted' => 'nullable|boolean',
         ];
     }
@@ -52,6 +53,7 @@ class CreateContactImportantDateType extends BaseService implements ServiceInter
         $type = ContactImportantDateType::create([
             'vault_id' => $data['vault_id'],
             'label' => $data['label'],
+            'internal_type' => $this->valueOrNull($data, 'internal_type'),
             'can_be_deleted' => $this->valueOrTrue($data, 'can_be_deleted'),
         ]);
 

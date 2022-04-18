@@ -101,7 +101,8 @@ class CreateVault extends BaseService implements ServiceInterface
             'account_id' => $this->data['account_id'],
             'author_id' => $this->author->id,
             'vault_id' => $this->vault->id,
-            'label' => ContactImportantDate::TYPE_BIRTHDATE,
+            'label' => trans('account.vault_contact_important_date_type_internal_type_birthdate'),
+            'internal_type' => ContactImportantDate::TYPE_BIRTHDATE,
             'can_be_deleted' => false,
         ]);
 
@@ -109,7 +110,8 @@ class CreateVault extends BaseService implements ServiceInterface
             'account_id' => $this->data['account_id'],
             'author_id' => $this->author->id,
             'vault_id' => $this->vault->id,
-            'label' => ContactImportantDate::TYPE_DECEASED_DATE,
+            'label' => trans('account.vault_contact_important_date_type_internal_type_deceased_date'),
+            'internal_type' => ContactImportantDate::TYPE_DECEASED_DATE,
             'can_be_deleted' => false,
         ]);
     }

@@ -20,6 +20,7 @@ class ContactImportantDateType extends Model
     protected $fillable = [
         'vault_id',
         'label',
+        'internal_type',
         'can_be_deleted',
     ];
 

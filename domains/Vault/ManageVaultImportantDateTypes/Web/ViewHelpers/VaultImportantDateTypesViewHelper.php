@@ -4,19 +4,18 @@ namespace App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers;
 
 use App\Models\Vault;
 use App\Models\ContactImportantDateType;
+use Illuminate\Support\Collection;
 
 class VaultImportantDateTypesViewHelper
 {
-    public static function data(Vault $vault): array
+    public static function data(Vault $vault): Collection
     {
         $types = $vault->contactImportantDateTypes;
-        $typesCollection = $types->map(function ($type) {
-            return self::dto($vault, $label);
+        $typesCollection = $types->map(function ($type) use ($vault) {
+            return self::dto($type, $vault);
         });
 
-        return [
-            'templates' => $typesCollection,
-        ];
+        return $typesCollection;
     }
 
     public static function dto(ContactImportantDateType $type, Vault $vault): array
@@ -24,15 +23,16 @@ class VaultImportantDateTypesViewHelper
         return [
             'id' => $type->id,
             'label' => $type->label,
+            'internal_type' => $type->internal_type,
             'can_be_deleted' => $type->can_be_deleted,
             'url' => [
-                'update' => route('vault.settings.user.update', [
+                'update' => route('vault.settings.important_date_type.update', [
                     'vault' => $vault->id,
-                    'user' => $user->id,
+                    'type' => $type->id,
                 ]),
-                'destroy' => route('vault.settings.user.destroy', [
+                'destroy' => route('vault.settings.important_date_type.destroy', [
                     'vault' => $vault->id,
-                    'user' => $user->id,
+                    'type' => $type->id,
                 ]),
             ],
         ];

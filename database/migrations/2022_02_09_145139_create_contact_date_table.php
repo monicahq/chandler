@@ -20,6 +20,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('vault_id');
             $table->string('label');
+            $table->string('internal_type')->nullable();
             $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');

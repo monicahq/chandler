@@ -33,8 +33,8 @@
         <errors :errors="form.errors" />
 
         <text-input
-          :ref="'newLabel'"
-          v-model="form.name"
+          :ref="'newtype'"
+          v-model="form.label"
           :label="'Name'"
           :type="'text'"
           :autofocus="true"
@@ -44,28 +44,11 @@
           :maxlength="255"
           :div-outer-class="'mb-4'"
           @esc-key-pressed="createTypeModalShown = false" />
-
-        <p class="mb-2 block text-sm">Choose a color</p>
-        <div class="grid grid-cols-8 gap-4">
-          <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
-            <input
-              :id="color.bg_color"
-              v-model="form.bg_color"
-              :value="color.bg_color"
-              name="name-order"
-              type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500"
-              @click="form.text_color = color.text_color" />
-            <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-              <div class="rounded p-4" :class="color.bg_color"></div>
-            </label>
-          </div>
-        </div>
       </div>
 
       <div class="flex justify-between p-5">
         <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createTypeModalShown = false" />
-        <pretty-button :text="'Create label'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-button :text="'Create date type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
@@ -75,27 +58,27 @@
         <!-- detail of the type -->
         <div v-if="editTypeModalShownId != type.id" class="flex items-center justify-between px-5 py-2">
           <span class="text-base">
-            {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
+            {{ type.label }} <span v-if="type.internal_type" class="mr-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0 bg-neutral-200 text-neutral-800">{{ type.internal_type }}</span>
           </span>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="update(type)">Edit</li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(type)">Delete</li>
+            <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="edit(type)">Edit</li>
+            <li v-if="type.can_be_deleted" class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(type)">Delete</li>
           </ul>
         </div>
 
-        <!-- edit a label modal -->
+        <!-- edit a type modal -->
         <form
           v-if="editTypeModalShownId == type.id"
           class="item-list border-b border-gray-200 hover:bg-slate-50"
-          @submit.prevent="update(label)">
+          @submit.prevent="update(type)">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
             <text-input
               :ref="'rename' + type.id"
-              v-model="form.name"
+              v-model="form.label"
               :label="'Name'"
               :type="'text'"
               :autofocus="true"
@@ -105,23 +88,6 @@
               :maxlength="255"
               :div-outer-class="'mb-4'"
               @esc-key-pressed="editTypeModalShownId = 0" />
-
-            <p class="mb-2 block text-sm">Choose a color</p>
-            <div class="grid grid-cols-8 gap-4">
-              <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
-                <input
-                  :id="color.bg_color"
-                  v-model="form.bg_color"
-                  :value="color.bg_color"
-                  name="name-order"
-                  type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500"
-                  @click="form.text_color = color.text_color" />
-                <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-                  <div class="rounded p-4" :class="color.bg_color"></div>
-                </label>
-              </div>
-            </div>
           </div>
 
           <div class="flex justify-between p-5">
@@ -173,24 +139,21 @@ export default {
       editTypeModalShownId: 0,
       localTypes: [],
       form: {
-        name: '',
-        description: '',
-        bg_color: '',
-        text_color: '',
+        label: '',
+        internal_type: '',
+        can_be_deleted: '',
         errors: [],
       },
     };
   },
 
   mounted() {
-    this.localTypes = this.data.labels;
-    this.form.bg_color = this.data.label_colors[0].bg_color;
-    this.form.text_color = this.data.label_colors[0].text_color;
+    this.localTypes = this.data.contact_important_date_types;
   },
 
   methods: {
     showTypeModal() {
-      this.form.name = '';
+      this.form.label = '';
       this.createTypeModalShown = true;
 
       this.$nextTick(() => {
@@ -198,20 +161,20 @@ export default {
       });
     },
 
-    update(label) {
-      this.form.name = type.name;
+    edit(type) {
+      this.form.label = type.label;
+      this.form.can_be_deleted = type.can_be_deleted;
+      this.form.internal_type = type.internal_type;
       this.editTypeModalShownId = type.id;
-      this.form.bg_color = type.bg_color;
-      this.form.text_color = type.text_color;
     },
 
     submit() {
       this.loadingState = 'loading';
 
       axios
-        .post(this.data.url.label_store, this.form)
+        .post(this.data.url.contact_date_important_date_type_store, this.form)
         .then((response) => {
-          this.flash('The label has been created', 'success');
+          this.flash('The type has been created', 'success');
           this.localTypes.unshift(response.data.data);
           this.loadingState = null;
           this.createTypeModalShown = false;
@@ -222,13 +185,13 @@ export default {
         });
     },
 
-    update(label) {
+    update(type) {
       this.loadingState = 'loading';
 
       axios
         .put(type.url.update, this.form)
         .then((response) => {
-          this.flash('The label has been updated', 'success');
+          this.flash('The type has been updated', 'success');
           this.localTypes[this.localTypes.findIndex((x) => x.id === type.id)] = response.data.data;
           this.loadingState = null;
           this.editTypeModalShownId = 0;
@@ -239,16 +202,16 @@ export default {
         });
     },
 
-    destroy(label) {
+    destroy(type) {
       if (
         confirm(
-          "Are you sure? This will remove the labels from all contacts, but won't delete the contacts themselves.",
+          "Are you sure? This will remove the types from all contacts, but won't delete the contacts themselves.",
         )
       ) {
         axios
           .delete(type.url.destroy)
           .then((response) => {
-            this.flash('The label has been deleted', 'success');
+            this.flash('The type has been deleted', 'success');
             var id = this.localTypes.findIndex((x) => x.id === type.id);
             this.localTypes.splice(id, 1);
           })
