@@ -9,7 +9,6 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDate;
-use App\Models\ContactImportantDateType;
 use App\Vault\ManageVaultImportantDateTypes\Services\CreateContactImportantDateType;
 
 class CreateVault extends BaseService implements ServiceInterface
