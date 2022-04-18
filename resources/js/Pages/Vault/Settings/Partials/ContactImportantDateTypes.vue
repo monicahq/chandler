@@ -20,13 +20,13 @@
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🏷 </span> All the labels used in the vault</h3>
-      <pretty-button v-if="!createlabelModalShown" :text="'Add a label'" :icon="'plus'" @click="showLabelModal" />
+      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📁 </span> All the important date types used in the vault</h3>
+      <pretty-button v-if="!createTypeModalShown" :text="'Add a type'" :icon="'plus'" @click="showTypeModal" />
     </div>
 
-    <!-- modal to create a new label -->
+    <!-- modal to create a type -->
     <form
-      v-if="createlabelModalShown"
+      v-if="createTypeModalShown"
       class="mb-6 rounded-lg border border-gray-200 bg-white"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5">
@@ -43,7 +43,7 @@
           :autocomplete="false"
           :maxlength="255"
           :div-outer-class="'mb-4'"
-          @esc-key-pressed="createlabelModalShown = false" />
+          @esc-key-pressed="createTypeModalShown = false" />
 
         <p class="mb-2 block text-sm">Choose a color</p>
         <div class="grid grid-cols-8 gap-4">
@@ -64,41 +64,40 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createlabelModalShown = false" />
+        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createTypeModalShown = false" />
         <pretty-button :text="'Create label'" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
-    <!-- list of label -->
-    <ul v-if="localLabels.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li v-for="label in localLabels" :key="label.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
-        <!-- detail of the label -->
-        <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
-          <span class="flex items-center text-base">
-            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></div>
-            <span class="mr-2">{{ label.name }}</span>
-            <span v-if="label.count > 0" class="text-xs text-gray-500">({{ label.count }} contacts)</span>
+    <!-- list of important date types -->
+    <ul v-if="localTypes.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <li v-for="type in localTypes" :key="type.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+
+        <!-- detail of the type -->
+        <div v-if="editTypeModalShownId != type.id" class="flex items-center justify-between px-5 py-2">
+          <span class="text-base">
+            {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
           </span>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateLabelModal(label)">
+            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="update(type)">
               Edit
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(label)">Delete</li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(type)">Delete</li>
           </ul>
         </div>
 
         <!-- edit a label modal -->
         <form
-          v-if="editLabelModalShownId == label.id"
+          v-if="editTypeModalShownId == type.id"
           class="item-list border-b border-gray-200 hover:bg-slate-50"
           @submit.prevent="update(label)">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
             <text-input
-              :ref="'rename' + label.id"
+              :ref="'rename' + type.id"
               v-model="form.name"
               :label="'Name'"
               :type="'text'"
@@ -108,7 +107,7 @@
               :autocomplete="false"
               :maxlength="255"
               :div-outer-class="'mb-4'"
-              @esc-key-pressed="editLabelModalShownId = 0" />
+              @esc-key-pressed="editTypeModalShownId = 0" />
 
             <p class="mb-2 block text-sm">Choose a color</p>
             <div class="grid grid-cols-8 gap-4">
@@ -129,7 +128,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="editLabelModalShownId = 0" />
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="editTypeModalShownId = 0" />
             <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
@@ -137,8 +136,8 @@
     </ul>
 
     <!-- blank state -->
-    <div v-if="localLabels.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">Labels let you classify contacts using a system that matters to you.</p>
+    <div v-if="localTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">Date types are essential as they let you categorize dates that you add to a contact.</p>
     </div>
   </div>
 </template>
@@ -171,9 +170,9 @@ export default {
   data() {
     return {
       loadingState: '',
-      createlabelModalShown: false,
-      editLabelModalShownId: 0,
-      localLabels: [],
+      createTypeModalShown: false,
+      editTypeModalShownId: 0,
+      localTypes: [],
       form: {
         name: '',
         description: '',
@@ -185,26 +184,26 @@ export default {
   },
 
   mounted() {
-    this.localLabels = this.data.labels;
+    this.localTypes = this.data.labels;
     this.form.bg_color = this.data.label_colors[0].bg_color;
     this.form.text_color = this.data.label_colors[0].text_color;
   },
 
   methods: {
-    showLabelModal() {
+    showTypeModal() {
       this.form.name = '';
-      this.createlabelModalShown = true;
+      this.createTypeModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.newLabel.focus();
+        this.$refs.newtype.focus();
       });
     },
 
-    updateLabelModal(label) {
-      this.form.name = label.name;
-      this.editLabelModalShownId = label.id;
-      this.form.bg_color = label.bg_color;
-      this.form.text_color = label.text_color;
+    update(label) {
+      this.form.name = type.name;
+      this.editTypeModalShownId = type.id;
+      this.form.bg_color = type.bg_color;
+      this.form.text_color = type.text_color;
     },
 
     submit() {
@@ -214,9 +213,9 @@ export default {
         .post(this.data.url.label_store, this.form)
         .then((response) => {
           this.flash('The label has been created', 'success');
-          this.localLabels.unshift(response.data.data);
+          this.localTypes.unshift(response.data.data);
           this.loadingState = null;
-          this.createlabelModalShown = false;
+          this.createTypeModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -228,12 +227,12 @@ export default {
       this.loadingState = 'loading';
 
       axios
-        .put(label.url.update, this.form)
+        .put(type.url.update, this.form)
         .then((response) => {
           this.flash('The label has been updated', 'success');
-          this.localLabels[this.localLabels.findIndex((x) => x.id === label.id)] = response.data.data;
+          this.localTypes[this.localTypes.findIndex((x) => x.id === type.id)] = response.data.data;
           this.loadingState = null;
-          this.editLabelModalShownId = 0;
+          this.editTypeModalShownId = 0;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -248,11 +247,11 @@ export default {
         )
       ) {
         axios
-          .delete(label.url.destroy)
+          .delete(type.url.destroy)
           .then((response) => {
             this.flash('The label has been deleted', 'success');
-            var id = this.localLabels.findIndex((x) => x.id === label.id);
-            this.localLabels.splice(id, 1);
+            var id = this.localTypes.findIndex((x) => x.id === type.id);
+            this.localTypes.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;

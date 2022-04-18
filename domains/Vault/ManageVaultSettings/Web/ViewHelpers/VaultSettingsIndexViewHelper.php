@@ -83,6 +83,9 @@ class VaultSettingsIndexViewHelper
                 'label_store' => route('vault.settings.label.store', [
                     'vault' => $vault->id,
                 ]),
+                'contact_date_important_date_type_store' => route('vault.settings.important_date_type.store', [
+                    'vault' => $vault->id,
+                ]),
                 'update' => route('vault.settings.update', [
                     'vault' => $vault->id,
                 ]),

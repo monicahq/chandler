@@ -84,6 +84,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'template_update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/template',
                 'user_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/users',
                 'label_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/labels',
+                'contact_date_important_date_type_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes',
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id,
             ],

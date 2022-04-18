@@ -132,6 +132,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('settings/labels', [VaultSettingsLabelController::class, 'store'])->name('vault.settings.label.store');
                 Route::put('settings/labels/{label}', [VaultSettingsLabelController::class, 'update'])->name('vault.settings.label.update');
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
+
+                // contact important date types
+                Route::post('settings/contactImportantDateTypes', [VaultSettingsLabelController::class, 'store'])->name('vault.settings.important_date_type.store');
+                Route::put('settings/contactImportantDateTypes/{label}', [VaultSettingsLabelController::class, 'update'])->name('vault.settings.important_date_type.update');
+                Route::delete('settings/contactImportantDateTypes/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.important_date_type.destroy');
             });
 
             // global search in the vault

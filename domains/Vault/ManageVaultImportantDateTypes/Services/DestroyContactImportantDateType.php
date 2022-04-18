@@ -7,6 +7,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDateType;
+use Illuminate\Validation\ValidationException;
 
 class DestroyContactImportantDateType extends BaseService implements ServiceInterface
 {
@@ -50,6 +51,10 @@ class DestroyContactImportantDateType extends BaseService implements ServiceInte
 
         $type = ContactImportantDateType::where('vault_id', $data['vault_id'])
             ->findOrFail($data['contact_important_date_type_id']);
+
+        if (!$type->can_be_deleted) {
+            throw new ValidationException();
+        }
 
         $type->delete();
 
