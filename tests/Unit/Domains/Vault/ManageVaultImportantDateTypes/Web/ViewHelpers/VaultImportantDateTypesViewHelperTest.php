@@ -3,15 +3,11 @@
 namespace Tests\Unit\Domains\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers;
 
 use function env;
-
-use App\Models\ContactImportantDateType;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Label;
 use App\Models\Vault;
-use App\Models\Template;
-use App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
+use App\Models\ContactImportantDateType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 
 class VaultImportantDateTypesViewHelperTest extends TestCase
 {
@@ -47,8 +43,8 @@ class VaultImportantDateTypesViewHelperTest extends TestCase
                 'internal_type' => null,
                 'can_be_deleted' => true,
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $vault->id . '/settings/contactImportantDateTypes/' . $type->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $vault->id . '/settings/contactImportantDateTypes/' . $type->id,
+                    'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes/'.$type->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes/'.$type->id,
                 ],
             ],
             $array

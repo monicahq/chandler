@@ -3,8 +3,8 @@
 namespace App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers;
 
 use App\Models\Vault;
-use App\Models\ContactImportantDateType;
 use Illuminate\Support\Collection;
+use App\Models\ContactImportantDateType;
 
 class VaultImportantDateTypesViewHelper
 {

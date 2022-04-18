@@ -48,8 +48,8 @@ use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDate
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
-use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
+use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

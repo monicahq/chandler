@@ -5,15 +5,11 @@ namespace App\Vault\ManageVaultSettings\Web\Controllers;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Vault\ManageVaultImportantDateTypes\Services\CreateContactImportantDateType;
-use App\Vault\ManageVaultImportantDateTypes\Services\DestroyContactImportantDateType;
-use App\Vault\ManageVaultImportantDateTypes\Services\UpdateContactImportantDateType;
-use App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 use Illuminate\Support\Facades\Auth;
-use App\Vault\ManageVaultSettings\Services\CreateLabel;
-use App\Vault\ManageVaultSettings\Services\UpdateLabel;
-use App\Vault\ManageVaultSettings\Services\DestroyLabel;
-use App\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
+use App\Vault\ManageVaultImportantDateTypes\Services\CreateContactImportantDateType;
+use App\Vault\ManageVaultImportantDateTypes\Services\UpdateContactImportantDateType;
+use App\Vault\ManageVaultImportantDateTypes\Services\DestroyContactImportantDateType;
+use App\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 
 class VaultSettingsContactImportantDateTypeController extends Controller
 {
