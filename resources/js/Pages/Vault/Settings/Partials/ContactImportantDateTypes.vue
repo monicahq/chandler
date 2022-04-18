@@ -72,7 +72,6 @@
     <!-- list of important date types -->
     <ul v-if="localTypes.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <li v-for="type in localTypes" :key="type.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
-
         <!-- detail of the type -->
         <div v-if="editTypeModalShownId != type.id" class="flex items-center justify-between px-5 py-2">
           <span class="text-base">
@@ -81,9 +80,7 @@
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="update(type)">
-              Edit
-            </li>
+            <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="update(type)">Edit</li>
             <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(type)">Delete</li>
           </ul>
         </div>
@@ -137,7 +134,9 @@
 
     <!-- blank state -->
     <div v-if="localTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">Date types are essential as they let you categorize dates that you add to a contact.</p>
+      <p class="p-5 text-center">
+        Date types are essential as they let you categorize dates that you add to a contact.
+      </p>
     </div>
   </div>
 </template>
