@@ -58,13 +58,23 @@
         <!-- detail of the type -->
         <div v-if="editTypeModalShownId != type.id" class="flex items-center justify-between px-5 py-2">
           <span class="text-base">
-            {{ type.label }} <span v-if="type.internal_type" class="mr-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0 bg-neutral-200 text-neutral-800">{{ type.internal_type }}</span>
+            {{ type.label }}
+            <span
+              v-if="type.internal_type"
+              class="mr-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0"
+              >{{ type.internal_type }}</span
+            >
           </span>
 
           <!-- actions -->
           <ul class="text-sm">
             <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="edit(type)">Edit</li>
-            <li v-if="type.can_be_deleted" class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(type)">Delete</li>
+            <li
+              v-if="type.can_be_deleted"
+              class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+              @click="destroy(type)">
+              Delete
+            </li>
           </ul>
         </div>
 
@@ -204,9 +214,7 @@ export default {
 
     destroy(type) {
       if (
-        confirm(
-          "Are you sure? This will remove the types from all contacts, but won't delete the contacts themselves.",
-        )
+        confirm("Are you sure? This will remove the types from all contacts, but won't delete the contacts themselves.")
       ) {
         axios
           .delete(type.url.destroy)
