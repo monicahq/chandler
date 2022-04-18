@@ -52,7 +52,7 @@ class DestroyContactImportantDateType extends BaseService implements ServiceInte
         $type = ContactImportantDateType::where('vault_id', $data['vault_id'])
             ->findOrFail($data['contact_important_date_type_id']);
 
-        if (!$type->can_be_deleted) {
+        if (! $type->can_be_deleted) {
             throw new ValidationException();
         }
 
