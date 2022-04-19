@@ -45,7 +45,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans',
-                'currencies' => env('APP_URL'). '/currencies',
+                'currencies' => env('APP_URL').'/currencies',
             ],
             $array['url']
         );

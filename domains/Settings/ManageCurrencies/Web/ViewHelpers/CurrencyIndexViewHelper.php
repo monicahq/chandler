@@ -3,9 +3,7 @@
 namespace App\Settings\ManageCurrencies\Web\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\Currency;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class CurrencyIndexViewHelper
 {
