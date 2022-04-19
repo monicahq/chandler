@@ -210,14 +210,18 @@
           </div>
         </div>
 
-        <div v-if="editedLoanId != loan.id" class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
+        <div
+          v-if="editedLoanId != loan.id"
+          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
           <div class="border-b border-gray-200 px-3 py-2">
             <div class="flex items-center justify-between">
               <div>
                 <span class="mr-2 block">{{ loan.name }}</span>
                 <span v-if="loan.description">{{ loan.description }}</span>
               </div>
-              <span v-if="loan.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{ loan.loaned_at_human_format }}</span>
+              <span v-if="loan.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
+                loan.loaned_at_human_format
+              }}</span>
             </div>
           </div>
 
@@ -226,7 +230,9 @@
             <!-- <small-contact /> -->
             <ul class="text-sm">
               <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
-              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Edit</li>
+              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Edit
+              </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
             </ul>
           </div>
@@ -235,7 +241,7 @@
         <!-- edit loan modal -->
         <form
           v-if="editedLoanId == loan.id"
-          class="mb-6 rounded-lg border border-gray-200 bg-white w-full"
+          class="mb-6 w-full rounded-lg border border-gray-200 bg-white"
           @submit.prevent="update(loan)">
           <div class="border-b border-gray-200">
             <div v-if="form.errors.length > 0" class="p-5">
