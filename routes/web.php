@@ -1,6 +1,5 @@
 <?php
 
-use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -14,6 +13,7 @@ use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
+use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
