@@ -2,6 +2,7 @@
 
 namespace App\Contact\ManageLoans\Web\ViewHelpers;
 
+use App\Helpers\DateHelper;
 use Carbon\Carbon;
 use App\Models\Loan;
 use App\Models\User;
@@ -20,19 +21,11 @@ class ModuleLoanViewHelper
             return self::dtoLoan($loan, $contact, $user);
         });
 
-        $currenciesCollection = $user->account->currencies()
-            ->where('active', true)->get()->map(function ($currency) {
-                return [
-                    'id' => $currency->id,
-                    'name' => $currency->code,
-                ];
-            });
-
         return [
             'loans' => $loansAssociatedWithContactCollection,
-            'currencies' => $currenciesCollection,
             'current_date' => Carbon::now()->format('Y-m-d'),
             'url' => [
+                'currencies' => route('currencies.index'),
                 'store' => route('contact.loan.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -63,7 +56,10 @@ class ModuleLoanViewHelper
             'type' => $loan->type,
             'name' => $loan->name,
             'description' => $loan->description,
-            'amount_lent' => $loan->amount_lent,
+            'amount_lent' => $loan->amount_lent / 100,
+            'currency_id' => $loan->currency_id,
+            'loaned_at' => $loan->loaned_at->format('Y-m-d'),
+            'loaned_at_human_format' => DateHelper::format($loan->loaned_at, $user),
             'loaners' => $loanersCollection,
             'loanees' => $loaneesCollection,
             'url' => [

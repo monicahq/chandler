@@ -31,6 +31,7 @@ class CreateLoan extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'currency_id' => 'nullable|integer|exists:currencies,id',
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
@@ -103,6 +104,7 @@ class CreateLoan extends BaseService implements ServiceInterface
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),
             'amount_lent' => $this->valueOrNull($this->data, 'amount_lent'),
+            'currency_id' => $this->valueOrNull($this->data, 'currency_id'),
             'loaned_at' => $this->valueOrNull($this->data, 'loaned_at'),
         ]);
 

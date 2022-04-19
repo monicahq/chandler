@@ -27,6 +27,7 @@ class Loan extends Model
         'name',
         'description',
         'amount_lent',
+        'currency_id',
         'loaned_at',
     ];
 

@@ -22,31 +22,20 @@ class ModuleLoanViewHelperTest extends TestCase
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
-        $currency = Currency::factory()->create();
-        $user->account->currencies()->syncWithoutDetaching([$currency->id => ['active' => true]]);
 
-        Loan::factory()->create([
-            'contact_id' => $contact->id,
+        $loan = Loan::factory()->create([
+            'currency_id' => Currency::factory()->create(),
         ]);
         $array = ModuleLoanViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            4,
+            3,
             count($array)
         );
 
         $this->assertArrayHasKey('loans', $array);
-        $this->assertArrayHasKey('currencies', $array);
         $this->assertArrayHasKey('current_date', $array);
         $this->assertArrayHasKey('url', $array);
-
-        $this->assertEquals(
-            [
-                'id' => 165,
-                'name' => 'CAD',
-            ],
-            $array['currencies']->toArray()[0]
-        );
 
         $this->assertEquals(
             '2018-01-01',
@@ -56,6 +45,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans',
+                'currencies' => env('APP_URL'). '/currencies',
             ],
             $array['url']
         );
@@ -69,14 +59,14 @@ class ModuleLoanViewHelperTest extends TestCase
         $otherContact = Contact::factory()->create();
         $user = User::factory()->create();
         $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
+            'currency_id' => Currency::factory()->create(),
         ]);
         $contact->loansAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
 
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            8,
+            10,
             count($array)
         );
 
@@ -97,12 +87,20 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['description']
         );
         $this->assertEquals(
-            $loan->amount_lent,
+            $loan->amount_lent / 100,
             $array['amount_lent']
         );
         $this->assertEquals(
-            $loan->amount_lent,
-            $array['amount_lent']
+            '2018-01-01',
+            $array['loaned_at']
+        );
+        $this->assertEquals(
+            '2018-01-01',
+            $array['loaned_at_human_format']
+        );
+        $this->assertEquals(
+            '2018-01-01',
+            $array['loaned_at_human_format']
         );
         $this->assertEquals(
             [
@@ -129,22 +127,5 @@ class ModuleLoanViewHelperTest extends TestCase
             ],
             $array['url']
         );
-
-        // $this->assertEquals(
-        //     [
-        //         'id' => $loan->id,
-        //         'type' => $loan->type,
-        //         'name' => $loan->name,
-        //         'description' => $loan->description,
-        //         'amount_lent' => $loan->amount_lent,
-        //         'loaners' => $loanersCollection,
-        //         'loanees' => $loaneesCollection,
-        //         'url' => [
-        //             'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/notes/' . $note->id,
-        //             'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/notes/' . $note->id,
-        //         ],
-        //     ],
-        //     $array
-        // );
     }
 }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Contact\ManageLoans\Services\CreateLoan;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -125,11 +126,14 @@ class CreateLoanTest extends TestCase
     {
         Queue::fake();
 
+        $currency = Currency::factory()->create();
+
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
+            'currency_id' => $currency->id,
             'type' => Loan::TYPE_DEBT,
             'name' => 'Orgy',
             'description' => 'This is incredible',

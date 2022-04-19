@@ -17,7 +17,7 @@ use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
-use App\Contact\ManageLoans\Web\Controllers\ContactModuleLabelController;
+use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
@@ -51,6 +51,7 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerific
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Settings\ManageCurrencies\Web\Controllers\CurrencyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -278,4 +279,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('cancel', [CancelAccountController::class, 'destroy'])->name('cancel.destroy');
         });
     });
+
+    // General stuff called by everyone/everywhere
+    Route::get('currencies', [CurrencyController::class, 'index'])->name('currencies.index');
 });

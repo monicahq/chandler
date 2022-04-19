@@ -31,6 +31,7 @@ class UpdateLoan extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'loan_id' => 'required|integer|exists:loans,id',
+            'currency_id' => 'nullable|integer|exists:currencies,id',
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
@@ -94,6 +95,7 @@ class UpdateLoan extends BaseService implements ServiceInterface
         $this->loan->description = $this->valueOrNull($this->data, 'description');
         $this->loan->amount_lent = $this->valueOrNull($this->data, 'amount_lent');
         $this->loan->loaned_at = $this->valueOrNull($this->data, 'loaned_at');
+        $this->loan->currency_id = $this->valueOrNull($this->data, 'currency_id');
         $this->loan->save();
 
         $this->loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $this->loanee->id]]);
