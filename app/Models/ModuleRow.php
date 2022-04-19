@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ModuleRow extends Model
 {
@@ -27,7 +28,7 @@ class ModuleRow extends Model
      *
      * @return BelongsTo
      */
-    public function module()
+    public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
     }
@@ -37,7 +38,7 @@ class ModuleRow extends Model
      *
      * @return HasMany
      */
-    public function fields()
+    public function fields(): HasMany
     {
         return $this->hasMany(ModuleRowField::class);
     }
