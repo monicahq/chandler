@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Module extends Model
 {
@@ -53,7 +54,7 @@ class Module extends Model
      *
      * @return BelongsTo
      */
-    public function account()
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
@@ -63,7 +64,7 @@ class Module extends Model
      *
      * @return HasMany
      */
-    public function rows()
+    public function rows(): HasMany
     {
         return $this->hasMany(ModuleRow::class);
     }
@@ -73,7 +74,7 @@ class Module extends Model
      *
      * @return BelongsToMany
      */
-    public function templatePages()
+    public function templatePages(): BelongsToMany
     {
         return $this->belongsToMany(TemplatePage::class, 'module_template_page')->withTimestamps();
     }
