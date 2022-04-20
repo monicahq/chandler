@@ -2,8 +2,8 @@
 
 namespace App\Settings\ManageCurrencies\Web\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Settings\ManageCurrencies\Web\ViewHelpers\CurrencyIndexViewHelper;
 
