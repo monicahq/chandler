@@ -89,7 +89,7 @@
         <!-- modal to create a new date -->
         <form
           v-if="createDateModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-form"
+          class="bg-form mb-6 rounded-lg border border-gray-200"
           @submit.prevent="submit()">
           <div class="border-b border-gray-200">
             <div v-if="form.errors.length > 0" class="p-5"><errors :errors="form.errors" /></div>
