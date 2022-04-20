@@ -24,6 +24,34 @@ class CurrencyIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => 165,
                     'name' => 'CAD',
+                    'selected' => null,
+                ],
+            ],
+            $collection->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_data_needed_for_the_view_with_a_currency(): void
+    {
+        $currency = Currency::factory()->create();
+        $otherCurrency = Currency::factory()->create();
+        $account = Account::factory()->create();
+        $account->currencies()->attach($currency->id, ['active' => true]);
+        $account->currencies()->attach($otherCurrency->id, ['active' => true]);
+
+        $collection = CurrencyIndexViewHelper::data($account, $otherCurrency->id);
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => 165,
+                    'name' => 'CAD',
+                    'selected' => false,
+                ],
+                1 => [
+                    'id' => 166,
+                    'name' => 'CAD',
+                    'selected' => true,
                 ],
             ],
             $collection->toArray()

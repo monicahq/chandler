@@ -60,13 +60,14 @@ class ModuleLoanViewHelperTest extends TestCase
         $user = User::factory()->create();
         $loan = Loan::factory()->create([
             'currency_id' => Currency::factory()->create(),
+            'loaned_at' => '2019-02-02',
         ]);
         $contact->loansAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
 
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            10,
+            12,
             count($array)
         );
 
@@ -91,16 +92,20 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['amount_lent']
         );
         $this->assertEquals(
-            '2018-01-01',
+            $loan->currency_id,
+            $array['currency_id']
+        );
+        $this->assertEquals(
+            '2019-02-02',
             $array['loaned_at']
         );
         $this->assertEquals(
-            '2018-01-01',
+            'Feb 02, 2019',
             $array['loaned_at_human_format']
         );
         $this->assertEquals(
-            '2018-01-01',
-            $array['loaned_at_human_format']
+            $loan->currency->code,
+            $array['currency_name']
         );
         $this->assertEquals(
             [

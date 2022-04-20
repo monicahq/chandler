@@ -58,6 +58,7 @@ class ModuleLoanViewHelper
             'description' => $loan->description,
             'amount_lent' => $loan->amount_lent / 100,
             'currency_id' => $loan->currency_id,
+            'currency_name' => $loan->currency->code,
             'loaned_at' => $loan->loaned_at->format('Y-m-d'),
             'loaned_at_human_format' => DateHelper::format($loan->loaned_at, $user),
             'loaners' => $loanersCollection,

@@ -7,13 +7,14 @@ use Illuminate\Support\Collection;
 
 class CurrencyIndexViewHelper
 {
-    public static function data(Account $account): Collection
+    public static function data(Account $account, int $currencyId = null): Collection
     {
         $currenciesCollection = $account->currencies()
-            ->where('active', true)->get()->map(function ($currency) {
+            ->where('active', true)->get()->map(function ($currency) use ($currencyId) {
                 return [
                     'id' => $currency->id,
                     'name' => $currency->code,
+                    'selected' => $currencyId ? $currencyId === $currency->id : null,
                 ];
             });
 

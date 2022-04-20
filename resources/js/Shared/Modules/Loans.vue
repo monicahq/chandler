@@ -47,7 +47,7 @@
       <!-- add a loan modal -->
       <form
         v-if="createLoanModalShown"
-        class="mb-6 rounded-lg border border-gray-200 bg-white"
+        class="mb-6 rounded-lg border border-gray-200 bg-form"
         @submit.prevent="submit()">
         <div class="border-b border-gray-200">
           <div v-if="form.errors.length > 0" class="p-5">
@@ -55,9 +55,8 @@
           </div>
 
           <!-- loan options -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 px-5 pt-5 pb-3">
             <ul class="">
-              <!-- show all -->
               <li class="mr-5 inline-block">
                 <div class="flex items-center">
                   <input
@@ -106,7 +105,7 @@
           </div>
 
           <!-- amount + currency -->
-          <div v-if="form.type == 'monetary'" class="flex border-b border-gray-200 p-5">
+          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
             <text-input
               :ref="'label'"
               v-model="form.amount_lent"
@@ -154,8 +153,8 @@
               v-model="form.loaners" />
 
             <contact-selector
-              :search-url="this.layoutData.vault.url.search_contacts_only"
-              :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+              :search-url="layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
               :display-most-consulted-contacts="true"
               :label="'Who the loan is for?'"
               :add-multiple-contacts="true"
@@ -216,7 +215,16 @@
           <div class="border-b border-gray-200 px-3 py-2">
             <div class="flex items-center justify-between">
               <div>
-                <span class="mr-2 block">{{ loan.name }}</span>
+                <span class="mr-2 block">
+                  <span v-if="loan.amount_lent" class="mr-2">
+                    <span v-if="loan.currency_name" class="mr-1 text-gray-500">
+                      {{ loan.currency_name }}
+                    </span>
+                    {{ loan.amount_lent }}
+                    <span class="ml-2">•</span>
+                  </span>
+                  {{ loan.name }}
+                </span>
                 <span v-if="loan.description">{{ loan.description }}</span>
               </div>
               <span v-if="loan.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
@@ -240,8 +248,8 @@
 
         <!-- edit loan modal -->
         <form
-          v-if="editedLoanId == loan.id"
-          class="mb-6 w-full rounded-lg border border-gray-200 bg-white"
+          v-if="editedLoanId === loan.id"
+          class="mb-6 w-full rounded-lg border border-gray-200 bg-form"
           @submit.prevent="update(loan)">
           <div class="border-b border-gray-200">
             <div v-if="form.errors.length > 0" class="p-5">
@@ -300,7 +308,7 @@
             </div>
 
             <!-- amount + currency -->
-            <div v-if="form.type == 'monetary'" class="flex border-b border-gray-200 p-5">
+            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
               <text-input
                 :ref="'label'"
                 v-model="form.amount_lent"
@@ -472,7 +480,7 @@ export default {
     showEditLoanModal(loan) {
       this.getCurrencies();
       this.form.errors = [];
-      this.form.type = 'object';
+      this.form.type = loan.amount_lent ? 'monetary' : 'object';
       this.form.name = loan.name;
       this.form.description = loan.description;
       this.form.loaned_at = loan.loaned_at;

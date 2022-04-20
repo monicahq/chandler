@@ -27,7 +27,7 @@
     <!-- modal to create a type -->
     <form
       v-if="createTypeModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white"
+      class="mb-6 rounded-lg border border-gray-200 bg-form"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5">
         <errors :errors="form.errors" />
@@ -81,7 +81,7 @@
         <!-- edit a type modal -->
         <form
           v-if="editTypeModalShownId == type.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50"
+          class="item-list border-b border-gray-200 hover:bg-slate-50 bg-form"
           @submit.prevent="update(type)">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
