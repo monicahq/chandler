@@ -29,7 +29,9 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create();
+        $loan = Loan::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
         ContactFeedItem::factory()->create([
             'contact_id' => $contact->id,
             'feedable_id' => $loan->id,
@@ -60,7 +62,9 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create();
+        $loan = Loan::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
         $this->executeService($regis, $account, $vault, $contact, $loan);
     }
@@ -74,7 +78,9 @@ class DestroyLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = Loan::factory()->create();
+        $loan = Loan::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $loan);
     }

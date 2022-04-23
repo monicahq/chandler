@@ -10,12 +10,14 @@ use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class UpdateLoan extends BaseService implements ServiceInterface
 {
     private Loan $loan;
-    private Contact $loaner;
-    private Contact $loanee;
+    private Collection $loanersCollection;
+    private Collection $loaneesCollection;
     private array $data;
 
     /**
@@ -35,8 +37,8 @@ class UpdateLoan extends BaseService implements ServiceInterface
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
-            'loaner_id' => 'required|integer|exists:contacts,id',
-            'loanee_id' => 'required|integer|exists:contacts,id',
+            'loaner_ids' => 'required',
+            'loanee_ids' => 'required',
             'amount_lent' => 'nullable|integer',
             'loaned_at' => 'nullable|date_format:Y-m-d',
         ];
@@ -78,14 +80,22 @@ class UpdateLoan extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->loan = Loan::where('contact_id', $this->data['contact_id'])
+        $this->loan = Loan::where('vault_id', $this->data['vault_id'])
             ->findOrFail($this->data['loan_id']);
 
-        $this->loaner = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['loaner_id']);
+        $this->loanersCollection = collect();
+        foreach ($this->data['loaner_ids'] as $loanerId) {
+            $this->loanersCollection->push(Contact::where('vault_id', $this->data['vault_id'])
+                ->findOrFail($loanerId)
+            );
+        }
 
-        $this->loanee = Contact::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['loanee_id']);
+        $this->loaneesCollection = collect();
+        foreach ($this->data['loanee_ids'] as $loaneeId) {
+            $this->loaneesCollection->push(Contact::where('vault_id', $this->data['vault_id'])
+                ->findOrFail($loaneeId)
+            );
+        }
     }
 
     private function update(): void
@@ -98,7 +108,20 @@ class UpdateLoan extends BaseService implements ServiceInterface
         $this->loan->currency_id = $this->valueOrNull($this->data, 'currency_id');
         $this->loan->save();
 
-        $this->loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $this->loanee->id]]);
+        // remove all the current loaners and loanees
+        DB::table('contact_loan')->where('loan_id', $this->loan->id)->delete();
+
+        foreach ($this->loanersCollection as $loaner) {
+            foreach ($this->loaneesCollection as $loanee) {
+                $loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $loanee->id]]);
+            }
+        }
+
+        foreach ($this->loaneesCollection as $loanee) {
+            foreach ($this->loanersCollection as $loaner) {
+                $loanee->loansAsLoanee()->syncWithoutDetaching([$this->loan->id => ['loaner_id' => $loaner->id]]);
+            }
+        }
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();

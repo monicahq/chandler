@@ -32,7 +32,7 @@ class UpdateLoanTest extends TestCase
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $loan, $loaner, $loanee);
@@ -62,7 +62,7 @@ class UpdateLoanTest extends TestCase
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $account, $vault, $contact, $loan, $loaner, $loanee);
@@ -80,7 +80,7 @@ class UpdateLoanTest extends TestCase
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $loan, $loaner, $loanee);
@@ -98,7 +98,7 @@ class UpdateLoanTest extends TestCase
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $loan, $loaner, $loanee);
@@ -113,7 +113,6 @@ class UpdateLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = ContactInformationType::factory()->create();
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([]);
@@ -130,7 +129,6 @@ class UpdateLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = ContactInformationType::factory()->create();
         $loaner = Contact::factory()->create();
         $loanee = Contact::factory()->create(['vault_id' => $vault->id]);
         $loan = Loan::factory()->create([]);
@@ -147,7 +145,6 @@ class UpdateLoanTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $loan = ContactInformationType::factory()->create();
         $loaner = Contact::factory()->create(['vault_id' => $vault->id]);
         $loanee = Contact::factory()->create();
         $loan = Loan::factory()->create([]);
@@ -168,8 +165,8 @@ class UpdateLoanTest extends TestCase
             'type' => Loan::TYPE_DEBT,
             'name' => 'resto',
             'description' => 'This is incredible',
-            'loaner_id' => $loaner->id,
-            'loanee_id' => $loanee->id,
+            'loaner_ids' => [$loaner->id],
+            'loanee_ids' => [$loanee->id],
             'amount_lent' => 123,
             'loaned_at' => '2020-01-01',
         ];
@@ -178,7 +175,7 @@ class UpdateLoanTest extends TestCase
 
         $this->assertDatabaseHas('loans', [
             'id' => $loan->id,
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'type' => Loan::TYPE_DEBT,
             'name' => 'resto',
             'description' => 'This is incredible',

@@ -53,7 +53,7 @@ class DestroyLoan extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->loan = Loan::findOrFail($data['loan_id']);
+        $this->loan = Loan::where('vault_id', $data['vault_id'])->findOrFail($data['loan_id']);
 
         $this->removeContactFeedItem();
 

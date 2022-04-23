@@ -15,7 +15,7 @@ class ModuleLoanViewHelper
         $loansAsLoaner = $contact->loansAsLoaner()->get();
         $loansAsLoanee = $contact->loansAsLoanee()->get();
 
-        $loans = $loansAsLoaner->concat($loansAsLoanee)->unique('id');
+        $loans = $loansAsLoaner->concat($loansAsLoanee)->sortBy('loaned_at')->unique('id');
 
         $loansAssociatedWithContactCollection = $loans->map(function ($loan) use ($contact, $user) {
             return self::dtoLoan($loan, $contact, $user);
@@ -58,7 +58,7 @@ class ModuleLoanViewHelper
             'description' => $loan->description,
             'amount_lent' => $loan->amount_lent / 100,
             'currency_id' => $loan->currency_id,
-            'currency_name' => $loan->currency->code,
+            'currency_name' => $loan->currency ? $loan->currency->code : null,
             'loaned_at' => $loan->loaned_at->format('Y-m-d'),
             'loaned_at_human_format' => DateHelper::format($loan->loaned_at, $user),
             'loaners' => $loanersCollection,

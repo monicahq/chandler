@@ -241,7 +241,7 @@
               <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
                 Edit
               </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
+              <li @click="destroy(loan)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
             </ul>
           </div>
         </div>
@@ -257,9 +257,8 @@
             </div>
 
             <!-- loan options -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200  px-5 pt-5 pb-3">
               <ul class="">
-                <!-- show all -->
                 <li class="mr-5 inline-block">
                   <div class="flex items-center">
                     <input
@@ -319,6 +318,7 @@
                 :input-class="'w-full'"
                 :required="false"
                 :min="0"
+                :max="1000000"
                 :autocomplete="false"
                 @esc-key-pressed="createLoanModalShown = false" />
 
@@ -346,8 +346,8 @@
             <!-- loaned by or to -->
             <div class="flex items-center items-stretch border-b border-gray-200">
               <contact-selector
-                :search-url="this.layoutData.vault.url.search_contacts_only"
-                :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+                :search-url="layoutData.vault.url.search_contacts_only"
+                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
                 :display-most-consulted-contacts="false"
                 :label="'Who makes the loan?'"
                 :add-multiple-contacts="true"
@@ -356,8 +356,8 @@
                 v-model="form.loaners" />
 
               <contact-selector
-                :search-url="this.layoutData.vault.url.search_contacts_only"
-                :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+                :search-url="layoutData.vault.url.search_contacts_only"
+                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
                 :display-most-consulted-contacts="true"
                 :label="'Who the loan is for?'"
                 :add-multiple-contacts="true"
@@ -486,6 +486,8 @@ export default {
       this.form.loaned_at = loan.loaned_at;
       this.form.amount_lent = loan.amount_lent;
       this.form.currency_id = loan.currency_id;
+      this.form.loaners = loan.loaners;
+      this.form.loanees = loan.loanees;
       this.editedLoanId = loan.id;
     },
 
@@ -524,6 +526,7 @@ export default {
         .put(loan.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
+          console.log('here')
           this.flash('The loan has been edited', 'success');
           this.localLoans[this.localLoans.findIndex((x) => x.id === loan.id)] = response.data.data;
           this.editedLoanId = 0;

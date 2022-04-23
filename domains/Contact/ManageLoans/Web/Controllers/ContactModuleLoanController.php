@@ -19,6 +19,9 @@ class ContactModuleLoanController extends Controller
             $amount = $request->input('amount_lent') * 100;
         }
 
+        $loaners = collect($request->input('loaners'))->pluck('id');
+        $loanees = collect($request->input('loanees'))->pluck('id');
+
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
@@ -28,8 +31,8 @@ class ContactModuleLoanController extends Controller
             'type' => $request->input('type'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'loaner_ids' => $request->input('loaners'),
-            'loanee_ids' => $request->input('loanees'),
+            'loaner_ids' => $loaners,
+            'loanee_ids' => $loanees,
             'amount_lent' => $request->input('amount_lent') ? $amount : null,
             'loaned_at' => $request->input('loaned_at'),
         ];
@@ -49,6 +52,9 @@ class ContactModuleLoanController extends Controller
             $amount = $request->input('amount_lent') * 100;
         }
 
+        $loaners = collect($request->input('loaners'))->pluck('id');
+        $loanees = collect($request->input('loanees'))->pluck('id');
+
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
@@ -59,8 +65,8 @@ class ContactModuleLoanController extends Controller
             'type' => $request->input('type'),
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'loaner_ids' => $request->input('loaners'),
-            'loanee_ids' => $request->input('loanees'),
+            'loaner_ids' => $loaners,
+            'loanee_ids' => $loanees,
             'amount_lent' => $request->input('amount_lent') ? $amount : null,
             'loaned_at' => $request->input('loaned_at'),
         ];

@@ -243,6 +243,10 @@ export default {
     if (this.displayMostConsultedContacts) {
       this.lookupMostConsultedContacts();
     }
+
+    if (this.modelValue) {
+      this.localContacts = this.modelValue;
+    }
   },
 
   computed: {
@@ -283,7 +287,7 @@ export default {
 
       if (id == -1) {
         this.localContacts.push(contact);
-        this.form.contactIds.push(contact.id);
+        this.form.contactIds.push(contact);
         this.form.searchTerm = '';
         this.addContactMode = false;
         this.$emit('update:modelValue', this.form.contactIds);

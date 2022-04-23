@@ -23,6 +23,7 @@ class Loan extends Model
      * @var array
      */
     protected $fillable = [
+        'vault_id',
         'type',
         'name',
         'description',
@@ -39,6 +40,16 @@ class Loan extends Model
     protected $dates = [
         'loaned_at',
     ];
+
+    /**
+     * Get the vault associated with the loan.
+     *
+     * @return BelongsTo
+     */
+    public function vault()
+    {
+        return $this->belongsTo(Vault::class);
+    }
 
     /**
      * Get the currency associated with the loan.

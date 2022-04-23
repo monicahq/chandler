@@ -18,6 +18,7 @@ return new class extends Migration
 
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('vault_id');
             $table->string('type');
             $table->string('name');
             $table->text('description')->nullable();
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->datetime('loaned_at')->nullable();
             $table->timestamps();
+            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
         });
 

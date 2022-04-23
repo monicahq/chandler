@@ -100,6 +100,7 @@ class CreateLoan extends BaseService implements ServiceInterface
     private function create(): void
     {
         $this->loan = Loan::create([
+            'vault_id' => $this->data['vault_id'],
             'type' => $this->data['type'],
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),

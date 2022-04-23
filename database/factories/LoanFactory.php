@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Loan;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoanFactory extends Factory
@@ -22,6 +23,7 @@ class LoanFactory extends Factory
     public function definition()
     {
         return [
+            'vault_id' => Vault::factory(),
             'type' => Loan::TYPE_DEBT,
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
