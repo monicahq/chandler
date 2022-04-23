@@ -89,6 +89,6 @@ class DestroyLoan extends BaseService implements ServiceInterface
 
     private function removeContactFeedItem(): void
     {
-        $this->loan->feedItem->delete();
+        $this->loan->feedItem()->delete();
     }
 }
