@@ -173,9 +173,7 @@
           <errors :errors="form.errors" />
         </div>
 
-        <div v-if="warning != ''" class="border-b p-3">
-          ⚠️ {{ warning }}
-        </div>
+        <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
 
         <div class="flex justify-between p-5">
           <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createLoanModalShown = false" />
@@ -256,7 +254,6 @@
           class="bg-form mb-6 w-full rounded-lg border border-gray-200"
           @submit.prevent="update(loan)">
           <div class="border-b border-gray-200">
-
             <!-- loan options -->
             <div class="border-b border-gray-200 px-5 pt-5 pb-3">
               <ul class="">
@@ -381,9 +378,7 @@
             <errors :errors="form.errors" />
           </div>
 
-          <div v-if="warning != ''" class="border-b p-3">
-            ⚠️ {{ warning }}
-          </div>
+          <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
 
           <div class="flex justify-between p-5">
             <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedLoanId = 0" />
@@ -513,7 +508,7 @@ export default {
     },
 
     submit() {
-      if (this.form.loaners.length == 0 || this.form.loanees.length ==0) {
+      if (this.form.loaners.length == 0 || this.form.loanees.length == 0) {
         this.warning = 'Please indicate the contacts.';
         return;
       }
