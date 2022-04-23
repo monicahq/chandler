@@ -44,12 +44,12 @@ class CurrencyIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 0 => [
-                    'id' => 165,
+                    'id' => $currency->id,
                     'name' => 'CAD',
                     'selected' => false,
                 ],
                 1 => [
-                    'id' => 166,
+                    'id' => $otherCurrency->id,
                     'name' => 'CAD',
                     'selected' => true,
                 ],
