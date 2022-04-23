@@ -9,9 +9,9 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
-use App\Interfaces\ServiceInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Interfaces\ServiceInterface;
 
 class UpdateLoan extends BaseService implements ServiceInterface
 {

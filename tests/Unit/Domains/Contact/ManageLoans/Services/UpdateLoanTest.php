@@ -11,7 +11,6 @@ use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
-use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Contact\ManageLoans\Services\UpdateLoan;
 use App\Exceptions\NotEnoughPermissionException;
