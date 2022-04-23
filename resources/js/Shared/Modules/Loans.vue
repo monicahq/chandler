@@ -50,10 +50,6 @@
         class="bg-form mb-6 rounded-lg border border-gray-200"
         @submit.prevent="submit()">
         <div class="border-b border-gray-200">
-          <div v-if="form.errors.length > 0" class="p-5">
-            <errors :errors="form.errors" />
-          </div>
-
           <!-- loan options -->
           <div class="border-b border-gray-200 px-5 pt-5 pb-3">
             <ul class="">
@@ -173,6 +169,14 @@
           </div>
         </div>
 
+        <div v-if="form.errors.length > 0" class="p-5">
+          <errors :errors="form.errors" />
+        </div>
+
+        <div v-if="warning != ''" class="border-b p-3">
+          ⚠️ {{ warning }}
+        </div>
+
         <div class="flex justify-between p-5">
           <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createLoanModalShown = false" />
           <pretty-button :text="'Add loan'" :state="loadingState" :icon="'plus'" :classes="'save'" />
@@ -252,9 +256,6 @@
           class="bg-form mb-6 w-full rounded-lg border border-gray-200"
           @submit.prevent="update(loan)">
           <div class="border-b border-gray-200">
-            <div v-if="form.errors.length > 0" class="p-5">
-              <errors :errors="form.errors" />
-            </div>
 
             <!-- loan options -->
             <div class="border-b border-gray-200 px-5 pt-5 pb-3">
@@ -376,6 +377,14 @@
             </div>
           </div>
 
+          <div v-if="form.errors.length > 0" class="p-5">
+            <errors :errors="form.errors" />
+          </div>
+
+          <div v-if="warning != ''" class="border-b p-3">
+            ⚠️ {{ warning }}
+          </div>
+
           <div class="flex justify-between p-5">
             <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedLoanId = 0" />
             <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
@@ -437,6 +446,7 @@ export default {
       localLoans: [],
       localCurrencies: [],
       editedLoanId: 0,
+      warning: '',
       form: {
         type: '',
         name: '',
@@ -503,6 +513,11 @@ export default {
     },
 
     submit() {
+      if (this.form.loaners.length == 0 || this.form.loanees.length ==0) {
+        this.warning = 'Please indicate the contacts.';
+        return;
+      }
+
       this.loadingState = 'loading';
 
       axios

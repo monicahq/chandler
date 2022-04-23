@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('amount_lent')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->datetime('loaned_at')->nullable();
+            $table->boolean('settled')->default(false);
+            $table->datetime('settled_at')->nullable();
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');

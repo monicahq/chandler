@@ -30,6 +30,8 @@ class Loan extends Model
         'amount_lent',
         'currency_id',
         'loaned_at',
+        'settled_at',
+        'settled',
     ];
 
     /**
@@ -39,6 +41,16 @@ class Loan extends Model
      */
     protected $dates = [
         'loaned_at',
+        'settled_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'settled' => 'boolean',
     ];
 
     /**

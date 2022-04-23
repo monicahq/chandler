@@ -12,8 +12,8 @@ class ModuleLoanViewHelper
 {
     public static function data(Contact $contact, User $user): array
     {
-        $loansAsLoaner = $contact->loansAsLoaner()->get();
-        $loansAsLoanee = $contact->loansAsLoanee()->get();
+        $loansAsLoaner = $contact->loansAsLoaner()->where('settled', false)->get();
+        $loansAsLoanee = $contact->loansAsLoanee()->where('settled', false)->get();
 
         $loans = $loansAsLoaner->concat($loansAsLoanee)->sortBy('loaned_at')->unique('id');
 
