@@ -257,7 +257,7 @@
             </div>
 
             <!-- loan options -->
-            <div class="border-b border-gray-200  px-5 pt-5 pb-3">
+            <div class="border-b border-gray-200 px-5 pt-5 pb-3">
               <ul class="">
                 <li class="mr-5 inline-block">
                   <div class="flex items-center">
@@ -526,7 +526,7 @@ export default {
         .put(loan.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          console.log('here')
+          console.log('here');
           this.flash('The loan has been edited', 'success');
           this.localLoans[this.localLoans.findIndex((x) => x.id === loan.id)] = response.data.data;
           this.editedLoanId = 0;
