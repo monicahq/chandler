@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Company;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
@@ -77,5 +78,16 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->contactImportantDateTypes()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_companies(): void
+    {
+        $vault = Vault::factory()->create();
+        Company::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->companies()->exists());
     }
 }
