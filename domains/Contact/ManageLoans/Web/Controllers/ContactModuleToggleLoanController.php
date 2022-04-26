@@ -6,9 +6,6 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Contact\ManageLoans\Services\CreateLoan;
-use App\Contact\ManageLoans\Services\UpdateLoan;
-use App\Contact\ManageLoans\Services\DestroyLoan;
 use App\Contact\ManageLoans\Services\ToggleLoan;
 use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 

@@ -2,19 +2,17 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLoans\Services;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Contact\ManageLoans\Services\ToggleLoan;
 use App\Exceptions\NotEnoughPermissionException;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

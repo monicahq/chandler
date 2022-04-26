@@ -4,13 +4,7 @@ namespace App\Contact\ManageLoans\Services;
 
 use Carbon\Carbon;
 use App\Models\Loan;
-use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use App\Interfaces\ServiceInterface;
 
 class ToggleLoan extends BaseService implements ServiceInterface
@@ -74,7 +68,7 @@ class ToggleLoan extends BaseService implements ServiceInterface
 
     private function toggle(): void
     {
-        $this->loan->settled = !$this->loan->settled;
+        $this->loan->settled = ! $this->loan->settled;
         $this->loan->settled_at = Carbon::now();
         $this->loan->save();
 
