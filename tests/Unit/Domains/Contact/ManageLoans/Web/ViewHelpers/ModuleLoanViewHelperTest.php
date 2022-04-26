@@ -67,7 +67,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            12,
+            14,
             count($array)
         );
 
@@ -104,6 +104,14 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['loaned_at_human_format']
         );
         $this->assertEquals(
+            false,
+            $array['settled']
+        );
+        $this->assertEquals(
+            null,
+            $array['settled_at_human_format']
+        );
+        $this->assertEquals(
             $loan->currency->code,
             $array['currency_name']
         );
@@ -128,6 +136,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans/'.$loan->id,
+                'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans/'.$loan->id.'/toggle',
                 'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/loans/'.$loan->id,
             ],
             $array['url']

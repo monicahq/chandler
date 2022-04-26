@@ -63,8 +63,15 @@ class ModuleLoanViewHelper
             'loaned_at_human_format' => DateHelper::format($loan->loaned_at, $user),
             'loaners' => $loanersCollection,
             'loanees' => $loaneesCollection,
+            'settled' => $loan->settled,
+            'settled_at_human_format' => $loan->settled_at ? DateHelper::format($loan->settled_at, $user) : null,
             'url' => [
                 'update' => route('contact.loan.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'loan' => $loan->id,
+                ]),
+                'toggle' => route('contact.loan.toggle', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                     'loan' => $loan->id,

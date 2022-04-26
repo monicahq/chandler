@@ -47,6 +47,7 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesC
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
@@ -121,6 +122,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     // loans
                     Route::post('loans', [ContactModuleLoanController::class, 'store'])->name('contact.loan.store');
                     Route::put('loans/{loan}', [ContactModuleLoanController::class, 'update'])->name('contact.loan.update');
+                    Route::put('loans/{loan}/toggle', [ContactModuleToggleLoanController::class, 'update'])->name('contact.loan.toggle');
                     Route::delete('loans/{loan}', [ContactModuleLoanController::class, 'destroy'])->name('contact.loan.destroy');
                 });
             });

@@ -239,10 +239,16 @@
           <div class="flex items-center justify-between px-3 py-2">
             <!-- <small-contact /> -->
             <ul class="text-sm">
-              <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
+              <!-- settle -->
+              <li v-if="!loan.settled" @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
+              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Revert</li>
+
+              <!-- edit -->
               <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
                 Edit
               </li>
+
+              <!-- delete -->
               <li @click="destroy(loan)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
             </ul>
           </div>
@@ -536,7 +542,6 @@ export default {
         .put(loan.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          console.log('here');
           this.flash('The loan has been edited', 'success');
           this.localLoans[this.localLoans.findIndex((x) => x.id === loan.id)] = response.data.data;
           this.editedLoanId = 0;
@@ -561,6 +566,18 @@ export default {
             this.form.errors = error.response.data;
           });
       }
+    },
+
+    toggle(loan) {
+      axios
+        .put(loan.url.toggle, this.form)
+        .then((response) => {
+          this.flash('The loan has been settled', 'success');
+          this.localLoans[this.localLoans.findIndex((x) => x.id === loan.id)] = response.data.data;
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
   },
 };
