@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        // necessary for SQLlite
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vault_id');

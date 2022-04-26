@@ -23,7 +23,7 @@ class CreateCompany extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -67,7 +67,7 @@ class CreateCompany extends BaseService implements ServiceInterface
         $this->company = Company::create([
             'vault_id' => $this->data['vault_id'],
             'name' => $this->data['name'],
-            'type' => $this->data['type'],
+            'type' => $this->valueOrNull($this->data, 'type'),
         ]);
     }
 }
