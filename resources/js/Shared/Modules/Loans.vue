@@ -240,8 +240,15 @@
             <!-- <small-contact /> -->
             <ul class="text-sm">
               <!-- settle -->
-              <li v-if="!loan.settled" @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Settle</li>
-              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">Revert</li>
+              <li
+                v-if="!loan.settled"
+                @click="toggle(loan)"
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Settle
+              </li>
+              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                Revert
+              </li>
 
               <!-- edit -->
               <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
