@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\AddressType;
 use App\Models\Company;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
