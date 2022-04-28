@@ -44,10 +44,7 @@
       </span>
 
       <!-- close button -->
-      <span
-        v-if="editJobInformation"
-        @click="editJobInformation = false"
-        class="cursor-pointer text-xs text-gray-600">
+      <span v-if="editJobInformation" @click="editJobInformation = false" class="cursor-pointer text-xs text-gray-600">
         Close
       </span>
     </div>
@@ -111,7 +108,7 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="!data.job_position && ! data.company" class="text-sm text-gray-600">Not set</p>
+    <p v-if="!data.job_position && !data.company" class="text-sm text-gray-600">Not set</p>
   </div>
 </template>
 
