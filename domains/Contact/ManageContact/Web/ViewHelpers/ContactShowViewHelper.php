@@ -123,6 +123,10 @@ class ContactShowViewHelper
                 $data = ModuleLabelViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_COMPANY) {
+                $data = ModuleCompanyViewHelper::data($contact);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,

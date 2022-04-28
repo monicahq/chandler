@@ -53,6 +53,8 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerific
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Vault\ManageCompanies\Web\Controllers\CompanyController;
+use App\Vault\ManageCompanies\Web\Controllers\ContactCompanyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -156,6 +158,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // contact search module
             Route::get('search/user/contact/mostConsulted', [VaultMostConsultedContactsController::class, 'index'])->name('vault.user.search.mostconsulted');
             Route::post('search/user/contacts', [VaultContactSearchController::class, 'index'])->name('vault.user.search.index');
+
+            // companies
+            Route::get('companies/list', [ContactCompanyController::class, 'index'])->name('vault.companies.list.index');
+            Route::post('companies', [CompanyController::class, 'store'])->name('vault.companies.store');
         });
     });
 
