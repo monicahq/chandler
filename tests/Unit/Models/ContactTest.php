@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Company;
 use Tests\TestCase;
 use App\Models\Loan;
 use App\Models\Note;
@@ -171,5 +172,15 @@ class ContactTest extends TestCase
         $ross->loansAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
 
         $this->assertTrue($ross->loansAsLoanee()->exists());
+    }
+
+    /** @test */
+    public function it_has_one_company()
+    {
+        $ross = Contact::factory()->create([
+            'company_id' => Company::factory()->create(),
+        ]);
+
+        $this->assertTrue($ross->company()->exists());
     }
 }
