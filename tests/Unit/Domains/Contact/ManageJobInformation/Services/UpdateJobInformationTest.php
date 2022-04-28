@@ -2,22 +2,17 @@
 
 namespace Tests\Unit\Domains\Contact\ManageJobInformation\Services;
 
-use App\Contact\ManageJobInformation\Services\UpdateJobInformation;
-use App\Models\Company;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
+use App\Models\Company;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use Illuminate\Support\Facades\Queue;
-use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Contact\ManageContactInformation\Services\CreateContactInformation;
+use App\Contact\ManageJobInformation\Services\UpdateJobInformation;
 
 class UpdateJobInformationTest extends TestCase
 {

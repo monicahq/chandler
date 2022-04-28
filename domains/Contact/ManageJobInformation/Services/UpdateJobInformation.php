@@ -2,14 +2,10 @@
 
 namespace App\Contact\ManageJobInformation\Services;
 
-use App\Jobs\CreateAuditLog;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactInformation;
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactInformationType;
 
 class UpdateJobInformation extends BaseService implements ServiceInterface
 {

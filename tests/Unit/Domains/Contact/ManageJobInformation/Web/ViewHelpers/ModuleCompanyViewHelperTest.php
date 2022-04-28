@@ -3,10 +3,8 @@
 namespace Tests\Unit\Domains\Contact\ManageJobInformation\Web\ViewHelpers;
 
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 
 class ModuleCompanyViewHelperTest extends TestCase

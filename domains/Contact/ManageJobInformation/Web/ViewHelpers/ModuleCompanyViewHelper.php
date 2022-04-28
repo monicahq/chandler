@@ -3,14 +3,12 @@
 namespace App\Contact\ManageJobInformation\Web\ViewHelpers;
 
 use App\Models\Contact;
-use App\Models\Vault;
-use App\Models\Company;
 
 class ModuleCompanyViewHelper
 {
     public static function data(Contact $contact): array
     {
-       $company = $contact->company;
+        $company = $contact->company;
 
         return [
             'job_position' => $contact->job_position,

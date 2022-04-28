@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Company;
 use Tests\TestCase;
 use App\Models\Loan;
 use App\Models\Note;
 use App\Models\Label;
 use App\Models\Gender;
 use App\Models\Address;
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Pronoun;
 use App\Models\Template;
