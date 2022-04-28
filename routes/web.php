@@ -8,6 +8,7 @@ use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Vault\ManageCompanies\Web\Controllers\CompanyController;
 use App\Vault\Search\Web\Controllers\VaultContactSearchController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
@@ -15,6 +16,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Settings\ManageCurrencies\Web\Controllers\CurrencyController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
+use App\Vault\ManageCompanies\Web\Controllers\ContactCompanyController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
@@ -53,8 +55,6 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerific
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Vault\ManageCompanies\Web\Controllers\CompanyController;
-use App\Vault\ManageCompanies\Web\Controllers\ContactCompanyController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

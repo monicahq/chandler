@@ -3,16 +3,11 @@
 namespace Tests\Unit\Domains\Vault\ManageCompanies\Web\ViewHelpers;
 
 use function env;
-
-use App\Models\Company;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Label;
 use App\Models\Vault;
-use App\Models\Template;
-use App\Vault\ManageCompanies\Web\ViewHelpers\CompanyViewHelper;
+use App\Models\Company;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
+use App\Vault\ManageCompanies\Web\ViewHelpers\CompanyViewHelper;
 
 class CompanyViewHelperTest extends TestCase
 {
@@ -34,8 +29,8 @@ class CompanyViewHelperTest extends TestCase
         $this->assertArrayHasKey('companies', $array);
         $this->assertEquals(
             [
-                'index' => env('APP_URL') . '/vaults/' . $vault->id . '/companies/list',
-                'store' => env('APP_URL') . '/vaults/' . $vault->id . '/companies',
+                'index' => env('APP_URL').'/vaults/'.$vault->id.'/companies/list',
+                'store' => env('APP_URL').'/vaults/'.$vault->id.'/companies',
             ],
             $array['url']
         );
@@ -55,7 +50,7 @@ class CompanyViewHelperTest extends TestCase
                 'id' => $company->id,
                 'name' => $company->name,
                 'type' => $company->type,
-                'url' => env('APP_URL') . '/vaults/' . $vault->id . '/companies/list',
+                'url' => env('APP_URL').'/vaults/'.$vault->id.'/companies/list',
             ],
             $array
         );

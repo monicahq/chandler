@@ -2,12 +2,8 @@
 
 namespace App\Vault\ManageCompanies\Web\ViewHelpers;
 
-use App\Models\User;
 use App\Models\Vault;
-use App\Helpers\VaultHelper;
 use App\Models\Company;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class ModuleCompanyViewHelper
 {
