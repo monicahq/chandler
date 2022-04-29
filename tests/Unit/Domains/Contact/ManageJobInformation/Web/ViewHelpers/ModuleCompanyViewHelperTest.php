@@ -6,6 +6,8 @@ use Tests\TestCase;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
+use App\Models\Company;
+use App\Models\Vault;
 
 class ModuleCompanyViewHelperTest extends TestCase
 {
@@ -21,12 +23,13 @@ class ModuleCompanyViewHelperTest extends TestCase
         $array = ModuleCompanyViewHelper::data($contact);
 
         $this->assertEquals(
-            2,
+            3,
             count($array)
         );
 
         $this->assertArrayHasKey('job_position', $array);
         $this->assertArrayHasKey('company', $array);
+        $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
             [
@@ -36,8 +39,38 @@ class ModuleCompanyViewHelperTest extends TestCase
                     'name' => $contact->company->name,
                     'type' => $contact->company->type,
                 ],
+                'url' => [
+                    'index' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/'.$contact->id.'/companies/list',
+                    'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/companies',
+                ],
             ],
             $array
+        );
+    }
+
+    /** @test */
+    public function it_gets_all_the_companies_in_the_vault(): void
+    {
+        $vault = Vault::factory()->create();
+        $company = Company::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+            'company_id' => $company->id,
+        ]);
+
+        $collection = ModuleCompanyViewHelper::list($vault, $contact);
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'type' => $company->type,
+                    'selected' => true,
+                ],
+            ],
+            $collection->toArray()
         );
     }
 }

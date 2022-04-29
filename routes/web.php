@@ -126,6 +126,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('loans/{loan}', [ContactModuleLoanController::class, 'update'])->name('contact.loan.update');
                     Route::put('loans/{loan}/toggle', [ContactModuleToggleLoanController::class, 'update'])->name('contact.loan.toggle');
                     Route::delete('loans/{loan}', [ContactModuleLoanController::class, 'destroy'])->name('contact.loan.destroy');
+
+                    // job information
+                    Route::get('companies/list', [ContactCompanyController::class, 'index'])->name('vault.companies.list.index');
                 });
             });
 
@@ -160,7 +163,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('search/user/contacts', [VaultContactSearchController::class, 'index'])->name('vault.user.search.index');
 
             // companies
-            Route::get('companies/list', [ContactCompanyController::class, 'index'])->name('vault.companies.list.index');
             Route::post('companies', [CompanyController::class, 'store'])->name('vault.companies.store');
         });
     });

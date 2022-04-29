@@ -50,61 +50,47 @@
     </div>
 
     <!-- edit job information -->
-    <div v-if="editJobInformation" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <!-- filter list of labels -->
+    <div v-if="editJobInformation" class="mb-6 rounded-lg border border-gray-200 bg-form">
+      <!-- filter list of existing companies -->
       <div class="border-b border-gray-200 p-2">
         <errors :errors="form.errors" />
 
-        <text-input
-          :ref="'label'"
-          v-model="form.search"
-          :type="'text'"
-          :placeholder="'Filter list'"
-          :autofocus="true"
-          :input-class="'block w-full'"
-          :required="true"
-          :autocomplete="false"
-          @esc-key-pressed="editJobInformation = false" />
+        <!-- companies -->
+        <dropdown
+          v-model="form.company_id"
+          :data="localCompanies"
+          :required="false"
+          :div-outer-class="'mb-2'"
+          :placeholder="'Choose a value'"
+          :dropdown-class="'block w-full'"
+          :label="'Existing company'" />
+
+        <p class="text-sm">Or create a new one</p>
       </div>
 
-      <!-- labels in vault -->
-      <ul class="label-list overflow-auto bg-white" :class="filteredLabels.length > 0 ? 'h-40' : ''">
-        <li
-          v-for="label in filteredLabels"
-          :key="label.id"
-          @click="set(label)"
-          class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-          <div>
-            <span class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></span>
-            <span>{{ label.name }}</span>
+      <div class="border-b border-gray-200 p-2">
+        <!-- job position -->
+          <text-input
+            v-model="form.job_position"
+            :label="'Job position'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="true"
+            :autocomplete="false"
+            :maxlength="255" />
+      </div>
+
+      <div class="flex justify-between p-5">
+            <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
+            <pretty-button
+              :href="'data.url.vault.create'"
+              :text="'Save'"
+              :state="loadingState"
+              :icon="'check'"
+              :classes="'save'" />
           </div>
 
-          <svg
-            v-if="label.taken"
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 text-green-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-        </li>
-
-        <!-- case if the label does not exist and needs to be created -->
-        <li
-          v-if="filteredLabels.length == 0 && form.search.length != ''"
-          class="cursor-pointer border-b border-gray-200 px-3 py-2 hover:bg-slate-50"
-          @click="store()">
-          Create new label <span class="italic">"{{ form.search }}"</span>
-        </li>
-
-        <!-- blank state when there is no label at all -->
-        <li
-          v-if="filteredLabels.length == 0 && form.search.length == ''"
-          class="border-b border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-slate-50">
-          Please type a few characters to create a new label.
-        </li>
-      </ul>
     </div>
 
     <!-- blank state -->
@@ -114,12 +100,18 @@
 
 <script>
 import TextInput from '@/Shared/Form/TextInput';
+import Dropdown from '@/Shared/Form/Dropdown';
+import PrettyLink from '@/Shared/Form/PrettyLink';
+import PrettyButton from '@/Shared/Form/PrettyButton';
 import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
     TextInput,
     Errors,
+    Dropdown,
+    PrettyLink,
+    PrettyButton,
   },
 
   props: {
@@ -132,24 +124,21 @@ export default {
   data() {
     return {
       editJobInformation: false,
-      localLabels: [],
-      localLabelsInVault: [],
+      localCompanies: [],
+      localCompaniesInVault: [],
       form: {
-        search: '',
-        name: '',
+        job_position: '',
+        company_id: 0,
         errors: [],
       },
     };
   },
 
-  created() {
-    this.localLabels = this.data.labels_in_contact;
-    this.localLabelsInVault = this.data.labels_in_vault;
-  },
+  created() {},
 
   computed: {
-    filteredLabels() {
-      return this.localLabelsInVault.filter((label) => {
+    filteredCompanies() {
+      return this.localCompaniesInVault.filter((label) => {
         return label.name.toLowerCase().indexOf(this.form.search.toLowerCase()) > -1;
       });
     },
@@ -159,10 +148,26 @@ export default {
     showEditModal() {
       this.form.name = '';
       this.editJobInformation = true;
+      this.getCompanies();
 
       this.$nextTick(() => {
         this.$refs.label.focus();
       });
+    },
+
+    getCompanies() {
+      if (this.localCompanies.length > 0) {
+        return;
+      }
+
+      axios
+        .get(this.data.url.index)
+        .then((response) => {
+          this.localCompanies.push(response.data.data);
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
 
     store() {
@@ -172,8 +177,8 @@ export default {
         .post(this.data.url.store, this.form)
         .then((response) => {
           this.form.search = '';
-          this.localLabelsInVault.push(response.data.data);
-          this.localLabels.push(response.data.data);
+          this.localCompaniesInVault.push(response.data.data);
+          this.localCompanies.push(response.data.data);
         })
         .catch((error) => {
           this.form.errors = error.response.data;
@@ -189,8 +194,8 @@ export default {
       axios
         .put(label.url.update)
         .then((response) => {
-          this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
-          this.localLabels.push(response.data.data);
+          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] = response.data.data;
+          this.localCompanies.push(response.data.data);
         })
         .catch((error) => {
           this.form.errors = error.response.data;
@@ -201,10 +206,10 @@ export default {
       axios
         .delete(label.url.destroy)
         .then((response) => {
-          this.localLabelsInVault[this.localLabelsInVault.findIndex((x) => x.id === label.id)] = response.data.data;
+          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] = response.data.data;
 
-          var id = this.localLabels.findIndex((x) => x.id === label.id);
-          this.localLabels.splice(id, 1);
+          var id = this.localCompanies.findIndex((x) => x.id === label.id);
+          this.localCompanies.splice(id, 1);
         })
         .catch((error) => {
           this.form.errors = error.response.data;

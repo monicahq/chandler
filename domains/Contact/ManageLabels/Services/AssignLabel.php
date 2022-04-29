@@ -91,10 +91,5 @@ class AssignLabel extends BaseService implements ServiceInterface
                 'label_name' => $this->label->name,
             ]),
         ])->onQueue('low');
-
-        ContactFeedItem::create([
-            'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_LABEL_ADDED,
-        ]);
     }
 }

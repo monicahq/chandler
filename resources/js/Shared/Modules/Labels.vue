@@ -62,7 +62,7 @@
           :ref="'label'"
           v-model="form.search"
           :type="'text'"
-          :placeholder="'Filter list'"
+          :placeholder="'Filter list or create a new label'"
           :autofocus="true"
           :input-class="'block w-full'"
           :required="true"
