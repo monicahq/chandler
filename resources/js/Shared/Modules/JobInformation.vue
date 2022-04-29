@@ -50,7 +50,7 @@
     </div>
 
     <!-- edit job information -->
-    <div v-if="editJobInformation" class="mb-6 rounded-lg border border-gray-200 bg-form">
+    <div v-if="editJobInformation" class="bg-form mb-6 rounded-lg border border-gray-200">
       <!-- filter list of existing companies -->
       <div class="border-b border-gray-200 p-2">
         <errors :errors="form.errors" />
@@ -70,27 +70,26 @@
 
       <div class="border-b border-gray-200 p-2">
         <!-- job position -->
-          <text-input
-            v-model="form.job_position"
-            :label="'Job position'"
-            :type="'text'"
-            :autofocus="true"
-            :input-class="'block w-full'"
-            :required="true"
-            :autocomplete="false"
-            :maxlength="255" />
+        <text-input
+          v-model="form.job_position"
+          :label="'Job position'"
+          :type="'text'"
+          :autofocus="true"
+          :input-class="'block w-full'"
+          :required="true"
+          :autocomplete="false"
+          :maxlength="255" />
       </div>
 
       <div class="flex justify-between p-5">
-            <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
-            <pretty-button
-              :href="'data.url.vault.create'"
-              :text="'Save'"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save'" />
-          </div>
-
+        <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
+        <pretty-button
+          :href="'data.url.vault.create'"
+          :text="'Save'"
+          :state="loadingState"
+          :icon="'check'"
+          :classes="'save'" />
+      </div>
     </div>
 
     <!-- blank state -->
@@ -194,7 +193,8 @@ export default {
       axios
         .put(label.url.update)
         .then((response) => {
-          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] = response.data.data;
+          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] =
+            response.data.data;
           this.localCompanies.push(response.data.data);
         })
         .catch((error) => {
@@ -206,7 +206,8 @@ export default {
       axios
         .delete(label.url.destroy)
         .then((response) => {
-          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] = response.data.data;
+          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] =
+            response.data.data;
 
           var id = this.localCompanies.findIndex((x) => x.id === label.id);
           this.localCompanies.splice(id, 1);
