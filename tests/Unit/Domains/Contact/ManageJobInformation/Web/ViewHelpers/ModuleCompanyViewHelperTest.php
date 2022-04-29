@@ -41,7 +41,7 @@ class ModuleCompanyViewHelperTest extends TestCase
                 ],
                 'url' => [
                     'index' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/'.$contact->id.'/companies/list',
-                    'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/companies',
+                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id .'/contacts/'.$contact->id.'/jobInformation',
                 ],
             ],
             $array

@@ -51,45 +51,60 @@
 
     <!-- edit job information -->
     <div v-if="editJobInformation" class="bg-form mb-6 rounded-lg border border-gray-200">
-      <!-- filter list of existing companies -->
-      <div class="border-b border-gray-200 p-2">
-        <errors :errors="form.errors" />
+      <form @submit.prevent="store">
+        <div class="border-b border-gray-200 p-2">
+          <errors :errors="form.errors" />
 
-        <!-- companies -->
-        <dropdown
-          v-model="form.company_id"
-          :data="localCompanies"
-          :required="false"
-          :div-outer-class="'mb-2'"
-          :placeholder="'Choose a value'"
-          :dropdown-class="'block w-full'"
-          :label="'Existing company'" />
+          <!-- companies -->
+          <dropdown
+            v-if="showDropdownCompanies"
+            v-model="form.company_id"
+            :data="localCompanies"
+            :required="false"
+            :div-outer-class="'mb-2'"
+            :placeholder="'Choose a value'"
+            :dropdown-class="'block w-full'"
+            :label="'Existing company'" />
 
-        <p class="text-sm">Or create a new one</p>
-      </div>
+          <p @click="showCreateCompany()" v-if="!showCreateCompanyField && !showDropdownCompanies" class="text-sm cursor-pointer text-sky-500 hover:text-blue-900">Or create a new one</p>
 
-      <div class="border-b border-gray-200 p-2">
-        <!-- job position -->
-        <text-input
-          v-model="form.job_position"
-          :label="'Job position'"
-          :type="'text'"
-          :autofocus="true"
-          :input-class="'block w-full'"
-          :required="true"
-          :autocomplete="false"
-          :maxlength="255" />
-      </div>
+          <!-- create a new company -->
+          <text-input
+            v-if="showCreateCompanyField"
+            :ref="'name'"
+            v-model="form.company_name"
+            :label="'Company name'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="true"
+            :autocomplete="false"
+            :maxlength="255" />
+        </div>
 
-      <div class="flex justify-between p-5">
-        <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
-        <pretty-button
-          :href="'data.url.vault.create'"
-          :text="'Save'"
-          :state="loadingState"
-          :icon="'check'"
-          :classes="'save'" />
-      </div>
+        <div class="border-b border-gray-200 p-2">
+          <!-- job position -->
+          <text-input
+            v-model="form.job_position"
+            :label="'Job position'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="true"
+            :autocomplete="false"
+            :maxlength="255" />
+        </div>
+
+        <div class="flex justify-between p-5">
+          <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
+          <pretty-button
+            :href="'data.url.vault.create'"
+            :text="'Save'"
+            :state="loadingState"
+            :icon="'check'"
+            :classes="'save'" />
+        </div>
+      </form>
     </div>
 
     <!-- blank state -->
@@ -122,11 +137,13 @@ export default {
 
   data() {
     return {
+      showDropdownCompanies: false,
+      showCreateCompanyField: false,
       editJobInformation: false,
       localCompanies: [],
-      localCompaniesInVault: [],
       form: {
         job_position: '',
+        company_name: '',
         company_id: 0,
         errors: [],
       },
@@ -135,22 +152,21 @@ export default {
 
   created() {},
 
-  computed: {
-    filteredCompanies() {
-      return this.localCompaniesInVault.filter((label) => {
-        return label.name.toLowerCase().indexOf(this.form.search.toLowerCase()) > -1;
-      });
-    },
-  },
-
   methods: {
     showEditModal() {
-      this.form.name = '';
+      this.showDropdownCompanies = true;
+      this.showCreateCompanyField = false;
       this.editJobInformation = true;
       this.getCompanies();
+    },
+
+    showCreateCompany() {
+      this.showDropdownCompanies = false;
+      this.showCreateCompanyField = true;
+      this.form.company_name = '';
 
       this.$nextTick(() => {
-        this.$refs.label.focus();
+        this.$refs.name.focus();
       });
     },
 
@@ -162,7 +178,12 @@ export default {
       axios
         .get(this.data.url.index)
         .then((response) => {
-          this.localCompanies.push(response.data.data);
+          this.localCompanies = response.data.data;
+
+          if (this.localCompanies.length == 0) {
+            this.showDropdownCompanies = false;
+            this.showCreateCompanyField = true;
+          }
         })
         .catch((error) => {
           this.form.errors = error.response.data;
@@ -170,47 +191,11 @@ export default {
     },
 
     store() {
-      this.form.name = this.form.search;
-
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
           this.form.search = '';
-          this.localCompaniesInVault.push(response.data.data);
           this.localCompanies.push(response.data.data);
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
-    },
-
-    set(label) {
-      if (label.taken) {
-        this.remove(label);
-        return;
-      }
-
-      axios
-        .put(label.url.update)
-        .then((response) => {
-          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] =
-            response.data.data;
-          this.localCompanies.push(response.data.data);
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
-    },
-
-    remove(label) {
-      axios
-        .delete(label.url.destroy)
-        .then((response) => {
-          this.localCompaniesInVault[this.localCompaniesInVault.findIndex((x) => x.id === label.id)] =
-            response.data.data;
-
-          var id = this.localCompanies.findIndex((x) => x.id === label.id);
-          this.localCompanies.splice(id, 1);
         })
         .catch((error) => {
           this.form.errors = error.response.data;
