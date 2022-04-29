@@ -66,7 +66,12 @@
             :dropdown-class="'block w-full'"
             :label="'Existing company'" />
 
-          <p @click="showCreateCompany()" v-if="!showCreateCompanyField && !showDropdownCompanies" class="text-sm cursor-pointer text-sky-500 hover:text-blue-900">Or create a new one</p>
+          <p
+            @click="showCreateCompany()"
+            v-if="!showCreateCompanyField && !showDropdownCompanies"
+            class="cursor-pointer text-sm text-sky-500 hover:text-blue-900">
+            Or create a new one
+          </p>
 
           <!-- create a new company -->
           <text-input
