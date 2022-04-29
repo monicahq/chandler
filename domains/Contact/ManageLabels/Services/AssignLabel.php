@@ -7,7 +7,6 @@ use App\Models\Label;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
 use App\Interfaces\ServiceInterface;
 
 class AssignLabel extends BaseService implements ServiceInterface

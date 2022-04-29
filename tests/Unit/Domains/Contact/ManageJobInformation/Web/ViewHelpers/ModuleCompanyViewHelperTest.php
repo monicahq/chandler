@@ -3,11 +3,11 @@
 namespace Tests\Unit\Domains\Contact\ManageJobInformation\Web\ViewHelpers;
 
 use Tests\TestCase;
+use App\Models\Vault;
+use App\Models\Company;
 use App\Models\Contact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
-use App\Models\Company;
-use App\Models\Vault;
 
 class ModuleCompanyViewHelperTest extends TestCase
 {
@@ -40,8 +40,8 @@ class ModuleCompanyViewHelperTest extends TestCase
                     'type' => $contact->company->type,
                 ],
                 'url' => [
-                    'index' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/'.$contact->id.'/companies/list',
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id .'/contacts/'.$contact->id.'/jobInformation',
+                    'index' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/companies/list',
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/jobInformation',
                 ],
             ],
             $array

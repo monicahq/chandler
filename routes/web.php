@@ -44,6 +44,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatCont
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
+use App\Vault\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
@@ -54,7 +55,6 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerific
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Vault\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

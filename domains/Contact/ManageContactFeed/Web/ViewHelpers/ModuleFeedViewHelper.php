@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
-use ErrorException;
 
 class ModuleFeedViewHelper
 {

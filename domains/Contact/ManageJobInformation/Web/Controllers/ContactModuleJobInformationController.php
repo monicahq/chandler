@@ -2,17 +2,16 @@
 
 namespace App\Vault\ManageJobInformation\Web\Controllers;
 
-use App\Contact\ManageJobInformation\Services\UpdateJobInformation;
-use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Models\Vault;
+use App\Models\Company;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Models\Company;
-use App\Models\Contact;
-use App\Vault\ManageCompanies\Services\CreateCompany;
-use App\Vault\ManageCompanies\Web\ViewHelpers\CompanyViewHelper;
 use Illuminate\Support\Facades\Auth;
+use App\Vault\ManageCompanies\Services\CreateCompany;
+use App\Contact\ManageJobInformation\Services\UpdateJobInformation;
+use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 
 class ContactModuleJobInformationController extends Controller
 {

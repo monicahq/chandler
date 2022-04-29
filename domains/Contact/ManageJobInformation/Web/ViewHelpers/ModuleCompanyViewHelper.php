@@ -2,9 +2,9 @@
 
 namespace App\Contact\ManageJobInformation\Web\ViewHelpers;
 
+use App\Models\Vault;
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\Vault;
 use Illuminate\Support\Collection;
 
 class ModuleCompanyViewHelper
@@ -36,9 +36,9 @@ class ModuleCompanyViewHelper
     public static function list(Vault $vault, Contact $contact): Collection
     {
         $collection = $vault->companies()->orderBy('name', 'asc')
-            ->get()->map(function ($company) use ($vault, $contact) {
+            ->get()->map(function ($company) use ($contact) {
                 return self::dto($company, $contact);
-        });
+            });
 
         return $collection;
     }
@@ -46,10 +46,10 @@ class ModuleCompanyViewHelper
     public static function dto(Company $company, Contact $contact): array
     {
         return [
-                    'id' => $company->id,
-                    'name' => $company->name,
-                    'type' => $company->type,
-                    'selected' => $company->id === $contact->company_id,
+            'id' => $company->id,
+            'name' => $company->name,
+            'type' => $company->type,
+            'selected' => $company->id === $contact->company_id,
         ];
     }
 }
