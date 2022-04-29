@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Vault\ManageJobInformation\Web\Controllers;
+namespace App\Contact\ManageJobInformation\Web\Controllers;
 
 use App\Models\Vault;
 use App\Models\Company;
@@ -26,7 +26,7 @@ class ContactModuleJobInformationController extends Controller
         ], 200);
     }
 
-    public function store(Request $request, int $vaultId, int $contactId)
+    public function update(Request $request, int $vaultId, int $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -50,7 +50,7 @@ class ContactModuleJobInformationController extends Controller
         $contact = Contact::findOrFail($contactId);
 
         return response()->json([
-            'data' => ModuleCompanyViewHelper::dto($company, $contact),
+            'data' => ModuleCompanyViewHelper::data($contact),
         ], 200);
     }
 }

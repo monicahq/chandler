@@ -16,9 +16,7 @@ class ModuleCompanyViewHelper
         return [
             'job_position' => $contact->job_position,
             'company' => $company ? [
-                'id' => $company->id,
-                'name' => $company->name,
-                'type' => $company->type,
+                self::dto($company, $contact)
             ] : null,
             'url' => [
                 'index' => route('contact.companies.list.index', [

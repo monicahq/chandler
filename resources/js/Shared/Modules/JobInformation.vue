@@ -51,7 +51,7 @@
 
     <!-- edit job information -->
     <div v-if="editJobInformation" class="bg-form mb-6 rounded-lg border border-gray-200">
-      <form @submit.prevent="store">
+      <form @submit.prevent="update">
         <div class="border-b border-gray-200 p-2">
           <errors :errors="form.errors" />
 
@@ -114,6 +114,14 @@
 
     <!-- blank state -->
     <p v-if="!data.job_position && !data.company" class="text-sm text-gray-600">Not set</p>
+
+    <p v-else>
+      <span v-if="data.job_position">
+        {{ data.job_position }}
+        <span v-if="data.company" class="text-gray-600 text-sm">at </span>
+      </span>
+      <span v-if="data.company">{{ data.company.name }}</span>
+    </p>
   </div>
 </template>
 
@@ -155,7 +163,10 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    this.form.job_position = this.data.job_position;
+    this.form.company_id = this.data.company ? this.data.company.id : null;
+  },
 
   methods: {
     showEditModal() {
@@ -195,9 +206,9 @@ export default {
         });
     },
 
-    store() {
+    update() {
       axios
-        .post(this.data.url.store, this.form)
+        .put(this.data.url.update, this.form)
         .then((response) => {
           this.form.search = '';
           this.localCompanies.push(response.data.data);
