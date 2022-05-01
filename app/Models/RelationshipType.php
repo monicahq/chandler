@@ -14,6 +14,12 @@ class RelationshipType extends Model
     protected $table = 'relationship_types';
 
     /**
+     * Possible types.
+     */
+    const TYPE_FAMILY = 'family';
+    const TYPE_LOVE = 'love';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

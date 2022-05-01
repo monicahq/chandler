@@ -9,6 +9,7 @@ use App\Models\Emotion;
 use App\Models\Currency;
 use App\Models\Template;
 use App\Models\Information;
+use App\Models\RelationshipGroupType;
 use App\Models\TemplatePage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
@@ -392,6 +393,7 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_love'),
             'can_be_deleted' => false,
+            'type' => RelationshipGroupType::TYPE_LOVE,
         ]);
 
         DB::table('relationship_types')->insert([
@@ -438,6 +440,7 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_family'),
             'can_be_deleted' => false,
+            'type' => RelationshipGroupType::TYPE_FAMILY,
         ]);
 
         DB::table('relationship_types')->insert([
