@@ -117,7 +117,7 @@
 
     <p v-else>
       <span v-if="data.job_position">
-        {{ data.job_position }}
+        {{ form.job_position }}
         <span v-if="data.company" class="text-sm text-gray-600">at </span>
       </span>
       <span v-if="data.company">{{ company_name }}</span>

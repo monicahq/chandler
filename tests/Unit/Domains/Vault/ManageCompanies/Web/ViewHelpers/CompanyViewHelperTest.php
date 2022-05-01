@@ -23,17 +23,10 @@ class CompanyViewHelperTest extends TestCase
 
         $array = CompanyViewHelper::data($vault);
         $this->assertCount(
-            2,
+            1,
             $array
         );
         $this->assertArrayHasKey('companies', $array);
-        $this->assertEquals(
-            [
-                'index' => env('APP_URL').'/vaults/'.$vault->id.'/companies/list',
-                'store' => env('APP_URL').'/vaults/'.$vault->id.'/companies',
-            ],
-            $array['url']
-        );
     }
 
     /** @test */
@@ -50,7 +43,6 @@ class CompanyViewHelperTest extends TestCase
                 'id' => $company->id,
                 'name' => $company->name,
                 'type' => $company->type,
-                'url' => env('APP_URL').'/vaults/'.$vault->id.'/companies/list',
             ],
             $array
         );

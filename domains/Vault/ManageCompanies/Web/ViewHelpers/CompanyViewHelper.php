@@ -16,14 +16,6 @@ class CompanyViewHelper
 
         return [
             'companies' => $collection,
-            'url' => [
-                'index' => route('vault.companies.list.index', [
-                    'vault' => $vault->id,
-                ]),
-                'store' => route('vault.companies.store', [
-                    'vault' => $vault->id,
-                ]),
-            ],
         ];
     }
 
@@ -33,9 +25,6 @@ class CompanyViewHelper
             'id' => $company->id,
             'name' => $company->name,
             'type' => $company->type,
-            'url' => route('vault.companies.list.index', [
-                'vault' => $vault->id,
-            ]),
         ];
     }
 }

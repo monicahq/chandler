@@ -162,9 +162,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // contact search module
             Route::get('search/user/contact/mostConsulted', [VaultMostConsultedContactsController::class, 'index'])->name('vault.user.search.mostconsulted');
             Route::post('search/user/contacts', [VaultContactSearchController::class, 'index'])->name('vault.user.search.index');
-
-            // companies
-            Route::post('companies', [CompanyController::class, 'store'])->name('vault.companies.store');
         });
     });
 

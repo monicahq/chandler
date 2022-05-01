@@ -38,6 +38,7 @@ class ModuleCompanyViewHelperTest extends TestCase
                     'id' => $contact->company->id,
                     'name' => $contact->company->name,
                     'type' => $contact->company->type,
+                    'selected' => true,
                 ],
                 'url' => [
                     'index' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/companies/list',
