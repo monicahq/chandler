@@ -44,7 +44,7 @@ class PersonalizeRelationshipIndexViewHelperTest extends TestCase
 
         $array = PersonalizeRelationshipIndexViewHelper::dtoGroupType($group);
         $this->assertEquals(
-            4,
+            5,
             count($array)
         );
         $this->assertArrayHasKey('types', $array);
@@ -68,7 +68,7 @@ class PersonalizeRelationshipIndexViewHelperTest extends TestCase
 
         $array = PersonalizeRelationshipIndexViewHelper::dtoRelationshipType($group, $type);
         $this->assertEquals(
-            4,
+            5,
             count($array)
         );
         $this->assertEquals(

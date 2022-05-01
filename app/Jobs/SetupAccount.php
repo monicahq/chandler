@@ -391,6 +391,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_love'),
+            'can_be_deleted' => false,
         ]);
 
         DB::table('relationship_types')->insert([
@@ -436,6 +437,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_family'),
+            'can_be_deleted' => false,
         ]);
 
         DB::table('relationship_types')->insert([
@@ -496,6 +498,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_friend_title'),
+            'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([
@@ -516,6 +519,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_work'),
+            'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([

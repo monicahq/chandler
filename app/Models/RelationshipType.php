@@ -22,6 +22,16 @@ class RelationshipType extends Model
         'relationship_group_type_id',
         'name',
         'name_reverse_relationship',
+        'can_be_deleted',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'can_be_deleted' => 'boolean',
     ];
 
     /**

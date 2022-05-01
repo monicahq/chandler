@@ -21,6 +21,16 @@ class RelationshipGroupType extends Model
     protected $fillable = [
         'account_id',
         'name',
+        'can_be_deleted',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'can_be_deleted' => 'boolean',
     ];
 
     /**
