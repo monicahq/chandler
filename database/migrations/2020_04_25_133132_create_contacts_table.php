@@ -21,13 +21,14 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('pronoun_id')->nullable();
             $table->unsignedBigInteger('template_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('nickname')->nullable();
             $table->string('maiden_name')->nullable();
             $table->string('job_position')->nullable();
             $table->boolean('can_be_deleted')->default(true);
+            $table->boolean('listed')->default(true);
             $table->datetime('last_updated_at')->nullable();
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');

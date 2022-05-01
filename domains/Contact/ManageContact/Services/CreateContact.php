@@ -100,7 +100,7 @@ class CreateContact extends BaseService implements ServiceInterface
 
         $this->contact = Contact::create([
             'vault_id' => $this->data['vault_id'],
-            'first_name' => $this->data['first_name'],
+            'first_name' => $this->valueOrNull($this->data, 'first_name'),
             'last_name' => $this->valueOrNull($this->data, 'last_name'),
             'middle_name' => $this->valueOrNull($this->data, 'middle_name'),
             'nickname' => $this->valueOrNull($this->data, 'nickname'),
