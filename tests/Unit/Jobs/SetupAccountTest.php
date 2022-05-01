@@ -5,8 +5,8 @@ namespace Tests\Unit\Jobs;
 use Tests\TestCase;
 use App\Models\Currency;
 use App\Jobs\SetupAccount;
-use App\Models\RelationshipGroupType;
 use Illuminate\Support\Facades\Mail;
+use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SetupAccountTest extends TestCase
