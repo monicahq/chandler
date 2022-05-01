@@ -8,7 +8,6 @@ use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
-use App\Vault\ManageCompanies\Web\Controllers\CompanyController;
 use App\Vault\Search\Web\Controllers\VaultContactSearchController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;

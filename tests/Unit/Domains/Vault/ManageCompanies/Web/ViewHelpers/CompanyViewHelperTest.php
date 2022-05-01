@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Vault\ManageCompanies\Web\ViewHelpers;
 
-use function env;
 use Tests\TestCase;
 use App\Models\Vault;
 use App\Models\Company;
