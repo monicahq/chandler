@@ -68,7 +68,7 @@
 
           <p
             @click="showCreateCompany()"
-            v-if="!showCreateCompanyField && !showDropdownCompanies"
+            v-if="showCreateCompanyLink"
             class="cursor-pointer text-sm text-sky-500 hover:text-blue-900">
             Or create a new one
           </p>
@@ -101,7 +101,7 @@
         </div>
 
         <div class="flex justify-between p-5">
-          <pretty-link @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
+          <pretty-span @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
           <pretty-button
             :href="'data.url.vault.create'"
             :text="'Save'"
@@ -118,9 +118,9 @@
     <p v-else>
       <span v-if="data.job_position">
         {{ data.job_position }}
-        <span v-if="data.company" class="text-gray-600 text-sm">at </span>
+        <span v-if="data.company" class="text-sm text-gray-600">at </span>
       </span>
-      <span v-if="data.company">{{ data.company.name }}</span>
+      <span v-if="data.company">{{ company_name }}</span>
     </p>
   </div>
 </template>
@@ -128,7 +128,7 @@
 <script>
 import TextInput from '@/Shared/Form/TextInput';
 import Dropdown from '@/Shared/Form/Dropdown';
-import PrettyLink from '@/Shared/Form/PrettyLink';
+import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import Errors from '@/Shared/Form/Errors';
 
@@ -137,7 +137,7 @@ export default {
     TextInput,
     Errors,
     Dropdown,
-    PrettyLink,
+    PrettySpan,
     PrettyButton,
   },
 
@@ -150,10 +150,13 @@ export default {
 
   data() {
     return {
+      loadingState: '',
       showDropdownCompanies: false,
+      showCreateCompanyLink: false,
       showCreateCompanyField: false,
       editJobInformation: false,
       localCompanies: [],
+      company_name: '',
       form: {
         job_position: '',
         company_name: '',
@@ -166,17 +169,20 @@ export default {
   created() {
     this.form.job_position = this.data.job_position;
     this.form.company_id = this.data.company ? this.data.company.id : null;
+    this.company_name = this.data.company ? this.data.company.name : null;
   },
 
   methods: {
     showEditModal() {
       this.showDropdownCompanies = true;
+      this.showCreateCompanyLink = true;
       this.showCreateCompanyField = false;
       this.editJobInformation = true;
       this.getCompanies();
     },
 
     showCreateCompany() {
+      this.showCreateCompanyLink = false;
       this.showDropdownCompanies = false;
       this.showCreateCompanyField = true;
       this.form.company_name = '';
@@ -198,6 +204,7 @@ export default {
 
           if (this.localCompanies.length == 0) {
             this.showDropdownCompanies = false;
+            this.showCreateCompanyLink = false;
             this.showCreateCompanyField = true;
           }
         })
@@ -207,13 +214,18 @@ export default {
     },
 
     update() {
+      this.loadingState = 'loading';
+
       axios
         .put(this.data.url.update, this.form)
         .then((response) => {
-          this.form.search = '';
+          this.editJobInformation = false;
+          this.loadingState = '';
+          this.company_name = response.data.data.company.name;
           this.localCompanies.push(response.data.data);
         })
         .catch((error) => {
+          this.loadingState = '';
           this.form.errors = error.response.data;
         });
     },

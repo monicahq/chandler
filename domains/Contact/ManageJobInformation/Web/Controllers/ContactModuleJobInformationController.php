@@ -28,15 +28,19 @@ class ContactModuleJobInformationController extends Controller
 
     public function update(Request $request, int $vaultId, int $contactId)
     {
-        $data = [
-            'account_id' => Auth::user()->account_id,
-            'author_id' => Auth::user()->id,
-            'vault_id' => $vaultId,
-            'name' => $request->input('company_name'),
-            'type' => Company::TYPE_COMPANY,
-        ];
+        $company = Company::findOrFail($request->input('company_id'));
 
-        $company = (new CreateCompany)->execute($data);
+        if ($request->input('company_name')) {
+            $data = [
+                'account_id' => Auth::user()->account_id,
+                'author_id' => Auth::user()->id,
+                'vault_id' => $vaultId,
+                'name' => $request->input('company_name'),
+                'type' => Company::TYPE_COMPANY,
+            ];
+
+            $company = (new CreateCompany)->execute($data);
+        }
 
         (new UpdateJobInformation)->execute([
             'account_id' => Auth::user()->account_id,
