@@ -144,7 +144,10 @@
                   @click="renameGroupTypeModal(groupType)">
                   Rename
                 </li>
-                <li v-if="groupType.can_be_deleted" class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyGroupType(groupType)">
+                <li
+                  v-if="groupType.can_be_deleted"
+                  class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                  @click="destroyGroupType(groupType)">
                   Delete
                 </li>
               </ul>
