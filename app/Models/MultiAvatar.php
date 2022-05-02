@@ -12,7 +12,7 @@ namespace App\Models;
 // license   https://multiavatar.com/license
 // homepage  https://multiavatar.com
 
-class Multiavatar
+class MultiAvatar
 {
     // string
     public $avatarId;
@@ -585,34 +585,34 @@ class Multiavatar
 
         // Get parts (range 0-47)
         $p['env'] = $hash[0].''.$hash[1];
-        $p['env'] = round((47 / 100) * $p['env']);
+        $p['env'] = round((47 / 100) * (int) $p['env']);
 
         // Freeze a single part
         // e.g. '0' = 01A; '16' = 01B; '32' = 01C; '1' = 02A; '17' = 02B;
         // p['env'] = '16';
 
         $p['clo'] = $hash[2].''.$hash[3];
-        $p['clo'] = round((47 / 100) * $p['clo']);
+        $p['clo'] = round((47 / 100) * (int) $p['clo']);
 
         // p['clo'] = '16';
 
         $p['head'] = $hash[4].''.$hash[5];
-        $p['head'] = round((47 / 100) * $p['head']);
+        $p['head'] = round((47 / 100) * (int) $p['head']);
 
         // p['head'] = '01';
 
         $p['mouth'] = $hash[6].''.$hash[7];
-        $p['mouth'] = round((47 / 100) * $p['mouth']);
+        $p['mouth'] = round((47 / 100) * (int) $p['mouth']);
 
         // p['mouth'] = '16';
 
         $p['eyes'] = $hash[8].''.$hash[9];
-        $p['eyes'] = round((47 / 100) * $p['eyes']);
+        $p['eyes'] = round((47 / 100) * (int) $p['eyes']);
 
         // p['eyes'] = '16';
 
         $p['top'] = $hash[10].''.$hash[11];
-        $p['top'] = round((47 / 100) * $p['top']);
+        $p['top'] = round((47 / 100) * (int) $p['top']);
 
         // p['top'] = '25';
 

@@ -35,6 +35,27 @@ class AvatarHelperTest extends TestCase
     }
 
     /** @test */
+    public function it_creates_an_avatar_for_a_contact_without_a_name(): void
+    {
+        $contact = Contact::factory()->create([
+            'first_name' => null,
+            'last_name' => null,
+        ]);
+
+        $avatar = AvatarHelper::generateRandomAvatar($contact);
+
+        $this->assertInstanceOf(
+            Avatar::class,
+            $avatar
+        );
+
+        $this->assertDatabaseHas('avatars', [
+            'id' => $avatar->id,
+            'type' => Avatar::TYPE_GENERATED,
+        ]);
+    }
+
+    /** @test */
     public function it_gets_the_svg_of_the_avatar(): void
     {
         $avatar = Avatar::factory()->create();
