@@ -4,9 +4,8 @@ namespace App\Helpers;
 
 use App\Models\Avatar;
 use App\Models\Contact;
-use App\Models\ContactLog;
-use Faker\Factory as Faker;
 use App\Models\MultiAvatar;
+use Faker\Factory as Faker;
 
 class AvatarHelper
 {
@@ -43,9 +42,9 @@ class AvatarHelper
     }
 
     /**
-     * Get the avatar of a contact
+     * Get the avatar of a contact.
      *
-     * @param Contact $contact
+     * @param  Contact  $contact
      * @return string
      */
     public static function getSVG(Contact $contact): string

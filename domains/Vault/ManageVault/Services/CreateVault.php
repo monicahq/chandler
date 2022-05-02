@@ -2,11 +2,11 @@
 
 namespace App\Vault\ManageVault\Services;
 
-use App\Helpers\AvatarHelper;
 use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\Template;
 use App\Jobs\CreateAuditLog;
+use App\Helpers\AvatarHelper;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDate;

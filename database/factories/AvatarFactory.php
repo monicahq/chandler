@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Avatar;
 use App\Models\Contact;
-use App\Models\ContactReminder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AvatarFactory extends Factory
