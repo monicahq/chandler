@@ -73,7 +73,6 @@ class CreateLoan extends BaseService implements ServiceInterface
         $this->contact->save();
 
         $this->log();
-        $this->createFeedItem();
 
         return $this->loan;
     }
@@ -145,14 +144,5 @@ class CreateLoan extends BaseService implements ServiceInterface
                 'loan_name' => $this->loan->name,
             ]),
         ])->onQueue('low');
-    }
-
-    private function createFeedItem(): void
-    {
-        $feedItem = ContactFeedItem::create([
-            'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_LOAN_CREATED,
-        ]);
-        $this->loan->feedItem()->save($feedItem);
     }
 }

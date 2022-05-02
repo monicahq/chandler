@@ -70,7 +70,6 @@ class UpdateLoan extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
         $this->update();
-        $this->createFeedItem();
         $this->log();
 
         return $this->loan;
@@ -150,14 +149,5 @@ class UpdateLoan extends BaseService implements ServiceInterface
                 'loan_name' => $this->loan->name,
             ]),
         ])->onQueue('low');
-    }
-
-    private function createFeedItem(): void
-    {
-        $feedItem = ContactFeedItem::create([
-            'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_LOAN_UPDATED,
-        ]);
-        $this->loan->feedItem()->save($feedItem);
     }
 }
