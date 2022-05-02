@@ -14,14 +14,11 @@ namespace App\Models;
 
 class MultiAvatar
 {
-    // string
-    public $avatarId;
+    public string $avatarId;
 
-    // boolean
-    public $sansEnv;
+    public bool $sansEnv;
 
-    // associative array
-    public $ver;
+    public array $ver;
 
     // Deprecated
     public function __construct($avatarId = null, $sansEnv = null, $ver = null)
