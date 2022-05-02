@@ -8,6 +8,7 @@ use App\Models\Note;
 use App\Models\Label;
 use App\Models\Gender;
 use App\Models\Address;
+use App\Models\Avatar;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Pronoun;
@@ -182,5 +183,16 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->company()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_avatars(): void
+    {
+        $ross = Contact::factory()->create();
+        Avatar::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->avatars()->exists());
     }
 }

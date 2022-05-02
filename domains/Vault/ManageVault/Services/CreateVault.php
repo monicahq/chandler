@@ -2,6 +2,7 @@
 
 namespace App\Vault\ManageVault\Services;
 
+use App\Helpers\AvatarHelper;
 use App\Models\Vault;
 use App\Models\Contact;
 use App\Models\Template;
@@ -93,6 +94,11 @@ class CreateVault extends BaseService implements ServiceInterface
             'permission' => Vault::PERMISSION_MANAGE,
             'contact_id' => $contact->id,
         ]);
+
+        $avatar = AvatarHelper::generateRandomAvatar($contact);
+
+        $contact->avatar_id = $avatar->id;
+        $contact->save();
     }
 
     private function populateDefaultContactImportantDateTypes(): void

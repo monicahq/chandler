@@ -2,6 +2,7 @@
 
 namespace App\Contact\ManageContact\Services;
 
+use App\Helpers\AvatarHelper;
 use Carbon\Carbon;
 use App\Models\Gender;
 use App\Models\Contact;
@@ -11,6 +12,7 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
+use App\Models\Avatar;
 
 class CreateContact extends BaseService implements ServiceInterface
 {
@@ -63,7 +65,8 @@ class CreateContact extends BaseService implements ServiceInterface
         $this->data = $data;
 
         $this->validate();
-        $this->create();
+        $this->createContact();
+        $this->generateAvatar();
         $this->log();
 
         return $this->contact;
@@ -89,7 +92,7 @@ class CreateContact extends BaseService implements ServiceInterface
         }
     }
 
-    private function create(): void
+    private function createContact(): void
     {
         // template - if no template is provided, we should use the default
         // template that is in the vault - if it exists.
@@ -110,6 +113,14 @@ class CreateContact extends BaseService implements ServiceInterface
             'template_id' => $templateId,
             'last_updated_at' => Carbon::now(),
         ]);
+    }
+
+    private function generateAvatar(): void
+    {
+        $avatar = AvatarHelper::generateRandomAvatar($this->contact);
+
+        $this->contact->avatar_id = $avatar->id;
+        $this->contact->save();
     }
 
     private function log(): void
