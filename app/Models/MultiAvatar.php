@@ -20,15 +20,6 @@ class MultiAvatar
 
     public array $ver;
 
-    // Deprecated
-    public function __construct($avatarId = null, $sansEnv = null, $ver = null)
-    {
-        if ($avatarId == null) {
-            return;
-        }
-        $this->svgCode = $this->generate(strval($avatarId), $sansEnv, $ver);
-    }
-
     public function __invoke($avatarId, $sansEnv, $ver)
     {
         $svgCode = $this->generate(strval($avatarId), $sansEnv, $ver);
