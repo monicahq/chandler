@@ -8,7 +8,6 @@ use App\Models\Contact;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
 use Illuminate\Support\Collection;
 use App\Interfaces\ServiceInterface;
 
