@@ -4,9 +4,7 @@ namespace App\Contact\ManageCouple\Services;
 
 use App\Models\Couple;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
 use App\Interfaces\ServiceInterface;
 
 class AddContactToCouple extends BaseService implements ServiceInterface
