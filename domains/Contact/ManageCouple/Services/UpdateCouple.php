@@ -10,9 +10,10 @@ use App\Models\ContactInformation;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactInformationType;
 
-class CreateCouple extends BaseService implements ServiceInterface
+class UpdateCouple extends BaseService implements ServiceInterface
 {
     private Couple $couple;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,6 +26,7 @@ class CreateCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'couple_id' => 'required|integer|exists:couples,id',
             'name' => 'nullable|string|max:255',
         ];
     }
@@ -44,20 +46,27 @@ class CreateCouple extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a couple.
+     * Update a couple.
      *
      * @param  array  $data
      * @return Couple
      */
     public function execute(array $data): Couple
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
 
-        $this->couple = Couple::create([
-            'vault_id' => $data['vault_id'],
-            'name' => $this->valueOrNull($data, 'name'),
-        ]);
+        $this->couple->name = $this->valueOrNull($data, 'name');
+        $this->couple->save();
 
         return $this->couple;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($data);
+
+        $this->couple = Couple::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['couple_id']);
     }
 }

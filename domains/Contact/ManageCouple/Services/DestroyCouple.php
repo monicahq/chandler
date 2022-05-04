@@ -2,17 +2,18 @@
 
 namespace App\Contact\ManageCouple\Services;
 
-use App\Models\Couple;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactInformation;
+use App\Models\Couple;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactInformationType;
 
-class CreateCouple extends BaseService implements ServiceInterface
+class DestroyCouple extends BaseService implements ServiceInterface
 {
     private Couple $couple;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,7 +26,7 @@ class CreateCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'name' => 'nullable|string|max:255',
+            'couple_id' => 'required|integer|exists:couples,id',
         ];
     }
 
@@ -39,25 +40,22 @@ class CreateCouple extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Create a couple.
+     * Destroy a couple.
      *
      * @param  array  $data
-     * @return Couple
      */
-    public function execute(array $data): Couple
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $this->couple = Couple::create([
-            'vault_id' => $data['vault_id'],
-            'name' => $this->valueOrNull($data, 'name'),
-        ]);
+        $this->couple = Couple::where('vault_id', $data['vault_id'])
+            ->findOrFail($data['couple_id']);
 
-        return $this->couple;
+        $this->couple->delete();
     }
 }
