@@ -2,11 +2,11 @@
 
 namespace App\Contact\ManageCouple\Services;
 
+use App\Models\Couple;
 use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactInformation;
-use App\Models\Couple;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactInformationType;
 
