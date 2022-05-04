@@ -127,4 +127,14 @@ class Vault extends Model
     {
         return $this->hasMany(Company::class);
     }
+
+    /**
+     * Get the couples associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function couples()
+    {
+        return $this->hasMany(Couple::class);
+    }
 }

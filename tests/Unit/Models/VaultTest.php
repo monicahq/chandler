@@ -8,6 +8,7 @@ use App\Models\Label;
 use App\Models\Vault;
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Couple;
 use App\Models\Template;
 use App\Models\ContactImportantDateType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -89,5 +90,16 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->companies()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_couples(): void
+    {
+        $vault = Vault::factory()->create();
+        Couple::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->couples()->exists());
     }
 }
