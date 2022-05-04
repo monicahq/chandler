@@ -2,13 +2,9 @@
 
 namespace App\Contact\ManageCouple\Services;
 
-use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactInformation;
 use App\Models\Couple;
+use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactInformationType;
 
 class DestroyCouple extends BaseService implements ServiceInterface
 {

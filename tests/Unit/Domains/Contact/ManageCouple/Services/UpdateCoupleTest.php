@@ -6,16 +6,11 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
-use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Models\ContactInformation;
 use Illuminate\Support\Facades\Queue;
-use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Contact\ManageContactInformation\Services\UpdateContactInformation;
 
 class UpdateCoupleTest extends TestCase
 {
