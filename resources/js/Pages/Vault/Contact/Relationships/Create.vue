@@ -84,7 +84,9 @@ input[type='checkbox'] {
             </div>
 
             <!-- switch -->
-            <div @click="toggle()" class="w-100 mb-4 block text-center cursor-pointer text-gray-400 hover:text-gray-900">
+            <div
+              @click="toggle()"
+              class="w-100 mb-4 block cursor-pointer text-center text-gray-400 hover:text-gray-900">
               <div class="flex">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -115,9 +117,7 @@ input[type='checkbox'] {
                     name="name-order"
                     type="radio"
                     class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label
-                    for="unknown"
-                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  <label for="unknown" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                     I don't know the name
                   </label>
                 </div>
@@ -132,9 +132,7 @@ input[type='checkbox'] {
                     type="radio"
                     @click="displayContactNameField"
                     class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label
-                    for="name"
-                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  <label for="name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                     I know the name
                   </label>
                 </div>
@@ -159,9 +157,7 @@ input[type='checkbox'] {
                     name="name-order"
                     type="radio"
                     class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label
-                    for="contact"
-                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  <label for="contact" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                     Choose an existing contact
                   </label>
                 </div>

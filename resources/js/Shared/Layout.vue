@@ -9,7 +9,7 @@ main {
 }
 
 .sha {
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
   background-color: #f6f8fa;
   border-color: #d9dee3;
 }
@@ -166,10 +166,13 @@ main {
         <slot />
       </main>
 
-      <footer class="text-center text-xs mb-10">
+      <footer class="mb-10 text-center text-xs">
         <ul>
-          <li class="inline mr-4">Monica. Since 2017.</li>
-          <li class="inline">Latest version: {{ layoutData.version.date }} <span class="ml-2 font-mono sha">{{ layoutData.version.sha }}</span></li>
+          <li class="mr-4 inline">Monica. Since 2017.</li>
+          <li class="inline">
+            Latest version: {{ layoutData.version.date }}
+            <span class="sha ml-2 font-mono">{{ layoutData.version.sha }}</span>
+          </li>
         </ul>
       </footer>
     </div>
