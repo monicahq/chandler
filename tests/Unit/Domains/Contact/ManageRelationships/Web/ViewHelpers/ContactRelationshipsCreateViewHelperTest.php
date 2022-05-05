@@ -2,18 +2,17 @@
 
 namespace Tests\Unit\Domains\Contact\ManageRelationships\Web\ViewHelpers;
 
-use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
-use App\Models\Contact;
-use App\Models\Gender;
-use App\Models\Pronoun;
-use App\Models\User;
-use App\Models\Vault;
 use function env;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Vault;
+use App\Models\Gender;
+use App\Models\Contact;
+use App\Models\Pronoun;
 use App\Models\RelationshipType;
 use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
+use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 
 class ContactRelationshipsCreateViewHelperTest extends TestCase
 {

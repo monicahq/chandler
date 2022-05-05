@@ -6,11 +6,9 @@ use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Contact\ManageNotes\Web\ViewHelpers\NotesIndexViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 
 class ContactRelationshipsController extends Controller

@@ -33,6 +33,7 @@ use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
+use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
@@ -49,7 +50,6 @@ use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformation
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
-use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
