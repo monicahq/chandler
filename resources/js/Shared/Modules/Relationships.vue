@@ -4,8 +4,20 @@
   top: -2px;
 }
 
-.icon-note {
-  top: -1px;
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 }
 </style>
 
@@ -31,15 +43,85 @@
 
         <span class="font-semibold">Relationships</span>
       </div>
-      <pretty-button :text="'Add a note'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
+      <pretty-button :text="'Add a relationship'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
     </div>
+
+    <!-- quick actions -->
+    <ul class="mb-2">
+      <li class="inline mr-2">Quick add:</li>
+      <li class="inline mr-2">Child (boy)</li>
+      <li class="inline">Child (girl)</li>
+    </ul>
 
     <!-- relationships -->
     <div>
-      <h3>Family</h3>
-      <div class="mb-4 rounded border border-gray-200 last:mb-0">
-        <div></div>
-      </div>
+      <h3 class="mb-1">Family</h3>
+      <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+          <div>Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span></div>
+
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="updateAdressTypeModal(addressType)">
+              Rename
+            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
+              Delete
+            </li>
+          </ul>
+        </li>
+        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+          <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
+
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="updateAdressTypeModal(addressType)">
+              Rename
+            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
+              Delete
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3 class="mb-1">Love</h3>
+      <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+          <div>Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span></div>
+
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="updateAdressTypeModal(addressType)">
+              Rename
+            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
+              Delete
+            </li>
+          </ul>
+        </li>
+        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+          <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
+
+          <!-- actions -->
+          <ul class="text-sm">
+            <li
+              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+              @click="updateAdressTypeModal(addressType)">
+              Rename
+            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
+              Delete
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
 
     <!-- blank state -->
@@ -100,7 +182,7 @@ export default {
   },
 
   created() {
-    this.localNotes = this.data.notes;
+
   },
 
   methods: {

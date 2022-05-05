@@ -163,6 +163,10 @@ class ContactShowViewHelper
                 $data = ModuleLoanViewHelper::data($contact, $user);
             }
 
+            if ($module->type == Module::TYPE_RELATIONSHIPS) {
+                $data = ModuleLoanViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,

@@ -76,6 +76,7 @@ class SetupAccount implements ShouldQueue
         $this->addTemplatePageContactInformation();
         $this->addTemplatePageFeed();
         $this->addTemplatePageSocial();
+        $this->addTemplatePageInformation();
         $this->addFirstInformation();
     }
 
@@ -268,6 +269,34 @@ class SetupAccount implements ShouldQueue
             'can_be_deleted' => true,
         ]);
 
+        // Relationships
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_relationships'),
+            'type' => Module::TYPE_RELATIONSHIPS,
+            'can_be_deleted' => false,
+            'pagination' => 3,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageSocial->id,
+            'module_id' => $module->id,
+        ]);
+    }
+
+    private function addTemplatePageInformation(): void
+    {
+        $templatePageInformation = (new CreateTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'name' => trans('app.default_template_page_information'),
+            'can_be_deleted' => true,
+        ]);
+
         // Notes
         $module = (new CreateModule)->execute([
             'account_id' => $this->user->account_id,
@@ -281,7 +310,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
-            'template_page_id' => $templatePageSocial->id,
+            'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
         ]);
 
@@ -297,7 +326,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
-            'template_page_id' => $templatePageSocial->id,
+            'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
         ]);
 
@@ -313,7 +342,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
-            'template_page_id' => $templatePageSocial->id,
+            'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
         ]);
     }
