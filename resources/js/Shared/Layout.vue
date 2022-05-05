@@ -7,6 +7,12 @@ main {
   left: 8px;
   top: 8px;
 }
+
+.sha {
+  padding: .2em .4em;
+  background-color: #f6f8fa;
+  border-color: #d9dee3;
+}
 </style>
 
 <template>
@@ -62,11 +68,11 @@ main {
           <!-- icons -->
           <div class="flew-grow">
             <ul>
-              <li class="mr-3 inline">
+              <li class="mr-4 inline">
                 <inertia-link :href="layoutData.url.settings" class="inline">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 sm:h-5 sm:w-5"
+                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 sm:h-4 sm:w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -89,7 +95,7 @@ main {
                 <inertia-link @click="logout()" class="inline">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 sm:h-5 sm:w-5"
+                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 sm:h-4 sm:w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -156,9 +162,16 @@ main {
           </div>
         </nav>
       </div>
-      <main class="relative mt-10">
+      <main class="relative mt-10 mb-8">
         <slot />
       </main>
+
+      <footer class="text-center text-xs mb-10">
+        <ul>
+          <li class="inline mr-4">Monica. Since 2017.</li>
+          <li class="inline">Latest version: {{ layoutData.version.date }} <span class="ml-2 font-mono sha">{{ layoutData.version.sha }}</span></li>
+        </ul>
+      </footer>
     </div>
 
     <toaster />

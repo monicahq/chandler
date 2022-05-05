@@ -3,6 +3,10 @@
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
+
+input[type='checkbox'] {
+  top: 3px;
+}
 </style>
 
 <template>
@@ -69,22 +73,22 @@
           </div>
 
           <div class="border-b border-gray-200 p-5">
-            <div class="">
-              <!-- relationship -->
-              <div class="mb-6">
-                <p class="mb-2 text-sm text-gray-700">Father</p>
-                <div class="flex items-center">
-                  <div v-html="data.contact.avatar" class="mr-2 h-5 w-5"></div>
+            <!-- relationship -->
+            <div class="mb-6">
+              <p class="mb-2 text-sm text-gray-700">{{ fromRelationship }}</p>
+              <div class="flex items-center">
+                <div v-html="data.contact.avatar" class="mr-2 h-5 w-5"></div>
 
-                  <span>{{ data.contact.name }}</span>
-                </div>
+                <span>{{ data.contact.name }}</span>
               </div>
+            </div>
 
-              <!-- switch -->
-              <div class="w-100 mx-auto mr-4 block text-center">
+            <!-- switch -->
+            <div @click="toggle()" class="w-100 mb-4 block text-center cursor-pointer text-gray-400 hover:text-gray-900">
+              <div class="flex">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mx-auto block h-5 w-5"
+                  class="mr-2 h-5 w-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -94,76 +98,92 @@
                     stroke-linejoin="round"
                     d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                 </svg>
-                <span class="text-xs">Switch</span>
-              </div>
-
-              <!-- reverse relationship -->
-              <div>
-                <p class="mb-2 text-sm text-gray-700">Father</p>
-                <div class="">
-                  <!-- I don't know the name -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="first_name_last_name"
-                      v-model="form.nameOrder"
-                      value="%first_name% %last_name%"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label
-                      for="first_name_last_name"
-                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I don't know the name
-                    </label>
-                  </div>
-
-                  <!-- I know the contact's name -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="first_name_last_name"
-                      v-model="form.nameOrder"
-                      value="%first_name% %last_name%"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label
-                      for="first_name_last_name"
-                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      I know the contact's name
-                    </label>
-                  </div>
-
-                  <!-- Choose an existing contact -->
-                  <div class="mb-2 flex items-center">
-                    <input
-                      id="first_name_last_name"
-                      v-model="form.nameOrder"
-                      value="%first_name% %last_name%"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label
-                      for="first_name_last_name"
-                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      Choose an existing contact
-                    </label>
-                  </div>
-                </div>
+                <span class="text-xs">Switch role</span>
               </div>
             </div>
 
-            <!-- first name -->
-            <text-input
-              v-model="form.first_name"
-              :autofocus="true"
-              :div-outer-class="'mb-5'"
-              :input-class="'block w-full'"
-              :required="true"
-              :maxlength="255"
-              :label="'First name'" />
+            <!-- reverse relationship -->
+            <div>
+              <p class="mb-2 text-sm text-gray-700">{{ toRelationship }}</p>
+              <div class="">
+                <!-- I don't know the name -->
+                <div class="mb-2 flex items-center">
+                  <input
+                    id="unknown"
+                    v-model="form.choice"
+                    value="unknown"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label
+                    for="unknown"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    I don't know the name
+                  </label>
+                </div>
 
+                <!-- I know the contact's name -->
+                <div class="mb-2 flex items-center">
+                  <input
+                    id="name"
+                    v-model="form.choice"
+                    value="name"
+                    name="name-order"
+                    type="radio"
+                    @click="displayContactNameField"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label
+                    for="name"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    I know the name
+                  </label>
+                </div>
+
+                <div v-if="showContactName" class="pl-6">
+                  <text-input
+                    :ref="'contactName'"
+                    v-model="form.first_name"
+                    :autofocus="true"
+                    :div-outer-class="'mb-5'"
+                    :input-class="'block w-full'"
+                    :required="true"
+                    :maxlength="255" />
+                </div>
+
+                <!-- Choose an existing contact -->
+                <div class="mb-2 flex items-center">
+                  <input
+                    id="contact"
+                    v-model="form.choice"
+                    value="contact"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label
+                    for="contact"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    Choose an existing contact
+                  </label>
+                </div>
+
+                <div v-if="form.choice == 'contact'" class="pl-6">
+                  <contact-selector
+                    :search-url="this.layoutData.vault.url.search_contacts_only"
+                    :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+                    :display-most-consulted-contacts="false"
+                    :add-multiple-contacts="false"
+                    :required="true"
+                    :div-outer-class="'flex-1 border-r border-gray-200'"
+                    v-model="form.loaners" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-b border-gray-200 p-5">
             <!-- last name -->
             <text-input
+              v-if="showLastNameField"
               :id="'last_name'"
               v-model="form.last_name"
               :div-outer-class="'mb-5'"
@@ -230,6 +250,12 @@
             <!-- other fields -->
             <div class="flex flex-wrap text-xs">
               <span
+                v-if="!showLastNameField"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                @click="displayLastNameField">
+                + last name
+              </span>
+              <span
                 v-if="!showMiddleNameField"
                 class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
                 @click="displayMiddleNameField">
@@ -259,6 +285,24 @@
                 @click="displayPronounField">
                 + pronoun
               </span>
+              <span
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                @click="displayPronounField">
+                + birthdate
+              </span>
+            </div>
+          </div>
+
+          <div class="border-b border-gray-200 p-5">
+            <div class="relative flex items-start">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                class="relative h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900">
+                Create a contact entry for this person
+              </label>
             </div>
           </div>
 
@@ -280,20 +324,24 @@
 
 <script>
 import Layout from '@/Shared/Layout';
+import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyLink from '@/Shared/Form/PrettyLink';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import TextInput from '@/Shared/Form/TextInput';
 import Dropdown from '@/Shared/Form/Dropdown';
 import Errors from '@/Shared/Form/Errors';
+import ContactSelector from '@/Shared/Form/ContactSelector';
 
 export default {
   components: {
     Layout,
     PrettyLink,
+    PrettySpan,
     PrettyButton,
     TextInput,
     Dropdown,
     Errors,
+    ContactSelector,
   },
 
   props: {
@@ -310,14 +358,17 @@ export default {
   data() {
     return {
       loadingState: '',
+      showContactName: false,
+      showLastNameField: false,
       showMiddleNameField: false,
       showNicknameField: false,
       showMaidenNameField: false,
       showGenderField: false,
       showPronounField: false,
-      showTemplateField: false,
+      fromRelationship: '',
+      toRelationship: '',
       form: {
-        first_name: '',
+        choice: 'unknown',
         last_name: '',
         middle_name: '',
         nickname: '',
@@ -330,7 +381,25 @@ export default {
     };
   },
 
+  created() {
+    this.fromRelationship = 'Father';
+    this.toRelationship = 'Child';
+  },
+
   methods: {
+    displayContactNameField() {
+      this.form.choice = 'name';
+      this.showContactName = true;
+
+      this.$nextTick(() => {
+        this.$refs.contactName.focus();
+      });
+    },
+
+    displayLastNameField() {
+      this.showLastNameField = true;
+    },
+
     displayMiddleNameField() {
       this.showMiddleNameField = true;
     },
@@ -353,6 +422,12 @@ export default {
 
     displayTemplateField() {
       this.showTemplateField = true;
+    },
+
+    toggle() {
+      var temp = this.fromRelationship;
+      this.fromRelationship = this.toRelationship;
+      this.toRelationship = temp;
     },
 
     submit() {
