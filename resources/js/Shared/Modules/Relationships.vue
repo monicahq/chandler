@@ -43,13 +43,17 @@
 
         <span class="font-semibold">Relationships</span>
       </div>
-      <pretty-button :text="'Add a relationship'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
+      <pretty-button
+        :text="'Add a relationship'"
+        :icon="'plus'"
+        :classes="'sm:w-fit w-full'"
+        @click="showCreateNoteModal" />
     </div>
 
     <!-- quick actions -->
     <ul class="mb-2">
-      <li class="inline mr-2">Quick add:</li>
-      <li class="inline mr-2">Child (boy)</li>
+      <li class="mr-2 inline">Quick add:</li>
+      <li class="mr-2 inline">Child (boy)</li>
       <li class="inline">Child (girl)</li>
     </ul>
 
@@ -57,8 +61,10 @@
     <div>
       <h3 class="mb-1">Family</h3>
       <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
-        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
-          <div>Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span></div>
+        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+          <div>
+            Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span>
+          </div>
 
           <!-- actions -->
           <ul class="text-sm">
@@ -67,12 +73,10 @@
               @click="updateAdressTypeModal(addressType)">
               Rename
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-              Delete
-            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
           </ul>
         </li>
-        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
           <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
 
           <!-- actions -->
@@ -82,17 +86,17 @@
               @click="updateAdressTypeModal(addressType)">
               Rename
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-              Delete
-            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
           </ul>
         </li>
       </ul>
 
       <h3 class="mb-1">Love</h3>
       <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
-        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
-          <div>Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span></div>
+        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+          <div>
+            Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span>
+          </div>
 
           <!-- actions -->
           <ul class="text-sm">
@@ -101,12 +105,10 @@
               @click="updateAdressTypeModal(addressType)">
               Rename
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-              Delete
-            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
           </ul>
         </li>
-        <li class="item-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 flex items-center justify-between">
+        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
           <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
 
           <!-- actions -->
@@ -116,9 +118,7 @@
               @click="updateAdressTypeModal(addressType)">
               Rename
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-              Delete
-            </li>
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
           </ul>
         </li>
       </ul>
@@ -181,9 +181,7 @@ export default {
     };
   },
 
-  created() {
-
-  },
+  created() {},
 
   methods: {
     showCreateNoteModal() {

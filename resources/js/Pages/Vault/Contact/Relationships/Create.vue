@@ -69,11 +69,10 @@
           </div>
 
           <div class="border-b border-gray-200 p-5">
-
             <div class="">
               <!-- relationship -->
               <div class="mb-6">
-                <p class="text-gray-700 text-sm mb-2">Father</p>
+                <p class="mb-2 text-sm text-gray-700">Father</p>
                 <div class="flex items-center">
                   <div v-html="data.contact.avatar" class="mr-2 h-5 w-5"></div>
 
@@ -82,18 +81,26 @@
               </div>
 
               <!-- switch -->
-              <div class="mr-4 text-center block mx-auto w-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              <div class="w-100 mx-auto mr-4 block text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mx-auto block h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                 </svg>
                 <span class="text-xs">Switch</span>
               </div>
 
               <!-- reverse relationship -->
               <div>
-                <p class="text-gray-700 text-sm mb-2">Father</p>
+                <p class="mb-2 text-sm text-gray-700">Father</p>
                 <div class="">
-
                   <!-- I don't know the name -->
                   <div class="mb-2 flex items-center">
                     <input
@@ -103,7 +110,9 @@
                       name="name-order"
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="first_name_last_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    <label
+                      for="first_name_last_name"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                       I don't know the name
                     </label>
                   </div>
@@ -117,7 +126,9 @@
                       name="name-order"
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="first_name_last_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    <label
+                      for="first_name_last_name"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                       I know the contact's name
                     </label>
                   </div>
@@ -131,15 +142,15 @@
                       name="name-order"
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="first_name_last_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    <label
+                      for="first_name_last_name"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
                       Choose an existing contact
                     </label>
                   </div>
                 </div>
               </div>
             </div>
-
-
 
             <!-- first name -->
             <text-input
