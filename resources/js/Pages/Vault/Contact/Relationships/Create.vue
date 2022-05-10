@@ -70,7 +70,12 @@ select {
 
             <!-- relationship type -->
             <label for="types" class="mb-2 block text-sm">Select a relationship type</label>
-            <select v-model="form.relationship_type_id" @change="load()" name="types" id="types" class="w-full py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm">
+            <select
+              v-model="form.relationship_type_id"
+              @change="load()"
+              name="types"
+              id="types"
+              class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
               <optgroup v-for="group in data.relationship_group_types" :key="group.id" :label="group.name">
                 <option v-for="type in group.types" :key="type.id" :value="type.id">
                   {{ type.name }}
@@ -156,43 +161,43 @@ select {
                       :required="true"
                       :maxlength="255" />
 
-                  <!-- last name -->
+                    <!-- last name -->
                     <text-input
-                        v-if="showLastNameField"
-                        :id="'last_name'"
-                        v-model="form.last_name"
-                        :div-outer-class="'mb-5'"
-                        :input-class="'block w-full'"
-                        :required="false"
-                        :maxlength="255"
-                        :label="'Last name'" />
+                      v-if="showLastNameField"
+                      :id="'last_name'"
+                      v-model="form.last_name"
+                      :div-outer-class="'mb-5'"
+                      :input-class="'block w-full'"
+                      :required="false"
+                      :maxlength="255"
+                      :label="'Last name'" />
 
-                      <div class="flex flex-wrap text-xs mb-4">
-                        <span
-                          v-if="!showLastNameField"
-                          class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
-                          @click="displayLastNameField">
-                          + last name
-                        </span>
-                        <span
-                          v-if="!showMiddleNameField"
-                          class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
-                          @click="displayMiddleNameField">
-                          + middle name
-                        </span>
-                        <span
-                          v-if="!showNicknameField"
-                          class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
-                          @click="displayNicknameField">
-                          + nickname
-                        </span>
-                        <span
-                          v-if="!showMaidenNameField"
-                          class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
-                          @click="displayMaidenNameField">
-                          + maiden name
-                        </span>
-                      </div>
+                    <div class="mb-4 flex flex-wrap text-xs">
+                      <span
+                        v-if="!showLastNameField"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        @click="displayLastNameField">
+                        + last name
+                      </span>
+                      <span
+                        v-if="!showMiddleNameField"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        @click="displayMiddleNameField">
+                        + middle name
+                      </span>
+                      <span
+                        v-if="!showNicknameField"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        @click="displayNicknameField">
+                        + nickname
+                      </span>
+                      <span
+                        v-if="!showMaidenNameField"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        @click="displayMaidenNameField">
+                        + maiden name
+                      </span>
+                    </div>
                   </div>
 
                   <!-- Choose an existing contact -->
