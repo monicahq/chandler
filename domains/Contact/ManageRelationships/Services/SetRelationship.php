@@ -7,7 +7,6 @@ use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\RelationshipType;
-use App\Helpers\RelationshipHelper;
 use App\Interfaces\ServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
