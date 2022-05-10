@@ -58,7 +58,7 @@ class ContactRelationshipsController extends Controller
         }
 
         if ($request->input('choice') == 'contact') {
-            $otherContact = Contact::findOrFail($request->input('other_contact_id'));
+            $otherContactId = collect($request->input('other_contact_id'))->pluck('id')->first();
         }
 
         (new SetRelationship)->execute([
@@ -66,8 +66,8 @@ class ContactRelationshipsController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'relationship_type_id' => $request->input('relationship_type_id'),
-            'contact_id' => $request->input('base_contact_id') == $contactId ? $contactId : $otherContact->id,
-            'other_contact_id' => $request->input('base_contact_id') == $contactId ? $otherContact->id : $contactId,
+            'contact_id' => $request->input('base_contact_id') == $contactId ? $contactId : $otherContactId,
+            'other_contact_id' => $request->input('base_contact_id') == $contactId ? $otherContactId : $contactId,
         ]);
 
         return response()->json([

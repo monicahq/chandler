@@ -89,7 +89,7 @@ select {
             <div class="border-b border-gray-200 p-5">
               <!-- relationship -->
               <div class="mb-6">
-                <p class="mb-2 text-sm text-gray-700">{{ fromRelationship }}</p>
+                <p class="mb-2 flex-none uppercase bg-gray-200 text-gray-600 text-xs tracking-wide font-semibold px-2 py-1 rounded-md inline-block">{{ fromRelationship }}</p>
                 <div class="flex items-center">
                   <div v-html="data.contact.avatar" class="mr-2 h-5 w-5"></div>
 
@@ -120,7 +120,7 @@ select {
 
               <!-- reverse relationship -->
               <div>
-                <p class="mb-2 text-sm text-gray-700">{{ toRelationship }}</p>
+                <p class="mb-2 flex-none uppercase bg-gray-200 text-gray-600 text-xs tracking-wide font-semibold px-2 py-1 rounded-md inline-block">{{ toRelationship }}</p>
                 <div class="">
                   <!-- I don't know the name -->
                   <div class="mb-2 flex items-center">
@@ -298,11 +298,6 @@ select {
                   class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
                   @click="displayPronounField">
                   + pronoun
-                </span>
-                <span
-                  class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
-                  @click="displayPronounField">
-                  + birthdate
                 </span>
               </div>
             </div>
