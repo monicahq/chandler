@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Vault;
 use App\Models\Contact;
 use App\Helpers\AvatarHelper;
+use App\Models\RelationshipType;
 
 class ContactRelationshipsCreateViewHelper
 {
@@ -29,9 +30,11 @@ class ContactRelationshipsCreateViewHelper
             ];
         });
 
-        $relationshipTypeGroupsCollection = $account->relationshipGroupTypes()
+        $groups = $account->relationshipGroupTypes()
             ->with('types')
-            ->get()
+            ->get();
+
+        $relationshipTypeGroupsCollection = $groups
             ->map(function ($relationshipTypeGroup) {
                 return [
                     'id' => $relationshipTypeGroup->id,
@@ -39,9 +42,20 @@ class ContactRelationshipsCreateViewHelper
                     'types' => $relationshipTypeGroup->types()->get()->map(function ($relationshipType) {
                         return [
                             'id' => $relationshipType->id,
-                            'name' => $relationshipType->name,
+                            'name' => $relationshipType->name. ' ↔ '. $relationshipType->name_reverse_relationship,
                         ];
                     }),
+                ];
+            });
+
+        $ids = $groups->pluck('id')->toArray();
+        $relationshipTypesCollection = RelationshipType::whereIn('relationship_group_type_id', $ids)
+            ->get()
+            ->map(function ($relationshipType) {
+                return [
+                    'id' => $relationshipType->id,
+                    'name' => $relationshipType->name,
+                    'name_reverse_relationship' => $relationshipType->name_reverse_relationship,
                 ];
             });
 
@@ -53,10 +67,12 @@ class ContactRelationshipsCreateViewHelper
             ],
             'genders' => $genderCollection,
             'pronouns' => $pronounCollection,
-            'relationship_types' => $relationshipTypeGroupsCollection,
+            'relationship_group_types' => $relationshipTypeGroupsCollection,
+            'relationship_types' => $relationshipTypesCollection,
             'url' => [
-                'store' => route('contact.store', [
+                'store' => route('contact.relationships.store', [
                     'vault' => $vault->id,
+                    'contact' => $contact->id,
                 ]),
                 'back' => route('contact.index', [
                     'vault' => $vault->id,

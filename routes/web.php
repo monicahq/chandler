@@ -133,6 +133,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     // relationships
                     Route::get('relationships/create', [ContactRelationshipsController::class, 'create'])->name('contact.relationships.create');
+                    Route::post('relationships', [ContactRelationshipsController::class, 'store'])->name('contact.relationships.store');
                 });
             });
 

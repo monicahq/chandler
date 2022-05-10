@@ -58,6 +58,7 @@ class ContactController extends Controller
             'gender_id' => $request->input('gender_id'),
             'pronoun_id' => $request->input('pronoun_id'),
             'template_id' => $request->input('template_id'),
+            'listed' => true,
         ];
 
         $contact = (new CreateContact)->execute($data);

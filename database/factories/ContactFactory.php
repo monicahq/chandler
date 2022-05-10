@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Avatar;
 use App\Models\Vault;
 use App\Models\Company;
 use App\Models\Contact;

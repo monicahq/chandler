@@ -13,6 +13,7 @@ use App\Models\RelationshipType;
 use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
+use App\Models\Avatar;
 
 class ContactRelationshipsCreateViewHelperTest extends TestCase
 {
@@ -25,7 +26,7 @@ class ContactRelationshipsCreateViewHelperTest extends TestCase
         $groupType = RelationshipGroupType::factory()->create([
             'account_id' => $user->account_id,
         ]);
-        $type = RelationshipType::factory()->create([
+        RelationshipType::factory()->create([
             'relationship_group_type_id' => $groupType->id,
         ]);
         $vault = Vault::factory()->create([
@@ -40,16 +41,23 @@ class ContactRelationshipsCreateViewHelperTest extends TestCase
         $contact = Contact::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $avatar = Avatar::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
+        $contact->avatar_id = $avatar->id;
+        $contact->save();
 
-        $array = ContactRelationshipsCreateViewHelper::data($vault);
+        $array = ContactRelationshipsCreateViewHelper::data($vault, $contact, $user);
         $this->assertEquals(
-            4,
+            6,
             count($array)
         );
 
+        $this->assertArrayHasKey('contact', $array);
         $this->assertArrayHasKey('genders', $array);
         $this->assertArrayHasKey('pronouns', $array);
         $this->assertArrayHasKey('relationship_types', $array);
+        $this->assertArrayHasKey('relationship_group_types', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
@@ -74,7 +82,7 @@ class ContactRelationshipsCreateViewHelperTest extends TestCase
 
         $this->assertEquals(
             $groupType->id,
-            $array['relationship_types']->toArray()[0]['id']
+            $array['relationship_group_types']->toArray()[0]['id']
         );
 
         $this->assertEquals(
