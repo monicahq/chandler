@@ -452,11 +452,6 @@ class SetupAccount implements ShouldQueue
                 'relationship_group_type_id' => $group->id,
             ],
             [
-                'name' => trans('account.relationship_type_lovedby'),
-                'name_reverse_relationship' => trans('account.relationship_type_inlovewith'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
                 'name' => trans('account.relationship_type_ex'),
                 'name_reverse_relationship' => trans('account.relationship_type_ex'),
                 'relationship_group_type_id' => $group->id,
@@ -479,11 +474,6 @@ class SetupAccount implements ShouldQueue
                 'relationship_group_type_id' => $group->id,
             ],
             [
-                'name' => trans('account.relationship_type_child'),
-                'name_reverse_relationship' => trans('account.relationship_type_parent'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
                 'name' => trans('account.relationship_type_sibling'),
                 'name_reverse_relationship' => trans('account.relationship_type_sibling'),
                 'relationship_group_type_id' => $group->id,
@@ -494,18 +484,8 @@ class SetupAccount implements ShouldQueue
                 'relationship_group_type_id' => $group->id,
             ],
             [
-                'name' => trans('account.relationship_type_grandchild'),
-                'name_reverse_relationship' => trans('account.relationship_type_grandparent'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
                 'name' => trans('account.relationship_type_uncle'),
                 'name_reverse_relationship' => trans('account.relationship_type_nephew'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
-                'name' => trans('account.relationship_type_nephew'),
-                'name_reverse_relationship' => trans('account.relationship_type_uncle'),
                 'relationship_group_type_id' => $group->id,
             ],
             [
@@ -516,11 +496,6 @@ class SetupAccount implements ShouldQueue
             [
                 'name' => trans('account.relationship_type_godfather'),
                 'name_reverse_relationship' => trans('account.relationship_type_godson'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
-                'name' => trans('account.relationship_type_godson'),
-                'name_reverse_relationship' => trans('account.relationship_type_godfather'),
                 'relationship_group_type_id' => $group->id,
             ],
         ]);
@@ -561,11 +536,6 @@ class SetupAccount implements ShouldQueue
                 'relationship_group_type_id' => $group->id,
             ],
             [
-                'name' => trans('account.relationship_type_boss'),
-                'name_reverse_relationship' => trans('account.relationship_type_subordinate'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
                 'name' => trans('account.relationship_type_subordinate'),
                 'name_reverse_relationship' => trans('account.relationship_type_boss'),
                 'relationship_group_type_id' => $group->id,
@@ -573,11 +543,6 @@ class SetupAccount implements ShouldQueue
             [
                 'name' => trans('account.relationship_type_mentor'),
                 'name_reverse_relationship' => trans('account.relationship_type_protege'),
-                'relationship_group_type_id' => $group->id,
-            ],
-            [
-                'name' => trans('account.relationship_type_protege'),
-                'name_reverse_relationship' => trans('account.relationship_type_mentor'),
                 'relationship_group_type_id' => $group->id,
             ],
         ]);

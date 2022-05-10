@@ -64,12 +64,8 @@ class SetRelationship extends BaseService implements ServiceInterface
             throw new ModelNotFoundException;
         }
 
-        // get the reverse relationship type
-        $reverseRelationshipType = RelationshipHelper::getReverseRelationshipType($relationshipType);
-
         // create the relationships
         $this->setRelationship($this->contact, $otherContact, $relationshipType);
-        $this->setRelationship($otherContact, $this->contact, $reverseRelationshipType);
 
         $this->log($otherContact, $relationshipType);
     }

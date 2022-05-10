@@ -170,7 +170,7 @@ main {
         <ul>
           <li class="mr-4 inline">Monica. Since 2017.</li>
           <li class="inline">
-            Latest version: {{ layoutData.version.date }}
+            Current version: {{ layoutData.version.date }}
             <span class="sha ml-2 font-mono">{{ layoutData.version.sha }}</span>
           </li>
         </ul>
