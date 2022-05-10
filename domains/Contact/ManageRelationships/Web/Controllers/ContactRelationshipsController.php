@@ -2,14 +2,14 @@
 
 namespace App\Contact\ManageRelationships\Web\Controllers;
 
-use App\Contact\ManageContact\Services\CreateContact;
-use App\Contact\ManageRelationships\Services\SetRelationship;
 use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Contact\ManageContact\Services\CreateContact;
+use App\Contact\ManageRelationships\Services\SetRelationship;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 

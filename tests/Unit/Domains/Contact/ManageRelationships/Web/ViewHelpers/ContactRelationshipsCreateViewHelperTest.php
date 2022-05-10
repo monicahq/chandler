@@ -6,6 +6,7 @@ use function env;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Avatar;
 use App\Models\Gender;
 use App\Models\Contact;
 use App\Models\Pronoun;
@@ -13,7 +14,6 @@ use App\Models\RelationshipType;
 use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
-use App\Models\Avatar;
 
 class ContactRelationshipsCreateViewHelperTest extends TestCase
 {

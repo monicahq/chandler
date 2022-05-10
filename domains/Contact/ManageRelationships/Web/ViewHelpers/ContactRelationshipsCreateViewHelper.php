@@ -42,7 +42,7 @@ class ContactRelationshipsCreateViewHelper
                     'types' => $relationshipTypeGroup->types()->get()->map(function ($relationshipType) {
                         return [
                             'id' => $relationshipType->id,
-                            'name' => $relationshipType->name. ' ↔ '. $relationshipType->name_reverse_relationship,
+                            'name' => $relationshipType->name.' ↔ '.$relationshipType->name_reverse_relationship,
                         ];
                     }),
                 ];
