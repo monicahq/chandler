@@ -1,4 +1,4 @@
-name: Integrate
+name: Update release version in the footer
 
 on:
   push:
