@@ -3,10 +3,8 @@
 namespace App\Contact\ManageRelationships\Web\ViewHelpers;
 
 use App\Models\User;
-use App\Models\Vault;
 use App\Models\Contact;
 use App\Helpers\AvatarHelper;
-use App\Models\RelationshipType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +33,7 @@ class ModuleRelationshipViewHelper
                     ->join('relationship_types', 'relationships.relationship_type_id', '=', 'relationship_types.id')
                     ->select('relationship_types.id', 'relationships.contact_id', 'relationships.related_contact_id')
                     ->where('relationships.relationship_type_id', $relationshipType->id)
-                    ->where(function ($query ) use ($contact) {
+                    ->where(function ($query) use ($contact) {
                         $query->where('relationships.contact_id', $contact->id)
                             ->orWhere('relationships.related_contact_id', $contact->id);
                     })
