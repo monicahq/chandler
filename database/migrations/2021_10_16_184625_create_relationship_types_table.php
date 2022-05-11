@@ -36,6 +36,7 @@ class CreateRelationshipTypesTable extends Migration
         });
 
         Schema::create('relationships', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('relationship_type_id');
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('related_contact_id');

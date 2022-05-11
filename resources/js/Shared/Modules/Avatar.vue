@@ -1,7 +1,7 @@
 <style lang="scss" scoped></style>
 
 <template>
-  <div class="mb-6" v-html="data" />
+  <div class="mb-6 sm:w-1/2 mx-auto" v-html="data" />
 </template>
 
 <script>

@@ -43,12 +43,12 @@
 
         <span class="font-semibold">Relationships</span>
       </div>
-      <pretty-link :text="'Add a relationship'" :icon="'plus'" :href="data.url.store" :classes="'sm:w-fit w-full'" />
+      <pretty-link :text="'Add a relationship'" :icon="'plus'" :href="data.url.create" :classes="'sm:w-fit w-full'" />
     </div>
 
     <!-- relationships -->
     <div>
-      <div v-for="relationshipGroupType in data.relationship_group_types" :key="relationshipGroupType.id" class="mb-4">
+      <div v-for="relationshipGroupType in localRelationships" :key="relationshipGroupType.id" class="mb-4">
         <!-- group name -->
         <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1 font-semibold">
           {{ relationshipGroupType.name }}
@@ -76,22 +76,14 @@
                 <span v-else>{{ relationshipType.contact.name }}</span>
               </div>
 
-              <!-- age -->
-              <span class="mr-2 text-gray-400">(3)</span>
-
               <!-- relationship type -->
               <span class="mr-2 text-gray-400">{{ relationshipType.relationship_type.name }}</span>
             </div>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-                @click="updateAdressTypeModal(addressType)">
-                Rename
-              </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
-                Delete
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(relationshipType)">
+                Remove
               </li>
             </ul>
           </li>
@@ -143,101 +135,24 @@ export default {
 
   data() {
     return {
-      loadingState: '',
-      titleFieldShown: false,
-      emotionFieldShown: false,
-      createNoteModalShown: false,
-      localNotes: [],
-      editedNoteId: 0,
-      form: {
-        title: '',
-        body: '',
-        emotion: '',
-        errors: [],
-      },
+      localRelationships: [],
     };
   },
 
-  created() {},
+  created() {
+    this.localRelationships = this.data.relationship_group_types;
+  },
 
   methods: {
-    showCreateNoteModal() {
-      this.form.errors = [];
-      this.form.title = '';
-      this.form.body = '';
-      this.createNoteModalShown = true;
-    },
-
-    showEmotionField() {
-      this.form.emotion = '';
-      this.emotionFieldShown = true;
-    },
-
-    showEditNoteModal(note) {
-      this.editedNoteId = note.id;
-      this.form.title = note.title;
-      this.form.body = note.body;
-      this.form.emotion = note.emotion.id;
-    },
-
-    showTitleField() {
-      this.titleFieldShown = true;
-      this.form.title = '';
-
-      this.$nextTick(() => {
-        this.$refs.newTitle.focus();
-      });
-    },
-
-    showFullBody(note) {
-      this.localNotes[this.localNotes.findIndex((x) => x.id === note.id)].show_full_content = true;
-    },
-
-    submit() {
-      this.loadingState = 'loading';
-
-      axios
-        .post(this.data.url.store, this.form)
-        .then((response) => {
-          this.flash('The note has been created', 'success');
-          this.localNotes.unshift(response.data.data);
-          this.loadingState = '';
-          this.createNoteModalShown = false;
-        })
-        .catch((error) => {
-          this.loadingState = '';
-          this.form.errors = error.response.data;
-        });
-    },
-
-    update(note) {
-      this.loadingState = 'loading';
-
-      axios
-        .put(note.url.update, this.form)
-        .then((response) => {
-          this.loadingState = '';
-          this.flash('The note has been edited', 'success');
-          this.localNotes[this.localNotes.findIndex((x) => x.id === note.id)] = response.data.data;
-          this.editedNoteId = 0;
-        })
-        .catch((error) => {
-          this.loadingState = '';
-          this.form.errors = error.response.data;
-        });
-    },
-
-    destroy(note) {
-      if (confirm('Are you sure? This will delete the note permanently.')) {
+    destroy(relationshipType) {
+      if (confirm('Are you sure? This will delete the relationship.')) {
         axios
-          .delete(note.url.destroy)
+          .put(relationshipType.url.update)
           .then((response) => {
-            this.flash('The note has been deleted', 'success');
-            var id = this.localNotes.findIndex((x) => x.id === note.id);
-            this.localNotes.splice(id, 1);
+            this.flash('The relationship has been deleted', 'success');
+            this.localRelationships = response.data.data.relationship_group_types;
           })
           .catch((error) => {
-            this.loadingState = null;
             this.form.errors = error.response.data;
           });
       }

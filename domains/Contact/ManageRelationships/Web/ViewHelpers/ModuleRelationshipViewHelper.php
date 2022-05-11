@@ -32,7 +32,7 @@ class ModuleRelationshipViewHelper
                 $relations = DB::table('relationships')
                     ->join('contacts', 'relationships.contact_id', '=', 'contacts.id')
                     ->join('relationship_types', 'relationships.relationship_type_id', '=', 'relationship_types.id')
-                    ->select('relationship_types.id', 'relationships.contact_id', 'relationships.related_contact_id')
+                    ->select('relationships.id as main_id', 'relationship_types.id', 'relationships.contact_id', 'relationships.related_contact_id')
                     ->where('relationships.relationship_type_id', $relationshipType->id)
                     ->where(function ($query) use ($contact) {
                         $query->where('relationships.contact_id', $contact->id)
@@ -59,6 +59,13 @@ class ModuleRelationshipViewHelper
                             'id' => $relationshipType->id,
                             'name' => $relationshipName,
                         ],
+                        'url' => [
+                            'update' => route('contact.relationships.update', [
+                                'vault' => $contact->vault->id,
+                                'contact' => $contact->id,
+                                'relationship' => $relation->main_id,
+                            ]),
+                        ],
                     ]);
 
                     $numberOfDefinedRelationships++;
@@ -76,7 +83,7 @@ class ModuleRelationshipViewHelper
             'relationship_group_types' => $relationshipGroupTypesCollection,
             'number_of_defined_relations' => $numberOfDefinedRelationships,
             'url' => [
-                'store' => route('contact.relationships.create', [
+                'create' => route('contact.relationships.create', [
                     'vault' => $contact->vault->id,
                     'contact' => $contact->id,
                 ]),
