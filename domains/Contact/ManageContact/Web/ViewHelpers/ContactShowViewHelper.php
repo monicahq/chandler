@@ -18,6 +18,7 @@ use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 
 class ContactShowViewHelper
 {
@@ -164,7 +165,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_RELATIONSHIPS) {
-                $data = ModuleLoanViewHelper::data($contact, $user);
+                $data = ModuleRelationshipViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

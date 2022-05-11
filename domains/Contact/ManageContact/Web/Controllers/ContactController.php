@@ -25,6 +25,7 @@ class ContactController extends Controller
         $vault = Vault::findOrFail($vaultId);
 
         $contacts = Contact::where('vault_id', $request->route()->parameter('vault'))
+            ->where('listed', true)
             ->orderBy('created_at', 'asc')
             ->paginate(10);
 

@@ -43,85 +43,50 @@
 
         <span class="font-semibold">Relationships</span>
       </div>
-      <pretty-button
+      <pretty-link
         :text="'Add a relationship'"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
-        @click="showCreateNoteModal" />
+        :href="data.url.store"
+        :classes="'sm:w-fit w-full'" />
     </div>
-
-    <!-- quick actions -->
-    <ul class="mb-2">
-      <li class="mr-2 inline">Quick add:</li>
-      <li class="mr-2 inline">Child (boy)</li>
-      <li class="inline">Child (girl)</li>
-    </ul>
 
     <!-- relationships -->
     <div>
-      <h3 class="mb-1">Family</h3>
-      <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
-        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-          <div>
-            Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span>
-          </div>
+      <div v-for="relationshipGroupType in data.relationship_group_types" :key="relationshipGroupType.id" class="mb-4">
+        <!-- group name -->
+        <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1">{{ relationshipGroupType.name }}</h3>
 
-          <!-- actions -->
-          <ul class="text-sm">
-            <li
-              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="updateAdressTypeModal(addressType)">
-              Rename
-            </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
-          </ul>
-        </li>
-        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-          <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
+        <!-- list of relationship types in this group -->
+        <ul v-if="relationshipGroupType.relationship_types.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+          <li v-for="relationshipType in relationshipGroupType.relationship_types" :key="relationshipType.id" class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+            <div class="flex">
+              <div class="flex items-center  mr-2">
+                <div v-html="relationshipType.contact.avatar" class="mr-2 h-5 w-5"></div>
 
-          <!-- actions -->
-          <ul class="text-sm">
-            <li
-              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="updateAdressTypeModal(addressType)">
-              Rename
-            </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
-          </ul>
-        </li>
-      </ul>
+                <!-- name -->
+                <inertia-link v-if="relationshipType.contact.url.show" :href="relationshipType.contact.url.show" class="text-sky-500 hover:text-blue-900"> {{ relationshipType.contact.name }} </inertia-link>
+                <span v-else>{{ relationshipType.contact.name }}</span>
+              </div>
 
-      <h3 class="mb-1">Love</h3>
-      <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
-        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-          <div>
-            Tarzon LKJLjwptihc <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">coworker</span>
-          </div>
+              <!-- age -->
+              <span class="text-gray-400 mr-2">(3)</span>
 
-          <!-- actions -->
-          <ul class="text-sm">
-            <li
-              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="updateAdressTypeModal(addressType)">
-              Rename
-            </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
-          </ul>
-        </li>
-        <li class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-          <div>Kim Bassinger <span class="text-gray-400">(3)</span> <span class="mr-2 text-gray-400">child</span></div>
+              <!-- relationship type -->
+              <span class="mr-2 text-gray-400">{{ relationshipType.relationship_type.name }}</span>
+            </div>
 
-          <!-- actions -->
-          <ul class="text-sm">
-            <li
-              class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
-              @click="updateAdressTypeModal(addressType)">
-              Rename
-            </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
-          </ul>
-        </li>
-      </ul>
+            <!-- actions -->
+            <ul class="text-sm">
+              <li
+                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+                @click="updateAdressTypeModal(addressType)">
+                Rename
+              </li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- blank state -->
@@ -135,6 +100,7 @@
 import HoverMenu from '@/Shared/HoverMenu';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
+import PrettyLink from '@/Shared/Form/PrettyLink';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
@@ -144,6 +110,7 @@ export default {
     HoverMenu,
     PrettyButton,
     PrettySpan,
+    PrettyLink,
     TextInput,
     TextArea,
     Errors,

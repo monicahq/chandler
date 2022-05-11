@@ -55,6 +55,7 @@ class ContactRelationshipsController extends Controller
                 'listed' => $request->input('create_contact_entry'),
                 'template_id' => null,
             ]);
+            $otherContactId = $otherContact->id;
         }
 
         if ($request->input('choice') == 'contact') {
