@@ -6,17 +6,16 @@ use Inertia\Inertia;
 use App\Models\Vault;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Contact\ManageContact\Services\CreateContact;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 use App\Contact\ManageRelationships\Services\SetRelationship;
 use App\Contact\ManageRelationships\Services\UnsetRelationship;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
-use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
-use App\Models\RelationshipType;
-use Illuminate\Database\Eloquent\Factories\Relationship;
-use Illuminate\Support\Facades\DB;
+use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 
 class ContactRelationshipsController extends Controller
 {
