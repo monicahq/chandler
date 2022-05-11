@@ -50,7 +50,7 @@
     <div>
       <div v-for="relationshipGroupType in data.relationship_group_types" :key="relationshipGroupType.id" class="mb-4">
         <!-- group name -->
-        <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1">
+        <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1 font-semibold">
           {{ relationshipGroupType.name }}
         </h3>
 
@@ -100,8 +100,8 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="localNotes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no notes yet.</p>
+    <div v-if="data.number_of_defined_relations == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">There are no relationships yet.</p>
     </div>
   </div>
 </template>

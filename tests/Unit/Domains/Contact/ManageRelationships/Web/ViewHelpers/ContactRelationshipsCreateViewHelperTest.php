@@ -88,7 +88,7 @@ class ContactRelationshipsCreateViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'store' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id.'/relationships',
-                'back' => env('APP_URL').'/vaults/'.$vault->id.'/contacts',
+                'back' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id,
             ],
             $array['url']
         );

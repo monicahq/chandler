@@ -18,6 +18,7 @@ class ModuleRelationshipViewHelper
         //    -> Relationship type
         //        -> Contact
 
+        $numberOfDefinedRelationships = 0;
         $relationshipGroupTypes = $contact->vault->account->relationshipGroupTypes()
             ->with('types')
             ->get();
@@ -59,6 +60,8 @@ class ModuleRelationshipViewHelper
                             'name' => $relationshipName,
                         ],
                     ]);
+
+                    $numberOfDefinedRelationships++;
                 }
             }
 
@@ -71,6 +74,7 @@ class ModuleRelationshipViewHelper
 
         return [
             'relationship_group_types' => $relationshipGroupTypesCollection,
+            'number_of_defined_relations' => $numberOfDefinedRelationships,
             'url' => [
                 'store' => route('contact.relationships.create', [
                     'vault' => $contact->vault->id,

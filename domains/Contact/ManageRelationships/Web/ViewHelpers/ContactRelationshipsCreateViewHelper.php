@@ -74,8 +74,9 @@ class ContactRelationshipsCreateViewHelper
                     'vault' => $vault->id,
                     'contact' => $contact->id,
                 ]),
-                'back' => route('contact.index', [
+                'back' => route('contact.show', [
                     'vault' => $vault->id,
+                    'contact' => $contact->id,
                 ]),
             ],
         ];
