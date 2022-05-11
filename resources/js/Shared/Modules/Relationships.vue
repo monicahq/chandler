@@ -43,33 +43,41 @@
 
         <span class="font-semibold">Relationships</span>
       </div>
-      <pretty-link
-        :text="'Add a relationship'"
-        :icon="'plus'"
-        :href="data.url.store"
-        :classes="'sm:w-fit w-full'" />
+      <pretty-link :text="'Add a relationship'" :icon="'plus'" :href="data.url.store" :classes="'sm:w-fit w-full'" />
     </div>
 
     <!-- relationships -->
     <div>
       <div v-for="relationshipGroupType in data.relationship_group_types" :key="relationshipGroupType.id" class="mb-4">
         <!-- group name -->
-        <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1">{{ relationshipGroupType.name }}</h3>
+        <h3 v-if="relationshipGroupType.relationship_types.length > 0" class="mb-1">
+          {{ relationshipGroupType.name }}
+        </h3>
 
         <!-- list of relationship types in this group -->
-        <ul v-if="relationshipGroupType.relationship_types.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0">
-          <li v-for="relationshipType in relationshipGroupType.relationship_types" :key="relationshipType.id" class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+        <ul
+          v-if="relationshipGroupType.relationship_types.length > 0"
+          class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+          <li
+            v-for="relationshipType in relationshipGroupType.relationship_types"
+            :key="relationshipType.id"
+            class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
             <div class="flex">
-              <div class="flex items-center  mr-2">
+              <div class="mr-2 flex items-center">
                 <div v-html="relationshipType.contact.avatar" class="mr-2 h-5 w-5"></div>
 
                 <!-- name -->
-                <inertia-link v-if="relationshipType.contact.url.show" :href="relationshipType.contact.url.show" class="text-sky-500 hover:text-blue-900"> {{ relationshipType.contact.name }} </inertia-link>
+                <inertia-link
+                  v-if="relationshipType.contact.url.show"
+                  :href="relationshipType.contact.url.show"
+                  class="text-sky-500 hover:text-blue-900">
+                  {{ relationshipType.contact.name }}
+                </inertia-link>
                 <span v-else>{{ relationshipType.contact.name }}</span>
               </div>
 
               <!-- age -->
-              <span class="text-gray-400 mr-2">(3)</span>
+              <span class="mr-2 text-gray-400">(3)</span>
 
               <!-- relationship type -->
               <span class="mr-2 text-gray-400">{{ relationshipType.relationship_type.name }}</span>
@@ -82,7 +90,9 @@
                 @click="updateAdressTypeModal(addressType)">
                 Rename
               </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">Delete</li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(addressType)">
+                Delete
+              </li>
             </ul>
           </li>
         </ul>
