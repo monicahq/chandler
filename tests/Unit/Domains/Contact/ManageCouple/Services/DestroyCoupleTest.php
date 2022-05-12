@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageCouple\Services;
 
-use App\Contact\ManageCouple\Services\DestroyCouple;
-use App\Models\Couple;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\Couple;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Contact\ManageCouple\Services\DestroyCouple;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
