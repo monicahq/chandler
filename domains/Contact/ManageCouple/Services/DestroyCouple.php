@@ -8,7 +8,6 @@ use App\Interfaces\ServiceInterface;
 
 class DestroyCouple extends BaseService implements ServiceInterface
 {
-    private Couple $couple;
     private array $data;
 
     /**
@@ -36,7 +35,7 @@ class DestroyCouple extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
+            'author_must_be_vault_editor',
         ];
     }
 
@@ -49,9 +48,9 @@ class DestroyCouple extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->couple = Couple::where('vault_id', $data['vault_id'])
+        $couple = Couple::where('vault_id', $data['vault_id'])
             ->findOrFail($data['couple_id']);
 
-        $this->couple->delete();
+        $couple->delete();
     }
 }

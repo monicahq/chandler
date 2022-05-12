@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageCouple\Services;
 
+use App\Contact\ManageCouple\Services\CreateCouple;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
@@ -49,19 +50,6 @@ class CreateCoupleTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
 
         $this->executeService($regis, $account, $vault);
-    }
-
-    /** @test */
-    public function it_fails_if_contact_doesnt_belong_to_vault(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create();
-
-        $this->executeService($regis, $regis->account, $vault);
     }
 
     /** @test */

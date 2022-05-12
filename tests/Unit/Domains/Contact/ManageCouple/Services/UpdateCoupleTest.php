@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Domains\Contact\ManageCouple\Services;
 
+use App\Contact\ManageCouple\Services\UpdateCouple;
+use App\Models\Couple;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;

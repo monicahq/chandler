@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Couple;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CoupleFactory extends Factory

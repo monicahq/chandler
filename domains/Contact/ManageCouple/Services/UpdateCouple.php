@@ -60,7 +60,7 @@ class UpdateCouple extends BaseService implements ServiceInterface
 
     private function validate(): void
     {
-        $this->validateRules($data);
+        $this->validateRules($this->data);
 
         $this->couple = Couple::where('vault_id', $this->data['vault_id'])
             ->findOrFail($this->data['couple_id']);

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Domains\Contact\ManageCouple\Services;
 
+use App\Contact\ManageCouple\Services\DestroyCouple;
+use App\Models\Couple;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
@@ -72,7 +74,7 @@ class DestroyCoupleTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_if_vault_is_not_in_the_vault(): void
+    public function it_fails_if_couple_is_not_in_the_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
