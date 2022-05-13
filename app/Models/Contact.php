@@ -260,6 +260,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the tasks associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(ContactTask::class);
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @param  User  $user

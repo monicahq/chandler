@@ -135,6 +135,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('relationships/create', [ContactRelationshipsController::class, 'create'])->name('contact.relationships.create');
                     Route::post('relationships', [ContactRelationshipsController::class, 'store'])->name('contact.relationships.store');
                     Route::put('relationships/{relationship}', [ContactRelationshipsController::class, 'update'])->name('contact.relationships.update');
+
+                    // tasks
+                    Route::post('tasks', [ContactRelationshipsController::class, 'store'])->name('contact.tasks.store');
+                    Route::put('tasks/{task}', [ContactRelationshipsController::class, 'update'])->name('contact.tasks.update');
+                    Route::delete('tasks/{task}', [ContactRelationshipsController::class, 'destroy'])->name('contact.tasks.destroy');
                 });
             });
 

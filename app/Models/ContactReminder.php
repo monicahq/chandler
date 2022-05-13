@@ -39,6 +39,15 @@ class ContactReminder extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_triggered_at',
+    ];
+
+    /**
      * Get the contact associated with the contact reminder.
      *
      * @return BelongsTo
