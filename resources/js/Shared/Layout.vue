@@ -173,7 +173,9 @@ main {
             Current version: {{ layoutData.version.date }}
 
             <a-tooltip placement="topLeft" title="Click to see the code" arrow-point-at-center>
-              <a href="https://github.com/djaiss/butler/commits/main" target="_blank" class="sha ml-2 font-mono">{{ layoutData.version.sha }}</a>
+              <a href="https://github.com/djaiss/butler/commits/main" target="_blank" class="sha ml-2 font-mono">{{
+                layoutData.version.sha
+              }}</a>
             </a-tooltip>
           </li>
         </ul>
