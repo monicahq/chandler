@@ -2,11 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\ContactReminder;
 use App\Models\ContactTask;
-use App\Models\UserNotificationChannel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTaskTest extends TestCase

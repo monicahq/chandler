@@ -2,12 +2,9 @@
 
 namespace App\Contact\ManageTasks\Services;
 
-use App\Models\ContactTask;
 use Carbon\Carbon;
-use App\Jobs\CreateAuditLog;
+use App\Models\ContactTask;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 
 class ToggleContactTask extends BaseService implements ServiceInterface
@@ -58,7 +55,7 @@ class ToggleContactTask extends BaseService implements ServiceInterface
         $this->task = ContactTask::where('contact_id', $data['contact_id'])
             ->findOrFail($data['contact_task_id']);
 
-        $this->task->completed = !$this->task->completed;
+        $this->task->completed = ! $this->task->completed;
         $this->task->completed_at = Carbon::now();
         $this->task->save();
 

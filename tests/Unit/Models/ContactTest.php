@@ -16,14 +16,13 @@ use App\Models\Contact;
 use App\Models\Pronoun;
 use App\Models\Template;
 use App\Models\ContactLog;
+use App\Models\ContactTask;
 use App\Models\ContactReminder;
 use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
-use App\Models\ContactTask;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use MeiliSearch\Endpoints\Tasks;
 
 class ContactTest extends TestCase
 {

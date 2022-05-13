@@ -7,17 +7,13 @@ use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactReminder;
+use App\Models\ContactTask;
 use Illuminate\Support\Facades\Queue;
 use App\Models\ContactInformationType;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Contact\ManageReminders\Services\UpdateReminder;
 use App\Contact\ManageTasks\Services\ToggleContactTask;
-use App\Models\ContactTask;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ToggleContactTaskTest extends TestCase

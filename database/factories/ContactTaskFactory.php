@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Contact;
-use App\Models\ContactReminder;
 use App\Models\ContactTask;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -5,8 +5,6 @@ namespace App\Contact\ManageReminders\Web\ViewHelpers;
 use App\Models\User;
 use App\Models\Contact;
 use App\Helpers\DateHelper;
-use App\Models\ContactReminder;
-use App\Helpers\ContactReminderHelper;
 use App\Models\ContactTask;
 
 class ModuleContactTasksViewHelper

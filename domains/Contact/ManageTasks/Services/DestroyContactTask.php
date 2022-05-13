@@ -2,12 +2,9 @@
 
 namespace App\Contact\ManageTasks\Services;
 
-use App\Models\ContactTask;
 use Carbon\Carbon;
-use App\Jobs\CreateAuditLog;
+use App\Models\ContactTask;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactReminder;
 use App\Interfaces\ServiceInterface;
 
 class DestroyContactTask extends BaseService implements ServiceInterface

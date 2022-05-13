@@ -2,23 +2,17 @@
 
 namespace Tests\Unit\Domains\Contact\ManageTasks\Services;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactReminder;
 use Illuminate\Support\Facades\Queue;
-use App\Models\UserNotificationChannel;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
+use App\Contact\ManageTasks\Services\CreateContactTask;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Contact\ManageReminders\Services\CreateContactReminder;
-use App\Contact\ManageTasks\Services\CreateContactTask;
 
 class CreateContactTaskTest extends TestCase
 {
