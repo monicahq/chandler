@@ -76,7 +76,9 @@
                 <span v-else>{{ relationshipType.contact.name }}</span>
 
                 <!-- age -->
-                <span v-if="relationshipType.contact.age" class="ml-2 text-xs text-gray-400">({{ relationshipType.contact.age }})</span>
+                <span v-if="relationshipType.contact.age" class="ml-2 text-xs text-gray-400"
+                  >({{ relationshipType.contact.age }})</span
+                >
               </div>
 
               <!-- relationship type -->
