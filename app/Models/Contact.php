@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
 use Laravel\Scout\Searchable;
+use App\Helpers\ImportantDateHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -283,7 +283,7 @@ class Contact extends Model
             ->where('internal_type', ContactImportantDate::TYPE_BIRTHDATE)
             ->first();
 
-        if (!$type) {
+        if (! $type) {
             return null;
         }
 
@@ -291,7 +291,7 @@ class Contact extends Model
             ->where('contact_important_date_type_id', $type->id)
             ->first();
 
-        if (!$birthdate) {
+        if (! $birthdate) {
             return null;
         }
 

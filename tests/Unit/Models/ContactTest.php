@@ -2,9 +2,11 @@
 
 namespace Tests\Unit\Models;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Loan;
 use App\Models\Note;
+use App\Models\User;
 use App\Models\Label;
 use App\Models\Avatar;
 use App\Models\Gender;
@@ -19,8 +21,6 @@ use App\Models\RelationshipType;
 use App\Models\ContactInformation;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactTest extends TestCase
