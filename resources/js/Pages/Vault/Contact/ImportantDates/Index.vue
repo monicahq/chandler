@@ -112,13 +112,13 @@
             <!-- type -->
             <div class="border-b border-gray-200 p-5">
               <dropdown
-                  v-model="form.contact_important_date_type_id"
-                  :data="data.date_types"
-                  :required="false"
-                  :placeholder="'Choose a value'"
-                  :dropdown-class="'block w-full'"
-                  :help="'Some dates have a special type that we will use in the software to calculate an age.'"
-                  :label="'Date type'" />
+                v-model="form.contact_important_date_type_id"
+                :data="data.date_types"
+                :required="false"
+                :placeholder="'Choose a value'"
+                :dropdown-class="'block w-full'"
+                :help="'Some dates have a special type that we will use in the software to calculate an age.'"
+                :label="'Date type'" />
             </div>
 
             <div class="p-5">
@@ -303,13 +303,13 @@
                 <!-- type -->
                 <div class="border-b border-gray-200 p-5">
                   <dropdown
-                      v-model="form.contact_important_date_type_id"
-                      :data="data.date_types"
-                      :required="false"
-                      :placeholder="'Choose a value'"
-                      :dropdown-class="'block w-full'"
-                      :help="'Some dates have a special type that we will use in the software to calculate an age.'"
-                      :label="'Date type'" />
+                    v-model="form.contact_important_date_type_id"
+                    :data="data.date_types"
+                    :required="false"
+                    :placeholder="'Choose a value'"
+                    :dropdown-class="'block w-full'"
+                    :help="'Some dates have a special type that we will use in the software to calculate an age.'"
+                    :label="'Date type'" />
                 </div>
 
                 <div class="p-5">
