@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3bdedc5f1fa7a3d8cf6e3ea98dde605f",
+    "content-hash": "7deaa5e501fe2f89a3be1fa05c891ee0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2131,6 +2131,68 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "marksitko/laravel-unsplash",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marksitko/laravel-unsplash.git",
+                "reference": "c68db3b985ae58bcb781eb81cb6b2c1300cde9ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marksitko/laravel-unsplash/zipball/c68db3b985ae58bcb781eb81cb6b2c1300cde9ed",
+                "reference": "c68db3b985ae58bcb781eb81cb6b2c1300cde9ed",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MarkSitko\\LaravelUnsplash\\UnsplashServiceProvider"
+                    ],
+                    "aliases": {
+                        "Unsplash": "MarkSitko\\LaravelUnsplash\\Facades\\Unsplash"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarkSitko\\LaravelUnsplash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Sitko",
+                    "email": "hey@marksitko.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides a fluent Unsplash API for Laravel",
+            "homepage": "https://github.com/marksitko/laravel-unsplash",
+            "keywords": [
+                "laravel-unsplash",
+                "marksitko"
+            ],
+            "support": {
+                "issues": "https://github.com/marksitko/laravel-unsplash/issues",
+                "source": "https://github.com/marksitko/laravel-unsplash/tree/2.0.0"
+            },
+            "time": "2022-03-08T19:23:43+00:00"
         },
         {
             "name": "meilisearch/meilisearch-php",
