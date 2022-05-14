@@ -2,11 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
-use App\Models\Vault;
 use App\Models\Wallpaper;
-use Illuminate\Support\Facades\DB;
-use MarkSitko\LaravelUnsplash\Facades\Unsplash;
 
 class WallpaperHelper
 {
@@ -38,6 +34,6 @@ class WallpaperHelper
 
         shuffle($photos);
 
-        return asset('img/'. $photos[0]);
+        return asset('img/'.$photos[0]);
     }
 }

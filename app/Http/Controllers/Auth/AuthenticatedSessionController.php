@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helpers\WallpaperHelper;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Helpers\WallpaperHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
