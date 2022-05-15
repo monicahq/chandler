@@ -345,6 +345,22 @@ class SetupAccount implements ShouldQueue
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
         ]);
+
+        // Tasks
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_tasks'),
+            'type' => Module::TYPE_TASKS,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageInformation->id,
+            'module_id' => $module->id,
+        ]);
     }
 
     private function addFirstInformation(): void

@@ -19,6 +19,8 @@ class ContactTask extends Model
      */
     protected $fillable = [
         'contact_id',
+        'author_id',
+        'author_name',
         'label',
         'description',
         'completed',
@@ -51,5 +53,15 @@ class ContactTask extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    /**
+     * Get the author associated with the contact task.
+     *
+     * @return BelongsTo
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class);
     }
 }

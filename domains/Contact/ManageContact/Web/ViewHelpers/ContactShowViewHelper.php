@@ -168,6 +168,10 @@ class ContactShowViewHelper
                 $data = ModuleRelationshipViewHelper::data($contact, $user);
             }
 
+            if ($module->type == Module::TYPE_TASKS) {
+                $data = ModuleRelationshipViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,

@@ -66,6 +66,8 @@ class CreateContactTask extends BaseService implements ServiceInterface
     {
         $this->task = ContactTask::create([
             'contact_id' => $this->data['contact_id'],
+            'author_id' => $this->author->id,
+            'author_name' => $this->author->name,
             'label' => $this->data['label'],
             'description' => $this->valueOrNull($this->data, 'description'),
         ]);

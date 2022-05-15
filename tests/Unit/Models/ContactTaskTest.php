@@ -17,4 +17,12 @@ class ContactTaskTest extends TestCase
 
         $this->assertTrue($task->contact()->exists());
     }
+
+    /** @test */
+    public function it_has_one_author()
+    {
+        $task = ContactTask::factory()->create();
+
+        $this->assertTrue($task->author()->exists());
+    }
 }

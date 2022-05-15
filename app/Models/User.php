@@ -104,6 +104,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the task records associated with the user.
+     *
+     * @return HasMany
+     */
+    public function contactTasks()
+    {
+        return $this->hasMany(ContactTask::class, 'author_id');
+    }
+
+    /**
      * Get the name of the user.
      *
      * @param  mixed  $value

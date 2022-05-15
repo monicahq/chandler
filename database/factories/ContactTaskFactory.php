@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Contact;
 use App\Models\ContactTask;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactTaskFactory extends Factory
@@ -24,6 +25,8 @@ class ContactTaskFactory extends Factory
     {
         return [
             'contact_id' => Contact::factory(),
+            'author_id' => User::factory(),
+            'author_name' => $this->faker->name,
             'label' => $this->faker->sentence(),
         ];
     }

@@ -26,6 +26,7 @@ class Module extends Model
     const TYPE_REMINDERS = 'reminders';
     const TYPE_LOANS = 'loans';
     const TYPE_RELATIONSHIPS = 'relationships';
+    const TYPE_TASKS = 'tasks';
 
     /**
      * The attributes that are mass assignable.
