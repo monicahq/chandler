@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
 use App\Models\Note;
 use App\Models\User;
-use App\Models\Vault;
 use App\Models\UserNotificationChannel;
+use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {

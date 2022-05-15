@@ -2,10 +2,10 @@
 
 namespace App\Contact\ManageReminders\Web\ViewHelpers;
 
-use App\Models\User;
-use App\Models\Contact;
 use App\Helpers\DateHelper;
+use App\Models\Contact;
 use App\Models\ContactTask;
+use App\Models\User;
 
 class ModuleContactTasksViewHelper
 {

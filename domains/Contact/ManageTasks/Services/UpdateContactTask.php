@@ -2,10 +2,10 @@
 
 namespace App\Contact\ManageTasks\Services;
 
-use Carbon\Carbon;
+use App\Interfaces\ServiceInterface;
 use App\Models\ContactTask;
 use App\Services\BaseService;
-use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class UpdateContactTask extends BaseService implements ServiceInterface
 {
