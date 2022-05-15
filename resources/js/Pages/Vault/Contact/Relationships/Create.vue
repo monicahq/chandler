@@ -316,7 +316,7 @@ select {
                   id="create-contact"
                   name="create-contact"
                   type="checkbox"
-                  class="relative h-4 w-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" />
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
                 <label for="create-contact" class="ml-2 block cursor-pointer text-sm text-gray-900">
                   Create a contact entry for this person
                 </label>
