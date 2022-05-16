@@ -48,7 +48,7 @@
 
     <!-- add a task modal -->
     <form v-if="createCallModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+      <div class="">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
