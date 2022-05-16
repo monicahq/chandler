@@ -25,4 +25,12 @@ class CallTest extends TestCase
 
         $this->assertTrue($task->author()->exists());
     }
+
+    /** @test */
+    public function it_has_one_call_reason()
+    {
+        $task = ContactTask::factory()->create();
+
+        $this->assertTrue($task->callReason()->exists());
+    }
 }

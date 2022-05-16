@@ -4,11 +4,15 @@ namespace App\Contact\ManageCalls\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Call;
+use App\Models\CallReason;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UpdateCall extends BaseService implements ServiceInterface
 {
+    private array $data;
+
     /**
      * Get the validation rules that apply to the service.
      *
@@ -22,6 +26,7 @@ class UpdateCall extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'call_id' => 'required|integer|exists:calls,id',
+            'call_reason_id' => 'nullable|integer|exists:call_reasons,id',
             'called_at' => 'required|date_format:Y-m-d',
             'duration' => 'nullable|integer',
             'type' => 'required|string',
@@ -53,13 +58,15 @@ class UpdateCall extends BaseService implements ServiceInterface
      */
     public function execute(array $data): Call
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
 
         $call = Call::where('contact_id', $data['contact_id'])
             ->findOrFail($data['call_id']);
 
         $call->called_at = $data['called_at'];
         $call->duration = $this->valueOrNull($data, 'duration');
+        $call->call_reason_id = $this->valueOrNull($data, 'call_reason_id');
         $call->type = $data['type'];
         $call->answered = $this->valueOrTrue($data, 'answered');
         $call->who_initiated = $data['who_initiated'];
@@ -69,5 +76,18 @@ class UpdateCall extends BaseService implements ServiceInterface
         $this->contact->save();
 
         return $call;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+
+        if (!is_null($this->data['call_reason_id'])) {
+            $this->callReason = CallReason::findOrFail($this->data['call_reason_id']);
+
+            if ($this->callReason->callReasonType->account_id !== $this->data['account_id']) {
+                throw new ModelNotFoundException('Call reason does not belong to account.');
+            }
+        }
     }
 }

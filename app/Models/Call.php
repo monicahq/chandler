@@ -27,6 +27,7 @@ class Call extends Model
      */
     protected $fillable = [
         'contact_id',
+        'call_reason_id',
         'author_id',
         'author_name',
         'called_at',
@@ -56,7 +57,7 @@ class Call extends Model
     ];
 
     /**
-     * Get the contact associated with the contact task.
+     * Get the contact associated with the call.
      *
      * @return BelongsTo
      */
@@ -66,12 +67,22 @@ class Call extends Model
     }
 
     /**
-     * Get the author associated with the contact task.
+     * Get the author associated with the call.
      *
      * @return BelongsTo
      */
     public function author()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the call reason associated with the call.
+     *
+     * @return BelongsTo
+     */
+    public function callReason()
+    {
+        return $this->belongsTo(CallReason::class);
     }
 }

@@ -5,6 +5,8 @@ namespace Tests\Unit\Domains\Contact\ManageCalls\Services;
 use App\Contact\ManageCalls\Services\CreateCall;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
+use App\Models\CallReason;
+use App\Models\CallReasonType;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
@@ -25,8 +27,12 @@ class CreateCallTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
 
     /** @test */
@@ -50,8 +56,12 @@ class CreateCallTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $account, $vault, $contact);
+        $this->executeService($regis, $account, $vault, $contact, $callReason);
     }
 
     /** @test */
@@ -63,8 +73,12 @@ class CreateCallTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
 
     /** @test */
@@ -76,11 +90,29 @@ class CreateCallTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact);
+        $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
+    /** @test */
+    public function it_fails_if_call_reason_doesnt_belong_to_account(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $callReason = CallReason::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, CallReason $reason): void
     {
         Queue::fake();
 
@@ -89,6 +121,7 @@ class CreateCallTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
+            'call_reason_id' => $reason->id,
             'called_at' => '1999-01-01',
             'duration' => 100,
             'type' => 'audio',

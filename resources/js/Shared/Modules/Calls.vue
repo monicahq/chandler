@@ -64,6 +64,7 @@
             </v-date-picker>
           </div>
 
+          <!-- who called -->
           <div class="border-l border-gray-200 p-5">
             <p class="mb-2 block text-sm">Who called?</p>
 
@@ -97,6 +98,7 @@
           </div>
         </div>
 
+        <!-- audio or video -->
         <div class="flex border-b border-gray-200 p-5">
           <div class="mr-6 flex items-center">
             <input
@@ -125,13 +127,22 @@
           </div>
         </div>
 
+        <!-- options -->
         <div class="border-b border-gray-200 p-5">
-          <!-- cta to add a title -->
+          <!-- cta to add a description -->
           <span
             v-if="!titleFieldShown"
             class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
             @click="showTitleField">
             + add description
+          </span>
+
+          <!-- cta to add a reason -->
+          <span
+            v-if="!titleFieldShown"
+            class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+            @click="showTitleField">
+            + add reason
           </span>
 
           <!-- cta to add emotion -->

@@ -4,8 +4,10 @@ namespace App\Contact\ManageCalls\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Call;
+use App\Models\CallReason;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CreateCall extends BaseService implements ServiceInterface
 {
@@ -24,6 +26,7 @@ class CreateCall extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'call_reason_id' => 'nullable|integer|exists:call_reasons,id',
             'called_at' => 'required|date_format:Y-m-d',
             'duration' => 'nullable|integer',
             'type' => 'required|string',
@@ -55,13 +58,26 @@ class CreateCall extends BaseService implements ServiceInterface
      */
     public function execute(array $data): Call
     {
-        $this->validateRules($data);
         $this->data = $data;
+        $this->validate();
 
         $this->createCall();
         $this->updateLastEditedDate();
 
         return $this->call;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+
+        if (! is_null($this->data['call_reason_id'])) {
+            $this->callReason = CallReason::findOrFail($this->data['call_reason_id']);
+
+            if ($this->callReason->callReasonType->account_id !== $this->data['account_id']) {
+                throw new ModelNotFoundException('Call reason does not belong to account.');
+            }
+        }
     }
 
     private function createCall(): void

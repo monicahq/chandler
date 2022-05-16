@@ -6,6 +6,8 @@ use App\Contact\ManageCalls\Services\UpdateCall;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Call;
+use App\Models\CallReason;
+use App\Models\CallReasonType;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
@@ -29,8 +31,12 @@ class UpdateCallTest extends TestCase
         $call = Call::factory()->create([
             'contact_id' => $contact->id,
         ]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $call);
+        $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
     }
 
     /** @test */
@@ -57,8 +63,12 @@ class UpdateCallTest extends TestCase
         $call = Call::factory()->create([
             'contact_id' => $contact->id,
         ]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $account, $vault, $contact, $call);
+        $this->executeService($regis, $account, $vault, $contact, $call, $callReason);
     }
 
     /** @test */
@@ -73,8 +83,12 @@ class UpdateCallTest extends TestCase
         $call = Call::factory()->create([
             'contact_id' => $contact->id,
         ]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $call);
+        $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
     }
 
     /** @test */
@@ -89,8 +103,12 @@ class UpdateCallTest extends TestCase
         $call = Call::factory()->create([
             'contact_id' => $contact->id,
         ]);
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $call);
+        $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
     }
 
     /** @test */
@@ -103,11 +121,30 @@ class UpdateCallTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $call = Call::factory()->create();
+        $type = CallReasonType::factory()->create([
+            'account_id' => $regis
+        ]);
+        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $call);
+        $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Call $call): void
+    /** @test */
+    public function it_fails_if_call_reason_doesnt_belong_to_account(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $call = Call::factory()->create();
+        $callReason = CallReason::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Call $call, CallReason $reason): void
     {
         Queue::fake();
 
@@ -117,6 +154,7 @@ class UpdateCallTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'call_id' => $call->id,
+            'call_reason_id' => $reason->id,
             'called_at' => '1999-01-01',
             'duration' => 100,
             'type' => 'audio',
