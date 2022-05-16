@@ -106,7 +106,6 @@ export default {
     this.localEmails = this.data.emails;
   },
 
-  methods: {
-  },
+  methods: {},
 };
 </script>

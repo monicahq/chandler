@@ -87,22 +87,14 @@
             </label>
           </div>
 
-          <hover-menu
-              :show-edit="true"
-              :show-delete="true"
-              @edit="showUpdateTaskModal(task)"
-              @delete="destroy(task)" />
+          <hover-menu :show-edit="true" :show-delete="true" @edit="showUpdateTaskModal(task)" @delete="destroy(task)" />
         </div>
 
         <!-- edit task -->
-        <form
-          v-if="editedTaskId === task.id"
-          class="bg-form"
-          @submit.prevent="update(task)">
+        <form v-if="editedTaskId === task.id" class="bg-form" @submit.prevent="update(task)">
           <errors :errors="form.errors" />
 
           <div class="border-b border-gray-200 p-5">
-
             <text-input
               :ref="'update' + task.id"
               v-model="form.label"
@@ -113,7 +105,6 @@
               :autocomplete="false"
               :maxlength="255"
               @esc-key-pressed="editedTaskId = 0" />
-
           </div>
 
           <div class="flex justify-between p-5">
@@ -125,7 +116,12 @@
     </ul>
 
     <!-- button to display completed tasks -->
-    <p v-if="data.completed_tasks_count > 0 && !showCompletedTasks" @click="getCompleted()" class="mx-4 mb-6 text-xs text-sky-500 hover:text-blue-900 cursor-pointer">Show completed tasks ({{ data.completed_tasks_count }})</p>
+    <p
+      v-if="data.completed_tasks_count > 0 && !showCompletedTasks"
+      @click="getCompleted()"
+      class="mx-4 mb-6 cursor-pointer text-xs text-sky-500 hover:text-blue-900">
+      Show completed tasks ({{ data.completed_tasks_count }})
+    </p>
 
     <!-- list of completed tasks -->
     <div v-if="showCompletedTasks" class="mx-4 text-xs">
@@ -146,10 +142,10 @@
             </div>
 
             <hover-menu
-                :show-edit="false"
-                :show-delete="true"
-                @edit="showUpdateTaskModal(task)"
-                @delete="destroy(task)" />
+              :show-edit="false"
+              :show-delete="true"
+              @edit="showUpdateTaskModal(task)"
+              @delete="destroy(task)" />
           </div>
         </li>
       </ul>
@@ -272,8 +268,7 @@ export default {
     toggle(task) {
       axios
         .put(task.url.toggle)
-        .then((response) => {
-        })
+        .then((response) => {})
         .catch((error) => {
           this.form.errors = error.response.data;
         });
