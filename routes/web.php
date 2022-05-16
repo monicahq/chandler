@@ -13,6 +13,7 @@ use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
+use App\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
 use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
@@ -137,9 +138,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('relationships/{relationship}', [ContactRelationshipsController::class, 'update'])->name('contact.relationships.update');
 
                     // tasks
-                    Route::post('tasks', [ContactRelationshipsController::class, 'store'])->name('contact.tasks.store');
-                    Route::put('tasks/{task}', [ContactRelationshipsController::class, 'update'])->name('contact.tasks.update');
-                    Route::delete('tasks/{task}', [ContactRelationshipsController::class, 'destroy'])->name('contact.tasks.destroy');
+                    Route::post('tasks', [ContactModuleTaskController::class, 'store'])->name('contact.task.store');
+                    Route::put('tasks/{task}', [ContactModuleTaskController::class, 'update'])->name('contact.task.update');
+                    Route::delete('tasks/{task}', [ContactModuleTaskController::class, 'destroy'])->name('contact.task.destroy');
                 });
             });
 

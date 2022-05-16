@@ -13,6 +13,7 @@ use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
+use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
 use App\Models\Contact;
 use App\Models\Module;
 use App\Models\TemplatePage;
@@ -169,7 +170,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_TASKS) {
-                $data = ModuleRelationshipViewHelper::data($contact, $user);
+                $data = ModuleContactTasksViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

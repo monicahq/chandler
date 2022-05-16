@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contact\ManageReminders\Web\ViewHelpers;
+namespace App\Contact\ManageTasks\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
 use App\Models\Contact;
@@ -12,7 +12,7 @@ class ModuleContactTasksViewHelper
     public static function data(Contact $contact, User $user): array
     {
         $tasks = $contact->tasks()
-            ->orderBy('id')
+            ->orderBy('id', 'desc')
             ->get();
 
         $tasksCollection = $tasks->map(function ($task) use ($contact, $user) {
@@ -22,7 +22,7 @@ class ModuleContactTasksViewHelper
         return [
             'tasks' => $tasksCollection,
             'url' => [
-                'store' => route('contact.reminder.store', [
+                'store' => route('contact.task.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -39,15 +39,15 @@ class ModuleContactTasksViewHelper
             'completed' => $task->completed,
             'completed_at' => $task->completed_at ? DateHelper::format($task->completed_at, $user) : null,
             'url' => [
-                'update' => route('contact.reminder.update', [
+                'update' => route('contact.task.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'reminder' => $task->id,
+                    'task' => $task->id,
                 ]),
-                'destroy' => route('contact.reminder.destroy', [
+                'destroy' => route('contact.task.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'reminder' => $task->id,
+                    'task' => $task->id,
                 ]),
             ],
         ];
