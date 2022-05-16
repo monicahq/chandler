@@ -86,9 +86,7 @@
           </svg>
 
           <div>
-            <p class="mb-2">
-              Call reasons let you indicate the reason of calls you make to your contacts.
-            </p>
+            <p class="mb-2">Call reasons let you indicate the reason of calls you make to your contacts.</p>
           </div>
         </div>
 
@@ -176,14 +174,12 @@
               :key="reason.id"
               class="border-b border-gray-200 hover:bg-slate-50">
               <!-- detail of the relationship type -->
-              <div v-if="renameReasonModalId != reason.id" class="px-5 py-2 pl-6 flex items-center justify-between">
+              <div v-if="renameReasonModalId != reason.id" class="flex items-center justify-between px-5 py-2 pl-6">
                 <span>{{ reason.label }}</span>
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li
-                    class="inline cursor-pointer text-sky-500 hover:text-blue-900"
-                    @click="renameReasonModal(reason)">
+                  <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="renameReasonModal(reason)">
                     Rename
                   </li>
                   <li
@@ -382,7 +378,8 @@ export default {
         .put(callReasonType.url.update, this.form)
         .then((response) => {
           this.flash('The call reason type has been updated', 'success');
-          this.localCallReasonTypes[this.localCallReasonTypes.findIndex((x) => x.id === callReasonType.id)] = response.data.data;
+          this.localCallReasonTypes[this.localCallReasonTypes.findIndex((x) => x.id === callReasonType.id)] =
+            response.data.data;
           this.loadingState = null;
           this.renameCallReasonTypeModalShownId = 0;
         })
