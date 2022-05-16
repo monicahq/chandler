@@ -82,7 +82,7 @@ class UpdateCall extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        if (!is_null($this->data['call_reason_id'])) {
+        if (! is_null($this->data['call_reason_id'])) {
             $this->callReason = CallReason::findOrFail($this->data['call_reason_id']);
 
             if ($this->callReason->callReasonType->account_id !== $this->data['account_id']) {

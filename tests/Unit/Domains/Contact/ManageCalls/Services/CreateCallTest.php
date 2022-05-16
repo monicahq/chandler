@@ -57,7 +57,7 @@ class CreateCallTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -74,7 +74,7 @@ class CreateCallTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -91,7 +91,7 @@ class CreateCallTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 

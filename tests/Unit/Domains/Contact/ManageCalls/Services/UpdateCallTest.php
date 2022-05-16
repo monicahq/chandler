@@ -32,7 +32,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -64,7 +64,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -84,7 +84,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -104,7 +104,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -122,7 +122,7 @@ class UpdateCallTest extends TestCase
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $call = Call::factory()->create();
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis
+            'account_id' => $regis,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
