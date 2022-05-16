@@ -5,9 +5,7 @@ namespace App\Contact\ManageCalls\Web\ViewHelpers;
 use App\Helpers\DateHelper;
 use App\Models\Call;
 use App\Models\Contact;
-use App\Models\ContactTask;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class ModuleCallsViewHelper
 {
