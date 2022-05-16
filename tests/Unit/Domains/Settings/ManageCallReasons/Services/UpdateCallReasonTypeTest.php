@@ -3,16 +3,12 @@
 namespace Tests\Unit\Domains\Settings\ManageCallReasons\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
 use App\Models\Account;
 use App\Models\CallReasonType;
-use App\Models\RelationshipGroupType;
 use App\Models\User;
 use App\Settings\ManageCallReasons\Services\UpdateCallReasonType;
-use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipGroupType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 

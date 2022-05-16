@@ -7,10 +7,6 @@ use App\Settings\ManageCallReasons\Services\CreateCallReason;
 use App\Settings\ManageCallReasons\Services\DestroyCallReason;
 use App\Settings\ManageCallReasons\Services\UpdateCallReason;
 use App\Settings\ManageCallReasons\Web\ViewHelpers\PersonalizeCallReasonsIndexViewHelper;
-use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipType;
-use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
-use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipType;
-use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

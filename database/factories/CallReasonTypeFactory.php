@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Account;
 use App\Models\CallReasonType;
-use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CallReasonTypeFactory extends Factory

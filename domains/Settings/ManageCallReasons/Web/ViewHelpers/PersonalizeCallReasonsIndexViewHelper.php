@@ -5,8 +5,6 @@ namespace App\Settings\ManageCallReasons\Web\ViewHelpers;
 use App\Models\Account;
 use App\Models\CallReason;
 use App\Models\CallReasonType;
-use App\Models\RelationshipGroupType;
-use App\Models\RelationshipType;
 
 class PersonalizeCallReasonsIndexViewHelper
 {

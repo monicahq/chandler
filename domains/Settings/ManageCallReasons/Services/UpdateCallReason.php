@@ -3,11 +3,8 @@
 namespace App\Settings\ManageCallReasons\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
 use App\Models\CallReason;
 use App\Models\CallReasonType;
-use App\Models\RelationshipGroupType;
-use App\Models\RelationshipType;
 use App\Models\User;
 use App\Services\BaseService;
 

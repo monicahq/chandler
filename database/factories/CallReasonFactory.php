@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\CallReason;
 use App\Models\CallReasonType;
-use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CallReasonFactory extends Factory

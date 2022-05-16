@@ -4,8 +4,6 @@ namespace Tests\Unit\Domains\Settings\ManageCallReasons\Web\ViewHelpers;
 
 use App\Models\CallReason;
 use App\Models\CallReasonType;
-use App\Models\RelationshipGroupType;
-use App\Models\RelationshipType;
 use App\Settings\ManageCallReasons\Web\ViewHelpers\PersonalizeCallReasonsIndexViewHelper;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
