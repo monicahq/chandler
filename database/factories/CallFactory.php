@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Call;
 use App\Models\Contact;
-use App\Models\ContactTask;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -3,13 +3,10 @@
 namespace Tests\Unit\Domains\Contact\ManageCalls\Services;
 
 use App\Contact\ManageCalls\Services\UpdateCall;
-use App\Contact\ManageTasks\Services\UpdateContactTask;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Call;
 use App\Models\Contact;
-use App\Models\ContactInformationType;
-use App\Models\ContactTask;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

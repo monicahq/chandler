@@ -64,7 +64,7 @@ class SetupDummyAccount extends Command
 
     private function start(): void
     {
-        if (!$this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
+        if (! $this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
             exit;
         }
 
@@ -74,8 +74,8 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        shell_exec('curl -X DELETE "' . config('scout.meilisearch.host') . '/indexes/notes"');
-        shell_exec('curl -X DELETE "' . config('scout.meilisearch.host') . '/indexes/contacts"');
+        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/notes"');
+        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/contacts"');
         $this->artisan('☐ Reset search engine', 'monica:setup');
         $this->artisan('☐ Migration of the database', 'migrate:fresh');
         $this->artisan('☐ Symlink the storage folder', 'storage:link');
@@ -98,7 +98,7 @@ class SetupDummyAccount extends Command
         $this->line('| username: blank@blank.com');
         $this->line('| password: blank123');
         $this->line('|------------------------–––-');
-        $this->line('| URL:      ' . config('app.url'));
+        $this->line('| URL:      '.config('app.url'));
         $this->line('-----------------------------');
 
         $this->info('Setup is done. Have fun.');

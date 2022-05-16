@@ -4,13 +4,11 @@ namespace App\Contact\ManageCalls\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Call;
-use App\Models\ContactTask;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
 class UpdateCall extends BaseService implements ServiceInterface
 {
-
     /**
      * Get the validation rules that apply to the service.
      *
