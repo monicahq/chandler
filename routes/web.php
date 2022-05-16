@@ -138,8 +138,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('relationships/{relationship}', [ContactRelationshipsController::class, 'update'])->name('contact.relationships.update');
 
                     // tasks
+                    Route::get('tasks/completed', [ContactModuleTaskController::class, 'index'])->name('contact.task.index');
                     Route::post('tasks', [ContactModuleTaskController::class, 'store'])->name('contact.task.store');
                     Route::put('tasks/{task}', [ContactModuleTaskController::class, 'update'])->name('contact.task.update');
+                    Route::put('tasks/{task}/toggle', [ContactModuleTaskController::class, 'toggle'])->name('contact.task.toggle');
                     Route::delete('tasks/{task}', [ContactModuleTaskController::class, 'destroy'])->name('contact.task.destroy');
                 });
             });

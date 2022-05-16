@@ -7,6 +7,8 @@ use App\Contact\ManageReminders\Services\DestroyReminder;
 use App\Contact\ManageReminders\Services\UpdateReminder;
 use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 use App\Contact\ManageTasks\Services\CreateContactTask;
+use App\Contact\ManageTasks\Services\DestroyContactTask;
+use App\Contact\ManageTasks\Services\ToggleContactTask;
 use App\Contact\ManageTasks\Services\UpdateContactTask;
 use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
 use App\Http\Controllers\Controller;
@@ -18,6 +20,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactModuleTaskController extends Controller
 {
+    public function index(Request $request, int $vaultId, int $contactId)
+    {
+        $contact = Contact::find($contactId);
+
+        return response()->json([
+            'data' => ModuleContactTasksViewHelper::completed($contact, Auth::user()),
+        ], 200);
+    }
+
     public function store(Request $request, int $vaultId, int $contactId)
     {
         $data = [
@@ -57,6 +68,26 @@ class ContactModuleTaskController extends Controller
         ], 200);
     }
 
+    public function toggle(Request $request, int $vaultId, int $contactId, int $taskId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'contact_id' => $contactId,
+            'contact_task_id' => $taskId,
+            'label' => $request->input('label'),
+            'description' => null,
+        ];
+
+        $task = (new ToggleContactTask)->execute($data);
+        $contact = Contact::find($contactId);
+
+        return response()->json([
+            'data' => ModuleContactTasksViewHelper::dtoTask($contact, $task, Auth::user()),
+        ], 200);
+    }
+
     public function destroy(Request $request, int $vaultId, int $contactId, int $taskId)
     {
         $data = [
@@ -64,10 +95,10 @@ class ContactModuleTaskController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_reminder_id' => $taskId,
+            'contact_task_id' => $taskId,
         ];
 
-        (new DestroyReminder)->execute($data);
+        (new DestroyContactTask)->execute($data);
 
         return response()->json([
             'data' => true,

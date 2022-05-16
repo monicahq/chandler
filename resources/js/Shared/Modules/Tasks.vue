@@ -73,27 +73,38 @@
     <!-- tasks -->
     <ul v-if="localTasks.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
       <li v-for="task in localTasks" :key="task.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
-        <div v-if="editedTaskId !== task.id" class="flex items-center p-3">
-          <input
-            :id="task.id"
-            :name="task.id"
-            type="checkbox"
-            class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-          <label :for="task.id" class="ml-2 cursor-pointer text-gray-900">
-            {{ task.label }}
-          </label>
+        <div v-if="editedTaskId !== task.id" class="flex items-center justify-between p-3">
+          <div>
+            <input
+              :id="task.id"
+              :name="task.id"
+              v-model="task.completed"
+              @change="toggle(task)"
+              type="checkbox"
+              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+            <label :for="task.id" class="ml-2 cursor-pointer text-gray-900">
+              {{ task.label }}
+            </label>
+          </div>
+
+          <hover-menu
+              :show-edit="true"
+              :show-delete="true"
+              @edit="showUpdateTaskModal(task)"
+              @delete="destroy(task)" />
         </div>
 
         <!-- edit task -->
         <form
           v-if="editedTaskId === task.id"
-          class="bg-form border-b border-gray-200 p-5"
+          class="bg-form"
           @submit.prevent="update(task)">
           <errors :errors="form.errors" />
 
-          <div class="flex justify-between">
+          <div class="border-b border-gray-200 p-5">
+
             <text-input
-              :ref="'newTitle'"
+              :ref="'update' + task.id"
               v-model="form.label"
               :label="'Title'"
               :type="'text'"
@@ -103,12 +114,8 @@
               :maxlength="255"
               @esc-key-pressed="editedTaskId = 0" />
 
-            <hover-menu
-              :show-edit="true"
-              :show-delete="true"
-              @edit="showUpdateTaskModal(task)"
-              @delete="destroy(task)" />
           </div>
+
           <div class="flex justify-between p-5">
             <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedTaskId = 0" />
             <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
@@ -116,7 +123,37 @@
         </form>
       </li>
     </ul>
-    <p class="mx-4 mb-6 text-xs">Show completed tasks</p>
+
+    <!-- button to display completed tasks -->
+    <p v-if="data.completed_tasks_count > 0 && !showCompletedTasks" @click="getCompleted()" class="mx-4 mb-6 text-xs text-sky-500 hover:text-blue-900 cursor-pointer">Show completed tasks ({{ data.completed_tasks_count }})</p>
+
+    <!-- list of completed tasks -->
+    <div v-if="showCompletedTasks" class="mx-4 text-xs">
+      <ul v-for="task in localCompletedTasks" :key="task.id" class="mb-2 rounded-lg border border-gray-200 bg-white">
+        <li>
+          <div class="flex items-center justify-between p-3">
+            <div>
+              <input
+                :id="task.id"
+                :name="task.id"
+                v-model="task.completed"
+                @change="toggle(task)"
+                type="checkbox"
+                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+              <label :for="task.id" class="ml-2 cursor-pointer text-gray-900">
+                {{ task.label }}
+              </label>
+            </div>
+
+            <hover-menu
+                :show-edit="false"
+                :show-delete="true"
+                @edit="showUpdateTaskModal(task)"
+                @delete="destroy(task)" />
+          </div>
+        </li>
+      </ul>
+    </div>
 
     <!-- blank state -->
     <div v-if="localTasks.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
@@ -146,16 +183,14 @@ export default {
       type: Object,
       default: null,
     },
-    paginator: {
-      type: Object,
-      default: null,
-    },
   },
 
   data() {
     return {
       createTaskModalShown: false,
+      showCompletedTasks: false,
       localTasks: [],
+      localCompletedTasks: [],
       loadingState: '',
       editedTaskId: 0,
       form: {
@@ -165,7 +200,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     this.localTasks = this.data.tasks;
   },
 
@@ -182,12 +217,22 @@ export default {
 
     showUpdateTaskModal(task) {
       this.form.errors = [];
-      this.form.label = '';
+      this.form.label = task.label;
       this.editedTaskId = task.id;
 
       this.$nextTick(() => {
         this.$refs[`update${task.id}`].focus();
       });
+    },
+
+    getCompleted() {
+      axios
+        .get(this.data.url.completed)
+        .then((response) => {
+          this.localCompletedTasks = response.data.data;
+          this.showCompletedTasks = true;
+        })
+        .catch((error) => {});
     },
 
     submit() {
@@ -207,13 +252,41 @@ export default {
         });
     },
 
-    destroy(relationshipType) {
-      if (confirm('Are you sure? This will delete the relationship.')) {
+    update(task) {
+      this.loadingState = 'loading';
+
+      axios
+        .put(task.url.update, this.form)
+        .then((response) => {
+          this.loadingState = '';
+          this.flash('The task has been edited', 'success');
+          this.localTasks[this.localTasks.findIndex((x) => x.id === task.id)] = response.data.data;
+          this.editedTaskId = 0;
+        })
+        .catch((error) => {
+          this.loadingState = '';
+          this.form.errors = error.response.data;
+        });
+    },
+
+    toggle(task) {
+      axios
+        .put(task.url.toggle)
+        .then((response) => {
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroy(task) {
+      if (confirm('Are you sure?')) {
         axios
-          .put(relationshipType.url.update)
+          .delete(task.url.destroy)
           .then((response) => {
-            this.flash('The relationship has been deleted', 'success');
-            this.localTasks = response.data.data.relationship_group_types;
+            this.flash('The task has been deleted', 'success');
+            var id = this.localTasks.findIndex((x) => x.id === task.id);
+            this.localTasks.splice(id, 1);
           })
           .catch((error) => {
             this.form.errors = error.response.data;
