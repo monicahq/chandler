@@ -28,6 +28,7 @@ class ContactTaskFactory extends Factory
             'author_id' => User::factory(),
             'author_name' => $this->faker->name,
             'label' => $this->faker->sentence(),
+            'completed' => false,
         ];
     }
 }
