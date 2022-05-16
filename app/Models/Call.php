@@ -34,6 +34,7 @@ class Call extends Model
         'type',
         'answered',
         'who_initiated',
+        'description',
     ];
 
     /**

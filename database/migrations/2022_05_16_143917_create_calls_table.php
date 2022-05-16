@@ -24,6 +24,7 @@ return new class extends Migration
             $table->datetime('called_at');
             $table->integer('duration')->nullable();
             $table->string('type');
+            $table->text('description')->nullable();
             $table->boolean('answered')->default(true);
             $table->string('who_initiated');
             $table->timestamps();

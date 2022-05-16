@@ -31,6 +31,7 @@ class CallFactory extends Factory
             'duration' => 100,
             'type' => Call::TYPE_AUDIO,
             'who_initiated' => Call::INITIATOR_ME,
+            'description' => $this->faker->sentence,
         ];
     }
 }
