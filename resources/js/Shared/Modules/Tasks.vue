@@ -85,37 +85,38 @@
         </div>
 
         <!-- edit task -->
-        <form v-if="editedTaskId === task.id" class="bg-form border-b border-gray-200 p-5" @submit.prevent="update(task)">
-            <errors :errors="form.errors" />
+        <form
+          v-if="editedTaskId === task.id"
+          class="bg-form border-b border-gray-200 p-5"
+          @submit.prevent="update(task)">
+          <errors :errors="form.errors" />
 
-            <div class="flex justify-between">
-              <text-input
-                :ref="'newTitle'"
-                v-model="form.label"
-                :label="'Title'"
-                :type="'text'"
-                :input-class="'block w-full'"
-                :required="true"
-                :autocomplete="false"
-                :maxlength="255"
-                @esc-key-pressed="editedTaskId = 0" />
+          <div class="flex justify-between">
+            <text-input
+              :ref="'newTitle'"
+              v-model="form.label"
+              :label="'Title'"
+              :type="'text'"
+              :input-class="'block w-full'"
+              :required="true"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="editedTaskId = 0" />
 
-                <hover-menu
-                :show-edit="true"
-                :show-delete="true"
-                @edit="showUpdateTaskModal(task)"
-                @delete="destroy(task)" />
-            </div>
-            <div class="flex justify-between p-5">
-              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedTaskId = 0" />
-              <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
-            </div>
+            <hover-menu
+              :show-edit="true"
+              :show-delete="true"
+              @edit="showUpdateTaskModal(task)"
+              @delete="destroy(task)" />
+          </div>
+          <div class="flex justify-between p-5">
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedTaskId = 0" />
+            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
+          </div>
         </form>
       </li>
     </ul>
-    <p class="mb-6 mx-4 text-xs">
-      Show completed tasks
-    </p>
+    <p class="mx-4 mb-6 text-xs">Show completed tasks</p>
 
     <!-- blank state -->
     <div v-if="localTasks.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
