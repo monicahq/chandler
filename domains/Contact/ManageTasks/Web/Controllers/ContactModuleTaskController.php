@@ -2,10 +2,6 @@
 
 namespace App\Contact\ManageTasks\Web\Controllers;
 
-use App\Contact\ManageReminders\Services\CreateContactReminder;
-use App\Contact\ManageReminders\Services\DestroyReminder;
-use App\Contact\ManageReminders\Services\UpdateReminder;
-use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 use App\Contact\ManageTasks\Services\CreateContactTask;
 use App\Contact\ManageTasks\Services\DestroyContactTask;
 use App\Contact\ManageTasks\Services\ToggleContactTask;
@@ -13,8 +9,6 @@ use App\Contact\ManageTasks\Services\UpdateContactTask;
 use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
-use App\Models\ContactReminder;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

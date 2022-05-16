@@ -2,12 +2,9 @@
 
 namespace Tests\Unit\Domains\Contact\ManageTasks\Web\ViewHelpers;
 
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
 use App\Models\Contact;
 use App\Models\ContactTask;
-use App\Models\Emotion;
-use App\Models\Note;
 use App\Models\User;
 use Carbon\Carbon;
 use function env;
@@ -50,8 +47,8 @@ class ModuleContactTasksViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'completed' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/tasks/completed',
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/tasks',
+                'completed' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/completed',
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks',
             ],
             $array['url']
         );
@@ -77,9 +74,9 @@ class ModuleContactTasksViewHelperTest extends TestCase
                 'completed' => false,
                 'completed_at' => null,
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/tasks/' . $task->id,
-                    'toggle' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/tasks/' . $task->id. '/toggle',
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/tasks/' . $task->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id,
+                    'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id.'/toggle',
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id,
                 ],
             ],
             $collection
