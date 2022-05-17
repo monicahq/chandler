@@ -379,8 +379,7 @@ export default {
         .put(activityType.url.update, this.form)
         .then((response) => {
           this.flash('The activity type has been updated', 'success');
-          this.localActivityTypes[this.localActivityTypes.findIndex((x) => x.id === activityType.id)] =
-            response.data.data;
+          this.localActivityTypes[this.localActivityTypes.findIndex((x) => x.id === activityType.id)] = response.data.data;
           this.loadingState = null;
           this.renameActivityTypeModalShownId = 0;
         })
@@ -420,7 +419,7 @@ export default {
           this.loadingState = null;
           this.createActivityModalId = 0;
           var id = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-          this.localActivityTypes[id].reasons.unshift(response.data.data);
+          this.localActivityTypes[id].activities.unshift(response.data.data);
         })
         .catch((error) => {
           this.loadingState = null;
@@ -428,18 +427,18 @@ export default {
         });
     },
 
-    updateActivity(activityType, reason) {
+    updateActivity(activityType, activity) {
       this.loadingState = 'loading';
 
       axios
-        .put(reason.url.update, this.form)
+        .put(activity.url.update, this.form)
         .then((response) => {
           this.flash('The activity has been updated', 'success');
           this.loadingState = null;
           this.renameActivityModalId = 0;
           var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-          var typeId = this.localActivityTypes[activityTypeId].reasons.findIndex((x) => x.id === reason.id);
-          this.localActivityTypes[activityTypeId].reasons[typeId] = response.data.data;
+          var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);
+          this.localActivityTypes[activityTypeId].activities[typeId] = response.data.data;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -447,19 +446,19 @@ export default {
         });
     },
 
-    destroyActivity(activityType, reason) {
+    destroyActivity(activityType, activity) {
       if (
         confirm(
           'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
         )
       ) {
         axios
-          .delete(reason.url.destroy)
+          .delete(activity.url.destroy)
           .then((response) => {
             this.flash('The activity has been deleted', 'success');
             var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-            var typeId = this.localActivityTypes[activityTypeId].reasons.findIndex((x) => x.id === reason.id);
-            this.localActivityTypes[activityTypeId].reasons.splice(typeId, 1);
+            var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);
+            this.localActivityTypes[activityTypeId].activities.splice(typeId, 1);
           })
           .catch((error) => {
             this.loadingState = null;
