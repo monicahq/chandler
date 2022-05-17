@@ -63,7 +63,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
+        ]);
 
         $this->executeService($regis, $account, $vault, $contact, $callReason);
     }
@@ -82,7 +82,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
@@ -101,7 +101,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
