@@ -7,7 +7,6 @@ use App\Models\Call;
 use App\Models\CallReason;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CreateCall extends BaseService implements ServiceInterface
 {
