@@ -57,10 +57,13 @@ class ModuleLoanViewHelperTest extends TestCase
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $contact = Contact::factory()->create();
         $otherContact = Contact::factory()->create();
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'number_format' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+        ]);
         $loan = Loan::factory()->create([
             'currency_id' => Currency::factory()->create(),
             'loaned_at' => '2019-02-02',
+            'amount_lent' => 100032,
         ]);
         $contact->loansAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
 
@@ -88,7 +91,7 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['description']
         );
         $this->assertEquals(
-            $loan->amount_lent / 100,
+            '1000.32',
             $array['amount_lent']
         );
         $this->assertEquals(
