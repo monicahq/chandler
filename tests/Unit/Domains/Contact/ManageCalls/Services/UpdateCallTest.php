@@ -32,9 +32,11 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis,
+            'account_id' => $regis->account_id,
         ]);
-        $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
+        $callReason = CallReason::factory()->create([
+            'call_reason_type_id' => $type->id,
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $call, $callReason);
     }
@@ -47,7 +49,7 @@ class UpdateCallTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateCall())->execute($request);
+        (new UpdateCall)->execute($request);
     }
 
     /** @test */
@@ -64,7 +66,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis,
+            'account_id' => $regis->account_id,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -84,7 +86,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis,
+            'account_id' => $regis->account_id,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -104,7 +106,7 @@ class UpdateCallTest extends TestCase
             'contact_id' => $contact->id,
         ]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis,
+            'account_id' => $regis->account_id,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -122,7 +124,7 @@ class UpdateCallTest extends TestCase
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $call = Call::factory()->create();
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis,
+            'account_id' => $regis->account_id,
         ]);
         $callReason = CallReason::factory()->create(['call_reason_type_id' => $type->id]);
 
@@ -146,8 +148,6 @@ class UpdateCallTest extends TestCase
 
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Call $call, CallReason $reason): void
     {
-        Queue::fake();
-
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
@@ -162,7 +162,7 @@ class UpdateCallTest extends TestCase
             'who_initiated' => 'contact',
         ];
 
-        $call = (new UpdateCall())->execute($request);
+        $call = (new UpdateCall)->execute($request);
 
         $this->assertDatabaseHas('calls', [
             'id' => $call->id,
