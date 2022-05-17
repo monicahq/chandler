@@ -262,7 +262,15 @@
 
             <!-- who called -->
             <span
-              class="mr-2 mb-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0"></span>
+              v-if="call.who_initiated == 'me'"
+              class="mr-2 rounded border border-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800">
+              I called
+            </span>
+            <span
+              v-else
+              class="mr-2 rounded border border-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800">
+              {{ data.contact_name }} called
+            </span>
 
             <!-- reason, if defined -->
             <span v-if="call.reason">{{ call.reason.label }}</span>

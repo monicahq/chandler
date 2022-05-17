@@ -61,6 +61,7 @@ class ModuleCallsViewHelper
             'called_at' => DateHelper::format($call->called_at, $user),
             'duration' => $call->duration,
             'description' => $call->description,
+            'who_initiated' => $call->who_initiated,
             'type' => $call->type,
             'answered' => $call->answered,
             'reason' => $call->callReason ? [
