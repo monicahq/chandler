@@ -5,8 +5,6 @@ namespace App\Settings\ManageActivityTypes\Web\ViewHelpers;
 use App\Models\Account;
 use App\Models\Activity;
 use App\Models\ActivityType;
-use App\Models\CallReason;
-use App\Models\CallReasonType;
 
 class PersonalizeActivityTypesIndexViewHelper
 {

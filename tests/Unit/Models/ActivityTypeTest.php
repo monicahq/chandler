@@ -4,8 +4,6 @@ namespace Tests\Unit\Models;
 
 use App\Models\Activity;
 use App\Models\ActivityType;
-use App\Models\CallReason;
-use App\Models\CallReasonType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

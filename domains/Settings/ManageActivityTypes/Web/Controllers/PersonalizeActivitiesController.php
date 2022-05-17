@@ -7,10 +7,6 @@ use App\Settings\ManageActivityTypes\Services\CreateActivity;
 use App\Settings\ManageActivityTypes\Services\DestroyActivity;
 use App\Settings\ManageActivityTypes\Services\UpdateActivity;
 use App\Settings\ManageActivityTypes\Web\ViewHelpers\PersonalizeActivityTypesIndexViewHelper;
-use App\Settings\ManageCallReasons\Services\CreateCallReason;
-use App\Settings\ManageCallReasons\Services\DestroyCallReason;
-use App\Settings\ManageCallReasons\Services\UpdateCallReason;
-use App\Settings\ManageCallReasons\Web\ViewHelpers\PersonalizeCallReasonsIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

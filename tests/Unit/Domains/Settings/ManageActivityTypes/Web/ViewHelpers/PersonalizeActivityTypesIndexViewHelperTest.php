@@ -4,10 +4,7 @@ namespace Tests\Unit\Domains\Settings\ManageActivityTypes\Web\ViewHelpers;
 
 use App\Models\Activity;
 use App\Models\ActivityType;
-use App\Models\CallReason;
-use App\Models\CallReasonType;
 use App\Settings\ManageActivityTypes\Web\ViewHelpers\PersonalizeActivityTypesIndexViewHelper;
-use App\Settings\ManageCallReasons\Web\ViewHelpers\PersonalizeCallReasonsIndexViewHelper;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -34,7 +31,7 @@ class PersonalizeActivityTypesIndexViewHelperTest extends TestCase
             [
                 'settings' => env('APP_URL').'/settings',
                 'personalize' => env('APP_URL').'/settings/personalize',
-                'activity_type_store' => env('APP_URL'). '/settings/personalize/activityTypes',
+                'activity_type_store' => env('APP_URL').'/settings/personalize/activityTypes',
             ],
             $array['url']
         );
@@ -84,7 +81,7 @@ class PersonalizeActivityTypesIndexViewHelperTest extends TestCase
                 'label' => $activity->label,
                 'url' => [
                     'update' => env('APP_URL').'/settings/personalize/activityTypes/'.$type->id.'/activities/'.$activity->id,
-                    'destroy' => env('APP_URL').'/settings/personalize/activityTypes/'.$type->id. '/activities/'.$activity->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/activityTypes/'.$type->id.'/activities/'.$activity->id,
                 ],
             ],
             $array

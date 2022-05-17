@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Activity;
 use App\Models\ActivityType;
-use App\Models\CallReason;
-use App\Models\CallReasonType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ActivityFactory extends Factory

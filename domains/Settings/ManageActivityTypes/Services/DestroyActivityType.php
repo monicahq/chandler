@@ -4,7 +4,6 @@ namespace App\Settings\ManageActivityTypes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\ActivityType;
-use App\Models\CallReasonType;
 use App\Models\User;
 use App\Services\BaseService;
 
