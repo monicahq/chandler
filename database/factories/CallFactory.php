@@ -32,6 +32,7 @@ class CallFactory extends Factory
             'called_at' => $this->faker->dateTimeThisCentury(),
             'duration' => 100,
             'type' => Call::TYPE_AUDIO,
+            'answered' => true,
             'who_initiated' => Call::INITIATOR_ME,
             'description' => $this->faker->sentence,
         ];
