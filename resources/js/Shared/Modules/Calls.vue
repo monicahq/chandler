@@ -66,35 +66,35 @@
 
           <!-- audio or video -->
           <div class="border-l border-gray-200 p-5">
-          <p class="mb-2 block text-sm">Nature of the call</p>
+            <p class="mb-2 block text-sm">Nature of the call</p>
 
-          <div class="flex">
-            <div class="mr-6 flex items-center">
-              <input
-                id="audio"
-                v-model="form.type"
-                value="audio"
-                name="type"
-                type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                This was an audio-only call
-              </label>
-            </div>
+            <div class="flex">
+              <div class="mr-6 flex items-center">
+                <input
+                  id="audio"
+                  v-model="form.type"
+                  value="audio"
+                  name="type"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                  This was an audio-only call
+                </label>
+              </div>
 
-            <div class="flex items-center">
-              <input
-                id="video"
-                v-model="form.type"
-                value="video"
-                name="type"
-                type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                This was a video call
-              </label>
+              <div class="flex items-center">
+                <input
+                  id="video"
+                  v-model="form.type"
+                  value="video"
+                  name="type"
+                  type="radio"
+                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                  This was a video call
+                </label>
+              </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -102,7 +102,7 @@
         <div class="border-b border-gray-200 p-5">
           <p class="mb-2 block text-sm">Who called?</p>
 
-          <div class="flex mb-4">
+          <div class="mb-4 flex">
             <div class="mr-6 flex items-center">
               <input
                 id="me"
@@ -111,9 +111,7 @@
                 name="who_initiated"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                I called
-              </label>
+              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700"> I called </label>
             </div>
 
             <div class="flex items-center">
@@ -178,7 +176,10 @@
             name="types"
             id="types"
             class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
-            <optgroup v-for="callReasonType in data.call_reason_types" :key="callReasonType.id" :label="callReasonType.label">
+            <optgroup
+              v-for="callReasonType in data.call_reason_types"
+              :key="callReasonType.id"
+              :label="callReasonType.label">
               <option v-for="reason in callReasonType.reasons" :key="reason.id" :value="reason.id">
                 {{ reason.label }}
               </option>
@@ -230,7 +231,7 @@
               <svg
                 v-if="!call.answered"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 mr-2 text-red-500"
+                class="mr-2 h-4 w-4 text-red-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -245,7 +246,7 @@
               <svg
                 v-if="call.answered"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 mr-2 text-green-600"
+                class="mr-2 h-4 w-4 text-green-600"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -260,7 +261,8 @@
             <span class="mr-2 text-sm text-gray-500">{{ call.called_at }}</span>
 
             <!-- who called -->
-            <span class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0 bg-neutral-200 text-neutral-800"></span>
+            <span
+              class="mr-2 mb-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0"></span>
 
             <!-- reason, if defined -->
             <span v-if="call.reason">{{ call.reason.label }}</span>
@@ -274,7 +276,6 @@
           <errors :errors="form.errors" />
 
           <div class="border-b border-gray-200">
-
             <!-- date -->
             <div class="flex border-b border-gray-200">
               <div class="p-5">
@@ -288,35 +289,35 @@
 
               <!-- audio or video -->
               <div class="border-l border-gray-200 p-5">
-              <p class="mb-2 block text-sm">Nature of the call</p>
+                <p class="mb-2 block text-sm">Nature of the call</p>
 
-              <div class="flex">
-                <div class="mr-6 flex items-center">
-                  <input
-                    id="audio"
-                    v-model="form.type"
-                    value="audio"
-                    name="type"
-                    type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                    This was an audio-only call
-                  </label>
-                </div>
+                <div class="flex">
+                  <div class="mr-6 flex items-center">
+                    <input
+                      id="audio"
+                      v-model="form.type"
+                      value="audio"
+                      name="type"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                      This was an audio-only call
+                    </label>
+                  </div>
 
-                <div class="flex items-center">
-                  <input
-                    id="video"
-                    v-model="form.type"
-                    value="video"
-                    name="type"
-                    type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                    This was a video call
-                  </label>
+                  <div class="flex items-center">
+                    <input
+                      id="video"
+                      v-model="form.type"
+                      value="video"
+                      name="type"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                      This was a video call
+                    </label>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
 
@@ -324,7 +325,7 @@
             <div class="border-b border-gray-200 p-5">
               <p class="mb-2 block text-sm">Who called?</p>
 
-              <div class="flex mb-4">
+              <div class="mb-4 flex">
                 <div class="mr-6 flex items-center">
                   <input
                     id="me"
@@ -333,9 +334,7 @@
                     name="who_initiated"
                     type="radio"
                     class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                    I called
-                  </label>
+                  <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700"> I called </label>
                 </div>
 
                 <div class="flex items-center">
@@ -397,11 +396,13 @@
               <p class="mb-2 block text-sm">Was there a reason for the call?</p>
               <select
                 v-model="form.call_reason_id"
-
                 name="types"
                 id="types"
                 class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
-                <optgroup v-for="callReasonType in data.call_reason_types" :key="callReasonType.id" :label="callReasonType.label">
+                <optgroup
+                  v-for="callReasonType in data.call_reason_types"
+                  :key="callReasonType.id"
+                  :label="callReasonType.label">
                   <option v-for="reason in callReasonType.reasons" :key="reason.id" :value="reason.id">
                     {{ reason.label }}
                   </option>
