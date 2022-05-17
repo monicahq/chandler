@@ -36,12 +36,13 @@ class ModuleCallsViewHelper
 
             $callReasonTypesCollection->push([
                 'id' => $callReasonType->id,
-                'name' => $callReasonType->name,
+                'label' => $callReasonType->label,
                 'reasons' => $callReasonsCollection,
             ]);
         }
 
         return [
+            'contact_name' => $contact->getName($user),
             'calls' => $callsCollection,
             'call_reason_types' => $callReasonTypesCollection,
             'url' => [
@@ -59,8 +60,13 @@ class ModuleCallsViewHelper
             'id' => $call->id,
             'called_at' => DateHelper::format($call->called_at, $user),
             'duration' => $call->duration,
+            'description' => $call->description,
             'type' => $call->type,
             'answered' => $call->answered,
+            'reason' => $call->callReason ? [
+                'id' => $call->callReason->id,
+                'label' => $call->callReason->label,
+            ] : null,
             'url' => [
                 'update' => route('contact.call.update', [
                     'vault' => $contact->vault_id,

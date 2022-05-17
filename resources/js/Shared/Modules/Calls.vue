@@ -46,102 +46,161 @@
       <pretty-span @click="showCreateCallModal()" :text="'Log a call'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
     </div>
 
-    <!-- add a task modal -->
+    <!-- add a call modal -->
     <form v-if="createCallModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="">
+      <div>
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
-        <!-- name -->
+        <!-- date -->
         <div class="flex border-b border-gray-200">
           <div class="p-5">
             <p class="mb-2 block text-sm">When did the call happened?</p>
-            <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
+            <v-date-picker class="inline-block h-full" v-model="form.called_at" :model-config="modelConfig">
               <template v-slot="{ inputValue, inputEvents }">
                 <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
               </template>
             </v-date-picker>
           </div>
 
-          <!-- who called -->
+          <!-- audio or video -->
           <div class="border-l border-gray-200 p-5">
-            <p class="mb-2 block text-sm">Who called?</p>
+          <p class="mb-2 block text-sm">Nature of the call</p>
 
-            <div class="flex">
-              <div class="mr-6 flex items-center">
-                <input
-                  id="one_time"
-                  v-model="form.reminderChoice"
-                  value="one_time"
-                  name="reminder-frequency"
-                  type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="one_time" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                  I called
-                </label>
-              </div>
+          <div class="flex">
+            <div class="mr-6 flex items-center">
+              <input
+                id="audio"
+                v-model="form.type"
+                value="audio"
+                name="type"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                This was an audio-only call
+              </label>
+            </div>
 
-              <div class="flex items-center">
-                <input
-                  id="one_time"
-                  v-model="form.reminderChoice"
-                  value="one_time"
-                  name="reminder-frequency"
-                  type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="one_time" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-                  Lorraine called
-                </label>
-              </div>
+            <div class="flex items-center">
+              <input
+                id="video"
+                v-model="form.type"
+                value="video"
+                name="type"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                This was a video call
+              </label>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- who called -->
+        <div class="border-b border-gray-200 p-5">
+          <p class="mb-2 block text-sm">Who called?</p>
+
+          <div class="flex mb-4">
+            <div class="mr-6 flex items-center">
+              <input
+                id="me"
+                v-model="form.who_initiated"
+                value="me"
+                name="who_initiated"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                I called
+              </label>
+            </div>
+
+            <div class="flex items-center">
+              <input
+                id="me_not_answered"
+                v-model="form.who_initiated"
+                value="me_not_answered"
+                name="who_initiated"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="me_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                I called, but {{ data.contact_name }} didn't answer
+              </label>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="mr-6 flex items-center">
+              <input
+                id="contact"
+                v-model="form.who_initiated"
+                value="contact"
+                name="who_initiated"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="contact" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                {{ data.contact_name }} called
+              </label>
+            </div>
+
+            <div class="flex items-center">
+              <input
+                id="contact_not_answered"
+                v-model="form.who_initiated"
+                value="contact_not_answered"
+                name="who_initiated"
+                type="radio"
+                class="h-4 w-4 border-gray-300 text-sky-500" />
+              <label for="contact_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                {{ data.contact_name }} called, but I didn't answer
+              </label>
             </div>
           </div>
         </div>
 
-        <!-- audio or video -->
-        <div class="flex border-b border-gray-200 p-5">
-          <div class="mr-6 flex items-center">
-            <input
-              id="one_time"
-              v-model="form.reminderChoice"
-              value="one_time"
-              name="reminder-frequency"
-              type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="one_time" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-              This was an audio-only call
-            </label>
-          </div>
+        <!-- description field -->
+        <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5">
+          <text-area
+            v-model="form.description"
+            :label="'Description'"
+            :rows="10"
+            :required="false"
+            :maxlength="65535"
+            :textarea-class="'block w-full mb-3'" />
+        </div>
 
-          <div class="flex items-center">
-            <input
-              id="one_time"
-              v-model="form.reminderChoice"
-              value="one_time"
-              name="reminder-frequency"
-              type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="one_time" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-              This was a video call
-            </label>
-          </div>
+        <!-- reason field -->
+        <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5">
+          <p class="mb-2 block text-sm">Was there a reason for the call?</p>
+          <select
+            v-model="form.call_reason_id"
+            name="types"
+            id="types"
+            class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
+            <optgroup v-for="callReasonType in data.call_reason_types" :key="callReasonType.id" :label="callReasonType.label">
+              <option v-for="reason in callReasonType.reasons" :key="reason.id" :value="reason.id">
+                {{ reason.label }}
+              </option>
+            </optgroup>
+          </select>
         </div>
 
         <!-- options -->
         <div class="border-b border-gray-200 p-5">
           <!-- cta to add a description -->
           <span
-            v-if="!titleFieldShown"
+            v-if="!descriptionFieldShown"
             class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
-            @click="showTitleField">
+            @click="showDescriptionField">
             + add description
           </span>
 
           <!-- cta to add a reason -->
           <span
-            v-if="!titleFieldShown"
+            v-if="!reasonFieldShown"
             class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
-            @click="showTitleField">
+            @click="showReasonField">
             + add reason
           </span>
 
@@ -165,34 +224,46 @@
     <ul v-if="localCalls.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
       <li v-for="call in localCalls" :key="call.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
         <div v-if="editedCallId !== call.id" class="flex items-center justify-between p-3">
-          <div>
-            <!-- icon phone cancel -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-            </svg>
+          <div class="flex items-center">
+            <div>
+              <!-- icon phone cancel -->
+              <svg
+                v-if="!call.answered"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-2 text-red-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
+              </svg>
 
-            <!-- call accepted -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
+              <!-- call accepted -->
+              <svg
+                v-if="call.answered"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-2 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+
+            <span class="mr-2 text-sm text-gray-500">{{ call.called_at }}</span>
+
+            <!-- who called -->
+            <span class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0 bg-neutral-200 text-neutral-800"></span>
+
+            <!-- reason, if defined -->
+            <span v-if="call.reason">{{ call.reason.label }}</span>
           </div>
 
           <hover-menu :show-edit="true" :show-delete="true" @edit="showUpdateCallModal(call)" @delete="destroy(call)" />
@@ -202,17 +273,168 @@
         <form v-if="editedCallId === call.id" class="bg-form" @submit.prevent="update(call)">
           <errors :errors="form.errors" />
 
-          <div class="border-b border-gray-200 p-5">
-            <text-input
-              :ref="'update' + call.id"
-              v-model="form.label"
-              :label="'Title'"
-              :type="'text'"
-              :input-class="'block w-full'"
-              :required="true"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="editedCallId = 0" />
+          <div class="border-b border-gray-200">
+
+            <!-- date -->
+            <div class="flex border-b border-gray-200">
+              <div class="p-5">
+                <p class="mb-2 block text-sm">When did the call happened?</p>
+                <v-date-picker class="inline-block h-full" v-model="form.called_at" :model-config="modelConfig">
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                  </template>
+                </v-date-picker>
+              </div>
+
+              <!-- audio or video -->
+              <div class="border-l border-gray-200 p-5">
+              <p class="mb-2 block text-sm">Nature of the call</p>
+
+              <div class="flex">
+                <div class="mr-6 flex items-center">
+                  <input
+                    id="audio"
+                    v-model="form.type"
+                    value="audio"
+                    name="type"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    This was an audio-only call
+                  </label>
+                </div>
+
+                <div class="flex items-center">
+                  <input
+                    id="video"
+                    v-model="form.type"
+                    value="video"
+                    name="type"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    This was a video call
+                  </label>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <!-- who called -->
+            <div class="border-b border-gray-200 p-5">
+              <p class="mb-2 block text-sm">Who called?</p>
+
+              <div class="flex mb-4">
+                <div class="mr-6 flex items-center">
+                  <input
+                    id="me"
+                    v-model="form.who_initiated"
+                    value="me"
+                    name="who_initiated"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    I called
+                  </label>
+                </div>
+
+                <div class="flex items-center">
+                  <input
+                    id="me_not_answered"
+                    v-model="form.who_initiated"
+                    value="me_not_answered"
+                    name="who_initiated"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="me_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    I called, but {{ data.contact_name }} didn't answer
+                  </label>
+                </div>
+              </div>
+
+              <div class="flex">
+                <div class="mr-6 flex items-center">
+                  <input
+                    id="contact"
+                    v-model="form.who_initiated"
+                    value="contact"
+                    name="who_initiated"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="contact" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    {{ data.contact_name }} called
+                  </label>
+                </div>
+
+                <div class="flex items-center">
+                  <input
+                    id="contact_not_answered"
+                    v-model="form.who_initiated"
+                    value="contact_not_answered"
+                    name="who_initiated"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="contact_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    {{ data.contact_name }} called, but I didn't answer
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- description field -->
+            <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5">
+              <text-area
+                v-model="form.description"
+                :label="'Description'"
+                :rows="10"
+                :required="false"
+                :maxlength="65535"
+                :textarea-class="'block w-full mb-3'" />
+            </div>
+
+            <!-- reason field -->
+            <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5">
+              <p class="mb-2 block text-sm">Was there a reason for the call?</p>
+              <select
+                v-model="form.call_reason_id"
+
+                name="types"
+                id="types"
+                class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
+                <optgroup v-for="callReasonType in data.call_reason_types" :key="callReasonType.id" :label="callReasonType.label">
+                  <option v-for="reason in callReasonType.reasons" :key="reason.id" :value="reason.id">
+                    {{ reason.label }}
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- options -->
+            <div class="border-b border-gray-200 p-5">
+              <!-- cta to add a description -->
+              <span
+                v-if="!descriptionFieldShown"
+                class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                @click="showDescriptionField">
+                + add description
+              </span>
+
+              <!-- cta to add a reason -->
+              <span
+                v-if="!reasonFieldShown"
+                class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                @click="showReasonField">
+                + add reason
+              </span>
+
+              <!-- cta to add emotion -->
+              <span
+                v-if="!emotionFieldShown"
+                class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+                @click="showEmotionField">
+                + add emotion
+              </span>
+            </div>
           </div>
 
           <div class="flex justify-between p-5">
@@ -235,6 +457,7 @@ import HoverMenu from '@/Shared/HoverMenu';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
+import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
 
 export default {
@@ -243,6 +466,7 @@ export default {
     PrettyButton,
     PrettySpan,
     TextInput,
+    TextArea,
     Errors,
   },
 
@@ -259,8 +483,13 @@ export default {
       localCalls: [],
       loadingState: '',
       editedCallId: 0,
+      descriptionFieldShown: false,
+      reasonFieldShown: false,
       form: {
-        label: '',
+        called_at: '',
+        call_reason_id: 0,
+        description: '',
+        type: '',
         errors: [],
       },
     };
@@ -268,27 +497,60 @@ export default {
 
   mounted() {
     this.localCalls = this.data.calls;
+    this.form.who_initiated = 'me';
+    this.form.type = 'audio';
   },
 
   methods: {
-    showCreateCallModal() {
-      this.form.errors = [];
-      this.form.label = '';
-      this.createCallModalShown = true;
-
-      this.$nextTick(() => {
-        this.$refs.label.focus();
-      });
+    showDescriptionField() {
+      this.descriptionFieldShown = true;
+      this.form.description = '';
     },
 
-    showUpdateCallModal(task) {
-      this.form.errors = [];
-      this.form.label = task.label;
-      this.editedCallId = task.id;
+    showReasonField() {
+      this.reasonFieldShown = true;
+      this.form.call_reason_id = '';
+    },
 
-      this.$nextTick(() => {
-        this.$refs[`update${task.id}`].focus();
-      });
+    showCreateCallModal() {
+      this.form.errors = [];
+      this.descriptionFieldShown = false;
+      this.reasonFieldShown = false;
+      this.createCallModalShown = true;
+    },
+
+    showUpdateCallModal(call) {
+      this.form.errors = [];
+      this.form.description = call.description;
+
+      if (call.description) {
+        this.descriptionFieldShown = true;
+      }
+
+      this.form.type = call.type;
+
+      if (!call.answered && call.who_initiated == 'me') {
+        this.form.who_initiated = 'me_not_answered';
+      }
+      if (call.answered && call.who_initiated == 'me') {
+        this.form.who_initiated = 'me';
+      }
+      if (call.answered && call.who_initiated == 'contact') {
+        this.form.who_initiated = 'contact';
+      }
+      if (!call.answered && call.who_initiated == 'contact') {
+        this.form.who_initiated = 'contact_not_answered';
+      }
+
+      if (call.reason) {
+        this.form.call_reason_id = call.reason.id;
+        this.reasonFieldShown = true;
+      } else {
+        this.form.call_reason_id = 0;
+        this.reasonFieldShown = false;
+      }
+      this.form.called_at = call.called_at;
+      this.editedCallId = call.id;
     },
 
     submit() {

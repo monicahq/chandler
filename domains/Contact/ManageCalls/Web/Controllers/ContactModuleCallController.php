@@ -8,6 +8,7 @@ use App\Contact\ManageCalls\Services\UpdateCall;
 use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,16 +16,42 @@ class ContactModuleCallController extends Controller
 {
     public function store(Request $request, int $vaultId, int $contactId)
     {
+        $carbonDate = Carbon::parse($request->input('called_at'));
+
+        switch ($request->input('who_initiated')) {
+            case 'contact_not_answered':
+                $whoInitiated = 'contact';
+                $answered = false;
+                break;
+
+            case 'me_not_answered':
+                $whoInitiated = 'me';
+                $answered = false;
+                break;
+
+            case 'contact':
+                $whoInitiated = 'contact';
+                $answered = true;
+                break;
+
+            case 'me':
+                $whoInitiated = 'me';
+                $answered = true;
+                break;
+        }
+
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'called_at' => $request->input('called_at'),
+            'call_reason_id' => $request->input('call_reason_id') == 0 ? null : $request->input('call_reason_id'),
+            'called_at' => $carbonDate->format('Y-m-d'),
             'duration' => $request->input('duration'),
+            'description' => $request->input('description'),
             'type' => $request->input('type'),
-            'answered' => $request->input('answered'),
-            'who_initiated' => $request->input('who_initiated'),
+            'answered' => $answered,
+            'who_initiated' => $whoInitiated,
         ];
 
         $call = (new CreateCall)->execute($data);
@@ -37,17 +64,46 @@ class ContactModuleCallController extends Controller
 
     public function update(Request $request, int $vaultId, int $contactId, int $callId)
     {
+        $carbonDate = Carbon::parse($request->input('called_at'));
+
+        switch ($request->input('who_initiated')) {
+            case 'contact_not_answered':
+                $whoInitiated = 'contact';
+                $answered = false;
+                break;
+
+            case 'me_not_answered':
+                $whoInitiated = 'me';
+                $answered = false;
+                break;
+
+            case 'contact':
+                $whoInitiated = 'contact';
+                $answered = true;
+                break;
+
+            case 'me':
+                $whoInitiated = 'me';
+                $answered = true;
+                break;
+
+            default:
+                break;
+        }
+
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
             'call_id' => $callId,
-            'called_at' => $request->input('called_at'),
+            'call_reason_id' => $request->input('call_reason_id') == 0 ? null : $request->input('call_reason_id'),
+            'called_at' => $carbonDate->format('Y-m-d'),
             'duration' => $request->input('duration'),
+            'description' => $request->input('description'),
             'type' => $request->input('type'),
-            'answered' => $request->input('answered'),
-            'who_initiated' => $request->input('who_initiated'),
+            'answered' => $answered,
+            'who_initiated' => $whoInitiated,
         ];
 
         $call = (new UpdateCall())->execute($data);
