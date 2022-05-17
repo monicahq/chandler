@@ -198,7 +198,9 @@
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-            <label :for="emotion.type" class="ml-2 block font-medium text-gray-700  cursor-pointer"> {{ emotion.name }} </label>
+            <label :for="emotion.type" class="ml-2 block cursor-pointer font-medium text-gray-700">
+              {{ emotion.name }}
+            </label>
           </div>
         </div>
 
@@ -449,7 +451,9 @@
                   name="emotion"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700  cursor-pointer"> {{ emotion.name }} </label>
+                <label :for="emotion.type" class="ml-2 block cursor-pointer font-medium text-gray-700">
+                  {{ emotion.name }}
+                </label>
               </div>
             </div>
 
