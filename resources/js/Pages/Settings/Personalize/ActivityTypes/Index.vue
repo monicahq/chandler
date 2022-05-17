@@ -173,13 +173,14 @@
               v-for="activity in activityType.activities"
               :key="activity.id"
               class="border-b border-gray-200 hover:bg-slate-50">
-
               <div v-if="renameActivityModalId != activity.id" class="flex items-center justify-between px-5 py-2 pl-6">
                 <span>{{ activity.label }}</span>
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="renameActivityModal(activity)">
+                  <li
+                    class="inline cursor-pointer text-sky-500 hover:text-blue-900"
+                    @click="renameActivityModal(activity)">
                     Rename
                   </li>
                   <li
