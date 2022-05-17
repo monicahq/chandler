@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Call;
+use App\Models\CallReason;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,6 +27,7 @@ class CallFactory extends Factory
         return [
             'contact_id' => Contact::factory(),
             'author_id' => User::factory(),
+            'call_reason_id' => CallReason::factory(),
             'author_name' => $this->faker->name,
             'called_at' => $this->faker->dateTimeThisCentury(),
             'duration' => 100,

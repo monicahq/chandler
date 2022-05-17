@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Call;
 use App\Models\ContactTask;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -13,24 +14,24 @@ class CallTest extends TestCase
     /** @test */
     public function it_has_one_contact()
     {
-        $task = ContactTask::factory()->create();
+        $call = Call::factory()->create();
 
-        $this->assertTrue($task->contact()->exists());
+        $this->assertTrue($call->contact()->exists());
     }
 
     /** @test */
     public function it_has_one_author()
     {
-        $task = ContactTask::factory()->create();
+        $call = Call::factory()->create();
 
-        $this->assertTrue($task->author()->exists());
+        $this->assertTrue($call->author()->exists());
     }
 
     /** @test */
     public function it_has_one_call_reason()
     {
-        $task = ContactTask::factory()->create();
+        $call = Call::factory()->create();
 
-        $this->assertTrue($task->callReason()->exists());
+        $this->assertTrue($call->callReason()->exists());
     }
 }
