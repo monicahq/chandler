@@ -264,7 +264,7 @@
 
         <!-- blank state -->
         <div v-if="localActivityTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <p class="p-5 text-center">Call reasons let you indicate the reason of calls you make to your contacts.</p>
+          <p class="p-5 text-center">Activity types let you indicate what you've done with your contacts.</p>
         </div>
       </div>
     </main>
@@ -379,7 +379,8 @@ export default {
         .put(activityType.url.update, this.form)
         .then((response) => {
           this.flash('The activity type has been updated', 'success');
-          this.localActivityTypes[this.localActivityTypes.findIndex((x) => x.id === activityType.id)] = response.data.data;
+          this.localActivityTypes[this.localActivityTypes.findIndex((x) => x.id === activityType.id)] =
+            response.data.data;
           this.loadingState = null;
           this.renameActivityTypeModalShownId = 0;
         })
