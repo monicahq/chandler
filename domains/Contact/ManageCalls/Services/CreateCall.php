@@ -72,14 +72,6 @@ class CreateCall extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
-
-        if (! is_null($this->data['call_reason_id'])) {
-            $this->callReason = CallReason::findOrFail($this->data['call_reason_id']);
-
-            if ($this->callReason->callReasonType->account_id !== $this->data['account_id']) {
-                throw new ModelNotFoundException('Call reason does not belong to account.');
-            }
-        }
     }
 
     private function createCall(): void
