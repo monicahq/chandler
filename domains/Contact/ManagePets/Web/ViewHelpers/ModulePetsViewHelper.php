@@ -2,12 +2,9 @@
 
 namespace App\Contact\ManagePets\Web\ViewHelpers;
 
-use App\Helpers\DateHelper;
 use App\Models\Contact;
-use App\Models\Note;
 use App\Models\Pet;
 use App\Models\User;
-use Illuminate\Support\Str;
 
 class ModulePetsViewHelper
 {

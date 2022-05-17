@@ -2,10 +2,6 @@
 
 namespace App\Contact\ManagePets\Web\Controllers;
 
-use App\Contact\ManageNotes\Services\CreateNote;
-use App\Contact\ManageNotes\Services\DestroyNote;
-use App\Contact\ManageNotes\Services\UpdateNote;
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Contact\ManagePets\Services\CreatePet;
 use App\Contact\ManagePets\Services\DestroyPet;
 use App\Contact\ManagePets\Services\UpdatePet;

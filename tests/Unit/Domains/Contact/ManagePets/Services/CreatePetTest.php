@@ -2,11 +2,8 @@
 
 namespace Tests\Unit\Domains\Contact\ManagePets\Services;
 
-use App\Contact\ManageNotes\Services\CreateNote;
 use App\Contact\ManagePets\Services\CreatePet;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\PetCategory;
@@ -14,7 +11,6 @@ use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 

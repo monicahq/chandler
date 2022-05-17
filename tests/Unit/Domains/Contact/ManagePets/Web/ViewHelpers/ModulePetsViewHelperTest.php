@@ -2,15 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManagePets\Web\ViewHelpers;
 
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Contact\ManagePets\Web\ViewHelpers\ModulePetsViewHelper;
 use App\Models\Contact;
-use App\Models\Emotion;
-use App\Models\Note;
 use App\Models\Pet;
 use App\Models\PetCategory;
 use App\Models\User;
-use Carbon\Carbon;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

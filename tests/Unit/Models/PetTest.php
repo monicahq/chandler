@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Pet;
-use App\Models\PetCategory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Pet;
 use App\Models\PetCategory;

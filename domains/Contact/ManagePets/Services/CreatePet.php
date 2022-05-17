@@ -3,11 +3,6 @@
 namespace App\Contact\ManagePets\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
-use App\Models\Emotion;
-use App\Models\Note;
 use App\Models\Pet;
 use App\Models\PetCategory;
 use App\Services\BaseService;
