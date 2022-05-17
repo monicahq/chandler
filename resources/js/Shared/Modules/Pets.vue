@@ -99,7 +99,7 @@ select {
       <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
         <li v-for="pet in localPets" :key="pet.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
           <!-- pet -->
-          <div class="flex items-center justify-between px-3 py-2">
+          <div v-if="editedPetId != pet.id" class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
               <span class="mr-2 text-sm text-gray-500">{{ pet.pet_category.name }}</span>
               <span class="mr-2">{{ pet.name }}</span>
