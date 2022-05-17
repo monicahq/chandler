@@ -4,10 +4,8 @@ namespace App\Contact\ManageCalls\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Call;
-use App\Models\CallReason;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UpdateCall extends BaseService implements ServiceInterface
 {
