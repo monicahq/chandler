@@ -28,7 +28,7 @@ class CreateCallTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = CallReasonType::factory()->create([
-            'account_id' => $regis->account_id,
+            'account_id' => $regis->account->id,
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
@@ -63,7 +63,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
+        ]);
 
         $this->executeService($regis, $account, $vault, $contact, $callReason);
     }
@@ -82,7 +82,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
@@ -101,21 +101,7 @@ class CreateCallTest extends TestCase
         ]);
         $callReason = CallReason::factory()->create([
             'call_reason_type_id' => $type->id,
-    ]);
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
-    }
-
-    /** @test */
-    public function it_fails_if_call_reason_doesnt_belong_to_account(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $callReason = CallReason::factory()->create();
+        ]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $callReason);
     }
