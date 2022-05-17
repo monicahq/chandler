@@ -75,7 +75,7 @@ select {
             @esc-key-pressed="addPetModalShown = false" />
         </div>
 
-        <div class="border-b border-gray-200 p-5">
+        <div class="p-5">
           <!-- pet categories -->
           <dropdown
             v-model="form.pet_category_id"
@@ -135,13 +135,12 @@ select {
                   @esc-key-pressed="addPetModalShown = false" />
               </div>
 
-              <div class="border-b border-gray-200 p-5">
+              <div class="p-5">
                 <!-- pet categories -->
                 <dropdown
                   v-model="form.pet_category_id"
                   :data="data.pet_categories"
                   :required="true"
-
                   :placeholder="'Choose a value'"
                   :dropdown-class="'block w-full'"
                   :label="'Pet category'" />
