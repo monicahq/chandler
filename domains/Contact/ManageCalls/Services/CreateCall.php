@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class CreateCall extends BaseService implements ServiceInterface
 {
     private Call $call;
+    private CallReason $callReason;
     private array $data;
 
     /**
