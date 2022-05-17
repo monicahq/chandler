@@ -70,7 +70,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            14,
+            15,
             count($array)
         );
 
@@ -93,6 +93,10 @@ class ModuleLoanViewHelperTest extends TestCase
         $this->assertEquals(
             '1000.32',
             $array['amount_lent']
+        );
+        $this->assertEquals(
+            '1000.32',
+            $array['amount_lent_int']
         );
         $this->assertEquals(
             $loan->currency_id,
