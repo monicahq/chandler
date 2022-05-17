@@ -3,7 +3,6 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Call;
-use App\Models\ContactTask;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
