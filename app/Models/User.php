@@ -133,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * Get the contact of the user in the given vault.
      * All users have a contact in the vaults.
      *
-     * @param Vault $vault
+     * @param  Vault  $vault
      * @return Contact
      */
     public function getContactInVault(Vault $vault): Contact

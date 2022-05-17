@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UserTest extends TestCase
