@@ -62,7 +62,9 @@
 
             <ul class="text-xs">
               <li class="mb-2">
-                <inertia-link :href="data.url.update_template" class="cursor-pointer text-sky-500 hover:text-blue-900">Change template</inertia-link>
+                <inertia-link :href="data.url.update_template" class="cursor-pointer text-sky-500 hover:text-blue-900"
+                  >Change template</inertia-link
+                >
               </li>
               <li v-if="data.options.can_be_deleted">
                 <span class="cursor-pointer text-sky-500 hover:text-blue-900" @click="destroy">Delete contact</span>

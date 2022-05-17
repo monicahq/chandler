@@ -68,11 +68,12 @@
 
             <div>
               <p v-if="data.templates.length > 0" class="mb-2">
-                Please choose one template below to tell Monica how this contact should be displayed. Templates let you define which data should be diplayed on the contact page.
+                Please choose one template below to tell Monica how this contact should be displayed. Templates let you
+                define which data should be diplayed on the contact page.
               </p>
               <p v-else>
-                It seems that there are no templates in the account yet. Please add at least template to your
-                account first, then associate this template with this contact.
+                It seems that there are no templates in the account yet. Please add at least template to your account
+                first, then associate this template with this contact.
               </p>
             </div>
           </div>
