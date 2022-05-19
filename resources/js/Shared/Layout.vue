@@ -168,7 +168,7 @@ main {
 
       <footer class="mb-10 text-center text-xs">
         <ul>
-          <li class="mr-4 sm:inline sm:mb-0 mb-2">Monica, since 2017.</li>
+          <li class="mr-4 mb-2 sm:mb-0 sm:inline">Monica, since 2017.</li>
           <li class="sm:inline">
             Current version: {{ layoutData.version.date }}
 
