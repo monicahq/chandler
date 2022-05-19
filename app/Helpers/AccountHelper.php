@@ -2,10 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Models\User;
-use App\Models\Vault;
-use Illuminate\Support\Facades\DB;
-
 class AccountHelper
 {
     /**
@@ -15,8 +11,6 @@ class AccountHelper
      */
     public static function generateShortCode(): string
     {
-
-
         return $friendlyType;
     }
 }
