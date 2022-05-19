@@ -2,6 +2,7 @@
 
 namespace App\Settings\CreateAccount\Services;
 
+use Illuminate\Support\Str;
 use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\SetupAccount;
@@ -42,7 +43,10 @@ class CreateAccount extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validateRules($this->data);
 
-        $this->account = Account::create();
+        $this->account = Account::create([
+            'shortcode' => $this->data['shortcode'],
+            'uuid' => (string) Str::uuid(),
+        ]);
         $this->addFirstUser();
         $this->addLogs();
 

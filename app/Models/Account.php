@@ -11,6 +11,18 @@ class Account extends Model
 {
     use HasFactory;
 
+    protected $table = 'accounts';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'shortcode',
+        'uuid',
+    ];
+
     /**
      * Get the users associated with the account.
      *
