@@ -5,7 +5,6 @@ namespace App\Contact\ManageContactInformation\Services;
 use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
 use App\Models\ContactInformation;
 use App\Models\ContactInformationType;
 use App\Services\BaseService;

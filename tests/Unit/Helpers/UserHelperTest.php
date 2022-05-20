@@ -4,7 +4,6 @@ namespace Tests\Unit\Helpers;
 
 use App\Helpers\AvatarHelper;
 use App\Helpers\UserHelper;
-use App\Helpers\VaultHelper;
 use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\User;

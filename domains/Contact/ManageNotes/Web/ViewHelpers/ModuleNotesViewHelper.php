@@ -2,7 +2,6 @@
 
 namespace App\Contact\ManageNotes\Web\ViewHelpers;
 
-use App\Helpers\AvatarHelper;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
 use App\Models\Contact;

@@ -143,7 +143,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('user_id', $this->id)
             ->first();
 
-        if (! $contact){
+        if (! $contact) {
             return null;
         }
 
