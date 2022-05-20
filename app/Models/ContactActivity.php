@@ -27,7 +27,6 @@ class ContactActivity extends Model
      * @var array
      */
     protected $fillable = [
-        'contact_id',
         'activity_id',
         'emotion_id',
         'summary',
