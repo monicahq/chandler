@@ -160,8 +160,8 @@
 
               <!-- author -->
               <div v-if="note.author" class="relative mr-3 inline">
-                <div class="flex relative">
-                  <div v-html="note.author.avatar" class="h-3 w-3 icon-avatar mr-1 relative"></div>
+                <div class="relative flex">
+                  <div v-html="note.author.avatar" class="icon-avatar relative mr-1 h-3 w-3"></div>
                   <span></span>{{ note.author.name }}
                 </div>
               </div>

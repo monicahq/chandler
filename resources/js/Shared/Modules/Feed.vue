@@ -10,22 +10,25 @@
     <div class="ml-4 border-l border-gray-200">
       <div v-for="feedItem in data.items" :key="feedItem.id" class="mb-4">
         <!-- action & user -->
-        <div class="flex mb-3">
+        <div class="mb-3 flex">
           <div class="relative w-6">
-            <div v-html="feedItem.author.avatar" class="icon-avatar h-6 w-6 relative"></div>
+            <div v-html="feedItem.author.avatar" class="icon-avatar relative h-6 w-6"></div>
           </div>
 
           <div>
-            <p class="inline mr-2 text-gray-400"><span class="font-medium text-gray-800">{{ feedItem.author.name }}</span> {{ feedItem.sentence }}</p>
-            <p class="inline mr-2">•</p>
-            <p class="inline text-gray-400 text-sm">{{ feedItem.created_at }}</p>
+            <p class="mr-2 inline text-gray-400">
+              <span class="font-medium text-gray-800">{{ feedItem.author.name }}</span> {{ feedItem.sentence }}
+            </p>
+            <p class="mr-2 inline">•</p>
+            <p class="inline text-sm text-gray-400">{{ feedItem.created_at }}</p>
           </div>
         </div>
 
         <!-- details -->
         <div v-if="feedItem.object" class="ml-6">
-          <div class="px-3 py-2 border border-gray-300 rounded-lg">
-            Dolores aliquam qui necessitatibus praesentium eum cum. Eos natus et nemo impedit reprehenderit. Voluptatem nulla commodi voluptatum commodi eos. Dignissimos sequi cumque voluptatibus voluptatem consectetur et.
+          <div class="rounded-lg border border-gray-300 px-3 py-2">
+            Dolores aliquam qui necessitatibus praesentium eum cum. Eos natus et nemo impedit reprehenderit. Voluptatem
+            nulla commodi voluptatum commodi eos. Dignissimos sequi cumque voluptatibus voluptatem consectetur et.
           </div>
         </div>
       </div>
