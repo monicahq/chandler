@@ -1,21 +1,34 @@
 <style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.icon-note {
+.icon-avatar {
   top: -1px;
+  left: -12px;
 }
 </style>
 
 <template>
   <div class="mb-4">
-    <div v-for="item in data.items" :key="item.id">
-      <note v-if="item.action == 'note_created'" :note="item.object" />
+    <div class="ml-4 border-l border-gray-200">
+      <div v-for="feedItem in data.items" :key="feedItem.id" class="mb-4">
+        <!-- action & user -->
+        <div class="flex mb-3">
+          <div class="relative w-6">
+            <div v-html="feedItem.author.avatar" class="icon-avatar h-6 w-6 relative"></div>
+          </div>
 
-      <feed-item v-if="item.action == 'important_date_created'" :message="item.object" />
-      <feed-item v-if="item.action == 'important_date_updated'" :message="item.object" />
+          <div>
+            <p class="inline mr-2 text-gray-400"><span class="font-medium text-gray-800">{{ feedItem.author.name }}</span> {{ feedItem.sentence }}</p>
+            <p class="inline mr-2">•</p>
+            <p class="inline text-gray-400 text-sm">{{ feedItem.created_at }}</p>
+          </div>
+        </div>
+
+        <!-- details -->
+        <div v-if="feedItem.object" class="ml-6">
+          <div class="px-3 py-2 border border-gray-300 rounded-lg">
+            Dolores aliquam qui necessitatibus praesentium eum cum. Eos natus et nemo impedit reprehenderit. Voluptatem nulla commodi voluptatum commodi eos. Dignissimos sequi cumque voluptatibus voluptatem consectetur et.
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- blank state -->

@@ -157,6 +157,13 @@ class UpdateContactInformationTest extends TestCase
             'data' => 45322322,
         ]);
 
+        $this->assertDatabaseHas('contact_feed_items', [
+            'author_id' => $author->id,
+            'contact_id' => $contact->id,
+            'feedable_id' => null,
+            'feedable_type' => null,
+        ]);
+
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
             return $job->auditLog['action_name'] === 'contact_information_updated';
         });

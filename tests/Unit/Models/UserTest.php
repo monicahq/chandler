@@ -105,5 +105,10 @@ class UserTest extends TestCase
             $contact->id,
             $rachel->getContactInVault($vault)->id,
         );
+
+        $robert = User::factory()->create();
+        $this->assertNull(
+            $robert->getContactInVault($vault),
+        );
     }
 }
