@@ -3,14 +3,10 @@
 namespace App\Contact\ManageContactActivities\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Activity;
 use App\Models\ActivityType;
 use App\Models\ContactActivity;
-use App\Models\ContactFeedItem;
 use App\Models\Emotion;
-use App\Models\Note;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
