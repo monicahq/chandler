@@ -31,6 +31,29 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('activity_type_id')->references('id')->on('activity_types')->onDelete('cascade');
         });
+
+        Schema::create('contact_activities', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('activity_id');
+            $table->unsignedBigInteger('emotion_id')->nullable();
+            $table->string('summary');
+            $table->text('description')->nullable();
+            $table->date('happened_at');
+            $table->string('period_of_day');
+            $table->timestamps();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
+            $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('set null');
+        });
+
+        Schema::create('contact_activity_participants', function (Blueprint $table) {
+            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('contact_activity_id');
+            $table->timestamps();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('contact_activity_id')->references('id')->on('contact_activities')->onDelete('cascade');
+        });
     }
 
     /**
@@ -42,5 +65,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('activity_types');
         Schema::dropIfExists('activities');
+        Schema::dropIfExists('contact_activities');
+        Schema::dropIfExists('contact_activity_participants');
     }
 };
