@@ -7,6 +7,7 @@ use App\Models\Avatar;
 use App\Models\Call;
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\ContactActivity;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
 use App\Models\ContactInformation;
@@ -233,6 +234,17 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->pets()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_activities(): void
+    {
+        $ross = Contact::factory()->create([]);
+        $contactActivity = ContactActivity::factory()->create();
+
+        $ross->activities()->sync([$contactActivity->id]);
+
+        $this->assertTrue($ross->activities()->exists());
     }
 
     /** @test */

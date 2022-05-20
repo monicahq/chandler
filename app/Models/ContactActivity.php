@@ -46,13 +46,13 @@ class ContactActivity extends Model
     ];
 
     /**
-     * Get the contact associated with the contact activity.
+     * Get the vault associated with the contact activity.
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function vault()
     {
-        return $this->belongsTo(Contact::class);
+        return $this->belongsTo(Vault::class);
     }
 
     /**
