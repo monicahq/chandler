@@ -27,7 +27,6 @@
         <!-- details -->
         <div v-if="feedItem.description" class="ml-6">
           <div class="rounded-lg border border-gray-300 px-3 py-2">
-
             <span class="text-sm">{{ feedItem.description }}</span>
           </div>
         </div>
