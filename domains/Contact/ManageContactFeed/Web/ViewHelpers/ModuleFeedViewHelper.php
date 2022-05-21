@@ -4,9 +4,11 @@ namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
 use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Helpers\DateHelper;
+use App\Helpers\ImportantDateHelper;
 use App\Helpers\UserHelper;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
+use App\Models\ContactImportantDate;
 use App\Models\User;
 
 class ModuleFeedViewHelper
@@ -18,13 +20,12 @@ class ModuleFeedViewHelper
             ->get();
 
         $itemsCollection = $items->map(function ($item) use ($contact, $user) {
-            $object = self::getObject($item, $contact, $user);
-
             return [
                 'id' => $item->id,
-                'author' => self::getAuthor($item),
+                'action' => $item->action,
+                'author' => self::getAuthor($item, $user),
                 'sentence' => self::getSentence($item),
-                'object' => $object,
+                'description' => $item->description,
                 'created_at' => DateHelper::format($item->created_at, $user),
             ];
         });
@@ -34,34 +35,12 @@ class ModuleFeedViewHelper
         ];
     }
 
-    private static function getObject(ContactFeedItem $item, Contact $contact, User $user): mixed
-    {
-        $object = null;
-
-        switch ($item->action) {
-            case ContactFeedItem::ACTION_CONTACT_INFORMATION_UPDATED:
-                $object = null;
-                break;
-
-            // case ContactFeedItem::ACTION_NOTE_CREATED:
-            // case ContactFeedItem::ACTION_NOTE_UPDATED:
-            // case ContactFeedItem::ACTION_NOTE_DESTROYED:
-            //     $object = ModuleNotesViewHelper::dto($contact, $item->feedable, $user);
-            //     break;
-
-            default:
-                break;
-        }
-
-        return $object;
-    }
-
     private static function getSentence(ContactFeedItem $item): mixed
     {
         return trans('contact.feed_item_'.$item->action);
     }
 
-    private static function getAuthor(ContactFeedItem $item): ?array
+    private static function getAuthor(ContactFeedItem $item, User $user): ?array
     {
         $author = $item->author;
         if (! $author) {

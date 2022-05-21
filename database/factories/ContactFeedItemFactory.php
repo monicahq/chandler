@@ -27,6 +27,7 @@ class ContactFeedItemFactory extends Factory
             'author_id' => User::factory(),
             'contact_id' => Contact::factory(),
             'action' => ContactFeedItem::ACTION_NOTE_CREATED,
+            'description' => $this->faker->word(),
         ];
     }
 }

@@ -19,6 +19,7 @@ class CreateContactFeedTable extends Migration
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('contact_id');
             $table->string('action');
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('feedable_id')->nullable();
             $table->string('feedable_type')->nullable();
             $table->timestamps();

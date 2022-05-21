@@ -8,8 +8,8 @@ use App\Models\Vault;
 class UserHelper
 {
     /**
-     * Get the information about the contact linked to the user, in the given
-     * vault.
+     * Get the information about the contact linked to the given user, in the
+     * given vault.
      *
      * @return null|array
      */

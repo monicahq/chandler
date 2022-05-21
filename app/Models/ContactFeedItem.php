@@ -19,9 +19,9 @@ class ContactFeedItem extends Model
     const ACTION_CONTACT_INFORMATION_UPDATED = 'contact_information_updated';
     const ACTION_NOTE_CREATED = 'note_created';
     const ACTION_NOTE_UPDATED = 'note_updated';
-    const ACTION_NOTE_DESTROYED = 'note_destroyed';
     const ACTION_IMPORTANT_DATE_CREATED = 'important_date_created';
     const ACTION_IMPORTANT_DATE_UPDATED = 'important_date_updated';
+    const ACTION_IMPORTANT_DATE_DESTROYED = 'important_date_destroyed';
     const ACTION_LABEL_ADDED = 'label_added';
     const ACTION_LOAN_CREATED = 'loan_created';
     const ACTION_LOAN_UPDATED = 'loan_updated';
@@ -35,6 +35,7 @@ class ContactFeedItem extends Model
         'author_id',
         'contact_id',
         'action',
+        'description',
         'feedable_id',
         'feedable_type',
     ];

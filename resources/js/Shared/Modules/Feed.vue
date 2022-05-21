@@ -8,7 +8,7 @@
 <template>
   <div class="mb-4">
     <div class="ml-4 border-l border-gray-200">
-      <div v-for="feedItem in data.items" :key="feedItem.id" class="mb-4">
+      <div v-for="feedItem in data.items" :key="feedItem.id" class="mb-8">
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="relative w-6">
@@ -25,10 +25,10 @@
         </div>
 
         <!-- details -->
-        <div v-if="feedItem.object" class="ml-6">
+        <div v-if="feedItem.description" class="ml-6">
           <div class="rounded-lg border border-gray-300 px-3 py-2">
-            Dolores aliquam qui necessitatibus praesentium eum cum. Eos natus et nemo impedit reprehenderit. Voluptatem
-            nulla commodi voluptatum commodi eos. Dignissimos sequi cumque voluptatibus voluptatem consectetur et.
+
+            <span class="text-sm">{{ feedItem.description }}</span>
           </div>
         </div>
       </div>
