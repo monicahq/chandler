@@ -2,13 +2,10 @@
 
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Helpers\DateHelper;
-use App\Helpers\ImportantDateHelper;
 use App\Helpers\UserHelper;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Models\ContactImportantDate;
 use App\Models\User;
 
 class ModuleFeedViewHelper
@@ -19,7 +16,7 @@ class ModuleFeedViewHelper
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $itemsCollection = $items->map(function ($item) use ($contact, $user) {
+        $itemsCollection = $items->map(function ($item) use ($user) {
             return [
                 'id' => $item->id,
                 'action' => $item->action,

@@ -97,7 +97,7 @@ class DestroyContactImportantDate extends BaseService implements ServiceInterfac
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
             'action' => ContactFeedItem::ACTION_IMPORTANT_DATE_DESTROYED,
-            'description' => $this->date->label . ' ' . ImportantDateHelper::formatDate($this->date, $this->author),
+            'description' => $this->date->label.' '.ImportantDateHelper::formatDate($this->date, $this->author),
         ]);
     }
 }

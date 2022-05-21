@@ -128,7 +128,7 @@ class UpdateContactImportantDate extends BaseService implements ServiceInterface
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
             'action' => ContactFeedItem::ACTION_IMPORTANT_DATE_UPDATED,
-            'description' => $this->date->label . ' ' . ImportantDateHelper::formatDate($this->date, $this->author),
+            'description' => $this->date->label.' '.ImportantDateHelper::formatDate($this->date, $this->author),
         ]);
 
         $this->date->feedItem()->save($feedItem);
