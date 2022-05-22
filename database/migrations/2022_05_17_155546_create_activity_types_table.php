@@ -32,9 +32,19 @@ return new class extends Migration
             $table->foreign('activity_type_id')->references('id')->on('activity_types')->onDelete('cascade');
         });
 
+        Schema::create('contact_events', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('contact_id');
+            $table->string('summary');
+            $table->date('started_at');
+            $table->date('ended_at');
+            $table->timestamps();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+        });
+
         Schema::create('contact_activities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
+            $table->unsignedBigInteger('contact_event_id');
             $table->unsignedBigInteger('activity_id');
             $table->unsignedBigInteger('emotion_id')->nullable();
             $table->string('summary');
@@ -42,7 +52,7 @@ return new class extends Migration
             $table->date('happened_at');
             $table->string('period_of_day');
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
+            $table->foreign('contact_event_id')->references('id')->on('contact_events')->onDelete('cascade');
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
             $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('set null');
         });
@@ -65,6 +75,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('activity_types');
         Schema::dropIfExists('activities');
+        Schema::dropIfExists('contact_events');
         Schema::dropIfExists('contact_activities');
         Schema::dropIfExists('contact_activity_participants');
     }

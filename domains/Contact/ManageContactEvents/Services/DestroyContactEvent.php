@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Contact\ManageContactActivities\Services;
+namespace App\Contact\ManageContactEvents\Services;
 
 use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactActivity;
+use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class DestroyContactActivity extends BaseService implements ServiceInterface
+class DestroyContactEvent extends BaseService implements ServiceInterface
 {
-    private ContactActivity $contactActivity;
+    private ContactEvent $contactEvent;
     private array $data;
 
     /**
@@ -26,7 +26,7 @@ class DestroyContactActivity extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'contact_activity_id' => 'required|integer|exists:contact_activities,id',
+            'contact_event_id' => 'required|integer|exists:contact_events,id',
         ];
     }
 
@@ -55,7 +55,7 @@ class DestroyContactActivity extends BaseService implements ServiceInterface
         $this->validate();
         $this->data = $data;
 
-        $this->contactActivity->delete();
+        $this->contactEvent->delete();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
@@ -67,8 +67,8 @@ class DestroyContactActivity extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contactActivity = ContactActivity::where('contact_id', $this->data['contact_id'])
-            ->findOrFail($this->data['contact_activity_id']);
+        $this->contactEvent = ContactEvent::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['contact_event_id']);
     }
 
     private function createFeedItem(): void
@@ -76,10 +76,9 @@ class DestroyContactActivity extends BaseService implements ServiceInterface
         $feedItem = ContactFeedItem::create([
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_DESTROYED,
-            'description' => $this->contactActivity->summary.' on '.DateHelper::format($this->contactActivity->happened_at, $this->author),
+            'action' => ContactFeedItem::ACTION_CONTACT_EVENT_DESTROYED,
         ]);
 
-        $this->contactActivity->feedItem()->save($feedItem);
+        $this->contactEvent->feedItem()->save($feedItem);
     }
 }

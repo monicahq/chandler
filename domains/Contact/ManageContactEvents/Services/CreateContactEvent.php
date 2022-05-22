@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Contact\ManageContactActivities\Services;
+namespace App\Contact\ManageContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Activity;
 use App\Models\ActivityType;
+use App\Models\Contact;
 use App\Models\ContactActivity;
+use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;
 use App\Models\Emotion;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
-class CreateContactActivity extends BaseService implements ServiceInterface
+class CreateContactEvent extends BaseService implements ServiceInterface
 {
-    private ContactActivity $contactActivity;
+    private ContactEvent $contactEvent;
     private array $data;
+    private Collection $participantsCollection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -27,12 +31,10 @@ class CreateContactActivity extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'activity_id' => 'required|integer|exists:activities,id',
-            'emotion_id' => 'nullable|integer|exists:emotions,id',
+            'contact_id' => 'required|integer|exists:contacts,id',
             'summary' => 'required|string|max:255',
-            'description' => 'nullable|string|max:65535',
-            'happened_at' => 'date|format:Y-m-d',
-            'period_of_day' => 'nullable|string|max:15',
+            'started_at' => 'date|format:Y-m-d',
+            'ended_at' => 'date|format:Y-m-d',
         ];
     }
 
@@ -52,47 +54,33 @@ class CreateContactActivity extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a contact activity.
+     * Create a contact event.
      *
      * @param  array  $data
-     * @return ContactActivity
+     * @return ContactEvent
      */
-    public function execute(array $data): ContactActivity
+    public function execute(array $data): ContactEvent
     {
         $this->data = $data;
         $this->validate();
         $this->store();
         $this->createFeedItem();
 
-        return $this->contactActivity;
+        return $this->contactEvent;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
-
-        if ($this->valueOrNull($this->data, 'emotion_id')) {
-            Emotion::where('account_id', $this->data['account_id'])
-                ->where('id', $this->data['emotion_id'])
-                ->firstOrFail();
-        }
-
-        $activity = Activity::findOrFail($this->data['activity_id']);
-
-        ActivityType::where('account_id', $this->data['account_id'])
-            ->where('id', $activity->id)
-            ->firstOrFail();
     }
 
     private function store(): void
     {
-        $this->contactActivity = ContactActivity::create([
-            'activity_id' => $this->data['activity_id'],
-            'emotion_id' => $this->valueOrNull($this->data, 'emotion_id'),
+        $this->contactEvent = ContactEvent::create([
+            'contact_id' => $this->data['contact_id'],
             'summary' => $this->data['summary'],
-            'description' => $this->valueOrNull($this->data, 'description'),
-            'happened_at' => $this->data['happened_at'],
-            'period_of_day' => $this->valueOrNull($this->data, 'period_of_day'),
+            'started_at' => $this->data['started_at'],
+            'ended_at' => $this->data['ended_at'],
         ]);
 
         $this->contact->last_updated_at = Carbon::now();
@@ -104,8 +92,8 @@ class CreateContactActivity extends BaseService implements ServiceInterface
         $feedItem = ContactFeedItem::create([
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_CREATED,
+            'action' => ContactFeedItem::ACTION_CONTACT_EVENT_CREATED,
         ]);
-        $this->note->feedItem()->save($feedItem);
+        $this->contactEvent->feedItem()->save($feedItem);
     }
 }

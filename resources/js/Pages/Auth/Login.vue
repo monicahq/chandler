@@ -109,9 +109,7 @@
               Forgot your password?
             </inertia-link>
 
-            <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-              Log in
-            </breeze-button>
+            <pretty-button :text="'Log in'" :state="loadingState" :icon="'plus'" :classes="'save ml-4'" />
           </div>
         </form>
       </div>
@@ -126,10 +124,12 @@ import BreezeCheckbox from '@/Components/Checkbox.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton';
 
 export default {
   components: {
     TextInput,
+    PrettyButton,
     BreezeButton,
     BreezeCheckbox,
     BreezeInput,

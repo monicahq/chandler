@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Contact\ManageContactActivities\Services;
+namespace App\Contact\ManageContactEvents\Services;
 
-use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Activity;
 use App\Models\ActivityType;
+use App\Models\Contact;
 use App\Models\ContactActivity;
 use App\Models\ContactFeedItem;
 use App\Models\Emotion;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
-class UpdateContactActivity extends BaseService implements ServiceInterface
+class CreateContactActivity extends BaseService implements ServiceInterface
 {
     private ContactActivity $contactActivity;
     private array $data;
+    private Collection $participantsCollection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -28,13 +30,14 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_activity_id' => 'required|integer|exists:contact_activities,id',
+            'contact_id' => 'required|integer|exists:contacts,id',
             'activity_id' => 'required|integer|exists:activities,id',
             'emotion_id' => 'nullable|integer|exists:emotions,id',
             'summary' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'happened_at' => 'date|format:Y-m-d',
             'period_of_day' => 'nullable|string|max:15',
+            'participants' => 'required|array',
         ];
     }
 
@@ -48,13 +51,13 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Update a contact activity.
+     * Create a contact activity.
      *
      * @param  array  $data
      * @return ContactActivity
@@ -63,11 +66,7 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
     {
         $this->data = $data;
         $this->validate();
-        $this->update();
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
-
+        $this->store();
         $this->createFeedItem();
 
         return $this->contactActivity;
@@ -76,9 +75,6 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
-
-        $this->contactActivity = ContactActivity::where('contact_id', $this->data['contact_id'])
-            ->findOrFail($this->data['contact_activity_id']);
 
         if ($this->valueOrNull($this->data, 'emotion_id')) {
             Emotion::where('account_id', $this->data['account_id'])
@@ -91,17 +87,38 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
         ActivityType::where('account_id', $this->data['account_id'])
             ->where('id', $activity->id)
             ->firstOrFail();
+
+        $this->participantsCollection = collect();
+        foreach ($this->data['participants'] as $contact) {
+            $this->participantsCollection->push(
+                Contact::where('vault_id', $this->data['vault_id'])
+                    ->findOrFail($contact)
+            );
+        }
     }
 
-    private function update(): void
+    private function store(): void
     {
-        $this->contactActivity->activity_id = $this->data['activity_id'];
-        $this->contactActivity->emotion_id = $this->valueOrNull($this->data, 'emotion_id');
-        $this->contactActivity->summary = $this->data['summary'];
-        $this->contactActivity->description = $this->valueOrNull($this->data, 'description');
-        $this->contactActivity->happened_at = $this->data['happened_at'];
-        $this->contactActivity->period_of_day = $this->valueOrNull($this->data, 'period_of_day');
-        $this->contactActivity->save();
+        $this->contactActivity = ContactActivity::create([
+            'activity_id' => $this->data['activity_id'],
+            'emotion_id' => $this->valueOrNull($this->data, 'emotion_id'),
+            'summary' => $this->data['summary'],
+            'description' => $this->valueOrNull($this->data, 'description'),
+            'happened_at' => $this->data['happened_at'],
+            'period_of_day' => $this->valueOrNull($this->data, 'period_of_day'),
+        ]);
+
+
+        // there is at least one contact
+        $this->contact->activities()->syncWithoutDetaching([$this->contactActivity->id]);
+
+        // now, let's add the other participants
+        foreach ($this->participantsCollection as $contact) {
+            $contact->activities()->syncWithoutDetaching([$this->contactActivity->id]);
+        }
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
     }
 
     private function createFeedItem(): void
@@ -109,10 +126,8 @@ class UpdateContactActivity extends BaseService implements ServiceInterface
         $feedItem = ContactFeedItem::create([
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_UPDATED,
-            'description' => $this->contactActivity->summary.' on '.DateHelper::format($this->contactActivity->happened_at, $this->author),
+            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_CREATED,
         ]);
-
-        $this->contactActivity->feedItem()->save($feedItem);
+        $this->note->feedItem()->save($feedItem);
     }
 }
