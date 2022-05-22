@@ -108,7 +108,6 @@ class CreateContactActivity extends BaseService implements ServiceInterface
             'period_of_day' => $this->valueOrNull($this->data, 'period_of_day'),
         ]);
 
-
         // there is at least one contact
         $this->contact->activities()->syncWithoutDetaching([$this->contactActivity->id]);
 

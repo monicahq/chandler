@@ -2,7 +2,6 @@
 
 namespace App\Contact\ManageContactEvents\Services;
 
-use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;

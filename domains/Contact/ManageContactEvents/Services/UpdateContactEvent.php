@@ -2,14 +2,9 @@
 
 namespace App\Contact\ManageContactEvents\Services;
 
-use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
-use App\Models\Activity;
-use App\Models\ActivityType;
-use App\Models\ContactActivity;
 use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;
-use App\Models\Emotion;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
