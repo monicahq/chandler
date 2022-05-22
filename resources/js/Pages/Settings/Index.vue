@@ -21,11 +21,15 @@
           <ul>
             <li class="mb-2">
               <span class="mr-2">🥳</span>
-              <inertia-link :href="data.url.preferences.index" class="text-blue-500 hover:underline">User preferences</inertia-link>
+              <inertia-link :href="data.url.preferences.index" class="text-blue-500 hover:underline"
+                >User preferences</inertia-link
+              >
             </li>
             <li>
               <span class="mr-2">📡</span>
-              <inertia-link :href="data.url.notifications.index" class="text-blue-500 hover:underline">Notification channels</inertia-link>
+              <inertia-link :href="data.url.notifications.index" class="text-blue-500 hover:underline"
+                >Notification channels</inertia-link
+              >
             </li>
           </ul>
         </div>

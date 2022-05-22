@@ -109,9 +109,7 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-                  @click="updateGenderModal(gender)">
+                <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="updateGenderModal(gender)">
                   Rename
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(gender)">Delete</li>

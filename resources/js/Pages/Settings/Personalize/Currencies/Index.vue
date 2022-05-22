@@ -91,14 +91,10 @@
         <div class="mb-3 text-right">
           <ul>
             <li class="mr-2 inline">
-              <span @click="enableAll" class="inline cursor-pointer text-blue-500 hover:underline">
-                Enable all
-              </span>
+              <span @click="enableAll" class="inline cursor-pointer text-blue-500 hover:underline"> Enable all </span>
             </li>
             <li class="inline">
-              <span @click="disableAll" class="inline cursor-pointer text-blue-500 hover:underline">
-                Disable all
-              </span>
+              <span @click="disableAll" class="inline cursor-pointer text-blue-500 hover:underline"> Disable all </span>
             </li>
           </ul>
         </div>
@@ -124,10 +120,7 @@
               </span>
 
               <!-- disable -->
-              <span
-                v-else
-                @click="update(currency)"
-                class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+              <span v-else @click="update(currency)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
                 Disable
               </span>
             </div>
