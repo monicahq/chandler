@@ -25,7 +25,7 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-sky-500 hover:text-blue-900"> Settings </inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline"> Settings </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -38,7 +38,7 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-sky-500 hover:text-blue-900">
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
                 Personalize your account
               </inertia-link>
             </li>
@@ -129,7 +129,7 @@
               <!-- actions -->
               <ul class="text-sm">
                 <li
-                  class="inline cursor-pointer text-sky-500 hover:text-blue-900"
+                  class="inline cursor-pointer text-blue-500 hover:underline"
                   @click="renameActivityTypeModal(activityType)">
                   Rename
                 </li>
@@ -179,7 +179,7 @@
                 <!-- actions -->
                 <ul class="text-sm">
                   <li
-                    class="inline cursor-pointer text-sky-500 hover:text-blue-900"
+                    class="inline cursor-pointer text-blue-500 hover:underline"
                     @click="renameActivityModal(activity)">
                     Rename
                   </li>
@@ -226,7 +226,7 @@
               v-if="createActivityModalId != activityType.id"
               class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50">
               <span
-                class="cursor-pointer text-sm text-sky-500 hover:text-blue-900"
+                class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showActivityModal(activityType)"
                 >Add a new activity</span
               >
