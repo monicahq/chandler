@@ -26,6 +26,9 @@ class ContactFeedItem extends Model
     const ACTION_IMPORTANT_DATE_DESTROYED = 'important_date_destroyed';
     const ACTION_LABEL_ASSIGNED = 'label_assigned';
     const ACTION_LABEL_REMOVED = 'label_removed';
+    const ACTION_CONTACT_ACTIVITY_CREATED = 'added an activity';
+    const ACTION_CONTACT_ACTIVITY_UPDATED = 'updated an activity';
+    const ACTION_CONTACT_ACTIVITY_DESTROYED = 'deleted an activity';
     const ACTION_LOAN_CREATED = 'loan_created';
     const ACTION_LOAN_UPDATED = 'loan_updated';
 

@@ -2,16 +2,17 @@
 
 namespace App\Contact\ManageContactActivities\Services;
 
+use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Note;
+use App\Models\ContactActivity;
+use App\Models\ContactFeedItem;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class DestroyNote extends BaseService implements ServiceInterface
+class DestroyContactActivity extends BaseService implements ServiceInterface
 {
-    private Note $note;
+    private ContactActivity $contactActivity;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,7 +26,7 @@ class DestroyNote extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'note_id' => 'required|integer|exists:notes,id',
+            'contact_activity_id' => 'required|integer|exists:contact_activities,id',
         ];
     }
 
@@ -45,51 +46,40 @@ class DestroyNote extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a note.
+     * Destroy a contact activity.
      *
      * @param  array  $data
      */
     public function execute(array $data): void
     {
-        $this->validateRules($data);
+        $this->validate();
+        $this->data = $data;
 
-        $this->note = Note::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['note_id']);
-
-        $this->removeContactFeedItem();
-
-        $this->note->delete();
+        $this->contactActivity->delete();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
-        $this->log();
+        $this->createFeedItem();
     }
 
-    private function log(): void
+    private function validate(): void
     {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-            ]),
-        ])->onQueue('low');
+        $this->validateRules($this->data);
 
-        CreateContactLog::dispatch([
+        $this->contactActivity = ContactActivity::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['contact_activity_id']);
+    }
+
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'note_destroyed',
-            'objects' => json_encode([]),
-        ])->onQueue('low');
-    }
+            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_DESTROYED,
+            'description' => $this->contactActivity->summary.' on '.DateHelper::format($this->contactActivity->happened_at, $this->author),
+        ]);
 
-    private function removeContactFeedItem(): void
-    {
-        $this->note->feedItem->delete();
+        $this->contactActivity->feedItem()->save($feedItem);
     }
 }

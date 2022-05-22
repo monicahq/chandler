@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Activity;
 use App\Models\ActivityType;
 use App\Models\ContactActivity;
+use App\Models\ContactFeedItem;
 use App\Models\Emotion;
 use App\Services\BaseService;
 use Carbon\Carbon;
@@ -60,18 +61,8 @@ class CreateContactActivity extends BaseService implements ServiceInterface
     {
         $this->data = $data;
         $this->validate();
-
-        $this->contactActivity = ContactActivity::create([
-            'activity_id' => $this->data['activity_id'],
-            'emotion_id' => $this->valueOrNull($data, 'emotion_id'),
-            'summary' => $data['summary'],
-            'description' => $this->valueOrNull($data, 'description'),
-            'happened_at' => $data['happened_at'],
-            'period_of_day' => $this->valueOrNull($data, 'period_of_day'),
-        ]);
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
+        $this->store();
+        $this->createFeedItem();
 
         return $this->contactActivity;
     }
@@ -91,5 +82,30 @@ class CreateContactActivity extends BaseService implements ServiceInterface
         ActivityType::where('account_id', $this->data['account_id'])
             ->where('id', $activity->id)
             ->firstOrFail();
+    }
+
+    private function store(): void
+    {
+        $this->contactActivity = ContactActivity::create([
+            'activity_id' => $this->data['activity_id'],
+            'emotion_id' => $this->valueOrNull($this->data, 'emotion_id'),
+            'summary' => $this->data['summary'],
+            'description' => $this->valueOrNull($this->data, 'description'),
+            'happened_at' => $this->data['happened_at'],
+            'period_of_day' => $this->valueOrNull($this->data, 'period_of_day'),
+        ]);
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
+    }
+
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'author_id' => $this->author->id,
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_CREATED,
+        ]);
+        $this->note->feedItem()->save($feedItem);
     }
 }

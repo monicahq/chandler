@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class ContactActivity extends Model
 {
@@ -49,7 +51,7 @@ class ContactActivity extends Model
      *
      * @return BelongsTo
      */
-    public function vault()
+    public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
     }
@@ -59,7 +61,7 @@ class ContactActivity extends Model
      *
      * @return BelongsTo
      */
-    public function activity()
+    public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);
     }
@@ -69,7 +71,7 @@ class ContactActivity extends Model
      *
      * @return BelongsTo
      */
-    public function emotion()
+    public function emotion(): BelongsTo
     {
         return $this->belongsTo(Emotion::class);
     }
@@ -77,10 +79,20 @@ class ContactActivity extends Model
     /**
      * Get the contact records the activity is with.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function participants()
+    public function participants(): BelongsToMany
     {
         return $this->belongsToMany(Contact::class, 'contact_activity_participants', 'contact_activity_id', 'contact_id');
+    }
+
+    /**
+     * Get the contact activity's feed item.
+     *
+     * @return MorphOne
+     */
+    public function feedItem(): MorphOne
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 }

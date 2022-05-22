@@ -2,17 +2,23 @@
 
 namespace App\Contact\ManageContactActivities\Services;
 
+use App\Helpers\DateHelper;
 use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
+use App\Models\Activity;
+use App\Models\ActivityType;
+use App\Models\ContactActivity;
+use App\Models\ContactFeedItem;
 use App\Models\Emotion;
 use App\Models\Note;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class UpdateNote extends BaseService implements ServiceInterface
+class UpdateContactActivity extends BaseService implements ServiceInterface
 {
-    private Note $note;
+    private ContactActivity $contactActivity;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -25,11 +31,13 @@ class UpdateNote extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'note_id' => 'required|integer|exists:notes,id',
+            'contact_activity_id' => 'required|integer|exists:contact_activities,id',
+            'activity_id' => 'required|integer|exists:activities,id',
             'emotion_id' => 'nullable|integer|exists:emotions,id',
-            'title' => 'nullable|string|max:255',
-            'body' => 'required|string|max:65535',
+            'summary' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
+            'happened_at' => 'date|format:Y-m-d',
+            'period_of_day' => 'nullable|string|max:15',
         ];
     }
 
@@ -49,59 +57,65 @@ class UpdateNote extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a note.
+     * Update a contact activity.
      *
      * @param  array  $data
-     * @return Note
+     * @return ContactActivity
      */
-    public function execute(array $data): Note
+    public function execute(array $data): ContactActivity
     {
-        $this->validateRules($data);
-
-        $this->note = Note::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['note_id']);
-
-        if ($this->valueOrNull($data, 'emotion_id')) {
-            Emotion::where('account_id', $data['account_id'])
-            ->where('id', $data['emotion_id'])
-            ->firstOrFail();
-        }
-
-        $this->note->body = $data['body'];
-        $this->note->title = $this->valueOrNull($data, 'title');
-        $this->note->emotion_id = $this->valueOrNull($data, 'emotion_id');
-        $this->note->save();
+        $this->data = $data;
+        $this->validate();
+        $this->update();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
-        $this->log();
+        $this->createFeedItem();
 
-        return $this->note;
+        return $this->contactActivity;
     }
 
-    private function log(): void
+    private function validate(): void
     {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-                'note_id' => $this->note->id,
-            ]),
-        ])->onQueue('low');
+        $this->validateRules($this->data);
 
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
+        $this->contactActivity = ContactActivity::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['contact_activity_id']);
+
+        if ($this->valueOrNull($this->data, 'emotion_id')) {
+            Emotion::where('account_id', $this->data['account_id'])
+                ->where('id', $this->data['emotion_id'])
+                ->firstOrFail();
+        }
+
+        $activity = Activity::findOrFail($this->data['activity_id']);
+
+        ActivityType::where('account_id', $this->data['account_id'])
+            ->where('id', $activity->id)
+            ->firstOrFail();
+    }
+
+    private function update(): void
+    {
+        $this->contactActivity->activity_id = $this->data['activity_id'];
+        $this->contactActivity->emotion_id = $this->valueOrNull($this->data, 'emotion_id');
+        $this->contactActivity->summary = $this->data['summary'];
+        $this->contactActivity->description = $this->valueOrNull($this->data, 'description');
+        $this->contactActivity->happened_at = $this->data['happened_at'];
+        $this->contactActivity->period_of_day = $this->valueOrNull($this->data, 'period_of_day');
+        $this->contactActivity->save();
+    }
+
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
             'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'note_updated',
-            'objects' => json_encode([
-                'note_id' => $this->note->id,
-            ]),
-        ])->onQueue('low');
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_ACTIVITY_UPDATED,
+            'description' => $this->contactActivity->summary.' on '.DateHelper::format($this->contactActivity->happened_at, $this->author),
+        ]);
+
+        $this->contactActivity->feedItem()->save($feedItem);
     }
 }
