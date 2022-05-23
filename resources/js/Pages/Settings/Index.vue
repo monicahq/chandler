@@ -41,21 +41,15 @@
             <ul>
               <li class="mb-2">
                 <span class="mr-2">🥸</span>
-                <inertia-link :href="data.url.users.index" class="text-blue-500 hover:underline">
-                  Manage users
-                </inertia-link>
+                <inertia-link :href="data.url.users.index" class="text-blue-500 hover:underline">Manage users</inertia-link>
               </li>
               <li class="mb-2">
                 <span class="mr-2">🎃</span>
-                <inertia-link :href="data.url.personalize.index" class="text-blue-500 hover:underline">
-                  Personalize your contacts data
-                </inertia-link>
+                <inertia-link :href="data.url.personalize.index" class="text-blue-500 hover:underline">Personalize your contacts data</inertia-link>
               </li>
               <li>
                 <span class="mr-2">💩</span>
-                <inertia-link :href="data.url.cancel.index" class="text-blue-500 hover:underline">
-                  Cancel your account
-                </inertia-link>
+                <inertia-link :href="data.url.cancel.index" class="text-blue-500 hover:underline">Cancel your account</inertia-link>
               </li>
             </ul>
           </div>
