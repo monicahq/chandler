@@ -2,12 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Activity;
 use App\Models\Contact;
-use App\Models\ContactActivity;
 use App\Models\ContactEvent;
-use App\Models\Emotion;
-use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactEventFactory extends Factory

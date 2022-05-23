@@ -3,10 +3,7 @@
 namespace Tests\Unit\Domains\Contact\ManageContactActivities\Services;
 
 use App\Contact\ManageContactActivities\Services\CreateContactActivity;
-use App\Contact\ManageNotes\Services\CreateNote;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\User;
