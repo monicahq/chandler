@@ -43,7 +43,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">Personalize your account</inertia-link>
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
+                >Personalize your account</inertia-link
+              >
             </li>
             <li class="relative mr-2 inline">
               <svg

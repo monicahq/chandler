@@ -113,7 +113,9 @@
 
               <!-- actions -->
               <ul v-if="!user.is_logged_user" class="text-sm">
-                <li @click="showEditModal(user)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">Edit</li>
+                <li @click="showEditModal(user)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+                  Edit
+                </li>
                 <li @click="destroy(user)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
               </ul>
             </div>

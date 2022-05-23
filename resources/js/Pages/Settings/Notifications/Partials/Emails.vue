@@ -174,17 +174,23 @@ select {
           <li
             v-if="email.active"
             class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="toggle(email)">Deactivate</li>
+            @click="toggle(email)">
+            Deactivate
+          </li>
           <li
             v-if="!email.active"
             class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="toggle(email)">Activate</li>
+            @click="toggle(email)">
+            Activate
+          </li>
 
           <!-- link to send a test email, if not already sent -->
           <li
             v-if="testEmailSentId != email.id"
             class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="sendTest(email)">Send test</li>
+            @click="sendTest(email)">
+            Send test
+          </li>
 
           <!-- text saying that the email has been sent -->
           <li v-if="testEmailSentId == email.id" class="mr-4 inline">Test email sent!</li>
