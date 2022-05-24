@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
-use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use Illuminate\Database\Eloquent\Factories\Factory;

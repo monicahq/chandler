@@ -2,10 +2,7 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Activity;
-use App\Models\ActivityType;
 use App\Models\LifeEvent;
-use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

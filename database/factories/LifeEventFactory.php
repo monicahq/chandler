@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
-use App\Models\ContactEvent;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
 use Illuminate\Database\Eloquent\Factories\Factory;

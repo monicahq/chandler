@@ -3,7 +3,6 @@
 namespace App\Settings\ManageLifeEventCategories\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
 use App\Models\User;
 use App\Services\BaseService;

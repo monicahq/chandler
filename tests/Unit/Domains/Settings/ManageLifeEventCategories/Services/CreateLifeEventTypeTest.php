@@ -4,12 +4,9 @@ namespace Tests\Unit\Domains\Settings\ManageLifeEventCategories\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Activity;
-use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\User;
-use App\Settings\ManageActivityTypes\Services\CreateActivity;
 use App\Settings\ManageLifeEventCategories\Services\CreateLifeEventType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
