@@ -20,28 +20,30 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('account_id');
             $table->string('label')->nullable();
-            $table->string('label_translation_key');
+            $table->string('label_translation_key')->nullable();
+            $table->boolean('can_be_deleted')->default(false);
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
 
         Schema::create('life_event_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('life_event_category');
+            $table->unsignedBigInteger('life_event_category_id');
             $table->string('label')->nullable();
-            $table->string('label_translation_key');
+            $table->string('label_translation_key')->nullable();
+            $table->boolean('can_be_deleted')->default(false);
             $table->timestamps();
-            $table->foreign('life_event_category')->references('id')->on('life_event_categories')->onDelete('cascade');
+            $table->foreign('life_event_category_id')->references('id')->on('life_event_categories')->onDelete('cascade');
         });
 
         Schema::create('life_events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('life_event_category_id');
+            $table->unsignedBigInteger('life_event_type_id');
             $table->string('summary');
             $table->date('started_at');
             $table->date('ended_at');
             $table->timestamps();
-            $table->foreign('life_event_category_id')->references('id')->on('life_event_types')->onDelete('cascade');
+            $table->foreign('life_event_type_id')->references('id')->on('life_event_types')->onDelete('cascade');
         });
 
         Schema::create('activity_types', function (Blueprint $table) {
