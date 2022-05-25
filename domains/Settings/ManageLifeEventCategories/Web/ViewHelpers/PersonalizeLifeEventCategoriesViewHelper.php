@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Settings\ManageActivityTypes\Web\ViewHelpers;
+namespace App\Settings\ManageLifeEventCategories\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Activity;
 use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
 
-class PersonalizeActivityTypesIndexViewHelper
+class PersonalizeLifeEventCategoriesViewHelper
 {
     public static function data(Account $account): array
     {
@@ -26,46 +27,44 @@ class PersonalizeActivityTypesIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
-                'activity_type_store' => route('settings.personalize.activity.type.store'),
+                'store' => route('settings.personalize.life_event_categories.store'),
             ],
         ];
     }
 
-    public static function dtoLifeEventCategory(LifeEventCategory $type): array
+    public static function dtoLifeEventCategory(LifeEventCategory $category): array
+    {
+        return [
+            'id' => $category->id,
+            'label' => $category->label,
+            'life_event_types' => $category->lifeEventTypes->map(function ($type) use ($category) {
+                return self::dtoType($category, $type);
+            }),
+            'url' => [
+                'store' => route('settings.personalize.life_event_categories.store'),
+                'update' => route('settings.personalize.life_event_categories.update', [
+                    'lifeEventCategory' => $category->id,
+                ]),
+                'destroy' => route('settings.personalize.life_event_categories.destroy', [
+                    'lifeEventCategory' => $category->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoType(LifeEventCategory $category, LifeEventType $type): array
     {
         return [
             'id' => $type->id,
             'label' => $type->label,
-            'activities' => $type->activities->map(function ($activity) use ($type) {
-                return self::dtoActivity($type, $activity);
-            }),
             'url' => [
-                'store' => route('settings.personalize.activity.store', [
-                    'activityType' => $type->id,
+                'update' => route('settings.personalize.life_event_types.update', [
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
                 ]),
-                'update' => route('settings.personalize.activity.type.update', [
-                    'activityType' => $type->id,
-                ]),
-                'destroy' => route('settings.personalize.activity.type.destroy', [
-                    'activityType' => $type->id,
-                ]),
-            ],
-        ];
-    }
-
-    public static function dtoActivity(ActivityType $type, Activity $activity): array
-    {
-        return [
-            'id' => $activity->id,
-            'label' => $activity->label,
-            'url' => [
-                'update' => route('settings.personalize.activity.update', [
-                    'activityType' => $type->id,
-                    'activity' => $activity->id,
-                ]),
-                'destroy' => route('settings.personalize.activity.destroy', [
-                    'activityType' => $type->id,
-                    'activity' => $activity->id,
+                'destroy' => route('settings.personalize.life_event_types.destroy', [
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
                 ]),
             ],
         ];

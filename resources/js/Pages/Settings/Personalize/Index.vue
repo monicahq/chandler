@@ -56,6 +56,12 @@
               >
             </li>
             <li class="mb-2">
+              <span class="mr-2">👩‍🍼</span>
+              <inertia-link :href="data.url.manage_life_event_categories" class="text-blue-500 hover:underline"
+                >Manage life event categories</inertia-link
+              >
+            </li>
+            <li class="mb-2">
               <span class="mr-2">🚲</span>
               <inertia-link :href="data.url.manage_activity_types" class="text-blue-500 hover:underline"
                 >Manage activity types</inertia-link

@@ -52,7 +52,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Activity Types</li>
+            <li class="inline">Life event categories</li>
           </ul>
         </div>
       </div>
@@ -62,60 +62,60 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🚲 </span> All the activity types</h3>
+          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🚲 </span> All the life event categories</h3>
           <pretty-button
-            v-if="!createActivityTypeModalShown"
-            :text="'Add a new activity type'"
+            v-if="!createLifeEventCategoryModalShown"
+            :text="'Add a new life event category'"
             :icon="'plus'"
-            @click="showActivityTypeModal" />
+            @click="showLifeEventCategoryModal" />
         </div>
 
         <!-- modal to create an activity type -->
         <form
-          v-if="createActivityTypeModalShown"
+          v-if="createLifeEventCategoryModalShown"
           class="mb-6 rounded-lg border border-gray-200 bg-white"
-          @submit.prevent="submitActivityType()">
+          @submit.prevent="submitLifeEventCategory()">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
             <text-input
-              :ref="'newActivityType'"
-              v-model="form.activityTypeName"
-              :label="'Name of the activity type'"
+              :ref="'newLifeEventCategory'"
+              v-model="form.lifeEventCategoryName"
+              :label="'Name of the life event category'"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
               :required="true"
               :autocomplete="false"
               :maxlength="255"
-              @esc-key-pressed="createActivityTypeModalShown = false" />
+              @esc-key-pressed="createLifeEventCategoryModalShown = false" />
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createActivityTypeModalShown = false" />
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createLifeEventCategoryModalShown = false" />
             <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
-        <!-- list of activity types -->
-        <ul v-if="localActivityTypes.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <li v-for="activityType in localActivityTypes" :key="activityType.id">
-            <!-- detail of the activity type -->
+        <!-- list of life event categories -->
+        <ul v-if="localLifeEventCategories.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <li v-for="lifeEventCategory in localLifeEventCategories" :key="lifeEventCategory.id">
+            <!-- detail of the life event category -->
             <div
-              v-if="renameActivityTypeModalShownId != activityType.id"
+              v-if="renameLifeEventCategoryModalShownId != lifeEventCategory.id"
               class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-              <span class="text-base font-semibold">{{ activityType.label }}</span>
+              <span class="text-base font-semibold">{{ lifeEventCategory.label }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
                 <li
                   class="inline cursor-pointer text-blue-500 hover:underline"
-                  @click="renameActivityTypeModal(activityType)">
+                  @click="renameLifeEventCategoryModal(lifeEventCategory)">
                   Rename
                 </li>
                 <li
                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                  @click="destroyActivityType(activityType)">
+                  @click="destroyLifeEventCategory(lifeEventCategory)">
                   Delete
                 </li>
               </ul>
@@ -123,15 +123,15 @@
 
             <!-- rename an activity type modal -->
             <form
-              v-if="renameActivityTypeModalShownId == activityType.id"
+              v-if="renameLifeEventCategoryModalShownId == lifeEventCategory.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50"
-              @submit.prevent="updateActivityType(activityType)">
+              @submit.prevent="updateLifeEventCategory(lifeEventCategory)">
               <div class="border-b border-gray-200 p-5">
                 <errors :errors="form.errors" />
 
                 <text-input
-                  :ref="'rename' + activityType.id"
-                  v-model="form.activityTypeName"
+                  :ref="'rename' + lifeEventCategory.id"
+                  v-model="form.lifeEventCategoryName"
                   :label="'Name of the new group type'"
                   :type="'text'"
                   :autofocus="true"
@@ -139,33 +139,38 @@
                   :required="true"
                   :autocomplete="false"
                   :maxlength="255"
-                  @esc-key-pressed="renameActivityTypeModalShownId = 0" />
+                  @esc-key-pressed="renameLifeEventCategoryModalShownId = 0" />
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameActivityTypeModalShownId = 0" />
+                <pretty-span
+                  :text="'Cancel'"
+                  :classes="'mr-3'"
+                  @click.prevent="renameLifeEventCategoryModalShownId = 0" />
                 <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
 
             <!-- list of activities -->
             <div
-              v-for="activity in activityType.activities"
+              v-for="activity in lifeEventCategory.life_event_types"
               :key="activity.id"
               class="border-b border-gray-200 hover:bg-slate-50">
-              <div v-if="renameActivityModalId != activity.id" class="flex items-center justify-between px-5 py-2 pl-6">
+              <div
+                v-if="renameLifeEventTypeModalId != activity.id"
+                class="flex items-center justify-between px-5 py-2 pl-6">
                 <span>{{ activity.label }}</span>
 
                 <!-- actions -->
                 <ul class="text-sm">
                   <li
                     class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameActivityModal(activity)">
+                    @click="renameLifeEventTypeModal(activity)">
                     Rename
                   </li>
                   <li
                     class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                    @click="destroyActivity(activityType, activity)">
+                    @click="destroyLifeEventType(lifeEventCategory, activity)">
                     Delete
                   </li>
                 </ul>
@@ -173,9 +178,9 @@
 
               <!-- rename the activity modal -->
               <form
-                v-if="renameActivityModalId == activity.id"
+                v-if="renameLifeEventTypeModalId == activity.id"
                 class="item-list border-b border-gray-200 hover:bg-slate-50"
-                @submit.prevent="updateActivity(activityType, activity)">
+                @submiLifeEventType.prevent="updateActivity(lifeEventCategory, activity)">
                 <div class="border-b border-gray-200 p-5">
                   <errors :errors="form.errors" />
 
@@ -191,11 +196,11 @@
                     :placeholder="'Wish good day'"
                     :autocomplete="false"
                     :maxlength="255"
-                    @esc-key-pressed="renameActivityModalId = 0" />
+                    @esc-key-pressed="renameLifeEventTypeModalId = 0" />
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameActivityModalId = 0" />
+                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameLifeEventTypeModalId = 0" />
                   <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
@@ -203,25 +208,25 @@
 
             <!-- create a new activity -->
             <div
-              v-if="createActivityModalId != activityType.id"
+              v-if="createLifeEventCategoryModalId != lifeEventCategory.id"
               class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
-                @click="showActivityModal(activityType)"
+                @click="showLifeEventTypeModal(lifeEventCategory)"
                 >Add a new activity</span
               >
             </div>
 
             <!-- create an activity -->
             <form
-              v-if="createActivityModalId == activityType.id"
+              v-if="createLifeEventCategoryModalId == lifeEventCategory.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50"
-              @submit.prevent="storeActivity(activityType)">
+              @submit.prevent="storeLifeEventType(lifeEventCategory)">
               <div class="border-b border-gray-200 p-5">
                 <errors :errors="form.errors" />
 
                 <text-input
-                  :ref="'newActivity'"
+                  :ref="'newLifeEventType'"
                   v-model="form.label"
                   :label="'Label'"
                   :type="'text'"
@@ -231,11 +236,11 @@
                   :placeholder="'Parent'"
                   :autocomplete="false"
                   :maxlength="255"
-                  @esc-key-pressed="createActivityModalId = 0" />
+                  @esc-key-pressed="createLifeEventCategoryModalId = 0" />
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="createActivityModalId = 0" />
+                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="createLifeEventCategoryModalId = 0" />
                 <pretty-button :text="'Add'" :state="loadingState" :icon="'plus'" :classes="'save'" />
               </div>
             </form>
@@ -243,8 +248,10 @@
         </ul>
 
         <!-- blank state -->
-        <div v-if="localActivityTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <p class="p-5 text-center">Activity types let you indicate what you've done with your contacts.</p>
+        <div v-if="localLifeEventCategories.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <p class="p-5 text-center">
+            Life events let you document what happened in your life, or the rich life of your contacts.
+          </p>
         </div>
       </div>
     </main>
@@ -281,13 +288,13 @@ export default {
   data() {
     return {
       loadingState: '',
-      createActivityTypeModalShown: false,
-      renameActivityTypeModalShownId: 0,
-      createActivityModalId: 0,
-      renameActivityModalId: 0,
-      localActivityTypes: [],
+      createLifeEventCategoryModalShown: false,
+      renameLifeEventCategoryModalShownId: 0,
+      createLifeEventCategoryModalId: 0,
+      renameLifeEventTypeModalId: 0,
+      localLifeEventCategories: [],
       form: {
-        activityTypeName: '',
+        lifeEventCategoryName: '',
         label: '',
         errors: [],
       },
@@ -295,56 +302,56 @@ export default {
   },
 
   mounted() {
-    this.localActivityTypes = this.data.activity_types;
+    this.localLifeEventCategories = this.data.life_event_categories;
   },
 
   methods: {
-    showActivityTypeModal() {
-      this.form.activityTypeName = '';
-      this.createActivityTypeModalShown = true;
+    showLifeEventCategoryModal() {
+      this.form.lifeEventCategoryName = '';
+      this.createLifeEventCategoryModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.newActivityType.focus();
+        this.$refs.newLifeEventCategory.focus();
       });
     },
 
-    renameActivityTypeModal(activityType) {
-      this.form.activityTypeName = activityType.label;
-      this.renameActivityTypeModalShownId = activityType.id;
+    renameLifeEventCategoryModal(lifeEventCategory) {
+      this.form.lifeEventCategoryName = lifeEventCategory.label;
+      this.renameLifeEventCategoryModalShownId = lifeEventCategory.id;
 
       this.$nextTick(() => {
-        this.$refs[`rename${activityType.id}`].focus();
+        this.$refs[`rename${lifeEventCategory.id}`].focus();
       });
     },
 
-    showActivityModal(activityType) {
-      this.createActivityModalId = activityType.id;
+    showLifeEventTypeModal(lifeEventCategory) {
+      this.createLifeEventCategoryModalId = lifeEventCategory.id;
       this.form.label = '';
 
       this.$nextTick(() => {
-        this.$refs.newActivity.focus();
+        this.$refs.newLifeEventType.focus();
       });
     },
 
-    renameActivityModal(activity) {
-      this.form.label = activity.label;
-      this.renameActivityModalId = activity.id;
+    renameLifeEventTypeModal(type) {
+      this.form.label = type.label;
+      this.renameLifeEventTypeModalId = type.id;
 
       this.$nextTick(() => {
-        this.$refs[`rename${activity.id}`].focus();
+        this.$refs[`rename${type.id}`].focus();
       });
     },
 
-    submitActivityType() {
+    submitLifeEventCategory() {
       this.loadingState = 'loading';
 
       axios
         .post(this.data.url.activity_type_store, this.form)
         .then((response) => {
-          this.flash('The activity type has been created', 'success');
-          this.localActivityTypes.unshift(response.data.data);
+          this.flash('The life event category has been created', 'success');
+          this.localLifeEventCategories.unshift(response.data.data);
           this.loadingState = null;
-          this.createActivityTypeModalShown = false;
+          this.createLifeEventCategoryModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -352,17 +359,17 @@ export default {
         });
     },
 
-    updateActivityType(activityType) {
+    updateLifeEventCategory(lifeEventCategory) {
       this.loadingState = 'loading';
 
       axios
-        .put(activityType.url.update, this.form)
+        .put(lifeEventCategory.url.update, this.form)
         .then((response) => {
-          this.flash('The activity type has been updated', 'success');
-          this.localActivityTypes[this.localActivityTypes.findIndex((x) => x.id === activityType.id)] =
+          this.flash('The life event category has been updated', 'success');
+          this.localLifeEventCategories[this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id)] =
             response.data.data;
           this.loadingState = null;
-          this.renameActivityTypeModalShownId = 0;
+          this.renameLifeEventCategoryModalShownId = 0;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -370,18 +377,18 @@ export default {
         });
     },
 
-    destroyActivityType(activityType) {
+    destroyLifeEventCategory(lifeEventCategory) {
       if (
         confirm(
-          'Are you sure? This will delete all the activity types of this type for all the activities that were using it.',
+          'Are you sure? This will delete all The life event categorys of this type for all the activities that were using it.',
         )
       ) {
         axios
-          .delete(activityType.url.destroy)
+          .delete(lifeEventCategory.url.destroy)
           .then((response) => {
-            this.flash('The activity type has been deleted', 'success');
-            var id = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-            this.localActivityTypes.splice(id, 1);
+            this.flash('The life event category has been deleted', 'success');
+            var id = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
+            this.localLifeEventCategories.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;
@@ -390,17 +397,17 @@ export default {
       }
     },
 
-    storeActivity(activityType) {
+    storeLifeEventType(lifeEventCategory) {
       this.loadingState = 'loading';
 
       axios
-        .post(activityType.url.store, this.form)
+        .post(lifeEventCategory.url.store, this.form)
         .then((response) => {
           this.flash('The activity has been created', 'success');
           this.loadingState = null;
-          this.createActivityModalId = 0;
-          var id = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-          this.localActivityTypes[id].activities.unshift(response.data.data);
+          this.createLifeEventCategoryModalId = 0;
+          var id = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
+          this.localLifeEventCategories[id].life_event_types.unshift(response.data.data);
         })
         .catch((error) => {
           this.loadingState = null;
@@ -408,7 +415,7 @@ export default {
         });
     },
 
-    updateActivity(activityType, activity) {
+    updateLifeEventType(lifeEventCategory, activity) {
       this.loadingState = 'loading';
 
       axios
@@ -416,10 +423,12 @@ export default {
         .then((response) => {
           this.flash('The activity has been updated', 'success');
           this.loadingState = null;
-          this.renameActivityModalId = 0;
-          var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-          var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);
-          this.localActivityTypes[activityTypeId].activities[typeId] = response.data.data;
+          this.renameLifeEventTypeModalId = 0;
+          var lifeEventCategoryId = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
+          var typeId = this.localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
+            (x) => x.id === activity.id,
+          );
+          this.localLifeEventCategories[lifeEventCategoryId].life_event_types[typeId] = response.data.data;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -427,19 +436,21 @@ export default {
         });
     },
 
-    destroyActivity(activityType, activity) {
+    destroyLifeEventType(lifeEventCategory, activity) {
       if (
         confirm(
-          'Are you sure? This will delete all the activities of this type for all the contacts that were using it.',
+          'Are you sure? This will delete all the life events of this type for all the contacts that were using it.',
         )
       ) {
         axios
           .delete(activity.url.destroy)
           .then((response) => {
             this.flash('The activity has been deleted', 'success');
-            var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
-            var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);
-            this.localActivityTypes[activityTypeId].activities.splice(typeId, 1);
+            var lifeEventCategoryId = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
+            var typeId = this.localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
+              (x) => x.id === activity.id,
+            );
+            this.localLifeEventCategories[lifeEventCategoryId].life_event_types.splice(typeId, 1);
           })
           .catch((error) => {
             this.loadingState = null;

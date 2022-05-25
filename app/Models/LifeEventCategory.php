@@ -54,13 +54,14 @@ class LifeEventCategory extends Model
      */
     protected function label(): Attribute
     {
-        TODODODODO
         return Attribute::make(
-            get: fn ($value, $attributes) => {
+            get: function ($value, $attributes) {
                 if (! $value) {
-                    return trans('account.'.$attributes);
+                    return trans('account.'.$attributes['label_translation_key']);
                 }
-            },
+
+                return $value;
+            }
         );
     }
 }

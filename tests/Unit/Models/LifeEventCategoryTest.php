@@ -28,4 +28,32 @@ class LifeEventCategoryTest extends TestCase
 
         $this->assertTrue($lifeEventCategory->lifeEventTypes()->exists());
     }
+
+    /** @test */
+    public function it_gets_the_default_label()
+    {
+        $lifeEventCategory = LifeEventCategory::factory()->create([
+            'label' => null,
+            'label_translation_key' => 'life_event_category.label',
+        ]);
+
+        $this->assertEquals(
+            'account.life_event_category.label',
+            $lifeEventCategory->label
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_custom_label_if_defined()
+    {
+        $lifeEventCategory = LifeEventCategory::factory()->create([
+            'label' => 'this is the real name',
+            'label_translation_key' => 'life_event_category.label',
+        ]);
+
+        $this->assertEquals(
+            'this is the real name',
+            $lifeEventCategory->label
+        );
+    }
 }

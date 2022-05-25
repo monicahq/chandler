@@ -350,32 +350,4 @@ class Contact extends Model
             }
         );
     }
-
-    /**
-     * Get the age of the contact.
-     * The birthdate is stored in a ContactImportantDate object, of the
-     * TYPE_BIRTHDATE type. So we need to find if a date of this type exists.
-     *
-     * @return null|int
-     */
-    public function getAge(): ?int
-    {
-        $type = ContactImportantDateType::where('vault_id', $this->vault_id)
-            ->where('internal_type', ContactImportantDate::TYPE_BIRTHDATE)
-            ->first();
-
-        if (! $type) {
-            return null;
-        }
-
-        $birthdate = $this->dates()
-            ->where('contact_important_date_type_id', $type->id)
-            ->first();
-
-        if (! $birthdate) {
-            return null;
-        }
-
-        return ImportantDateHelper::getAge($birthdate);
-    }
 }

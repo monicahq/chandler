@@ -28,4 +28,18 @@ class LifeEventTypeTest extends TestCase
 
         $this->assertTrue($lifeEventType->lifeEvents()->exists());
     }
+
+    /** @test */
+    public function it_gets_the_custom_label_if_defined()
+    {
+        $lifeEventType = LifeEventType::factory()->create([
+            'label' => 'this is the real name',
+            'label_translation_key' => 'life_event_category.label',
+        ]);
+
+        $this->assertEquals(
+            'this is the real name',
+            $lifeEventType->label
+        );
+    }
 }
