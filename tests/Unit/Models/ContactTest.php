@@ -303,7 +303,7 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertNull(
-            $contact->getAge()
+            $contact->age
         );
 
         ContactImportantDate::factory()->create([
@@ -316,7 +316,7 @@ class ContactTest extends TestCase
 
         $this->assertEquals(
             21,
-            $contact->getAge()
+            $contact->age
         );
     }
 }
