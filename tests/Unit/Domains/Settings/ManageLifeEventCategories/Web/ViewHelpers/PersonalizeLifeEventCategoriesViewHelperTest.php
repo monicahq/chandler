@@ -58,7 +58,7 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id. '/lifeEventTypes',
+                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes',
                 'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
                 'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
             ],

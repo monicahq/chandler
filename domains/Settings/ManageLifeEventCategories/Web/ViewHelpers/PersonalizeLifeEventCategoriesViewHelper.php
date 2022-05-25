@@ -40,7 +40,7 @@ class PersonalizeLifeEventCategoriesViewHelper
                 return self::dtoType($category, $type);
             }),
             'url' => [
-                'store' => route( 'settings.personalize.life_event_types.store', [
+                'store' => route('settings.personalize.life_event_types.store', [
                     'lifeEventCategory' => $category->id,
                 ]),
                 'update' => route('settings.personalize.life_event_categories.update', [
