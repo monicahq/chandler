@@ -5,6 +5,8 @@ namespace App\Jobs;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\Information;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
 use App\Models\Module;
 use App\Models\RelationshipGroupType;
 use App\Models\Template;
@@ -882,273 +884,323 @@ class SetupAccount implements ShouldQueue
 
     private function addLifeEventCategories(): void
     {
-        $category = (new CreateLifeEventCategory)->execute([
+        $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'label' => trans('account.default_life_event_category_work_education'),
+            'label_translation_key' => 'account.default_life_event_category_work_education',
             'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_WORK_EDUCATION,
         ]);
 
         DB::table('life_event_types')->insert([
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_job'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_job',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_JOB,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_retirement'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_retirement',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_RETIREMENT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_school'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_school',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_SCHOOL,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_study_abroad'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_study_abroad',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_STUDY_ABROAD,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_volunteer_work'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_volunteer_work',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_VOLUNTEER_WORK,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_published_book_or_paper'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_published_book_or_paper',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_PUBLISHED_BOOK_OR_PAPER,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_military_service'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_military_service',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MILITARY_SERVICE,
             ],
         ]);
 
-        $category = (new CreateLifeEventCategory)->execute([
+        $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'label' => trans('account.default_life_event_category_family_relationships'),
+            'label_translation_key' => 'account.default_life_event_category_family_relationships',
             'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_FAMILY_RELATIONSHIPS,
         ]);
 
         DB::table('life_event_types')->insert([
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_first_met'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_met',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_MET,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_relationship'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_relationship',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_RELATIONSHIP,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_engagement'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_engagement',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ENGAGEMENT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_marriage'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_marriage',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MARRIAGE,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_anniversary'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_anniversary',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ANNIVERSARY,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_expecting_a_baby'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_expecting_a_baby',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_EXPECTING_A_BABY,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_child'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_child',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_CHILD,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_family_member'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_family_member',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_FAMILY_MEMBER,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_pet'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_pet',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_PET,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_end_of_relationship'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_end_of_relationship',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_END_OF_RELATIONSHIP,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_loss_of_a_loved_one'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_loss_of_a_loved_one',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_LOSS_OF_A_LOVED_ONE,
             ],
         ]);
 
-        $category = (new CreateLifeEventCategory)->execute([
+        $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'label' => trans('account.default_life_event_category_home_living'),
+            'label_translation_key' => 'account.default_life_event_category_home_living',
             'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_HOME_LIVING,
         ]);
 
         DB::table('life_event_types')->insert([
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_moved'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_moved',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MOVED,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_bought_a_home'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_bought_a_home',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_BOUGHT_A_HOME,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_home_improvement'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_home_improvement',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_HOME_IMPROVEMENT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_holidays'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_holidays',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_HOLIDAYS,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_vehicle'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_vehicle',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_VEHICLE,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_roommate'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_roommate',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_ROOMMATE,
             ],
         ]);
 
-        $category = (new CreateLifeEventCategory)->execute([
+        $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'label' => trans('account.default_life_event_category_health_wellness'),
+            'label_translation_key' => 'account.default_life_event_category_health_wellness',
             'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_HEALTH_WELLNESS,
         ]);
 
         DB::table('life_event_types')->insert([
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_overcame_an_illness'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_overcame_an_illness',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_OVERCAME_AN_ILLNESS,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_quit_a_habit'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_quit_a_habit',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_QUIT_A_HABIT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_eating_habits'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_eating_habits',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_EATING_HABITS,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_weight_loss'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_weight_loss',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_WEIGHT_LOSS,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_wear_glass_or_contact'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_wear_glass_or_contact',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_WEAR_GLASS_OR_CONTACT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_broken_bone'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_broken_bone',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_BROKEN_BONE,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_removed_braces'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_removed_braces',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_REMOVED_BRACES,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_surgery'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_surgery',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_SURGERY,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_dentist'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_dentist',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_DENTIST,
             ],
         ]);
 
-        $category = (new CreateLifeEventCategory)->execute([
+        $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'label' => trans('account.default_life_event_category_travel_experiences'),
+            'label_translation_key' => 'account.default_life_event_category_travel_experiences',
             'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_TRAVEL_EXPERIENCES,
         ]);
 
         DB::table('life_event_types')->insert([
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_sport'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_activities',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ACTIVITIES,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_hobby'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_sport',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_SPORT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_instrument'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_hobby',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_HOBBY,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_language'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_instrument',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_INSTRUMENT,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_tattoo_or_piercing'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_language',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_LANGUAGE,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_new_license'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_tattoo_or_piercing',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TATTOO_OR_PIERCING,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_travel'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_license',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_LICENSE,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_achievement_or_award'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_travel',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRAVEL,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_changed_beliefs'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_achievement_or_award',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ACHIEVEMENT_OR_AWARD,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_first_word'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_changed_beliefs',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_CHANGED_BELIEFS,
             ],
             [
-                'life_event_category_id' => $category->id,
-                'label' => trans('account.default_life_event_type_first_kiss'),
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_word',
                 'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_WORD,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_kiss',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_KISS,
             ],
         ]);
     }

@@ -80,6 +80,7 @@ class UpdateLifeEventCategoryTest extends TestCase
             'life_event_category_id' => $category->id,
             'label' => 'type name',
             'can_be_deleted' => true,
+            'type' => null,
         ];
 
         $category = (new UpdateLifeEventCategory)->execute($request);

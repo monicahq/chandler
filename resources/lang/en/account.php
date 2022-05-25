@@ -121,7 +121,7 @@ return [
     'default_life_event_category_work_education' => 'Work & education',
     'default_life_event_category_family_relationships' => 'Family & relationships',
     'default_life_event_category_home_living' => 'Home & living',
-    'default_life_event_category_travel_experiences' => 'Travel & experiences',
+    'default_life_event_category_travel_experiences' => 'Activities, travel & experiences',
     'default_life_event_category_health_wellness' => 'Health & wellness',
 
     'default_life_event_type_new_job' => 'Started a new job',
@@ -168,4 +168,5 @@ return [
     'default_life_event_type_changed_beliefs' => 'Changed beliefs',
     'default_life_event_type_first_word' => 'Spoke for the first time',
     'default_life_event_type_first_kiss' => 'Kissed for the first time',
+    'default_life_event_type_activities' => 'Did an activity',
 ];

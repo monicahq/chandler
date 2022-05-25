@@ -21,6 +21,7 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'label' => 'required|string|max:255',
             'can_be_deleted' => 'required|boolean',
+            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -51,6 +52,7 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
             'account_id' => $data['account_id'],
             'label' => $data['label'],
             'can_be_deleted' => $data['can_be_deleted'],
+            'type' => $this->valueOrNull($data, 'type'),
         ]);
     }
 }

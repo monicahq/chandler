@@ -206,7 +206,7 @@
               <form
                 v-if="renameLifeEventTypeModalId == lifeEventType.id"
                 class="item-list border-b border-gray-200 hover:bg-slate-50"
-                @submiLifeEventType.prevent="updateLifeEventType(lifeEventCategory, lifeEventType)">
+                @submit.prevent="updateLifeEventType(lifeEventCategory, lifeEventType)">
                 <div class="border-b border-gray-200 p-5">
                   <errors :errors="form.errors" />
 
@@ -321,7 +321,9 @@ export default {
       localLifeEventCategories: [],
       form: {
         lifeEventCategoryName: '',
+        canBeDeleted: false,
         label: '',
+        type: '',
         errors: [],
       },
     };
@@ -344,6 +346,8 @@ export default {
     renameLifeEventCategoryModal(lifeEventCategory) {
       this.form.lifeEventCategoryName = lifeEventCategory.label;
       this.renameLifeEventCategoryModalShownId = lifeEventCategory.id;
+      this.form.canBeDeleted = lifeEventCategory.can_be_deleted;
+      this.form.type = lifeEventCategory.type;
 
       this.$nextTick(() => {
         this.$refs[`rename${lifeEventCategory.id}`].focus();
@@ -362,6 +366,8 @@ export default {
     renameLifeEventTypeModal(type) {
       this.form.label = type.label;
       this.renameLifeEventTypeModalId = type.id;
+      this.form.type = type.type;
+      this.form.canBeDeleted = type.can_be_deleted;
 
       this.$nextTick(() => {
         this.$refs[`rename${type.id}`].focus();

@@ -60,6 +60,7 @@ class CreateLifeEventCategoryTest extends TestCase
             'author_id' => $author->id,
             'label' => 'type name',
             'can_be_deleted' => true,
+            'type' => null,
         ];
 
         $type = (new CreateLifeEventCategory)->execute($request);

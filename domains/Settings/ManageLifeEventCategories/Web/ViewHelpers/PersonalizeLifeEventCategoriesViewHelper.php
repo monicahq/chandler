@@ -36,6 +36,7 @@ class PersonalizeLifeEventCategoriesViewHelper
             'id' => $category->id,
             'label' => $category->label,
             'can_be_deleted' => $category->can_be_deleted,
+            'type' => $category->type,
             'life_event_types' => $category->lifeEventTypes->map(function ($type) use ($category) {
                 return self::dtoType($category, $type);
             }),
@@ -59,6 +60,7 @@ class PersonalizeLifeEventCategoriesViewHelper
             'id' => $type->id,
             'label' => $type->label,
             'can_be_deleted' => $type->can_be_deleted,
+            'type' => $type->type,
             'url' => [
                 'update' => route('settings.personalize.life_event_types.update', [
                     'lifeEventCategory' => $category->id,

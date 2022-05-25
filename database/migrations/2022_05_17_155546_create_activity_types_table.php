@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('label')->nullable();
             $table->string('label_translation_key')->nullable();
             $table->boolean('can_be_deleted')->default(false);
+            $table->string('type')->nullable();
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->string('label')->nullable();
             $table->string('label_translation_key')->nullable();
             $table->boolean('can_be_deleted')->default(false);
+            $table->string('type')->nullable();
             $table->timestamps();
             $table->foreign('life_event_category_id')->references('id')->on('life_event_categories')->onDelete('cascade');
         });

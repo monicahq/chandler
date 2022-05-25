@@ -38,7 +38,7 @@ class LifeEventCategoryTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'account.life_event_category.label',
+            'life_event_category.label',
             $lifeEventCategory->label
         );
     }

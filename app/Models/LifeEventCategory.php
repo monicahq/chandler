@@ -15,6 +15,15 @@ class LifeEventCategory extends Model
     protected $table = 'life_event_categories';
 
     /**
+     * Possible types.
+     */
+    const TYPE_WORK_EDUCATION = 'work_education';
+    const TYPE_FAMILY_RELATIONSHIPS = 'family_relationships';
+    const TYPE_HOME_LIVING = 'home_living';
+    const TYPE_TRAVEL_EXPERIENCES = 'travel_experiences';
+    const TYPE_HEALTH_WELLNESS = 'health_wellness';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -24,6 +33,7 @@ class LifeEventCategory extends Model
         'label',
         'label_translation_key',
         'can_be_deleted',
+        'type',
     ];
 
     /**
@@ -58,7 +68,7 @@ class LifeEventCategory extends Model
         return Attribute::make(
             get: function ($value, $attributes) {
                 if (! $value) {
-                    return trans('account.'.$attributes['label_translation_key']);
+                    return trans($attributes['label_translation_key']);
                 }
 
                 return $value;

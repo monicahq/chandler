@@ -29,6 +29,7 @@ class PersonalizeLifeEventCategoriesController extends Controller
             'author_id' => Auth::user()->id,
             'label' => $request->input('lifeEventCategoryName'),
             'can_be_deleted' => true,
+            'type' => null,
         ];
 
         $lifeEventCategory = (new CreateLifeEventCategory)->execute($data);
@@ -45,7 +46,8 @@ class PersonalizeLifeEventCategoriesController extends Controller
             'author_id' => Auth::user()->id,
             'life_event_category_id' => $lifeEventCategoryId,
             'label' => $request->input('lifeEventCategoryName'),
-            'can_be_deleted' => true,
+            'can_be_deleted' => $request->input('canBeDeleted'),
+            'type' => $request->input('type'),
         ];
 
         $lifeEventCategory = (new UpdateLifeEventCategory)->execute($data);
