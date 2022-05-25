@@ -23,6 +23,7 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -56,6 +57,7 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
             ->findOrFail($data['life_event_type_id']);
 
         $type->label = $data['label'];
+        $type->can_be_deleted = $data['can_be_deleted'];
         $type->save();
 
         return $type;

@@ -20,6 +20,7 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -49,6 +50,7 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
         return LifeEventCategory::create([
             'account_id' => $data['account_id'],
             'label' => $data['label'],
+            'can_be_deleted' => $data['can_be_deleted'],
         ]);
     }
 }

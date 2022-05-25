@@ -79,6 +79,7 @@ class UpdateLifeEventCategoryTest extends TestCase
             'author_id' => $author->id,
             'life_event_category_id' => $category->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ];
 
         $category = (new UpdateLifeEventCategory)->execute($request);
@@ -87,6 +88,7 @@ class UpdateLifeEventCategoryTest extends TestCase
             'id' => $category->id,
             'account_id' => $account->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ]);
     }
 }

@@ -106,6 +106,7 @@ class UpdateLifeEventTypeTest extends TestCase
             'life_event_category_id' => $category->id,
             'life_event_type_id' => $type->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ];
 
         $type = (new UpdateLifeEventType)->execute($request);
@@ -114,6 +115,7 @@ class UpdateLifeEventTypeTest extends TestCase
             'id' => $type->id,
             'life_event_category_id' => $category->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ]);
     }
 }

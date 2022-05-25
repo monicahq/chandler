@@ -35,11 +35,14 @@ class PersonalizeLifeEventCategoriesViewHelper
         return [
             'id' => $category->id,
             'label' => $category->label,
+            'can_be_deleted' => $category->can_be_deleted,
             'life_event_types' => $category->lifeEventTypes->map(function ($type) use ($category) {
                 return self::dtoType($category, $type);
             }),
             'url' => [
-                'store' => route('settings.personalize.life_event_categories.store'),
+                'store' => route( 'settings.personalize.life_event_types.store', [
+                    'lifeEventCategory' => $category->id,
+                ]),
                 'update' => route('settings.personalize.life_event_categories.update', [
                     'lifeEventCategory' => $category->id,
                 ]),
@@ -55,6 +58,7 @@ class PersonalizeLifeEventCategoriesViewHelper
         return [
             'id' => $type->id,
             'label' => $type->label,
+            'can_be_deleted' => $type->can_be_deleted,
             'url' => [
                 'update' => route('settings.personalize.life_event_types.update', [
                     'lifeEventCategory' => $category->id,

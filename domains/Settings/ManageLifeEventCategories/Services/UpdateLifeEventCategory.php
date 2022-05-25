@@ -21,6 +21,7 @@ class UpdateLifeEventCategory extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -51,6 +52,7 @@ class UpdateLifeEventCategory extends BaseService implements ServiceInterface
             ->findOrFail($data['life_event_category_id']);
 
         $category->label = $data['label'];
+        $category->can_be_deleted = $data['can_be_deleted'];
         $category->save();
 
         return $category;

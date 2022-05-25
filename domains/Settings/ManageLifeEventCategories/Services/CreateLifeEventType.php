@@ -22,6 +22,7 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -54,6 +55,7 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
         $type = LifeEventType::create([
             'life_event_category_id' => $category->id,
             'label' => $data['label'],
+            'can_be_deleted' => $data['can_be_deleted'],
         ]);
 
         return $type;

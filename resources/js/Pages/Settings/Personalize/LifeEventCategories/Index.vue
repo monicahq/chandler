@@ -62,7 +62,7 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🚲 </span> All the life event categories</h3>
+          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 👩‍🍼 </span> All the life event categories</h3>
           <pretty-button
             v-if="!createLifeEventCategoryModalShown"
             :text="'Add a new life event category'"
@@ -70,7 +70,31 @@
             @click="showLifeEventCategoryModal" />
         </div>
 
-        <!-- modal to create an activity type -->
+        <!-- help text -->
+        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 grow pr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+
+          <div>
+            <p class="mb-2">
+              You can customize life events available for your contacts in your account. All the life events that come
+              pre-defined when you create your account can't be deleted, as they each contain special actions. However,
+              you can decide to hide them on a per-vault basis in your vault settings.
+            </p>
+          </div>
+        </div>
+
+        <!-- modal to create a life event category -->
         <form
           v-if="createLifeEventCategoryModalShown"
           class="mb-6 rounded-lg border border-gray-200 bg-white"
@@ -114,6 +138,7 @@
                   Rename
                 </li>
                 <li
+                  v-if="lifeEventCategory.can_be_deleted"
                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                   @click="destroyLifeEventCategory(lifeEventCategory)">
                   Delete
@@ -151,41 +176,42 @@
               </div>
             </form>
 
-            <!-- list of activities -->
+            <!-- list of life event types -->
             <div
-              v-for="activity in lifeEventCategory.life_event_types"
-              :key="activity.id"
+              v-for="lifeEventType in lifeEventCategory.life_event_types"
+              :key="lifeEventType.id"
               class="border-b border-gray-200 hover:bg-slate-50">
               <div
-                v-if="renameLifeEventTypeModalId != activity.id"
+                v-if="renameLifeEventTypeModalId != lifeEventType.id"
                 class="flex items-center justify-between px-5 py-2 pl-6">
-                <span>{{ activity.label }}</span>
+                <span>{{ lifeEventType.label }}</span>
 
                 <!-- actions -->
                 <ul class="text-sm">
                   <li
                     class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameLifeEventTypeModal(activity)">
+                    @click="renameLifeEventTypeModal(lifeEventType)">
                     Rename
                   </li>
                   <li
+                    v-if="lifeEventType.can_be_deleted"
                     class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                    @click="destroyLifeEventType(lifeEventCategory, activity)">
+                    @click="destroyLifeEventType(lifeEventCategory, lifeEventType)">
                     Delete
                   </li>
                 </ul>
               </div>
 
-              <!-- rename the activity modal -->
+              <!-- rename the lifeEventType modal -->
               <form
-                v-if="renameLifeEventTypeModalId == activity.id"
+                v-if="renameLifeEventTypeModalId == lifeEventType.id"
                 class="item-list border-b border-gray-200 hover:bg-slate-50"
-                @submiLifeEventType.prevent="updateActivity(lifeEventCategory, activity)">
+                @submiLifeEventType.prevent="updateLifeEventType(lifeEventCategory, lifeEventType)">
                 <div class="border-b border-gray-200 p-5">
                   <errors :errors="form.errors" />
 
                   <text-input
-                    :ref="'rename' + activity.id"
+                    :ref="'rename' + lifeEventType.id"
                     v-model="form.label"
                     :label="'Label'"
                     :type="'text'"
@@ -206,18 +232,18 @@
               </form>
             </div>
 
-            <!-- create a new activity -->
+            <!-- create a new life event type cta -->
             <div
               v-if="createLifeEventCategoryModalId != lifeEventCategory.id"
               class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showLifeEventTypeModal(lifeEventCategory)"
-                >Add a new activity</span
+                >Add a new life event type</span
               >
             </div>
 
-            <!-- create an activity -->
+            <!-- create a life event type -->
             <form
               v-if="createLifeEventCategoryModalId == lifeEventCategory.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50"
@@ -346,7 +372,7 @@ export default {
       this.loadingState = 'loading';
 
       axios
-        .post(this.data.url.activity_type_store, this.form)
+        .post(this.data.url.store, this.form)
         .then((response) => {
           this.flash('The life event category has been created', 'success');
           this.localLifeEventCategories.unshift(response.data.data);
@@ -407,7 +433,7 @@ export default {
           this.loadingState = null;
           this.createLifeEventCategoryModalId = 0;
           var id = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
-          this.localLifeEventCategories[id].life_event_types.unshift(response.data.data);
+          this.localLifeEventCategories[id].life_event_types.push(response.data.data);
         })
         .catch((error) => {
           this.loadingState = null;
@@ -415,18 +441,18 @@ export default {
         });
     },
 
-    updateLifeEventType(lifeEventCategory, activity) {
+    updateLifeEventType(lifeEventCategory, lifeEventType) {
       this.loadingState = 'loading';
 
       axios
-        .put(activity.url.update, this.form)
+        .put(lifeEventType.url.update, this.form)
         .then((response) => {
           this.flash('The activity has been updated', 'success');
           this.loadingState = null;
           this.renameLifeEventTypeModalId = 0;
           var lifeEventCategoryId = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
           var typeId = this.localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
-            (x) => x.id === activity.id,
+            (x) => x.id === lifeEventType.id,
           );
           this.localLifeEventCategories[lifeEventCategoryId].life_event_types[typeId] = response.data.data;
         })
@@ -436,19 +462,19 @@ export default {
         });
     },
 
-    destroyLifeEventType(lifeEventCategory, activity) {
+    destroyLifeEventType(lifeEventCategory, lifeEventType) {
       if (
         confirm(
           'Are you sure? This will delete all the life events of this type for all the contacts that were using it.',
         )
       ) {
         axios
-          .delete(activity.url.destroy)
+          .delete(lifeEventType.url.destroy)
           .then((response) => {
             this.flash('The activity has been deleted', 'success');
             var lifeEventCategoryId = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
             var typeId = this.localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
-              (x) => x.id === activity.id,
+              (x) => x.id === lifeEventType.id,
             );
             this.localLifeEventCategories[lifeEventCategoryId].life_event_types.splice(typeId, 1);
           })

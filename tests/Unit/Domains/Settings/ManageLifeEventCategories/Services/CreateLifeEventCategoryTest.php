@@ -59,6 +59,7 @@ class CreateLifeEventCategoryTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ];
 
         $type = (new CreateLifeEventCategory)->execute($request);
@@ -67,6 +68,7 @@ class CreateLifeEventCategoryTest extends TestCase
             'id' => $type->id,
             'account_id' => $account->id,
             'label' => 'type name',
+            'can_be_deleted' => true,
         ]);
 
         $this->assertInstanceOf(

@@ -23,6 +23,7 @@ class LifeEventType extends Model
         'life_event_category_id',
         'label',
         'label_translation_key',
+        'can_be_deleted',
     ];
 
     /**

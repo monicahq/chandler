@@ -44,7 +44,7 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
 
         $array = PersonalizeLifeEventCategoriesViewHelper::dtoLifeEventCategory($lifeEventCategory);
         $this->assertEquals(
-            4,
+            5,
             count($array)
         );
         $this->assertArrayHasKey('life_event_types', $array);
@@ -53,8 +53,12 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
             $array['label']
         );
         $this->assertEquals(
+            $lifeEventCategory->can_be_deleted,
+            $array['can_be_deleted']
+        );
+        $this->assertEquals(
             [
-                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories',
+                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id. '/lifeEventTypes',
                 'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
                 'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
             ],
@@ -72,13 +76,14 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
 
         $array = PersonalizeLifeEventCategoriesViewHelper::dtoType($lifeEventCategory, $lifeEventType);
         $this->assertEquals(
-            3,
+            4,
             count($array)
         );
         $this->assertEquals(
             [
                 'id' => $lifeEventType->id,
                 'label' => $lifeEventType->label,
+                'can_be_deleted' => $lifeEventType->can_be_deleted,
                 'url' => [
                     'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
                     'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
