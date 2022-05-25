@@ -3,7 +3,6 @@
 namespace App\Contact\ManageContact\Web\ViewHelpers;
 
 use App\Models\Contact;
-use Illuminate\Support\Facades\Auth;
 
 class ContactShowBlankViewHelper
 {

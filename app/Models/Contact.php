@@ -304,7 +304,7 @@ class Contact extends Model
                     return NameHelper::formatContactName(Auth::user(), $this);
                 }
 
-                return $attributes['first_name']. ' '.$attributes['last_name'];
+                return $attributes['first_name'].' '.$attributes['last_name'];
             }
         );
     }
