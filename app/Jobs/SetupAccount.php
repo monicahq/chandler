@@ -19,7 +19,6 @@ use App\Settings\ManageCallReasons\Services\CreateCallReason;
 use App\Settings\ManageCallReasons\Services\CreateCallReasonType;
 use App\Settings\ManageContactInformationTypes\Services\CreateContactInformationType;
 use App\Settings\ManageGenders\Services\CreateGender;
-use App\Settings\ManageLifeEventCategories\Services\CreateLifeEventCategory;
 use App\Settings\ManageNotificationChannels\Services\CreateUserNotificationChannel;
 use App\Settings\ManagePetCategories\Services\CreatePetCategory;
 use App\Settings\ManagePronouns\Services\CreatePronoun;
