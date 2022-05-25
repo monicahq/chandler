@@ -56,8 +56,8 @@ class LifeEventType extends Model
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                if (!$value) {
-                    return trans('account.' . $attributes['label_translation_key']);
+                if (! $value) {
+                    return trans('account.'.$attributes['label_translation_key']);
                 }
 
                 return $value;

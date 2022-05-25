@@ -3,8 +3,6 @@
 namespace App\Settings\ManageLifeEventCategories\Web\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\Activity;
-use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 

@@ -2,13 +2,9 @@
 
 namespace Tests\Unit\Domains\Settings\ManageLifeEventCategories\Web\ViewHelpers;
 
-use App\Models\Activity;
-use App\Models\ActivityType;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
-use App\Settings\ManageActivityTypes\Web\ViewHelpers\PersonalizeActivityTypesIndexViewHelper;
 use App\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
-
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -33,9 +29,9 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
         $this->assertArrayHasKey('life_event_categories', $array);
         $this->assertEquals(
             [
-                'settings' => env('APP_URL') . '/settings',
-                'personalize' => env('APP_URL') . '/settings/personalize',
-                'store' => env('APP_URL') . '/settings/personalize/lifeEventCategories',
+                'settings' => env('APP_URL').'/settings',
+                'personalize' => env('APP_URL').'/settings/personalize',
+                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories',
             ],
             $array['url']
         );
@@ -58,9 +54,9 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/settings/personalize/lifeEventCategories',
-                'update' => env('APP_URL') . '/settings/personalize/lifeEventCategories/' . $lifeEventCategory->id,
-                'destroy' => env('APP_URL') . '/settings/personalize/lifeEventCategories/' . $lifeEventCategory->id,
+                'store' => env('APP_URL').'/settings/personalize/lifeEventCategories',
+                'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
+                'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id,
             ],
             $array['url']
         );
@@ -84,8 +80,8 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
                 'id' => $lifeEventType->id,
                 'label' => $lifeEventType->label,
                 'url' => [
-                    'update' => env('APP_URL') . '/settings/personalize/lifeEventCategories/' . $lifeEventCategory->id . '/lifeEventTypes/' . $lifeEventType->id,
-                    'destroy' => env('APP_URL') . '/settings/personalize/lifeEventCategories/' . $lifeEventCategory->id . '/lifeEventTypes/' . $lifeEventType->id,
+                    'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
                 ],
             ],
             $array

@@ -3,10 +3,6 @@
 namespace App\Settings\ManageLifeEventCategories\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageActivityTypes\Services\CreateActivity;
-use App\Settings\ManageActivityTypes\Services\DestroyActivity;
-use App\Settings\ManageActivityTypes\Services\UpdateActivity;
-use App\Settings\ManageActivityTypes\Web\ViewHelpers\PersonalizeActivityTypesIndexViewHelper;
 use App\Settings\ManageLifeEventCategories\Services\CreateLifeEventCategory;
 use App\Settings\ManageLifeEventCategories\Services\DestroyLifeEventCategory;
 use App\Settings\ManageLifeEventCategories\Services\UpdateLifeEventCategory;
