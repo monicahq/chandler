@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,5 +43,23 @@ class LifeEventCategory extends Model
     public function lifeEventTypes()
     {
         return $this->hasMany(LifeEventType::class);
+    }
+
+    /**
+     * Get the label attribute.
+     * Life Event categories have a default label that can be translated.
+     * Howerer, if a label is set, it will be used instead of the default.
+     *
+     * @return Attribute
+     */
+    protected function label(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => {
+                if (! $value) {
+                    return trans('account.'.$attributes);
+                }
+            },
+        );
     }
 }

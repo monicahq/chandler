@@ -152,4 +152,14 @@ class Account extends Model
     {
         return $this->hasMany(ActivityType::class);
     }
+
+    /**
+     * Get the life event categories associated with the account.
+     *
+     * @return HasMany
+     */
+    public function lifeEventCategories()
+    {
+        return $this->hasMany(LifeEventCategory::class);
+    }
 }
