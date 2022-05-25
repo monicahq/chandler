@@ -21,7 +21,7 @@ class ContactShowBlankViewHelper
         return [
             'templates' => $templatesCollection,
             'contact' => [
-                'name' => $contact->getName(Auth::user()),
+                'name' => $contact->name,
             ],
             'url' => [
                 'update' => route('contact.template.update', [

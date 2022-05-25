@@ -42,13 +42,13 @@ class ModuleLoanViewHelper
         $loanersCollection = $loaners->map(function ($loaner) use ($user) {
             return [
                 'id' => $loaner->id,
-                'name' => $loaner->getName($user),
+                'name' => $loaner->name,
             ];
         });
         $loaneesCollection = $loanees->map(function ($loanee) use ($user) {
             return [
                 'id' => $loanee->id,
-                'name' => $loanee->getName($user),
+                'name' => $loanee->name,
             ];
         });
 
