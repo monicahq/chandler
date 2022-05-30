@@ -124,7 +124,7 @@ class VaultIndexViewHelper
             ->inRandomOrder()
             ->take(5)
             ->get()
-            ->map(function ($contact) use ($vault) {
+            ->map(function ($contact) {
                 return [
                     'id' => $contact->id,
                     'name' => $contact->name,
