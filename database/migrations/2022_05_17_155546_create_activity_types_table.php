@@ -64,6 +64,16 @@ return new class extends Migration
             $table->foreign('activity_type_id')->references('id')->on('activity_types')->onDelete('cascade');
         });
 
+        Schema::create('life_event_category_vault', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('vault_id');
+            $table->unsignedBigInteger('life_event_type_id');
+            $table->boolean('active');
+            $table->timestamps();
+            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
+            $table->foreign('life_event_type_id')->references('id')->on('life_event_types')->onDelete('cascade');
+        });
+
         Schema::create('life_event_activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('life_event_id');
