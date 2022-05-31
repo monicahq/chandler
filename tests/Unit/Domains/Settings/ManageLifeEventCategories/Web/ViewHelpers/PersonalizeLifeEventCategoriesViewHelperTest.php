@@ -80,7 +80,7 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
 
         $array = PersonalizeLifeEventCategoriesViewHelper::dtoType($lifeEventCategory, $lifeEventType);
         $this->assertEquals(
-            5,
+            6,
             count($array)
         );
         $this->assertEquals(

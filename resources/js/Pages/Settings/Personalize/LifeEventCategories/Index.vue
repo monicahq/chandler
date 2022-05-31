@@ -214,17 +214,43 @@
                   <ul class="text-sm">
                     <li
                       class="inline cursor-pointer text-blue-500 hover:underline"
-                      @click="renameLifeEventTypeModal(lifeEventType)">
+                      @click="renameLifeEventTypeModal(element)">
                       Rename
                     </li>
                     <li
                       v-if="element.can_be_deleted"
                       class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                      @click="destroyLifeEventType(lifeEventCategory, lifeEventType)">
+                      @click="destroyLifeEventType(lifeEventCategory, element)">
                       Delete
                     </li>
                   </ul>
                 </div>
+
+                <form
+                  v-else
+                  class="item-list border-b border-gray-200 hover:bg-slate-50"
+                  @submit.prevent="updateLifeEventType(lifeEventCategory, element)">
+                  <div class="border-b border-gray-200 p-5">
+                    <errors :errors="form.errors" />
+
+                    <text-input
+                      :ref="'rename' + element.id"
+                      v-model="form.label"
+                      :label="'Name of the new group type'"
+                      :type="'text'"
+                      :autofocus="true"
+                      :input-class="'block w-full'"
+                      :required="true"
+                      :autocomplete="false"
+                      :maxlength="255"
+                      @esc-key-pressed="renameLifeEventTypeModalId = 0" />
+                  </div>
+
+                  <div class="flex justify-between p-5">
+                    <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameLifeEventTypeModalId = 0" />
+                    <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                  </div>
+                </form>
               </template>
             </draggable>
 
