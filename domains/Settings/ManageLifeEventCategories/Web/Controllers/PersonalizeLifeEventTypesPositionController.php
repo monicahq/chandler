@@ -3,9 +3,6 @@
 namespace App\Settings\ManageLifeEventCategories\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageLifeEventCategories\Services\CreateLifeEventType;
-use App\Settings\ManageLifeEventCategories\Services\DestroyLifeEventType;
-use App\Settings\ManageLifeEventCategories\Services\UpdateLifeEventType;
 use App\Settings\ManageLifeEventCategories\Services\UpdateLifeEventTypePosition;
 use App\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
 use Illuminate\Http\Request;

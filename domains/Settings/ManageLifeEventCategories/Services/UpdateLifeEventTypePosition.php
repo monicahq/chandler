@@ -5,9 +5,6 @@ namespace App\Settings\ManageLifeEventCategories\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
-use App\Models\Module;
-use App\Models\Template;
-use App\Models\TemplatePage;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 
