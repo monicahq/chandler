@@ -27,6 +27,7 @@ class LifeEventTypeFactory extends Factory
             'label' => $this->faker->name(),
             'label_translation_key' => $this->faker->name(),
             'can_be_deleted' => true,
+            'position' => 1,
         ];
     }
 }

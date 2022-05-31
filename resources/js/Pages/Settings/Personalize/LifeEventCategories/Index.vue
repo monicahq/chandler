@@ -146,7 +146,7 @@
               </ul>
             </div>
 
-            <!-- rename an activity type modal -->
+            <!-- rename a life event category modal -->
             <form
               v-if="renameLifeEventCategoryModalShownId == lifeEventCategory.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50"
@@ -177,60 +177,56 @@
             </form>
 
             <!-- list of life event types -->
-            <div
-              v-for="lifeEventType in lifeEventCategory.life_event_types"
-              :key="lifeEventType.id"
-              class="border-b border-gray-200 hover:bg-slate-50">
-              <div
-                v-if="renameLifeEventTypeModalId != lifeEventType.id"
-                class="flex items-center justify-between px-5 py-2 pl-6">
-                <span>{{ lifeEventType.label }}</span>
+            <draggable
+              :list="lifeEventCategory.life_event_types"
+              item-key="id"
+              :component-data="{ name: 'fade' }"
+              handle=".handle"
+              @change="updatePosition">
+              <template #item="{ element }">
+                <div
+                  v-if="renameLifeEventTypeModalId != element.id"
+                  class="flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50">
+                  <!-- icon to move position -->
+                  <div class="mr-2 flex">
+                    <svg
+                      class="handle mr-2 cursor-move"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 7H9V9H7V7Z" fill="currentColor" />
+                      <path d="M11 7H13V9H11V7Z" fill="currentColor" />
+                      <path d="M17 7H15V9H17V7Z" fill="currentColor" />
+                      <path d="M7 11H9V13H7V11Z" fill="currentColor" />
+                      <path d="M13 11H11V13H13V11Z" fill="currentColor" />
+                      <path d="M15 11H17V13H15V11Z" fill="currentColor" />
+                      <path d="M9 15H7V17H9V15Z" fill="currentColor" />
+                      <path d="M11 15H13V17H11V15Z" fill="currentColor" />
+                      <path d="M17 15H15V17H17V15Z" fill="currentColor" />
+                    </svg>
 
-                <!-- actions -->
-                <ul class="text-sm">
-                  <li
-                    class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameLifeEventTypeModal(lifeEventType)">
-                    Rename
-                  </li>
-                  <li
-                    v-if="lifeEventType.can_be_deleted"
-                    class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                    @click="destroyLifeEventType(lifeEventCategory, lifeEventType)">
-                    Delete
-                  </li>
-                </ul>
-              </div>
+                    <span>{{ element.label }}</span>
+                  </div>
 
-              <!-- rename the lifeEventType modal -->
-              <form
-                v-if="renameLifeEventTypeModalId == lifeEventType.id"
-                class="item-list border-b border-gray-200 hover:bg-slate-50"
-                @submit.prevent="updateLifeEventType(lifeEventCategory, lifeEventType)">
-                <div class="border-b border-gray-200 p-5">
-                  <errors :errors="form.errors" />
-
-                  <text-input
-                    :ref="'rename' + lifeEventType.id"
-                    v-model="form.label"
-                    :label="'Label'"
-                    :type="'text'"
-                    :autofocus="true"
-                    :input-class="'block w-full'"
-                    :required="true"
-                    :div-outer-class="'mb-4'"
-                    :placeholder="'Wish good day'"
-                    :autocomplete="false"
-                    :maxlength="255"
-                    @esc-key-pressed="renameLifeEventTypeModalId = 0" />
+                  <!-- actions -->
+                  <ul class="text-sm">
+                    <li
+                      class="inline cursor-pointer text-blue-500 hover:underline"
+                      @click="renameLifeEventTypeModal(lifeEventType)">
+                      Rename
+                    </li>
+                    <li
+                      v-if="element.can_be_deleted"
+                      class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                      @click="destroyLifeEventType(lifeEventCategory, lifeEventType)">
+                      Delete
+                    </li>
+                  </ul>
                 </div>
-
-                <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameLifeEventTypeModalId = 0" />
-                  <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
-                </div>
-              </form>
-            </div>
+              </template>
+            </draggable>
 
             <!-- create a new life event type cta -->
             <div
@@ -290,6 +286,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import Errors from '@/Shared/Form/Errors';
+import draggable from 'vuedraggable';
 
 export default {
   components: {
@@ -298,6 +295,7 @@ export default {
     PrettySpan,
     TextInput,
     Errors,
+    draggable,
   },
 
   props: {
@@ -323,6 +321,7 @@ export default {
         lifeEventCategoryName: '',
         canBeDeleted: false,
         label: '',
+        position: '',
         type: '',
         errors: [],
       },
@@ -427,6 +426,21 @@ export default {
             this.form.errors = error.response.data;
           });
       }
+    },
+
+    updatePosition(event) {
+      // the event object comes from the draggable component
+      this.form.position = event.moved.newIndex + 1;
+
+      axios
+        .post(event.moved.element.url.position, this.form)
+        .then((response) => {
+          this.flash('The order has been saved', 'success');
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.errors = error.response.data;
+        });
     },
 
     storeLifeEventType(lifeEventCategory) {

@@ -16,8 +16,8 @@ class PersonalizeLifeEventCategoriesViewHelper
             ->get();
 
         $collection = collect();
-        foreach ($lifeEventCategories as $type) {
-            $collection->push(self::dtoLifeEventCategory($type));
+        foreach ($lifeEventCategories as $category) {
+            $collection->push(self::dtoLifeEventCategory($category));
         }
 
         return [
@@ -32,12 +32,16 @@ class PersonalizeLifeEventCategoriesViewHelper
 
     public static function dtoLifeEventCategory(LifeEventCategory $category): array
     {
+        $lifeEventTypesCollection = $category->lifeEventTypes()
+            ->orderBy('position', 'asc')
+            ->get();
+
         return [
             'id' => $category->id,
             'label' => $category->label,
             'can_be_deleted' => $category->can_be_deleted,
             'type' => $category->type,
-            'life_event_types' => $category->lifeEventTypes->map(function ($type) use ($category) {
+            'life_event_types' => $lifeEventTypesCollection->map(function ($type) use ($category) {
                 return self::dtoType($category, $type);
             }),
             'url' => [
@@ -61,7 +65,12 @@ class PersonalizeLifeEventCategoriesViewHelper
             'label' => $type->label,
             'can_be_deleted' => $type->can_be_deleted,
             'type' => $type->type,
+            'position' => $type->position,
             'url' => [
+                'position' => route('settings.personalize.life_event_types.order.update', [
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
+                ]),
                 'update' => route('settings.personalize.life_event_types.update', [
                     'lifeEventCategory' => $category->id,
                     'lifeEventType' => $type->id,

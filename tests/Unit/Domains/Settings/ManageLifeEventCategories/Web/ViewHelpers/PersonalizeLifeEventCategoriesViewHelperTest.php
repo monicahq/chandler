@@ -89,7 +89,9 @@ class PersonalizeLifeEventCategoriesViewHelperTest extends TestCase
                 'label' => $lifeEventType->label,
                 'can_be_deleted' => $lifeEventType->can_be_deleted,
                 'type' => null,
+                'position' => 1,
                 'url' => [
+                    'position' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id.'/order',
                     'update' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
                     'destroy' => env('APP_URL').'/settings/personalize/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
                 ],

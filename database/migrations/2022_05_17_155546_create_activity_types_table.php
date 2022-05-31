@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('label_translation_key')->nullable();
             $table->boolean('can_be_deleted')->default(false);
             $table->string('type')->nullable();
+            $table->integer('position')->nullable();
             $table->timestamps();
             $table->foreign('life_event_category_id')->references('id')->on('life_event_categories')->onDelete('cascade');
         });

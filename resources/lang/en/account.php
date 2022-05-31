@@ -121,9 +121,10 @@ return [
     'default_life_event_category_work_education' => 'Work & education',
     'default_life_event_category_family_relationships' => 'Family & relationships',
     'default_life_event_category_home_living' => 'Home & living',
-    'default_life_event_category_travel_experiences' => 'Activities, travel & experiences',
     'default_life_event_category_health_wellness' => 'Health & wellness',
+    'default_life_event_category_travel_experiences' => 'Activities, travel & experiences',
 
+    // work & education
     'default_life_event_type_new_job' => 'Started a new job',
     'default_life_event_type_retirement' => 'Retired',
     'default_life_event_type_new_school' => 'Started school',
@@ -131,6 +132,8 @@ return [
     'default_life_event_type_volunteer_work' => 'Started volunteering',
     'default_life_event_type_published_book_or_paper' => 'Published a book or paper',
     'default_life_event_type_military_service' => 'Started military service',
+
+    // family & relationships
     'default_life_event_type_first_met' => 'First met',
     'default_life_event_type_new_relationship' => 'Started a relationship',
     'default_life_event_type_engagement' => 'Got engaged',
@@ -142,12 +145,16 @@ return [
     'default_life_event_type_new_pet' => 'Got a pet',
     'default_life_event_type_end_of_relationship' => 'Ended a relationship',
     'default_life_event_type_loss_of_a_loved_one' => 'Lost a loved one',
+
+    // home & living
     'default_life_event_type_moved' => 'Moved',
     'default_life_event_type_bought_a_home' => 'Bought a home',
     'default_life_event_type_home_improvement' => 'Made a home improvement',
     'default_life_event_type_holidays' => 'Went on holidays',
     'default_life_event_type_new_vehicle' => 'Got a new vehicle',
     'default_life_event_type_new_roommate' => 'Got a roommate',
+
+    // health & wellness
     'default_life_event_type_overcame_an_illness' => 'Overcame an illness',
     'default_life_event_type_quit_a_habit' => 'Quit a habit',
     'default_life_event_type_new_eating_habits' => 'Started new eating habits',
@@ -157,16 +164,18 @@ return [
     'default_life_event_type_removed_braces' => 'Removed braces',
     'default_life_event_type_surgery' => 'Had surgery',
     'default_life_event_type_dentist' => 'Went to the dentist',
+
+    // activities, travel & experiences
+    'default_life_event_type_activity' => 'Did an activity',
+    'default_life_event_type_travel' => 'Traveled',
     'default_life_event_type_new_sport' => 'Started playing a new sport',
     'default_life_event_type_new_hobby' => 'Took up a new hobby',
     'default_life_event_type_new_instrument' => 'Started learning a new instrument',
     'default_life_event_type_new_language' => 'Started learning a new language',
     'default_life_event_type_tattoo_or_piercing' => 'Got a tattoo or piercing',
     'default_life_event_type_new_license' => 'Got a license',
-    'default_life_event_type_travel' => 'Traveled',
     'default_life_event_type_achievement_or_award' => 'Got an achievement or award',
     'default_life_event_type_changed_beliefs' => 'Changed beliefs',
     'default_life_event_type_first_word' => 'Spoke for the first time',
     'default_life_event_type_first_kiss' => 'Kissed for the first time',
-    'default_life_event_type_activities' => 'Did an activity',
 ];

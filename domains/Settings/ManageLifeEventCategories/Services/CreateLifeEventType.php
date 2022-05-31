@@ -52,10 +52,16 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
         $category = LifeEventCategory::where('account_id', $data['account_id'])
             ->findOrFail($data['life_event_category_id']);
 
+        // determine the new position of the template page
+        $newPosition = LifeEventType::where('life_event_category_id', $data['life_event_category_id'])
+            ->max('position');
+        $newPosition++;
+
         $type = LifeEventType::create([
             'life_event_category_id' => $category->id,
             'label' => $data['label'],
             'can_be_deleted' => $data['can_be_deleted'],
+            'position' => $newPosition,
         ]);
 
         return $type;

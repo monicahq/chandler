@@ -74,6 +74,7 @@ class LifeEventType extends Model
         'label_translation_key',
         'can_be_deleted',
         'type',
+        'position',
     ];
 
     /**
