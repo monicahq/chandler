@@ -19,17 +19,6 @@ class LifeEventTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_types()
-    {
-        $lifeEventType = LifeEventType::factory()->create();
-        LifeEvent::factory(2)->create([
-            'life_event_type_id' => $lifeEventType->id,
-        ]);
-
-        $this->assertTrue($lifeEventType->lifeEvents()->exists());
-    }
-
-    /** @test */
     public function it_gets_the_custom_label_if_defined()
     {
         $lifeEventType = LifeEventType::factory()->create([

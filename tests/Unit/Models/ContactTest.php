@@ -237,17 +237,6 @@ class ContactTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_activities(): void
-    {
-        $ross = Contact::factory()->create([]);
-        $contactActivity = ContactActivity::factory()->create();
-
-        $ross->activities()->sync([$contactActivity->id]);
-
-        $this->assertTrue($ross->activities()->exists());
-    }
-
-    /** @test */
     public function it_gets_the_name(): void
     {
         $user = User::factory()->create([

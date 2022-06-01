@@ -138,7 +138,7 @@ return [
     'default_life_event_type_new_relationship' => 'Started a relationship',
     'default_life_event_type_engagement' => 'Got engaged',
     'default_life_event_type_marriage' => 'Got married',
-    'default_life_event_type_anniversary' => 'Anniversary',
+    'default_life_event_type_anniversary' => 'Celebrated an anniversary',
     'default_life_event_type_expecting_a_baby' => 'Expects a baby',
     'default_life_event_type_new_child' => 'Had a child',
     'default_life_event_type_new_family_member' => 'Welcomed a family member',
@@ -150,7 +150,6 @@ return [
     'default_life_event_type_moved' => 'Moved',
     'default_life_event_type_bought_a_home' => 'Bought a home',
     'default_life_event_type_home_improvement' => 'Made a home improvement',
-    'default_life_event_type_holidays' => 'Went on holidays',
     'default_life_event_type_new_vehicle' => 'Got a new vehicle',
     'default_life_event_type_new_roommate' => 'Got a roommate',
 
@@ -167,6 +166,7 @@ return [
 
     // activities, travel & experiences
     'default_life_event_type_activity' => 'Did an activity',
+    'default_life_event_type_holidays' => 'Went on holidays',
     'default_life_event_type_travel' => 'Traveled',
     'default_life_event_type_new_sport' => 'Started playing a new sport',
     'default_life_event_type_new_hobby' => 'Took up a new hobby',
