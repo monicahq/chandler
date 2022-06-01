@@ -7,7 +7,6 @@ use App\Models\Avatar;
 use App\Models\Call;
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\ContactActivity;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
 use App\Models\ContactInformation;
