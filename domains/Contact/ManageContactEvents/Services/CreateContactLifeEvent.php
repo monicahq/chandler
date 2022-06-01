@@ -4,14 +4,11 @@ namespace App\Contact\ManageContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
-use App\Models\ContactEvent;
-use App\Models\ContactFeedItem;
 use App\Models\ContactLifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class CreateContactLifeEvent extends BaseService implements ServiceInterface
 {
@@ -78,7 +75,7 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
 
     private function store(): void
     {
-        $this-$contactLifeEvent = ContactLifeEvent::create([
+        $this - $contactLifeEvent = ContactLifeEvent::create([
             'contact_id' => $this->data['contact_id'],
             'life_event_type_id' => $this->data['life_event_type_id'],
             'summary' => $this->data['summary'],
