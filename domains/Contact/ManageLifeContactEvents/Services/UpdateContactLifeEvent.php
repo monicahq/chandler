@@ -3,8 +3,6 @@
 namespace App\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactEvent;
-use App\Models\ContactFeedItem;
 use App\Models\ContactLifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
