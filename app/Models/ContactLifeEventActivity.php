@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class ContactActivity extends Model
+class ContactLifeEventActivity extends Model
 {
     use HasFactory;
 
-    protected $table = 'contact_activities';
+    protected $table = 'contact_life_event_activities';
 
     /**
      * Possible type.
@@ -29,6 +29,7 @@ class ContactActivity extends Model
      * @var array
      */
     protected $fillable = [
+        'life_event_id',
         'activity_id',
         'emotion_id',
         'summary',

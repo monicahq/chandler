@@ -256,7 +256,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function avatars()
+    public function avatars(): HasMany
     {
         return $this->hasMany(Avatar::class);
     }
@@ -266,7 +266,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function tasks()
+    public function tasks(): HasMany
     {
         return $this->hasMany(ContactTask::class);
     }
@@ -276,7 +276,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function calls()
+    public function calls(): HasMany
     {
         return $this->hasMany(Call::class);
     }
@@ -286,7 +286,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function pets()
+    public function pets(): HasMany
     {
         return $this->hasMany(Pet::class);
     }
@@ -296,7 +296,7 @@ class Contact extends Model
      *
      * @return BelongsToMany
      */
-    public function activities()
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(ContactActivity::class, 'contact_activity_participants', 'contact_id');
     }

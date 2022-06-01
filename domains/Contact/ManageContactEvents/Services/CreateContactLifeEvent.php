@@ -6,15 +6,17 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;
+use App\Models\ContactLifeEvent;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class CreateContactEvent extends BaseService implements ServiceInterface
+class CreateContactLifeEvent extends BaseService implements ServiceInterface
 {
-    private ContactEvent $contactEvent;
+    private ContactLifeEvent $contactLifeEvent;
     private array $data;
-    private Collection $participantsCollection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -53,27 +55,32 @@ class CreateContactEvent extends BaseService implements ServiceInterface
      * Create a contact event.
      *
      * @param  array  $data
-     * @return ContactEvent
+     * @return ContactLifeEvent
      */
-    public function execute(array $data): ContactEvent
+    public function execute(array $data): ContactLifeEvent
     {
         $this->data = $data;
         $this->validate();
         $this->store();
-        $this->createFeedItem();
 
-        return $this->contactEvent;
+        return $this->contactLifeEvent;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
+
+        $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
+
+        LifeEventCategory::where('account_id', $this->data['account_id'])
+            ->findOrFail($lifeEventType->lifeEventCategory->id);
     }
 
     private function store(): void
     {
-        $this->contactEvent = ContactEvent::create([
+        $this-$contactLifeEvent = ContactLifeEvent::create([
             'contact_id' => $this->data['contact_id'],
+            'life_event_type_id' => $this->data['life_event_type_id'],
             'summary' => $this->data['summary'],
             'started_at' => $this->data['started_at'],
             'ended_at' => $this->data['ended_at'],
@@ -81,15 +88,5 @@ class CreateContactEvent extends BaseService implements ServiceInterface
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-    }
-
-    private function createFeedItem(): void
-    {
-        $feedItem = ContactFeedItem::create([
-            'author_id' => $this->author->id,
-            'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_EVENT_CREATED,
-        ]);
-        $this->contactEvent->feedItem()->save($feedItem);
     }
 }

@@ -41,7 +41,7 @@ class LifeEventCategory extends Model
      *
      * @return BelongsTo
      */
-    public function account()
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
@@ -51,7 +51,7 @@ class LifeEventCategory extends Model
      *
      * @return HasMany
      */
-    public function lifeEventTypes()
+    public function lifeEventTypes(): HasMany
     {
         return $this->hasMany(LifeEventType::class);
     }

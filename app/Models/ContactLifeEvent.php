@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class LifeEvent extends Model
+class ContactLifeEvent extends Model
 {
     use HasFactory;
 
-    protected $table = 'life_events';
+    protected $table = 'contact_life_events';
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,7 @@ class LifeEvent extends Model
      * @var array
      */
     protected $fillable = [
+        'contact_id',
         'life_event_type_id',
         'summary',
         'started_at',
@@ -34,6 +35,16 @@ class LifeEvent extends Model
         'started_at',
         'ended_at',
     ];
+
+    /**
+     * Get the contact associated with the life event.
+     *
+     * @return BelongsTo
+     */
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
+    }
 
     /**
      * Get the life event type associated with the life event.

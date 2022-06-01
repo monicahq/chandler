@@ -54,7 +54,7 @@ class ContactFeedItem extends Model
      *
      * @return BelongsTo
      */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
@@ -64,7 +64,7 @@ class ContactFeedItem extends Model
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -74,7 +74,7 @@ class ContactFeedItem extends Model
      *
      * @return MorphTo
      */
-    public function feedable()
+    public function feedable(): MorphTo
     {
         return $this->morphTo();
     }

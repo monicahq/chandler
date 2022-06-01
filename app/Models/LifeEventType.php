@@ -82,7 +82,7 @@ class LifeEventType extends Model
      *
      * @return BelongsTo
      */
-    public function lifeEventCategory()
+    public function lifeEventCategory(): BelongsTo
     {
         return $this->belongsTo(LifeEventCategory::class, 'life_event_category_id');
     }
@@ -92,9 +92,9 @@ class LifeEventType extends Model
      *
      * @return HasMany
      */
-    public function lifeEvents()
+    public function lifeEvents(): HasMany
     {
-        return $this->hasMany(LifeEvent::class);
+        return $this->hasMany(ContactLifeEvent::class);
     }
 
     /**
