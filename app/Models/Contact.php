@@ -292,16 +292,6 @@ class Contact extends Model
     }
 
     /**
-     * Get the activities that the contact is associated with.
-     *
-     * @return BelongsToMany
-     */
-    public function activities(): BelongsToMany
-    {
-        return $this->belongsToMany(ContactActivity::class, 'contact_activity_participants', 'contact_id');
-    }
-
-    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute
