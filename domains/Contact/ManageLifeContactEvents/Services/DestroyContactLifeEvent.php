@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Contact\ManageContactEvents\Services;
+namespace App\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactEvent;
 use App\Models\ContactFeedItem;
+use App\Models\ContactLifeEvent;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class DestroyContactEvent extends BaseService implements ServiceInterface
+class DestroyContactLifeEvent extends BaseService implements ServiceInterface
 {
-    private ContactEvent $contactEvent;
+    private ContactLifeEvent $contactLifeEvent;
     private array $data;
 
     /**
@@ -25,7 +26,7 @@ class DestroyContactEvent extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'contact_event_id' => 'required|integer|exists:contact_events,id',
+            'life_event_type_id' => 'required|integer|exists:life_event_types,id',
         ];
     }
 
@@ -54,30 +55,17 @@ class DestroyContactEvent extends BaseService implements ServiceInterface
         $this->validate();
         $this->data = $data;
 
-        $this->contactEvent->delete();
+        $this->contactLifeEvent->delete();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-
-        $this->createFeedItem();
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->contactEvent = ContactEvent::where('contact_id', $this->data['contact_id'])
+        $this->contactLifeEvent = ContactLifeEvent::where('contact_id', $this->data['contact_id'])
             ->findOrFail($this->data['contact_event_id']);
-    }
-
-    private function createFeedItem(): void
-    {
-        $feedItem = ContactFeedItem::create([
-            'author_id' => $this->author->id,
-            'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_EVENT_DESTROYED,
-        ]);
-
-        $this->contactEvent->feedItem()->save($feedItem);
     }
 }

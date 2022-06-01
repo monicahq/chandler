@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contact\ManageContactEvents\Services;
+namespace App\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Activity;

@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Contact\ManageContactEvents\Services;
+namespace App\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
+use App\Models\ContactEvent;
+use App\Models\ContactFeedItem;
 use App\Models\ContactLifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class CreateContactLifeEvent extends BaseService implements ServiceInterface
+class UpdateContactLifeEvent extends BaseService implements ServiceInterface
 {
     private ContactLifeEvent $contactLifeEvent;
     private array $data;
@@ -26,7 +27,9 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_life_event_id' => 'required|integer|exists:contact_life_events,id',
             'summary' => 'required|string|max:255',
             'started_at' => 'date|format:Y-m-d',
             'ended_at' => 'date|format:Y-m-d',
@@ -43,13 +46,13 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
             'contact_must_belong_to_vault',
+            'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Create a contact event.
+     * Update a contact event.
      *
      * @param  array  $data
      * @return ContactLifeEvent
@@ -58,7 +61,10 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
     {
         $this->data = $data;
         $this->validate();
-        $this->store();
+        $this->update();
+
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
 
         return $this->contactLifeEvent;
     }
@@ -67,23 +73,20 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
+        $this->contactLifeEvent = ContactLifeEvent::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['contact_life_event_id']);
+
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
         LifeEventCategory::where('account_id', $this->data['account_id'])
             ->findOrFail($lifeEventType->lifeEventCategory->id);
     }
 
-    private function store(): void
+    private function update(): void
     {
-        $this - $contactLifeEvent = ContactLifeEvent::create([
-            'contact_id' => $this->data['contact_id'],
-            'life_event_type_id' => $this->data['life_event_type_id'],
-            'summary' => $this->data['summary'],
-            'started_at' => $this->data['started_at'],
-            'ended_at' => $this->data['ended_at'],
-        ]);
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
+        $this->contactLifeEvent->summary = $this->data['summary'];
+        $this->contactLifeEvent->started_at = $this->data['started_at'];
+        $this->contactLifeEvent->ended_at = $this->data['ended_at'];
+        $this->contactLifeEvent->save();
     }
 }
