@@ -3,20 +3,15 @@
 namespace Tests\Unit\Domains\Contact\ManageGoals\Services;
 
 use App\Contact\ManageGoals\Services\UpdateGoal;
-use App\Contact\ManageNotes\Services\UpdateNote;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\ContactInformationType;
 use App\Models\Goal;
-use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 

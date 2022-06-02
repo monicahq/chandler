@@ -3,14 +3,9 @@
 namespace App\Contact\ManageGoals\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\ContactFeedItem;
 use App\Models\Goal;
-use App\Models\Note;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class DestroyGoal extends BaseService implements ServiceInterface
 {

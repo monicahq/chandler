@@ -4,8 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Contact;
 use App\Models\Goal;
-use App\Models\Loan;
-use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GoalFactory extends Factory

@@ -2,10 +2,7 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Contact;
-use App\Models\Currency;
 use App\Models\Goal;
-use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

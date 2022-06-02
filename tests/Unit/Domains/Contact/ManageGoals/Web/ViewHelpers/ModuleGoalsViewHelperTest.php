@@ -3,13 +3,9 @@
 namespace Tests\Unit\Domains\Contact\ManageGoals\Web\ViewHelpers;
 
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Models\Contact;
-use App\Models\Emotion;
 use App\Models\Goal;
-use App\Models\Note;
 use App\Models\User;
-use Carbon\Carbon;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -51,7 +47,7 @@ class ModuleGoalsViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals',
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals',
             ],
             $array['url']
         );
@@ -74,8 +70,8 @@ class ModuleGoalsViewHelperTest extends TestCase
                 'name' => $goal->name,
                 'active' => $goal->active,
                 'url' => [
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals/' . $goal->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals/' . $goal->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
                 ],
             ],
             $collection

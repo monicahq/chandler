@@ -2,13 +2,9 @@
 
 namespace App\Contact\ManageGoals\Web\ViewHelpers;
 
-use App\Helpers\DateHelper;
-use App\Helpers\UserHelper;
 use App\Models\Contact;
 use App\Models\Goal;
-use App\Models\Note;
 use App\Models\User;
-use Illuminate\Support\Str;
 
 class ModuleGoalsViewHelper
 {
