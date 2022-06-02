@@ -3,7 +3,6 @@
 namespace Tests\Unit\Domains\Contact\ManageGoals\Services;
 
 use App\Contact\ManageGoals\Services\LogStreakForGoal;
-use App\Contact\ManageGoals\Services\UpdateGoal;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
@@ -13,7 +12,6 @@ use App\Models\Goal;
 use App\Models\Streak;
 use App\Models\User;
 use App\Models\Vault;
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;

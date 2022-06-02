@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Goal;
 use App\Models\Streak;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

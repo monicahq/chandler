@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
 use App\Models\Goal;
 use App\Models\Streak;
 use Illuminate\Database\Eloquent\Factories\Factory;
