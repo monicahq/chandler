@@ -121,6 +121,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('notes/{note}', [ContactModuleNoteController::class, 'update'])->name('contact.note.update');
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
 
+                    // goals
+                    Route::post('goals', [ContactModuleGoalController::class, 'store'])->name('contact.goal.store');
+                    Route::put('goals/{goal}', [ContactModuleGoalController::class, 'update'])->name('contact.goal.update');
+                    Route::delete('goals/{goal}', [ContactModuleGoalController::class, 'destroy'])->name('contact.goal.destroy');
+
                     // labels
                     Route::post('labels', [ContactModuleLabelController::class, 'store'])->name('contact.label.store');
                     Route::put('labels/{label}', [ContactModuleLabelController::class, 'update'])->name('contact.label.update');
