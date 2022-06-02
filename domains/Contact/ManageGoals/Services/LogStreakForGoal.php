@@ -2,12 +2,14 @@
 
 namespace App\Contact\ManageGoals\Services;
 
+use App\Exceptions\EntryAlreadyExistException;
 use App\Interfaces\ServiceInterface;
 use App\Models\Goal;
+use App\Models\Streak;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class CreateGoal extends BaseService implements ServiceInterface
+class LogStreakForGoal extends BaseService implements ServiceInterface
 {
     private Goal $goal;
     private array $data;
@@ -24,7 +26,8 @@ class CreateGoal extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'name' => 'nullable|string|max:255',
+            'goal_id' => 'nullable|integer|exists:goals,id',
+            'happened_at' => 'required|date_format:Y-m-d',
         ];
     }
 
@@ -38,36 +41,54 @@ class CreateGoal extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
             'contact_must_belong_to_vault',
+            'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Create a goal.
+     * Log a streak for a given goal.
      *
      * @param  array  $data
-     * @return Goal
+     * @return void
      */
-    public function execute(array $data): Goal
+    public function execute(array $data): void
     {
         $this->data = $data;
-        $this->validate();
 
-        $this->goal = Goal::create([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'name' => $data['name'],
-        ]);
+        $this->validate();
+        $this->makeSureEntryDoesntExistYet();
+        $this->createStreak();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-
-        return $this->goal;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
+
+        $this->goal = Goal::where('contact_id', $this->data['contact_id'])
+            ->findOrFail($this->data['goal_id']);
+    }
+
+    private function makeSureEntryDoesntExistYet(): void
+    {
+        $entry = $this->goal->streaks()
+            ->where('goal_id', $this->goal->id)
+            ->whereDate('happened_at', $this->data['happened_at'])
+            ->first();
+
+        if ($entry) {
+            throw new EntryAlreadyExistException();
+        }
+    }
+
+    private function createStreak(): void
+    {
+        Streak::create([
+            'goal_id' => $this->goal->id,
+            'happened_at' => $this->data['happened_at'],
+        ]);
     }
 }

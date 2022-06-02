@@ -24,6 +24,14 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
+
+        Schema::create('streaks', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('goal_id');
+            $table->datetime('happened_at');
+            $table->timestamps();
+            $table->foreign('goal_id')->references('id')->on('goals')->onDelete('cascade');
+        });
     }
 
     /**
@@ -34,5 +42,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('goals');
+        Schema::dropIfExists('streaks');
     }
 };
