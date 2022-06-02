@@ -6,6 +6,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
