@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Contact\ManageNotes\Web\Controllers;
+namespace App\Contact\ManageGoals\Web\Controllers;
 
+use App\Contact\ManageGoals\Services\CreateGoal;
+use App\Contact\ManageGoals\Services\DestroyGoal;
+use App\Contact\ManageGoals\Services\UpdateGoal;
+use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Contact\ManageNotes\Services\CreateNote;
 use App\Contact\ManageNotes\Services\DestroyNote;
 use App\Contact\ManageNotes\Services\UpdateNote;
@@ -11,7 +15,7 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ContactModuleNoteController extends Controller
+class ContactModuleGoalController extends Controller
 {
     public function store(Request $request, int $vaultId, int $contactId)
     {
@@ -20,53 +24,49 @@ class ContactModuleNoteController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'title' => $request->input('title'),
-            'body' => $request->input('body'),
-            'emotion_id' => $request->input('emotion'),
+            'name' => $request->input('name'),
         ];
 
-        $note = (new CreateNote)->execute($data);
+        $goal = (new CreateGoal)->execute($data);
 
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleNotesViewHelper::dto($contact, $note, Auth::user()),
+            'data' => ModuleGoalsViewHelper::dto($contact, $goal),
         ], 201);
     }
 
-    public function update(Request $request, int $vaultId, int $contactId, int $noteId)
+    public function update(Request $request, int $vaultId, int $contactId, int $goalId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'note_id' => $noteId,
-            'title' => $request->input('title'),
-            'body' => $request->input('body'),
-            'emotion_id' => $request->input('emotion'),
+            'goal_id' => $goalId,
+            'name' => $request->input('name'),
         ];
 
-        $note = (new UpdateNote)->execute($data);
+        $goal = (new UpdateGoal)->execute($data);
 
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleNotesViewHelper::dto($contact, $note, Auth::user()),
+            'data' => ModuleGoalsViewHelper::dto($contact, $goal),
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $noteId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $goalId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'note_id' => $noteId,
+            'goal_id' => $goalId,
         ];
 
-        (new DestroyNote)->execute($data);
+        (new DestroyGoal)->execute($data);
 
         return response()->json([
             'data' => true,
