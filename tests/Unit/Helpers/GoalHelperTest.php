@@ -2,15 +2,9 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Helpers\AvatarHelper;
 use App\Helpers\GoalHelper;
-use App\Helpers\UserHelper;
-use App\Models\Avatar;
-use App\Models\Contact;
 use App\Models\Goal;
 use App\Models\Streak;
-use App\Models\User;
-use App\Models\Vault;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
