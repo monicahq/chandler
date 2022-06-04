@@ -29,9 +29,6 @@ class GoalHelper
             $currentEntry = Carbon::parse($streaks[$i]);
             $nextEntry = Carbon::parse($streaks[$i + 1] ?? null);
 
-            Log::info('Current entry: '.$currentEntry->toDateString());
-            Log::info('Next entry: '.$nextEntry->toDateString());
-            Log::info($currentEntry->copy()->addDay()->toDateString());
             if ($currentEntry->copy()->addDay()->isSameDay($nextEntry)) {
                 $currentStreak++;
 

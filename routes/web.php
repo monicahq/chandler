@@ -7,6 +7,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
+use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
@@ -125,6 +126,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     // goals
                     Route::post('goals', [ContactModuleGoalController::class, 'store'])->name('contact.goal.store');
                     Route::put('goals/{goal}', [ContactModuleGoalController::class, 'update'])->name('contact.goal.update');
+                    Route::put('goals/{goal}/streaks', [ContactModuleStreakController::class, 'update'])->name('contact.goal.streak.update');
                     Route::delete('goals/{goal}', [ContactModuleGoalController::class, 'destroy'])->name('contact.goal.destroy');
 
                     // labels

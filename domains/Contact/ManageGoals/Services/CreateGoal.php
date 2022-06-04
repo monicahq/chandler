@@ -58,6 +58,7 @@ class CreateGoal extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'author_id' => $this->author->id,
             'name' => $data['name'],
+            'active' => true,
         ]);
 
         $this->contact->last_updated_at = Carbon::now();
