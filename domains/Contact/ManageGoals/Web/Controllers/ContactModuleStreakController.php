@@ -5,6 +5,7 @@ namespace App\Contact\ManageGoals\Web\Controllers;
 use App\Contact\ManageGoals\Services\CreateGoal;
 use App\Contact\ManageGoals\Services\DestroyGoal;
 use App\Contact\ManageGoals\Services\LogStreakForGoal;
+use App\Contact\ManageGoals\Services\ToggleStreak;
 use App\Contact\ManageGoals\Services\UpdateGoal;
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class ContactModuleStreakController extends Controller
             'happened_at' => $request->input('happened_at'),
         ];
 
-        (new LogStreakForGoal)->execute($data);
+        (new ToggleStreak)->execute($data);
 
         $contact = Contact::find($contactId);
         $goal = Goal::find($goalId);

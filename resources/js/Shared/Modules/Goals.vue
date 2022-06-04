@@ -81,16 +81,18 @@
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="mr-7 text-center"
+                class="mr-7 w-9 text-center"
                 :class="{ 'text-gray-500': !streak.active }">
                 <span class="mb-0 block text-xs font-semibold">{{ streak.day }}</span>
                 <span class="block">{{ streak.day_number }}</span>
 
                 <!-- active streak -->
-                <span v-if="streak.active" class="block text-2xl">👍</span>
+                <span @click="toggleStreak(goal, streak)" v-if="streak.active" class="block cursor-pointer text-2xl"
+                  >👍</span
+                >
 
                 <!-- inactive streak -->
-                <span v-else class="block cursor-pointer text-center text-2xl">
+                <span @click="toggleStreak(goal, streak)" v-else class="block cursor-pointer text-center text-2xl">
                   <div class="rounded-md border border-gray-200 bg-slate-100 py-1 px-2">
                     <svg
                       class="z-50"
@@ -223,35 +225,42 @@ export default {
     },
 
     submit() {
-      this.loadingState = 'loading';
-
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
           this.flash('The goal has been created', 'success');
           this.localGoals.unshift(response.data.data);
-          this.loadingState = '';
           this.createGoalModalShown = false;
         })
         .catch((error) => {
-          this.loadingState = '';
           this.form.errors = error.response.data;
         });
     },
 
     update(goal) {
-      this.loadingState = 'loading';
-
       axios
         .put(goal.url.update, this.form)
         .then((response) => {
-          this.loadingState = '';
           this.flash('The goal has been edited', 'success');
           this.localGoals[this.localGoals.findIndex((x) => x.id === goal.id)] = response.data.data;
           this.editedGoalId = 0;
         })
         .catch((error) => {
-          this.loadingState = '';
+          this.form.errors = error.response.data;
+        });
+    },
+
+    toggleStreak(goal, streak) {
+      this.form.happened_at = streak.happened_at;
+
+      axios
+        .put(goal.url.streak_update, this.form)
+        .then((response) => {
+          this.flash('The goal has been edited', 'success');
+          this.localGoals[this.localGoals.findIndex((x) => x.id === goal.id)] = response.data.data;
+          this.editedGoalId = 0;
+        })
+        .catch((error) => {
           this.form.errors = error.response.data;
         });
     },

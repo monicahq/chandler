@@ -40,9 +40,13 @@ class GoalHelper
             }
         }
 
+        if (! Carbon::parse(end($streaks))->isToday()) {
+            $currentStreak = 0;
+        }
+
         return [
             'max_streak' => $maxStreaks + 1,
-            'current_streak' => $currentStreak + 1,
+            'current_streak' => $currentStreak,
         ];
     }
 }

@@ -9,7 +9,7 @@ use App\Models\Streak;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class LogStreakForGoal extends BaseService implements ServiceInterface
+class ToggleStreak extends BaseService implements ServiceInterface
 {
     private Goal $goal;
     private array $data;
@@ -57,8 +57,17 @@ class LogStreakForGoal extends BaseService implements ServiceInterface
         $this->data = $data;
 
         $this->validate();
-        $this->makeSureEntryDoesntExistYet();
-        $this->createStreak();
+
+        $entry = $this->goal->streaks()
+            ->where('goal_id', $this->goal->id)
+            ->whereDate('happened_at', $this->data['happened_at'])
+            ->first();
+
+        if ($entry) {
+            $this->destroyStreak($entry);
+        } else {
+            $this->createStreak();
+        }
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
@@ -72,16 +81,9 @@ class LogStreakForGoal extends BaseService implements ServiceInterface
             ->findOrFail($this->data['goal_id']);
     }
 
-    private function makeSureEntryDoesntExistYet(): void
+    private function destroyStreak(Streak $streak): void
     {
-        $entry = $this->goal->streaks()
-            ->where('goal_id', $this->goal->id)
-            ->whereDate('happened_at', $this->data['happened_at'])
-            ->first();
-
-        if ($entry) {
-            throw new EntryAlreadyExistException();
-        }
+        $streak->delete();
     }
 
     private function createStreak(): void
