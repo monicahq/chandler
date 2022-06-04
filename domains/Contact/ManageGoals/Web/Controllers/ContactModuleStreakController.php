@@ -2,8 +2,6 @@
 
 namespace App\Contact\ManageGoals\Web\Controllers;
 
-use App\Contact\ManageGoals\Services\CreateGoal;
-use App\Contact\ManageGoals\Services\DestroyGoal;
 use App\Contact\ManageGoals\Services\LogStreakForGoal;
 use App\Contact\ManageGoals\Services\ToggleStreak;
 use App\Contact\ManageGoals\Services\UpdateGoal;
