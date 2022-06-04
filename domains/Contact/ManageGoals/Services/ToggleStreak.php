@@ -2,7 +2,6 @@
 
 namespace App\Contact\ManageGoals\Services;
 
-use App\Exceptions\EntryAlreadyExistException;
 use App\Interfaces\ServiceInterface;
 use App\Models\Goal;
 use App\Models\Streak;

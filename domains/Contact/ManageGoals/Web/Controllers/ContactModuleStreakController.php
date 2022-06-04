@@ -2,9 +2,7 @@
 
 namespace App\Contact\ManageGoals\Web\Controllers;
 
-use App\Contact\ManageGoals\Services\LogStreakForGoal;
 use App\Contact\ManageGoals\Services\ToggleStreak;
-use App\Contact\ManageGoals\Services\UpdateGoal;
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
