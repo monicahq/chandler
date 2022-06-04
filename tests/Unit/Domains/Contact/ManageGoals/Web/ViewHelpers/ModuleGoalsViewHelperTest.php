@@ -84,9 +84,9 @@ class ModuleGoalsViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals/' . $goal->id,
-                'streak_update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals/' . $goal->id.'/streaks',
-                'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/goals/' . $goal->id,
+                'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
+                'streak_update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id.'/streaks',
+                'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
             ],
             $array['url']
         );

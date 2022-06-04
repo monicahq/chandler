@@ -8,7 +8,6 @@ use App\Models\Contact;
 use App\Models\Goal;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class ModuleGoalsViewHelper
 {
