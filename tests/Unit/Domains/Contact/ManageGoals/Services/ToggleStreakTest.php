@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGoals\Services;
 
-use App\Contact\ManageGoals\Services\LogStreakForGoal;
+use App\Contact\ManageGoals\Services\ToggleStreak;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
@@ -17,29 +17,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class LogStreakForGoalTest extends TestCase
+class ToggleStreakTest extends TestCase
 {
     use DatabaseTransactions;
-
-    /** @test */
-    public function it_fails_if_the_streak_already_exists_for_the_date(): void
-    {
-        $this->expectException(EntryAlreadyExistException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $goal = Goal::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
-        Streak::factory()->create([
-            'goal_id' => $goal->id,
-            'happened_at' => '1900-01-01 00:00:00',
-        ]);
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $goal);
-    }
 
     /** @test */
     public function it_creates_a_streak(): void
@@ -63,7 +43,7 @@ class LogStreakForGoalTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new LogStreakForGoal)->execute($request);
+        (new ToggleStreak)->execute($request);
     }
 
     /** @test */
@@ -142,9 +122,16 @@ class LogStreakForGoalTest extends TestCase
             'happened_at' => '1900-01-01',
         ];
 
-        (new LogStreakForGoal)->execute($request);
+        (new ToggleStreak)->execute($request);
 
         $this->assertDatabaseHas('streaks', [
+            'goal_id' => $goal->id,
+            'happened_at' => '1900-01-01 00:00:00',
+        ]);
+
+        (new ToggleStreak)->execute($request);
+
+        $this->assertDatabaseMissing('streaks', [
             'goal_id' => $goal->id,
             'happened_at' => '1900-01-01 00:00:00',
         ]);

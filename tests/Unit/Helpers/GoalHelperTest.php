@@ -71,7 +71,7 @@ class GoalHelperTest extends TestCase
         $this->assertEquals(
             [
                 'max_streak' => 7,
-                'current_streak' => 4,
+                'current_streak' => 3,
             ],
             GoalHelper::getStreakData($goal)
         );

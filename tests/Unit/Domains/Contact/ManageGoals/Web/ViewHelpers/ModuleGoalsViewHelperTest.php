@@ -78,9 +78,13 @@ class ModuleGoalsViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'max_streak' => 1,
-                'current_streak' => 1,
+                'current_streak' => 0,
             ],
-            $array['streaks']
+            $array['streaks_statistics']
+        );
+        $this->assertArrayHasKey(
+            'last_7_days',
+            $array
         );
         $this->assertEquals(
             [
