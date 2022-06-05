@@ -71,7 +71,7 @@
             </div>
 
             <div>
-              <inertia-link class="text-blue-500 hover:underline">View details</inertia-link>
+              <inertia-link class="text-sm text-blue-500 hover:underline">View details</inertia-link>
             </div>
           </div>
 

@@ -126,6 +126,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     // goals
                     Route::post('goals', [ContactModuleGoalController::class, 'store'])->name('contact.goal.store');
                     Route::put('goals/{goal}', [ContactModuleGoalController::class, 'update'])->name('contact.goal.update');
+                    Route::get('goals/{goal}', [ContactModuleGoalController::class, 'show'])->name('contact.goal.show');
                     Route::put('goals/{goal}/streaks', [ContactModuleStreakController::class, 'update'])->name('contact.goal.streak.update');
                     Route::delete('goals/{goal}', [ContactModuleGoalController::class, 'destroy'])->name('contact.goal.destroy');
 
