@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Contact\ManageContact\Services\CreateContact;
 use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
 use App\Contact\ManageGoals\Services\CreateGoal;
-use App\Contact\ManageGoals\Services\LogStreakForGoal;
+use App\Contact\ManageGoals\Services\ToggleStreak;
 use App\Contact\ManageNotes\Services\CreateNote;
 use App\Contact\ManageTasks\Services\CreateContactTask;
 use App\Exceptions\EntryAlreadyExistException;
@@ -234,11 +234,11 @@ class SetupDummyAccount extends Command
 
                 for ($i = 0; $i < 4; $i++) {
                     $date = Carbon::now()->subYears(2);
-                    for ($i = 0; $i < rand(1, 340); $i++) {
+                    for ($j = 0; $j < rand(1, 340); $j++) {
                         $date = $date->addDays(rand(1, 3));
 
                         try {
-                            (new LogStreakForGoal)->execute([
+                            (new ToggleStreak)->execute([
                                 'account_id' => $this->firstUser->account_id,
                                 'author_id' => $this->firstUser->id,
                                 'vault_id' => $contact->vault_id,
