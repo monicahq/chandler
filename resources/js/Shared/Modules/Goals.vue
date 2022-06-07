@@ -75,22 +75,22 @@
             </div>
           </div>
 
-          <div class="flex items-center sm:justify-between">
+          <div class="flex flex-col sm:flex-row sm:justify-between">
             <!-- streaks -->
-            <div class="flex flex-col p-3 sm:flex-row">
+            <div class="flex flex-col p-0 sm:flex-row sm:p-3">
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="mr-7 w-9 text-center"
+                class="mr-0 flex flex-row items-center border-b border-gray-200 p-3 text-center sm:mr-7 sm:mb-0 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
                 :class="{ 'text-gray-500': !streak.active }">
-                <span class="mb-0 mr-2 inline text-xs font-semibold sm:mr-0 sm:block">{{ streak.day }}</span>
-                <span class="mr-2 inline sm:mr-0 sm:block">{{ streak.day_number }}</span>
+                <span class="mb-0 mr-2 text-xs font-semibold sm:mr-0">{{ streak.day }}</span>
+                <span class="mr-2 sm:mr-0">{{ streak.day_number }}</span>
 
                 <!-- active streak -->
                 <span
                   @click="toggleStreak(goal, streak)"
                   v-if="streak.active"
-                  class="mr-2 inline cursor-pointer text-2xl sm:mr-0 sm:block"
+                  class="mr-2 cursor-pointer text-2xl sm:mr-0"
                   >👍</span
                 >
 
@@ -98,7 +98,7 @@
                 <span
                   @click="toggleStreak(goal, streak)"
                   v-else
-                  class="mr-2 inline cursor-pointer text-center text-2xl sm:mr-0 sm:block">
+                  class="mr-2 cursor-pointer text-center text-2xl sm:mr-0">
                   <div class="rounded-md border border-gray-200 bg-slate-100 py-1 px-2">
                     <svg
                       class="z-50"
