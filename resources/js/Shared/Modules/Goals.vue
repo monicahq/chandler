@@ -81,10 +81,12 @@
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="mr-0 flex flex-row items-center border-b border-gray-200 p-3 text-center sm:mr-7 sm:mb-0 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
+                class="mr-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center sm:mr-7 sm:mb-0 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
                 :class="{ 'text-gray-500': !streak.active }">
-                <span class="mb-0 mr-2 text-xs font-semibold sm:mr-0">{{ streak.day }}</span>
-                <span class="mr-2 sm:mr-0">{{ streak.day_number }}</span>
+                <div>
+                  <span class="mb-0 mr-2 block text-xs font-semibold sm:mr-0">{{ streak.day }}</span>
+                  <span class="mr-2 sm:mr-0">{{ streak.day_number }}</span>
+                </div>
 
                 <!-- active streak -->
                 <span
@@ -126,7 +128,7 @@
             </div>
 
             <!-- stats -->
-            <div class="p-3 sm:flex">
+            <div class="flex justify-between p-3">
               <div class="mr-6 flex items-center">
                 <div class="mr-3 w-14 text-right text-sm text-gray-500">Current streak</div>
                 <div class="text-4xl">{{ goal.streaks_statistics.current_streak }}</div>
