@@ -7,7 +7,6 @@ use App\Models\ContactFeedItem;
 use App\Models\Goal;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class CreateGoal extends BaseService implements ServiceInterface
 {
