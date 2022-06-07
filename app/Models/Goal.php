@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Goal extends Model
 {
@@ -49,5 +50,15 @@ class Goal extends Model
     public function streaks(): HasMany
     {
         return $this->hasMany(Streak::class);
+    }
+
+    /**
+     * Get the goal's feed item.
+     *
+     * @return MorphOne
+     */
+    public function feedItem(): MorphOne
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 }

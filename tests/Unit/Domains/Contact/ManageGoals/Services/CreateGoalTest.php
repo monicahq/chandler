@@ -89,12 +89,19 @@ class CreateGoalTest extends TestCase
             'name' => 'super title',
         ];
 
-        $note = (new CreateGoal)->execute($request);
+        $goal = (new CreateGoal)->execute($request);
 
         $this->assertDatabaseHas('goals', [
-            'id' => $note->id,
+            'id' => $goal->id,
             'contact_id' => $contact->id,
             'name' => 'super title',
+        ]);
+
+        $this->assertDatabaseHas('contact_feed_items', [
+            'contact_id' => $contact->id,
+            'feedable_id' => $goal->id,
+            'feedable_type' => 'App\Models\Goal',
+            'description' => 'super title',
         ]);
     }
 }

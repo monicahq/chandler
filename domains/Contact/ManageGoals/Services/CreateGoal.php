@@ -3,9 +3,11 @@
 namespace App\Contact\ManageGoals\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\ContactFeedItem;
 use App\Models\Goal;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class CreateGoal extends BaseService implements ServiceInterface
 {
@@ -54,12 +56,8 @@ class CreateGoal extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->goal = Goal::create([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'name' => $data['name'],
-            'active' => true,
-        ]);
+        $this->create();
+        $this->createFeedItem();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
@@ -70,5 +68,26 @@ class CreateGoal extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
+    }
+
+    private function create(): void
+    {
+        $this->goal = Goal::create([
+            'contact_id' => $this->contact->id,
+            'author_id' => $this->author->id,
+            'name' => $this->data['name'],
+            'active' => true,
+        ]);
+    }
+
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'author_id' => $this->author->id,
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_GOAL_CREATED,
+            'description' => $this->data['name'],
+        ]);
+        $this->goal->feedItem()->save($feedItem);
     }
 }
