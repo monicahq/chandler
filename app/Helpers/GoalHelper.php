@@ -6,6 +6,7 @@ use App\Models\Goal;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class GoalHelper
 {

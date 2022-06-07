@@ -63,7 +63,7 @@
 
     <!-- goals -->
     <div v-if="localGoals.length > 0">
-      <div v-for="goal in localGoals" :key="goal.id" class="mb-4 rounded border border-gray-200 last:mb-0 last:mb-0">
+      <div v-for="goal in localGoals" :key="goal.id" class="mb-4 rounded border border-gray-200 last:mb-0">
         <div v-if="editedGoalId !== goal.id">
           <div class="flex items-center justify-between border-b border-gray-200 p-3">
             <div class="font-semibold text-gray-600">
@@ -75,24 +75,30 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div class="flex items-center sm:justify-between">
             <!-- streaks -->
-            <div class="flex p-3">
+            <div class="flex flex-col p-3 sm:flex-row">
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
                 class="mr-7 w-9 text-center"
                 :class="{ 'text-gray-500': !streak.active }">
-                <span class="mb-0 block text-xs font-semibold">{{ streak.day }}</span>
-                <span class="block">{{ streak.day_number }}</span>
+                <span class="mb-0 mr-2 inline text-xs font-semibold sm:mr-0 sm:block">{{ streak.day }}</span>
+                <span class="mr-2 inline sm:mr-0 sm:block">{{ streak.day_number }}</span>
 
                 <!-- active streak -->
-                <span @click="toggleStreak(goal, streak)" v-if="streak.active" class="block cursor-pointer text-2xl"
+                <span
+                  @click="toggleStreak(goal, streak)"
+                  v-if="streak.active"
+                  class="mr-2 inline cursor-pointer text-2xl sm:mr-0 sm:block"
                   >👍</span
                 >
 
                 <!-- inactive streak -->
-                <span @click="toggleStreak(goal, streak)" v-else class="block cursor-pointer text-center text-2xl">
+                <span
+                  @click="toggleStreak(goal, streak)"
+                  v-else
+                  class="mr-2 inline cursor-pointer text-center text-2xl sm:mr-0 sm:block">
                   <div class="rounded-md border border-gray-200 bg-slate-100 py-1 px-2">
                     <svg
                       class="z-50"
@@ -120,7 +126,7 @@
             </div>
 
             <!-- stats -->
-            <div class="flex p-3">
+            <div class="p-3 sm:flex">
               <div class="mr-6 flex items-center">
                 <div class="mr-3 w-14 text-right text-sm text-gray-500">Current streak</div>
                 <div class="text-4xl">{{ goal.streaks_statistics.current_streak }}</div>
