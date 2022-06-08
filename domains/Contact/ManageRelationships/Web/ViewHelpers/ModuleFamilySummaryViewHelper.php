@@ -10,17 +10,16 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ModuleFamilySummaryViewHelper
 {
     /**
      * Get a summary of the family of the contact:
      * - spouse or partner
-     * - children
+     * - children.
      *
-     * @param Contact $contact
-     * @param User $user
+     * @param  Contact  $contact
+     * @param  User  $user
      * @return array
      */
     public static function data(Contact $contact, User $user): array
@@ -84,7 +83,7 @@ class ModuleFamilySummaryViewHelper
                 ]);
             }
             $counter++;
-        };
+        }
 
         return $relationshipsCollection;
     }
