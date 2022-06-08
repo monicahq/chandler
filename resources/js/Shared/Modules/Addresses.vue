@@ -3,10 +3,6 @@
   color: #737e8d;
   top: -2px;
 }
-
-.icon-note {
-  top: -1px;
-}
 </style>
 
 <template>
@@ -14,197 +10,358 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative">
+        <span class="relative mr-1">
           <svg
+            xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
-            viewBox="0 0 24 24"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
             <path
-              d="M6 6C6 5.44772 6.44772 5 7 5H17C17.5523 5 18 5.44772 18 6C18 6.55228 17.5523 7 17 7H7C6.44771 7 6 6.55228 6 6Z"
-              fill="currentColor" />
-            <path
-              d="M6 10C6 9.44771 6.44772 9 7 9H17C17.5523 9 18 9.44771 18 10C18 10.5523 17.5523 11 17 11H7C6.44771 11 6 10.5523 6 10Z"
-              fill="currentColor" />
-            <path
-              d="M7 13C6.44772 13 6 13.4477 6 14C6 14.5523 6.44771 15 7 15H17C17.5523 15 18 14.5523 18 14C18 13.4477 17.5523 13 17 13H7Z"
-              fill="currentColor" />
-            <path
-              d="M6 18C6 17.4477 6.44772 17 7 17H11C11.5523 17 12 17.4477 12 18C12 18.5523 11.5523 19 11 19H7C6.44772 19 6 18.5523 6 18Z"
-              fill="currentColor" />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M2 4C2 2.34315 3.34315 1 5 1H19C20.6569 1 22 2.34315 22 4V20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V4ZM5 3H19C19.5523 3 20 3.44771 20 4V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44771 3 5 3Z"
-              fill="currentColor" />
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </span>
 
-        Addresses
+        <span class="font-semibold">Addresses</span>
       </div>
       <pretty-button
         :text="'Add an address'"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
-        @click="showCreateNoteModal" />
+        @click="showCreateAddressModal" />
     </div>
 
-    <!-- add a note modal -->
-    <form
-      v-if="createNoteModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white"
-      @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
-        <errors :errors="form.errors" />
+    <div>
+      <!-- add an address modal -->
+      <form
+        v-if="createAddressModalShown"
+        class="bg-form mb-6 rounded-lg border border-gray-200"
+        @submit.prevent="submit()">
+        <div class="border-b border-gray-200">
+          <!-- loan options -->
+          <div class="border-b border-gray-200 px-5 pt-5 pb-3">
+            <ul class="">
+              <li class="mr-5 inline-block">
+                <div class="flex items-center">
+                  <input
+                    id="object"
+                    v-model="form.type"
+                    value="object"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    The loan is an object
+                  </label>
+                </div>
+              </li>
 
-        <text-area
-          v-model="form.body"
-          :label="'Body'"
-          :rows="10"
-          :required="true"
-          :maxlength="65535"
-          :textarea-class="'block w-full mb-3'" />
-
-        <!-- cta to add a title -->
-        <span
-          v-if="!titleFieldShown"
-          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
-          @click="showTitleField">
-          + add title
-        </span>
-
-        <!-- title -->
-        <text-input
-          v-if="titleFieldShown"
-          :ref="'newTitle'"
-          v-model="form.title"
-          :label="'Title'"
-          :type="'text'"
-          :input-class="'block w-full'"
-          :required="false"
-          :autocomplete="false"
-          :maxlength="255"
-          @esc-key-pressed="createNoteModalShown = false" />
-      </div>
-
-      <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createNoteModalShown = false" />
-        <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
-      </div>
-    </form>
-
-    <!-- notes -->
-    <div v-if="localNotes.length > 0">
-      <div v-for="note in localNotes" :key="note.id" class="mb-4 rounded border border-gray-200 last:mb-0">
-        <!-- body of the note, if not being edited -->
-        <div v-if="editedNoteId !== note.id">
-          <div v-if="note.title" class="font-semibol mb-1 border-b border-gray-200 p-3 text-xs text-gray-600">
-            {{ note.title }}
+              <li class="mr-5 inline-block">
+                <div class="flex items-center">
+                  <input
+                    id="monetary"
+                    v-model="form.type"
+                    value="monetary"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                  <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    The loan is monetary
+                  </label>
+                </div>
+              </li>
+            </ul>
           </div>
 
-          <!-- excerpt, if it exists -->
-          <div v-if="!note.show_full_content && note.body_excerpt" class="p-3">
-            {{ note.body_excerpt }}
-            <span class="cursor-pointer text-blue-500 hover:underline" @click="showFullBody(note)"> View all </span>
-          </div>
-          <!-- full body -->
-          <div v-else class="p-3">
-            {{ note.body }}
+          <!-- name -->
+          <div class="border-b border-gray-200 p-5">
+            <text-input
+              :ref="'name'"
+              v-model="form.name"
+              :label="'What is the loan?'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'block w-full'"
+              :required="true"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createAddressModalShown = false" />
           </div>
 
-          <!-- details -->
-          <div
-            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50">
-            <div>
-              <!-- date -->
-              <div class="relative mr-3 inline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-note relative inline h-4 w-4 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ note.written_at }}
-              </div>
+          <!-- amount + currency -->
+          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
+            <text-input
+              :ref="'label'"
+              v-model="form.amount_lent"
+              :label="'How much money was lent?'"
+              :help="'Write the amount with a dot if you need decimals, like 100.50'"
+              :type="'number'"
+              :autofocus="true"
+              :input-class="'w-full'"
+              :required="false"
+              :min="0"
+              :max="10000000"
+              :autocomplete="false"
+              @esc-key-pressed="createAddressModalShown = false" />
 
-              <!-- author -->
-              <div class="relative mr-3 inline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-note relative inline h-4 w-4 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ note.author }}
-              </div>
-            </div>
-            <div>
-              <hover-menu
-                :show-edit="true"
-                :show-delete="true"
-                @edit="showEditNoteModal(note)"
-                @delete="destroy(note)" />
-            </div>
+            <dropdown
+              v-model="form.currency_id"
+              :data="localCurrencies"
+              :required="false"
+              :div-outer-class="'ml-3 mb-5'"
+              :placeholder="'Choose a value'"
+              :dropdown-class="'block'"
+              :label="'Currency'" />
+          </div>
+
+          <!-- loaned at -->
+          <div class="border-b border-gray-200 p-5">
+            <p class="mb-2 block text-sm">When was the loan made?</p>
+
+            <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
+              <template v-slot="{ inputValue, inputEvents }">
+                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+              </template>
+            </v-date-picker>
           </div>
         </div>
 
-        <!-- edit modal form -->
-        <form
-          v-if="editedNoteId === note.id"
-          class="mb-6 rounded-lg border border-gray-200 bg-white"
-          @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5">
-            <errors :errors="form.errors" />
+        <div v-if="form.errors.length > 0" class="p-5">
+          <errors :errors="form.errors" />
+        </div>
 
-            <text-area
-              v-model="form.body"
-              :label="'Body'"
-              :rows="10"
-              :required="true"
-              :maxlength="65535"
-              :textarea-class="'block w-full mb-3'" />
+        <div class="flex justify-between p-5">
+          <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createAddressModalShown = false" />
+          <pretty-button :text="'Add loan'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        </div>
+      </form>
 
-            <!-- title -->
-            <text-input
-              :ref="'newTitle'"
-              v-model="form.title"
-              :label="'Title'"
-              :type="'text'"
-              :input-class="'block w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="editedNoteId = 0" />
+      <!-- list of addresses -->
+      <div v-for="address in localAddresses" :key="address.id" class="mb-5 flex">
+        <div v-if="editedAddressId != address.id" class="mr-3 flex items-center">
+          <div class="flex -space-x-2 overflow-hidden">
+            <div v-for="loaner in address.loaners" :key="loaner.id">
+              <small-contact
+                :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
+                :show-name="false"
+                :preview-contact-size="30" />
+            </div>
           </div>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+
+          <div v-for="loanee in address.loanees" :key="loanee.id">
+            <small-contact
+              :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
+              :show-name="false"
+              :preview-contact-size="30" />
+          </div>
+        </div>
+
+        <div
+          v-if="editedAddressId != address.id"
+          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
+          <div class="border-b border-gray-200 px-3 py-2">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="mr-2 block">
+                  <span v-if="address.amount_lent" class="mr-2">
+                    <span v-if="address.currency_name" class="mr-1 text-gray-500">
+                      {{ address.currency_name }}
+                    </span>
+                    {{ address.amount_lent }}
+                    <span class="ml-2">•</span>
+                  </span>
+                  {{ address.name }}
+                </span>
+                <span v-if="address.description">{{ address.description }}</span>
+              </div>
+              <span v-if="address.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
+                address.loaned_at_human_format
+              }}</span>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <div class="flex items-center justify-between px-3 py-2">
+            <!-- <small-contact /> -->
+            <ul class="text-sm">
+              <!-- settle -->
+              <li
+                v-if="!address.settled"
+                @click="toggle(loan)"
+                class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+                Settle
+              </li>
+              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+                Revert
+              </li>
+
+              <!-- edit -->
+              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+                Edit
+              </li>
+
+              <!-- delete -->
+              <li @click="destroy(loan)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- edit address modal -->
+        <form
+          v-if="editedAddressId === address.id"
+          class="bg-form mb-6 w-full rounded-lg border border-gray-200"
+          @submit.prevent="update(loan)">
+          <div class="border-b border-gray-200">
+            <!-- loan options -->
+            <div class="border-b border-gray-200 px-5 pt-5 pb-3">
+              <ul class="">
+                <li class="mr-5 inline-block">
+                  <div class="flex items-center">
+                    <input
+                      id="object"
+                      v-model="form.type"
+                      value="object"
+                      name="name-order"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      The loan is an object
+                    </label>
+                  </div>
+                </li>
+
+                <li class="mr-5 inline-block">
+                  <div class="flex items-center">
+                    <input
+                      id="monetary"
+                      v-model="form.type"
+                      value="monetary"
+                      name="name-order"
+                      type="radio"
+                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                    <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      The loan is monetary
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- name -->
+            <div class="border-b border-gray-200 p-5">
+              <text-input
+                :ref="'name'"
+                v-model="form.name"
+                :label="'What is the loan?'"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="createAddressModalShown = false" />
+            </div>
+
+            <!-- amount + currency -->
+            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
+              <text-input
+                :ref="'label'"
+                v-model="form.amount_lent"
+                :label="'How much money was lent?'"
+                :help="'Write the amount with a dot if you need decimals, like 100.50'"
+                :type="'number'"
+                :autofocus="true"
+                :input-class="'w-full'"
+                :required="false"
+                :min="0"
+                :max="10000000"
+                :autocomplete="false"
+                @esc-key-pressed="createAddressModalShown = false" />
+
+              <dropdown
+                v-model="form.currency_id"
+                :data="localCurrencies"
+                :required="false"
+                :div-outer-class="'ml-3 mb-5'"
+                :placeholder="'Choose a value'"
+                :dropdown-class="'block'"
+                :label="'Currency'" />
+            </div>
+
+            <!-- loaned at -->
+            <div class="border-b border-gray-200 p-5">
+              <p class="mb-2 block text-sm">When was the loan made?</p>
+
+              <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
+                <template v-slot="{ inputValue, inputEvents }">
+                  <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                </template>
+              </v-date-picker>
+            </div>
+
+            <!-- loaned by or to -->
+            <div class="flex items-center items-stretch border-b border-gray-200">
+              <contact-selector
+                :search-url="layoutData.vault.url.search_contacts_only"
+                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
+                :display-most-consulted-contacts="false"
+                :label="'Who makes the loan?'"
+                :add-multiple-contacts="true"
+                :required="true"
+                :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
+                v-model="form.loaners" />
+
+              <contact-selector
+                :search-url="layoutData.vault.url.search_contacts_only"
+                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
+                :display-most-consulted-contacts="true"
+                :label="'Who the loan is for?'"
+                :add-multiple-contacts="true"
+                :required="true"
+                :div-outer-class="'p-5 flex-1'"
+                v-model="form.loanees" />
+            </div>
+
+            <!-- description -->
+            <div class="p-5">
+              <text-area
+                v-model="form.description"
+                :label="'Description'"
+                :maxlength="255"
+                :textarea-class="'block w-full'" />
+            </div>
+          </div>
+
+          <div v-if="form.errors.length > 0" class="p-5">
+            <errors :errors="form.errors" />
+          </div>
+
+          <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedNoteId = 0" />
-            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedAddressId = 0" />
+            <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
-      </div>
-
-      <!-- view all button -->
-      <div class="text-center">
-        <inertia-link :href="data.url.index" class="text-blue-500 hover:underline"> View all notes </inertia-link>
       </div>
     </div>
 
     <!-- blank state -->
-    <div v-if="localNotes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no notes yet.</p>
+    <div v-if="localAddresses.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">There are no addresses yet.</p>
     </div>
   </div>
 </template>
@@ -216,6 +373,8 @@ import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
+import SmallContact from '@/Shared/SmallContact';
+import Dropdown from '@/Shared/Form/Dropdown';
 
 export default {
   components: {
@@ -225,9 +384,15 @@ export default {
     TextInput,
     TextArea,
     Errors,
+    SmallContact,
+    Dropdown,
   },
 
   props: {
+    layoutData: {
+      type: Object,
+      default: null,
+    },
     data: {
       type: Object,
       default: null,
@@ -237,58 +402,90 @@ export default {
   data() {
     return {
       loadingState: '',
-      titleFieldShown: false,
-      createNoteModalShown: false,
-      localNotes: [],
-      editedNoteId: 0,
+      createAddressModalShown: false,
+      localAddresses: [],
+      localCurrencies: [],
+      editedAddressId: 0,
+      warning: '',
       form: {
-        title: '',
-        body: '',
+        type: '',
+        name: '',
+        description: '',
+        loaned_at: null,
+        amount_lent: '',
+        currency_id: '',
+        loaners: [],
+        loanees: [],
         errors: [],
+      },
+      modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD',
       },
     };
   },
 
   created() {
-    this.localNotes = this.data.notes;
+    this.localAddresses = this.data.addresses;
+    this.form.loaned_at = this.data.current_date;
   },
 
   methods: {
-    showCreateNoteModal() {
-      this.form.title = '';
-      this.form.body = '';
-      this.createNoteModalShown = true;
-    },
+    showCreateAddressModal() {
+      this.getCurrencies();
+      this.form.errors = [];
 
-    showEditNoteModal(note) {
-      this.editedNoteId = note.id;
-      this.form.title = note.title;
-      this.form.body = note.body;
-    },
-
-    showTitleField() {
-      this.titleFieldShown = true;
-      this.form.title = '';
+      this.form.name = '';
+      this.form.description = '';
+      this.form.amount_lent = '';
+      this.form.currency_id = '';
+      this.createAddressModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.newTitle.focus();
+        this.$refs.name.focus();
       });
     },
 
-    showFullBody(note) {
-      this.localNotes[this.localNotes.findIndex((x) => x.id === note.id)].show_full_content = true;
+    showEditLoanModal(loan) {
+      this.getCurrencies();
+      this.form.errors = [];
+      this.form.type = address.amount_lent ? 'monetary' : 'object';
+      this.form.name = address.name;
+      this.form.description = address.description;
+      this.form.loaned_at = address.loaned_at;
+      this.form.amount_lent = address.amount_lent_int;
+      this.form.currency_id = address.currency_id;
+      this.form.loaners = address.loaners;
+      this.form.loanees = address.loanees;
+      this.editedAddressId = address.id;
+    },
+
+    getCurrencies() {
+      if (this.localCurrencies.length == 0) {
+        axios
+          .get(this.data.url.currencies, this.form)
+          .then((response) => {
+            this.localCurrencies = response.data.data;
+          })
+          .catch((error) => {});
+      }
     },
 
     submit() {
+      if (this.form.loaners.length == 0 || this.form.loanees.length == 0) {
+        this.warning = 'Please indicate the contacts.';
+        return;
+      }
+
       this.loadingState = 'loading';
 
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The note has been created', 'success');
-          this.localNotes.unshift(response.data.data);
+          this.flash('The loan has been created', 'success');
+          this.localAddresses.unshift(response.data.data);
           this.loadingState = '';
-          this.createNoteModalShown = false;
+          this.createAddressModalShown = false;
         })
         .catch((error) => {
           this.loadingState = '';
@@ -296,16 +493,16 @@ export default {
         });
     },
 
-    update(note) {
+    update(loan) {
       this.loadingState = 'loading';
 
       axios
-        .put(note.url.update, this.form)
+        .put(address.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash('The note has been edited', 'success');
-          this.localNotes[this.localNotes.findIndex((x) => x.id === note.id)] = response.data.data;
-          this.editedNoteId = 0;
+          this.flash('The loan has been edited', 'success');
+          this.localAddresses[this.localAddresses.findIndex((x) => x.id === address.id)] = response.data.data;
+          this.editedAddressId = 0;
         })
         .catch((error) => {
           this.loadingState = '';
@@ -313,20 +510,32 @@ export default {
         });
     },
 
-    destroy(note) {
-      if (confirm('Are you sure? This will delete the note permanently.')) {
+    destroy(loan) {
+      if (confirm('Are you sure? This will delete the loan permanently.')) {
         axios
-          .delete(note.url.destroy)
+          .delete(address.url.destroy)
           .then((response) => {
-            this.flash('The note has been deleted', 'success');
-            var id = this.localNotes.findIndex((x) => x.id === note.id);
-            this.localNotes.splice(id, 1);
+            this.flash('The loan has been deleted', 'success');
+            var id = this.localAddresses.findIndex((x) => x.id === address.id);
+            this.localAddresses.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;
             this.form.errors = error.response.data;
           });
       }
+    },
+
+    toggle(loan) {
+      axios
+        .put(address.url.toggle, this.form)
+        .then((response) => {
+          this.flash('The loan has been settled', 'success');
+          this.localAddresses[this.localAddresses.findIndex((x) => x.id === address.id)] = response.data.data;
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
   },
 };
