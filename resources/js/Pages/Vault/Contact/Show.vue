@@ -50,6 +50,8 @@
 
                 <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
 
+                <family-summary v-if="module.type == 'family_summary'" :data="familySummary" />
+
                 <gender-pronoun v-if="module.type == 'gender_pronoun'" :data="genderPronoun" />
 
                 <important-dates v-if="module.type == 'important_dates'" :data="importantDates" />
@@ -122,6 +124,7 @@ import Layout from '@/Shared/Layout';
 import ContactName from '@/Shared/Modules/ContactName';
 import GenderPronoun from '@/Shared/Modules/GenderPronoun';
 import Avatar from '@/Shared/Modules/Avatar';
+import FamilySummary from '@/Shared/Modules/FamilySummary';
 import Notes from '@/Shared/Modules/Notes';
 import ImportantDates from '@/Shared/Modules/ImportantDates';
 import Labels from '@/Shared/Modules/Labels';
@@ -141,6 +144,7 @@ export default {
     ContactName,
     GenderPronoun,
     Avatar,
+    FamilySummary,
     Notes,
     ImportantDates,
     Labels,
@@ -170,6 +174,7 @@ export default {
     return {
       avatar: [],
       contactName: [],
+      familySummary: [],
       genderPronoun: [],
       importantDates: [],
       feed: [],
@@ -220,6 +225,13 @@ export default {
       if (this.data.contact_information.findIndex((x) => x.type == 'company') > -1) {
         this.jobInformation =
           this.data.contact_information[this.data.contact_information.findIndex((x) => x.type == 'company')].data;
+      }
+
+      if (this.data.contact_information.findIndex((x) => x.type == 'family_summary') > -1) {
+        this.familySummary =
+          this.data.contact_information[
+            this.data.contact_information.findIndex((x) => x.type == 'family_summary')
+          ].data;
       }
     }
 
