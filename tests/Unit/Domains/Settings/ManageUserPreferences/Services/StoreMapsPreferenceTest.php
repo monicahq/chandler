@@ -5,10 +5,8 @@ namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Services;
 use App\Models\Account;
 use App\Models\User;
 use App\Settings\ManageUserPreferences\Services\StoreMapsPreference;
-use App\Settings\ManageUserPreferences\Services\StoreNameOrderPreference;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 

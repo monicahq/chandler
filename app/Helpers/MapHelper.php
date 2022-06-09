@@ -3,10 +3,8 @@
 namespace App\Helpers;
 
 use App\Models\Address;
-use Illuminate\Support\Str;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class MapHelper
 {
@@ -28,11 +26,11 @@ class MapHelper
         $encodedAddress = urlencode($addressAsString);
 
         if ($user->default_map_site == User::MAPS_SITE_GOOGLE_MAPS) {
-            $url =  "https://www.google.com/maps/place/{$encodedAddress}";
+            $url = "https://www.google.com/maps/place/{$encodedAddress}";
         }
 
         if ($user->default_map_site == User::MAPS_SITE_OPEN_STREET_MAPS) {
-            $url =  "https://www.openstreetmap.org/search?query={$encodedAddress}";
+            $url = "https://www.openstreetmap.org/search?query={$encodedAddress}";
         }
 
         return $url;
@@ -47,24 +45,24 @@ class MapHelper
     {
         $sentence = '';
 
-        if (!is_null($address->street)) {
+        if (! is_null($address->street)) {
             $sentence = $address->street;
         }
 
-        if (!is_null($address->city)) {
-            $sentence .= ' ' . $address->city;
+        if (! is_null($address->city)) {
+            $sentence .= ' '.$address->city;
         }
 
-        if (!is_null($address->province)) {
-            $sentence .= ' ' . $address->province;
+        if (! is_null($address->province)) {
+            $sentence .= ' '.$address->province;
         }
 
-        if (!is_null($address->postal_code)) {
-            $sentence .= ' ' . $address->postal_code;
+        if (! is_null($address->postal_code)) {
+            $sentence .= ' '.$address->postal_code;
         }
 
-        if (!is_null($address->country)) {
-            $sentence .= ' ' . $address->country;
+        if (! is_null($address->country)) {
+            $sentence .= ' '.$address->country;
         }
 
         if (empty($address)) {

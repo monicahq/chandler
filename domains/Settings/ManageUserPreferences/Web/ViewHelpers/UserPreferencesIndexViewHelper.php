@@ -138,7 +138,7 @@ class UserPreferencesIndexViewHelper
         return [
             'types' => $collection,
             'default_map_site' => $user->default_map_site,
-            'default_map_site_i18n' => trans('account.maps_site_'. $user->default_map_site),
+            'default_map_site_i18n' => trans('account.maps_site_'.$user->default_map_site),
             'url' => [
                 'store' => route('settings.preferences.maps.store'),
             ],
