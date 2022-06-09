@@ -586,7 +586,14 @@ export default {
           .then((response) => {
             this.flash('The address has been deleted', 'success');
             var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
-            this.localActiveAddresses.splice(id, 1);
+
+            if (address.is_past_address) {
+              var id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
+              this.localInactiveAddresses.splice(id, 1);
+            } else {
+              var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+              this.localActiveAddresses.splice(id, 1);
+            }
           })
           .catch((error) => {
             this.loadingState = null;
