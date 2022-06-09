@@ -20,10 +20,10 @@ class DestroyGiftStateTest extends TestCase
     public function it_destroys_a_gift_state(): void
     {
         $ross = $this->createAdministrator();
-        $giftStage = GiftState::factory()->create([
+        $giftState = GiftState::factory()->create([
             'account_id' => $ross->account_id,
         ]);
-        $this->executeService($ross, $ross->account, $giftStage);
+        $this->executeService($ross, $ross->account, $giftState);
     }
 
     /** @test */
@@ -44,10 +44,10 @@ class DestroyGiftStateTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
-        $giftStage = GiftState::factory()->create([
+        $giftState = GiftState::factory()->create([
             'account_id' => $ross->account_id,
         ]);
-        $this->executeService($ross, $account, $giftStage);
+        $this->executeService($ross, $account, $giftState);
     }
 
     /** @test */
@@ -56,8 +56,8 @@ class DestroyGiftStateTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $giftStage = GiftState::factory()->create();
-        $this->executeService($ross, $ross->account, $giftStage);
+        $giftState = GiftState::factory()->create();
+        $this->executeService($ross, $ross->account, $giftState);
     }
 
     /** @test */
@@ -66,24 +66,24 @@ class DestroyGiftStateTest extends TestCase
         $this->expectException(NotEnoughPermissionException::class);
 
         $ross = $this->createUser();
-        $giftStage = GiftState::factory()->create([
+        $giftState = GiftState::factory()->create([
             'account_id' => $ross->account_id,
         ]);
-        $this->executeService($ross, $ross->account, $giftStage);
+        $this->executeService($ross, $ross->account, $giftState);
     }
 
-    private function executeService(User $author, Account $account, GiftState $giftStage): void
+    private function executeService(User $author, Account $account, GiftState $giftState): void
     {
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'gift_state_id' => $giftStage->id,
+            'gift_state_id' => $giftState->id,
         ];
 
         (new DestroyGiftState)->execute($request);
 
         $this->assertDatabaseMissing('gift_states', [
-            'id' => $giftStage->id,
+            'id' => $giftState->id,
         ]);
     }
 }

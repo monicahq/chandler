@@ -10,19 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class PersonalizeGiftStatesPositionController extends Controller
 {
-    public function update(Request $request, int $giftStageId)
+    public function update(Request $request, int $giftStateId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'gift_state_id' => $giftStageId,
+            'gift_state_id' => $giftStateId,
             'new_position' => $request->input('position'),
         ];
 
-        $giftStage = (new UpdateGiftStatePosition)->execute($data);
+        $giftState = (new UpdateGiftStatePosition)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGiftStateViewHelper::dto($giftStage),
+            'data' => PersonalizeGiftStateViewHelper::dto($giftState),
         ], 200);
     }
 }

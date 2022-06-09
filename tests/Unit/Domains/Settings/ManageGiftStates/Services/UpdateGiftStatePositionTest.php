@@ -19,10 +19,10 @@ class UpdateGiftStatePositionTest extends TestCase
     public function it_updates_a_state_position(): void
     {
         $ross = $this->createAdministrator();
-        $giftStage = GiftState::factory()->create([
+        $giftState = GiftState::factory()->create([
             'account_id' => $ross->account_id,
         ]);
-        $this->executeService($ross, $ross->account, $giftStage);
+        $this->executeService($ross, $ross->account, $giftState);
     }
 
     /** @test */
@@ -43,10 +43,10 @@ class UpdateGiftStatePositionTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
-        $giftStage = GiftState::factory()->create([
+        $giftState = GiftState::factory()->create([
             'account_id' => $ross->account_id,
         ]);
-        $this->executeService($ross, $account, $giftStage);
+        $this->executeService($ross, $account, $giftState);
     }
 
     /** @test */
@@ -55,21 +55,21 @@ class UpdateGiftStatePositionTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
-        $giftStage = GiftState::factory()->create();
-        $this->executeService($ross, $ross->account, $giftStage);
+        $giftState = GiftState::factory()->create();
+        $this->executeService($ross, $ross->account, $giftState);
     }
 
-    private function executeService(User $author, Account $account, GiftState $giftStage): void
+    private function executeService(User $author, Account $account, GiftState $giftState): void
     {
-        $giftStage1 = GiftState::factory()->create([
+        $giftState1 = GiftState::factory()->create([
             'account_id' => $account->id,
             'position' => 1,
         ]);
-        $giftStage3 = GiftState::factory()->create([
+        $giftState3 = GiftState::factory()->create([
             'account_id' => $account->id,
             'position' => 3,
         ]);
-        $giftStage4 = GiftState::factory()->create([
+        $giftState4 = GiftState::factory()->create([
             'account_id' => $account->id,
             'position' => 4,
         ]);
@@ -77,36 +77,36 @@ class UpdateGiftStatePositionTest extends TestCase
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'gift_state_id' => $giftStage->id,
+            'gift_state_id' => $giftState->id,
             'new_position' => 3,
         ];
 
-        $giftStage = (new UpdateGiftStatePosition)->execute($request);
+        $giftState = (new UpdateGiftStatePosition)->execute($request);
 
         $this->assertDatabaseHas('gift_states', [
-            'id' => $giftStage1->id,
+            'id' => $giftState1->id,
             'account_id' => $account->id,
             'position' => 1,
         ]);
         $this->assertDatabaseHas('gift_states', [
-            'id' => $giftStage3->id,
+            'id' => $giftState3->id,
             'account_id' => $account->id,
             'position' => 2,
         ]);
         $this->assertDatabaseHas('gift_states', [
-            'id' => $giftStage4->id,
+            'id' => $giftState4->id,
             'account_id' => $account->id,
             'position' => 4,
         ]);
         $this->assertDatabaseHas('gift_states', [
-            'id' => $giftStage->id,
+            'id' => $giftState->id,
             'account_id' => $account->id,
             'position' => 3,
         ]);
 
         $this->assertInstanceOf(
             GiftState::class,
-            $giftStage
+            $giftState
         );
     }
 }
