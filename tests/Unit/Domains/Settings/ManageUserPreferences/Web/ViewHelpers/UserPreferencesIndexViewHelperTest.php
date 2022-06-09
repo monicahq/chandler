@@ -205,11 +205,13 @@ class UserPreferencesIndexViewHelperTest extends TestCase
 
         $array = UserPreferencesIndexViewHelper::dtoMapsPreferences($user);
         $this->assertEquals(
-            3,
+            4,
             count($array)
         );
 
         $this->assertArrayHasKey('types', $array);
+        $this->assertArrayHasKey('default_map_site', $array);
+        $this->assertArrayHasKey('default_map_site_i18n', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
