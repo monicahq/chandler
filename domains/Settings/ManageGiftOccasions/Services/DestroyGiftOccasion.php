@@ -58,6 +58,6 @@ class DestroyGiftOccasion extends BaseService implements ServiceInterface
 
     private function repositionEverything(): void
     {
-        DB::table('gift_occasions')->where('position', '>' ,$this->giftOccasion->position)->decrement('position');
+        DB::table('gift_occasions')->where('position', '>', $this->giftOccasion->position)->decrement('position');
     }
 }
