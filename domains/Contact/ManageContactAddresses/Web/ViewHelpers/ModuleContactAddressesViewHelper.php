@@ -11,16 +11,8 @@ class ModuleContactAddressesViewHelper
 {
     public static function data(Contact $contact, User $user): array
     {
-        $addressesCollection = $contact->addresses()
-            ->get();
-
-        // filter addresses
-        $activeAddressesCollection = $addressesCollection->filter(function ($address) {
-            return ! $address->is_past_address;
-        });
-        $inactiveAddressesCollection = $addressesCollection->filter(function ($address) {
-            return $address->is_past_address;
-        });
+        $activeAddressesCollection = $contact->addresses()->where('is_past_address', false)->get();
+        $inactiveAddressesCollection = $contact->addresses()->where('is_past_address', true)->get();
 
         // get collections
         $activeAddressesCollection = $activeAddressesCollection->map(function ($address) use ($contact, $user) {

@@ -134,7 +134,7 @@
           </div>
 
           <!-- past address -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="p-5">
             <input
               :id="form.is_past_address"
               :name="form.is_past_address"
@@ -177,7 +177,7 @@
                   >View on map</a
                 >
               </li>
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(address)">
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 Edit
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
@@ -266,7 +266,7 @@
               </div>
 
               <!-- past address -->
-              <div class="border-b border-gray-200 p-5">
+              <div class="p-5">
                 <input
                   :id="form.is_past_address"
                   :name="form.is_past_address"
@@ -326,7 +326,7 @@
                   >View on map</a
                 >
               </li>
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(address)">
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 Edit
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
@@ -415,14 +415,14 @@
               </div>
 
               <!-- past address -->
-              <div class="border-b border-gray-200 p-5">
+              <div class="p-5">
                 <input
-                  :id="form.is_past_address"
-                  :name="form.is_past_address"
+                  id="is_past_address"
+                  name="is_past_address"
                   v-model="form.is_past_address"
                   type="checkbox"
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-                <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
+                <label for="is_past_address" class="ml-2 cursor-pointer text-gray-900">
                   This address is not active anymore
                 </label>
               </div>
@@ -520,7 +520,7 @@ export default {
       this.inactiveAddressesShown = !this.inactiveAddressesShown;
     },
 
-    showEditLoanModal(address) {
+    showEditAddressModal(address) {
       this.editedAddressId = address.id;
       this.form.errors = [];
       this.form.is_past_address = address.is_past_address;
