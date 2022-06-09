@@ -4,11 +4,8 @@ namespace Tests\Unit\Domains\Settings\ManageGiftStates\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\GiftOccasion;
 use App\Models\GiftState;
 use App\Models\User;
-use App\Settings\ManageGiftOccasions\Services\DestroyGiftOccasion;
-use App\Settings\ManageGiftStages\Services\DestroyGiftStage;
 use App\Settings\ManageGiftStates\Services\DestroyGiftState;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

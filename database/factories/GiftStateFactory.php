@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Account;
-use App\Models\GiftOccasion;
 use App\Models\GiftState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

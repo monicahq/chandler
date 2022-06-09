@@ -3,11 +3,8 @@
 namespace Tests\Unit\Domains\Settings\ManageGiftStates\Services;
 
 use App\Models\Account;
-use App\Models\GiftOccasion;
 use App\Models\GiftState;
 use App\Models\User;
-use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasionPosition;
-use App\Settings\ManageGiftStages\Services\UpdateGiftStagePosition;
 use App\Settings\ManageGiftStates\Services\UpdateGiftStatePosition;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

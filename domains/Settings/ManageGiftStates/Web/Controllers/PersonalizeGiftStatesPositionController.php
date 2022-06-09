@@ -3,8 +3,6 @@
 namespace App\Settings\ManageGiftStates\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasionPosition;
-use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
 use App\Settings\ManageGiftStates\Services\UpdateGiftStatePosition;
 use App\Settings\ManageGiftStates\Web\ViewHelpers\PersonalizeGiftStateViewHelper;
 use Illuminate\Http\Request;

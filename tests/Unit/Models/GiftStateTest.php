@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\GiftOccasion;
 use App\Models\GiftState;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

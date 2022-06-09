@@ -33,8 +33,6 @@ use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
 use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionController;
 use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionsPositionController;
 use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController;
-use App\Settings\ManageGiftStages\Web\Controllers\PersonalizeGiftStagePositionController;
-use App\Settings\ManageGiftStages\Web\Controllers\PersonalizeGiftStagesPositionController;
 use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;

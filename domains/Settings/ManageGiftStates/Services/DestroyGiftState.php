@@ -3,7 +3,6 @@
 namespace App\Settings\ManageGiftStates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\GiftOccasion;
 use App\Models\GiftState;
 use App\Models\User;
 use App\Services\BaseService;
