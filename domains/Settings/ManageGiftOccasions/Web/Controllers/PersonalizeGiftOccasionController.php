@@ -7,17 +7,26 @@ use App\Settings\ManageGiftOccasions\Services\CreateGiftOccasion;
 use App\Settings\ManageGiftOccasions\Services\DestroyGiftOccasion;
 use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasion;
 use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class PersonalizeGiftOccasionController extends Controller
 {
-    public function store(Request $request, int $giftOccasionId)
+    public function index()
+    {
+        return Inertia::render('Settings/Personalize/GiftOccasions/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData(),
+            'data' => PersonalizeGiftOccasionViewHelper::data(Auth::user()->account),
+        ]);
+    }
+
+    public function store(Request $request)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'gift_occasion_id' => $giftOccasionId,
             'label' => $request->input('label'),
         ];
 

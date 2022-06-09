@@ -35,6 +35,9 @@ class PersonalizeGiftOccasionViewHelper
             'label' => $giftOccasion->label,
             'position' => $giftOccasion->position,
             'url' => [
+                'position' => route('settings.personalize.gift_occasions.order.update', [
+                    'giftOccasion' => $giftOccasion->id,
+                ]),
                 'update' => route('settings.personalize.gift_occasions.update', [
                     'giftOccasion' => $giftOccasion->id,
                 ]),

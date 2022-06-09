@@ -43,6 +43,7 @@ class PersonalizeGiftOccasionViewHelperTest extends TestCase
                 'label' => $giftOccasion->label,
                 'position' => $giftOccasion->position,
                 'url' => [
+                    'position' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id.'/position',
                     'update' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id,
                     'destroy' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id,
                 ],

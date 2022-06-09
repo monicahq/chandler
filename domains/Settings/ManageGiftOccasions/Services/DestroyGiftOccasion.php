@@ -6,9 +6,12 @@ use App\Interfaces\ServiceInterface;
 use App\Models\GiftOccasion;
 use App\Models\User;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
 
 class DestroyGiftOccasion extends BaseService implements ServiceInterface
 {
+    private GiftOccasion $giftOccasion;
+
     /**
      * Get the validation rules that apply to the service.
      *
@@ -45,9 +48,16 @@ class DestroyGiftOccasion extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $giftOccasion = GiftOccasion::where('account_id', $data['account_id'])
+        $this->giftOccasion = GiftOccasion::where('account_id', $data['account_id'])
             ->findOrFail($data['gift_occasion_id']);
 
-        $giftOccasion->delete();
+        $this->giftOccasion->delete();
+
+        $this->repositionEverything();
+    }
+
+    private function repositionEverything(): void
+    {
+        DB::table('gift_occasions')->where('position', '>' ,$this->giftOccasion->position)->decrement('position');
     }
 }
