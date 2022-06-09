@@ -4,6 +4,7 @@ namespace App\Settings\ManageGiftOccasions\Web\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasionPosition;
+use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
 use App\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class PersonalizeGiftOccasionsPositionController extends Controller
         $giftOccasion = (new UpdateGiftOccasionPosition)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeLifeEventCategoriesViewHelper::dtoType($giftOccasion->lifeEventCategory, $lifeEventType),
+            'data' => PersonalizeGiftOccasionViewHelper::dto($giftOccasion),
         ], 200);
     }
 }
