@@ -2,10 +2,8 @@
 
 namespace Tests\Unit\Domains\Settings\ManageGiftOccasions\Web\ViewHelpers;
 
-use App\Models\ContactInformationType;
 use App\Models\GiftOccasion;
 use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
-
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -46,7 +44,7 @@ class PersonalizeGiftOccasionViewHelperTest extends TestCase
                 'position' => $giftOccasion->position,
                 'url' => [
                     'update' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id,
-                    'destroy' => env('APP_URL'). '/settings/personalize/giftOccasions/'. $giftOccasion->id,
+                    'destroy' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id,
                 ],
             ],
             $array

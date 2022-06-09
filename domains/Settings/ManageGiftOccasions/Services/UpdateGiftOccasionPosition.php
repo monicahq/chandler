@@ -4,8 +4,6 @@ namespace App\Settings\ManageGiftOccasions\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GiftOccasion;
-use App\Models\LifeEventCategory;
-use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 

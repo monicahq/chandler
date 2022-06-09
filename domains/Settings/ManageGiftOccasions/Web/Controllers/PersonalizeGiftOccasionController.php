@@ -7,9 +7,6 @@ use App\Settings\ManageGiftOccasions\Services\CreateGiftOccasion;
 use App\Settings\ManageGiftOccasions\Services\DestroyGiftOccasion;
 use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasion;
 use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
-use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipType;
-use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
-use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

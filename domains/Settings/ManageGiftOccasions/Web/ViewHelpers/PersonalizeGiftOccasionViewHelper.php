@@ -4,8 +4,6 @@ namespace App\Settings\ManageGiftOccasions\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\GiftOccasion;
-use App\Models\RelationshipGroupType;
-use App\Models\RelationshipType;
 
 class PersonalizeGiftOccasionViewHelper
 {

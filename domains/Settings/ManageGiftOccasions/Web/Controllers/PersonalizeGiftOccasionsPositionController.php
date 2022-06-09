@@ -4,7 +4,6 @@ namespace App\Settings\ManageGiftOccasions\Web\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasionPosition;
-use App\Settings\ManageLifeEventCategories\Services\UpdateLifeEventTypePosition;
 use App\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
