@@ -3,16 +3,12 @@
 namespace Tests\Unit\Domains\Settings\ManageGiftOccasions\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
 use App\Models\Account;
-use App\Models\ContactInformationType;
 use App\Models\GiftOccasion;
 use App\Models\User;
-use App\Settings\ManageContactInformationTypes\Services\DestroyContactInformationType;
 use App\Settings\ManageGiftOccasions\Services\DestroyGiftOccasion;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 

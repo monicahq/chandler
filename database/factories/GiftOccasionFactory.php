@@ -3,11 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Account;
-use App\Models\Call;
-use App\Models\CallReason;
-use App\Models\Contact;
 use App\Models\GiftOccasion;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GiftOccasionFactory extends Factory

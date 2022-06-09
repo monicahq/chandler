@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Call;
-use App\Models\Emotion;
 use App\Models\GiftOccasion;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

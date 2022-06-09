@@ -3,9 +3,7 @@
 namespace App\Settings\ManageGiftOccasions\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
 use App\Models\GiftOccasion;
-use App\Models\RelationshipGroupType;
 use App\Models\User;
 use App\Services\BaseService;
 
