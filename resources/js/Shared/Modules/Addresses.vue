@@ -3,6 +3,22 @@
   color: #737e8d;
   top: -2px;
 }
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 </style>
 
 <template>
@@ -41,327 +57,384 @@
         class="bg-form mb-6 rounded-lg border border-gray-200"
         @submit.prevent="submit()">
         <div class="border-b border-gray-200">
-          <!-- loan options -->
-          <div class="border-b border-gray-200 px-5 pt-5 pb-3">
-            <ul class="">
-              <li class="mr-5 inline-block">
-                <div class="flex items-center">
-                  <input
-                    id="object"
-                    v-model="form.type"
-                    value="object"
-                    name="name-order"
-                    type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                    The loan is an object
-                  </label>
-                </div>
-              </li>
-
-              <li class="mr-5 inline-block">
-                <div class="flex items-center">
-                  <input
-                    id="monetary"
-                    v-model="form.type"
-                    value="monetary"
-                    name="name-order"
-                    type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                    The loan is monetary
-                  </label>
-                </div>
-              </li>
-            </ul>
+          <div v-if="form.errors.length > 0" class="p-5">
+            <errors :errors="form.errors" />
           </div>
 
-          <!-- name -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+            <dropdown
+              v-model="form.address_type_id"
+              :data="data.address_types"
+              :required="false"
+              :placeholder="'Choose a value'"
+              :dropdown-class="'block w-full'"
+              :label="'Address type'" />
+          </div>
+
+          <!-- street + city -->
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
             <text-input
-              :ref="'name'"
-              v-model="form.name"
-              :label="'What is the loan?'"
+              :ref="'street'"
+              v-model="form.street"
+              :label="'Street'"
               :type="'text'"
               :autofocus="true"
-              :input-class="'block w-full'"
-              :required="true"
+              :input-class="'w-full mr-2'"
+              :required="false"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createAddressModalShown = false" />
+
+            <text-input
+              v-model="form.city"
+              :label="'City'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'w-full'"
+              :required="false"
               :autocomplete="false"
               :maxlength="255"
               @esc-key-pressed="createAddressModalShown = false" />
           </div>
 
-          <!-- amount + currency -->
-          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
+          <!-- province + postal code + country -->
+          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
             <text-input
-              :ref="'label'"
-              v-model="form.amount_lent"
-              :label="'How much money was lent?'"
-              :help="'Write the amount with a dot if you need decimals, like 100.50'"
-              :type="'number'"
+              v-model="form.province"
+              :label="'Province'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'w-full mr-2'"
+              :required="false"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createAddressModalShown = false" />
+
+            <text-input
+              v-model="form.postal_code"
+              :label="'Postal code'"
+              :type="'text'"
               :autofocus="true"
               :input-class="'w-full'"
               :required="false"
-              :min="0"
-              :max="10000000"
               :autocomplete="false"
+              :maxlength="255"
               @esc-key-pressed="createAddressModalShown = false" />
 
-            <dropdown
-              v-model="form.currency_id"
-              :data="localCurrencies"
+            <text-input
+              v-model="form.country"
+              :label="'Country'"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'w-full'"
               :required="false"
-              :div-outer-class="'ml-3 mb-5'"
-              :placeholder="'Choose a value'"
-              :dropdown-class="'block'"
-              :label="'Currency'" />
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createAddressModalShown = false" />
           </div>
 
-          <!-- loaned at -->
+          <!-- past address -->
           <div class="border-b border-gray-200 p-5">
-            <p class="mb-2 block text-sm">When was the loan made?</p>
-
-            <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
-              </template>
-            </v-date-picker>
+            <input
+              :id="form.is_past_address"
+              :name="form.is_past_address"
+              v-model="form.is_past_address"
+              type="checkbox"
+              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+            <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
+              This address is not active anymore
+            </label>
           </div>
-        </div>
-
-        <div v-if="form.errors.length > 0" class="p-5">
-          <errors :errors="form.errors" />
         </div>
 
         <div class="flex justify-between p-5">
           <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createAddressModalShown = false" />
-          <pretty-button :text="'Add loan'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+          <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
         </div>
       </form>
 
       <!-- list of addresses -->
-      <div v-for="address in localAddresses" :key="address.id" class="mb-5 flex">
-        <div v-if="editedAddressId != address.id" class="mr-3 flex items-center">
-          <div class="flex -space-x-2 overflow-hidden">
-            <div v-for="loaner in address.loaners" :key="loaner.id">
-              <small-contact
-                :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
-                :show-name="false"
-                :preview-contact-size="30" />
-            </div>
-          </div>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-
-          <div v-for="loanee in address.loanees" :key="loanee.id">
-            <small-contact
-              :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
-              :show-name="false"
-              :preview-contact-size="30" />
-          </div>
-        </div>
-
+      <div v-if="localActiveAddresses.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
         <div
-          v-if="editedAddressId != address.id"
-          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
-          <div class="border-b border-gray-200 px-3 py-2">
-            <div class="flex items-center justify-between">
+          v-for="address in localActiveAddresses"
+          :key="address.id"
+          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
+            <!-- address detail -->
+            <div>
+              <p v-if="address.type" class="mb-2 text-sm font-semibold">{{ address.type.name }}</p>
               <div>
-                <span class="mr-2 block">
-                  <span v-if="address.amount_lent" class="mr-2">
-                    <span v-if="address.currency_name" class="mr-1 text-gray-500">
-                      {{ address.currency_name }}
-                    </span>
-                    {{ address.amount_lent }}
-                    <span class="ml-2">•</span>
-                  </span>
-                  {{ address.name }}
-                </span>
-                <span v-if="address.description">{{ address.description }}</span>
+                <p v-if="address.street">{{ address.street }}</p>
+                <p v-if="address.postal_code || address.city">{{ address.postal_code }} {{ address.city }}</p>
+                <p v-if="address.country">{{ address.country }}</p>
               </div>
-              <span v-if="address.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
-                address.loaned_at_human_format
-              }}</span>
             </div>
-          </div>
 
-          <!-- actions -->
-          <div class="flex items-center justify-between px-3 py-2">
-            <!-- <small-contact /> -->
+            <!-- actions -->
             <ul class="text-sm">
-              <!-- settle -->
-              <li
-                v-if="!address.settled"
-                @click="toggle(loan)"
-                class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-                Settle
+              <li class="mr-2 inline">
+                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline"
+                  >View on map</a
+                >
               </li>
-              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-                Revert
-              </li>
-
-              <!-- edit -->
-              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(address)">
                 Edit
               </li>
-
-              <!-- delete -->
-              <li @click="destroy(loan)" class="inline cursor-pointer text-red-500 hover:text-red-900">Delete</li>
+              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
+                Delete
+              </li>
             </ul>
           </div>
+
+          <!-- edit address -->
+          <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
+            <div class="border-b border-gray-200">
+              <div v-if="form.errors.length > 0" class="p-5">
+                <errors :errors="form.errors" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+                <dropdown
+                  v-model="form.address_type_id"
+                  :data="data.address_types"
+                  :required="false"
+                  :placeholder="'Choose a value'"
+                  :dropdown-class="'block w-full'"
+                  :label="'Address type'" />
+              </div>
+
+              <!-- street + city -->
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+                <text-input
+                  :ref="'street'"
+                  v-model="form.street"
+                  :label="'Street'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full mr-2'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.city"
+                  :label="'City'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+              </div>
+
+              <!-- province + postal code + country -->
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+                <text-input
+                  v-model="form.province"
+                  :label="'Province'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full mr-2'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.postal_code"
+                  :label="'Postal code'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.country"
+                  :label="'Country'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+              </div>
+
+              <!-- past address -->
+              <div class="border-b border-gray-200 p-5">
+                <input
+                  :id="form.is_past_address"
+                  :name="form.is_past_address"
+                  v-model="form.is_past_address"
+                  type="checkbox"
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+                <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
+                  This address is not active anymore
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-between p-5">
+              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedAddressId = 0" />
+              <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            </div>
+          </form>
         </div>
-
-        <!-- edit address modal -->
-        <form
-          v-if="editedAddressId === address.id"
-          class="bg-form mb-6 w-full rounded-lg border border-gray-200"
-          @submit.prevent="update(loan)">
-          <div class="border-b border-gray-200">
-            <!-- loan options -->
-            <div class="border-b border-gray-200 px-5 pt-5 pb-3">
-              <ul class="">
-                <li class="mr-5 inline-block">
-                  <div class="flex items-center">
-                    <input
-                      id="object"
-                      v-model="form.type"
-                      value="object"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      The loan is an object
-                    </label>
-                  </div>
-                </li>
-
-                <li class="mr-5 inline-block">
-                  <div class="flex items-center">
-                    <input
-                      id="monetary"
-                      v-model="form.type"
-                      value="monetary"
-                      name="name-order"
-                      type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
-                      The loan is monetary
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <!-- name -->
-            <div class="border-b border-gray-200 p-5">
-              <text-input
-                :ref="'name'"
-                v-model="form.name"
-                :label="'What is the loan?'"
-                :type="'text'"
-                :autofocus="true"
-                :input-class="'block w-full'"
-                :required="true"
-                :autocomplete="false"
-                :maxlength="255"
-                @esc-key-pressed="createAddressModalShown = false" />
-            </div>
-
-            <!-- amount + currency -->
-            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
-              <text-input
-                :ref="'label'"
-                v-model="form.amount_lent"
-                :label="'How much money was lent?'"
-                :help="'Write the amount with a dot if you need decimals, like 100.50'"
-                :type="'number'"
-                :autofocus="true"
-                :input-class="'w-full'"
-                :required="false"
-                :min="0"
-                :max="10000000"
-                :autocomplete="false"
-                @esc-key-pressed="createAddressModalShown = false" />
-
-              <dropdown
-                v-model="form.currency_id"
-                :data="localCurrencies"
-                :required="false"
-                :div-outer-class="'ml-3 mb-5'"
-                :placeholder="'Choose a value'"
-                :dropdown-class="'block'"
-                :label="'Currency'" />
-            </div>
-
-            <!-- loaned at -->
-            <div class="border-b border-gray-200 p-5">
-              <p class="mb-2 block text-sm">When was the loan made?</p>
-
-              <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
-                <template v-slot="{ inputValue, inputEvents }">
-                  <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
-                </template>
-              </v-date-picker>
-            </div>
-
-            <!-- loaned by or to -->
-            <div class="flex items-center items-stretch border-b border-gray-200">
-              <contact-selector
-                :search-url="layoutData.vault.url.search_contacts_only"
-                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
-                :display-most-consulted-contacts="false"
-                :label="'Who makes the loan?'"
-                :add-multiple-contacts="true"
-                :required="true"
-                :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
-                v-model="form.loaners" />
-
-              <contact-selector
-                :search-url="layoutData.vault.url.search_contacts_only"
-                :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
-                :display-most-consulted-contacts="true"
-                :label="'Who the loan is for?'"
-                :add-multiple-contacts="true"
-                :required="true"
-                :div-outer-class="'p-5 flex-1'"
-                v-model="form.loanees" />
-            </div>
-
-            <!-- description -->
-            <div class="p-5">
-              <text-area
-                v-model="form.description"
-                :label="'Description'"
-                :maxlength="255"
-                :textarea-class="'block w-full'" />
-            </div>
-          </div>
-
-          <div v-if="form.errors.length > 0" class="p-5">
-            <errors :errors="form.errors" />
-          </div>
-
-          <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
-
-          <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedAddressId = 0" />
-            <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
-          </div>
-        </form>
       </div>
-    </div>
 
-    <!-- blank state -->
-    <div v-if="localAddresses.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no addresses yet.</p>
+      <!-- blank state -->
+      <div v-if="localActiveAddresses.length == 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
+        <p class="p-5 text-center">There are no active addresses yet.</p>
+      </div>
+
+      <!-- view past addresses link -->
+      <p
+        v-if="localInactiveAddresses.length > 0"
+        @click="toggleInactiveAdresses"
+        class="mx-4 mb-2 cursor-pointer text-xs text-blue-500 hover:underline">
+        Previous addresses ({{ localInactiveAddresses.length }})
+      </p>
+
+      <!-- list of previous addresses -->
+      <div
+        v-if="localInactiveAddresses.length > 0 && inactiveAddressesShown"
+        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white">
+        <div
+          v-for="address in localInactiveAddresses"
+          :key="address.id"
+          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
+            <!-- address detail -->
+            <div>
+              <p v-if="address.type" class="mb-2 text-sm font-semibold">{{ address.type.name }}</p>
+              <div>
+                <p v-if="address.street">{{ address.street }}</p>
+                <p v-if="address.postal_code || address.city">{{ address.postal_code }} {{ address.city }}</p>
+                <p v-if="address.country">{{ address.country }}</p>
+              </div>
+            </div>
+
+            <!-- actions -->
+            <ul class="text-sm">
+              <li class="mr-2 inline">
+                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline"
+                  >View on map</a
+                >
+              </li>
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(address)">
+                Edit
+              </li>
+              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
+                Delete
+              </li>
+            </ul>
+          </div>
+
+          <!-- edit address -->
+          <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
+            <div class="border-b border-gray-200">
+              <div v-if="form.errors.length > 0" class="p-5">
+                <errors :errors="form.errors" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+                <dropdown
+                  v-model="form.address_type_id"
+                  :data="data.address_types"
+                  :required="false"
+                  :placeholder="'Choose a value'"
+                  :dropdown-class="'block w-full'"
+                  :label="'Address type'" />
+              </div>
+
+              <!-- street + city -->
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+                <text-input
+                  :ref="'street'"
+                  v-model="form.street"
+                  :label="'Street'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full mr-2'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.city"
+                  :label="'City'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+              </div>
+
+              <!-- province + postal code + country -->
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+                <text-input
+                  v-model="form.province"
+                  :label="'Province'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full mr-2'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.postal_code"
+                  :label="'Postal code'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+
+                <text-input
+                  v-model="form.country"
+                  :label="'Country'"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="createAddressModalShown = false" />
+              </div>
+
+              <!-- past address -->
+              <div class="border-b border-gray-200 p-5">
+                <input
+                  :id="form.is_past_address"
+                  :name="form.is_past_address"
+                  v-model="form.is_past_address"
+                  type="checkbox"
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+                <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
+                  This address is not active anymore
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-between p-5">
+              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedAddressId = 0" />
+              <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -373,7 +446,6 @@ import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
-import SmallContact from '@/Shared/SmallContact';
 import Dropdown from '@/Shared/Form/Dropdown';
 
 export default {
@@ -384,7 +456,6 @@ export default {
     TextInput,
     TextArea,
     Errors,
-    SmallContact,
     Dropdown,
   },
 
@@ -403,87 +474,78 @@ export default {
     return {
       loadingState: '',
       createAddressModalShown: false,
-      localAddresses: [],
-      localCurrencies: [],
+      inactiveAddressesShown: false,
+      localActiveAddresses: [],
+      localInactiveAddresses: [],
       editedAddressId: 0,
       warning: '',
       form: {
         type: '',
-        name: '',
-        description: '',
-        loaned_at: null,
-        amount_lent: '',
-        currency_id: '',
-        loaners: [],
-        loanees: [],
+        address_type_id: 0,
+        is_past_address: false,
+        street: '',
+        city: '',
+        province: '',
+        postal_code: '',
+        country: '',
         errors: [],
-      },
-      modelConfig: {
-        type: 'string',
-        mask: 'YYYY-MM-DD',
       },
     };
   },
 
   created() {
-    this.localAddresses = this.data.addresses;
-    this.form.loaned_at = this.data.current_date;
+    this.localActiveAddresses = this.data.active_addresses;
+    this.localInactiveAddresses = this.data.inactive_addresses;
   },
 
   methods: {
     showCreateAddressModal() {
-      this.getCurrencies();
       this.form.errors = [];
 
-      this.form.name = '';
-      this.form.description = '';
-      this.form.amount_lent = '';
-      this.form.currency_id = '';
+      this.form.is_past_address = false;
+      this.form.address_type_id = 0;
+      this.form.street = '';
+      this.form.city = '';
+      this.form.province = '';
+      this.form.postal_code = '';
+      this.form.country = '';
       this.createAddressModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.name.focus();
+        this.$refs.street.focus();
       });
     },
 
-    showEditLoanModal(loan) {
-      this.getCurrencies();
-      this.form.errors = [];
-      this.form.type = address.amount_lent ? 'monetary' : 'object';
-      this.form.name = address.name;
-      this.form.description = address.description;
-      this.form.loaned_at = address.loaned_at;
-      this.form.amount_lent = address.amount_lent_int;
-      this.form.currency_id = address.currency_id;
-      this.form.loaners = address.loaners;
-      this.form.loanees = address.loanees;
-      this.editedAddressId = address.id;
+    toggleInactiveAdresses() {
+      this.inactiveAddressesShown = !this.inactiveAddressesShown;
     },
 
-    getCurrencies() {
-      if (this.localCurrencies.length == 0) {
-        axios
-          .get(this.data.url.currencies, this.form)
-          .then((response) => {
-            this.localCurrencies = response.data.data;
-          })
-          .catch((error) => {});
-      }
+    showEditLoanModal(address) {
+      this.editedAddressId = address.id;
+      this.form.errors = [];
+      this.form.is_past_address = address.is_past_address;
+      this.form.address_type_id = address.type ? address.type.id : 0;
+      this.form.street = address.street;
+      this.form.city = address.city;
+      this.form.province = address.province;
+      this.form.postal_code = address.postal_code;
+      this.form.country = address.country;
     },
 
     submit() {
-      if (this.form.loaners.length == 0 || this.form.loanees.length == 0) {
-        this.warning = 'Please indicate the contacts.';
-        return;
-      }
-
       this.loadingState = 'loading';
 
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The loan has been created', 'success');
-          this.localAddresses.unshift(response.data.data);
+          this.flash('The address has been created', 'success');
+
+          if (this.form.is_past_address) {
+            this.localInactiveAddresses.unshift(response.data.data);
+          } else {
+            this.localActiveAddresses.unshift(response.data.data);
+          }
+
           this.loadingState = '';
           this.createAddressModalShown = false;
         })
@@ -493,15 +555,22 @@ export default {
         });
     },
 
-    update(loan) {
+    update(address) {
       this.loadingState = 'loading';
 
       axios
         .put(address.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash('The loan has been edited', 'success');
-          this.localAddresses[this.localAddresses.findIndex((x) => x.id === address.id)] = response.data.data;
+          this.flash('The address has been edited', 'success');
+
+          if (this.form.is_past_address) {
+            this.localInactiveAddresses[this.localInactiveAddresses.findIndex((x) => x.id === address.id)] =
+              response.data.data;
+          } else {
+            this.localActiveAddresses[this.localActiveAddresses.findIndex((x) => x.id === address.id)] =
+              response.data.data;
+          }
           this.editedAddressId = 0;
         })
         .catch((error) => {
@@ -510,32 +579,20 @@ export default {
         });
     },
 
-    destroy(loan) {
-      if (confirm('Are you sure? This will delete the loan permanently.')) {
+    destroy(address) {
+      if (confirm('Are you sure? This will delete the address permanently.')) {
         axios
           .delete(address.url.destroy)
           .then((response) => {
-            this.flash('The loan has been deleted', 'success');
-            var id = this.localAddresses.findIndex((x) => x.id === address.id);
-            this.localAddresses.splice(id, 1);
+            this.flash('The address has been deleted', 'success');
+            var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+            this.localActiveAddresses.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;
             this.form.errors = error.response.data;
           });
       }
-    },
-
-    toggle(loan) {
-      axios
-        .put(address.url.toggle, this.form)
-        .then((response) => {
-          this.flash('The loan has been settled', 'success');
-          this.localAddresses[this.localAddresses.findIndex((x) => x.id === address.id)] = response.data.data;
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
     },
   },
 };
