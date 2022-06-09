@@ -2,15 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Web\ViewHelpers;
 
-use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
 use App\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
 use App\Models\Address;
 use App\Models\AddressType;
-use App\Models\Call;
 use App\Models\Contact;
-use App\Models\Emotion;
 use App\Models\User;
-use Carbon\Carbon;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -74,7 +70,7 @@ class ModuleContactAddressesViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/addresses',
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/addresses',
             ],
             $array['url']
         );
@@ -118,8 +114,8 @@ class ModuleContactAddressesViewHelperTest extends TestCase
                 ],
                 'url' => [
                     'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
-                    'update' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/addresses/' . $activeAddress->id,
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/addresses/' . $activeAddress->id,
+                    'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/addresses/'.$activeAddress->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/addresses/'.$activeAddress->id,
                 ],
             ],
             $collection
