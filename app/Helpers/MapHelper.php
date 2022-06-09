@@ -66,10 +66,6 @@ class MapHelper
             $sentence .= ' '.$address->country;
         }
 
-        if (empty($address)) {
-            return null;
-        }
-
         // trim extra whitespaces inside the address
         return Str::of($sentence)->replaceMatches('/\s+/', ' ');
     }
