@@ -3,7 +3,9 @@
 namespace Tests\Unit\Domains\Settings\ManageGiftOccasions\Web\ViewHelpers;
 
 use App\Models\ContactInformationType;
-use App\Settings\ManageContactInformationTypes\Web\ViewHelpers\PersonalizeContactInformationTypeIndexViewHelper;
+use App\Models\GiftOccasion;
+use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
+
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -15,18 +17,18 @@ class PersonalizeGiftOccasionViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
-        $contactInformationType = ContactInformationType::factory()->create();
-        $array = PersonalizeContactInformationTypeIndexViewHelper::data($contactInformationType->account);
+        $giftOccasion = GiftOccasion::factory()->create();
+        $array = PersonalizeGiftOccasionViewHelper::data($giftOccasion->account);
         $this->assertEquals(
             2,
             count($array)
         );
-        $this->assertArrayHasKey('contact_information_types', $array);
+        $this->assertArrayHasKey('gift_occasions', $array);
         $this->assertEquals(
             [
                 'settings' => env('APP_URL').'/settings',
                 'personalize' => env('APP_URL').'/settings/personalize',
-                'contact_information_type_store' => env('APP_URL').'/settings/personalize/contactInformationType',
+                'store' => env('APP_URL').'/settings/personalize/giftOccasions',
             ],
             $array['url']
         );
@@ -35,17 +37,16 @@ class PersonalizeGiftOccasionViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_data_transfer_object(): void
     {
-        $contactInformationType = ContactInformationType::factory()->create();
-        $array = PersonalizeContactInformationTypeIndexViewHelper::dtoContactInformationType($contactInformationType);
+        $giftOccasion = GiftOccasion::factory()->create();
+        $array = PersonalizeGiftOccasionViewHelper::dto($giftOccasion);
         $this->assertEquals(
             [
-                'id' => $contactInformationType->id,
-                'name' => $contactInformationType->name,
-                'protocol' => $contactInformationType->protocol,
-                'can_be_deleted' => $contactInformationType->can_be_deleted,
+                'id' => $giftOccasion->id,
+                'label' => $giftOccasion->label,
+                'position' => $giftOccasion->position,
                 'url' => [
-                    'update' => env('APP_URL').'/settings/personalize/contactInformationType/'.$contactInformationType->id,
-                    'destroy' => env('APP_URL').'/settings/personalize/contactInformationType/'.$contactInformationType->id,
+                    'update' => env('APP_URL').'/settings/personalize/giftOccasions/'.$giftOccasion->id,
+                    'destroy' => env('APP_URL'). '/settings/personalize/giftOccasions/'. $giftOccasion->id,
                 ],
             ],
             $array

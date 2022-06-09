@@ -3,6 +3,7 @@
 namespace App\Settings\ManageGiftOccasions\Web\ViewHelpers;
 
 use App\Models\Account;
+use App\Models\GiftOccasion;
 use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 
@@ -10,64 +11,37 @@ class PersonalizeGiftOccasionViewHelper
 {
     public static function data(Account $account): array
     {
-        $relationshipGroupTypes = $account->relationshipGroupTypes()
-            ->with('types')
-            ->orderBy('name', 'asc')
+        $giftOccasions = $account->giftOccasions()
+            ->orderBy('position', 'asc')
             ->get();
 
         $collection = collect();
-        foreach ($relationshipGroupTypes as $relationshipGroupType) {
-            $collection->push(self::dtoGroupType($relationshipGroupType));
+        foreach ($giftOccasions as $giftOccasion) {
+            $collection->push(self::dto($giftOccasion));
         }
 
         return [
-            'group_types' => $collection,
+            'gift_occasions' => $collection,
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
-                'group_type_store' => route('settings.personalize.relationship.grouptype.store'),
+                'store' => route('settings.personalize.gift_occasions.store'),
             ],
         ];
     }
 
-    public static function dtoGroupType(RelationshipGroupType $groupType): array
+    public static function dto(GiftOccasion $giftOccasion): array
     {
         return [
-            'id' => $groupType->id,
-            'name' => $groupType->name,
-            'can_be_deleted' => $groupType->can_be_deleted,
-            'types' => $groupType->types->map(function ($type) use ($groupType) {
-                return self::dtoRelationshipType($groupType, $type);
-            }),
+            'id' => $giftOccasion->id,
+            'label' => $giftOccasion->label,
+            'position' => $giftOccasion->position,
             'url' => [
-                'store' => route('settings.personalize.relationship.type.store', [
-                    'groupType' => $groupType->id,
+                'update' => route('settings.personalize.gift_occasions.update', [
+                    'giftOccasion' => $giftOccasion->id,
                 ]),
-                'update' => route('settings.personalize.relationship.grouptype.update', [
-                    'groupType' => $groupType->id,
-                ]),
-                'destroy' => route('settings.personalize.relationship.grouptype.destroy', [
-                    'groupType' => $groupType->id,
-                ]),
-            ],
-        ];
-    }
-
-    public static function dtoRelationshipType(RelationshipGroupType $groupType, RelationshipType $type): array
-    {
-        return [
-            'id' => $type->id,
-            'name' => $type->name,
-            'name_reverse_relationship' => $type->name_reverse_relationship,
-            'can_be_deleted' => $type->can_be_deleted,
-            'url' => [
-                'update' => route('settings.personalize.relationship.type.update', [
-                    'groupType' => $groupType->id,
-                    'type' => $type->id,
-                ]),
-                'destroy' => route('settings.personalize.relationship.type.destroy', [
-                    'groupType' => $groupType->id,
-                    'type' => $type->id,
+                'destroy' => route('settings.personalize.gift_occasions.destroy', [
+                    'giftOccasion' => $giftOccasion->id,
                 ]),
             ],
         ];

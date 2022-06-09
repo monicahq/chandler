@@ -3,61 +3,59 @@
 namespace App\Settings\ManageGiftOccasions\Web\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Settings\ManageGiftOccasions\Services\CreateGiftOccasion;
+use App\Settings\ManageGiftOccasions\Services\DestroyGiftOccasion;
+use App\Settings\ManageGiftOccasions\Services\UpdateGiftOccasion;
+use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
 use App\Settings\ManageRelationshipTypes\Services\CreateRelationshipType;
 use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
 use App\Settings\ManageRelationshipTypes\Services\UpdateRelationshipType;
-use App\Settings\ManageRelationshipTypes\Web\ViewHelpers\PersonalizeRelationshipIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PersonalizeRelationshipTypeController extends Controller
+class PersonalizeGiftOccasionController extends Controller
 {
-    public function store(Request $request, int $groupTypeId)
+    public function store(Request $request, int $giftOccasionId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'relationship_group_type_id' => $groupTypeId,
-            'name' => $request->input('name'),
-            'name_reverse_relationship' => $request->input('nameReverseRelationship'),
-            'can_be_deleted' => true,
+            'gift_occasion_id' => $giftOccasionId,
+            'label' => $request->input('label'),
         ];
 
-        $type = (new CreateRelationshipType)->execute($data);
+        $giftOccasion = (new CreateGiftOccasion)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeRelationshipIndexViewHelper::dtoRelationshipType($type->groupType, $type),
+            'data' => PersonalizeGiftOccasionViewHelper::dto($giftOccasion),
         ], 201);
     }
 
-    public function update(Request $request, int $groupTypeId, int $typeId)
+    public function update(Request $request, int $giftOccasionId, int $giftOccasion)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'relationship_group_type_id' => $groupTypeId,
-            'relationship_type_id' => $typeId,
-            'name' => $request->input('name'),
-            'name_reverse_relationship' => $request->input('nameReverseRelationship'),
+            'gift_occasion_id' => $giftOccasionId,
+            'label' => $request->input('label'),
         ];
 
-        $type = (new UpdateRelationshipType)->execute($data);
+        $giftOccasion = (new UpdateGiftOccasion)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeRelationshipIndexViewHelper::dtoRelationshipType($type->groupType, $type),
+            'data' => PersonalizeGiftOccasionViewHelper::dto($giftOccasion),
         ], 200);
     }
 
-    public function destroy(Request $request, int $groupTypeId, int $typeId)
+    public function destroy(Request $request, int $giftOccasionId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
-            'relationship_group_type_id' => $groupTypeId,
-            'relationship_type_id' => $typeId,
+            'gift_occasion_id' => $giftOccasionId,
         ];
 
-        (new DestroyRelationshipType)->execute($data);
+        (new DestroyGiftOccasion)->execute($data);
 
         return response()->json([
             'data' => true,
