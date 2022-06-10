@@ -62,7 +62,7 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 👩‍🍼 </span> All the gift occasions</h3>
+          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🎁 </span> All the gift occasions</h3>
           <pretty-button
             v-if="!createGiftOccasionModalShown"
             :text="'Add a gift occasion'"
@@ -263,14 +263,14 @@ export default {
         });
     },
 
-    update(lifeEventCategory) {
+    update(giftOccasion) {
       this.loadingState = 'loading';
 
       axios
-        .put(lifeEventCategory.url.update, this.form)
+        .put(giftOccasion.url.update, this.form)
         .then((response) => {
           this.flash('The gift occasion has been updated', 'success');
-          this.localGiftOccasions[this.localGiftOccasions.findIndex((x) => x.id === lifeEventCategory.id)] =
+          this.localGiftOccasions[this.localGiftOccasions.findIndex((x) => x.id === giftOccasion.id)] =
             response.data.data;
           this.loadingState = null;
           this.editGiftOccasionId = 0;
@@ -281,17 +281,13 @@ export default {
         });
     },
 
-    destroy(lifeEventCategory) {
-      if (
-        confirm(
-          'Are you sure? This will delete all The gift occasions of this type for all the activities that were using it.',
-        )
-      ) {
+    destroy(giftOccasion) {
+      if (confirm('Are you sure? This can not be undone.')) {
         axios
-          .delete(lifeEventCategory.url.destroy)
+          .delete(giftOccasion.url.destroy)
           .then((response) => {
             this.flash('The gift occasion has been deleted', 'success');
-            var id = this.localGiftOccasions.findIndex((x) => x.id === lifeEventCategory.id);
+            var id = this.localGiftOccasions.findIndex((x) => x.id === giftOccasion.id);
             this.localGiftOccasions.splice(id, 1);
           })
           .catch((error) => {
