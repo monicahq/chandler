@@ -6,7 +6,6 @@ use App\Contact\ManageContact\Web\ViewHelpers\ContactIndexViewHelper;
 use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\Label;
-use App\Models\User;
 use App\Models\Vault;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -72,7 +71,7 @@ class ContactIndexViewHelperTest extends TestCase
                     'name' => 'assigned label',
                     'count' => 1,
                     'url' => [
-                        'show' => env('APP_URL').'/vaults/'.$vault->id. '/contacts/labels/'.$label->id,
+                        'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/labels/'.$label->id,
                     ],
                 ],
             ],
