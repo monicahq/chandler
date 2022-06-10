@@ -34,11 +34,10 @@
           <!-- left -->
           <div>
             <!-- labels -->
-            <div v-if="data.labels.length > 0">
+            <div>
               <div class="mb-3 border-b border-gray-200"><span class="mr-1">🏷️</span> Labels</div>
-
-              <ul>
-                <li>
+              <ul v-if="data.labels.length > 0">
+                <li class="mb-1">
                   <div v-if="data.current_label">
                     <inertia-link :href="data.url.contact.index" class="text-blue-500 hover:underline"
                       >View all</inertia-link
@@ -46,7 +45,7 @@
                   </div>
                   <div v-if="!data.current_label">View all</div>
                 </li>
-                <li v-for="label in data.labels" :key="label.id">
+                <li v-for="label in data.labels" :key="label.id" class="mb-1">
                   <div v-if="label.id !== data.current_label">
                     <inertia-link :href="label.url.show" class="text-blue-500 hover:underline">{{
                       label.name
@@ -58,6 +57,8 @@
                   </div>
                 </li>
               </ul>
+
+              <p v-else>No labels yet.</p>
             </div>
           </div>
 
