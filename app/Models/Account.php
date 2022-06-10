@@ -21,6 +21,7 @@ class Account extends Model
     protected $fillable = [
         'shortcode',
         'uuid',
+        'is_temporary',
     ];
 
     /**

@@ -22,8 +22,9 @@ class AccountFactory extends Factory
     public function definition()
     {
         return [
-            'shortcode' => $this->faker->uuid(),
+            'shortcode' => $this->faker->word(),
             'uuid' => $this->faker->uuid(),
+            'is_temporary' => false,
         ];
     }
 }
