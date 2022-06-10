@@ -34,13 +34,19 @@ button {
     transform: translate(0, 0);
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  a {
+    --tw-shadow: 2px 2px 0 #575a5d !important;
+  }
+}
 </style>
 
 <template>
   <button
     :class="classes"
     :disabled="state == 'loading' || state == 'disabled'"
-    class="relative text-sm"
+    class="relative text-sm dark:bg-gray-700"
     name="save"
     type="submit">
     <span v-if="state == 'loading'"> Loading… </span>
@@ -49,7 +55,7 @@ button {
     <svg
       v-if="icon === 'plus' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5"
+      class="icon relative mr-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
@@ -60,7 +66,7 @@ button {
     <svg
       v-if="icon === 'check' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5"
+      class="icon relative mr-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
@@ -75,7 +81,7 @@ button {
     <svg
       v-if="icon === 'arrow' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative ml-1 inline h-5 w-5"
+      class="icon relative ml-1 mr-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">

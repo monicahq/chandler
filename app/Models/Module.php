@@ -18,6 +18,7 @@ class Module extends Model
     const TYPE_NOTES = 'notes';
     const TYPE_CONTACT_NAMES = 'contact_names';
     const TYPE_AVATAR = 'avatar';
+    const TYPE_FAMILY_SUMMARY = 'family_summary';
     const TYPE_COMPANY = 'company';
     const TYPE_FEED = 'feed';
     const TYPE_GENDER_PRONOUN = 'gender_pronoun';
@@ -29,6 +30,8 @@ class Module extends Model
     const TYPE_TASKS = 'tasks';
     const TYPE_CALLS = 'calls';
     const TYPE_PETS = 'pets';
+    const TYPE_GOALS = 'goals';
+    const TYPE_ADDRESSES = 'addresses';
 
     /**
      * The attributes that are mass assignable.

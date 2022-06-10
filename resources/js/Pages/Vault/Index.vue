@@ -9,6 +9,11 @@
   grid-template-rows: auto 1fr auto;
 }
 
+.remaining-contact {
+  top: -1px;
+  left: -5px;
+}
+
 @media (max-width: 480px) {
   .vault-list {
     grid-template-columns: 1fr;
@@ -23,26 +28,31 @@
 
 <template>
   <layout title="Dashboard" :layout-data="layoutData">
-    <main class="relative sm:mt-24">
+    <main class="relative mt-16 sm:mt-24">
       <!-- blank state -->
-      <div v-if="data.vaults.length == 0" class="mx-auto max-w-md px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <div class="mb-6 rounded-lg border border-gray-200 bg-white p-5">
-          <h2 class="mb-6 text-center text-lg">Thanks for trying out Monica 👋</h2>
-          <p class="mb-3">Monica is there to help you build better relationships.</p>
-          <p class="mb-3">
-            Contacts in Monica are stored in vaults. You can have as many vaults as you want: one vault for your
-            personal life, one for your professional life, and/or one vault shared with your spouse.
-          </p>
-          <div class="text-center">
+      <div v-if="data.vaults.length == 0" class="mx-auto mb-6 max-w-md px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+        <div class="rounded-t-lg border-t border-l border-r border-gray-200 bg-white p-5">
+          <p class="text-center">👋</p>
+          <h2 class="mb-6 text-center text-lg">Thanks for giving Monica a try</h2>
+          <p class="mb-3">Monica was made to help you document your life and your social interactions.</p>
+          <p class="mb-3">To start, you need to create a vault.</p>
+          <div class="mb-3 text-center">
             <pretty-link :href="data.url.vault.create" :text="'Create a vault'" :icon="'plus'" />
           </div>
         </div>
+        <div class="rounded-b-lg border border-gray-200 p-5">
+          <p class="mb-3">Monica is open source, made by hundreds of people from all around the world.</p>
+          <p class="mb-3">We hope you will like what we've done.</p>
+          <p class="mb-3">All the best,</p>
+          <p>Régis & Alexis</p>
+        </div>
       </div>
 
+      <!-- list of existing vaults -->
       <div v-if="data.vaults.length > 0" class="mx-auto max-w-4xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <div class="mb-6 flex items-center justify-between">
-          <h3 class="dark:text-slate-200">All the vaults in the account</h3>
-          <pretty-link :href="data.url.vault.create" :text="'Create a vault'" :icon="'plus'" />
+        <div class="mb-10 items-center justify-between sm:mb-6 sm:flex">
+          <h3 class="mb-3 dark:text-slate-200 sm:mb-0">All the vaults in the account</h3>
+          <pretty-link :href="data.url.vault.create" :text="'Create a vault'" :icon="'plus'" class="w-full md:w-auto" />
         </div>
 
         <div class="vault-list grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -51,22 +61,36 @@
             :key="vault.id"
             class="rounded-lg border border-gray-200 bg-white dark:bg-slate-700">
             <div class="vault-detail grid">
-              <inertia-link :href="vault.url.show" class="border-b border-gray-200 px-3 py-1 text-lg font-medium">
+              <inertia-link
+                :href="vault.url.show"
+                class="border-b border-gray-200 px-3 py-1 text-lg font-medium hover:rounded-t-lg hover:bg-slate-50 dark:text-gray-300">
                 {{ vault.name }}
               </inertia-link>
 
               <!-- description -->
-              <p v-if="vault.description" class="border-b border-gray-200 p-3">
-                {{ vault.description }}
-              </p>
-              <p v-else class="border-b border-gray-200 p-3">No description yet.</p>
+              <div>
+                <div v-if="vault.contacts.length > 0" class="relative flex -space-x-2 overflow-hidden p-3">
+                  <div v-for="contact in vault.contacts" :key="contact.id" class="inline-block">
+                    <div v-html="contact.avatar" class="h-8 w-8 rounded-full ring-2 ring-white"></div>
+                  </div>
+                  <div
+                    v-if="vault.remaining_contacts != 0"
+                    class="remaining-contact relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800">
+                    + {{ vault.remaining_contacts }}
+                  </div>
+                </div>
+                <p v-if="vault.description" class="p-3 dark:text-gray-300">
+                  {{ vault.description }}
+                </p>
+                <p v-else class="p-3 text-gray-500">No description yet.</p>
+              </div>
 
               <!-- actions -->
-              <div class="flex items-center justify-between px-3 py-2">
+              <div class="flex items-center justify-between border-t border-gray-200 px-3 py-2">
                 <inertia-link :href="vault.url.settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900"
+                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:hover:text-gray-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">

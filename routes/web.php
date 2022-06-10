@@ -5,7 +5,10 @@ use App\Contact\ManageContact\Web\Controllers\ContactController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
+use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
+use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
@@ -27,6 +30,13 @@ use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContat
 use App\Settings\ManageCurrencies\Web\Controllers\CurrencyController;
 use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
 use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
+use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionController;
+use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionsPositionController;
+use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController;
+use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
+use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
+use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
+use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
 use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
@@ -46,6 +56,7 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesControl
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
@@ -118,6 +129,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('notes/{note}', [ContactModuleNoteController::class, 'update'])->name('contact.note.update');
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
 
+                    // goals
+                    Route::post('goals', [ContactModuleGoalController::class, 'store'])->name('contact.goal.store');
+                    Route::put('goals/{goal}', [ContactModuleGoalController::class, 'update'])->name('contact.goal.update');
+                    Route::get('goals/{goal}', [ContactModuleGoalController::class, 'show'])->name('contact.goal.show');
+                    Route::put('goals/{goal}/streaks', [ContactModuleStreakController::class, 'update'])->name('contact.goal.streak.update');
+                    Route::delete('goals/{goal}', [ContactModuleGoalController::class, 'destroy'])->name('contact.goal.destroy');
+
                     // labels
                     Route::post('labels', [ContactModuleLabelController::class, 'store'])->name('contact.label.store');
                     Route::put('labels/{label}', [ContactModuleLabelController::class, 'update'])->name('contact.label.update');
@@ -127,6 +145,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('reminders', [ContactModuleReminderController::class, 'store'])->name('contact.reminder.store');
                     Route::put('reminders/{reminder}', [ContactModuleReminderController::class, 'update'])->name('contact.reminder.update');
                     Route::delete('reminders/{reminder}', [ContactModuleReminderController::class, 'destroy'])->name('contact.reminder.destroy');
+
+                    // addresses
+                    Route::post('addresses', [ContactModuleAddressController::class, 'store'])->name('contact.address.store');
+                    Route::put('addresses/{address}', [ContactModuleAddressController::class, 'update'])->name('contact.address.update');
+                    Route::delete('addresses/{address}', [ContactModuleAddressController::class, 'destroy'])->name('contact.address.destroy');
 
                     // loans
                     Route::post('loans', [ContactModuleLoanController::class, 'store'])->name('contact.loan.store');
@@ -205,6 +228,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
             Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
+            Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
         });
 
         // notifications
@@ -268,6 +292,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('activityTypes/{activityType}/activities', [PersonalizeActivitiesController::class, 'store'])->name('activity.store');
                 Route::put('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'update'])->name('activity.update');
                 Route::delete('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'destroy'])->name('activity.destroy');
+
+                // life event categories
+                Route::get('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'index'])->name('life_event_categories.index');
+                Route::post('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('life_event_categories.store');
+                Route::put('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('life_event_categories.update');
+                Route::delete('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('life_event_categories.destroy');
+
+                // life event types
+                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('life_event_types.store');
+                Route::put('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('life_event_types.update');
+                Route::delete('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('life_event_types.destroy');
+                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('life_event_types.order.update');
+
+                // gift occasions
+                Route::get('giftOccasions', [PersonalizeGiftOccasionController::class, 'index'])->name('gift_occasions.index');
+                Route::post('giftOccasions', [PersonalizeGiftOccasionController::class, 'store'])->name('gift_occasions.store');
+                Route::put('giftOccasions/{giftOccasion}', [PersonalizeGiftOccasionController::class, 'update'])->name('gift_occasions.update');
+                Route::delete('giftOccasions/{giftOccasion}', [PersonalizeGiftOccasionController::class, 'destroy'])->name('gift_occasions.destroy');
+                Route::post('giftOccasions/{giftOccasion}/position', [PersonalizeGiftOccasionsPositionController::class, 'update'])->name('gift_occasions.order.update');
+
+                // gift stages
+                Route::get('giftStates', [PersonalizeGiftStateController::class, 'index'])->name('gift_states.index');
+                Route::post('giftStates', [PersonalizeGiftStateController::class, 'store'])->name('gift_states.store');
+                Route::put('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'update'])->name('gift_states.update');
+                Route::delete('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'destroy'])->name('gift_states.destroy');
+                Route::post('giftStates/{giftState}/position', [PersonalizeGiftStatesPositionController::class, 'update'])->name('gift_states.order.update');
 
                 // genders
                 Route::get('genders', [ManageGenderController::class, 'index'])->name('gender.index');

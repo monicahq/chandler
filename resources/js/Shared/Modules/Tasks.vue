@@ -19,6 +19,10 @@
     border-bottom-right-radius: 8px;
   }
 }
+
+input[type='checkbox'] {
+  top: -1px;
+}
 </style>
 
 <template>
@@ -43,7 +47,7 @@
 
         <span class="font-semibold">Tasks</span>
       </div>
-      <pretty-span @click="showCreateTaskModal()" :text="'Add a task'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+      <pretty-button @click="showCreateTaskModal()" :text="'Add a task'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
     </div>
 
     <!-- add a task modal -->
@@ -119,7 +123,7 @@
     <p
       v-if="data.completed_tasks_count > 0 && !showCompletedTasks"
       @click="getCompleted()"
-      class="mx-4 mb-6 cursor-pointer text-xs text-sky-500 hover:text-blue-900">
+      class="mx-4 mb-6 cursor-pointer text-xs text-blue-500 hover:underline">
       Show completed tasks ({{ data.completed_tasks_count }})
     </p>
 

@@ -38,7 +38,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function templates()
+    public function templates(): HasMany
     {
         return $this->hasMany(Template::class);
     }
@@ -48,7 +48,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function modules()
+    public function modules(): HasMany
     {
         return $this->hasMany(Module::class);
     }
@@ -58,7 +58,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function groupTypes()
+    public function groupTypes(): HasMany
     {
         return $this->hasMany(GroupType::class);
     }
@@ -68,7 +68,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function relationshipGroupTypes()
+    public function relationshipGroupTypes(): HasMany
     {
         return $this->hasMany(RelationshipGroupType::class);
     }
@@ -78,7 +78,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function genders()
+    public function genders(): HasMany
     {
         return $this->hasMany(Gender::class);
     }
@@ -88,7 +88,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function pronouns()
+    public function pronouns(): HasMany
     {
         return $this->hasMany(Pronoun::class);
     }
@@ -98,7 +98,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function contactInformationTypes()
+    public function contactInformationTypes(): HasMany
     {
         return $this->hasMany(ContactInformationType::class);
     }
@@ -108,7 +108,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function addressTypes()
+    public function addressTypes(): HasMany
     {
         return $this->hasMany(AddressType::class);
     }
@@ -118,7 +118,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function petCategories()
+    public function petCategories(): HasMany
     {
         return $this->hasMany(PetCategory::class);
     }
@@ -128,7 +128,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function emotions()
+    public function emotions(): HasMany
     {
         return $this->hasMany(Emotion::class);
     }
@@ -138,7 +138,7 @@ class Account extends Model
      *
      * @return BelongsToMany
      */
-    public function currencies()
+    public function currencies(): BelongsToMany
     {
         return $this->belongsToMany(Currency::class, 'account_currencies', 'account_id', 'currency_id')
             ->withPivot('active')
@@ -150,7 +150,7 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function callReasonTypes()
+    public function callReasonTypes(): HasMany
     {
         return $this->hasMany(CallReasonType::class);
     }
@@ -160,8 +160,38 @@ class Account extends Model
      *
      * @return HasMany
      */
-    public function activityTypes()
+    public function activityTypes(): HasMany
     {
         return $this->hasMany(ActivityType::class);
+    }
+
+    /**
+     * Get the life event categories associated with the account.
+     *
+     * @return HasMany
+     */
+    public function lifeEventCategories(): HasMany
+    {
+        return $this->hasMany(LifeEventCategory::class);
+    }
+
+    /**
+     * Get the gift occasions associated with the account.
+     *
+     * @return HasMany
+     */
+    public function giftOccasions(): HasMany
+    {
+        return $this->hasMany(GiftOccasion::class);
+    }
+
+    /**
+     * Get the gift stages associated with the account.
+     *
+     * @return HasMany
+     */
+    public function giftStates(): HasMany
+    {
+        return $this->hasMany(GiftState::class);
     }
 }

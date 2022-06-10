@@ -14,6 +14,7 @@ use App\Models\ContactLog;
 use App\Models\ContactReminder;
 use App\Models\ContactTask;
 use App\Models\Gender;
+use App\Models\Goal;
 use App\Models\Label;
 use App\Models\Loan;
 use App\Models\Note;
@@ -236,11 +237,23 @@ class ContactTest extends TestCase
     }
 
     /** @test */
+    public function it_has_many_goals(): void
+    {
+        $ross = Contact::factory()->create();
+        Goal::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->goals()->exists());
+    }
+
+    /** @test */
     public function it_gets_the_name(): void
     {
         $user = User::factory()->create([
             'name_order' => '%first_name%',
         ]);
+        $this->be($user);
         $contact = Contact::factory()->create([
             'first_name' => 'James',
             'last_name' => 'Bond',
@@ -251,31 +264,31 @@ class ContactTest extends TestCase
 
         $this->assertEquals(
             'James',
-            $contact->getName($user)
+            $contact->name
         );
 
         $user->update(['name_order' => '%last_name%']);
         $this->assertEquals(
             'Bond',
-            $contact->getName($user)
+            $contact->name
         );
 
         $user->update(['name_order' => '%first_name% %last_name%']);
         $this->assertEquals(
             'James Bond',
-            $contact->getName($user)
+            $contact->name
         );
 
         $user->update(['name_order' => '%first_name% (%maiden_name%) %last_name%']);
         $this->assertEquals(
             'James (Muller) Bond',
-            $contact->getName($user)
+            $contact->name
         );
 
         $user->update(['name_order' => '%last_name% (%maiden_name%)  || (%nickname%) || %first_name%']);
         $this->assertEquals(
             'Bond (Muller)  || (007) || James',
-            $contact->getName($user)
+            $contact->name
         );
     }
 
@@ -290,7 +303,7 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertNull(
-            $contact->getAge()
+            $contact->age
         );
 
         ContactImportantDate::factory()->create([
@@ -303,7 +316,7 @@ class ContactTest extends TestCase
 
         $this->assertEquals(
             21,
-            $contact->getAge()
+            $contact->age
         );
     }
 }

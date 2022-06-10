@@ -10,6 +10,8 @@ use App\Models\ContactInformationType;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\Gender;
+use App\Models\GiftOccasion;
+use App\Models\GiftState;
 use App\Models\GroupType;
 use App\Models\Module;
 use App\Models\PetCategory;
@@ -176,5 +178,27 @@ class AccountTest extends TestCase
         ]);
 
         $this->assertTrue($account->activityTypes()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gift_occasions()
+    {
+        $account = Account::factory()->create();
+        GiftOccasion::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->giftOccasions()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gift_states()
+    {
+        $account = Account::factory()->create();
+        GiftState::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->giftStates()->exists());
     }
 }

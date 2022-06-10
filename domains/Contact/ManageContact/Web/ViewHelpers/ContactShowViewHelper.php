@@ -4,15 +4,18 @@ namespace App\Contact\ManageContact\Web\ViewHelpers;
 
 use App\Contact\ManageAvatar\Web\ViewHelpers\ModuleAvatarViewHelper;
 use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
+use App\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
 use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
+use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Contact\ManagePets\Web\ViewHelpers\ModulePetsViewHelper;
 use App\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
+use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleFamilySummaryViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
@@ -146,6 +149,10 @@ class ContactShowViewHelper
                 $data = ModuleCompanyViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_FAMILY_SUMMARY) {
+                $data = ModuleFamilySummaryViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,
@@ -195,6 +202,14 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_PETS) {
                 $data = ModulePetsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_GOALS) {
+                $data = ModuleGoalsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_ADDRESSES) {
+                $data = ModuleContactAddressesViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

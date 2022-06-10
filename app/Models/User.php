@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +25,12 @@ class User extends Authenticatable implements MustVerifyEmail
     const NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL = '1234.56';
 
     /**
+     * Possible maps site.
+     */
+    const MAPS_SITE_GOOGLE_MAPS = 'google_maps';
+    const MAPS_SITE_OPEN_STREET_MAPS = 'open_street_maps';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -42,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_format',
         'number_format',
         'timezone',
+        'default_map_site',
     ];
 
     /**
@@ -69,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return BelongsTo
      */
-    public function account()
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
@@ -79,7 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return BelongsToMany
      */
-    public function vaults()
+    public function vaults(): BelongsToMany
     {
         return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission');
     }
@@ -89,7 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return HasMany
      */
-    public function notes()
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'author_id');
     }
@@ -99,7 +107,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return HasMany
      */
-    public function notificationChannels()
+    public function notificationChannels(): HasMany
     {
         return $this->hasMany(UserNotificationChannel::class, 'user_id');
     }
@@ -109,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return HasMany
      */
-    public function contactTasks()
+    public function contactTasks(): HasMany
     {
         return $this->hasMany(ContactTask::class, 'author_id');
     }
@@ -134,14 +142,24 @@ class User extends Authenticatable implements MustVerifyEmail
      * All users have a contact in the vaults.
      *
      * @param  Vault  $vault
-     * @return Contact
+     * @return null|Contact
      */
-    public function getContactInVault(Vault $vault): Contact
+    public function getContactInVault(Vault $vault): ?Contact
     {
         $contact = DB::table('user_vault')->where('vault_id', $vault->id)
             ->where('user_id', $this->id)
             ->first();
 
-        return Contact::findOrFail($contact->contact_id);
+        if (! $contact) {
+            return null;
+        }
+
+        try {
+            $contact = Contact::findOrFail($contact->contact_id);
+        } catch (ModelNotFoundException) {
+            return null;
+        }
+
+        return $contact;
     }
 }

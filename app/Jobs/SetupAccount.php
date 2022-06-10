@@ -5,8 +5,11 @@ namespace App\Jobs;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\Information;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
 use App\Models\Module;
 use App\Models\RelationshipGroupType;
+use App\Models\RelationshipType;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Models\User;
@@ -79,6 +82,7 @@ class SetupAccount implements ShouldQueue
         $this->addTemplatePageContactInformation();
         $this->addTemplatePageFeed();
         $this->addTemplatePageSocial();
+        $this->addTemplatePageLifeEvents();
         $this->addTemplatePageInformation();
         $this->addFirstInformation();
     }
@@ -162,6 +166,22 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'name' => trans('app.module_names'),
             'type' => Module::TYPE_CONTACT_NAMES,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageContact->id,
+            'module_id' => $module->id,
+        ]);
+
+        // family summary
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_family_summary'),
+            'type' => Module::TYPE_FAMILY_SUMMARY,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage)->execute([
@@ -305,6 +325,33 @@ class SetupAccount implements ShouldQueue
         ]);
     }
 
+    private function addTemplatePageLifeEvents(): void
+    {
+        $templatePageSocial = (new CreateTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'name' => trans('app.default_template_page_life_events'),
+            'can_be_deleted' => true,
+        ]);
+
+        // goals
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_goals'),
+            'type' => Module::TYPE_GOALS,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageSocial->id,
+            'module_id' => $module->id,
+        ]);
+    }
+
     private function addTemplatePageInformation(): void
     {
         $templatePageInformation = (new CreateTemplatePage)->execute([
@@ -313,6 +360,22 @@ class SetupAccount implements ShouldQueue
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_information'),
             'can_be_deleted' => true,
+        ]);
+
+        // Addresses
+        $module = (new CreateModule)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.module_addresses'),
+            'type' => Module::TYPE_ADDRESSES,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageInformation->id,
+            'module_id' => $module->id,
         ]);
 
         // Notes
@@ -409,6 +472,9 @@ class SetupAccount implements ShouldQueue
         $this->addPetCategories();
         $this->addEmotions();
         $this->addActivityTypes();
+        $this->addLifeEventCategories();
+        $this->addGiftOccasions();
+        $this->addGiftStates();
     }
 
     /**
@@ -482,31 +548,43 @@ class SetupAccount implements ShouldQueue
                 'name' => trans('account.relationship_type_partner'),
                 'name_reverse_relationship' => trans('account.relationship_type_partner'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => false,
+                'type' => RelationshipType::TYPE_LOVE,
             ],
             [
                 'name' => trans('account.relationship_type_spouse'),
                 'name_reverse_relationship' => trans('account.relationship_type_spouse'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => false,
+                'type' => RelationshipType::TYPE_LOVE,
             ],
             [
                 'name' => trans('account.relationship_type_date'),
                 'name_reverse_relationship' => trans('account.relationship_type_date'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_lover'),
                 'name_reverse_relationship' => trans('account.relationship_type_lover'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_inlovewith'),
                 'name_reverse_relationship' => trans('account.relationship_type_lovedby'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_ex'),
                 'name_reverse_relationship' => trans('account.relationship_type_ex'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
         ]);
 
@@ -524,31 +602,43 @@ class SetupAccount implements ShouldQueue
                 'name' => trans('account.relationship_type_parent'),
                 'name_reverse_relationship' => trans('account.relationship_type_child'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => false,
+                'type' => RelationshipType::TYPE_CHILD,
             ],
             [
                 'name' => trans('account.relationship_type_sibling'),
                 'name_reverse_relationship' => trans('account.relationship_type_sibling'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_grandparent'),
                 'name_reverse_relationship' => trans('account.relationship_type_grandchild'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_uncle'),
                 'name_reverse_relationship' => trans('account.relationship_type_nephew'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_cousin'),
                 'name_reverse_relationship' => trans('account.relationship_type_cousin'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_godfather'),
                 'name_reverse_relationship' => trans('account.relationship_type_godson'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
         ]);
 
@@ -565,11 +655,15 @@ class SetupAccount implements ShouldQueue
                 'name' => trans('account.relationship_type_friend'),
                 'name_reverse_relationship' => trans('account.relationship_type_friend'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_bestfriend'),
                 'name_reverse_relationship' => trans('account.relationship_type_bestfriend'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
         ]);
 
@@ -586,16 +680,22 @@ class SetupAccount implements ShouldQueue
                 'name' => trans('account.relationship_type_colleague'),
                 'name_reverse_relationship' => trans('account.relationship_type_colleague'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_subordinate'),
                 'name_reverse_relationship' => trans('account.relationship_type_boss'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
             [
                 'name' => trans('account.relationship_type_mentor'),
                 'name_reverse_relationship' => trans('account.relationship_type_protege'),
                 'relationship_group_type_id' => $group->id,
+                'can_be_deleted' => true,
+                'type' => null,
             ],
         ]);
     }
@@ -874,6 +974,436 @@ class SetupAccount implements ShouldQueue
             [
                 'activity_type_id' => $type->id,
                 'label' => trans('account.activity_type_went_museum'),
+            ],
+        ]);
+    }
+
+    private function addLifeEventCategories(): void
+    {
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->user->account_id,
+            'label_translation_key' => 'account.default_life_event_category_travel_experiences',
+            'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_TRAVEL_EXPERIENCES,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_activity',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ACTIVITIES,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_travel',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRAVEL,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_sport',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_SPORT,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_hobby',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_HOBBY,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_instrument',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_INSTRUMENT,
+                'position' => 5,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_language',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_LANGUAGE,
+                'position' => 6,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_tattoo_or_piercing',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TATTOO_OR_PIERCING,
+                'position' => 7,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_license',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_LICENSE,
+                'position' => 8,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_achievement_or_award',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ACHIEVEMENT_OR_AWARD,
+                'position' => 9,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_changed_beliefs',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_CHANGED_BELIEFS,
+                'position' => 10,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_word',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_WORD,
+                'position' => 11,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_kiss',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_KISS,
+                'position' => 12,
+            ],
+        ]);
+
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->user->account_id,
+            'label_translation_key' => 'account.default_life_event_category_work_education',
+            'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_WORK_EDUCATION,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_job',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_JOB,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_retirement',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_RETIREMENT,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_school',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_SCHOOL,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_study_abroad',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_STUDY_ABROAD,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_volunteer_work',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_VOLUNTEER_WORK,
+                'position' => 5,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_published_book_or_paper',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_PUBLISHED_BOOK_OR_PAPER,
+                'position' => 6,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_military_service',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MILITARY_SERVICE,
+                'position' => 7,
+            ],
+        ]);
+
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->user->account_id,
+            'label_translation_key' => 'account.default_life_event_category_family_relationships',
+            'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_FAMILY_RELATIONSHIPS,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_first_met',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_FIRST_MET,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_relationship',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_RELATIONSHIP,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_engagement',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ENGAGEMENT,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_marriage',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MARRIAGE,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_anniversary',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_ANNIVERSARY,
+                'position' => 5,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_expecting_a_baby',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_EXPECTING_A_BABY,
+                'position' => 6,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_child',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_CHILD,
+                'position' => 7,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_family_member',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_FAMILY_MEMBER,
+                'position' => 8,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_pet',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_PET,
+                'position' => 9,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_end_of_relationship',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_END_OF_RELATIONSHIP,
+                'position' => 10,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_loss_of_a_loved_one',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_LOSS_OF_A_LOVED_ONE,
+                'position' => 11,
+            ],
+        ]);
+
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->user->account_id,
+            'label_translation_key' => 'account.default_life_event_category_home_living',
+            'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_HOME_LIVING,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_moved',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_MOVED,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_bought_a_home',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_BOUGHT_A_HOME,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_home_improvement',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_HOME_IMPROVEMENT,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_holidays',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_HOLIDAYS,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_vehicle',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_VEHICLE,
+                'position' => 5,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_roommate',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_ROOMMATE,
+                'position' => 6,
+            ],
+        ]);
+
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->user->account_id,
+            'label_translation_key' => 'account.default_life_event_category_health_wellness',
+            'can_be_deleted' => false,
+            'type' => LifeEventCategory::TYPE_HEALTH_WELLNESS,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_overcame_an_illness',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_OVERCAME_AN_ILLNESS,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_quit_a_habit',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_QUIT_A_HABIT,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_new_eating_habits',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_NEW_EATING_HABITS,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_weight_loss',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_WEIGHT_LOSS,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_wear_glass_or_contact',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_WEAR_GLASS_OR_CONTACT,
+                'position' => 5,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_broken_bone',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_BROKEN_BONE,
+                'position' => 6,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_removed_braces',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_REMOVED_BRACES,
+                'position' => 7,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_surgery',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_SURGERY,
+                'position' => 8,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_dentist',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_DENTIST,
+                'position' => 9,
+            ],
+        ]);
+    }
+
+    private function addGiftOccasions(): void
+    {
+        DB::table('gift_occasions')->insert([
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_occasion_birthday'),
+                'position' => 1,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_occasion_anniversary'),
+                'position' => 2,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_occasion_christmas'),
+                'position' => 3,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_occasion_just_because'),
+                'position' => 4,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_occasion_wedding'),
+                'position' => 5,
+            ],
+        ]);
+    }
+
+    private function addGiftStates(): void
+    {
+        DB::table('gift_states')->insert([
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_state_idea'),
+                'position' => 1,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_state_searched'),
+                'position' => 2,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_state_found'),
+                'position' => 3,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_state_bought'),
+                'position' => 4,
+            ],
+            [
+                'account_id' => $this->user->account_id,
+                'label' => trans('account.gift_state_offered'),
+                'position' => 5,
             ],
         ]);
     }
