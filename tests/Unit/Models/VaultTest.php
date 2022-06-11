@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\ContactImportantDateType;
+use App\Models\Family;
 use App\Models\Label;
 use App\Models\Template;
 use App\Models\User;
@@ -94,13 +96,13 @@ class VaultTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_couples(): void
+    public function it_has_many_families(): void
     {
         $vault = Vault::factory()->create();
-        Couple::factory()->create([
+        Family::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->assertTrue($vault->couples()->exists());
+        $this->assertTrue($vault->families()->exists());
     }
 }
