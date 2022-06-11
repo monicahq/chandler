@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Contact\ManageCouple\Services;
+namespace App\Contact\ManageFamily\Services;
 
-use App\Models\Couple;
+use App\Models\Family;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class CreateCouple extends BaseService implements ServiceInterface
+class UpdateFamily extends BaseService implements ServiceInterface
 {
-    private Couple $couple;
+    private Family $family;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,6 +22,7 @@ class CreateCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'family_id' => 'required|integer|exists:families,id',
             'name' => 'nullable|string|max:255',
         ];
     }
@@ -40,20 +42,27 @@ class CreateCouple extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a couple.
+     * Update a family.
      *
      * @param  array  $data
-     * @return Couple
+     * @return Family
      */
-    public function execute(array $data): Couple
+    public function execute(array $data): Family
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
 
-        $this->couple = Couple::create([
-            'vault_id' => $data['vault_id'],
-            'name' => $this->valueOrNull($data, 'name'),
-        ]);
+        $this->family->name = $this->valueOrNull($data, 'name');
+        $this->family->save();
 
-        return $this->couple;
+        return $this->family;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+
+        $this->family = Family::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['family_id']);
     }
 }

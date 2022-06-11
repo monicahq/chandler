@@ -1,34 +1,35 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageCouple\Services;
+namespace Tests\Unit\Domains\Contact\ManageFamily\Services;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Couple;
+use App\Models\Family;
 use App\Models\Account;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Contact\ManageCouple\Services\UpdateCouple;
+use App\Contact\ManageCouple\Services\DestroyCouple;
+use App\Contact\ManageFamily\Services\DestroyFamily;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UpdateCoupleTest extends TestCase
+class DestroyFamilyTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_couple(): void
+    public function it_deletes_a_family(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $couple = Couple::factory()->create([
+        $family = Family::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $couple);
+        $this->executeService($regis, $regis->account, $vault, $family);
     }
 
     /** @test */
@@ -39,7 +40,7 @@ class UpdateCoupleTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateCouple)->execute($request);
+        (new DestroyFamily)->execute($request);
     }
 
     /** @test */
@@ -51,11 +52,11 @@ class UpdateCoupleTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $couple = Couple::factory()->create([
+        $family = Family::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $account, $vault, $couple);
+        $this->executeService($regis, $account, $vault, $family);
     }
 
     /** @test */
@@ -66,27 +67,27 @@ class UpdateCoupleTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
-        $couple = Couple::factory()->create([
+        $family = Family::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $couple);
+        $this->executeService($regis, $regis->account, $vault, $family);
     }
 
     /** @test */
-    public function it_fails_if_vault_is_not_in_the_vault(): void
+    public function it_fails_if_couple_is_not_in_the_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $couple = Couple::factory()->create();
+        $family = Family::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $couple);
+        $this->executeService($regis, $regis->account, $vault, $family);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Couple $couple): void
+    private function executeService(User $author, Account $account, Vault $vault, Family $family): void
     {
         Queue::fake();
 
@@ -94,15 +95,13 @@ class UpdateCoupleTest extends TestCase
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
-            'couple_id' => $couple->id,
-            'name' => 'love',
+            'family_id' => $family->id,
         ];
 
-        $couple = (new UpdateCouple)->execute($request);
+        (new DestroyFamily)->execute($request);
 
-        $this->assertDatabaseHas('couples', [
-            'id' => $couple->id,
-            'name' => 'love',
+        $this->assertDatabaseMissing('families', [
+            'id' => $family->id,
         ]);
     }
 }

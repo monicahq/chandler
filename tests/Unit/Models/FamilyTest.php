@@ -3,18 +3,18 @@
 namespace Tests\Unit\Models;
 
 use Tests\TestCase;
-use App\Models\Couple;
+use App\Models\Family;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CoupleTest extends TestCase
+class FamilyTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
     public function it_has_one_vault()
     {
-        $couple = Couple::factory()->create();
+        $family = Family::factory()->create();
 
-        $this->assertTrue($couple->vault()->exists());
+        $this->assertTrue($family->vault()->exists());
     }
 }

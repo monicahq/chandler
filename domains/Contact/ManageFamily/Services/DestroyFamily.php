@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Contact\ManageCouple\Services;
+namespace App\Contact\ManageFamily\Services;
 
-use App\Models\Couple;
-use App\Models\Contact;
+use App\Models\Family;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class AddContactToCouple extends BaseService implements ServiceInterface
+class DestroyFamily extends BaseService implements ServiceInterface
 {
-    private Couple $couple;
     private array $data;
 
     /**
@@ -23,8 +21,7 @@ class AddContactToCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'couple_id' => 'required|integer|exists:couples,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'family_id' => 'required|integer|exists:families,id',
         ];
     }
 
@@ -39,31 +36,21 @@ class AddContactToCouple extends BaseService implements ServiceInterface
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_vault_editor',
-            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Add a contact to a couple.
+     * Destroy a family.
      *
      * @param  array  $data
-     * @return Couple
      */
-    public function execute(array $data): Couple
-    {
-        $this->data = $data;
-        $this->validate();
-
-        $this->couple->contacts()->syncWithoutDetaching($this->contact->id);
-
-        return $this->couple;
-    }
-
-    private function validate(): void
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $this->couple = Couple::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['couple_id']);
+        $family = Family::where('vault_id', $data['vault_id'])
+            ->findOrFail($data['family_id']);
+
+        $family->delete();
     }
 }

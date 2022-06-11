@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Contact\ManageCouple\Services;
+namespace App\Contact\ManageFamily\Services;
 
-use App\Models\Couple;
+use App\Models\Family;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class DestroyCouple extends BaseService implements ServiceInterface
+class CreateFamily extends BaseService implements ServiceInterface
 {
-    private array $data;
+    private Family $family;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,7 +21,7 @@ class DestroyCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'couple_id' => 'required|integer|exists:couples,id',
+            'name' => 'nullable|string|max:255',
         ];
     }
 
@@ -40,17 +40,20 @@ class DestroyCouple extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a couple.
+     * Create a family.
      *
      * @param  array  $data
+     * @return Family
      */
-    public function execute(array $data): void
+    public function execute(array $data): Family
     {
         $this->validateRules($data);
 
-        $couple = Couple::where('vault_id', $data['vault_id'])
-            ->findOrFail($data['couple_id']);
+        $this->family = Family::create([
+            'vault_id' => $data['vault_id'],
+            'name' => $this->valueOrNull($data, 'name'),
+        ]);
 
-        $couple->delete();
+        return $this->family;
     }
 }

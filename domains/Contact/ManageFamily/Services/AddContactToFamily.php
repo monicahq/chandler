@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Contact\ManageCouple\Services;
+namespace App\Contact\ManageFamily\Services;
 
-use App\Models\Couple;
+use App\Models\Family;
+use App\Models\Contact;
 use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
 
-class UpdateCouple extends BaseService implements ServiceInterface
+class AddContactToFamily extends BaseService implements ServiceInterface
 {
-    private Couple $couple;
+    private Family $family;
     private array $data;
 
     /**
@@ -22,8 +23,8 @@ class UpdateCouple extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'couple_id' => 'required|integer|exists:couples,id',
-            'name' => 'nullable|string|max:255',
+            'family_id' => 'required|integer|exists:families,id',
+            'contact_id' => 'required|integer|exists:contacts,id',
         ];
     }
 
@@ -38,31 +39,31 @@ class UpdateCouple extends BaseService implements ServiceInterface
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Update a couple.
+     * Add a contact to a family.
      *
      * @param  array  $data
-     * @return Couple
+     * @return Family
      */
-    public function execute(array $data): Couple
+    public function execute(array $data): Family
     {
         $this->data = $data;
         $this->validate();
 
-        $this->couple->name = $this->valueOrNull($data, 'name');
-        $this->couple->save();
+        $this->family->contacts()->syncWithoutDetaching($this->contact->id);
 
-        return $this->couple;
+        return $this->family;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->couple = Couple::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['couple_id']);
+        $this->family = Family::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['family_id']);
     }
 }

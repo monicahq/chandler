@@ -135,6 +135,6 @@ class Vault extends Model
      */
     public function couples()
     {
-        return $this->hasMany(Couple::class);
+        return $this->hasMany(Family::class);
     }
 }
