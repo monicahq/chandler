@@ -2,10 +2,10 @@
 
 namespace App\Contact\ManageFamily\Services;
 
-use App\Models\Family;
-use App\Models\Contact;
-use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
+use App\Models\Family;
+use App\Services\BaseService;
 
 class AddContactToFamily extends BaseService implements ServiceInterface
 {

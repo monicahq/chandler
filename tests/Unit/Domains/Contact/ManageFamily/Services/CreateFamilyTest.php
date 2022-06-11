@@ -2,17 +2,16 @@
 
 namespace Tests\Unit\Domains\Contact\ManageFamily\Services;
 
-use Tests\TestCase;
+use App\Contact\ManageFamily\Services\CreateFamily;
+use App\Exceptions\NotEnoughPermissionException;
+use App\Models\Account;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Account;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use App\Contact\ManageCouple\Services\CreateCouple;
-use App\Contact\ManageFamily\Services\CreateFamily;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Tests\TestCase;
 
 class CreateFamilyTest extends TestCase
 {

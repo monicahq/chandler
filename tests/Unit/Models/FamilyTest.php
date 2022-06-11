@@ -3,9 +3,9 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Contact;
-use Tests\TestCase;
 use App\Models\Family;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class FamilyTest extends TestCase
 {

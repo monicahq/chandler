@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Vault;
 use App\Models\Family;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FamilyFactory extends Factory
