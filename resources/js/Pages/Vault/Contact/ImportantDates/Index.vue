@@ -43,7 +43,7 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 Contacts
               </inertia-link>
             </li>
@@ -58,7 +58,7 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.contact" class="text-sky-500 hover:text-blue-900">
+              <inertia-link :href="data.url.contact" class="text-blue-500 hover:underline">
                 Profile of {{ data.contact.name }}
               </inertia-link>
             </li>
@@ -107,6 +107,18 @@
                 :autocomplete="false"
                 :maxlength="255"
                 @esc-key-pressed="createDateModalShown = false" />
+            </div>
+
+            <!-- type -->
+            <div class="border-b border-gray-200 p-5">
+              <dropdown
+                v-model="form.contact_important_date_type_id"
+                :data="data.date_types"
+                :required="false"
+                :placeholder="'Choose a value'"
+                :dropdown-class="'block w-full'"
+                :help="'Some dates have a special type that we will use in the software to calculate an age.'"
+                :label="'Date type'" />
             </div>
 
             <div class="p-5">
@@ -201,7 +213,7 @@
                   id="reminder"
                   name="reminder"
                   type="checkbox"
-                  class="relative h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
                 <label for="reminder" class="ml-2 block cursor-pointer text-sm text-gray-900">
                   Create a reminder
                 </label>
@@ -251,11 +263,17 @@
             <div v-if="editedDateId !== date.id" class="flex items-center justify-between px-5 py-2">
               <span class="text-base">
                 {{ date.label }}: <span class="font-medium">{{ date.date }}</span>
+
+                <span
+                  v-if="date.type"
+                  class="ml-2 inline-block rounded bg-neutral-200 py-0 px-1 text-xs text-neutral-500 last:mr-0">
+                  {{ date.type.label }}
+                </span>
               </span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900" @click="updateDateModal(date)">
+                <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="updateDateModal(date)">
                   Edit
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
@@ -280,6 +298,18 @@
                     :autocomplete="false"
                     :maxlength="255"
                     @esc-key-pressed="createDateModalShown = false" />
+                </div>
+
+                <!-- type -->
+                <div class="border-b border-gray-200 p-5">
+                  <dropdown
+                    v-model="form.contact_important_date_type_id"
+                    :data="data.date_types"
+                    :required="false"
+                    :placeholder="'Choose a value'"
+                    :dropdown-class="'block w-full'"
+                    :help="'Some dates have a special type that we will use in the software to calculate an age.'"
+                    :label="'Date type'" />
                 </div>
 
                 <div class="p-5">
@@ -440,6 +470,7 @@ export default {
         label: '',
         date: '',
         age: '',
+        contact_important_date_type_id: null,
         reminder: false,
         reminderChoice: '',
         errors: [],
@@ -473,6 +504,7 @@ export default {
       this.form.month = date.month;
       this.form.date = date.completeDate;
       this.form.age = date.age;
+      this.form.contact_important_date_type_id = date.type ? date.type.id : 0;
       this.editedDateId = date.id;
     },
 

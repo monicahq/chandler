@@ -2,11 +2,11 @@
 
 namespace App\Contact\ManageRelationships\Web\ViewHelpers;
 
+use App\Helpers\AvatarHelper;
+use App\Models\Contact;
+use App\Models\RelationshipType;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Contact;
-use App\Helpers\AvatarHelper;
-use App\Models\RelationshipType;
 
 class ContactRelationshipsCreateViewHelper
 {
@@ -62,7 +62,7 @@ class ContactRelationshipsCreateViewHelper
         return [
             'contact' => [
                 'id' => $contact->id,
-                'name' => $contact->getName($user),
+                'name' => $contact->name,
                 'avatar' => AvatarHelper::getSVG($contact),
             ],
             'genders' => $genderCollection,

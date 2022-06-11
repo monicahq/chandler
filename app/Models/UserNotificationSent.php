@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserNotificationSent extends Model
 {
@@ -38,7 +38,7 @@ class UserNotificationSent extends Model
      *
      * @return BelongsTo
      */
-    public function notificationChannel()
+    public function notificationChannel(): BelongsTo
     {
         return $this->belongsTo(UserNotificationChannel::class, 'user_notification_channel_id');
     }

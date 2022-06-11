@@ -2,23 +2,30 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
-use App\Models\Loan;
-use App\Models\Note;
-use App\Models\Label;
-use App\Models\Avatar;
-use App\Models\Gender;
 use App\Models\Address;
+use App\Models\Avatar;
+use App\Models\Call;
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\Pronoun;
-use App\Models\Template;
+use App\Models\ContactImportantDate;
+use App\Models\ContactImportantDateType;
+use App\Models\ContactInformation;
 use App\Models\ContactLog;
 use App\Models\ContactReminder;
+use App\Models\ContactTask;
+use App\Models\Gender;
+use App\Models\Goal;
+use App\Models\Label;
+use App\Models\Loan;
+use App\Models\Note;
+use App\Models\Pet;
+use App\Models\Pronoun;
 use App\Models\RelationshipType;
-use App\Models\ContactInformation;
-use App\Models\ContactImportantDate;
+use App\Models\Template;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
@@ -194,5 +201,122 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->avatars()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_tasks(): void
+    {
+        $ross = Contact::factory()->create();
+        ContactTask::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->tasks()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_calls(): void
+    {
+        $ross = Contact::factory()->create();
+        Call::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->calls()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_pets(): void
+    {
+        $ross = Contact::factory()->create();
+        Pet::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->pets()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_goals(): void
+    {
+        $ross = Contact::factory()->create();
+        Goal::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->goals()->exists());
+    }
+
+    /** @test */
+    public function it_gets_the_name(): void
+    {
+        $user = User::factory()->create([
+            'name_order' => '%first_name%',
+        ]);
+        $this->be($user);
+        $contact = Contact::factory()->create([
+            'first_name' => 'James',
+            'last_name' => 'Bond',
+            'nickname' => '007',
+            'middle_name' => 'W.',
+            'maiden_name' => 'Muller',
+        ]);
+
+        $this->assertEquals(
+            'James',
+            $contact->name
+        );
+
+        $user->update(['name_order' => '%last_name%']);
+        $this->assertEquals(
+            'Bond',
+            $contact->name
+        );
+
+        $user->update(['name_order' => '%first_name% %last_name%']);
+        $this->assertEquals(
+            'James Bond',
+            $contact->name
+        );
+
+        $user->update(['name_order' => '%first_name% (%maiden_name%) %last_name%']);
+        $this->assertEquals(
+            'James (Muller) Bond',
+            $contact->name
+        );
+
+        $user->update(['name_order' => '%last_name% (%maiden_name%)  || (%nickname%) || %first_name%']);
+        $this->assertEquals(
+            'Bond (Muller)  || (007) || James',
+            $contact->name
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_age(): void
+    {
+        Carbon::setTestNow(Carbon::create(2022, 1, 1));
+        $contact = Contact::factory()->create();
+        $type = ContactImportantDateType::factory()->create([
+            'vault_id' => $contact->vault_id,
+            'internal_type' => ContactImportantDate::TYPE_BIRTHDATE,
+        ]);
+
+        $this->assertNull(
+            $contact->age
+        );
+
+        ContactImportantDate::factory()->create([
+            'contact_id' => $contact->id,
+            'contact_important_date_type_id' => $type->id,
+            'day' => 1,
+            'month' => 10,
+            'year' => 2000,
+        ]);
+
+        $this->assertEquals(
+            21,
+            $contact->age
+        );
     }
 }

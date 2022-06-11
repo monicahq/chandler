@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Jobs;
 
-use Tests\TestCase;
-use App\Models\Currency;
 use App\Jobs\SetupAccount;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Currency;
 use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Mail;
+use Tests\TestCase;
 
 class SetupAccountTest extends TestCase
 {
@@ -48,6 +48,10 @@ class SetupAccountTest extends TestCase
             'name' => trans('app.default_template_page_contact_information'),
             'can_be_deleted' => false,
         ]);
+        $this->assertDatabaseHas('template_pages', [
+            'name' => trans('app.default_template_page_life_events'),
+            'can_be_deleted' => true,
+        ]);
         $this->assertDatabaseHas('modules', [
             'account_id' => $regis->account_id,
             'name' => trans('app.module_notes'),
@@ -83,6 +87,30 @@ class SetupAccountTest extends TestCase
         $this->assertDatabaseHas('modules', [
             'account_id' => $regis->account_id,
             'name' => trans('app.module_companies'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_tasks'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_calls'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_pets'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_goals'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_family_summary'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $regis->account_id,
+            'name' => trans('app.module_addresses'),
         ]);
 
         $this->assertDatabaseHas('relationship_group_types', [
@@ -245,6 +273,279 @@ class SetupAccountTest extends TestCase
         $this->assertDatabaseHas('pet_categories', [
             'account_id' => $regis->account_id,
             'name' => trans('account.pets_other'),
+        ]);
+
+        $this->assertDatabaseHas('call_reason_types', [
+            'account_id' => $regis->account_id,
+            'label' => trans('account.default_call_reason_types_personal'),
+        ]);
+        $this->assertDatabaseHas('call_reason_types', [
+            'account_id' => $regis->account_id,
+            'label' => trans('account.default_call_reason_types_business'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_business_purchases'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_business_partnership'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_advice'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_say_hello'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_need_anything'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_respect'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_story'),
+        ]);
+        $this->assertDatabaseHas('call_reasons', [
+            'label' => trans('account.default_call_reason_personal_love'),
+        ]);
+
+        $this->assertDatabaseHas('life_event_categories', [
+            'label_translation_key' => 'account.default_life_event_category_work_education',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_categories', [
+            'label_translation_key' => 'account.default_life_event_category_family_relationships',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_categories', [
+            'label_translation_key' => 'account.default_life_event_category_home_living',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_categories', [
+            'label_translation_key' => 'account.default_life_event_category_travel_experiences',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_categories', [
+            'label_translation_key' => 'account.default_life_event_category_health_wellness',
+            'can_be_deleted' => false,
+        ]);
+
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_job',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_retirement',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_school',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_study_abroad',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_volunteer_work',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_published_book_or_paper',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_military_service',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_first_met',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_relationship',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_engagement',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_marriage',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_anniversary',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_expecting_a_baby',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_child',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_family_member',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_pet',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_end_of_relationship',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_loss_of_a_loved_one',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_moved',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_bought_a_home',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_home_improvement',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_holidays',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_vehicle',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_roommate',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_overcame_an_illness',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_quit_a_habit',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_eating_habits',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_weight_loss',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_wear_glass_or_contact',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_broken_bone',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_removed_braces',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_surgery',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_dentist',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_sport',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_hobby',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_instrument',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_language',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_tattoo_or_piercing',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_new_license',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_travel',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_achievement_or_award',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_changed_beliefs',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_first_word',
+            'can_be_deleted' => false,
+        ]);
+        $this->assertDatabaseHas('life_event_types', [
+            'label_translation_key' => 'account.default_life_event_type_first_kiss',
+            'can_be_deleted' => false,
+        ]);
+
+        $this->assertDatabaseHas('gift_occasions', [
+            'label' => 'Birthday',
+            'position' => 1,
+        ]);
+        $this->assertDatabaseHas('gift_occasions', [
+            'label' => 'Anniversary',
+            'position' => 2,
+        ]);
+        $this->assertDatabaseHas('gift_occasions', [
+            'label' => 'Christmas',
+            'position' => 3,
+        ]);
+        $this->assertDatabaseHas('gift_occasions', [
+            'label' => 'Just because',
+            'position' => 4,
+        ]);
+        $this->assertDatabaseHas('gift_occasions', [
+            'label' => 'Wedding',
+            'position' => 5,
+        ]);
+
+        $this->assertDatabaseHas('gift_states', [
+            'label' => trans('account.gift_state_idea'),
+            'position' => 1,
+        ]);
+        $this->assertDatabaseHas('gift_states', [
+            'label' => trans('account.gift_state_searched'),
+            'position' => 2,
+        ]);
+        $this->assertDatabaseHas('gift_states', [
+            'label' => trans('account.gift_state_found'),
+            'position' => 3,
+        ]);
+        $this->assertDatabaseHas('gift_states', [
+            'label' => trans('account.gift_state_bought'),
+            'position' => 4,
+        ]);
+        $this->assertDatabaseHas('gift_states', [
+            'label' => trans('account.gift_state_offered'),
+            'position' => 5,
         ]);
     }
 }

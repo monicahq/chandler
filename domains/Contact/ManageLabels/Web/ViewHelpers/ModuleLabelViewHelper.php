@@ -2,8 +2,8 @@
 
 namespace App\Contact\ManageLabels\Web\ViewHelpers;
 
-use App\Models\Label;
 use App\Models\Contact;
+use App\Models\Label;
 
 class ModuleLabelViewHelper
 {
@@ -50,6 +50,10 @@ class ModuleLabelViewHelper
             'text_color' => $label->text_color,
             'taken' => $taken,
             'url' => [
+                'show' => route('contact.label.index', [
+                    'vault' => $contact->vault_id,
+                    'label' => $label->id,
+                ]),
                 'update' => route('contact.label.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,

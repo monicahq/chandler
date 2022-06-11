@@ -117,7 +117,7 @@
         :key="label.id"
         class="mr-2 mb-2 inline-block rounded py-1 px-2 text-xs font-semibold last:mr-0"
         :class="label.bg_color + ' ' + label.text_color">
-        {{ label.name }}
+        <inertia-link :href="label.url.show">{{ label.name }}</inertia-link>
       </span>
     </div>
 
@@ -185,6 +185,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
+          this.flash('The label has been added', 'success');
           this.form.search = '';
           this.localLabelsInVault.push(response.data.data);
           this.localLabels.push(response.data.data);

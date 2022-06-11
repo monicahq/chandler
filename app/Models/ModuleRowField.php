@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ModuleRowField extends Model
 {
@@ -44,7 +44,7 @@ class ModuleRowField extends Model
      *
      * @return BelongsTo
      */
-    public function row()
+    public function row(): BelongsTo
     {
         return $this->belongsTo(ModuleRow::class, 'module_row_id');
     }

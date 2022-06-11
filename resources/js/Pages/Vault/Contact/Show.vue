@@ -19,9 +19,9 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
-                Contacts
-              </inertia-link>
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline"
+                >Contacts</inertia-link
+              >
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -50,6 +50,8 @@
 
                 <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
 
+                <family-summary v-if="module.type == 'family_summary'" :data="familySummary" />
+
                 <gender-pronoun v-if="module.type == 'gender_pronoun'" :data="genderPronoun" />
 
                 <important-dates v-if="module.type == 'important_dates'" :data="importantDates" />
@@ -60,9 +62,14 @@
               </div>
             </div>
 
-            <ul class="text-sm">
-              <li>
-                <span class="cursor-pointer text-sky-500 hover:text-blue-900" @click="destroy">Delete contact</span>
+            <ul class="text-xs">
+              <li class="mb-2">
+                <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline"
+                  >Change template</inertia-link
+                >
+              </li>
+              <li v-if="data.options.can_be_deleted">
+                <span class="cursor-pointer text-blue-500 hover:underline" @click="destroy">Delete contact</span>
               </li>
             </ul>
           </div>
@@ -95,6 +102,16 @@
                 <loans v-if="module.type == 'loans'" :data="loans" :layout-data="layoutData" />
 
                 <relationships v-if="module.type == 'relationships'" :data="relationships" />
+
+                <tasks v-if="module.type == 'tasks'" :data="tasks" />
+
+                <calls v-if="module.type == 'calls'" :data="calls" />
+
+                <pets v-if="module.type == 'pets'" :data="pets" />
+
+                <goals v-if="module.type == 'goals'" :data="goals" />
+
+                <addresses v-if="module.type == 'addresses'" :data="addresses" />
               </div>
             </div>
           </div>
@@ -109,6 +126,7 @@ import Layout from '@/Shared/Layout';
 import ContactName from '@/Shared/Modules/ContactName';
 import GenderPronoun from '@/Shared/Modules/GenderPronoun';
 import Avatar from '@/Shared/Modules/Avatar';
+import FamilySummary from '@/Shared/Modules/FamilySummary';
 import Notes from '@/Shared/Modules/Notes';
 import ImportantDates from '@/Shared/Modules/ImportantDates';
 import Labels from '@/Shared/Modules/Labels';
@@ -117,6 +135,11 @@ import Feed from '@/Shared/Modules/Feed';
 import Loans from '@/Shared/Modules/Loans';
 import JobInformation from '@/Shared/Modules/JobInformation';
 import Relationships from '@/Shared/Modules/Relationships';
+import Tasks from '@/Shared/Modules/Tasks';
+import Calls from '@/Shared/Modules/Calls';
+import Pets from '@/Shared/Modules/Pets';
+import Goals from '@/Shared/Modules/Goals';
+import Addresses from '@/Shared/Modules/Addresses';
 
 export default {
   components: {
@@ -124,6 +147,7 @@ export default {
     ContactName,
     GenderPronoun,
     Avatar,
+    FamilySummary,
     Notes,
     ImportantDates,
     Labels,
@@ -132,6 +156,11 @@ export default {
     Loans,
     JobInformation,
     Relationships,
+    Tasks,
+    Calls,
+    Pets,
+    Goals,
+    Addresses,
   },
 
   props: {
@@ -149,6 +178,7 @@ export default {
     return {
       avatar: [],
       contactName: [],
+      familySummary: [],
       genderPronoun: [],
       importantDates: [],
       feed: [],
@@ -158,6 +188,11 @@ export default {
       loans: [],
       jobInformation: [],
       relationships: [],
+      tasks: [],
+      calls: [],
+      pets: [],
+      goals: [],
+      addresses: [],
     };
   },
 
@@ -196,6 +231,13 @@ export default {
         this.jobInformation =
           this.data.contact_information[this.data.contact_information.findIndex((x) => x.type == 'company')].data;
       }
+
+      if (this.data.contact_information.findIndex((x) => x.type == 'family_summary') > -1) {
+        this.familySummary =
+          this.data.contact_information[
+            this.data.contact_information.findIndex((x) => x.type == 'family_summary')
+          ].data;
+      }
     }
 
     // active page
@@ -218,6 +260,26 @@ export default {
 
       if (this.data.modules.findIndex((x) => x.type == 'relationships') > -1) {
         this.relationships = this.data.modules[this.data.modules.findIndex((x) => x.type == 'relationships')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'tasks') > -1) {
+        this.tasks = this.data.modules[this.data.modules.findIndex((x) => x.type == 'tasks')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'calls') > -1) {
+        this.calls = this.data.modules[this.data.modules.findIndex((x) => x.type == 'calls')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'pets') > -1) {
+        this.pets = this.data.modules[this.data.modules.findIndex((x) => x.type == 'pets')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'goals') > -1) {
+        this.goals = this.data.modules[this.data.modules.findIndex((x) => x.type == 'goals')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'addresses') > -1) {
+        this.addresses = this.data.modules[this.data.modules.findIndex((x) => x.type == 'addresses')].data;
       }
     }
   },

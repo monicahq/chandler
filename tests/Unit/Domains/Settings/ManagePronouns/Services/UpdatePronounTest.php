@@ -2,17 +2,17 @@
 
 namespace Tests\Unit\Domains\Settings\ManagePronouns\Services;
 
-use Tests\TestCase;
-use App\Models\User;
+use App\Exceptions\NotEnoughPermissionException;
+use App\Jobs\CreateAuditLog;
 use App\Models\Account;
 use App\Models\Pronoun;
-use App\Jobs\CreateAuditLog;
+use App\Models\User;
+use App\Settings\ManagePronouns\Services\UpdatePronoun;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use App\Settings\ManagePronouns\Services\UpdatePronoun;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Tests\TestCase;
 
 class UpdatePronounTest extends TestCase
 {
@@ -23,7 +23,7 @@ class UpdatePronounTest extends TestCase
     {
         $ross = $this->createAdministrator();
         $pronoun = Pronoun::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $pronoun);
     }
@@ -47,7 +47,7 @@ class UpdatePronounTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $pronoun = Pronoun::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $account, $pronoun);
     }
@@ -69,7 +69,7 @@ class UpdatePronounTest extends TestCase
 
         $ross = $this->createUser();
         $pronoun = Pronoun::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $pronoun);
     }

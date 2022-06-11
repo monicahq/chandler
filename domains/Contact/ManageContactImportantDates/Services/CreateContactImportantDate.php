@@ -2,13 +2,14 @@
 
 namespace App\Contact\ManageContactImportantDates\Services;
 
+use App\Helpers\ImportantDateHelper;
+use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
-use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
+use App\Services\BaseService;
 
 class CreateContactImportantDate extends BaseService implements ServiceInterface
 {
@@ -71,6 +72,7 @@ class CreateContactImportantDate extends BaseService implements ServiceInterface
         ]);
 
         $this->log();
+        $this->createFeedItem();
 
         return $this->date;
     }
@@ -80,7 +82,7 @@ class CreateContactImportantDate extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         // make sure the vault matches
-        if ($this->valueOrNull($this->data, 'contact_important_date_type_id')) {
+        if (! is_null($this->valueOrNull($this->data, 'contact_important_date_type_id'))) {
             ContactImportantDateType::where('vault_id', $this->data['vault_id'])
                 ->findOrFail($this->data['contact_important_date_type_id']);
         }
@@ -109,10 +111,17 @@ class CreateContactImportantDate extends BaseService implements ServiceInterface
                 'label' => $this->date->label,
             ]),
         ])->onQueue('low');
+    }
 
-        ContactFeedItem::create([
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
             'action' => ContactFeedItem::ACTION_IMPORTANT_DATE_CREATED,
+            'description' => $this->date->label.' '.ImportantDateHelper::formatDate($this->date, $this->author),
         ]);
+
+        $this->date->feedItem()->save($feedItem);
     }
 }

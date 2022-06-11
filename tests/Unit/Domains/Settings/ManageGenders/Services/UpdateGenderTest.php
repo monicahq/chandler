@@ -2,17 +2,17 @@
 
 namespace Tests\Unit\Domains\Settings\ManageGenders\Services;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Gender;
-use App\Models\Account;
+use App\Exceptions\NotEnoughPermissionException;
 use App\Jobs\CreateAuditLog;
+use App\Models\Account;
+use App\Models\Gender;
+use App\Models\User;
+use App\Settings\ManageGenders\Services\UpdateGender;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use App\Settings\ManageGenders\Services\UpdateGender;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Tests\TestCase;
 
 class UpdateGenderTest extends TestCase
 {
@@ -23,7 +23,7 @@ class UpdateGenderTest extends TestCase
     {
         $ross = $this->createAdministrator();
         $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $gender);
     }
@@ -47,7 +47,7 @@ class UpdateGenderTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $account, $gender);
     }
@@ -69,7 +69,7 @@ class UpdateGenderTest extends TestCase
 
         $ross = $this->createUser();
         $gender = Gender::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $gender);
     }

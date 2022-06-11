@@ -2,23 +2,29 @@
 
 namespace App\Contact\ManageContact\Web\ViewHelpers;
 
-use App\Models\User;
-use App\Models\Module;
-use App\Models\Contact;
-use App\Models\TemplatePage;
-use Illuminate\Support\Collection;
+use App\Contact\ManageAvatar\Web\ViewHelpers\ModuleAvatarViewHelper;
+use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
+use App\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
+use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
+use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
+use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
+use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
-use App\Contact\ManageAvatar\Web\ViewHelpers\ModuleAvatarViewHelper;
-use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
-use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
-use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
+use App\Contact\ManagePets\Web\ViewHelpers\ModulePetsViewHelper;
 use App\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
-use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
+use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleFamilySummaryViewHelper;
 use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
-use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
+use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
+use App\Models\Contact;
+use App\Models\Module;
+use App\Models\TemplatePage;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 
 class ContactShowViewHelper
 {
@@ -42,7 +48,14 @@ class ContactShowViewHelper
             'template_pages' => $templatesPagesCollection,
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
+            'options' => [
+                'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
+            ],
             'url' => [
+                'update_template' => route('contact.blank', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'destroy' => route('contact.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -60,7 +73,14 @@ class ContactShowViewHelper
             'template_pages' => self::getTemplatePagesList($templatePages, $contact, $templatePage),
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'modules' => self::modules($templatePage, $contact, $user),
+            'options' => [
+                'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
+            ],
             'url' => [
+                'update_template' => route('contact.blank', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'destroy' => route('contact.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -129,6 +149,10 @@ class ContactShowViewHelper
                 $data = ModuleCompanyViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_FAMILY_SUMMARY) {
+                $data = ModuleFamilySummaryViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,
@@ -166,6 +190,26 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_RELATIONSHIPS) {
                 $data = ModuleRelationshipViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_TASKS) {
+                $data = ModuleContactTasksViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_CALLS) {
+                $data = ModuleCallsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_PETS) {
+                $data = ModulePetsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_GOALS) {
+                $data = ModuleGoalsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_ADDRESSES) {
+                $data = ModuleContactAddressesViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

@@ -2,11 +2,12 @@
 
 namespace App\Contact\ManageLoans\Web\ViewHelpers;
 
-use Carbon\Carbon;
+use App\Helpers\DateHelper;
+use App\Helpers\MonetaryNumberHelper;
+use App\Models\Contact;
 use App\Models\Loan;
 use App\Models\User;
-use App\Models\Contact;
-use App\Helpers\DateHelper;
+use Carbon\Carbon;
 
 class ModuleLoanViewHelper
 {
@@ -38,16 +39,16 @@ class ModuleLoanViewHelper
     {
         $loaners = $loan->loaners->unique('id');
         $loanees = $loan->loanees->unique('id');
-        $loanersCollection = $loaners->map(function ($loaner) use ($user) {
+        $loanersCollection = $loaners->map(function ($loaner) {
             return [
                 'id' => $loaner->id,
-                'name' => $loaner->getName($user),
+                'name' => $loaner->name,
             ];
         });
-        $loaneesCollection = $loanees->map(function ($loanee) use ($user) {
+        $loaneesCollection = $loanees->map(function ($loanee) {
             return [
                 'id' => $loanee->id,
-                'name' => $loanee->getName($user),
+                'name' => $loanee->name,
             ];
         });
 
@@ -56,7 +57,8 @@ class ModuleLoanViewHelper
             'type' => $loan->type,
             'name' => $loan->name,
             'description' => $loan->description,
-            'amount_lent' => $loan->amount_lent / 100,
+            'amount_lent' => $loan->amount_lent ? MonetaryNumberHelper::format($user, $loan->amount_lent) : null,
+            'amount_lent_int' => $loan->amount_lent / 100,
             'currency_id' => $loan->currency_id,
             'currency_name' => $loan->currency ? $loan->currency->code : null,
             'loaned_at' => $loan->loaned_at->format('Y-m-d'),

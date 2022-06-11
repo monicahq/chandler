@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLoans\Web\ViewHelpers;
 
-use function env;
-use Carbon\Carbon;
-use Tests\TestCase;
-use App\Models\Loan;
-use App\Models\User;
+use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Models\Contact;
 use App\Models\Currency;
+use App\Models\Loan;
+use App\Models\User;
+use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
+use Tests\TestCase;
 
 class ModuleLoanViewHelperTest extends TestCase
 {
@@ -57,17 +57,20 @@ class ModuleLoanViewHelperTest extends TestCase
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $contact = Contact::factory()->create();
         $otherContact = Contact::factory()->create();
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'number_format' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+        ]);
         $loan = Loan::factory()->create([
             'currency_id' => Currency::factory()->create(),
             'loaned_at' => '2019-02-02',
+            'amount_lent' => 100032,
         ]);
         $contact->loansAsLoaner()->syncWithoutDetaching([$loan->id => ['loanee_id' => $otherContact->id]]);
 
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            14,
+            15,
             count($array)
         );
 
@@ -88,8 +91,12 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['description']
         );
         $this->assertEquals(
-            $loan->amount_lent / 100,
+            '1000.32',
             $array['amount_lent']
+        );
+        $this->assertEquals(
+            '1000.32',
+            $array['amount_lent_int']
         );
         $this->assertEquals(
             $loan->currency_id,
@@ -119,7 +126,7 @@ class ModuleLoanViewHelperTest extends TestCase
             [
                 0 => [
                     'id' => $contact->id,
-                    'name' => $contact->getName($user),
+                    'name' => $contact->name,
                 ],
             ],
             $array['loaners']->toArray()
@@ -128,7 +135,7 @@ class ModuleLoanViewHelperTest extends TestCase
             [
                 0 => [
                     'id' => $otherContact->id,
-                    'name' => $otherContact->getName($user),
+                    'name' => $otherContact->name,
                 ],
             ],
             $array['loanees']->toArray()

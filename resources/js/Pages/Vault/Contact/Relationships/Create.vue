@@ -24,7 +24,7 @@ select {
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-sky-500 hover:text-blue-900">
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 Contacts
               </inertia-link>
             </li>
@@ -39,7 +39,7 @@ select {
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.contact" class="text-sky-500 hover:text-blue-900">
+              <inertia-link :href="data.url.contact" class="text-blue-500 hover:underline">
                 Profile of {{ data.contact.name }}
               </inertia-link>
             </li>
@@ -316,7 +316,7 @@ select {
                   id="create-contact"
                   name="create-contact"
                   type="checkbox"
-                  class="relative h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
                 <label for="create-contact" class="ml-2 block cursor-pointer text-sm text-gray-900">
                   Create a contact entry for this person
                 </label>

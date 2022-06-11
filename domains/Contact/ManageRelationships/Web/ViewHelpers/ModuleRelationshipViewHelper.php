@@ -2,9 +2,9 @@
 
 namespace App\Contact\ManageRelationships\Web\ViewHelpers;
 
-use App\Models\User;
-use App\Models\Contact;
 use App\Helpers\AvatarHelper;
+use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -95,8 +95,9 @@ class ModuleRelationshipViewHelper
     {
         return [
             'id' => $contact->id,
-            'name' => $contact->getName($user),
+            'name' => $contact->name,
             'avatar' => AvatarHelper::getSVG($contact),
+            'age' => $contact->age,
             'url' => [
                 'show' => $contact->listed ? route('contact.show', [
                     'vault' => $contact->vault->id,

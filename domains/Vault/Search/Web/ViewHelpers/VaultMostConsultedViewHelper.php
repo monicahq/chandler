@@ -2,9 +2,9 @@
 
 namespace App\Vault\Search\Web\ViewHelpers;
 
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Contact;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +27,7 @@ class VaultMostConsultedViewHelper
 
             $contactsCollection->push([
                 'id' => $contact->id,
-                'name' => $contact->getName($user),
+                'name' => $contact->name,
                 'url' => route('contact.show', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,

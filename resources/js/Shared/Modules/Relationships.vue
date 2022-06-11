@@ -70,10 +70,15 @@
                 <inertia-link
                   v-if="relationshipType.contact.url.show"
                   :href="relationshipType.contact.url.show"
-                  class="text-sky-500 hover:text-blue-900">
+                  class="text-blue-500 hover:underline">
                   {{ relationshipType.contact.name }}
                 </inertia-link>
                 <span v-else>{{ relationshipType.contact.name }}</span>
+
+                <!-- age -->
+                <span v-if="relationshipType.contact.age" class="ml-2 text-xs text-gray-400"
+                  >({{ relationshipType.contact.age }})</span
+                >
               </div>
 
               <!-- relationship type -->

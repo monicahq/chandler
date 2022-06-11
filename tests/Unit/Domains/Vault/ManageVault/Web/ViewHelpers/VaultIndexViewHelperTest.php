@@ -2,12 +2,13 @@
 
 namespace Tests\Unit\Domains\Vault\ManageVault\Web\ViewHelpers;
 
-use function env;
-use Tests\TestCase;
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use function env;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class VaultIndexViewHelperTest extends TestCase
 {
@@ -20,6 +21,7 @@ class VaultIndexViewHelperTest extends TestCase
         $vault = Vault::factory()->create();
         $user->vaults()->attach($vault->id, [
             'permission' => Vault::PERMISSION_EDIT,
+            'contact_id' => Contact::factory()->create()->id,
         ]);
 
         $this->be($user);
@@ -69,25 +71,34 @@ class VaultIndexViewHelperTest extends TestCase
         $vault = Vault::factory()->create([
             'account_id' => $user->account_id,
         ]);
-        $user->vaults()->sync([$vault->id => ['permission' => Vault::PERMISSION_MANAGE]]);
+        $user->vaults()->sync([$vault->id => [
+            'permission' => Vault::PERMISSION_MANAGE,
+            'contact_id' => Contact::factory()->create()->id,
+        ]]);
 
         $array = VaultIndexViewHelper::data($user);
 
         $this->assertEquals(2, count($array));
 
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => $vault->id,
-                    'name' => $vault->name,
-                    'description' => $vault->description,
-                    'url' => [
-                        'show' => env('APP_URL').'/vaults/'.$vault->id,
-                        'settings' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
-                    ],
-                ],
-            ],
-            $array['vaults']->toArray()
+            $vault->id,
+            $array['vaults']->toArray()[0]['id']
+        );
+        $this->assertEquals(
+            $vault->name,
+            $array['vaults']->toArray()[0]['name']
+        );
+        $this->assertEquals(
+            $vault->description,
+            $array['vaults']->toArray()[0]['description']
+        );
+        $this->assertEquals(
+            $vault->description,
+            $array['vaults']->toArray()[0]['description']
+        );
+        $this->assertEquals(
+            0,
+            $array['vaults']->toArray()[0]['remaining_contacts']
         );
 
         $this->assertEquals(

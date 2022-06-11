@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Label extends Model
@@ -30,7 +30,7 @@ class Label extends Model
      *
      * @return BelongsTo
      */
-    public function vault()
+    public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
     }
@@ -40,7 +40,7 @@ class Label extends Model
      *
      * @return BelongsToMany
      */
-    public function contacts()
+    public function contacts(): BelongsToMany
     {
         return $this->belongsToMany(Contact::class);
     }

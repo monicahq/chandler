@@ -2,11 +2,11 @@
 
 namespace App\Settings\ManageRelationshipTypes\Services;
 
-use App\Models\User;
-use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
 use App\Interfaces\ServiceInterface;
+use App\Jobs\CreateAuditLog;
 use App\Models\RelationshipGroupType;
+use App\Models\User;
+use App\Services\BaseService;
 
 class DestroyRelationshipGroupType extends BaseService implements ServiceInterface
 {
@@ -47,6 +47,7 @@ class DestroyRelationshipGroupType extends BaseService implements ServiceInterfa
         $this->validateRules($data);
 
         $type = RelationshipGroupType::where('account_id', $data['account_id'])
+            ->where('can_be_deleted', true)
             ->findOrFail($data['relationship_group_type_id']);
 
         CreateAuditLog::dispatch([

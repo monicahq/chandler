@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Laravel\Scout\Searchable;
 
 class Note extends Model
 {
@@ -20,7 +21,6 @@ class Note extends Model
         'contact_id',
         'author_id',
         'emotion_id',
-        'author_name',
         'title',
         'body',
     ];
@@ -48,7 +48,7 @@ class Note extends Model
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -58,7 +58,7 @@ class Note extends Model
      *
      * @return BelongsTo
      */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -68,15 +68,17 @@ class Note extends Model
      *
      * @return BelongsTo
      */
-    public function emotion()
+    public function emotion(): BelongsTo
     {
         return $this->belongsTo(Emotion::class);
     }
 
     /**
      * Get the note's feed item.
+     *
+     * @return MorphOne
      */
-    public function feedItem()
+    public function feedItem(): MorphOne
     {
         return $this->morphOne(ContactFeedItem::class, 'feedable');
     }

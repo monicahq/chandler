@@ -7,6 +7,10 @@
 .icon-note {
   top: -1px;
 }
+
+.icon-avatar {
+  top: 2px;
+}
 </style>
 
 <template>
@@ -114,14 +118,14 @@
       <div v-for="note in localNotes" :key="note.id" class="mb-4 rounded border border-gray-200 last:mb-0">
         <!-- body of the note, if not being edited -->
         <div v-if="editedNoteId !== note.id">
-          <div v-if="note.title" class="font-semibol mb-1 border-b border-gray-200 p-3 text-xs text-gray-600">
+          <div v-if="note.title" class="border-b border-gray-200 p-3 text-xs font-semibold text-gray-600">
             {{ note.title }}
           </div>
 
           <!-- excerpt, if it exists -->
           <div v-if="!note.show_full_content && note.body_excerpt" class="p-3">
             {{ note.body_excerpt }}
-            <span class="cursor-pointer text-sky-500 hover:text-blue-900" @click="showFullBody(note)"> View all </span>
+            <span class="cursor-pointer text-blue-500 hover:underline" @click="showFullBody(note)"> View all </span>
           </div>
           <!-- full body -->
           <div v-else class="p-3">
@@ -131,7 +135,7 @@
           <!-- details -->
           <div
             class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50">
-            <div>
+            <div class="flex items-center">
               <!-- emotion -->
               <div v-if="note.emotion" class="relative mr-3 inline">
                 {{ note.emotion.name }}
@@ -155,20 +159,11 @@
               </div>
 
               <!-- author -->
-              <div class="relative mr-3 inline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-note relative inline h-3 w-3 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ note.author }}
+              <div v-if="note.author" class="relative mr-3 inline">
+                <div class="relative flex">
+                  <div v-html="note.author.avatar" class="icon-avatar relative mr-1 h-3 w-3"></div>
+                  <span></span>{{ note.author.name }}
+                </div>
               </div>
             </div>
             <div>
@@ -231,7 +226,7 @@
 
       <!-- view all button -->
       <div v-if="moduleMode" class="text-center">
-        <inertia-link :href="data.url.index" class="text-sky-500 hover:text-blue-900"> View all notes </inertia-link>
+        <inertia-link :href="data.url.index" class="text-blue-500 hover:underline"> View all notes </inertia-link>
       </div>
 
       <!-- pagination -->

@@ -2,12 +2,12 @@
 
 namespace App\Settings\ManageRelationshipTypes\Services;
 
-use App\Models\User;
-use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
-use App\Models\RelationshipType;
 use App\Interfaces\ServiceInterface;
+use App\Jobs\CreateAuditLog;
 use App\Models\RelationshipGroupType;
+use App\Models\RelationshipType;
+use App\Models\User;
+use App\Services\BaseService;
 
 class CreateRelationshipType extends BaseService implements ServiceInterface
 {
@@ -25,6 +25,7 @@ class CreateRelationshipType extends BaseService implements ServiceInterface
             'name' => 'required|string|max:255',
             'name_reverse_relationship' => 'required|string|max:255',
             'can_be_deleted' => 'required|boolean',
+            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -59,6 +60,7 @@ class CreateRelationshipType extends BaseService implements ServiceInterface
             'name' => $data['name'],
             'name_reverse_relationship' => $data['name_reverse_relationship'],
             'can_be_deleted' => $data['can_be_deleted'],
+            'type' => $this->valueOrNull($data, 'type'),
         ]);
 
         CreateAuditLog::dispatch([

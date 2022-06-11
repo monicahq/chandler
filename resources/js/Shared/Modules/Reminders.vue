@@ -4,10 +4,6 @@
   top: -2px;
 }
 
-.icon-note {
-  top: -1px;
-}
-
 .item-list {
   &:hover:first-child {
     border-top-left-radius: 8px;
@@ -252,7 +248,7 @@ select {
             <!-- actions -->
             <ul class="text-sm">
               <li
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900"
+                class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
                 @click="showEditReminderModal(reminder)">
                 Edit
               </li>

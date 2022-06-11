@@ -4,10 +4,6 @@
   top: -2px;
 }
 
-.icon-note {
-  top: -1px;
-}
-
 .item-list {
   &:hover {
     border-top-left-radius: 8px;
@@ -112,6 +108,7 @@
               :input-class="'w-full'"
               :required="false"
               :min="0"
+              :max="10000000"
               :autocomplete="false"
               @esc-key-pressed="createLoanModalShown = false" />
 
@@ -243,15 +240,15 @@
               <li
                 v-if="!loan.settled"
                 @click="toggle(loan)"
-                class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+                class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
                 Settle
               </li>
-              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
                 Revert
               </li>
 
               <!-- edit -->
-              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-sky-500 hover:text-blue-900">
+              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
                 Edit
               </li>
 
@@ -329,7 +326,7 @@
                 :input-class="'w-full'"
                 :required="false"
                 :min="0"
-                :max="1000000"
+                :max="10000000"
                 :autocomplete="false"
                 @esc-key-pressed="createLoanModalShown = false" />
 
@@ -502,7 +499,7 @@ export default {
       this.form.name = loan.name;
       this.form.description = loan.description;
       this.form.loaned_at = loan.loaned_at;
-      this.form.amount_lent = loan.amount_lent;
+      this.form.amount_lent = loan.amount_lent_int;
       this.form.currency_id = loan.currency_id;
       this.form.loaners = loan.loaners;
       this.form.loanees = loan.loanees;

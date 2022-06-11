@@ -2,18 +2,18 @@
 
 namespace Tests\Unit\Domains\Settings\ManageRelationshipTypes\Services;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Account;
+use App\Exceptions\NotEnoughPermissionException;
 use App\Jobs\CreateAuditLog;
-use App\Models\RelationshipType;
+use App\Models\Account;
 use App\Models\RelationshipGroupType;
+use App\Models\RelationshipType;
+use App\Models\User;
+use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Settings\ManageRelationshipTypes\Services\DestroyRelationshipType;
+use Tests\TestCase;
 
 class DestroyRelationshipTypeTest extends TestCase
 {
@@ -24,7 +24,7 @@ class DestroyRelationshipTypeTest extends TestCase
     {
         $ross = $this->createAdministrator();
         $group = RelationshipGroupType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $type = RelationshipType::factory()->create([
             'relationship_group_type_id' => $group->id,
@@ -79,7 +79,7 @@ class DestroyRelationshipTypeTest extends TestCase
 
         $ross = $this->createUser();
         $group = RelationshipGroupType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $type = RelationshipType::factory()->create([
             'relationship_group_type_id' => $group->id,

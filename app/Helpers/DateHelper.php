@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use Carbon\Carbon;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class DateHelper
@@ -86,6 +86,17 @@ class DateHelper
     public static function formatShortMonthAndDay(Carbon $date): string
     {
         return $date->isoFormat(trans('format.short_date'));
+    }
+
+    /**
+     * Return the day in a format like "Mon".
+     *
+     * @param  Carbon  $date
+     * @return string
+     */
+    public static function formatShortDay(Carbon $date): string
+    {
+        return $date->isoFormat(trans('format.short_day'));
     }
 
     /**

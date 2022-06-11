@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateNotesTable extends Migration
 {
@@ -19,7 +19,6 @@ class CreateNotesTable extends Migration
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('emotion_id')->nullable();
-            $table->string('author_name');
             $table->string('title')->nullable();
             $table->text('body');
             $table->timestamps();

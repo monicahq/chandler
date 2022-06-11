@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateContactsTable extends Migration
 {
@@ -41,12 +41,12 @@ class CreateContactsTable extends Migration
         Schema::create('user_vault', function (Blueprint $table) {
             $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('contact_id')->nullable();
+            $table->unsignedBigInteger('contact_id');
             $table->integer('permission');
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('set null');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
         Schema::create('contact_vault_user', function (Blueprint $table) {

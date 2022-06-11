@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Vault;
-use App\Models\Couple;
+use App\Models\Account;
+use App\Models\ActivityType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CoupleFactory extends Factory
+class ActivityTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Couple::class;
+    protected $model = ActivityType::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,8 @@ class CoupleFactory extends Factory
     public function definition()
     {
         return [
-            'vault_id' => Vault::factory(),
-            'name' => $this->faker->name(),
+            'account_id' => Account::factory(),
+            'label' => $this->faker->name(),
         ];
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Contact\ManageContactAddresses\Services;
 
-use Carbon\Carbon;
+use App\Interfaces\ServiceInterface;
+use App\Jobs\CreateAuditLog;
+use App\Jobs\CreateContactLog;
 use App\Models\Address;
 use App\Models\AddressType;
-use App\Jobs\CreateAuditLog;
 use App\Services\BaseService;
-use App\Jobs\CreateContactLog;
-use App\Interfaces\ServiceInterface;
+use Carbon\Carbon;
 
 class UpdateContactAddress extends BaseService implements ServiceInterface
 {
@@ -34,11 +34,12 @@ class UpdateContactAddress extends BaseService implements ServiceInterface
             'city' => 'nullable|string|max:255',
             'province' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:255',
-            'country' => 'nullable|string|max:3',
+            'country' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'lived_from_at' => 'nullable|date_format:Y-m-d',
             'lived_until_at' => 'nullable|date_format:Y-m-d',
+            'is_past_address' => 'nullable|boolean',
         ];
     }
 
@@ -98,6 +99,7 @@ class UpdateContactAddress extends BaseService implements ServiceInterface
         $this->address->longitude = $this->valueOrNull($this->data, 'longitude');
         $this->address->lived_from_at = $this->valueOrNull($this->data, 'lived_from_at');
         $this->address->lived_until_at = $this->valueOrNull($this->data, 'lived_until_at');
+        $this->address->is_past_address = $this->valueOrFalse($this->data, 'is_past_address');
         $this->address->save();
 
         $this->contact->last_updated_at = Carbon::now();

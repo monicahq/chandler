@@ -2,23 +2,28 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
+use App\Contact\ManageContact\Services\CreateContact;
+use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
+use App\Contact\ManageGoals\Services\CreateGoal;
+use App\Contact\ManageGoals\Services\ToggleStreak;
+use App\Contact\ManageNotes\Services\CreateNote;
+use App\Contact\ManageTasks\Services\CreateContactTask;
+use App\Exceptions\EntryAlreadyExistException;
+use App\Models\Contact;
+use App\Models\ContactImportantDate;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Contact;
+use App\Settings\CreateAccount\Services\CreateAccount;
+use App\Vault\ManageVault\Services\CreateVault;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
-use App\Models\ContactImportantDate;
-use App\Vault\ManageVault\Services\CreateVault;
-use App\Contact\ManageNotes\Services\CreateNote;
-use App\Contact\ManageContact\Services\CreateContact;
-use App\Settings\CreateAccount\Services\CreateAccount;
-use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
 
 class SetupDummyAccount extends Command
 {
     protected ?\Faker\Generator $faker;
-    protected User $user;
+    protected User $firstUser;
+    protected User $secondUser;
 
     /**
      * The name and signature of the console command.
@@ -53,10 +58,12 @@ class SetupDummyAccount extends Command
     {
         $this->start();
         $this->wipeAndMigrateDB();
-        $this->createFirstUser();
+        $this->createFirstUsers();
         $this->createVaults();
         $this->createContacts();
         $this->createNotes();
+        $this->createTasks();
+        $this->createGoals();
         $this->stop();
     }
 
@@ -102,21 +109,18 @@ class SetupDummyAccount extends Command
         $this->info('Setup is done. Have fun.');
     }
 
-    private function createFirstUser(): void
+    private function createFirstUsers(): void
     {
         $this->info('☐ Create first user of the account');
 
-        $this->user = (new CreateAccount)->execute([
+        $this->firstUser = (new CreateAccount)->execute([
             'email' => 'admin@admin.com',
             'password' => 'admin123',
             'first_name' => 'Michael',
             'last_name' => 'Scott',
         ]);
-
-        $this->user = User::first();
-        $this->user->email_verified_at = Carbon::now();
-        $this->user->save();
-
+        $this->firstUser->email_verified_at = Carbon::now();
+        $this->firstUser->save();
         sleep(5);
     }
 
@@ -126,8 +130,8 @@ class SetupDummyAccount extends Command
 
         for ($i = 0; $i < rand(3, 5); $i++) {
             (new CreateVault)->execute([
-                'account_id' => $this->user->account_id,
-                'author_id' => $this->user->id,
+                'account_id' => $this->firstUser->account_id,
+                'author_id' => $this->firstUser->id,
                 'type' => Vault::TYPE_PERSONAL,
                 'name' => $this->faker->firstName,
                 'description' => rand(1, 2) == 1 ? $this->faker->sentence() : null,
@@ -145,8 +149,8 @@ class SetupDummyAccount extends Command
                 $birthDate = Carbon::parse($date);
 
                 $contact = (new CreateContact)->execute([
-                    'account_id' => $this->user->account_id,
-                    'author_id' => $this->user->id,
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
                     'vault_id' => $vault->id,
                     'first_name' => $this->faker->firstName(),
                     'last_name' => $this->faker->lastName(),
@@ -157,8 +161,8 @@ class SetupDummyAccount extends Command
                 ]);
 
                 (new CreateContactImportantDate)->execute([
-                    'account_id' => $this->user->account_id,
-                    'author_id' => $this->user->id,
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
                     'vault_id' => $vault->id,
                     'contact_id' => $contact->id,
                     'label' => 'Birthdate',
@@ -178,13 +182,75 @@ class SetupDummyAccount extends Command
         foreach (Contact::all() as $contact) {
             for ($i = 0; $i < 4; $i++) {
                 (new CreateNote)->execute([
-                    'account_id' => $this->user->account_id,
-                    'author_id' => $this->user->id,
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
                     'vault_id' => $contact->vault_id,
                     'contact_id' => $contact->id,
                     'title' => rand(1, 2) == 1 ? $this->faker->sentence(rand(3, 6)) : null,
                     'body' => $this->faker->paragraph(),
                 ]);
+            }
+        }
+    }
+
+    private function createTasks(): void
+    {
+        $this->info('☐ Create tasks');
+
+        foreach (Contact::all() as $contact) {
+            for ($i = 0; $i < 4; $i++) {
+                (new CreateContactTask)->execute([
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
+                    'vault_id' => $contact->vault_id,
+                    'contact_id' => $contact->id,
+                    'label' => $this->faker->sentence(rand(3, 6)),
+                    'description' => null,
+                ]);
+            }
+        }
+    }
+
+    private function createGoals(): void
+    {
+        $this->info('☐ Create goals');
+
+        $goals = collect([
+            'Lose 5 kgs',
+            'Practice sport every day',
+            'Develop Monica every day',
+            'Kiss my wife',
+        ]);
+
+        foreach (Contact::all() as $contact) {
+            foreach ($goals->take(rand(1, 4)) as $goal) {
+                $goal = (new CreateGoal)->execute([
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
+                    'vault_id' => $contact->vault_id,
+                    'contact_id' => $contact->id,
+                    'name' => $goal,
+                ]);
+
+                for ($i = 0; $i < 4; $i++) {
+                    $date = Carbon::now()->subYears(2);
+                    for ($j = 0; $j < rand(1, 340); $j++) {
+                        $date = $date->addDays(rand(1, 3));
+
+                        try {
+                            (new ToggleStreak)->execute([
+                                'account_id' => $this->firstUser->account_id,
+                                'author_id' => $this->firstUser->id,
+                                'vault_id' => $contact->vault_id,
+                                'contact_id' => $contact->id,
+                                'goal_id' => $goal->id,
+                                'happened_at' => $date->format('Y-m-d'),
+                            ]);
+                        } catch (EntryAlreadyExistException) {
+                            continue;
+                        }
+                    }
+                }
             }
         }
     }

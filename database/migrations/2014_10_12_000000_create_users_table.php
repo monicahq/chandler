@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('date_format')->default('MMM DD, YYYY');
             $table->string('timezone')->nullable();
             $table->string('number_format')->default(User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL);
+            $table->string('default_map_site')->default(User::MAPS_SITE_GOOGLE_MAPS);
             $table->string('password')->nullable();
             $table->boolean('is_account_administrator')->default(false);
             $table->string('invitation_code')->nullable();

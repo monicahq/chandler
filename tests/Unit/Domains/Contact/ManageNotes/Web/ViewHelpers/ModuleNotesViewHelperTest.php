@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageNotes\Web\ViewHelpers;
 
-use function env;
-use Carbon\Carbon;
-use Tests\TestCase;
-use App\Models\Note;
-use App\Models\User;
+use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Models\Contact;
 use App\Models\Emotion;
+use App\Models\Note;
+use App\Models\User;
+use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
+use Tests\TestCase;
 
 class ModuleNotesViewHelperTest extends TestCase
 {
@@ -80,7 +80,7 @@ class ModuleNotesViewHelperTest extends TestCase
                 'show_full_content' => false,
                 'title' => $note->title,
                 'emotion' => null,
-                'author' => $note->author->name,
+                'author' => null,
                 'written_at' => 'Jan 01, 2018',
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/notes/'.$note->id,

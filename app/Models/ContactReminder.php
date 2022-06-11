@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ContactReminder extends Model
@@ -39,11 +39,20 @@ class ContactReminder extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'last_triggered_at',
+    ];
+
+    /**
      * Get the contact associated with the contact reminder.
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -53,7 +62,7 @@ class ContactReminder extends Model
      *
      * @return BelongsToMany
      */
-    public function userNotificationChannels()
+    public function userNotificationChannels(): BelongsToMany
     {
         return $this->belongsToMany(UserNotificationChannel::class, 'contact_reminder_scheduled')->withTimestamps()->withPivot('scheduled_at', 'triggered');
     }

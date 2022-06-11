@@ -2,14 +2,15 @@
 
 namespace App\Contact\ManageContactImportantDates\Services;
 
-use Carbon\Carbon;
+use App\Helpers\ImportantDateHelper;
+use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
-use App\Services\BaseService;
 use App\Jobs\CreateContactLog;
 use App\Models\ContactFeedItem;
-use App\Interfaces\ServiceInterface;
 use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
+use App\Services\BaseService;
+use Carbon\Carbon;
 
 class UpdateContactImportantDate extends BaseService implements ServiceInterface
 {
@@ -64,6 +65,7 @@ class UpdateContactImportantDate extends BaseService implements ServiceInterface
         $this->validate();
         $this->update();
         $this->log();
+        $this->createFeedItem();
 
         return $this->date;
     }
@@ -118,10 +120,17 @@ class UpdateContactImportantDate extends BaseService implements ServiceInterface
                 'label' => $this->date->label,
             ]),
         ])->onQueue('low');
+    }
 
-        ContactFeedItem::create([
+    private function createFeedItem(): void
+    {
+        $feedItem = ContactFeedItem::create([
+            'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
             'action' => ContactFeedItem::ACTION_IMPORTANT_DATE_UPDATED,
+            'description' => $this->date->label.' '.ImportantDateHelper::formatDate($this->date, $this->author),
         ]);
+
+        $this->date->feedItem()->save($feedItem);
     }
 }

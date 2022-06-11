@@ -2,21 +2,25 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Gender;
-use App\Models\Module;
 use App\Models\Account;
-use App\Models\Emotion;
-use App\Models\Pronoun;
-use App\Models\Currency;
-use App\Models\Template;
-use App\Models\GroupType;
+use App\Models\ActivityType;
 use App\Models\AddressType;
-use App\Models\PetCategory;
-use App\Models\RelationshipGroupType;
+use App\Models\CallReasonType;
 use App\Models\ContactInformationType;
+use App\Models\Currency;
+use App\Models\Emotion;
+use App\Models\Gender;
+use App\Models\GiftOccasion;
+use App\Models\GiftState;
+use App\Models\GroupType;
+use App\Models\Module;
+use App\Models\PetCategory;
+use App\Models\Pronoun;
+use App\Models\RelationshipGroupType;
+use App\Models\Template;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class AccountTest extends TestCase
 {
@@ -152,5 +156,49 @@ class AccountTest extends TestCase
         $account->currencies()->sync([$currency->id => ['active' => true]]);
 
         $this->assertTrue($account->currencies()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_call_reason_types()
+    {
+        $account = Account::factory()->create();
+        CallReasonType::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->callReasonTypes()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_activity_types()
+    {
+        $account = Account::factory()->create();
+        ActivityType::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->activityTypes()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gift_occasions()
+    {
+        $account = Account::factory()->create();
+        GiftOccasion::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->giftOccasions()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gift_states()
+    {
+        $account = Account::factory()->create();
+        GiftState::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->giftStates()->exists());
     }
 }

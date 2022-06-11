@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ContactLog extends Model
 {
@@ -30,7 +30,7 @@ class ContactLog extends Model
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -40,7 +40,7 @@ class ContactLog extends Model
      *
      * @return BelongsTo
      */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
@@ -51,7 +51,7 @@ class ContactLog extends Model
      * @param  mixed  $value
      * @return mixed
      */
-    public function getObjectAttribute($value)
+    public function getObjectAttribute($value): mixed
     {
         return json_decode($this->objects);
     }

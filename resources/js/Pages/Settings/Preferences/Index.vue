@@ -25,7 +25,7 @@
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600">You are here:</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-sky-500 hover:text-blue-900"> Settings </inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -52,6 +52,8 @@
         <number-format :data="data.number_format" />
 
         <timezone :data="data.timezone" />
+
+        <maps :data="data.maps" />
       </div>
     </main>
   </layout>
@@ -63,6 +65,7 @@ import NameOrder from '@/Pages/Settings/Preferences/Partials/NameOrder';
 import DateFormat from '@/Pages/Settings/Preferences/Partials/DateFormat';
 import NumberFormat from '@/Pages/Settings/Preferences/Partials/NumberFormat';
 import Timezone from '@/Pages/Settings/Preferences/Partials/Timezone';
+import Maps from '@/Pages/Settings/Preferences/Partials/Maps';
 
 export default {
   components: {
@@ -71,6 +74,7 @@ export default {
     DateFormat,
     Timezone,
     NumberFormat,
+    Maps,
   },
 
   props: {

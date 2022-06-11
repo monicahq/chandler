@@ -58,14 +58,14 @@
             {{ type.label }}
             <span
               v-if="type.internal_type"
-              class="mr-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0"
+              class="mr-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-500 last:mr-0"
               >{{ type.internal_type }}</span
             >
           </span>
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="inline cursor-pointer text-sky-500 hover:text-blue-900" @click="edit(type)">Edit</li>
+            <li class="inline cursor-pointer text-blue-500 hover:underline" @click="edit(type)">Edit</li>
             <li
               v-if="type.can_be_deleted"
               class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"

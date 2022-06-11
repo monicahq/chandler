@@ -2,17 +2,17 @@
 
 namespace Tests\Unit\Domains\Settings\ManageAddressTypes\Services;
 
-use Tests\TestCase;
-use App\Models\User;
+use App\Exceptions\NotEnoughPermissionException;
+use App\Jobs\CreateAuditLog;
 use App\Models\Account;
 use App\Models\AddressType;
-use App\Jobs\CreateAuditLog;
+use App\Models\User;
+use App\Settings\ManageAddressTypes\Services\UpdateAddressType;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\NotEnoughPermissionException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Settings\ManageAddressTypes\Services\UpdateAddressType;
+use Tests\TestCase;
 
 class UpdateAddressTypeTest extends TestCase
 {
@@ -23,7 +23,7 @@ class UpdateAddressTypeTest extends TestCase
     {
         $ross = $this->createAdministrator();
         $type = AddressType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $type);
     }
@@ -47,7 +47,7 @@ class UpdateAddressTypeTest extends TestCase
         $ross = $this->createAdministrator();
         $account = Account::factory()->create();
         $type = AddressType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $account, $type);
     }
@@ -69,7 +69,7 @@ class UpdateAddressTypeTest extends TestCase
 
         $ross = $this->createUser();
         $type = AddressType::factory()->create([
-            'account_id' => $ross->account->id,
+            'account_id' => $ross->account_id,
         ]);
         $this->executeService($ross, $ross->account, $type);
     }

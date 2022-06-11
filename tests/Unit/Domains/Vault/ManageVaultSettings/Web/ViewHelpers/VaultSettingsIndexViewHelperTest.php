@@ -2,14 +2,15 @@
 
 namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Web\ViewHelpers;
 
-use function env;
-use Tests\TestCase;
-use App\Models\User;
+use App\Models\Contact;
 use App\Models\Label;
-use App\Models\Vault;
 use App\Models\Template;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\User;
+use App\Models\Vault;
 use App\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
+use function env;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class VaultSettingsIndexViewHelperTest extends TestCase
 {
@@ -28,7 +29,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $vault = Vault::factory()->create([
             'account_id' => $template->account_id,
         ]);
-        $vault->users()->sync([$userInVault->id => ['permission' => 100]]);
+        $vault->users()->sync([$userInVault->id => ['permission' => 100, 'contact_id' => Contact::factory()->create()->id]]);
 
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertCount(

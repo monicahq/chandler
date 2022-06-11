@@ -2,9 +2,9 @@
 
 namespace App\Contact\ManageContact\Web\ViewHelpers;
 
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\Contact;
 
 class ContactEditViewHelper
 {
@@ -33,7 +33,7 @@ class ContactEditViewHelper
         return [
             'contact' => [
                 'id' => $contact->id,
-                'name' => $contact->getName($user),
+                'name' => $contact->name,
                 'first_name' => $contact->first_name,
                 'last_name' => $contact->last_name,
                 'middle_name' => $contact->middle_name,

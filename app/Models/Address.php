@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
@@ -29,6 +29,7 @@ class Address extends Model
         'longitude',
         'lived_from_at',
         'lived_until_at',
+        'is_past_address',
     ];
 
     /**
@@ -42,11 +43,20 @@ class Address extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_past_address' => 'boolean',
+    ];
+
+    /**
      * Get the contact associated with the address.
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -56,7 +66,7 @@ class Address extends Model
      *
      * @return BelongsTo
      */
-    public function addressType()
+    public function addressType(): BelongsTo
     {
         return $this->belongsTo(AddressType::class);
     }

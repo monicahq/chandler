@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ContactInformation extends Model
 {
@@ -28,7 +28,7 @@ class ContactInformation extends Model
      *
      * @return BelongsTo
      */
-    public function contact()
+    public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
@@ -38,7 +38,7 @@ class ContactInformation extends Model
      *
      * @return BelongsTo
      */
-    public function contactInformationType()
+    public function contactInformationType(): BelongsTo
     {
         return $this->belongsTo(ContactInformationType::class, 'type_id');
     }

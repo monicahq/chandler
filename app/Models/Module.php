@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Module extends Model
 {
@@ -18,6 +18,7 @@ class Module extends Model
     const TYPE_NOTES = 'notes';
     const TYPE_CONTACT_NAMES = 'contact_names';
     const TYPE_AVATAR = 'avatar';
+    const TYPE_FAMILY_SUMMARY = 'family_summary';
     const TYPE_COMPANY = 'company';
     const TYPE_FEED = 'feed';
     const TYPE_GENDER_PRONOUN = 'gender_pronoun';
@@ -26,6 +27,11 @@ class Module extends Model
     const TYPE_REMINDERS = 'reminders';
     const TYPE_LOANS = 'loans';
     const TYPE_RELATIONSHIPS = 'relationships';
+    const TYPE_TASKS = 'tasks';
+    const TYPE_CALLS = 'calls';
+    const TYPE_PETS = 'pets';
+    const TYPE_GOALS = 'goals';
+    const TYPE_ADDRESSES = 'addresses';
 
     /**
      * The attributes that are mass assignable.

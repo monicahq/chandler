@@ -3,10 +3,6 @@
   top: -2px;
 }
 
-.icon-note {
-  top: -1px;
-}
-
 .label-list {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -69,7 +65,7 @@
           <p
             @click="showCreateCompany()"
             v-if="showCreateCompanyLink"
-            class="cursor-pointer text-sm text-sky-500 hover:text-blue-900">
+            class="cursor-pointer text-sm text-blue-500 hover:underline">
             Or create a new one
           </p>
 
@@ -219,6 +215,7 @@ export default {
       axios
         .put(this.data.url.update, this.form)
         .then((response) => {
+          this.flash('The job information has been saved', 'success');
           this.editJobInformation = false;
           this.loadingState = '';
           this.company_name = response.data.data.company.name;
