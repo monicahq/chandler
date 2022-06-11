@@ -89,7 +89,7 @@ require __DIR__.'/auth.php';
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
 
-Route::middleware(['auth', 'verified'])->prefix('{account}')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // vaults
     Route::prefix('vaults')->group(function () {
