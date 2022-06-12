@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use Illuminate\Database\Eloquent\Factories\Factory;

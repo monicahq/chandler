@@ -4,12 +4,9 @@ namespace Tests\Unit\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\GiftState;
 use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use App\Models\User;
-use App\Settings\ManageGiftStates\Services\DestroyGiftState;
-use App\Settings\ManageGroupTypes\Services\DestroyGroupType;
 use App\Settings\ManageGroupTypes\Services\DestroyGroupTypeRole;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

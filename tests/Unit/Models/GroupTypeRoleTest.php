@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

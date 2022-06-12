@@ -3,7 +3,6 @@
 namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\GiftState;
 use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use App\Models\User;
