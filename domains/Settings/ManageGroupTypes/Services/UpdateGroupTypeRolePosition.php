@@ -3,13 +3,15 @@
 namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GiftState;
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 
-class UpdateGroupTypePosition extends BaseService implements ServiceInterface
+class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterface
 {
-    private GroupType $groupType;
+    private GroupTypeRole $groupTypeRole;
     private int $pastPosition;
 
     /**
@@ -23,6 +25,7 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'group_type_id' => 'required|integer|exists:group_types,id',
+            'group_type_role_id' => 'required|integer|exists:group_type_roles,id',
             'new_position' => 'required|integer',
         ];
     }
@@ -41,29 +44,32 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update the group type's position.
+     * Update the group type role's position.
      *
      * @param  array  $data
-     * @return GroupType
+     * @return GroupTypeRole
      */
-    public function execute(array $data): GroupType
+    public function execute(array $data): GroupTypeRole
     {
         $this->data = $data;
         $this->validate();
         $this->updatePosition();
 
-        return $this->groupType;
+        return $this->groupTypeRole;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
+        GroupType::where('account_id', $this->data['account_id'])
             ->findOrFail($this->data['group_type_id']);
 
-        $this->pastPosition = DB::table('group_types')
-            ->where('id', $this->groupType->id)
+        $this->groupTypeRole = GroupTypeRole::where('group_type_id', $this->data['group_type_id'])
+            ->findOrFail($this->data['group_type_role_id']);
+
+        $this->pastPosition = DB::table('group_type_roles')
+            ->where('id', $this->groupTypeRole->id)
             ->select('position')
             ->first()->position;
     }
@@ -76,8 +82,8 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
             $this->updateDescendingPosition();
         }
 
-        DB::table('group_types')
-            ->where('id', $this->groupType->id)
+        DB::table('group_type_roles')
+            ->where('id', $this->groupTypeRole->id)
             ->update([
                 'position' => $this->data['new_position'],
             ]);
@@ -85,7 +91,7 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
 
     private function updateAscendingPosition(): void
     {
-        DB::table('group_types')
+        DB::table('group_type_roles')
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -93,7 +99,7 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
 
     private function updateDescendingPosition(): void
     {
-        DB::table('group_types')
+        DB::table('group_type_roles')
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');

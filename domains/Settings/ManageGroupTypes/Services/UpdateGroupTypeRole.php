@@ -3,14 +3,16 @@
 namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GiftState;
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Services\BaseService;
 
-class UpdateGroupType extends BaseService implements ServiceInterface
+class UpdateGroupTypeRole extends BaseService implements ServiceInterface
 {
     private array $data;
-    private GroupType $groupType;
+    private GroupTypeRole $groupTypeRole;
 
     /**
      * Get the validation rules that apply to the service.
@@ -23,6 +25,7 @@ class UpdateGroupType extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'group_type_id' => 'required|integer|exists:group_types,id',
+            'group_type_role_id' => 'required|integer|exists:group_type_roles,id',
             'label' => 'required|string|max:255',
         ];
     }
@@ -41,30 +44,34 @@ class UpdateGroupType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a group type.
+     * Update a group type role.
      *
      * @param  array  $data
-     * @return GroupType
+     * @return GroupTypeRole
      */
-    public function execute(array $data): GroupType
+    public function execute(array $data): GroupTypeRole
     {
         $this->data = $data;
         $this->validate();
         $this->update();
 
-        return $this->groupType;
+        return $this->groupTypeRole;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
-        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
+
+        GroupType::where('account_id', $this->data['account_id'])
             ->findOrFail($this->data['group_type_id']);
+
+        $this->groupTypeRole = GroupTypeRole::where('group_type_id', $this->data['group_type_id'])
+            ->findOrFail($this->data['group_type_role_id']);
     }
 
     private function update(): void
     {
-        $this->groupType->label = $this->data['label'];
-        $this->groupType->save();
+        $this->groupTypeRole->label = $this->data['label'];
+        $this->groupTypeRole->save();
     }
 }

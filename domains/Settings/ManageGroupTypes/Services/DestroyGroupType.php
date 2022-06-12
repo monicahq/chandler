@@ -40,7 +40,7 @@ class DestroyGroupType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a gift occasion.
+     * Destroy a group type.
      *
      * @param  array  $data
      */
@@ -58,6 +58,6 @@ class DestroyGroupType extends BaseService implements ServiceInterface
 
     private function repositionEverything(): void
     {
-        DB::table('gift_states')->where('position', '>', $this->groupType->position)->decrement('position');
+        DB::table('group_types')->where('position', '>', $this->groupType->position)->decrement('position');
     }
 }

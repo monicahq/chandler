@@ -3,14 +3,16 @@
 namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GiftState;
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
 
-class UpdateGroupType extends BaseService implements ServiceInterface
+class DestroyGroupTypeRole extends BaseService implements ServiceInterface
 {
-    private array $data;
-    private GroupType $groupType;
+    private GroupTypeRole $groupTypeRole;
 
     /**
      * Get the validation rules that apply to the service.
@@ -23,7 +25,7 @@ class UpdateGroupType extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'group_type_id' => 'required|integer|exists:group_types,id',
-            'label' => 'required|string|max:255',
+            'group_type_role_id' => 'required|integer|exists:group_type_roles,id',
         ];
     }
 
@@ -41,30 +43,27 @@ class UpdateGroupType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a group type.
+     * Destroy a group type.
      *
      * @param  array  $data
-     * @return GroupType
      */
-    public function execute(array $data): GroupType
+    public function execute(array $data): void
     {
-        $this->data = $data;
-        $this->validate();
-        $this->update();
+        $this->validateRules($data);
 
-        return $this->groupType;
+        GroupType::where('account_id', $data['account_id'])
+            ->findOrFail($data['group_type_id']);
+
+        $this->groupTypeRole = GroupTypeRole::where('group_type_id', $data['group_type_id'])
+            ->findOrFail($data['group_type_role_id']);
+
+        $this->groupTypeRole->delete();
+
+        $this->repositionEverything();
     }
 
-    private function validate(): void
+    private function repositionEverything(): void
     {
-        $this->validateRules($this->data);
-        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['group_type_id']);
-    }
-
-    private function update(): void
-    {
-        $this->groupType->label = $this->data['label'];
-        $this->groupType->save();
+        DB::table('group_type_roles')->where('position', '>', $this->groupTypeRole->position)->decrement('position');
     }
 }

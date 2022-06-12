@@ -7,14 +7,14 @@ use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GroupTypeFactory extends Factory
+class GroupTypeRoleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = GroupType::class;
+    protected $model = GroupTypeRole::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +24,7 @@ class GroupTypeFactory extends Factory
     public function definition()
     {
         return [
-            'account_id' => Account::factory(),
+            'group_type_id' => GroupType::factory(),
             'label' => $this->faker->name,
             'position' => 1,
         ];

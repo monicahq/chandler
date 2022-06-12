@@ -3,14 +3,16 @@
 namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GiftState;
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Services\BaseService;
 
-class UpdateGroupType extends BaseService implements ServiceInterface
+class CreateGroupTypeRole extends BaseService implements ServiceInterface
 {
     private array $data;
-    private GroupType $groupType;
+    private GroupTypeRole $groupTypeRole;
 
     /**
      * Get the validation rules that apply to the service.
@@ -41,30 +43,37 @@ class UpdateGroupType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a group type.
+     * Create a group type role.
      *
      * @param  array  $data
-     * @return GroupType
+     * @return GroupTypeRole
      */
-    public function execute(array $data): GroupType
+    public function execute(array $data): GroupTypeRole
     {
         $this->data = $data;
-        $this->validate();
-        $this->update();
 
-        return $this->groupType;
+        $this->validate();
+        $this->create();
+
+        return $this->groupTypeRole;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
-        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['group_type_id']);
     }
 
-    private function update(): void
+    private function create(): void
     {
-        $this->groupType->label = $this->data['label'];
-        $this->groupType->save();
+        // determine the new position of the template page
+        $newPosition = GroupTypeRole::where('group_type_id', $this->data['group_type_id'])
+            ->max('position');
+        $newPosition++;
+
+        $this->groupTypeRole = GroupTypeRole::create([
+            'group_type_id' => $this->data['group_type_id'],
+            'label' => $this->data['label'],
+            'position' => $newPosition,
+        ]);
     }
 }

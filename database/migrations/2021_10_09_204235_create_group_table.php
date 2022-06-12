@@ -25,6 +25,15 @@ return new class extends Migration
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
 
+        Schema::create('group_type_roles', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('group_type_id');
+            $table->string('label');
+            $table->integer('position')->nullable();
+            $table->timestamps();
+            $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
+        });
+
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('group_type_id');

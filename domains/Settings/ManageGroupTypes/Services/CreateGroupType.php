@@ -40,7 +40,7 @@ class CreateGroupType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a gift stage.
+     * Create a group type.
      *
      * @param  array  $data
      * @return GroupType
