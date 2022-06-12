@@ -2,12 +2,7 @@
 
 namespace App\Settings\ManageGroupTypes\Web\Controllers;
 
-use App\Contact\ManageGroups\Services\CreateGroup;
-use App\Contact\ManageGroups\Services\DestroyGroup;
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGiftStates\Services\CreateGiftState;
-use App\Settings\ManageGiftStates\Services\DestroyGiftState;
-use App\Settings\ManageGiftStates\Services\UpdateGiftState;
 use App\Settings\ManageGroupTypes\Services\CreateGroupType;
 use App\Settings\ManageGroupTypes\Services\DestroyGroupType;
 use App\Settings\ManageGroupTypes\Services\UpdateGroupType;

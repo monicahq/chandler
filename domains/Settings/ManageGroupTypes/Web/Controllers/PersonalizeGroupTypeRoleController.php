@@ -2,23 +2,13 @@
 
 namespace App\Settings\ManageGroupTypes\Web\Controllers;
 
-use App\Contact\ManageGroups\Services\CreateGroup;
-use App\Contact\ManageGroups\Services\DestroyGroup;
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGiftStates\Services\CreateGiftState;
-use App\Settings\ManageGiftStates\Services\DestroyGiftState;
-use App\Settings\ManageGiftStates\Services\UpdateGiftState;
-use App\Settings\ManageGroupTypes\Services\CreateGroupType;
 use App\Settings\ManageGroupTypes\Services\CreateGroupTypeRole;
-use App\Settings\ManageGroupTypes\Services\DestroyGroupType;
 use App\Settings\ManageGroupTypes\Services\DestroyGroupTypeRole;
-use App\Settings\ManageGroupTypes\Services\UpdateGroupType;
 use App\Settings\ManageGroupTypes\Services\UpdateGroupTypeRole;
 use App\Settings\ManageGroupTypes\Web\ViewHelpers\PersonalizeGroupTypeViewHelper;
-use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 class PersonalizeGroupTypeRoleController extends Controller
 {
@@ -55,7 +45,7 @@ class PersonalizeGroupTypeRoleController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int$groupTypeId, int $groupTypeRoleId)
+    public function destroy(Request $request, int $groupTypeId, int $groupTypeRoleId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

@@ -21,7 +21,7 @@ class GroupTypeTest extends TestCase
 
     /** @test */
     public function it_has_many_group_type_roles()
-   {
+    {
         $groupType = GroupType::factory()->create();
         GroupTypeRole::factory(2)->create([
             'group_type_id' => $groupType->id,

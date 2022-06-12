@@ -62,19 +62,19 @@ class PersonalizeGroupTypeViewHelperTest extends TestCase
                     'label' => 'Father',
                     'position' => 1,
                     'url' => [
-                        'position' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id . '/position',
-                        'update' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
-                        'destroy' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
+                        'position' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/groupTypeRoles/'.$groupTypeRole->id.'/position',
+                        'update' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
+                        'destroy' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
                     ],
-                ]
+                ],
             ],
             $array['group_type_roles']->toArray()
         );
         $this->assertEquals(
             [
-                'position' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id . '/position',
-                'update' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id,
-                'destroy' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id,
+                'position' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/position',
+                'update' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
+                'destroy' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
             ],
             $array['url']
         );
