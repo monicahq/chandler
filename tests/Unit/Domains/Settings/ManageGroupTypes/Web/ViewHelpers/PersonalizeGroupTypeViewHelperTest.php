@@ -2,11 +2,8 @@
 
 namespace Tests\Unit\Domains\Settings\ManageGroupTypes\Web\ViewHelpers;
 
-use App\Models\GiftState;
 use App\Models\GroupType;
-use App\Settings\ManageGiftStates\Web\ViewHelpers\PersonalizeGiftStateViewHelper;
 use App\Settings\ManageGroupTypes\Web\ViewHelpers\PersonalizeGroupTypeViewHelper;
-
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

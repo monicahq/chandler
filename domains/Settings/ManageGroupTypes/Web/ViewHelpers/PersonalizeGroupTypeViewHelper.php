@@ -3,7 +3,6 @@
 namespace App\Settings\ManageGroupTypes\Web\ViewHelpers;
 
 use App\Models\Account;
-use App\Models\GiftState;
 use App\Models\GroupType;
 
 class PersonalizeGroupTypeViewHelper

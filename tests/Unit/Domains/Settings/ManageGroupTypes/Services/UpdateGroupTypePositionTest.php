@@ -3,10 +3,8 @@
 namespace Tests\Unit\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Models\Account;
-use App\Models\GiftState;
 use App\Models\GroupType;
 use App\Models\User;
-use App\Settings\ManageGiftStates\Services\UpdateGiftStatePosition;
 use App\Settings\ManageGroupTypes\Services\UpdateGroupTypePosition;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
