@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Contact\ManageFamily\Services;
+namespace App\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Family;
+use App\Models\GiftState;
+use App\Models\GroupType;
+use App\Models\User;
 use App\Services\BaseService;
 
-class UpdateFamily extends BaseService implements ServiceInterface
+class UpdateGroupType extends BaseService implements ServiceInterface
 {
-    private Family $family;
     private array $data;
+    private GroupType $groupType;
 
     /**
      * Get the validation rules that apply to the service.
@@ -20,10 +22,9 @@ class UpdateFamily extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'family_id' => 'required|integer|exists:families,id',
-            'name' => 'nullable|string|max:255',
+            'group_type_id' => 'required|integer|exists:group_types,id',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -36,33 +37,35 @@ class UpdateFamily extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
+            'author_must_be_account_administrator',
         ];
     }
 
     /**
-     * Update a family.
+     * Update a gift state.
      *
      * @param  array  $data
-     * @return Family
+     * @return GroupType
      */
-    public function execute(array $data): Family
+    public function execute(array $data): GroupType
     {
         $this->data = $data;
         $this->validate();
+        $this->update();
 
-        $this->family->name = $this->valueOrNull($data, 'name');
-        $this->family->save();
-
-        return $this->family;
+        return $this->groupType;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
+        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['group_type_id']);
+    }
 
-        $this->family = Family::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['family_id']);
+    private function update(): void
+    {
+        $this->groupType->label = $this->data['label'];
+        $this->groupType->save();
     }
 }

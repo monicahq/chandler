@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Contact\ManageFamily\Services;
+namespace App\Contact\ManageGroups\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
-use App\Models\Family;
+use App\Models\Group;
 use App\Services\BaseService;
 
-class AddContactToFamily extends BaseService implements ServiceInterface
+class UpdateGroup extends BaseService implements ServiceInterface
 {
-    private Family $family;
+    private Group $group;
     private array $data;
 
     /**
@@ -23,8 +22,8 @@ class AddContactToFamily extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'family_id' => 'required|integer|exists:families,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'group_id' => 'required|integer|exists:groups,id',
+            'name' => 'nullable|string|max:255',
         ];
     }
 
@@ -39,31 +38,31 @@ class AddContactToFamily extends BaseService implements ServiceInterface
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_vault_editor',
-            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Add a contact to a family.
+     * Update a family.
      *
      * @param  array  $data
-     * @return Family
+     * @return Group
      */
-    public function execute(array $data): Family
+    public function execute(array $data): Group
     {
         $this->data = $data;
         $this->validate();
 
-        $this->family->contacts()->syncWithoutDetaching($this->contact->id);
+        $this->group->name = $this->valueOrNull($data, 'name');
+        $this->group->save();
 
-        return $this->family;
+        return $this->group;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->family = Family::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['family_id']);
+        $this->group = Group::where('vault_id', $this->data['vault_id'])
+            ->findOrFail($this->data['group_id']);
     }
 }

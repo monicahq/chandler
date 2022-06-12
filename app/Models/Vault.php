@@ -135,6 +135,6 @@ class Vault extends Model
      */
     public function families()
     {
-        return $this->hasMany(Family::class);
+        return $this->hasMany(Group::class);
     }
 }

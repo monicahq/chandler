@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageFamily\Services;
+namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 
-use App\Contact\ManageFamily\Services\AddContactToFamily;
+use App\Contact\ManageGroups\Services\AddContactToGroup;
 use App\Contact\ManageLabels\Services\AssignLabel;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\Family;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,15 +20,15 @@ class AddContactToFamilyTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_adds_a_contact_to_a_family(): void
+    public function it_adds_a_contact_to_a_group(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $family = Family::factory()->create(['vault_id' => $vault->id]);
+        $group = Group::factory()->create(['vault_id' => $vault->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $family);
+        $this->executeService($regis, $regis->account, $vault, $contact, $group);
     }
 
     /** @test */
@@ -52,9 +52,9 @@ class AddContactToFamilyTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $family = Family::factory()->create(['vault_id' => $vault->id]);
+        $group = Group::factory()->create(['vault_id' => $vault->id]);
 
-        $this->executeService($regis, $account, $vault, $contact, $family);
+        $this->executeService($regis, $account, $vault, $contact, $group);
     }
 
     /** @test */
@@ -66,9 +66,9 @@ class AddContactToFamilyTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $family = Family::factory()->create();
+        $group = Group::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $family);
+        $this->executeService($regis, $regis->account, $vault, $contact, $group);
     }
 
     /** @test */
@@ -80,9 +80,9 @@ class AddContactToFamilyTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $family = Family::factory()->create(['vault_id' => $vault->id]);
+        $group = Group::factory()->create(['vault_id' => $vault->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $family);
+        $this->executeService($regis, $regis->account, $vault, $contact, $group);
     }
 
     /** @test */
@@ -94,26 +94,26 @@ class AddContactToFamilyTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $family = Family::factory()->create(['vault_id' => $vault->id]);
+        $group = Group::factory()->create(['vault_id' => $vault->id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $family);
+        $this->executeService($regis, $regis->account, $vault, $contact, $group);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Family $family): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Group $group): void
     {
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
             'vault_id' => $vault->id,
-            'family_id' => $family->id,
+            'group_id' => $group->id,
             'contact_id' => $contact->id,
         ];
 
-        (new AddContactToFamily)->execute($request);
+        (new AddContactToGroup)->execute($request);
 
         $this->assertDatabaseHas('contact_family', [
             'contact_id' => $contact->id,
-            'family_id' => $family->id,
+            'group_id' => $group->id,
         ]);
     }
 }

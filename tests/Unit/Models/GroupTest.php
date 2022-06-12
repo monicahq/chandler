@@ -3,30 +3,30 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Contact;
-use App\Models\Family;
+use App\Models\Group;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class FamilyTest extends TestCase
+class GroupTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
     public function it_has_one_vault()
     {
-        $family = Family::factory()->create();
+        $group = Group::factory()->create();
 
-        $this->assertTrue($family->vault()->exists());
+        $this->assertTrue($group->vault()->exists());
     }
 
     /** @test */
     public function it_has_many_contacts(): void
     {
         $ross = Contact::factory()->create([]);
-        $family = Family::factory()->create();
+        $group = Group::factory()->create();
 
-        $family->contacts()->sync([$ross->id]);
+        $group->contacts()->sync([$ross->id]);
 
-        $this->assertTrue($family->contacts()->exists());
+        $this->assertTrue($group->contacts()->exists());
     }
 }

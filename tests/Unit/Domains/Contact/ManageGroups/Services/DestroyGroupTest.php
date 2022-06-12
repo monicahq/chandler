@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageFamily\Services;
+namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 
-use App\Contact\ManageFamily\Services\DestroyFamily;
+use App\Contact\ManageGroups\Services\DestroyGroup;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Family;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,21 +14,21 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class DestroyFamilyTest extends TestCase
+class DestroyGroupTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_deletes_a_family(): void
+    public function it_deletes_a_group(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $family = Family::factory()->create([
+        $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $family);
+        $this->executeService($regis, $regis->account, $vault, $group);
     }
 
     /** @test */
@@ -39,7 +39,7 @@ class DestroyFamilyTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyFamily)->execute($request);
+        (new DestroyGroup)->execute($request);
     }
 
     /** @test */
@@ -51,11 +51,11 @@ class DestroyFamilyTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $family = Family::factory()->create([
+        $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $account, $vault, $family);
+        $this->executeService($regis, $account, $vault, $group);
     }
 
     /** @test */
@@ -66,11 +66,11 @@ class DestroyFamilyTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
-        $family = Family::factory()->create([
+        $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $family);
+        $this->executeService($regis, $regis->account, $vault, $group);
     }
 
     /** @test */
@@ -81,12 +81,12 @@ class DestroyFamilyTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $family = Family::factory()->create();
+        $group = Group::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $family);
+        $this->executeService($regis, $regis->account, $vault, $group);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Family $family): void
+    private function executeService(User $author, Account $account, Vault $vault, Group $group): void
     {
         Queue::fake();
 
@@ -94,13 +94,13 @@ class DestroyFamilyTest extends TestCase
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
-            'family_id' => $family->id,
+            'group_id' => $group->id,
         ];
 
-        (new DestroyFamily)->execute($request);
+        (new DestroyGroup)->execute($request);
 
-        $this->assertDatabaseMissing('families', [
-            'id' => $family->id,
+        $this->assertDatabaseMissing('groups', [
+            'id' => $group->id,
         ]);
     }
 }

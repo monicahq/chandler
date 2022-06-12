@@ -35,6 +35,8 @@ use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionCont
 use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionsPositionController;
 use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController;
 use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
+use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeController;
+use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
@@ -320,6 +322,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::put('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'update'])->name('gift_states.update');
                 Route::delete('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'destroy'])->name('gift_states.destroy');
                 Route::post('giftStates/{giftState}/position', [PersonalizeGiftStatesPositionController::class, 'update'])->name('gift_states.order.update');
+
+                // group types
+                Route::get('groupTypes', [PersonalizeGroupTypeController::class, 'index'])->name('group_types.index');
+                Route::post('groupTypes', [PersonalizeGroupTypeController::class, 'store'])->name('group_types.store');
+                Route::put('groupTypes/{giftState}', [PersonalizeGroupTypeController::class, 'update'])->name('group_types.update');
+                Route::delete('groupTypes/{giftState}', [PersonalizeGroupTypeController::class, 'destroy'])->name('group_types.destroy');
+                Route::post('groupTypes/{giftState}/position', [PersonalizeGroupTypePositionController::class, 'update'])->name('group_types.order.update');
 
                 // genders
                 Route::get('genders', [ManageGenderController::class, 'index'])->name('gender.index');

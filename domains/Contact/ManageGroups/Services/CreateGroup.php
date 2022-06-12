@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Contact\ManageFamily\Services;
+namespace App\Contact\ManageGroups\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Family;
+use App\Models\Group;
 use App\Services\BaseService;
 
-class CreateFamily extends BaseService implements ServiceInterface
+class CreateGroup extends BaseService implements ServiceInterface
 {
-    private Family $family;
+    private Group $group;
 
     /**
      * Get the validation rules that apply to the service.
@@ -43,17 +43,17 @@ class CreateFamily extends BaseService implements ServiceInterface
      * Create a family.
      *
      * @param  array  $data
-     * @return Family
+     * @return Group
      */
-    public function execute(array $data): Family
+    public function execute(array $data): Group
     {
         $this->validateRules($data);
 
-        $this->family = Family::create([
+        $this->group = Group::create([
             'vault_id' => $data['vault_id'],
             'name' => $this->valueOrNull($data, 'name'),
         ]);
 
-        return $this->family;
+        return $this->group;
     }
 }

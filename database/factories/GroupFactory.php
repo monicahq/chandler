@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Family;
+use App\Models\Group;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class FamilyFactory extends Factory
+class GroupFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Family::class;
+    protected $model = Group::class;
 
     /**
      * Define the model's default state.

@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageFamily\Services;
+namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 
-use App\Contact\ManageFamily\Services\CreateFamily;
+use App\Contact\ManageGroups\Services\UpdateGroup;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,18 +14,21 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateFamilyTest extends TestCase
+class UpdateGroupTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_family(): void
+    public function it_updates_a_group(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $group = Group::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault);
+        $this->executeService($regis, $regis->account, $vault, $group);
     }
 
     /** @test */
@@ -35,7 +39,7 @@ class CreateFamilyTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateFamily)->execute($request);
+        (new UpdateGroup)->execute($request);
     }
 
     /** @test */
@@ -47,8 +51,11 @@ class CreateFamilyTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $group = Group::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $account, $vault);
+        $this->executeService($regis, $account, $vault, $group);
     }
 
     /** @test */
@@ -59,11 +66,27 @@ class CreateFamilyTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
+        $group = Group::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault);
+        $this->executeService($regis, $regis->account, $vault, $group);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault): void
+    /** @test */
+    public function it_fails_if_vault_is_not_in_the_vault(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $group = Group::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $group);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Group $group): void
     {
         Queue::fake();
 
@@ -71,14 +94,15 @@ class CreateFamilyTest extends TestCase
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
-            'name' => 'test',
+            'group_id' => $group->id,
+            'name' => 'love',
         ];
 
-        $family = (new CreateFamily)->execute($request);
+        $group = (new UpdateGroup)->execute($request);
 
-        $this->assertDatabaseHas('families', [
-            'id' => $family->id,
-            'name' => 'test',
+        $this->assertDatabaseHas('groups', [
+            'id' => $group->id,
+            'name' => 'love',
         ]);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Contact\ManageFamily\Services;
+namespace App\Contact\ManageGroups\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Family;
+use App\Models\Group;
 use App\Services\BaseService;
 
-class DestroyFamily extends BaseService implements ServiceInterface
+class DestroyGroup extends BaseService implements ServiceInterface
 {
     private array $data;
 
@@ -21,7 +21,7 @@ class DestroyFamily extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'family_id' => 'required|integer|exists:families,id',
+            'group_id' => 'required|integer|exists:groups,id',
         ];
     }
 
@@ -48,9 +48,9 @@ class DestroyFamily extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $family = Family::where('vault_id', $data['vault_id'])
-            ->findOrFail($data['family_id']);
+        $group = Group::where('vault_id', $data['vault_id'])
+            ->findOrFail($data['group_id']);
 
-        $family->delete();
+        $group->delete();
     }
 }

@@ -19,17 +19,29 @@ return new class extends Migration
         Schema::create('group_types', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');
-            $table->string('name');
+            $table->string('label');
+            $table->integer('position');
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
 
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('group_type_id');
             $table->unsignedBigInteger('vault_id');
             $table->string('name');
             $table->timestamps();
+            $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
+        });
+
+        Schema::create('group_roles', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('group_id');
+            $table->string('name');
+            $table->integer('position')->nullable();
+            $table->timestamps();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
 
         Schema::create('contact_group', function (Blueprint $table) {
@@ -48,6 +60,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('group_types');
         Schema::dropIfExists('groups');
+        Schema::dropIfExists('group_roles');
         Schema::dropIfExists('contact_group');
     }
 };
