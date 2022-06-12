@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Contact\ManageGroups\Services\CreateGroup;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\Information;
