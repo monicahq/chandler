@@ -48,7 +48,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Gift states</li>
+            <li class="inline">Group types</li>
           </ul>
         </div>
       </div>
@@ -60,22 +60,45 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🎁 </span> All the gift states</h3>
           <pretty-button
-            v-if="!createGiftStateModalShown"
+            v-if="!createGroupTypeModalShown"
             :text="'Add a gift state'"
             :icon="'plus'"
             @click="showGiftStateModal" />
         </div>
 
-        <!-- modal to create a gift state -->
+        <!-- help text -->
+        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 grow pr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+
+          <div>
+            <p>
+              A group is two or more people together. It can be a family, a household, a sport club. Whatever is
+              important to you.
+            </p>
+          </div>
+        </div>
+
+        <!-- modal to create a group type -->
         <form
-          v-if="createGiftStateModalShown"
+          v-if="createGroupTypeModalShown"
           class="mb-6 rounded-lg border border-gray-200 bg-white"
           @submit.prevent="submit()">
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
             <text-input
-              :ref="'newGiftState'"
+              :ref="'newGroupType'"
               v-model="form.label"
               :label="'Name'"
               :type="'text'"
@@ -84,25 +107,25 @@
               :required="true"
               :autocomplete="false"
               :maxlength="255"
-              @esc-key-pressed="createGiftStateModalShown = false" />
+              @esc-key-pressed="createGroupTypeModalShown = false" />
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createGiftStateModalShown = false" />
+            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
             <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
-        <!-- list of gift states -->
-        <div v-if="localGiftStates.length > 0" class="mb-6">
+        <!-- list of group types -->
+        <div v-if="localGroupTypes.length > 0" class="mb-6">
           <draggable
-            :list="localGiftStates"
+            :list="localGroupTypes"
             item-key="id"
             :component-data="{ name: 'fade' }"
             handle=".handle"
             @change="updatePosition">
             <template #item="{ element }">
-              <div v-if="editGiftStateId != element.id" class="">
+              <div v-if="editGroupTypeId != element.id" class="">
                 <div
                   class="item-list mb-2 flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
                   <!-- icon to move position -->
@@ -132,7 +155,7 @@
                   <ul class="text-sm">
                     <li
                       class="inline cursor-pointer text-blue-500 hover:underline"
-                      @click="renameGiftStateModal(element)">
+                      @click="renameGroupTypeModal(element)">
                       Rename
                     </li>
                     <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
@@ -161,11 +184,11 @@
                     :required="true"
                     :autocomplete="false"
                     :maxlength="255"
-                    @esc-key-pressed="editGiftStateId = 0" />
+                    @esc-key-pressed="editGroupTypeId = 0" />
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="editGiftStateId = 0" />
+                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="editGroupTypeId = 0" />
                   <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
@@ -174,8 +197,8 @@
         </div>
 
         <!-- blank state -->
-        <div v-if="localGiftStates.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <p class="p-5 text-center">Gift states let you define the various states for your gifts.</p>
+        <div v-if="localGroupTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <p class="p-5 text-center">Group types let you group people together.</p>
         </div>
       </div>
     </main>
@@ -214,9 +237,9 @@ export default {
   data() {
     return {
       loadingState: '',
-      createGiftStateModalShown: false,
-      editGiftStateId: 0,
-      localGiftStates: [],
+      createGroupTypeModalShown: false,
+      editGroupTypeId: 0,
+      localGroupTypes: [],
       form: {
         label: '',
         position: '',
@@ -226,23 +249,23 @@ export default {
   },
 
   mounted() {
-    this.localGiftStates = this.data.gift_states;
+    this.localGroupTypes = this.data.group_types;
   },
 
   methods: {
     showGiftStateModal() {
       this.form.label = '';
       this.form.position = '';
-      this.createGiftStateModalShown = true;
+      this.createGroupTypeModalShown = true;
 
       this.$nextTick(() => {
-        this.$refs.newGiftState.focus();
+        this.$refs.newGroupType.focus();
       });
     },
 
-    renameGiftStateModal(giftState) {
-      this.form.label = giftState.label;
-      this.editGiftStateId = giftState.id;
+    renameGroupTypeModal(groupType) {
+      this.form.label = groupType.label;
+      this.editGroupTypeId = groupType.id;
     },
 
     submit() {
@@ -251,10 +274,10 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The gift state has been created', 'success');
-          this.localGiftStates.push(response.data.data);
+          this.flash('The group type has been created', 'success');
+          this.localGroupTypes.push(response.data.data);
           this.loadingState = null;
-          this.createGiftStateModalShown = false;
+          this.createGroupTypeModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -262,16 +285,16 @@ export default {
         });
     },
 
-    update(giftState) {
+    update(groupType) {
       this.loadingState = 'loading';
 
       axios
-        .put(giftState.url.update, this.form)
+        .put(groupType.url.update, this.form)
         .then((response) => {
-          this.flash('The gift state has been updated', 'success');
-          this.localGiftStates[this.localGiftStates.findIndex((x) => x.id === giftState.id)] = response.data.data;
+          this.flash('The group type has been updated', 'success');
+          this.localGroupTypes[this.localGroupTypes.findIndex((x) => x.id === groupType.id)] = response.data.data;
           this.loadingState = null;
-          this.editGiftStateId = 0;
+          this.editGroupTypeId = 0;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -279,14 +302,14 @@ export default {
         });
     },
 
-    destroy(giftState) {
+    destroy(groupType) {
       if (confirm('Are you sure? This can not be undone.')) {
         axios
-          .delete(giftState.url.destroy)
+          .delete(groupType.url.destroy)
           .then((response) => {
-            this.flash('The gift state has been deleted', 'success');
-            var id = this.localGiftStates.findIndex((x) => x.id === giftState.id);
-            this.localGiftStates.splice(id, 1);
+            this.flash('The group type has been deleted', 'success');
+            var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
+            this.localGroupTypes.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;
