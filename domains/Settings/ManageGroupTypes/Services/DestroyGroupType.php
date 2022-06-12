@@ -21,8 +21,8 @@ class DestroyGroupType extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'group_type_id' => 'required|integer|exists:group_types,id',
             'author_id' => 'required|integer|exists:users,id',
+            'group_type_id' => 'required|integer|exists:group_types,id',
         ];
     }
 

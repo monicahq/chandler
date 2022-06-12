@@ -37,6 +37,7 @@ use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController
 use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
 use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeController;
 use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
+use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
 use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
@@ -326,9 +327,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 // group types
                 Route::get('groupTypes', [PersonalizeGroupTypeController::class, 'index'])->name('group_types.index');
                 Route::post('groupTypes', [PersonalizeGroupTypeController::class, 'store'])->name('group_types.store');
-                Route::put('groupTypes/{giftState}', [PersonalizeGroupTypeController::class, 'update'])->name('group_types.update');
-                Route::delete('groupTypes/{giftState}', [PersonalizeGroupTypeController::class, 'destroy'])->name('group_types.destroy');
-                Route::post('groupTypes/{giftState}/position', [PersonalizeGroupTypePositionController::class, 'update'])->name('group_types.order.update');
+                Route::put('groupTypes/{type}', [PersonalizeGroupTypeController::class, 'update'])->name('group_types.update');
+                Route::delete('groupTypes/{type}', [PersonalizeGroupTypeController::class, 'destroy'])->name('group_types.destroy');
+                Route::post('groupTypes/{type}/position', [PersonalizeGroupTypePositionController::class, 'update'])->name('group_types.order.update');
+
+                // group type roles
+                Route::post('groupTypes/{type}/groupTypeRoles', [PersonalizeGroupTypeRoleController::class, 'store'])->name('group_types.roles.store');
+                Route::put('groupTypes/{type}/groupTypeRoles/{role}', [PersonalizeGroupTypeRoleController::class, 'update'])->name('group_types.roles.update');
+                Route::delete('groupTypes/{type}/groupTypeRoles/{role}', [PersonalizeGroupTypeRoleController::class, 'destroy'])->name('group_types.roles.destroy');
+                Route::post('groupTypes/{type}/groupTypeRoles/{role}/position', [PersonalizeGroupTypePositionController::class, 'update'])->name('group_types.roles.order.update');
 
                 // genders
                 Route::get('genders', [ManageGenderController::class, 'index'])->name('gender.index');

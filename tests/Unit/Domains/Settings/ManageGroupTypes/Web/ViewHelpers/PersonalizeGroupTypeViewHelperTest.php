@@ -3,6 +3,7 @@
 namespace Tests\Unit\Domains\Settings\ManageGroupTypes\Web\ViewHelpers;
 
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Settings\ManageGroupTypes\Web\ViewHelpers\PersonalizeGroupTypeViewHelper;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -36,19 +37,46 @@ class PersonalizeGroupTypeViewHelperTest extends TestCase
     public function it_gets_the_data_needed_for_the_data_transfer_object(): void
     {
         $groupType = GroupType::factory()->create();
+        $groupTypeRole = GroupTypeRole::factory()->create([
+            'group_type_id' => $groupType->id,
+            'label' => 'Father',
+        ]);
         $array = PersonalizeGroupTypeViewHelper::dto($groupType);
+
+        $this->assertEquals(
+            $groupType->id,
+            $array['id']
+        );
+        $this->assertEquals(
+            $groupType->label,
+            $array['label']
+        );
+        $this->assertEquals(
+            $groupType->position,
+            $array['position']
+        );
         $this->assertEquals(
             [
-                'id' => $groupType->id,
-                'label' => $groupType->label,
-                'position' => $groupType->position,
-                'url' => [
-                    'position' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/position',
-                    'update' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
-                    'destroy' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
-                ],
+                0 => [
+                    'id' => $groupTypeRole->id,
+                    'label' => 'Father',
+                    'position' => 1,
+                    'url' => [
+                        'position' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id . '/position',
+                        'update' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
+                        'destroy' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id.'/groupTypeRoles/'.$groupTypeRole->id,
+                    ],
+                ]
             ],
-            $array
+            $array['group_type_roles']->toArray()
+        );
+        $this->assertEquals(
+            [
+                'position' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id . '/position',
+                'update' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id,
+                'destroy' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id,
+            ],
+            $array['url']
         );
     }
 }

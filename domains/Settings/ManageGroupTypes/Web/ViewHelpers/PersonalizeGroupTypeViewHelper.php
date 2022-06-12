@@ -4,6 +4,7 @@ namespace App\Settings\ManageGroupTypes\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 
 class PersonalizeGroupTypeViewHelper
 {
@@ -11,6 +12,7 @@ class PersonalizeGroupTypeViewHelper
     {
         $groupTypes = $account->groupTypes()
             ->orderBy('position', 'asc')
+            ->with('groupTypeRoles')
             ->get();
 
         $collection = collect();
@@ -30,19 +32,50 @@ class PersonalizeGroupTypeViewHelper
 
     public static function dto(GroupType $groupType): array
     {
+        $groupTypeRoles = $groupType->groupTypeRoles()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(function (GroupTypeRole $groupTypeRole) {
+                return self::dtoGroupTypeRole($groupTypeRole);
+            });
+
         return [
             'id' => $groupType->id,
             'label' => $groupType->label,
             'position' => $groupType->position,
+            'group_type_roles' => $groupTypeRoles,
             'url' => [
                 'position' => route('settings.personalize.group_types.order.update', [
-                    'giftState' => $groupType->id,
+                    'type' => $groupType->id,
                 ]),
                 'update' => route('settings.personalize.group_types.update', [
-                    'giftState' => $groupType->id,
+                    'type' => $groupType->id,
                 ]),
                 'destroy' => route('settings.personalize.group_types.destroy', [
-                    'giftState' => $groupType->id,
+                    'type' => $groupType->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoGroupTypeRole(GroupTypeRole $groupTypeRole): array
+    {
+        return [
+            'id' => $groupTypeRole->id,
+            'label' => $groupTypeRole->label,
+            'position' => $groupTypeRole->position,
+            'url' => [
+                'position' => route('settings.personalize.group_types.roles.order.update', [
+                    'type' => $groupTypeRole->group_type_id,
+                    'role' => $groupTypeRole->id,
+                ]),
+                'update' => route('settings.personalize.group_types.roles.update', [
+                    'type' => $groupTypeRole->group_type_id,
+                    'role' => $groupTypeRole->id,
+                ]),
+                'destroy' => route('settings.personalize.group_types.roles.destroy', [
+                    'type' => $groupTypeRole->group_type_id,
+                    'role' => $groupTypeRole->id,
                 ]),
             ],
         ];
