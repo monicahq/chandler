@@ -126,45 +126,102 @@
             @change="updatePosition">
             <template #item="{ element }">
               <div v-if="editGroupTypeId != element.id" class="">
-                <div
-                  class="item-list mb-2 flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
-                  <!-- icon to move position -->
-                  <div class="mr-2 flex">
-                    <svg
-                      class="handle mr-2 cursor-move"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 7H9V9H7V7Z" fill="currentColor" />
-                      <path d="M11 7H13V9H11V7Z" fill="currentColor" />
-                      <path d="M17 7H15V9H17V7Z" fill="currentColor" />
-                      <path d="M7 11H9V13H7V11Z" fill="currentColor" />
-                      <path d="M13 11H11V13H13V11Z" fill="currentColor" />
-                      <path d="M15 11H17V13H15V11Z" fill="currentColor" />
-                      <path d="M9 15H7V17H9V15Z" fill="currentColor" />
-                      <path d="M11 15H13V17H11V15Z" fill="currentColor" />
-                      <path d="M17 15H15V17H17V15Z" fill="currentColor" />
-                    </svg>
+                <div class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
+                  <div class="flex items-center justify-between">
+                    <!-- icon to move position -->
+                    <div class="mr-2 flex">
+                      <svg
+                        class="handle mr-2 cursor-move"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 7H9V9H7V7Z" fill="currentColor" />
+                        <path d="M11 7H13V9H11V7Z" fill="currentColor" />
+                        <path d="M17 7H15V9H17V7Z" fill="currentColor" />
+                        <path d="M7 11H9V13H7V11Z" fill="currentColor" />
+                        <path d="M13 11H11V13H13V11Z" fill="currentColor" />
+                        <path d="M15 11H17V13H15V11Z" fill="currentColor" />
+                        <path d="M9 15H7V17H9V15Z" fill="currentColor" />
+                        <path d="M11 15H13V17H11V15Z" fill="currentColor" />
+                        <path d="M17 15H15V17H17V15Z" fill="currentColor" />
+                      </svg>
 
-                    <span>{{ element.label }}</span>
+                      <span>{{ element.label }}</span>
+                    </div>
+
+                    <!-- actions -->
+                    <ul class="text-sm">
+                      <li
+                        class="inline cursor-pointer text-blue-500 hover:underline"
+                        @click="renameGroupTypeModal(element)">
+                        Rename
+                      </li>
+                      <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
+                        Delete
+                      </li>
+                    </ul>
                   </div>
 
-                  <!-- actions -->
-                  <ul class="text-sm">
-                    <li
-                      class="inline cursor-pointer text-blue-500 hover:underline"
-                      @click="renameGroupTypeModal(element)">
-                      Rename
-                    </li>
-                    <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                      Delete
-                    </li>
-                  </ul>
-                </div>
+                  <!-- available roles -->
+                  <div class="ml-8">
+                    <p class="text-sm text-gray-500">Roles:</p>
 
-                <div class="ml-3 mb-3">👇</div>
+                    <draggable
+                      :list="element.group_type_roles"
+                      item-key="id"
+                      :component-data="{ name: 'fade' }"
+                      handle=".handle"
+                      @change="updatePosition">
+                      <template #item="{ role }">
+                        <div v-if="editGroupTypeId != role.id" class="">
+                          <div
+                            class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
+                            <div class="flex items-center justify-between">
+                              <!-- icon to move position -->
+                              <div class="mr-2 flex">
+                                <svg
+                                  class="handle mr-2 cursor-move"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M7 7H9V9H7V7Z" fill="currentColor" />
+                                  <path d="M11 7H13V9H11V7Z" fill="currentColor" />
+                                  <path d="M17 7H15V9H17V7Z" fill="currentColor" />
+                                  <path d="M7 11H9V13H7V11Z" fill="currentColor" />
+                                  <path d="M13 11H11V13H13V11Z" fill="currentColor" />
+                                  <path d="M15 11H17V13H15V11Z" fill="currentColor" />
+                                  <path d="M9 15H7V17H9V15Z" fill="currentColor" />
+                                  <path d="M11 15H13V17H11V15Z" fill="currentColor" />
+                                  <path d="M17 15H15V17H17V15Z" fill="currentColor" />
+                                </svg>
+
+                                <span>{{ role.label }}</span>
+                              </div>
+
+                              <!-- actions -->
+                              <ul class="text-sm">
+                                <li
+                                  class="inline cursor-pointer text-blue-500 hover:underline"
+                                  @click="renameGroupTypeModal(role)">
+                                  Rename
+                                </li>
+                                <li
+                                  class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                                  @click="destroy(role)">
+                                  Delete
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                    </draggable>
+                  </div>
+                </div>
               </div>
 
               <form
