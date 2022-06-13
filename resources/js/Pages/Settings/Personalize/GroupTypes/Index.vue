@@ -58,12 +58,12 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🎁 </span> All the gift states</h3>
+          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 👥 </span> All the group types</h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
-            :text="'Add a gift state'"
+            :text="'Add a group type'"
             :icon="'plus'"
-            @click="showGiftStateModal" />
+            @click="showCreateGroupTypeModal" />
         </div>
 
         <!-- help text -->
@@ -127,7 +127,7 @@
             <template #item="{ element }">
               <div v-if="editGroupTypeId != element.id" class="">
                 <div class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
-                  <div class="flex items-center justify-between">
+                  <div class="mb-3 flex items-center justify-between">
                     <!-- icon to move position -->
                     <div class="mr-2 flex">
                       <svg
@@ -166,7 +166,7 @@
 
                   <!-- available roles -->
                   <div class="ml-8">
-                    <p class="text-sm text-gray-500">Roles:</p>
+                    <p class="mb-1 text-sm text-gray-500">Roles:</p>
 
                     <draggable
                       :list="element.group_type_roles"
@@ -174,8 +174,8 @@
                       :component-data="{ name: 'fade' }"
                       handle=".handle"
                       @change="updatePosition">
-                      <template #item="{ role }">
-                        <div v-if="editGroupTypeId != role.id" class="">
+                      <template #item="{ element }">
+                        <div v-if="editGroupTypeId != element.id" class="">
                           <div
                             class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
                             <div class="flex items-center justify-between">
@@ -199,19 +199,19 @@
                                   <path d="M17 15H15V17H17V15Z" fill="currentColor" />
                                 </svg>
 
-                                <span>{{ role.label }}</span>
+                                <span>{{ element.label }}</span>
                               </div>
 
                               <!-- actions -->
                               <ul class="text-sm">
                                 <li
                                   class="inline cursor-pointer text-blue-500 hover:underline"
-                                  @click="renameGroupTypeModal(role)">
+                                  @click="renameGroupTypeModal(element)">
                                   Rename
                                 </li>
                                 <li
                                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                                  @click="destroy(role)">
+                                  @click="destroy(element)">
                                   Delete
                                 </li>
                               </ul>
@@ -220,6 +220,55 @@
                         </div>
                       </template>
                     </draggable>
+
+                    <!-- add a new role -->
+                    <span
+                      @click="showCreateRoleModal()"
+                      v-if="element.group_type_roles.length != 0 && !createRoleModalShown"
+                      class="inline cursor-pointer text-sm text-blue-500 hover:underline"
+                      >Add a new role</span
+                    >
+
+                    <!-- form: create new role -->
+                    <form
+                      v-if="createRoleModalShown"
+                      class="mb-6 rounded-lg border border-gray-200 bg-white"
+                      @submit.prevent="submit()">
+                      <div class="border-b border-gray-200 p-5">
+                        <errors :errors="form.errors" />
+
+                        <text-input
+                          :ref="'newRole'"
+                          v-model="form.label"
+                          :label="'Name'"
+                          :type="'text'"
+                          :autofocus="true"
+                          :input-class="'block w-full'"
+                          :required="true"
+                          :autocomplete="false"
+                          :maxlength="255"
+                          @esc-key-pressed="createRoleModalShown = false" />
+                      </div>
+
+                      <div class="flex justify-between p-5">
+                        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createRoleModalShown = false" />
+                        <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                      </div>
+                    </form>
+
+                    <!-- blank state -->
+                    <div
+                      v-if="element.group_type_roles.length == 0"
+                      class="mb-6 rounded-lg border border-gray-200 bg-white">
+                      <p class="p-5 text-center">
+                        No roles yet.
+                        <span
+                          @click="showCreateRoleModal()"
+                          class="block cursor-pointer text-sm text-blue-500 hover:underline"
+                          >Add a new role</span
+                        >
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -295,6 +344,7 @@ export default {
     return {
       loadingState: '',
       createGroupTypeModalShown: false,
+      createRoleModalShown: false,
       editGroupTypeId: 0,
       localGroupTypes: [],
       form: {
@@ -310,13 +360,23 @@ export default {
   },
 
   methods: {
-    showGiftStateModal() {
+    showCreateGroupTypeModal() {
       this.form.label = '';
       this.form.position = '';
       this.createGroupTypeModalShown = true;
 
       this.$nextTick(() => {
         this.$refs.newGroupType.focus();
+      });
+    },
+
+    showCreateRoleModal() {
+      this.form.label = '';
+      this.form.position = '';
+      this.createRoleModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.newRole.focus();
       });
     },
 
