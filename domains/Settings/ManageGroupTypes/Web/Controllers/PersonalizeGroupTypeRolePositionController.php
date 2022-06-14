@@ -3,8 +3,6 @@
 namespace App\Settings\ManageGroupTypes\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGroupTypes\Services\UpdateGroupTypePosition;
-use App\Settings\ManageGroupTypes\Services\UpdateGroupTypeRole;
 use App\Settings\ManageGroupTypes\Services\UpdateGroupTypeRolePosition;
 use App\Settings\ManageGroupTypes\Web\ViewHelpers\PersonalizeGroupTypeViewHelper;
 use Illuminate\Http\Request;

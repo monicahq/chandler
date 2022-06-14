@@ -73,7 +73,7 @@ class PersonalizeGroupTypeViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/settings/personalize/groupTypes/' . $groupType->id . '/groupTypeRoles',
+                'store' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/groupTypeRoles',
                 'position' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id.'/position',
                 'update' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
                 'destroy' => env('APP_URL').'/settings/personalize/groupTypes/'.$groupType->id,
