@@ -35,8 +35,8 @@ class PersonalizeGroupTypeViewHelper
         $groupTypeRoles = $groupType->groupTypeRoles()
             ->orderBy('position', 'asc')
             ->get()
-            ->map(function (GroupTypeRole $groupTypeRole) {
-                return self::dtoGroupTypeRole($groupTypeRole);
+            ->map(function (GroupTypeRole $groupTypeRole) use ($groupType) {
+                return self::dtoGroupTypeRole($groupType, $groupTypeRole);
             });
 
         return [
@@ -45,6 +45,9 @@ class PersonalizeGroupTypeViewHelper
             'position' => $groupType->position,
             'group_type_roles' => $groupTypeRoles,
             'url' => [
+                'store' => route('settings.personalize.group_types.roles.store', [
+                    'type' => $groupType->id,
+                ]),
                 'position' => route('settings.personalize.group_types.order.update', [
                     'type' => $groupType->id,
                 ]),
@@ -58,12 +61,13 @@ class PersonalizeGroupTypeViewHelper
         ];
     }
 
-    public static function dtoGroupTypeRole(GroupTypeRole $groupTypeRole): array
+    public static function dtoGroupTypeRole(GroupType $groupType, GroupTypeRole $groupTypeRole): array
     {
         return [
             'id' => $groupTypeRole->id,
             'label' => $groupTypeRole->label,
             'position' => $groupTypeRole->position,
+            'group_type_id' => $groupType->id,
             'url' => [
                 'position' => route('settings.personalize.group_types.roles.order.update', [
                     'type' => $groupTypeRole->group_type_id,

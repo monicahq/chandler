@@ -24,7 +24,7 @@ class PersonalizeGroupTypeRoleController extends Controller
         $groupTypeRole = (new CreateGroupTypeRole)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGroupTypeViewHelper::dtoGroupTypeRole($groupTypeRole),
+            'data' => PersonalizeGroupTypeViewHelper::dtoGroupTypeRole($groupTypeRole->groupType, $groupTypeRole),
         ], 201);
     }
 
@@ -41,7 +41,7 @@ class PersonalizeGroupTypeRoleController extends Controller
         $groupTypeRole = (new UpdateGroupTypeRole)->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGroupTypeViewHelper::dtoGroupTypeRole($groupTypeRole),
+            'data' => PersonalizeGroupTypeViewHelper::dtoGroupTypeRole($groupTypeRole->groupType, $groupTypeRole),
         ], 200);
     }
 

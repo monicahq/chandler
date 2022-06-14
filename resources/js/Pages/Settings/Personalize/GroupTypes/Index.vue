@@ -174,8 +174,8 @@
                       :component-data="{ name: 'fade' }"
                       handle=".handle"
                       @change="updatePosition">
-                      <template #item="{ element }">
-                        <div v-if="editGroupTypeId != element.id" class="">
+                      <template #item="{ element, id }">
+                        <div v-if="editRoleId != element.id" class="">
                           <div
                             class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50">
                             <div class="flex items-center justify-between">
@@ -206,34 +206,63 @@
                               <ul class="text-sm">
                                 <li
                                   class="inline cursor-pointer text-blue-500 hover:underline"
-                                  @click="renameGroupTypeModal(element)">
+                                  @click="renameRoleModal(id, element)">
                                   Rename
                                 </li>
                                 <li
                                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                                  @click="destroy(element)">
+                                  @click="destroyRole(element)">
                                   Delete
                                 </li>
                               </ul>
                             </div>
                           </div>
                         </div>
+
+                        <!-- edit a role form -->
+                        <form
+                          v-else
+                          class="mb-6 rounded-lg border border-gray-200 bg-white"
+                          @submit.prevent="updateRole(element)">
+                          <div class="border-b border-gray-200 p-5">
+                            <errors :errors="form.errors" />
+
+                            <text-input
+                              :ref="'newRole'"
+                              v-model="form.label"
+                              :label="'Name'"
+                              :type="'text'"
+                              :autofocus="true"
+                              :input-class="'block w-full'"
+                              :required="true"
+                              :autocomplete="false"
+                              :maxlength="255"
+                              @esc-key-pressed="roleGroupTypeId = 0" />
+                          </div>
+
+                          <div class="flex justify-between p-5">
+                            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="roleGroupTypeId = 0" />
+                            <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                          </div>
+                        </form>
                       </template>
                     </draggable>
 
                     <!-- add a new role -->
                     <span
-                      @click="showCreateRoleModal()"
-                      v-if="element.group_type_roles.length != 0 && !createRoleModalShown"
+                      @click="showCreateRoleModal(element)"
+                      v-if="
+                        element.group_type_roles.length != 0 && !createRoleModalShown && roleGroupTypeId != element.id
+                      "
                       class="inline cursor-pointer text-sm text-blue-500 hover:underline"
                       >Add a new role</span
                     >
 
                     <!-- form: create new role -->
                     <form
-                      v-if="createRoleModalShown"
+                      v-if="createRoleModalShown && roleGroupTypeId == element.id"
                       class="mb-6 rounded-lg border border-gray-200 bg-white"
-                      @submit.prevent="submit()">
+                      @submit.prevent="submitRole(element)">
                       <div class="border-b border-gray-200 p-5">
                         <errors :errors="form.errors" />
 
@@ -258,12 +287,14 @@
 
                     <!-- blank state -->
                     <div
-                      v-if="element.group_type_roles.length == 0"
+                      v-if="
+                        element.group_type_roles.length == 0 && !createRoleModalShown && roleGroupTypeId != element.id
+                      "
                       class="mb-6 rounded-lg border border-gray-200 bg-white">
                       <p class="p-5 text-center">
                         No roles yet.
                         <span
-                          @click="showCreateRoleModal()"
+                          @click="showCreateRoleModal(element)"
                           class="block cursor-pointer text-sm text-blue-500 hover:underline"
                           >Add a new role</span
                         >
@@ -345,7 +376,9 @@ export default {
       loadingState: '',
       createGroupTypeModalShown: false,
       createRoleModalShown: false,
+      roleGroupTypeId: 0,
       editGroupTypeId: 0,
+      editRoleId: 0,
       localGroupTypes: [],
       form: {
         label: '',
@@ -370,10 +403,11 @@ export default {
       });
     },
 
-    showCreateRoleModal() {
+    showCreateRoleModal(groupType) {
       this.form.label = '';
       this.form.position = '';
       this.createRoleModalShown = true;
+      this.roleGroupTypeId = groupType.id;
 
       this.$nextTick(() => {
         this.$refs.newRole.focus();
@@ -383,6 +417,12 @@ export default {
     renameGroupTypeModal(groupType) {
       this.form.label = groupType.label;
       this.editGroupTypeId = groupType.id;
+    },
+
+    renameRoleModal(groupType, role) {
+      this.form.label = role.label;
+      this.editGroupTypeId = groupType;
+      this.editRoleId = role.id;
     },
 
     submit() {
@@ -448,6 +488,65 @@ export default {
           this.loadingState = null;
           this.errors = error.response.data;
         });
+    },
+
+    submitRole(groupType) {
+      this.loadingState = 'loading';
+
+      axios
+        .post(groupType.url.store, this.form)
+        .then((response) => {
+          this.flash('The role has been created', 'success');
+          var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
+          this.localGroupTypes[id].group_type_roles.push(response.data.data);
+          this.loadingState = null;
+          this.roleGroupTypeId = 0;
+          this.createRoleModalShown = false;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    updateRole(role) {
+      this.loadingState = 'loading';
+
+      axios
+        .put(role.url.update, this.form)
+        .then((response) => {
+          this.flash('The role has been updated', 'success');
+
+          var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === role.group_type_id);
+          var roleId = this.localGroupTypes[groupTypeId].group_type_roles.findIndex((x) => x.id === role.id);
+          this.localGroupTypes[groupTypeId].group_type_roles[roleId] = response.data.data;
+
+          this.loadingState = null;
+          this.roleGroupTypeId = 0;
+          this.editRoleId = 0;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroyRole(role) {
+      if (confirm('Are you sure? This can not be undone.')) {
+        axios
+          .delete(role.url.destroy)
+          .then((response) => {
+            this.flash('The role has been deleted', 'success');
+
+            var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === role.group_type_id);
+            var roleId = this.localGroupTypes[groupTypeId].group_type_roles.findIndex((x) => x.id === role.id);
+            this.localGroupTypes[groupTypeId].group_type_roles.splice(roleId, 1);
+          })
+          .catch((error) => {
+            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+      }
     },
   },
 };
