@@ -2,7 +2,6 @@
 
 namespace App\Contact\ManageContact\Web\ViewHelpers;
 
-use App\Helpers\AvatarHelper;
 use App\Models\Vault;
 
 class ContactIndexViewHelper

@@ -2,7 +2,6 @@
 
 namespace App\Contact\ManageRelationships\Web\ViewHelpers;
 
-use App\Helpers\AvatarHelper;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Support\Collection;
