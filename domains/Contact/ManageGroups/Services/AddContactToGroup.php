@@ -5,6 +5,8 @@ namespace App\Contact\ManageGroups\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\GroupType;
+use App\Models\GroupTypeRole;
 use App\Services\BaseService;
 
 class AddContactToGroup extends BaseService implements ServiceInterface
@@ -45,7 +47,7 @@ class AddContactToGroup extends BaseService implements ServiceInterface
     }
 
     /**
-     * Add a contact to a family.
+     * Add a contact to a group.
      *
      * @param  array  $data
      * @return Group
@@ -55,7 +57,9 @@ class AddContactToGroup extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->group->contacts()->syncWithoutDetaching($this->contact->id);
+        $this->group->contacts()->syncWithoutDetaching([
+            $this->contact->id => ['group_type_role_id' => $this->data['group_type_role_id']]
+        ]);
 
         return $this->group;
     }
@@ -66,5 +70,10 @@ class AddContactToGroup extends BaseService implements ServiceInterface
 
         $this->group = Group::where('vault_id', $this->data['vault_id'])
             ->findOrFail($this->data['group_id']);
+
+        $role = GroupTypeRole::findOrFail($this->data['group_type_role_id']);
+
+        GroupType::where('account_id', $this->data['account_id'])
+            ->findOrFail($role->group_type_id);
     }
 }

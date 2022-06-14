@@ -37,32 +37,28 @@ class ModuleGroupsViewHelper
             ->map(function ($contact) {
                 return [
                     'id' => $contact->id,
-                    'name' => $contact->full_name,
-                    'email' => $contact->email,
-                    'phone' => $contact->phone,
-                    'birthday' => DateHelper::format($contact->birthday),
-                    'age' => DateHelper::age($contact->birthday),
+                    'name' => $contact->name,
+                    'avatar' => $contact->avatar,
+                    'url' => [
+                        'show' => route('contact.show', [
+                            'vault' => $contact->vault_id,
+                            'contact' => $contact->id,
+                        ]),
+                    ],
                 ];
             });
 
         return [
             'id' => $group->id,
             'name' => $group->name,
-
-            'streaks_statistics' => GoalHelper::getStreakData($group),
-            'last_7_days' => self::getLast7Days($group),
+            'contacts' => $contacts,
             'url' => [
-                'update' => route('contact.goal.update', [
+                'update' => route('contact.group.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                     'goal' => $group->id,
                 ]),
-                'streak_update' => route('contact.goal.streak.update', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                    'goal' => $group->id,
-                ]),
-                'destroy' => route('contact.goal.destroy', [
+                'destroy' => route('contact.group.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                     'goal' => $group->id,

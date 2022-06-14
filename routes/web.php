@@ -188,6 +188,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('calls', [ContactModuleCallController::class, 'store'])->name('contact.call.store');
                     Route::put('calls/{call}', [ContactModuleCallController::class, 'update'])->name('contact.call.update');
                     Route::delete('calls/{call}', [ContactModuleCallController::class, 'destroy'])->name('contact.call.destroy');
+
+                    // groups
+                    Route::post('groups', [ContactModuleCallController::class, 'store'])->name('contact.group.store');
+                    Route::put('groups/{group}', [ContactModuleCallController::class, 'update'])->name('contact.group.update');
+                    Route::delete('groups/{group}', [ContactModuleCallController::class, 'destroy'])->name('contact.group.destroy');
                 });
             });
 
