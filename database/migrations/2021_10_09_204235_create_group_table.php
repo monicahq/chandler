@@ -36,29 +36,22 @@ return new class extends Migration
 
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_type_id');
             $table->unsignedBigInteger('vault_id');
+            $table->unsignedBigInteger('group_type_id');
             $table->string('name');
             $table->timestamps();
-            $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
-        });
-
-        Schema::create('group_roles', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('group_id');
-            $table->string('name');
-            $table->integer('position')->nullable();
-            $table->timestamps();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
         });
 
         Schema::create('contact_group', function (Blueprint $table) {
             $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('group_type_role_id')->nullable();
             $table->timestamps();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('group_type_role_id')->references('id')->on('group_type_roles')->onDelete('set null');
         });
     }
 
@@ -68,8 +61,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('group_types');
+        Schema::dropIfExists('group_type_roles');
         Schema::dropIfExists('groups');
-        Schema::dropIfExists('group_roles');
         Schema::dropIfExists('contact_group');
     }
 };

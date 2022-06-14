@@ -5,6 +5,7 @@ namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 use App\Contact\ManageGroups\Services\CreateGroup;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
+use App\Models\GroupType;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,8 +24,11 @@ class CreateGroupTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault);
+        $this->executeService($regis, $regis->account, $vault, $groupType);
     }
 
     /** @test */
@@ -47,8 +51,11 @@ class CreateGroupTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $account, $vault);
+        $this->executeService($regis, $account, $vault, $groupType);
     }
 
     /** @test */
@@ -59,11 +66,27 @@ class CreateGroupTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault);
+        $this->executeService($regis, $regis->account, $vault, $groupType);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault): void
+    /** @test */
+    public function it_fails_if_group_type_doesnt_belong_to_account(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $groupType = GroupType::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $groupType);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, GroupType $groupType): void
     {
         Queue::fake();
 
@@ -71,6 +94,7 @@ class CreateGroupTest extends TestCase
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
+            'group_type_id' => $groupType->id,
             'name' => 'test',
         ];
 
@@ -78,6 +102,7 @@ class CreateGroupTest extends TestCase
 
         $this->assertDatabaseHas('groups', [
             'id' => $group->id,
+            'group_type_id' => $groupType->id,
             'name' => 'test',
         ]);
     }

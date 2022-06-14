@@ -6,6 +6,7 @@ use App\Contact\ManageGroups\Services\UpdateGroup;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Group;
+use App\Models\GroupType;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,8 +28,11 @@ class UpdateGroupTest extends TestCase
         $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $group);
+        $this->executeService($regis, $regis->account, $vault, $group, $groupType);
     }
 
     /** @test */
@@ -54,8 +58,11 @@ class UpdateGroupTest extends TestCase
         $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $account, $vault, $group);
+        $this->executeService($regis, $account, $vault, $group, $groupType);
     }
 
     /** @test */
@@ -69,12 +76,15 @@ class UpdateGroupTest extends TestCase
         $group = Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $group);
+        $this->executeService($regis, $regis->account, $vault, $group, $groupType);
     }
 
     /** @test */
-    public function it_fails_if_vault_is_not_in_the_vault(): void
+    public function it_fails_if_group_is_not_in_the_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
@@ -82,11 +92,30 @@ class UpdateGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $group = Group::factory()->create();
+        $groupType = GroupType::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $group);
+        $this->executeService($regis, $regis->account, $vault, $group, $groupType);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Group $group): void
+    /** @test */
+    public function it_fails_if_group_type_is_not_in_the_account(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $group = Group::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $groupType = GroupType::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $group, $groupType);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Group $group, GroupType $groupType): void
     {
         Queue::fake();
 
@@ -95,6 +124,7 @@ class UpdateGroupTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'group_id' => $group->id,
+            'group_type_id' => $groupType->id,
             'name' => 'love',
         ];
 
@@ -102,6 +132,7 @@ class UpdateGroupTest extends TestCase
 
         $this->assertDatabaseHas('groups', [
             'id' => $group->id,
+            'group_type_id' => $groupType->id,
             'name' => 'love',
         ]);
     }

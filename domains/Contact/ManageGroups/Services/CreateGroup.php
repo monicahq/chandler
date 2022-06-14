@@ -4,11 +4,13 @@ namespace App\Contact\ManageGroups\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Group;
+use App\Models\GroupType;
 use App\Services\BaseService;
 
 class CreateGroup extends BaseService implements ServiceInterface
 {
     private Group $group;
+    private array $array;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,6 +23,7 @@ class CreateGroup extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'group_type_id' => 'required|integer|exists:group_types,id',
             'name' => 'nullable|string|max:255',
         ];
     }
@@ -47,13 +50,23 @@ class CreateGroup extends BaseService implements ServiceInterface
      */
     public function execute(array $data): Group
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
 
         $this->group = Group::create([
+            'group_type_id' => $data['group_type_id'],
             'vault_id' => $data['vault_id'],
             'name' => $this->valueOrNull($data, 'name'),
         ]);
 
         return $this->group;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+
+        GroupType::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['group_type_id']);
     }
 }

@@ -25,6 +25,7 @@ class AddContactToGroup extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'group_id' => 'required|integer|exists:groups,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'group_type_role_id' => 'required|integer|exists:group_type_roles,id',
         ];
     }
 

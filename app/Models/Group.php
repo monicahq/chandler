@@ -20,21 +20,32 @@ class Group extends Model
      */
     protected $fillable = [
         'vault_id',
+        'group_type_id',
         'name',
     ];
 
     /**
-     * Get the vault associated with the family.
+     * Get the vault associated with the group.
      *
      * @return BelongsTo
      */
-    public function vault()
+    public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
     }
 
     /**
-     * Get the contacts associated with the family.
+     * Get the vault associated with the group.
+     *
+     * @return BelongsTo
+     */
+    public function groupType(): BelongsTo
+    {
+        return $this->belongsTo(GroupType::class);
+    }
+
+    /**
+     * Get the contacts associated with the group.
      *
      * @return BelongsToMany
      */

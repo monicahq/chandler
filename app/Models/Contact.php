@@ -302,6 +302,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the groups associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function groups(): HasMany
+    {
+        return $this->hasMany(Group::class);
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute

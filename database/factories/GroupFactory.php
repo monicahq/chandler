@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Group;
+use App\Models\GroupType;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class GroupFactory extends Factory
     {
         return [
             'vault_id' => Vault::factory(),
+            'group_type_id' => GroupType::factory(),
             'name' => $this->faker->name(),
         ];
     }

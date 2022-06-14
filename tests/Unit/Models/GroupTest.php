@@ -20,6 +20,14 @@ class GroupTest extends TestCase
     }
 
     /** @test */
+    public function it_has_one_group_type()
+    {
+        $group = Group::factory()->create();
+
+        $this->assertTrue($group->groupType()->exists());
+    }
+
+    /** @test */
     public function it_has_many_contacts(): void
     {
         $ross = Contact::factory()->create([]);
