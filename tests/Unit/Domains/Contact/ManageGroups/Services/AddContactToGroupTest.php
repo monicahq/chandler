@@ -3,7 +3,6 @@
 namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 
 use App\Contact\ManageGroups\Services\AddContactToGroup;
-use App\Contact\ManageLabels\Services\AssignLabel;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;

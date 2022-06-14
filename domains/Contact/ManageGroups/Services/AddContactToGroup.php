@@ -58,7 +58,7 @@ class AddContactToGroup extends BaseService implements ServiceInterface
         $this->validate();
 
         $this->group->contacts()->syncWithoutDetaching([
-            $this->contact->id => ['group_type_role_id' => $this->data['group_type_role_id']]
+            $this->contact->id => ['group_type_role_id' => $this->data['group_type_role_id']],
         ]);
 
         return $this->group;

@@ -2,8 +2,6 @@
 
 namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
-use App\Helpers\DateHelper;
-use App\Helpers\GoalHelper;
 use App\Models\Contact;
 use App\Models\Group;
 use App\Models\User;
