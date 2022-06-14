@@ -41,7 +41,7 @@ class UserHelperTest extends TestCase
             [
                 'id' => $contact->id,
                 'name' => 'Keanu Reeves',
-                'avatar' => AvatarHelper::getSVG($contact),
+                'avatar' => $contact->avatar,
             ],
             UserHelper::getInformationAboutContact($rachel, $vault)
         );

@@ -63,7 +63,7 @@ class ContactRelationshipsCreateViewHelper
             'contact' => [
                 'id' => $contact->id,
                 'name' => $contact->name,
-                'avatar' => AvatarHelper::getSVG($contact),
+                'avatar' => $contact->avatar,
             ],
             'genders' => $genderCollection,
             'pronouns' => $pronounCollection,

@@ -128,7 +128,7 @@ class VaultIndexViewHelper
                 return [
                     'id' => $contact->id,
                     'name' => $contact->name,
-                    'avatar' => AvatarHelper::getSVG($contact),
+                    'avatar' => $contact->avatar,
                 ];
             });
 

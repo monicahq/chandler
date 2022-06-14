@@ -96,7 +96,7 @@ class ModuleRelationshipViewHelper
         return [
             'id' => $contact->id,
             'name' => $contact->name,
-            'avatar' => AvatarHelper::getSVG($contact),
+            'avatar' => $contact->avatar,
             'age' => $contact->age,
             'url' => [
                 'show' => $contact->listed ? route('contact.show', [
