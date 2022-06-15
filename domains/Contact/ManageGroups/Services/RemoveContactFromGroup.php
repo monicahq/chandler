@@ -5,8 +5,6 @@ namespace App\Contact\ManageGroups\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\Group;
-use App\Models\GroupType;
-use App\Models\GroupTypeRole;
 use App\Services\BaseService;
 
 class RemoveContactFromGroup extends BaseService implements ServiceInterface

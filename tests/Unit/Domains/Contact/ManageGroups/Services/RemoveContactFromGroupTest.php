@@ -2,13 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGroups\Services;
 
-use App\Contact\ManageGroups\Services\AddContactToGroup;
 use App\Contact\ManageGroups\Services\RemoveContactFromGroup;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Group;
-use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
