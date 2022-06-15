@@ -19,7 +19,7 @@ class ModuleGroupsViewHelper
         return [
             'groups' => $groupsCollection,
             'url' => [
-                'store' => route('contact.goal.store', [
+                'store' => route('contact.group.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
