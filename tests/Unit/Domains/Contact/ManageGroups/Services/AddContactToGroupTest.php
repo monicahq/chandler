@@ -7,6 +7,7 @@ use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Models\Vault;
@@ -26,7 +27,11 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $group = Group::factory()->create(['vault_id' => $vault->id]);
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+            'vault_id' => $vault->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create(['group_type_id' => $group->group_type_id]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $group, $groupTypeRole);
@@ -53,14 +58,18 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $group = Group::factory()->create(['vault_id' => $vault->id]);
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+            'vault_id' => $vault->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create(['group_type_id' => $group->group_type_id]);
 
         $this->executeService($regis, $account, $vault, $contact, $group, $groupTypeRole);
     }
 
     /** @test */
-    public function it_fails_if_label_doesnt_belong_to_account(): void
+    public function it_fails_if_group_doesnt_belong_to_account(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
@@ -68,7 +77,10 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $group = Group::factory()->create();
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create(['group_type_id' => $group->group_type_id]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $group, $groupTypeRole);
@@ -83,7 +95,11 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $group = Group::factory()->create(['vault_id' => $vault->id]);
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+            'vault_id' => $vault->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create(['group_type_id' => $group->group_type_id]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $group, $groupTypeRole);
@@ -98,7 +114,11 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $group = Group::factory()->create(['vault_id' => $vault->id]);
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+            'vault_id' => $vault->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create();
 
         $this->executeService($regis, $regis->account, $vault, $contact, $group, $groupTypeRole);
@@ -113,7 +133,11 @@ class AddContactToGroupTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $group = Group::factory()->create(['vault_id' => $vault->id]);
+        $groupType = GroupType::factory()->create(['account_id' => $vault->account_id]);
+        $group = Group::factory()->create([
+            'group_type_id' => $groupType->id,
+            'vault_id' => $vault->id,
+        ]);
         $groupTypeRole = GroupTypeRole::factory()->create(['group_type_id' => $group->group_type_id]);
 
         $this->executeService($regis, $regis->account, $vault, $contact, $group, $groupTypeRole);
