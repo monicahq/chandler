@@ -1067,6 +1067,8 @@
                 <goals v-if="module.type == 'goals'" :data="goals" />
 
                 <addresses v-if="module.type == 'addresses'" :data="addresses" />
+
+                <groups v-if="module.type == 'groups'" :data="groups" />
               </div>
             </div>
           </div>
@@ -1095,6 +1097,7 @@ import Calls from '@/Shared/Modules/Calls';
 import Pets from '@/Shared/Modules/Pets';
 import Goals from '@/Shared/Modules/Goals';
 import Addresses from '@/Shared/Modules/Addresses';
+import Groups from '@/Shared/Modules/Groups';
 
 export default {
   components: {
@@ -1116,6 +1119,7 @@ export default {
     Pets,
     Goals,
     Addresses,
+    Groups,
   },
 
   props: {
@@ -1148,6 +1152,7 @@ export default {
       pets: [],
       goals: [],
       addresses: [],
+      groups: [],
     };
   },
 
@@ -1235,6 +1240,10 @@ export default {
 
       if (this.data.modules.findIndex((x) => x.type == 'addresses') > -1) {
         this.addresses = this.data.modules[this.data.modules.findIndex((x) => x.type == 'addresses')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'groups') > -1) {
+        this.groups = this.data.modules[this.data.modules.findIndex((x) => x.type == 'groups')].data;
       }
     }
   },

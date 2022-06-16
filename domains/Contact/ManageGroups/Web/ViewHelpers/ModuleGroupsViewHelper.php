@@ -8,7 +8,7 @@ use App\Models\User;
 
 class ModuleGroupsViewHelper
 {
-    public static function data(Contact $contact, User $user): array
+    public static function data(Contact $contact): array
     {
         $groups = $contact->groups()->with('contacts')->orderBy('name')->get();
 

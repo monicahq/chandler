@@ -63,28 +63,6 @@
             </div>
           </div>
         </div>
-        <div class="flex">
-          <div class="mr-2 flex items-center">
-            <div v-html="relationshipType.contact.avatar" class="mr-2 h-5 w-5"></div>
-
-            <!-- name -->
-            <inertia-link
-              v-if="relationshipType.contact.url.show"
-              :href="relationshipType.contact.url.show"
-              class="text-blue-500 hover:underline">
-              {{ relationshipType.contact.name }}
-            </inertia-link>
-            <span v-else>{{ relationshipType.contact.name }}</span>
-
-            <!-- age -->
-            <span v-if="relationshipType.contact.age" class="ml-2 text-xs text-gray-400"
-              >({{ relationshipType.contact.age }})</span
-            >
-          </div>
-
-          <!-- relationship type -->
-          <span class="mr-2 text-gray-400">{{ relationshipType.relationship_type.name }}</span>
-        </div>
 
         <!-- actions -->
         <ul class="text-sm">
@@ -96,8 +74,8 @@
     </ul>
 
     <!-- blank state -->
-    <div v-if="data.number_of_defined_relations == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no relationships yet.</p>
+    <div v-if="localGroups.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">There are no groups yet.</p>
     </div>
   </div>
 </template>
@@ -144,7 +122,7 @@ export default {
   },
 
   created() {
-    this.localGroups = this.data.relationship_group_types;
+    this.localGroups = this.data.groups;
   },
 
   methods: {
