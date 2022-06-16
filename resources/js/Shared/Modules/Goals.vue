@@ -3,14 +3,6 @@
   color: #737e8d;
   top: -2px;
 }
-
-.icon-note {
-  top: -1px;
-}
-
-.icon-avatar {
-  top: 2px;
-}
 </style>
 
 <template>

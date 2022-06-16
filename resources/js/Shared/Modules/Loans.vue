@@ -438,10 +438,6 @@ export default {
       type: Object,
       default: null,
     },
-    paginator: {
-      type: Object,
-      default: null,
-    },
   },
 
   data() {

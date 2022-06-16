@@ -96,13 +96,13 @@ class VaultTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_families(): void
+    public function it_has_many_groups(): void
     {
         $vault = Vault::factory()->create();
         Group::factory()->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->assertTrue($vault->families()->exists());
+        $this->assertTrue($vault->groups()->exists());
     }
 }

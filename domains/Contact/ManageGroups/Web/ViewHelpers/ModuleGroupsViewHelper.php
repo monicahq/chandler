@@ -7,16 +7,33 @@ use App\Models\Group;
 
 class ModuleGroupsViewHelper
 {
+    /**
+     * All the groups associated with the contact.
+     *
+     * @param Contact $contact
+     * @return array
+     */
     public static function data(Contact $contact): array
     {
-        $groups = $contact->groups()->with('contacts')->orderBy('name')->get();
+        $groupsInVault = $contact->vault->groups()->with('contacts')->orderBy('name')->get();
+        $groupsInContact = $contact->groups()->with('contacts')->orderBy('name')->get();
 
-        $groupsCollection = $groups->map(function ($group) use ($contact) {
+        $groupsInVaultCollection = $groupsInVault->map(function ($group) use ($contact, $groupsInContact) {
+            $taken = false;
+            if ($groupsInContact->contains($group)) {
+                $taken = true;
+            }
+
+            return self::dto($contact, $group, $taken);
+        });
+
+        $groupsInContactCollection = $groupsInContact->map(function ($group) use ($contact) {
             return self::dto($contact, $group);
         });
 
         return [
-            'groups' => $groupsCollection,
+            'groups_in_contact' => $groupsInContactCollection,
+            'groups_in_vault' => $groupsInVaultCollection,
             'url' => [
                 'store' => route('contact.group.store', [
                     'vault' => $contact->vault_id,
@@ -26,7 +43,7 @@ class ModuleGroupsViewHelper
         ];
     }
 
-    public static function dto(Contact $contact, Group $group): array
+    public static function dto(Contact $contact, Group $group, bool $taken = false): array
     {
         $contacts = $group->contacts()
             ->orderBy('first_name')

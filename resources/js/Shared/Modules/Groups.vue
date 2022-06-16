@@ -4,17 +4,17 @@
   top: -2px;
 }
 
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
+.group-list {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 
-  &:last-child {
+  li:last-child {
     border-bottom: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 
-  &:hover:last-child {
+  li:hover:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
@@ -45,6 +45,61 @@
       </div>
       <pretty-link :text="'Add to group'" :icon="'plus'" :href="data.url.create" :classes="'sm:w-fit w-full'" />
     </div>
+
+    <form class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
+      <!-- filter list of groups -->
+      <div class="border-b border-gray-200 p-2">
+        <errors :errors="form.errors" />
+
+        <text-input
+          :ref="'label'"
+          v-model="form.search"
+          :type="'text'"
+          :placeholder="'Filter list or create a new label'"
+          :autofocus="true"
+          :input-class="'block w-full'"
+          :required="true"
+          :autocomplete="false"
+          @esc-key-pressed="editLabelModalShown = false" />
+      </div>
+
+      <ul class="group-list overflow-auto bg-white" :class="filteredGroups.length > 0 ? 'h-40' : ''">
+        <li
+          v-for="group in filteredGroups"
+          :key="group.id"
+          @click="set(group)"
+          class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          <div>
+            <span>{{ label.group }}</span>
+          </div>
+
+          <svg
+            v-if="label.taken"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-green-700"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </li>
+
+        <!-- case if the group does not exist and needs to be created -->
+        <li
+          v-if="filteredGroups.length == 0 && form.search.length != ''"
+          class="cursor-pointer border-b border-gray-200 px-3 py-2 hover:bg-slate-50"
+          @click="store()">
+          Create new group <span class="italic">"{{ form.search }}"</span>
+        </li>
+
+        <!-- blank state when there is no group at all -->
+        <li
+          v-if="filteredGroups.length == 0 && form.search.length == ''"
+          class="border-b border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-slate-50">
+          Please type a few characters to create a new group.
+        </li>
+      </ul>
+    </form>
 
     <!-- groups -->
     <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
@@ -86,7 +141,6 @@ import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyLink from '@/Shared/Form/PrettyLink';
 import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
 import Errors from '@/Shared/Form/Errors';
 
 export default {
@@ -96,7 +150,6 @@ export default {
     PrettySpan,
     PrettyLink,
     TextInput,
-    TextArea,
     Errors,
   },
 
@@ -105,40 +158,36 @@ export default {
       type: Object,
       default: null,
     },
-    paginator: {
-      type: Object,
-      default: null,
-    },
-    moduleMode: {
-      type: Boolean,
-      default: true,
-    },
   },
 
   data() {
     return {
       localGroups: [],
+      localGroupsInVault: [],
+      form: {
+        search: '',
+        name: '',
+        errors: [],
+      },
     };
   },
 
   created() {
-    this.localGroups = this.data.groups;
+    this.localGroups = this.data.groups_in_contact;
+
+    // TODO: this should not be loaded up front. we should do a async call once
+    // the edit mode is active to load all the groups from the backend instead..
+    this.localGroupsInVault = this.data.groups_in_vault;
   },
 
-  methods: {
-    destroy(relationshipType) {
-      if (confirm('Are you sure? This will delete the relationship.')) {
-        axios
-          .put(relationshipType.url.update)
-          .then((response) => {
-            this.flash('The relationship has been deleted', 'success');
-            this.localGroups = response.data.data.relationship_group_types;
-          })
-          .catch((error) => {
-            this.form.errors = error.response.data;
-          });
-      }
+  computed: {
+    filteredGroups() {
+      return this.localGroupsInVault.filter((group) => {
+        return group.name.toLowerCase().indexOf(this.form.search.toLowerCase()) > -1;
+      });
     },
   },
+
+  methods: {},
 };
 </script>

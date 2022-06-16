@@ -190,6 +190,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('calls/{call}', [ContactModuleCallController::class, 'destroy'])->name('contact.call.destroy');
 
                     // groups
+                    Route::get('groups', [ContactModuleCallController::class, 'index'])->name('contact.group.index');
                     Route::post('groups', [ContactModuleCallController::class, 'store'])->name('contact.group.store');
                     Route::put('groups/{group}', [ContactModuleCallController::class, 'update'])->name('contact.group.update');
                     Route::delete('groups/{group}', [ContactModuleCallController::class, 'destroy'])->name('contact.group.destroy');
