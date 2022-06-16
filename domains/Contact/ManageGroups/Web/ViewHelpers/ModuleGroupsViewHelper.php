@@ -10,7 +10,7 @@ class ModuleGroupsViewHelper
     /**
      * All the groups associated with the contact.
      *
-     * @param Contact $contact
+     * @param  Contact  $contact
      * @return array
      */
     public static function data(Contact $contact): array

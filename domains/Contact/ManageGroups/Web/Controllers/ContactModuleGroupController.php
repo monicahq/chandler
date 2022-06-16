@@ -2,10 +2,6 @@
 
 namespace App\Contact\ManageGroups\Web\Controllers;
 
-use App\Contact\ManageGoals\Services\CreateGoal;
-use App\Contact\ManageGoals\Services\DestroyGoal;
-use App\Contact\ManageGoals\Services\UpdateGoal;
-use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Contact\ManageGroups\Services\AddContactToGroup;
 use App\Contact\ManageGroups\Services\CreateGroup;
 use App\Http\Controllers\Controller;
