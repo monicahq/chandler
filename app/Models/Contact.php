@@ -305,11 +305,11 @@ class Contact extends Model
     /**
      * Get the groups associated with the contact.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function groups(): HasMany
+    public function groups(): BelongsToMany
     {
-        return $this->hasMany(Group::class);
+        return $this->belongsToMany(Group::class, 'contact_group');
     }
 
     /**

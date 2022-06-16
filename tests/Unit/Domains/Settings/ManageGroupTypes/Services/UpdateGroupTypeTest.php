@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class UpdateGiftStateTest extends TestCase
+class UpdateGroupTypeTest extends TestCase
 {
     use DatabaseTransactions;
 
