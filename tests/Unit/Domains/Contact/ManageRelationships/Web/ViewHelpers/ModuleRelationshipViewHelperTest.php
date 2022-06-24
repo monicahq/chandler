@@ -9,9 +9,9 @@ use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 use App\Models\User;
 use App\Models\Vault;
-use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use function env;
 
 class ModuleRelationshipViewHelperTest extends TestCase
 {
@@ -41,7 +41,7 @@ class ModuleRelationshipViewHelperTest extends TestCase
 
         $array = ModuleRelationshipViewHelper::data($contact, $user);
         $this->assertEquals(
-        3,
+            3,
             count($array)
         );
 
