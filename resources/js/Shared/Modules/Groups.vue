@@ -219,8 +219,8 @@ export default {
         this.form.name = '';
 
         // we need to load the list of existing roles for this group
-        var id = this.localGroups.findIndex((x) => x.id == this.form.group_id);
-        this.form.group_type_id = this.localGroups[id].type.id;
+        var id = this.localAvailableGroups.findIndex((x) => x.id == this.form.group_id);
+        this.form.group_type_id = this.localAvailableGroups[id].type.id;
         this.loadGroupTypeRoles();
       }
     },
