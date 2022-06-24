@@ -4,17 +4,17 @@
   top: -2px;
 }
 
-.group-list {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-
-  li:last-child {
-    border-bottom: 0;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
-  li:hover:last-child {
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
@@ -47,70 +47,78 @@
     </div>
 
     <form class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <!-- filter list of groups -->
-      <div class="border-b border-gray-200 p-2">
-        <errors :errors="form.errors" />
+      <div class="border-b border-gray-200">
+        <div v-if="form.errors.length > 0" class="p-5">
+          <errors :errors="form.errors" />
+        </div>
 
-        <text-input
-          :ref="'label'"
-          v-model="form.search"
-          :type="'text'"
-          :placeholder="'Filter list or create a new label'"
-          :autofocus="true"
-          :input-class="'block w-full'"
-          :required="true"
-          :autocomplete="false"
-          @esc-key-pressed="editLabelModalShown = false" />
+        <div class="border-b border-gray-200 p-5">
+          <!-- group type -->
+          <dropdown
+            v-model="form.group_id"
+            :data="localAvailableGroups"
+            :required="true"
+            :placeholder="'Choose a value'"
+            :dropdown-class="'block w-full'"
+            @change="toggleCreateGroup()"
+            :label="'Select a group or create a new one'" />
+        </div>
+
+        <!-- name -->
+        <div v-if="createGroupStateShown" class="border-b border-gray-200 p-5">
+          <text-input
+            :ref="'newName'"
+            v-model="form.name"
+            :label="'Name'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :autocomplete="false"
+            :maxlength="255"
+            :required="true"
+            @esc-key-pressed="addPetModalShown = false" />
+        </div>
+
+        <div v-if="createGroupStateShown" class="border-b border-gray-200 p-5">
+          <!-- group type -->
+          <dropdown
+            v-model="form.group_type_id"
+            :data="data.group_types"
+            :required="true"
+            :placeholder="'Choose a value'"
+            :dropdown-class="'block w-full'"
+            :label="'Group type'"
+            @change="loadGroupTypeRoles()" />
+        </div>
+
+        <div v-if="localGroupTypeRoles.length > 0 || chooseGroupTypeRoleShown" class="p-5">
+          <!-- group role -->
+          <dropdown
+            v-model="form.group_type_role_id"
+            :data="localGroupTypeRoles"
+            :required="false"
+            :placeholder="'Choose a value'"
+            :dropdown-class="'block w-full'"
+            :label="'Role'" />
+        </div>
       </div>
 
-      <ul class="group-list overflow-auto bg-white" :class="filteredGroups.length > 0 ? 'h-40' : ''">
-        <li
-          v-for="group in filteredGroups"
-          :key="group.id"
-          @click="set(group)"
-          class="flex cursor-pointer items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-          <div>
-            <span>{{ label.group }}</span>
-          </div>
-
-          <svg
-            v-if="label.taken"
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 text-green-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-        </li>
-
-        <!-- case if the group does not exist and needs to be created -->
-        <li
-          v-if="filteredGroups.length == 0 && form.search.length != ''"
-          class="cursor-pointer border-b border-gray-200 px-3 py-2 hover:bg-slate-50"
-          @click="store()">
-          Create new group <span class="italic">"{{ form.search }}"</span>
-        </li>
-
-        <!-- blank state when there is no group at all -->
-        <li
-          v-if="filteredGroups.length == 0 && form.search.length == ''"
-          class="border-b border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-slate-50">
-          Please type a few characters to create a new group.
-        </li>
-      </ul>
+      <div class="flex justify-between p-5">
+        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="addPetModalShown = false" />
+        <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+      </div>
     </form>
 
     <!-- groups -->
     <ul class="mb-4 rounded-lg border border-gray-200 last:mb-0">
       <li
-        v-for="group in localGroups"
+        v-for="group in filteredGroups"
         :key="group.id"
         class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
         <div>
           <p>{{ group.name }}</p>
 
-          <div v-if="group.contacts.length > 0" class="relative flex -space-x-2 overflow-hidden p-3">
+          <div v-if="group.contacts" class="relative flex -space-x-2 overflow-hidden py-1">
             <div v-for="contact in group.contacts" :key="contact.id" class="inline-block">
               <inertia-link :href="contact.url.show"
                 ><div v-html="contact.avatar" class="h-8 w-8 rounded-full ring-2 ring-white"></div
@@ -122,7 +130,7 @@
         <!-- actions -->
         <ul class="text-sm">
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(relationshipType)">
-            Remove
+            Leave
           </li>
         </ul>
       </li>
@@ -136,20 +144,20 @@
 </template>
 
 <script>
-import HoverMenu from '@/Shared/HoverMenu';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyLink from '@/Shared/Form/PrettyLink';
 import TextInput from '@/Shared/Form/TextInput';
+import Dropdown from '@/Shared/Form/Dropdown';
 import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
-    HoverMenu,
     PrettyButton,
     PrettySpan,
     PrettyLink,
     TextInput,
+    Dropdown,
     Errors,
   },
 
@@ -162,10 +170,18 @@ export default {
 
   data() {
     return {
+      loadingState: null,
       localGroups: [],
-      localGroupsInVault: [],
+      localAvailableGroups: [],
+      localGroupTypeRoles: [],
+      addModalShown: false,
+      createGroupStateShown: false,
+      chooseGroupTypeRoleShown: false,
       form: {
         search: '',
+        group_id: -1,
+        group_type_id: -1,
+        group_type_role_id: 0,
         name: '',
         errors: [],
       },
@@ -173,21 +189,71 @@ export default {
   },
 
   created() {
-    this.localGroups = this.data.groups_in_contact;
-
-    // TODO: this should not be loaded up front. we should do a async call once
-    // the edit mode is active to load all the groups from the backend instead..
-    this.localGroupsInVault = this.data.groups_in_vault;
+    this.localGroups = this.data.groups;
+    this.localAvailableGroups = this.data.available_groups;
   },
 
   computed: {
     filteredGroups() {
-      return this.localGroupsInVault.filter((group) => {
-        return group.name.toLowerCase().indexOf(this.form.search.toLowerCase()) > -1;
+      return this.localGroups.filter((group) => {
+        return group.id > 0;
       });
     },
   },
 
-  methods: {},
+  methods: {
+    showAddGroupModal() {
+      this.form.name = '';
+      this.addModalShown = true;
+
+      this.$nextTick(() => {
+        this.$refs.groupName.focus();
+      });
+    },
+
+    toggleCreateGroup() {
+      if (this.form.group_id == 0) {
+        this.createAddGroupModal();
+      } else {
+        this.chooseGroupTypeRoleShown = true;
+        this.form.name = '';
+
+        // we need to load the list of existing roles for this group
+        var id = this.localGroups.findIndex((x) => x.id == this.form.group_id);
+        this.form.group_type_id = this.localGroups[id].type.id;
+        this.loadGroupTypeRoles();
+      }
+    },
+
+    createAddGroupModal() {
+      this.chooseGroupTypeRoleShown = false;
+      this.createGroupStateShown = true;
+    },
+
+    loadGroupTypeRoles() {
+      for (let i = 0; i < this.data.group_types.length; i++) {
+        if (this.data.group_types[i].id == this.form.group_type_id) {
+          this.localGroupTypeRoles = this.data.group_types[i].roles;
+        }
+      }
+    },
+
+    submit() {
+      this.loadingState = 'loading';
+
+      axios
+        .post(this.data.url.store, this.form)
+        .then((response) => {
+          this.flash('The group has been added', 'success');
+          this.localGroups.unshift(response.data.data);
+          this.loadingState = null;
+          this.createDateModalShown = false;
+        })
+        .catch((error) => {
+          this.loadingState = null;
+          this.form.errors = error.response.data;
+        });
+    },
+  },
 };
 </script>

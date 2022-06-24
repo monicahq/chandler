@@ -420,7 +420,6 @@ select {
 </template>
 
 <script>
-import HoverMenu from '@/Shared/HoverMenu';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
@@ -429,7 +428,6 @@ import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
-    HoverMenu,
     PrettyButton,
     PrettySpan,
     TextInput,

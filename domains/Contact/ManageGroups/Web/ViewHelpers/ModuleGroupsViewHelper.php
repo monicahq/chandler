@@ -4,6 +4,7 @@ namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\GroupType;
 
 class ModuleGroupsViewHelper
 {
@@ -18,22 +19,30 @@ class ModuleGroupsViewHelper
         $groupsInVault = $contact->vault->groups()->with('contacts')->orderBy('name')->get();
         $groupsInContact = $contact->groups()->with('contacts')->orderBy('name')->get();
 
-        $groupsInVaultCollection = $groupsInVault->map(function ($group) use ($contact, $groupsInContact) {
-            $taken = false;
-            if ($groupsInContact->contains($group)) {
-                $taken = true;
-            }
+        $availableGroups = $groupsInVault->diff($groupsInContact);
 
-            return self::dto($contact, $group, $taken);
+        $availableGroupsCollection = $availableGroups->map(function ($group) use ($contact, $groupsInContact) {
+            return self::dto($contact, $group);
         });
+        $availableGroupsCollection->prepend([
+            'id' => 0,
+            'name' => trans('contact.group_create'),
+            'selected' => false,
+        ]);
 
         $groupsInContactCollection = $groupsInContact->map(function ($group) use ($contact) {
             return self::dto($contact, $group);
         });
 
+        $groupTypes = $contact->vault->account->groupTypes()->orderBy('position')->get();
+        $groupTypesCollection = $groupTypes->map(function ($groupType) {
+            return self::dtoGroupType($groupType);
+        });
+
         return [
-            'groups_in_contact' => $groupsInContactCollection,
-            'groups_in_vault' => $groupsInVaultCollection,
+            'groups' => $groupsInContactCollection,
+            'available_groups' => $availableGroupsCollection,
+            'group_types' => $groupTypesCollection,
             'url' => [
                 'store' => route('contact.group.store', [
                     'vault' => $contact->vault_id,
@@ -62,22 +71,57 @@ class ModuleGroupsViewHelper
                 ];
             });
 
+        $roles = $group->groupType
+            ->groupTypeRoles()
+            ->orderBy('position')
+            ->get()
+            ->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'label' => $role->label,
+                ];
+            });
+
         return [
             'id' => $group->id,
             'name' => $group->name,
+            'type' => [
+                'id' => $group->groupType->id,
+            ],
             'contacts' => $contacts,
+            'roles' => $roles,
+            'selected' => $taken,
             'url' => [
                 'update' => route('contact.group.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'goal' => $group->id,
+                    'group' => $group->id,
                 ]),
                 'destroy' => route('contact.group.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'goal' => $group->id,
+                    'group' => $group->id,
                 ]),
             ],
+        ];
+    }
+
+    private static function dtoGroupType(GroupType $groupType): array
+    {
+        $rolesCollection = $groupType->groupTypeRoles()
+            ->orderBy('position')
+            ->get()
+            ->map(function ($role) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->label,
+                ];
+            });
+
+        return [
+            'id' => $groupType->id,
+            'name' => $groupType->label,
+            'roles' => $rolesCollection,
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressContr
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
+use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
 use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
@@ -190,10 +191,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('calls/{call}', [ContactModuleCallController::class, 'destroy'])->name('contact.call.destroy');
 
                     // groups
-                    Route::get('groups', [ContactModuleCallController::class, 'index'])->name('contact.group.index');
-                    Route::post('groups', [ContactModuleCallController::class, 'store'])->name('contact.group.store');
-                    Route::put('groups/{group}', [ContactModuleCallController::class, 'update'])->name('contact.group.update');
-                    Route::delete('groups/{group}', [ContactModuleCallController::class, 'destroy'])->name('contact.group.destroy');
+                    Route::get('groups', [ContactModuleGroupController::class, 'index'])->name('contact.group.index');
+                    Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
+                    Route::put('groups/{group}', [ContactModuleGroupController::class, 'update'])->name('contact.group.update');
+                    Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
                 });
             });
 

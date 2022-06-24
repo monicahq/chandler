@@ -27,7 +27,7 @@ class AddContactToGroup extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'group_id' => 'required|integer|exists:groups,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'group_type_role_id' => 'required|integer|exists:group_type_roles,id',
+            'group_type_role_id' => 'nullable|integer',
         ];
     }
 
@@ -57,9 +57,15 @@ class AddContactToGroup extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->group->contacts()->syncWithoutDetaching([
-            $this->contact->id => ['group_type_role_id' => $this->data['group_type_role_id']],
-        ]);
+        if ($this->data['group_type_role_id'] != 0) {
+            $this->group->contacts()->syncWithoutDetaching([
+                $this->contact->id => ['group_type_role_id' => $this->data['group_type_role_id']],
+            ]);
+        } else {
+            $this->group->contacts()->syncWithoutDetaching([
+                $this->contact->id => ['group_type_role_id' => null],
+            ]);
+        }
 
         return $this->group;
     }
@@ -71,9 +77,11 @@ class AddContactToGroup extends BaseService implements ServiceInterface
         $this->group = Group::where('vault_id', $this->data['vault_id'])
             ->findOrFail($this->data['group_id']);
 
-        $role = GroupTypeRole::findOrFail($this->data['group_type_role_id']);
+        if ($this->data['group_type_role_id'] != 0) {
+            $role = GroupTypeRole::findOrFail($this->data['group_type_role_id']);
 
-        GroupType::where('account_id', $this->data['account_id'])
-            ->findOrFail($role->group_type_id);
+            GroupType::where('account_id', $this->data['account_id'])
+                ->findOrFail($role->group_type_id);
+        }
     }
 }
