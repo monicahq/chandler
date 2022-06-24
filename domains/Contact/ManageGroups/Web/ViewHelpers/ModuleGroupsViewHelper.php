@@ -21,7 +21,7 @@ class ModuleGroupsViewHelper
 
         $availableGroups = $groupsInVault->diff($groupsInContact);
 
-        $availableGroupsCollection = $availableGroups->map(function ($group) use ($contact, $groupsInContact) {
+        $availableGroupsCollection = $availableGroups->map(function ($group) use ($contact) {
             return self::dto($contact, $group);
         });
         $availableGroupsCollection->prepend([

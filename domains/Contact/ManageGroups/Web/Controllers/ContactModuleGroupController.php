@@ -20,9 +20,9 @@ class ContactModuleGroupController extends Controller
      * 2) the group already exists, and the contact needs to be associated
      * with it.
      *
-     * @param Request $request
-     * @param integer $vaultId
-     * @param integer $contactId
+     * @param  Request  $request
+     * @param  int  $vaultId
+     * @param  int  $contactId
      * @return void
      */
     public function store(Request $request, int $vaultId, int $contactId)
