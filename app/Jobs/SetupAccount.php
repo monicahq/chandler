@@ -40,7 +40,10 @@ use Illuminate\Support\Facades\DB;
 
 class SetupAccount implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The user instance.
@@ -109,7 +112,7 @@ class SetupAccount implements ShouldQueue
      */
     private function addNotificationChannel(): void
     {
-        $channel = (new CreateUserNotificationChannel)->execute([
+        $channel = (new CreateUserNotificationChannel())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('app.notification_channel_email'),
@@ -135,7 +138,7 @@ class SetupAccount implements ShouldQueue
             'name' => trans('app.default_template_name'),
         ];
 
-        $this->template = (new CreateTemplate)->execute($request);
+        $this->template = (new CreateTemplate())->execute($request);
     }
 
     private function addTemplatePageContactInformation(): void
@@ -147,14 +150,14 @@ class SetupAccount implements ShouldQueue
             ->first();
 
         // avatar
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_avatar'),
             'type' => Module::TYPE_AVATAR,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -163,14 +166,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // names
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_names'),
             'type' => Module::TYPE_CONTACT_NAMES,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -179,14 +182,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // family summary
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_family_summary'),
             'type' => Module::TYPE_FAMILY_SUMMARY,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -195,14 +198,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // important dates
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_important_dates'),
             'type' => Module::TYPE_IMPORTANT_DATES,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -211,14 +214,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // gender/pronouns
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_gender_pronoun'),
             'type' => Module::TYPE_GENDER_PRONOUN,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -227,14 +230,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // labels
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_labels'),
             'type' => Module::TYPE_LABELS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -243,14 +246,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // companies
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_companies'),
             'type' => Module::TYPE_COMPANY,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -261,21 +264,21 @@ class SetupAccount implements ShouldQueue
 
     private function addTemplatePageFeed(): void
     {
-        $templatePageFeed = (new CreateTemplatePage)->execute([
+        $templatePageFeed = (new CreateTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_feed'),
             'can_be_deleted' => true,
         ]);
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_feed'),
             'type' => Module::TYPE_FEED,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -286,7 +289,7 @@ class SetupAccount implements ShouldQueue
 
     private function addTemplatePageSocial(): void
     {
-        $templatePageSocial = (new CreateTemplatePage)->execute([
+        $templatePageSocial = (new CreateTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -295,14 +298,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Relationships
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_relationships'),
             'type' => Module::TYPE_RELATIONSHIPS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -311,14 +314,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Pets
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_pets'),
             'type' => Module::TYPE_PETS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -345,7 +348,7 @@ class SetupAccount implements ShouldQueue
 
     private function addTemplatePageLifeEvents(): void
     {
-        $templatePageSocial = (new CreateTemplatePage)->execute([
+        $templatePageSocial = (new CreateTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -354,14 +357,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // goals
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_goals'),
             'type' => Module::TYPE_GOALS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -372,7 +375,7 @@ class SetupAccount implements ShouldQueue
 
     private function addTemplatePageInformation(): void
     {
-        $templatePageInformation = (new CreateTemplatePage)->execute([
+        $templatePageInformation = (new CreateTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -381,14 +384,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Addresses
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_addresses'),
             'type' => Module::TYPE_ADDRESSES,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -397,7 +400,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Notes
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_notes'),
@@ -405,7 +408,7 @@ class SetupAccount implements ShouldQueue
             'can_be_deleted' => false,
             'pagination' => 3,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -414,14 +417,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Reminders
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_reminders'),
             'type' => Module::TYPE_REMINDERS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -430,14 +433,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Loans
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_loans'),
             'type' => Module::TYPE_LOANS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -446,14 +449,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Tasks
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_tasks'),
             'type' => Module::TYPE_TASKS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -462,14 +465,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Calls
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_calls'),
             'type' => Module::TYPE_CALLS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -513,7 +516,7 @@ class SetupAccount implements ShouldQueue
                 'name' => $type,
             ];
 
-            (new CreateGender)->execute($request);
+            (new CreateGender())->execute($request);
         }
     }
 
@@ -539,7 +542,7 @@ class SetupAccount implements ShouldQueue
                 'name' => $pronoun,
             ];
 
-            (new CreatePronoun)->execute($request);
+            (new CreatePronoun())->execute($request);
         }
     }
 
@@ -582,7 +585,7 @@ class SetupAccount implements ShouldQueue
     private function addRelationshipTypes(): void
     {
         // Love type
-        $group = (new CreateRelationshipGroupType)->execute([
+        $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_love'),
@@ -636,7 +639,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Family type
-        $group = (new CreateRelationshipGroupType)->execute([
+        $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_family'),
@@ -690,7 +693,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Friend
-        $group = (new CreateRelationshipGroupType)->execute([
+        $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_friend_title'),
@@ -715,7 +718,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Work
-        $group = (new CreateRelationshipGroupType)->execute([
+        $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.relationship_type_work'),
@@ -757,7 +760,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         foreach ($addresses as $address) {
-            (new CreateAddressType)->execute([
+            (new CreateAddressType())->execute([
                 'account_id' => $this->user->account_id,
                 'author_id' => $this->user->id,
                 'name' => $address,
@@ -767,42 +770,42 @@ class SetupAccount implements ShouldQueue
 
     private function addCallReasonTypes(): void
     {
-        $type = (new CreateCallReasonType)->execute([
+        $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.default_call_reason_types_personal'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_advice'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_say_hello'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_need_anything'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_respect'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_story'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
@@ -810,18 +813,18 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // business
-        $type = (new CreateCallReasonType)->execute([
+        $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.default_call_reason_types_business'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_business_purchases'),
         ]);
-        (new CreateCallReason)->execute([
+        (new CreateCallReason())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'call_reason_type_id' => $type->id,
@@ -831,7 +834,7 @@ class SetupAccount implements ShouldQueue
 
     private function addContactInformation(): void
     {
-        $information = (new CreateContactInformationType)->execute([
+        $information = (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_email'),
@@ -841,7 +844,7 @@ class SetupAccount implements ShouldQueue
         $information->type = 'email';
         $information->save();
 
-        $information = (new CreateContactInformationType)->execute([
+        $information = (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_phone'),
@@ -851,37 +854,37 @@ class SetupAccount implements ShouldQueue
         $information->type = 'phone';
         $information->save();
 
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_facebook'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_twitter'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_whatsapp'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_telegram'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_hangouts'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_linkedin'),
         ]);
-        (new CreateContactInformationType)->execute([
+        (new CreateContactInformationType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('account.contact_information_type_instagram'),
@@ -905,7 +908,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         foreach ($categories as $category) {
-            (new CreatePetCategory)->execute([
+            (new CreatePetCategory())->execute([
                 'account_id' => $this->user->account_id,
                 'author_id' => $this->user->id,
                 'name' => $category,
@@ -936,7 +939,7 @@ class SetupAccount implements ShouldQueue
 
     private function addActivityTypes(): void
     {
-        $type = (new CreateActivityType)->execute([
+        $type = (new CreateActivityType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.activity_type_category_simple_activities'),
@@ -957,7 +960,7 @@ class SetupAccount implements ShouldQueue
             ],
         ]);
 
-        $type = (new CreateActivityType)->execute([
+        $type = (new CreateActivityType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.activity_type_category_sport'),
@@ -970,7 +973,7 @@ class SetupAccount implements ShouldQueue
             ],
         ]);
 
-        $type = (new CreateActivityType)->execute([
+        $type = (new CreateActivityType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.activity_type_category_food'),
@@ -999,7 +1002,7 @@ class SetupAccount implements ShouldQueue
             ],
         ]);
 
-        $type = (new CreateActivityType)->execute([
+        $type = (new CreateActivityType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.activity_type_category_cultural_activities'),
