@@ -9,6 +9,7 @@ use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
 use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
+use App\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
 use App\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
@@ -73,6 +74,7 @@ class ContactShowViewHelper
             'contact_name' => ModuleContactNameViewHelper::data($contact, $user),
             'template_pages' => self::getTemplatePagesList($templatePages, $contact, $templatePage),
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
+            'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => self::modules($templatePage, $contact, $user),
             'options' => [
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
