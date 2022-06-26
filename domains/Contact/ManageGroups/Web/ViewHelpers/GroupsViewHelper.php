@@ -3,8 +3,6 @@
 namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
 use App\Models\Contact;
-use App\Models\Group;
-use App\Models\GroupType;
 use Illuminate\Support\Collection;
 
 class GroupsViewHelper
