@@ -13,7 +13,7 @@ class GroupsViewHelper
      * information exists.
      *
      * @param  Contact  $contact
-     * @return array
+     * @return Collection
      */
     public static function summary(Contact $contact): Collection
     {
