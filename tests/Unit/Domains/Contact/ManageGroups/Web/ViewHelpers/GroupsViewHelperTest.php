@@ -2,14 +2,9 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGroups\Web\ViewHelpers;
 
-use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
-use App\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Models\Contact;
-use App\Models\Goal;
 use App\Models\Group;
-use App\Models\User;
-use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -38,7 +33,7 @@ class GroupsViewHelperTest extends TestCase
                 0 => [
                     'id' => $group->id,
                     'name' => $group->name,
-                ]
+                ],
             ],
             $collection->toArray()
         );
