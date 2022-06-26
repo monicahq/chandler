@@ -8,6 +8,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+.group-list-item:not(:last-child):after {
+  content: ',';
+}
 </style>
 
 <template>
@@ -1031,8 +1035,11 @@
                   <g></g>
                 </svg>
                 <ul>
-                  <li>Part of</li>
-                  <li v-for="group in data.group_summary_information" :key="group.id">
+                  <li class="mr-2 inline">Part of</li>
+                  <li
+                    v-for="group in data.group_summary_information"
+                    :key="group.id"
+                    class="group-list-item mr-2 inline">
                     <inertia-link class="text-blue-500 hover:underline">{{ group.name }}</inertia-link>
                   </li>
                 </ul>
