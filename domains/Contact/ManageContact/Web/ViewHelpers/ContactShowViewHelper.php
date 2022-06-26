@@ -49,6 +49,7 @@ class ContactShowViewHelper
             'contact_name' => ModuleContactNameViewHelper::data($contact, $user),
             'template_pages' => $templatesPagesCollection,
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
+            'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
             'options' => [
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,

@@ -3,6 +3,9 @@
 namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
 use App\Models\Contact;
+use App\Models\Group;
+use App\Models\GroupType;
+use Illuminate\Support\Collection;
 
 class GroupsViewHelper
 {
@@ -14,7 +17,7 @@ class GroupsViewHelper
      * @param  Contact  $contact
      * @return array
      */
-    public static function summary(Contact $contact): array
+    public static function summary(Contact $contact): Collection
     {
         $groupsInContact = $contact->groups()->with('contacts')->orderBy('name')->get();
 
