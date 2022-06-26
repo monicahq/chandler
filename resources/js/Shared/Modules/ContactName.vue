@@ -27,8 +27,6 @@
     <h1 class="text-xl font-bold">
       {{ data.name }}
     </h1>
-
-    <p class="mt-2 text-sm">Part of <inertia-link class="text-blue-500 hover:underline">Famille Freyd</inertia-link></p>
   </div>
 </template>
 
