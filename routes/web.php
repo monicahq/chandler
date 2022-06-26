@@ -193,7 +193,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     // groups
                     Route::get('groups', [ContactModuleGroupController::class, 'index'])->name('contact.group.index');
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
-                    Route::put('groups/{group}', [ContactModuleGroupController::class, 'update'])->name('contact.group.update');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
                 });
             });

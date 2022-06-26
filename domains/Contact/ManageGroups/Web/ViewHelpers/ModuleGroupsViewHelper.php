@@ -92,11 +92,6 @@ class ModuleGroupsViewHelper
             'roles' => $roles,
             'selected' => $taken,
             'url' => [
-                'update' => route('contact.group.update', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                    'group' => $group->id,
-                ]),
                 'destroy' => route('contact.group.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,

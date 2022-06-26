@@ -4,6 +4,7 @@ namespace App\Contact\ManageGroups\Web\Controllers;
 
 use App\Contact\ManageGroups\Services\AddContactToGroup;
 use App\Contact\ManageGroups\Services\CreateGroup;
+use App\Contact\ManageGroups\Services\RemoveContactFromGroup;
 use App\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -62,24 +63,6 @@ class ContactModuleGroupController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, int $vaultId, int $contactId, int $groupId)
-    {
-        $data = [
-            'account_id' => Auth::user()->account_id,
-            'author_id' => Auth::user()->id,
-            'vault_id' => $vaultId,
-            'contact_id' => $contactId,
-            'group_id' => $groupId,
-        ];
-
-        $group = (new AddContactToGroup)->execute($data);
-        $contact = Contact::find($contactId);
-
-        return response()->json([
-            'data' => ModuleLabelViewHelper::dtoLabel($group, $contact, true),
-        ], 200);
-    }
-
     public function destroy(Request $request, int $vaultId, int $contactId, int $groupId)
     {
         $data = [
@@ -90,11 +73,11 @@ class ContactModuleGroupController extends Controller
             'group_id' => $groupId,
         ];
 
-        $group = (new RemoveLabel)->execute($data);
+        $group = (new RemoveContactFromGroup)->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleLabelViewHelper::dtoLabel($group, $contact, false),
+            'data' => ModuleGroupsViewHelper::dto($contact, $group, false),
         ], 200);
     }
 }
