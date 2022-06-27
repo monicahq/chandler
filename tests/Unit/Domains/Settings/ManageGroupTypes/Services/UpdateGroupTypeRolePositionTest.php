@@ -96,22 +96,22 @@ class UpdateGroupTypeRolePositionTest extends TestCase
 
         $this->assertDatabaseHas('group_type_roles', [
             'id' => $groupTypeRole1->id,
-            'group_type_id' => $groupTypeRole->id,
+            'group_type_id' => $groupType->id,
             'position' => 1,
         ]);
         $this->assertDatabaseHas('group_type_roles', [
             'id' => $groupTypeRole3->id,
-            'group_type_id' => $groupTypeRole->id,
+            'group_type_id' => $groupType->id,
             'position' => 2,
         ]);
         $this->assertDatabaseHas('group_type_roles', [
             'id' => $groupTypeRole4->id,
-            'group_type_id' => $groupTypeRole->id,
+            'group_type_id' => $groupType->id,
             'position' => 4,
         ]);
         $this->assertDatabaseHas('group_type_roles', [
             'id' => $groupTypeRole->id,
-            'group_type_id' => $groupTypeRole->id,
+            'group_type_id' => $groupType->id,
             'position' => 3,
         ]);
 
