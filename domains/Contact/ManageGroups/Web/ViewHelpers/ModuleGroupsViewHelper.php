@@ -52,6 +52,14 @@ class ModuleGroupsViewHelper
         ];
     }
 
+    /**
+     * Gets the details of a given group.
+     *
+     * @param Contact $contact
+     * @param Group $group
+     * @param boolean $taken
+     * @return array
+     */
     public static function dto(Contact $contact, Group $group, bool $taken = false): array
     {
         $contacts = $group->contacts()
