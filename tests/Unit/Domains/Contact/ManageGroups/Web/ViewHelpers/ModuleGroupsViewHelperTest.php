@@ -33,7 +33,7 @@ class ModuleGroupsViewHelperTest extends TestCase
                 0 => [
                     'id' => $group->id,
                     'name' => $group->name,
-                ]
+                ],
             ],
             $collection->toArray()
         );
