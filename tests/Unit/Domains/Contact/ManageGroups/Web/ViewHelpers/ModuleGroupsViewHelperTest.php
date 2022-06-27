@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGroups\Web\ViewHelpers;
 
-use App\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
 use App\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Models\Avatar;
 use App\Models\Contact;
@@ -44,7 +43,7 @@ class ModuleGroupsViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault_id . '/contacts/' . $contact->id.'/groups',
+                'store' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id.'/groups',
             ],
             $array['url']
         );
@@ -106,9 +105,9 @@ class ModuleGroupsViewHelperTest extends TestCase
                     'name' => $contact->name,
                     'avatar' => '123',
                     'url' => [
-                        'show' => env('APP_URL') . '/vaults/' . $contact->vault_id . '/contacts/' . $contact->id,
+                        'show' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id,
                     ],
-                ]
+                ],
             ],
             $array['contacts']->toArray()
         );
@@ -117,16 +116,15 @@ class ModuleGroupsViewHelperTest extends TestCase
                 0 => [
                     'id' => $groupTypeRole->id,
                     'label' => $groupTypeRole->label,
-                ]
+                ],
             ],
             $array['roles']->toArray()
         );
         $this->assertEquals(
             [
-                'destroy' => env('APP_URL') . '/vaults/' . $contact->vault_id . '/contacts/' . $contact->id.'/groups/'.$group->id,
+                'destroy' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id.'/groups/'.$group->id,
             ],
             $array['url']
         );
-
     }
 }
