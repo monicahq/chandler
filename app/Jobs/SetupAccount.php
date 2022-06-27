@@ -330,14 +330,14 @@ class SetupAccount implements ShouldQueue
         ]);
 
         // Groups
-        $module = (new CreateModule)->execute([
+        $module = (new CreateModule())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'name' => trans('app.module_groups'),
             'type' => Module::TYPE_GROUPS,
             'can_be_deleted' => false,
         ]);
-        (new AssociateModuleToTemplatePage)->execute([
+        (new AssociateModuleToTemplatePage())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
@@ -551,30 +551,30 @@ class SetupAccount implements ShouldQueue
      */
     private function addGroupTypes(): void
     {
-        $groupType = (new CreateGroupType)->execute([
+        $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.group_type_family'),
         ]);
-        (new CreateGroupTypeRole)->execute([
+        (new CreateGroupTypeRole())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'group_type_id' => $groupType->id,
             'label' => trans('account.group_type_family_role_parent'),
         ]);
-        (new CreateGroupTypeRole)->execute([
+        (new CreateGroupTypeRole())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'group_type_id' => $groupType->id,
             'label' => trans('account.group_type_family_role_child'),
         ]);
 
-        $groupType = (new CreateGroupType)->execute([
+        $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'label' => trans('account.group_type_couple_without_children'),
         ]);
-        (new CreateGroupTypeRole)->execute([
+        (new CreateGroupTypeRole())->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'group_type_id' => $groupType->id,

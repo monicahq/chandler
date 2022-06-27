@@ -9,9 +9,9 @@ use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Models\User;
 use App\Models\Vault;
-use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use function env;
 
 class ContactShowViewHelperTest extends TestCase
 {
@@ -48,13 +48,14 @@ class ContactShowViewHelperTest extends TestCase
         $array = ContactShowViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            6,
+            7,
             count($array)
         );
 
         $this->assertArrayHasKey('contact_name', $array);
         $this->assertArrayHasKey('template_pages', $array);
         $this->assertArrayHasKey('contact_information', $array);
+        $this->assertArrayHasKey('group_summary_information', $array);
         $this->assertArrayHasKey('modules', $array);
         $this->assertArrayHasKey('options', $array);
         $this->assertArrayHasKey('url', $array);

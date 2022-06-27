@@ -41,7 +41,7 @@ class ContactModuleGroupController extends Controller
                 'name' => $request->input('name'),
             ];
 
-            $group = (new CreateGroup)->execute($data);
+            $group = (new CreateGroup())->execute($data);
             $groupId = $group->id;
         }
 
@@ -54,7 +54,7 @@ class ContactModuleGroupController extends Controller
             'group_type_role_id' => $request->input('group_type_role_id') ?? null,
         ];
 
-        $group = (new AddContactToGroup)->execute($data);
+        $group = (new AddContactToGroup())->execute($data);
 
         $contact = Contact::find($contactId);
 
@@ -73,7 +73,7 @@ class ContactModuleGroupController extends Controller
             'group_id' => $groupId,
         ];
 
-        $group = (new RemoveContactFromGroup)->execute($data);
+        $group = (new RemoveContactFromGroup())->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([
