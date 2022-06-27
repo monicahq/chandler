@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\AvatarHelper;
 use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +16,8 @@ use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -71,6 +73,16 @@ class Contact extends Model
                 'contact' => $this->id,
             ]),
         ];
+    }
+
+    /**
+     * Determine if the model should be searchable.
+     *
+     * @return bool
+     */
+    public function shouldBeSearchable()
+    {
+        return $this->listed;
     }
 
     /**
@@ -246,9 +258,9 @@ class Contact extends Model
      *
      * @return BelongsTo
      */
-    public function avatar(): BelongsTo
+    public function currentAvatar(): BelongsTo
     {
-        return $this->belongsTo(Avatar::class);
+        return $this->belongsTo(Avatar::class, 'avatar_id');
     }
 
     /**
@@ -302,6 +314,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the groups associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'contact_group');
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute
@@ -347,6 +369,20 @@ class Contact extends Model
                 }
 
                 return ImportantDateHelper::getAge($birthdate);
+            }
+        );
+    }
+
+    /**
+     * Get the avatar of the contact.
+     *
+     * @return Attribute
+     */
+    protected function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return AvatarHelper::getSVG($this);
             }
         );
     }

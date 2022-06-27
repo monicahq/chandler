@@ -81,6 +81,7 @@ class SetupDummyAccount extends Command
     {
         shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/notes"');
         shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/contacts"');
+        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/groups"');
         $this->artisan('☐ Reset search engine', 'monica:setup');
         $this->artisan('☐ Migration of the database', 'migrate:fresh');
         $this->artisan('☐ Symlink the storage folder', 'storage:link');
@@ -113,7 +114,7 @@ class SetupDummyAccount extends Command
     {
         $this->info('☐ Create first user of the account');
 
-        $this->firstUser = (new CreateAccount)->execute([
+        $this->firstUser = (new CreateAccount())->execute([
             'email' => 'admin@admin.com',
             'password' => 'admin123',
             'first_name' => 'Michael',
@@ -129,7 +130,7 @@ class SetupDummyAccount extends Command
         $this->info('☐ Create vaults');
 
         for ($i = 0; $i < rand(3, 5); $i++) {
-            (new CreateVault)->execute([
+            (new CreateVault())->execute([
                 'account_id' => $this->firstUser->account_id,
                 'author_id' => $this->firstUser->id,
                 'type' => Vault::TYPE_PERSONAL,
@@ -148,7 +149,7 @@ class SetupDummyAccount extends Command
                 $date = $this->faker->dateTimeThisCentury();
                 $birthDate = Carbon::parse($date);
 
-                $contact = (new CreateContact)->execute([
+                $contact = (new CreateContact())->execute([
                     'account_id' => $this->firstUser->account_id,
                     'author_id' => $this->firstUser->id,
                     'vault_id' => $vault->id,
@@ -160,7 +161,7 @@ class SetupDummyAccount extends Command
                     'listed' => true,
                 ]);
 
-                (new CreateContactImportantDate)->execute([
+                (new CreateContactImportantDate())->execute([
                     'account_id' => $this->firstUser->account_id,
                     'author_id' => $this->firstUser->id,
                     'vault_id' => $vault->id,
@@ -181,7 +182,7 @@ class SetupDummyAccount extends Command
 
         foreach (Contact::all() as $contact) {
             for ($i = 0; $i < 4; $i++) {
-                (new CreateNote)->execute([
+                (new CreateNote())->execute([
                     'account_id' => $this->firstUser->account_id,
                     'author_id' => $this->firstUser->id,
                     'vault_id' => $contact->vault_id,
@@ -199,7 +200,7 @@ class SetupDummyAccount extends Command
 
         foreach (Contact::all() as $contact) {
             for ($i = 0; $i < 4; $i++) {
-                (new CreateContactTask)->execute([
+                (new CreateContactTask())->execute([
                     'account_id' => $this->firstUser->account_id,
                     'author_id' => $this->firstUser->id,
                     'vault_id' => $contact->vault_id,
@@ -224,7 +225,7 @@ class SetupDummyAccount extends Command
 
         foreach (Contact::all() as $contact) {
             foreach ($goals->take(rand(1, 4)) as $goal) {
-                $goal = (new CreateGoal)->execute([
+                $goal = (new CreateGoal())->execute([
                     'account_id' => $this->firstUser->account_id,
                     'author_id' => $this->firstUser->id,
                     'vault_id' => $contact->vault_id,
@@ -234,11 +235,11 @@ class SetupDummyAccount extends Command
 
                 for ($i = 0; $i < 4; $i++) {
                     $date = Carbon::now()->subYears(2);
-                    for ($j = 0; $j < rand(1, 340); $j++) {
+                    for ($j = 0; $j < rand(1, 20); $j++) {
                         $date = $date->addDays(rand(1, 3));
 
                         try {
-                            (new ToggleStreak)->execute([
+                            (new ToggleStreak())->execute([
                                 'account_id' => $this->firstUser->account_id,
                                 'author_id' => $this->firstUser->id,
                                 'vault_id' => $contact->vault_id,
