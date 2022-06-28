@@ -3,14 +3,9 @@
 namespace App\Contact\ManageContact\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Models\Gender;
-use App\Models\Pronoun;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class ToggleArchiveContact extends BaseService implements ServiceInterface
 {
@@ -57,7 +52,7 @@ class ToggleArchiveContact extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->contact->listed = !$this->contact->listed;
+        $this->contact->listed = ! $this->contact->listed;
         $this->contact->save();
 
         $this->createFeedItem();
