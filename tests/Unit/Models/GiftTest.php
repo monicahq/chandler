@@ -7,7 +7,6 @@ use App\Models\Currency;
 use App\Models\Gift;
 use App\Models\GiftOccasion;
 use App\Models\GiftState;
-use App\Models\Loan;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

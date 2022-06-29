@@ -3,11 +3,8 @@
 namespace App\Contact\ManageGifts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Contact;
 use App\Models\Gift;
-use App\Models\Loan;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;

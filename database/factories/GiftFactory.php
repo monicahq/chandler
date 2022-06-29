@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Gift;
 use App\Models\GiftOccasion;
 use App\Models\GiftState;
-use App\Models\Loan;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
