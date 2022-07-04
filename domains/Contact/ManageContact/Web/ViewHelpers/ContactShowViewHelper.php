@@ -9,6 +9,8 @@ use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
 use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
+use App\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
+use App\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
 use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
@@ -45,13 +47,19 @@ class ContactShowViewHelper
 
         return [
             'contact_name' => ModuleContactNameViewHelper::data($contact, $user),
+            'listed' => $contact->listed,
             'template_pages' => $templatesPagesCollection,
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
+            'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
             'options' => [
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
             ],
             'url' => [
+                'toggle_archive' => route('contact.archive.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'update_template' => route('contact.blank', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -70,8 +78,10 @@ class ContactShowViewHelper
 
         return [
             'contact_name' => ModuleContactNameViewHelper::data($contact, $user),
+            'listed' => $contact->listed,
             'template_pages' => self::getTemplatePagesList($templatePages, $contact, $templatePage),
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
+            'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => self::modules($templatePage, $contact, $user),
             'options' => [
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
@@ -210,6 +220,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_ADDRESSES) {
                 $data = ModuleContactAddressesViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_GROUPS) {
+                $data = ModuleGroupsViewHelper::data($contact);
             }
 
             $modulesCollection->push([

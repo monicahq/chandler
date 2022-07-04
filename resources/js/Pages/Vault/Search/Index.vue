@@ -48,6 +48,8 @@
         <div v-if="!processingSearch && Object.keys(results).length !== 0">
           <contact :data="results.contacts" />
 
+          <group :data="results.groups" />
+
           <note :data="results.notes" />
         </div>
 
@@ -74,7 +76,7 @@ import Layout from '@/Shared/Layout';
 import TextInput from '@/Shared/Form/TextInput';
 import Contact from '@/Pages/Vault/Search/Partials/Contact';
 import Note from '@/Pages/Vault/Search/Partials/Note';
-import Loading from '@/Shared/Loading';
+import Group from '@/Pages/Vault/Search/Partials/Group';
 
 export default {
   components: {
@@ -82,7 +84,7 @@ export default {
     TextInput,
     Contact,
     Note,
-    Loading,
+    Group,
   },
 
   props: {

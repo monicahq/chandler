@@ -58,7 +58,7 @@
                 </li>
               </ul>
 
-              <p v-else>No labels yet.</p>
+              <p v-else class="text-sm text-gray-500">No labels yet.</p>
             </div>
           </div>
 
@@ -86,6 +86,20 @@
                 </inertia-link>
               </li>
             </ul>
+
+            <!-- pagination -->
+            <div v-if="!moduleMode" class="flex justify-between text-center">
+              <inertia-link
+                v-show="paginator.previousPageUrl"
+                class="fl dib"
+                :href="paginator.previousPageUrl"
+                title="Previous">
+                &larr; Previous
+              </inertia-link>
+              <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">
+                Next &rarr;
+              </inertia-link>
+            </div>
           </div>
         </div>
       </div>
@@ -105,6 +119,10 @@ export default {
 
   props: {
     layoutData: {
+      type: Object,
+      default: null,
+    },
+    paginator: {
       type: Object,
       default: null,
     },

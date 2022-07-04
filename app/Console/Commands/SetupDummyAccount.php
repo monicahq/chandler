@@ -81,6 +81,7 @@ class SetupDummyAccount extends Command
     {
         shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/notes"');
         shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/contacts"');
+        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/groups"');
         $this->artisan('☐ Reset search engine', 'monica:setup');
         $this->artisan('☐ Migration of the database', 'migrate:fresh');
         $this->artisan('☐ Symlink the storage folder', 'storage:link');
@@ -234,7 +235,7 @@ class SetupDummyAccount extends Command
 
                 for ($i = 0; $i < 4; $i++) {
                     $date = Carbon::now()->subYears(2);
-                    for ($j = 0; $j < rand(1, 340); $j++) {
+                    for ($j = 0; $j < rand(1, 20); $j++) {
                         $date = $date->addDays(rand(1, 3));
 
                         try {

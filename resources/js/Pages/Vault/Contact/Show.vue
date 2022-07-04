@@ -8,6 +8,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+.group-list-item:not(:last-child):after {
+  content: ',';
+}
 </style>
 
 <template>
@@ -41,6 +45,12 @@
 
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+        <!-- banner if contact is archived -->
+        <!-- this is based on the `listed` boolean on the contact object -->
+        <div v-if="!data.listed" class="mb-8 rounded-lg border border-gray-300 px-3 py-2 text-center">
+          <span class="mr-4">🕸️</span> The contact is archived <span class="ml-4">🕷️</span>
+        </div>
+
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="p-3 sm:p-3">
@@ -63,6 +73,16 @@
             </div>
 
             <ul class="text-xs">
+              <li v-if="data.listed" class="mb-2">
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Archive contact</inertia-link
+                >
+              </li>
+              <li v-if="!data.listed" class="mb-2">
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Unarchive contact</inertia-link
+                >
+              </li>
               <li class="mb-2">
                 <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline"
                   >Change template</inertia-link
@@ -76,6 +96,22 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
+            <!-- family summary -->
+            <div v-if="data.group_summary_information.length > 0">
+              <div class="mb-6 flex rounded border border-gray-200 p-3">
+                <img src="/img/group.svg" class="mr-2 h-6 w-6" />
+                <ul>
+                  <li class="mr-2 inline">Part of</li>
+                  <li
+                    v-for="group in data.group_summary_information"
+                    :key="group.id"
+                    class="group-list-item mr-2 inline">
+                    <inertia-link class="text-blue-500 hover:underline">{{ group.name }}</inertia-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             <!-- all the pages -->
             <div class="mb-8 border-b border-gray-200">
               <ul>
@@ -112,6 +148,8 @@
                 <goals v-if="module.type == 'goals'" :data="goals" />
 
                 <addresses v-if="module.type == 'addresses'" :data="addresses" />
+
+                <groups v-if="module.type == 'groups'" :data="groups" />
               </div>
             </div>
           </div>
@@ -140,6 +178,7 @@ import Calls from '@/Shared/Modules/Calls';
 import Pets from '@/Shared/Modules/Pets';
 import Goals from '@/Shared/Modules/Goals';
 import Addresses from '@/Shared/Modules/Addresses';
+import Groups from '@/Shared/Modules/Groups';
 
 export default {
   components: {
@@ -161,6 +200,7 @@ export default {
     Pets,
     Goals,
     Addresses,
+    Groups,
   },
 
   props: {
@@ -193,6 +233,7 @@ export default {
       pets: [],
       goals: [],
       addresses: [],
+      groups: [],
     };
   },
 
@@ -281,6 +322,10 @@ export default {
       if (this.data.modules.findIndex((x) => x.type == 'addresses') > -1) {
         this.addresses = this.data.modules[this.data.modules.findIndex((x) => x.type == 'addresses')].data;
       }
+
+      if (this.data.modules.findIndex((x) => x.type == 'groups') > -1) {
+        this.groups = this.data.modules[this.data.modules.findIndex((x) => x.type == 'groups')].data;
+      }
     }
   },
 
@@ -294,7 +339,20 @@ export default {
             this.$inertia.visit(response.data.data);
           })
           .catch((error) => {
-            this.loadingState = null;
+            this.form.errors = error.response.data;
+          });
+      }
+    },
+
+    toggleArchive() {
+      if (confirm('Are you sure?')) {
+        axios
+          .put(this.data.url.toggle_archive)
+          .then((response) => {
+            localStorage.success = 'Changes saved';
+            this.$inertia.visit(response.data.data);
+          })
+          .catch((error) => {
             this.form.errors = error.response.data;
           });
       }

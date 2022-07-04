@@ -76,6 +76,16 @@ class Contact extends Model
     }
 
     /**
+     * Determine if the model should be searchable.
+     *
+     * @return bool
+     */
+    public function shouldBeSearchable()
+    {
+        return $this->listed;
+    }
+
+    /**
      * Used to delete related objects from Meilisearch/Algolia instance.
      *
      * @return void
@@ -301,6 +311,16 @@ class Contact extends Model
     public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);
+    }
+
+    /**
+     * Get the groups associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'contact_group');
     }
 
     /**

@@ -35,6 +35,10 @@ class ContactFeedItem extends Model
     public const ACTION_CONTACT_ACTIVITY_DESTROYED = 'deleted an activity';
     public const ACTION_LOAN_CREATED = 'loan_created';
     public const ACTION_LOAN_UPDATED = 'loan_updated';
+    public const ACTION_ADDED_TO_GROUP = 'added_to_group';
+    public const ACTION_REMOVED_FROM_GROUP = 'removed_from_group';
+    public const ACTION_ARCHIVED_CONTACT = 'archived';
+    public const ACTION_UNARCHIVED_CONTACT = 'unarchived';
 
     /**
      * The attributes that are mass assignable.
