@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Settings\ManageUserPreferences\Services;
 use App\Models\Account;
 use App\Models\User;
 use App\Settings\ManageUserPreferences\Services\StoreLocale;
-use App\Settings\ManageUserPreferences\Services\StoreTimezone;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;

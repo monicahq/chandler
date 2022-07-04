@@ -150,7 +150,7 @@ class UserPreferencesIndexViewHelper
     {
         return [
             'locale' => $user->locale,
-            'locale_i18n' => trans('settings.user_preferences_locale_'. $user->locale),
+            'locale_i18n' => trans('settings.user_preferences_locale_'.$user->locale),
             'url' => [
                 'store' => route('settings.preferences.locale.store'),
             ],

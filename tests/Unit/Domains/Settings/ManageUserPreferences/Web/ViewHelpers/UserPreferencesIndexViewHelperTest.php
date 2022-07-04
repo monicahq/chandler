@@ -258,7 +258,7 @@ class UserPreferencesIndexViewHelperTest extends TestCase
                 'locale' => 'fr',
                 'locale_i18n' => 'French',
                 'url' => [
-                    'store' => env('APP_URL') . '/settings/preferences/locale',
+                    'store' => env('APP_URL').'/settings/preferences/locale',
                 ],
             ],
             $array
