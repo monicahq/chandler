@@ -1,0 +1,41 @@
+<?php
+
+return [
+    'index_blank_title' => 'Merci d’essayer Monica',
+    'index_blank_sentence_1' => 'Monica a été créée pour vous permettre de documenter votre vie et vos interactions sociales.',
+    'index_blank_sentence_2' => 'Pour commencer, vous devez créer une voûte.',
+    'index_blank_sentence_3' => 'Monica est open source, conçu par des centaines de personnes dans le monde entier.',
+    'index_blank_sentence_4' => 'Nous espérons que vous aimerez ce que nous avons fait.',
+    'index_blank_sentence_5' => 'Avec toute notre amitié,',
+    'index_title' => 'Toutes les voûtes du compte',
+    'index_description_blank' => 'Pas de description.',
+    'index_cta' => 'Créer une voûte',
+
+    'create_title' => 'Créer une voûte',
+    'create_description' => 'Les voûtes contiennent toutes les données sur vos contacts.',
+    'create_vault_name' => 'Nom de la voûte',
+    'create_vault_description' => 'Description',
+    'create_success' => 'La voûte a été créée',
+
+    'show_contacts_index' => 'Tous les contacts dans la voûte',
+    'show_contacts_labels' => 'Étiquettes',
+    'show_contacts_labels_blank' => 'Aucune étiquette définie.',
+    'show_contacts_cta' => 'Ajouter un contact',
+
+    'create_contact_title' => 'Ajouter un contact',
+    'create_contact_first_name' => 'Prénom',
+    'create_contact_last_name' => 'Nom de famille',
+    'create_contact_middle_name' => 'Deuxième prénom',
+    'create_contact_nickname' => 'Surnom',
+    'create_contact_maiden_name' => 'Nom de jeune fille',
+    'create_contact_gender' => 'Genre',
+    'create_contact_pronoun' => 'Pronom',
+    'create_contact_template' => 'Utiliser le modèle suivant pour ce contact',
+    'create_contact_add_middle_name' => '+ deuxième prénom',
+    'create_contact_add_nickname' => '+ surnom',
+    'create_contact_add_maiden_name' => '+ nom de jeune fille',
+    'create_contact_add_gender' => '+ genre',
+    'create_contact_add_pronoun' => '+ pronom',
+    'create_contact_add_change_template' => '+ changer le modèle',
+    'create_contact_success' => 'Le contact a été ajouté',
+];

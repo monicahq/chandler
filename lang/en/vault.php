@@ -1,0 +1,41 @@
+<?php
+
+return [
+    'index_blank_title' => 'Thanks for giving Monica a try',
+    'index_blank_sentence_1' => 'Monica was made to help you document your life and your social interactions.',
+    'index_blank_sentence_2' => 'To start, you need to create a vault.',
+    'index_blank_sentence_3' => 'Monica is open source, made by hundreds of people from all around the world.',
+    'index_blank_sentence_4' => 'We hope you will like what we’ve done.',
+    'index_blank_sentence_5' => 'All the best,',
+    'index_title' => 'All the vaults in the account',
+    'index_description_blank' => 'No description yet.',
+    'index_cta' => 'Create a vault',
+
+    'create_title' => 'Create a vault',
+    'create_description' => 'Vaults contain all your contacts data.',
+    'create_vault_name' => 'Vault name',
+    'create_vault_description' => 'Description',
+    'create_success' => 'The vault has been created',
+
+    'show_contacts_index' => 'All contacts in the vault',
+    'show_contacts_labels' => 'Labels',
+    'show_contacts_labels_blank' => 'No labels yet.',
+    'show_contacts_cta' => 'Add a contact',
+
+    'create_contact_title' => 'Add a contact',
+    'create_contact_first_name' => 'First name',
+    'create_contact_last_name' => 'Last name',
+    'create_contact_middle_name' => 'Middle name',
+    'create_contact_nickname' => 'Nickname',
+    'create_contact_maiden_name' => 'Maiden name',
+    'create_contact_gender' => 'Gender',
+    'create_contact_pronoun' => 'Pronoun',
+    'create_contact_template' => 'Use the following template for this contact',
+    'create_contact_add_middle_name' => '+ middle name',
+    'create_contact_add_nickname' => '+ nickname',
+    'create_contact_add_maiden_name' => '+ maiden name',
+    'create_contact_add_gender' => '+ gender',
+    'create_contact_add_pronoun' => '+ pronoun',
+    'create_contact_add_change_template' => '+ change template',
+    'create_contact_success' => 'The contact has been added',
+];
