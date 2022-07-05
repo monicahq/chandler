@@ -57,4 +57,10 @@ return [
     'settings_users_store_success' => 'The user has been added',
     'settings_users_update_success' => 'The user has been updated',
     'settings_users_destroy_success' => 'The user has been removed',
+
+    'settings_default_template_title' => 'Default template to display contacts',
+    'settings_default_template_help' => 'A template defines how contacts should be displayed. You can have as many templates as you want - they are defined in your Account settings. However, you might want to define a default template so all your contacts in this vault have this template by default.',
+    'settings_default_template_cta' => 'Set as default',
+    'settings_default_template_blank' => 'There are no templates in the account. Go to the account settings to create one.',
+    'settings_default_template_success' => 'The vault have been updated',
 ];

@@ -57,4 +57,10 @@ return [
     'settings_users_store_success' => 'L’utilisateur a été ajouté',
     'settings_users_update_success' => 'L’utilisateur a été mis à jour',
     'settings_users_destroy_success' => 'L’utilisateur a été enlevé',
+
+    'settings_default_template_title' => 'Modèle par défaut pour afficher les contacts',
+    'settings_default_template_help' => 'Un modèle définit comment les contacts devraient être affichés. Vous pouvez avoir autant de modèles que vous le souhaitez - ils sont définis dans vos Paramètres de compte. Toutefois, vous pouvez définir un modèle par défaut dans cette voûte afin que tous les contacts utilisent ce modèle par défaut.',
+    'settings_default_template_cta' => 'Définir comme défaut',
+    'settings_default_template_blank' => 'Il n’y a pas de modèles dans le compte. Allez dans la section Paramètres de votre compte pour en créer un.',
+    'settings_default_template_success' => 'La voûte a été mise à jour',
 ];
