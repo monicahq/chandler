@@ -175,7 +175,7 @@
                   :text="$t('app.cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameTemplateModalShownId = 0" />
-                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>
