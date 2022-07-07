@@ -21,6 +21,7 @@ return [
     'breadcrumb_contact_create' => 'Create a contact',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
+    'breadcrumb_settings_notification_channels' => 'Notification channels',
 
     'notification_flash_changes_saved' => 'Changes saved',
 
