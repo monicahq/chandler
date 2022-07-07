@@ -60,7 +60,7 @@ return [
     'notification_channels_email_at_word' => 'À',
     'notification_channels_email_help' => 'Nous vous enverrons un courriel de confirmation à cette adresse courriel que vous devrez valider avant qu’on puisse envoyer des notifications à cette adresse.',
     'notification_channels_email_sent_at' => 'Envoyé à :time',
-    'notification_channels_email_deactivate' => 'Désactivater',
+    'notification_channels_email_deactivate' => 'Désactiver',
     'notification_channels_email_activate' => 'Activer',
     'notification_channels_email_send_test' => 'Envoyer un test',
     'notification_channels_email_send_success' => 'Courriel de test envoyé !',
@@ -72,4 +72,9 @@ return [
     'notification_channels_email_added' => 'Le courriel a été ajouté',
     'notification_channels_email_destroy_confirm' => 'Êtes-vous sûr ? Vous pourrez toujours rajouter le courriel plus tard si vous le voulez.',
     'notification_channels_email_destroy_success' => 'Le courriel a été supprimé',
+    'notification_channels_log_title' => 'Historique des notifications envoyées',
+    'notification_channels_log_type' => 'Type :',
+    'notification_channels_log_label' => 'Libellé :',
+    'notification_channels_log_help' => 'Cette page montre toutes les notifications qui ont été envoyés via ce canal par le passé. Cela sert principalement comme une façon de déboguer dans le cas où vous ne recevez pas les notifications que vous avez programmées.',
+    'notification_channels_log_blank' => 'Vous n’avez pas encore reçu de notifications dans ce canal.',
 ];

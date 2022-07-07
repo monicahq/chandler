@@ -22,6 +22,7 @@ return [
     'breadcrumb_settings' => 'Paramètres',
     'breadcrumb_settings_preferences' => 'Préférences de l’utilisateur',
     'breadcrumb_settings_notification_channels' => 'Chaînes de notification',
+    'breadcrumb_settings_notification_channels_log_details' => 'Détails des logs',
 
     'notification_flash_changes_saved' => 'Changements effectués',
 

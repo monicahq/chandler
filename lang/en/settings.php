@@ -72,4 +72,9 @@ return [
     'notification_channels_email_added' => 'The email has been added',
     'notification_channels_email_destroy_confirm' => 'Are you sure? You can always add the email back later on if you want.',
     'notification_channels_email_destroy_success' => 'The email address has been deleted',
+    'notification_channels_log_title' => 'History of the notification sent',
+    'notification_channels_log_type' => 'Type:',
+    'notification_channels_log_label' => 'Label:',
+    'notification_channels_log_help' => 'This page shows all the notifications that have been sent in this channel in the past. It primeraly serves as a way to debug in case you don’t receive the notification you’ve set up.',
+    'notification_channels_log_blank' => 'You haven’t received a notification in this channel yet.',
 ];

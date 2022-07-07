@@ -22,6 +22,7 @@ return [
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
     'breadcrumb_settings_notification_channels' => 'Notification channels',
+    'breadcrumb_settings_notification_channels_log_details' => 'Log details',
 
     'notification_flash_changes_saved' => 'Changes saved',
 
