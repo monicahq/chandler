@@ -75,5 +75,20 @@ return [
     'settings_labels_create_success' => 'The label has been created',
     'settings_labels_update_success' => 'The label has been updated',
     'settings_labels_destroy_success' => 'The label has been deleted',
-    'settings_labels_destroy_confirmation' => 'Are you sure? This will remove the labels from all contacts, but won’t delete the contacts themselves.',
+    'settings_labels_destroy_confirmation' => 'Are you sure? This will remove the label from all contacts, but won’t delete the contacts themselves.',
+
+    'settings_important_dates_title' => 'All the important date types used in the vault',
+    'settings_important_dates_cta' => 'Add a type',
+    'settings_important_dates_name' => 'Name',
+    'settings_important_dates_blank' => 'Date types are essential as they let you categorize dates that you add to a contact.',
+    'settings_important_dates_create_success' => 'The type has been created',
+    'settings_important_dates_update_success' => 'The type has been updated',
+    'settings_important_dates_destroy_success' => 'The type has been deleted',
+    'settings_important_dates_destroy_confirmation' => 'Are you sure? This will remove the type from all contacts, but won’t delete the contacts themselves.',
+
+    'settings_delete_title' => 'Delete the vault',
+    'settings_delete_description' => 'Deleting the vault means deleting all the data inside this vault, forever. There is no turning back. Please be certain.',
+    'settings_delete_cta' => 'Delete the vault',
+    'settings_delete_cta_confirmation' => 'Are you sure? This will delete all the data inside this vault.',
+    'settings_delete_destroy_success' => 'The vault has been deleted',
 ];
