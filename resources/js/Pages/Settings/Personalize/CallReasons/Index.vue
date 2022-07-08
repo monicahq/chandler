@@ -23,9 +23,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -38,9 +40,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_personalize')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -65,7 +67,7 @@
           <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📲 </span> All the call reasons</h3>
           <pretty-button
             v-if="!createCallReasonTypeModalShown"
-            :text="'Add a new call reason type'"
+            :text="'add a call reason type'"
             :icon="'plus'"
             @click="showCallReasonTypeModal" />
         </div>
@@ -112,8 +114,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createCallReasonTypeModalShown = false" />
-            <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createCallReasonTypeModalShown = false" />
+            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -163,8 +165,11 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameCallReasonTypeModalShownId = 0" />
-                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-span
+                  :text="$t('app.cancel')"
+                  :classes="'mr-3'"
+                  @click.prevent="renameCallReasonTypeModalShownId = 0" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
 
@@ -214,8 +219,8 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameReasonModalId = 0" />
-                  <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                  <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="renameReasonModalId = 0" />
+                  <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
             </div>
@@ -227,7 +232,7 @@
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showReasonModal(callReasonType)"
-                >Add a new reason</span
+                >add a reason</span
               >
             </div>
 
@@ -254,8 +259,8 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="createReasonModalId = 0" />
-                <pretty-button :text="'Add'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="createReasonModalId = 0" />
+                <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
               </div>
             </form>
           </li>

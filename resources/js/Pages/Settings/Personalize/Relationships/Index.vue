@@ -23,9 +23,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -38,9 +40,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_personalize')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -65,7 +67,7 @@
           <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🥸 </span> All the relationship types</h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
-            :text="'Add a new group type'"
+            :text="'add a group type'"
             :icon="'plus'"
             @click="showGroupTypeModal" />
         </div>
@@ -123,7 +125,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
             <pretty-button :text="'Create group type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
@@ -175,8 +177,11 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameGroupTypeModalShownId = 0" />
-                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-span
+                  :text="$t('app.cancel')"
+                  :classes="'mr-3'"
+                  @click.prevent="renameGroupTypeModalShownId = 0" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
 
@@ -260,8 +265,11 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameRelationshipTypeModalId = 0" />
-                  <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                  <pretty-span
+                    :text="$t('app.cancel')"
+                    :classes="'mr-3'"
+                    @click.prevent="renameRelationshipTypeModalId = 0" />
+                  <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
             </div>
@@ -273,7 +281,7 @@
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showRelationshipTypeModal(groupType)"
-                >Add a new relationship type</span
+                >add a relationship type</span
               >
             </div>
 
@@ -313,8 +321,11 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="createRelationshipTypeModalId = 0" />
-                <pretty-button :text="'Add'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                <pretty-span
+                  :text="$t('app.cancel')"
+                  :classes="'mr-3'"
+                  @click.prevent="createRelationshipTypeModalId = 0" />
+                <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
               </div>
             </form>
           </li>

@@ -17,6 +17,7 @@ class UserPreferencesIndexViewHelper
             'timezone' => self::dtoTimezone($user),
             'number_format' => self::dtoNumberFormat($user),
             'maps' => self::dtoMapsPreferences($user),
+            'locale' => self::dtoLocale($user),
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
@@ -124,23 +125,34 @@ class UserPreferencesIndexViewHelper
         $collection = collect();
         $collection->push([
             'id' => 1,
-            'type' => trans('account.maps_site_google_maps'),
-            'description' => trans('account.maps_site_google_maps_description'),
+            'type' => trans('settings.user_preferences_map_site_google_maps'),
+            'description' => trans('settings.user_preferences_map_site_google_maps_description'),
             'value' => User::MAPS_SITE_GOOGLE_MAPS,
         ]);
         $collection->push([
             'id' => 2,
-            'type' => trans('account.maps_site_open_street_maps'),
-            'description' => trans('account.maps_site_open_street_maps_description'),
+            'type' => trans('settings.user_preferences_map_site_open_street_maps'),
+            'description' => trans('settings.user_preferences_map_site_open_street_maps_description'),
             'value' => User::MAPS_SITE_OPEN_STREET_MAPS,
         ]);
 
         return [
             'types' => $collection,
             'default_map_site' => $user->default_map_site,
-            'default_map_site_i18n' => trans('account.maps_site_'.$user->default_map_site),
+            'default_map_site_i18n' => trans('settings.user_preferences_map_site_'.$user->default_map_site),
             'url' => [
                 'store' => route('settings.preferences.maps.store'),
+            ],
+        ];
+    }
+
+    public static function dtoLocale(User $user): array
+    {
+        return [
+            'locale' => $user->locale,
+            'locale_i18n' => trans('settings.user_preferences_locale_'.$user->locale),
+            'url' => [
+                'store' => route('settings.preferences.locale.store'),
             ],
         ];
     }

@@ -81,14 +81,14 @@ select {
             v-model="form.pet_category_id"
             :data="data.pet_categories"
             :required="true"
-            :placeholder="'Choose a value'"
+            :placeholder="$t('app.choose_value')"
             :dropdown-class="'block w-full'"
             :label="'Pet category'" />
         </div>
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="addPetModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addPetModalShown = false" />
         <pretty-button :text="'Add pet'" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
@@ -109,7 +109,9 @@ select {
               <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="showEditPetModal(pet)">
                 Edit
               </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pet)">Delete</li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pet)">
+                {{ $t('app.delete') }}
+              </li>
             </ul>
           </div>
 
@@ -141,15 +143,15 @@ select {
                   v-model="form.pet_category_id"
                   :data="data.pet_categories"
                   :required="true"
-                  :placeholder="'Choose a value'"
+                  :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
                   :label="'Pet category'" />
               </div>
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedPetId = 0" />
-              <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedPetId = 0" />
+              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </li>

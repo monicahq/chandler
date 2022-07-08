@@ -23,9 +23,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -38,9 +40,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_personalize')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -65,7 +67,7 @@
           <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 👩‍🍼 </span> All the life event categories</h3>
           <pretty-button
             v-if="!createLifeEventCategoryModalShown"
-            :text="'Add a new life event category'"
+            :text="'add a life event category'"
             :icon="'plus'"
             @click="showLifeEventCategoryModal" />
         </div>
@@ -116,8 +118,11 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createLifeEventCategoryModalShown = false" />
-            <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3'"
+              @click="createLifeEventCategoryModalShown = false" />
+            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -169,10 +174,10 @@
 
               <div class="flex justify-between p-5">
                 <pretty-span
-                  :text="'Cancel'"
+                  :text="$t('app.cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameLifeEventCategoryModalShownId = 0" />
-                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
 
@@ -247,8 +252,11 @@
                   </div>
 
                   <div class="flex justify-between p-5">
-                    <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="renameLifeEventTypeModalId = 0" />
-                    <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                    <pretty-span
+                      :text="$t('app.cancel')"
+                      :classes="'mr-3'"
+                      @click.prevent="renameLifeEventTypeModalId = 0" />
+                    <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                   </div>
                 </form>
               </template>
@@ -261,7 +269,7 @@
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showLifeEventTypeModal(lifeEventCategory)"
-                >Add a new life event type</span
+                >add a life event type</span
               >
             </div>
 
@@ -288,8 +296,11 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="createLifeEventCategoryModalId = 0" />
-                <pretty-button :text="'Add'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                <pretty-span
+                  :text="$t('app.cancel')"
+                  :classes="'mr-3'"
+                  @click.prevent="createLifeEventCategoryModalId = 0" />
+                <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
               </div>
             </form>
           </li>

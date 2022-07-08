@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'default_vault_name' => 'My little vault',
-
     'gender_male' => 'Male',
     'gender_female' => 'Female',
     'gender_other' => 'Other',
@@ -21,11 +19,6 @@ return [
     'pronoun_ve_ver' => 've/ver',
     'pronoun_xe_xem' => 'xe/xem',
     'pronoun_ze_hir' => 'ze/hir',
-
-    'maps_site_google_maps' => 'Google Maps',
-    'maps_site_google_maps_description' => 'Google Maps offers the best accuracy and details, but it is not ideal from a privacy standpoint.',
-    'maps_site_open_street_maps' => 'Open Street Maps',
-    'maps_site_open_street_maps_description' => 'Open Street Maps is a great privacy alternative, but offers less details.',
 
     'contact_information_type_email' => 'Email',
     'contact_information_type_phone' => 'Phone',
@@ -62,8 +55,13 @@ return [
     'group_type_family' => 'Family',
     'group_type_family_role_parent' => 'Parent',
     'group_type_family_role_child' => 'Children',
+
     'group_type_couple_without_children' => 'Couple',
     'group_type_couple_role' => 'Partner',
+
+    'group_type_club' => 'Club',
+    'group_type_association' => 'Association',
+    'group_type_roomates' => 'Roomates',
 
     'relationship_type_partner' => 'significant other',
     'relationship_type_spouse' => 'spouse',

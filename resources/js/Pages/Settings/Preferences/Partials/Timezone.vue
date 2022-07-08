@@ -10,8 +10,8 @@ select {
   <div class="mb-16">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> Timezone</h3>
-      <pretty-button v-if="!editMode" :text="'Edit'" @click="enableEditMode" />
+      <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> {{ $t('settings.user_preferences_timezone_title') }}</h3>
+      <pretty-button v-if="!editMode" :text="$t('app.edit')" @click="enableEditMode" />
     </div>
 
     <!-- help text -->
@@ -30,14 +30,14 @@ select {
       </svg>
 
       <div>
-        <p>Regardless of where you are located in the world, have dates displayed in your own timezone.</p>
+        <p>{{ $t('settings.user_preferences_timezone_description') }}</p>
       </div>
     </div>
 
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <p class="px-5 py-2">
-        <span class="mb-2 block">Current timezone:</span>
+        <span class="mb-2 block">{{ $t('settings.user_preferences_timezone_current') }}</span>
         <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm">{{ localTimezone }}</span>
       </p>
     </div>
@@ -499,8 +499,8 @@ select {
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="'Cancel'" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-link :text="$t('app.cancel')" :classes="'mr-3'" @click="editMode = false" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
   </div>
@@ -553,7 +553,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('Changes saved', 'success');
+          this.flash(this.$t('app.notification_flash_changes_saved'), 'success');
           this.localTimezone = response.data.data.timezone;
           this.editMode = false;
           this.loadingState = null;

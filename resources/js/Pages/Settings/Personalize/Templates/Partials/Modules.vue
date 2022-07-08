@@ -24,18 +24,23 @@
 <template>
   <div>
     <div class="mb-4 mt-8 items-center justify-between border-b pb-3 sm:mt-0 sm:flex">
-      <h3>Modules in this page</h3>
+      <h3>{{ $t('settings.personalize_template_show_module_title') }}</h3>
       <pretty-button
         v-if="!addModuleModalShown && moduleLoaded"
-        :text="'Add a module'"
+        :text="$t('settings.personalize_template_show_module_cta')"
         :icon="'plus'"
         @click="showModuleModal" />
-      <pretty-button v-if="addModuleModalShown && moduleLoaded" :text="'Cancel'" @click="addModuleModalShown = false" />
+      <pretty-button
+        v-if="addModuleModalShown && moduleLoaded"
+        :text="$t('app.cancel')"
+        @click="addModuleModalShown = false" />
     </div>
 
     <!-- list of all the existing modules -->
     <ul v-if="addModuleModalShown" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm">Available modules:</li>
+      <li class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm">
+        {{ $t('settings.personalize_template_show_module_available_modules') }}
+      </li>
       <li
         v-for="module in localAllModules"
         :key="module.id"
@@ -45,9 +50,11 @@
           v-if="!module.already_used"
           class="inline cursor-pointer text-blue-500 hover:underline"
           @click="add(module)"
-          >Add</span
+          >{{ $t('app.add') }}</span
         >
-        <span v-if="module.already_used" class="text-xs"><span class="mr-1">✅</span> Already in use on this page</span>
+        <span v-if="module.already_used" class="text-xs"
+          ><span class="mr-1">✅</span> {{ $t('settings.personalize_template_show_module_already_used') }}</span
+        >
       </li>
     </ul>
 
@@ -88,7 +95,9 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="remove(element)">Remove</li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="remove(element)">
+                  {{ $t('app.remove') }}
+                </li>
               </ul>
             </div>
           </div>
@@ -98,13 +107,15 @@
 
     <!-- blank state -->
     <div v-if="localPageModules.length == 0 && moduleLoaded">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">Add at least one module.</p>
+      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">
+        {{ $t('settings.personalize_template_show_module_add_module') }}
+      </p>
     </div>
 
     <!-- no page selected -->
     <div v-if="!moduleLoaded">
       <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">
-        Please select a page on the left to load modules.
+        {{ $t('settings.personalize_template_show_module_select') }}
       </p>
     </div>
   </div>
@@ -164,7 +175,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The module has been added', 'success');
+          this.flash(this.$t('settings.personalize_template_show_module_add_success'), 'success');
           this.localPageModules.unshift(response.data.data);
           this.addModuleModalShown = false;
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = true;
@@ -178,7 +189,7 @@ export default {
       axios
         .delete(module.url.destroy)
         .then((response) => {
-          this.flash('The module has been added', 'success');
+          this.flash(this.$t('settings.personalize_template_show_module_remove_success'), 'success');
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = false;
 
           var id = this.localPageModules.findIndex((x) => x.id === module.id);
@@ -196,7 +207,7 @@ export default {
       axios
         .post(event.moved.element.url.position, this.form)
         .then((response) => {
-          this.flash('The order has been saved', 'success');
+          this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
         })
         .catch((error) => {
           this.loadingState = null;

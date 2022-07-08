@@ -41,7 +41,7 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 Contacts
@@ -115,7 +115,7 @@
                 v-model="form.contact_important_date_type_id"
                 :data="data.date_types"
                 :required="false"
-                :placeholder="'Choose a value'"
+                :placeholder="$t('app.choose_value')"
                 :dropdown-class="'block w-full'"
                 :help="'Some dates have a special type that we will use in the software to calculate an age.'"
                 :label="'Date type'" />
@@ -162,7 +162,7 @@
                   :data="data.months"
                   :required="true"
                   :div-outer-class="'mb-5 mr-2'"
-                  :placeholder="'Choose a value'"
+                  :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
                   :label="'Month'" />
 
@@ -171,7 +171,7 @@
                   :data="data.days"
                   :required="true"
                   :div-outer-class="'mb-5'"
-                  :placeholder="'Choose a value'"
+                  :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
                   :label="'Day'" />
               </div>
@@ -251,7 +251,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createDateModalShown = false" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createDateModalShown = false" />
             <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
@@ -276,7 +276,9 @@
                 <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="updateDateModal(date)">
                   Edit
                 </li>
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">Delete</li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">
+                  {{ $t('app.delete') }}
+                </li>
               </ul>
             </div>
 
@@ -306,7 +308,7 @@
                     v-model="form.contact_important_date_type_id"
                     :data="data.date_types"
                     :required="false"
-                    :placeholder="'Choose a value'"
+                    :placeholder="$t('app.choose_value')"
                     :dropdown-class="'block w-full'"
                     :help="'Some dates have a special type that we will use in the software to calculate an age.'"
                     :label="'Date type'" />
@@ -357,7 +359,7 @@
                       :data="data.months"
                       :required="true"
                       :div-outer-class="'mb-5 mr-2'"
-                      :placeholder="'Choose a value'"
+                      :placeholder="$t('app.choose_value')"
                       :dropdown-class="'block w-full'"
                       :label="'Month'" />
 
@@ -366,7 +368,7 @@
                       :data="data.days"
                       :required="true"
                       :div-outer-class="'mb-5'"
-                      :placeholder="'Choose a value'"
+                      :placeholder="$t('app.choose_value')"
                       :dropdown-class="'block w-full'"
                       :label="'Day'" />
                   </div>
@@ -401,8 +403,8 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedDateId = 0" />
-                <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedDateId = 0" />
+                <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>
