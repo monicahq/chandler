@@ -50,7 +50,7 @@ class SendEmailNotification implements ShouldQueue
         Mail::to($emailAddress)
             ->queue(
                 (new SendReminder($this->contactReminder, $user))
-                ->onQueue('low')
+                    ->onQueue('low')
             );
 
         UserNotificationSent::create([
