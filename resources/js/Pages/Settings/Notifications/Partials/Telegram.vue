@@ -25,11 +25,11 @@ select {
 <template>
   <div>
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">{{ $t('settings.notification_channels_email_title') }}</span>
+      <span class="dark:text-gray-200">{{ $t('settings.notification_channels_telegram_title') }}</span>
 
       <pretty-button
         v-if="!addEmailModalShown"
-        :text="$t('settings.notification_channels_email_cta')"
+        :text="$t('settings.notification_channels_telegram_cta')"
         :icon="'plus'"
         @click="showAddEmailModal" />
     </div>

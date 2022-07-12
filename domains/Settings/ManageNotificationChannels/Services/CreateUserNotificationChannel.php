@@ -87,12 +87,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
 
         // add a verification link if the channel is email
         if ($this->data['verify_email']) {
-            $uuid = Str::uuid();
-
-            $this->userNotificationChannel->email_verification_link = route('settings.notifications.verification.store', [
-                'notification' => $this->userNotificationChannel->id,
-                'uuid' => $uuid,
-            ]);
+            $this->userNotificationChannel->verification_token = Str::uuid();
             $this->userNotificationChannel->save();
         }
     }

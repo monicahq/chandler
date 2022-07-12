@@ -77,6 +77,8 @@ return [
     'notification_channels_log_label' => 'Libellé :',
     'notification_channels_log_help' => 'Cette page montre toutes les notifications qui ont été envoyés via ce canal par le passé. Cela sert principalement comme une façon de déboguer dans le cas où vous ne recevez pas les notifications que vous avez programmées.',
     'notification_channels_log_blank' => 'Vous n’avez pas encore reçu de notifications dans ce canal.',
+    'notification_channels_telegram_title' => 'Par Telegram',
+    'notification_channels_telegram_cta' => 'Configurer Telegram',
 
     /***************************************************************
      * USER MANAGEMENT

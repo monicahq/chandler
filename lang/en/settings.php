@@ -77,6 +77,9 @@ return [
     'notification_channels_log_label' => 'Label:',
     'notification_channels_log_help' => 'This page shows all the notifications that have been sent in this channel in the past. It primeraly serves as a way to debug in case you don’t receive the notification you’ve set up.',
     'notification_channels_log_blank' => 'You haven’t received a notification in this channel yet.',
+    'notification_channels_telegram_title' => 'Via Telegram',
+    'notification_channels_telegram_cta' => 'Setup Telegram',
+    'notification_channels_telegram_blank' => 'You haven’t setup Telegram yet.',
 
     /***************************************************************
      * USER MANAGEMENT

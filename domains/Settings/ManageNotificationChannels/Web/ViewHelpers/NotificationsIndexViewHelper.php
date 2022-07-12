@@ -56,4 +56,31 @@ class NotificationsIndexViewHelper
             ],
         ];
     }
+
+    public static function dtoTelegram(UserNotificationChannel $channel, User $user): array
+    {
+        return [
+            'id' => $channel->id,
+            'type' => $channel->type,
+            'content' => $channel->content,
+            'active' => $channel->active,
+            'verified_at' => $channel->verified_at ? $channel->verified_at->format('Y-m-d H:i:s') : null,
+            'preferred_time' => $channel->preferred_time->format('H:i'),
+            'url' => [
+                'store' => route('settings.notifications.store'),
+                'send_test' => route('settings.notifications.test.store', [
+                    'notification' => $channel->id,
+                ]),
+                'toggle' => route('settings.notifications.toggle.update', [
+                    'notification' => $channel->id,
+                ]),
+                'logs' => route('settings.notifications.log.index', [
+                    'notification' => $channel->id,
+                ]),
+                'destroy' => route('settings.notifications.destroy', [
+                    'notification' => $channel->id,
+                ]),
+            ],
+        ];
+    }
 }
