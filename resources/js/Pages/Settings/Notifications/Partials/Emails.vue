@@ -215,7 +215,6 @@ select {
 
         <!-- actions when the email has NOT been verified -->
         <ul v-else class="text-sm">
-          <!-- view log -->
           <li class="mr-4 inline">{{ $t('settings.notification_channels_verif_email_sent') }}</li>
 
           <!-- delete email -->

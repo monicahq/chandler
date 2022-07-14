@@ -76,9 +76,8 @@ class ReminderTriggered extends Notification
         ]);
 
         return TelegramMessage::create()
-            // Optional recipient user id.
             ->to($this->channel->content)
-            ->content("incredible ".$this->contactName);
+            ->content($this->content);
     }
 
     /**

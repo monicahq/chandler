@@ -4,8 +4,8 @@ namespace App\Settings\ManageNotificationChannels\Web\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserNotificationChannel;
-use App\Settings\ManageNotificationChannels\Services\SendTelegramTest;
 use App\Settings\ManageNotificationChannels\Services\SendTestEmail;
+use App\Settings\ManageNotificationChannels\Services\SendTestTelegramNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +26,7 @@ class NotificationsTestController extends Controller
         }
 
         if ($channel->type == UserNotificationChannel::TYPE_TELEGRAM) {
-            (new SendTelegramTest())->execute($data);
+            (new SendTestTelegramNotification())->execute($data);
         }
 
         return response()->json([

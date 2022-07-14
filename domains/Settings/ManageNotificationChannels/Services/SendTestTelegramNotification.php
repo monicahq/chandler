@@ -9,7 +9,7 @@ use App\Services\BaseService;
 use Exception;
 use Illuminate\Support\Facades\Notification;
 
-class SendTelegramTest extends BaseService implements ServiceInterface
+class SendTestTelegramNotification extends BaseService implements ServiceInterface
 {
     private array $data;
     private UserNotificationChannel $userNotificationChannel;
@@ -69,7 +69,9 @@ class SendTelegramTest extends BaseService implements ServiceInterface
 
     private function send(): void
     {
+        $content = trans('settings.notification_channels_telegram_test_notification', ['name' => $this->author->name]);
+
         Notification::route('telegram', $this->userNotificationChannel->content)
-            ->notify(new ReminderTriggered($this->userNotificationChannel, 'tets', 'lkfjl'));
+            ->notify(new ReminderTriggered($this->userNotificationChannel, $content, 'Test'));
     }
 }

@@ -26,7 +26,10 @@ class NotificationsIndexViewHelper
 
         return [
             'emails' => $emailsCollection,
-            'telegram' => $telegram ? self::dtoTelegram($telegram) : null,
+            'telegram' => [
+                'data' => $telegram ? self::dtoTelegram($telegram) : null,
+                'telegram_env_variable_set' => config('services.telegram-bot-api.token'),
+            ],
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
@@ -36,7 +39,7 @@ class NotificationsIndexViewHelper
         ];
     }
 
-    public static function dtoEmail(UserNotificationChannel $channel, User $user): array
+    public static function dtoEmail(UserNotificationChannel $channel): array
     {
         return [
             'id' => $channel->id,
@@ -72,7 +75,6 @@ class NotificationsIndexViewHelper
             'active' => $channel->active,
             'verified_at' => $channel->verified_at ? $channel->verified_at->format('Y-m-d H:i:s') : null,
             'preferred_time' => $channel->preferred_time->format('H:i'),
-            'telegram_env_variable_set' => config('services.telegram-bot-api.token'),
             'url' => [
                 'open' => config('services.telegram-bot-api.bot_url').'?start='.$channel->verification_token,
                 'send_test' => route('settings.notifications.test.store', [

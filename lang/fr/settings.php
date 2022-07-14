@@ -50,6 +50,8 @@ return [
      * NOTIFICATION CHANNELS
      **************************************************************/
 
+    'notification_channel_type_email' => 'Courriel',
+    'notification_channel_type_telegram' => 'Telegram',
     'notification_channels_title' => 'Configurer comment nous devons vous notifier',
     'notification_channels_description' => 'Vous pouvez être notifié à travers plusieurs canaux : courriels, Telegram, Facebook. Vous décidez.',
     'notification_channels_email_title' => 'Par courriel',
@@ -82,6 +84,11 @@ return [
     'notification_channels_telegram_blank' => 'Vous n’avez pas encore configuré Telegram.',
     'notification_channels_telegram_delete_confirm' => 'Êtes-vous sûr ? Vous pourrez toujours rajouter Telegram plus tard si vous le voulez.',
     'notification_channels_telegram_not_set' => 'Vous n’avez pas encore configuré Telegram dans vos variables d’environnement.',
+    'notification_channels_telegram_test_notification' => 'Ceci est une notification de test pour :name',
+    'notification_channels_telegram_test_notification_sent' => 'Notification envoyée',
+    'notification_channels_telegram_destroy_success' => 'Le canal Telegram a été supprimé',
+    'notification_channels_telegram_added' => 'Le canal Telegram a été ajouté',
+    'notification_channels_telegram_linked' => 'Votre compte est lié',
 
     /***************************************************************
      * USER MANAGEMENT

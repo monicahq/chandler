@@ -28,7 +28,7 @@ select {
       <span class="dark:text-gray-200">{{ $t('settings.notification_channels_telegram_title') }}</span>
 
       <pretty-button
-        v-if="!setupTelegramModalShown"
+        v-if="!setupTelegramModalShown && !localTelegram && envVariableSet"
         :text="$t('settings.notification_channels_telegram_cta')"
         :icon="'plus'"
         @click="showSetupTelegramModal" />
@@ -121,63 +121,83 @@ select {
       </div>
     </form>
 
-    <div v-if="localTelegram">
-      <div
-        v-if="localTelegram.telegram_env_variable_set"
-        class="flex items-center justify-between rounded-lg border border-gray-200 px-5 py-2 hover:bg-slate-50">
-        <div class="flex items-center">
-          <a-tooltip v-if="localTelegram.active" placement="topLeft" title="Verified" arrow-point-at-center>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="mr-2 inline h-4 w-4 text-green-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
-          </a-tooltip>
+    <!-- case if env variables are not set -->
+    <div v-if="!envVariableSet" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_not_set') }}</p>
+    </div>
 
-          <!-- telegram user id -->
-          <div>
-            <span v-if="localTelegram.active" class="mb-0 block">bla</span>
+    <div v-if="envVariableSet">
+      <div v-if="localTelegram">
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 px-5 py-2 hover:bg-slate-50">
+          <div class="flex items-center">
+            <a-tooltip v-if="localTelegram.active" placement="topLeft" title="Verified" arrow-point-at-center>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="mr-2 inline h-4 w-4 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+            </a-tooltip>
+
+            <!-- telegram user id -->
+            <div>
+              <span v-if="localTelegram.active" class="mb-0 block">{{
+                $t('settings.notification_channels_telegram_linked')
+              }}</span>
+            </div>
           </div>
+
+          <!-- actions when Telegram is not active -->
+          <ul v-if="!localTelegram.active" class="text-sm">
+            <li class="mr-4 inline">
+              <a :href="localTelegram.url.open" target="_blank" class="text-blue-500 hover:underline"
+                >Open Telegram to validate your identity</a
+              >
+            </li>
+
+            <!-- delete email -->
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy">
+              {{ $t('app.delete') }}
+            </li>
+          </ul>
+
+          <ul v-if="localTelegram.active" class="text-sm">
+            <!-- link to send a test notification, if not already sent -->
+            <li
+              v-if="!notificationSent"
+              class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+              @click="sendTest">
+              {{ $t('settings.notification_channels_email_send_test') }}
+            </li>
+            <li v-if="notificationSent" class="mr-4 inline">
+              {{ $t('settings.notification_channels_telegram_test_notification_sent') }}
+            </li>
+
+            <!-- view log -->
+            <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+              <inertia-link :href="localTelegram.url.logs" class="text-blue-500 hover:underline">{{
+                $t('settings.notification_channels_email_log')
+              }}</inertia-link>
+            </li>
+
+            <!-- delete email -->
+            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy">
+              {{ $t('app.delete') }}
+            </li>
+          </ul>
         </div>
-
-        <!-- actions when Telegram is not active -->
-        <ul v-if="!localTelegram.active" class="text-sm">
-          <li class="mr-4 inline">
-            <a :href="localTelegram.url.open" target="_blank" class="text-blue-500 hover:underline"
-              >Open Telegram to validate your identity</a
-            >
-          </li>
-
-          <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy">
-            {{ $t('app.delete') }}
-          </li>
-        </ul>
-
-        <ul v-if="localTelegram.active" class="text-sm">
-          <!-- link to send a test email, if not already sent -->
-          <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="sendTest">
-            {{ $t('settings.notification_channels_email_send_test') }}
-          </li>
-        </ul>
       </div>
 
       <!-- blank state -->
       <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
         <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_blank') }}</p>
       </div>
-    </div>
-
-    <!-- case if env variables are not set -->
-    <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_not_set') }}</p>
     </div>
   </div>
 </template>
@@ -207,8 +227,10 @@ export default {
     return {
       loadingState: '',
       localTelegram: null,
+      envVariableSet: null,
       setupTelegramModalShown: false,
       testEmailSentId: 0,
+      notificationSent: false,
       form: {
         content: '',
         label: '',
@@ -219,8 +241,9 @@ export default {
     };
   },
 
-  created() {
-    this.localTelegram = this.data.telegram;
+  mounted() {
+    this.localTelegram = this.data.telegram.data;
+    this.envVariableSet = this.data.telegram.telegram_env_variable_set;
     this.form.hours = '09';
     this.form.minutes = '00';
   },
@@ -236,7 +259,7 @@ export default {
         .post(this.localTelegram.url.send_test)
         .then((response) => {
           this.flash(this.$t('settings.notification_channels_success_email'), 'success');
-          this.testEmailSentId = channel.id;
+          this.notificationSent = true;
         })
         .catch((error) => {
           this.form.errors = error.response.data;
@@ -277,7 +300,7 @@ export default {
         axios
           .delete(this.localTelegram.url.destroy)
           .then((response) => {
-            this.flash(this.$t('settings.notification_channels_email_destroy_success'), 'success');
+            this.flash(this.$t('settings.notification_channels_telegram_destroy_success'), 'success');
             this.localTelegram = null;
           })
           .catch((error) => {
