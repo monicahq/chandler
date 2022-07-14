@@ -79,6 +79,9 @@ return [
     'notification_channels_log_blank' => 'Vous n’avez pas encore reçu de notifications dans ce canal.',
     'notification_channels_telegram_title' => 'Par Telegram',
     'notification_channels_telegram_cta' => 'Configurer Telegram',
+    'notification_channels_telegram_blank' => 'Vous n’avez pas encore configuré Telegram.',
+    'notification_channels_telegram_delete_confirm' => 'Êtes-vous sûr ? Vous pourrez toujours rajouter Telegram plus tard si vous le voulez.',
+    'notification_channels_telegram_not_set' => 'Vous n’avez pas encore configuré Telegram dans vos variables d’environnement.',
 
     /***************************************************************
      * USER MANAGEMENT

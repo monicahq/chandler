@@ -80,6 +80,8 @@ return [
     'notification_channels_telegram_title' => 'Via Telegram',
     'notification_channels_telegram_cta' => 'Setup Telegram',
     'notification_channels_telegram_blank' => 'You haven’t setup Telegram yet.',
+    'notification_channels_telegram_delete_confirm' => 'Are you sure? You can always add Telegram back later on if you want.',
+    'notification_channels_telegram_not_set' => 'You have not setup Telegram in your environment variables yet.',
 
     /***************************************************************
      * USER MANAGEMENT

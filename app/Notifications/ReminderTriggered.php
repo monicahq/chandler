@@ -2,8 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Helpers\NameHelper;
-use App\Models\ContactReminder;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
@@ -11,23 +9,26 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class ReminderTriggered extends Notification
 {
     use Queueable;
 
-    private ContactReminder $contactReminder;
     private User $user;
     private UserNotificationChannel $channel;
+    private string $content;
+    private string $contactName;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(ContactReminder $contactReminder, UserNotificationChannel $channel)
+    public function __construct(UserNotificationChannel $channel, string $content, string $contactName)
     {
-        $this->contactReminder = $contactReminder;
+        $this->content = $content;
+        $this->contactName = $contactName;
         $this->channel = $channel;
         $this->user = $channel->user;
     }
@@ -40,7 +41,7 @@ class ReminderTriggered extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'telegram'];
     }
 
     /**
@@ -51,22 +52,33 @@ class ReminderTriggered extends Notification
      */
     public function toMail($notifiable)
     {
-        $contact = $this->contactReminder->contact;
-        $contactName = NameHelper::formatContactName($this->user, $contact);
-
         UserNotificationSent::create([
             'user_notification_channel_id' => $this->channel->id,
             'sent_at' => Carbon::now(),
-            'subject_line' => $this->contactReminder->label,
+            'subject_line' => $this->content,
         ]);
 
         return (new MailMessage())
-                    ->subject(trans('email.notification_reminder_email', ['name' => $contactName]))
+                    ->subject(trans('email.notification_reminder_email', ['name' => $this->contactName]))
                     ->line(trans('email.reminder_triggered_intro'))
-                    ->line($this->contactReminder->label)
+                    ->line($this->content)
                     ->line(trans('email.reminder_triggered_for'))
-                    ->line($contactName)
+                    ->line($this->contactName)
                     ->line(trans('email.reminder_triggered_signature'));
+    }
+
+    public function toTelegram($notifiable)
+    {
+        UserNotificationSent::create([
+            'user_notification_channel_id' => $this->channel->id,
+            'sent_at' => Carbon::now(),
+            'subject_line' => $this->content,
+        ]);
+
+        return TelegramMessage::create()
+            // Optional recipient user id.
+            ->to($this->channel->content)
+            ->content("incredible ".$this->contactName);
     }
 
     /**

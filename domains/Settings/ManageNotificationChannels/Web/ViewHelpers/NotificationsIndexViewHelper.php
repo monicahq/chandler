@@ -19,12 +19,19 @@ class NotificationsIndexViewHelper
             return self::dtoEmail($channel, $user);
         });
 
+        // telegram
+        $telegram = $channels->filter(function ($channel) {
+            return $channel->type === 'telegram';
+        })->first();
+
         return [
             'emails' => $emailsCollection,
+            'telegram' => $telegram ? self::dtoTelegram($telegram) : null,
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
                 'store' => route('settings.notifications.store'),
+                'store_telegram' => route('settings.notifications.telegram.store'),
             ],
         ];
     }
@@ -57,17 +64,17 @@ class NotificationsIndexViewHelper
         ];
     }
 
-    public static function dtoTelegram(UserNotificationChannel $channel, User $user): array
+    public static function dtoTelegram(UserNotificationChannel $channel): array
     {
         return [
             'id' => $channel->id,
             'type' => $channel->type,
-            'content' => $channel->content,
             'active' => $channel->active,
             'verified_at' => $channel->verified_at ? $channel->verified_at->format('Y-m-d H:i:s') : null,
             'preferred_time' => $channel->preferred_time->format('H:i'),
+            'telegram_env_variable_set' => config('services.telegram-bot-api.token'),
             'url' => [
-                'store' => route('settings.notifications.store'),
+                'open' => config('services.telegram-bot-api.bot_url').'?start='.$channel->verification_token,
                 'send_test' => route('settings.notifications.test.store', [
                     'notification' => $channel->id,
                 ]),

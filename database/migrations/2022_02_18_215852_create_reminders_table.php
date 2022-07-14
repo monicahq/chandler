@@ -34,7 +34,7 @@ return new class () extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('type');
-            $table->string('label');
+            $table->string('label')->nullable();
             $table->text('content');
             $table->time('preferred_time')->nullable();
             $table->boolean('active')->default(false);

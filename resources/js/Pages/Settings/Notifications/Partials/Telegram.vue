@@ -28,46 +28,19 @@ select {
       <span class="dark:text-gray-200">{{ $t('settings.notification_channels_telegram_title') }}</span>
 
       <pretty-button
-        v-if="!addEmailModalShown"
+        v-if="!setupTelegramModalShown"
         :text="$t('settings.notification_channels_telegram_cta')"
         :icon="'plus'"
-        @click="showAddEmailModal" />
+        @click="showSetupTelegramModal" />
     </div>
 
     <!-- add modal -->
     <form
-      v-if="addEmailModalShown"
+      v-if="setupTelegramModalShown"
       class="item-list bg-form mb-6 rounded-lg border border-b border-gray-200 hover:bg-slate-50"
       @submit.prevent="store()">
       <div class="border-b border-gray-200 p-5">
         <errors :errors="form.errors" />
-
-        <!-- content -->
-        <text-input
-          :ref="'content'"
-          v-model="form.content"
-          :label="$t('settings.notification_channels_email_field')"
-          :type="'email'"
-          :autofocus="true"
-          :input-class="'block w-full'"
-          :required="true"
-          :div-outer-class="'mb-4'"
-          :autocomplete="false"
-          :maxlength="255"
-          @esc-key-pressed="addEmailModalShown = false" />
-
-        <!-- label -->
-        <text-input
-          v-model="form.label"
-          :label="$t('settings.notification_channels_email_name')"
-          :type="'text'"
-          :autofocus="true"
-          :input-class="'block w-full'"
-          :div-outer-class="'mb-4'"
-          :required="true"
-          :autocomplete="false"
-          :maxlength="255"
-          @esc-key-pressed="addEmailModalShown = false" />
 
         <!-- preferred time -->
         <p class="mb-2 block text-sm">{{ $t('settings.notification_channels_email_at') }}</p>
@@ -128,23 +101,32 @@ select {
       </div>
 
       <div class="border-b border-gray-200 p-5">
-        <p><span class="mr-1">⚠️</span> {{ $t('settings.notification_channels_email_help') }}</p>
+        <p class="mb-4 font-semibold"><span class="mr-1">👋</span> What happens now?</p>
+        <ol class="ml-4 list-decimal">
+          <li class="mb-2">
+            Once you click the Setup button below, you'll have to open Telegram with the button we'll provide you with.
+            This will locate the Monica Telegram bot for you.
+          </li>
+          <li class="mb-2">Type anything in the conversation with the Monica bot. It can be "start" for instance.</li>
+          <li>
+            Wait a few seconds for Monica (the application) to recognize you. We'll send you a fake notification to see
+            if it works.
+          </li>
+        </ol>
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="addEmailModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="setupTelegramModalShown = false" />
         <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
-    <!-- list of emails -->
-    <ul v-if="localEmails.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li
-        v-for="email in localEmails"
-        :key="email.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+    <div v-if="localTelegram">
+      <div
+        v-if="localTelegram.telegram_env_variable_set"
+        class="flex items-center justify-between rounded-lg border border-gray-200 px-5 py-2 hover:bg-slate-50">
         <div class="flex items-center">
-          <a-tooltip v-if="email.verified_at" placement="topLeft" title="Verified" arrow-point-at-center>
+          <a-tooltip v-if="localTelegram.active" placement="topLeft" title="Verified" arrow-point-at-center>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="mr-2 inline h-4 w-4 text-green-600"
@@ -159,76 +141,43 @@ select {
             </svg>
           </a-tooltip>
 
-          <!-- email address + label -->
+          <!-- telegram user id -->
           <div>
-            <span class="mb-0 block">{{ email.content }}</span>
-            <ul class="bulleted-list mr-2 text-sm text-gray-500">
-              <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
-              <li class="inline">
-                {{ $t('settings.notification_channels_email_sent_at', { time: email.preferred_time }) }}
-              </li>
-            </ul>
+            <span v-if="localTelegram.active" class="mb-0 block">bla</span>
           </div>
         </div>
 
-        <!-- actions when the email has been verified -->
-        <ul v-if="email.verified_at" class="text-sm">
-          <!-- activate/deactivate -->
-          <li
-            v-if="email.active"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="toggle(email)">
-            {{ $t('settings.notification_channels_email_deactivate') }}
-          </li>
-          <li
-            v-if="!email.active"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="toggle(email)">
-            {{ $t('settings.notification_channels_email_activate') }}
+        <!-- actions when Telegram is not active -->
+        <ul v-if="!localTelegram.active" class="text-sm">
+          <li class="mr-4 inline">
+            <a :href="localTelegram.url.open" target="_blank" class="text-blue-500 hover:underline"
+              >Open Telegram to validate your identity</a
+            >
           </li>
 
+          <!-- delete email -->
+          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy">
+            {{ $t('app.delete') }}
+          </li>
+        </ul>
+
+        <ul v-if="localTelegram.active" class="text-sm">
           <!-- link to send a test email, if not already sent -->
-          <li
-            v-if="testEmailSentId != email.id"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-            @click="sendTest(email)">
+          <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="sendTest">
             {{ $t('settings.notification_channels_email_send_test') }}
           </li>
-
-          <!-- text saying that the email has been sent -->
-          <li v-if="testEmailSentId == email.id" class="mr-4 inline">
-            {{ $t('settings.notification_channels_email_send_success') }}
-          </li>
-
-          <!-- view log -->
-          <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-            <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">{{
-              $t('settings.notification_channels_email_log')
-            }}</inertia-link>
-          </li>
-
-          <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">
-            {{ $t('app.delete') }}
-          </li>
         </ul>
+      </div>
 
-        <!-- actions when the email has NOT been verified -->
-        <ul v-else class="text-sm">
-          <!-- view log -->
-          <li class="mr-4 inline">{{ $t('settings.notification_channels_verif_email_sent') }}</li>
+      <!-- blank state -->
+      <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_blank') }}</p>
+      </div>
+    </div>
 
-          <!-- delete email -->
-          <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">
-            {{ $t('app.delete') }}
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <!-- blank state -->
+    <!-- case if env variables are not set -->
     <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('settings.notification_channels_blank') }}</p>
+      <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_not_set') }}</p>
     </div>
   </div>
 </template>
@@ -257,8 +206,8 @@ export default {
   data() {
     return {
       loadingState: '',
-      localEmails: [],
-      addEmailModalShown: false,
+      localTelegram: null,
+      setupTelegramModalShown: false,
       testEmailSentId: 0,
       form: {
         content: '',
@@ -270,26 +219,21 @@ export default {
     };
   },
 
-  mounted() {
-    this.localEmails = this.data.emails;
+  created() {
+    this.localTelegram = this.data.telegram;
     this.form.hours = '09';
     this.form.minutes = '00';
   },
 
   methods: {
-    showAddEmailModal() {
+    showSetupTelegramModal() {
       this.form.label = '';
-      this.form.content = '';
-      this.addEmailModalShown = true;
-
-      this.$nextTick(() => {
-        this.$refs.content.focus();
-      });
+      this.setupTelegramModalShown = true;
     },
 
-    sendTest(channel) {
+    sendTest() {
       axios
-        .post(channel.url.send_test)
+        .post(this.localTelegram.url.send_test)
         .then((response) => {
           this.flash(this.$t('settings.notification_channels_success_email'), 'success');
           this.testEmailSentId = channel.id;
@@ -304,7 +248,7 @@ export default {
         .put(channel.url.toggle)
         .then((response) => {
           this.flash(this.$t('settings.notification_channels_success_channel'), 'success');
-          this.localEmails[this.localEmails.findIndex((x) => x.id === channel.id)] = response.data.data;
+          this.localTelegram[this.localTelegram.findIndex((x) => x.id === channel.id)] = response.data.data;
         })
         .catch((error) => {
           this.form.errors = error.response.data;
@@ -315,12 +259,12 @@ export default {
       this.loadingState = 'loading';
 
       axios
-        .post(this.data.url.store, this.form)
+        .post(this.data.url.store_telegram, this.form)
         .then((response) => {
           this.flash(this.$t('settings.notification_channels_email_added'), 'success');
-          this.localEmails.unshift(response.data.data);
+          this.localTelegram = response.data.data;
           this.loadingState = null;
-          this.addEmailModalShown = false;
+          this.setupTelegramModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -328,14 +272,13 @@ export default {
         });
     },
 
-    destroy(channel) {
-      if (confirm(this.$t('settings.notification_channels_email_destroy_confirm'))) {
+    destroy() {
+      if (confirm(this.$t('settings.notification_channels_telegram_delete_confirm'))) {
         axios
-          .delete(channel.url.destroy)
+          .delete(this.localTelegram.url.destroy)
           .then((response) => {
             this.flash(this.$t('settings.notification_channels_email_destroy_success'), 'success');
-            var id = this.localEmails.findIndex((x) => x.id === channel.id);
-            this.localEmails.splice(id, 1);
+            this.localTelegram = null;
           })
           .catch((error) => {
             this.loadingState = null;
