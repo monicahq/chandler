@@ -89,6 +89,7 @@ return [
     'notification_channels_telegram_destroy_success' => 'The Telegram channel has been deleted',
     'notification_channels_telegram_added' => 'The Telegram channel has been added',
     'notification_channels_telegram_linked' => 'Your account is linked',
+    'notification_channels_test_success_telegram' => 'The notification has been sent',
 
     /***************************************************************
      * USER MANAGEMENT

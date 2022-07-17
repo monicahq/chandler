@@ -258,7 +258,7 @@ export default {
       axios
         .post(this.localTelegram.url.send_test)
         .then((response) => {
-          this.flash(this.$t('settings.notification_channels_success_email'), 'success');
+          this.flash(this.$t('settings.notification_channels_test_success_telegram'), 'success');
           this.notificationSent = true;
         })
         .catch((error) => {

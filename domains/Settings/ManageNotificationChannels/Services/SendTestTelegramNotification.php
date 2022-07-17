@@ -9,6 +9,9 @@ use App\Services\BaseService;
 use Exception;
 use Illuminate\Support\Facades\Notification;
 
+/**
+ * Inspired by https://abstractentropy.com/laravel-notifications-telegram-bot/
+ */
 class SendTestTelegramNotification extends BaseService implements ServiceInterface
 {
     private array $data;

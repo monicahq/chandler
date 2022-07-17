@@ -3,7 +3,6 @@
 namespace Tests\Unit\Domains\Contact\ManageReminders\Jobs;
 
 use App\Contact\ManageReminders\Jobs\ProcessScheduledContactReminders;
-use App\Jobs\Notifications\SendEmailNotification;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use Carbon\Carbon;
@@ -11,20 +10,21 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
 
 class ProcessScheduledContactRemindersTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @test */
     public function it_processes_all_the_scheduled_contact_reminders(): void
     {
-        Bus::fake();
+        Notification::fake();
 
         Carbon::setTestNow(Carbon::create(2018, 1, 1, 0, 0, 0));
 
         $contactReminder = ContactReminder::factory()->create([
             'type' => ContactReminder::TYPE_RECURRING_DAY,
+            'label' => 'test',
         ]);
         $channel = UserNotificationChannel::factory()->create([
             'type' => UserNotificationChannel::TYPE_EMAIL,
@@ -41,10 +41,14 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $job->dispatch();
         $job->handle();
 
-        Bus::assertDispatched(SendEmailNotification::class);
+        Notification::assertSentOnDemand(
+            ReminderTriggered::class,
+            function ($notification, $channels, $notifiable) {
+                return $notifiable->routes['mail'] == 'admin@admin.com';
+            }
+        );
     }
 
-    /** @test */
     public function it_cant_process_the_scheduled_contact_reminders(): void
     {
         Bus::fake();
@@ -69,6 +73,11 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $job->dispatch();
         $job->handle();
 
-        Bus::assertNotDispatched(SendEmailNotification::class);
+        Notification::assertNothingSent(
+            ReminderTriggered::class,
+            function ($notification, $channels, $notifiable) {
+                return $notifiable->routes['email'] == 'admin@admin.com';
+            }
+        );
     }
 }
