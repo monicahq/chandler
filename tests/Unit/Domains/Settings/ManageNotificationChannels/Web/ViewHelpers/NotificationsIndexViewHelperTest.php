@@ -87,6 +87,8 @@ class NotificationsIndexViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_telegram_notification_channel(): void
     {
+        config(['services.telegram-bot-api.bot_url' => 'https://t.me/randombot']);
+
         $user = User::factory()->create();
         $channel = UserNotificationChannel::factory()->create([
             'user_id' => $user->id,
