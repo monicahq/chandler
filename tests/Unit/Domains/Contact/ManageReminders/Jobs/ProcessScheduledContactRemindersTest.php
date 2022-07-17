@@ -5,6 +5,7 @@ namespace Tests\Unit\Domains\Contact\ManageReminders\Jobs;
 use App\Contact\ManageReminders\Jobs\ProcessScheduledContactReminders;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
+use App\Notifications\ReminderTriggered;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Bus;
