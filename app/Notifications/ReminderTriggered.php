@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
 use Carbon\Carbon;
@@ -15,7 +14,6 @@ class ReminderTriggered extends Notification
 {
     use Queueable;
 
-    private User $user;
     private UserNotificationChannel $channel;
     private string $content;
     private string $contactName;
@@ -30,7 +28,6 @@ class ReminderTriggered extends Notification
         $this->content = $content;
         $this->contactName = $contactName;
         $this->channel = $channel;
-        $this->user = $channel->user;
     }
 
     /**

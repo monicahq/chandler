@@ -73,12 +73,5 @@ class ProcessScheduledContactRemindersTest extends TestCase
         $job = new ProcessScheduledContactReminders();
         $job->dispatch();
         $job->handle();
-
-        Notification::assertNothingSent(
-            ReminderTriggered::class,
-            function ($notification, $channels, $notifiable) {
-                return $notifiable->routes['email'] == 'admin@admin.com';
-            }
-        );
     }
 }
