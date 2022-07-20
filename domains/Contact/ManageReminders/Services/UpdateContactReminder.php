@@ -61,6 +61,7 @@ class UpdateContactReminder extends BaseService implements ServiceInterface
     public function execute(array $data): ContactReminder
     {
         $this->data = $data;
+        $this->validate();
 
         $this->update();
         $this->deleteOldScheduledReminders();
@@ -81,7 +82,6 @@ class UpdateContactReminder extends BaseService implements ServiceInterface
 
     private function update(): void
     {
-        dd($this->reminder);
         $this->reminder->label = $this->data['label'];
         $this->reminder->day = $this->data['day'];
         $this->reminder->month = $this->data['month'];

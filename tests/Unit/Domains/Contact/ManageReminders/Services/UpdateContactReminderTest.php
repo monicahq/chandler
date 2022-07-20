@@ -10,6 +10,7 @@ use App\Models\Account;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\User;
+use App\Models\UserNotificationChannel;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -112,6 +113,11 @@ class UpdateContactReminderTest extends TestCase
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact, ContactReminder $reminder): void
     {
         Queue::fake();
+
+        $channel = UserNotificationChannel::factory()->create([
+            'user_id' => $author->id,
+            'preferred_time' => '18:00',
+        ]);
 
         $request = [
             'account_id' => $account->id,
