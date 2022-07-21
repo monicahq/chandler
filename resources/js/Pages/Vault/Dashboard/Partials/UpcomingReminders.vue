@@ -43,24 +43,26 @@
     </h3>
 
     <!-- list of reminders -->
-    <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
-      <li
-        v-for="reminder in data"
-        :key="reminder.id"
-        class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
-        <div class="flex items-center">
-          <p class="mr-3 text-xs text-gray-400">{{ reminder.scheduled_at }}</p>
-          <div class="flex items-center text-sm">
-            <div v-html="reminder.contact.avatar" class="mr-2 h-4 w-4"></div>
+    <div v-if="data.length > 0">
+      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
+        <li
+          v-for="reminder in data"
+          :key="reminder.id"
+          class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          <div class="flex items-center">
+            <p class="mr-3 text-xs text-gray-400">{{ reminder.scheduled_at }}</p>
+            <div class="flex items-center text-sm">
+              <div v-html="reminder.contact.avatar" class="mr-2 h-4 w-4"></div>
 
-            <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">{{
-              reminder.contact.name
-            }}</inertia-link>
+              <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">{{
+                reminder.contact.name
+              }}</inertia-link>
+            </div>
           </div>
-        </div>
-        <p class="text-sm">{{ reminder.label }}</p>
-      </li>
-    </ul>
+          <p class="text-sm">{{ reminder.label }}</p>
+        </li>
+      </ul>
+    </div>
 
     <!-- blank state -->
     <div v-if="data.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
