@@ -49,11 +49,11 @@ class VaultShowViewHelper
             ->toArray();
 
         // then we get all the contact reminders scheduled for those channels
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::now()->copy();
         $currentDate->second = 0;
 
         $contactRemindersScheduled = DB::table('contact_reminder_scheduled')
-            ->where('scheduled_at', '<=', $currentDate->addDays(7))
+            ->whereDate('scheduled_at', '<=', $currentDate->addDays(30))
             ->where('triggered_at', null)
             ->whereIn('user_notification_channel_id', $userNotificationChannelIds)
             ->get();
