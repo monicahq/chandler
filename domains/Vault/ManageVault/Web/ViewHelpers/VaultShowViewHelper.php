@@ -45,6 +45,7 @@ class VaultShowViewHelper
         $userNotificationChannelIds = UserNotificationChannel::whereIn('user_id', $usersInVaultIds)
             ->get()
             ->pluck('id')
+            ->unique('id')
             ->toArray();
 
         // then we get all the contact reminders scheduled for those channels
@@ -64,10 +65,12 @@ class VaultShowViewHelper
             $reminder = ContactReminder::where('id', $contactReminderScheduled->contact_reminder_id)->with('contact')->first();
             $contact = $reminder->contact;
 
+            $scheduledAtDate = Carbon::createFromFormat('Y-m-d H:i:s', $contactReminderScheduled->scheduled_at);
+
             $remindersCollection->push([
                 'id' => $reminder->id,
                 'label' => $reminder->label,
-                'scheduled_at' => DateHelper::format($reminder->scheduled_at, $user),
+                'scheduled_at' => DateHelper::format($scheduledAtDate, $user),
                 'contact' => [
                     'id' => $contact->id,
                     'name' => $contact->name,

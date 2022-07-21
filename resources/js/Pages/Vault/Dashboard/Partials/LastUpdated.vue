@@ -1,3 +1,10 @@
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+</style>
+
 <template>
   <div>
     <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">

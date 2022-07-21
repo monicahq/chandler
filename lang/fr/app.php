@@ -54,6 +54,7 @@ return [
     'view_all' => 'Tout voir',
     'previous' => 'Précédent',
     'next' => 'Suivant',
+    'view_all' => 'Tout voir',
 
     'error_title' => '👇 Oops. Une erreur est survenue.',
 

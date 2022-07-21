@@ -54,6 +54,7 @@ return [
     'view_all' => 'View all',
     'previous' => 'Previous',
     'next' => 'Next',
+    'view_all' => 'View all',
 
     'error_title' => '👇 Oops. An error occured.',
 
