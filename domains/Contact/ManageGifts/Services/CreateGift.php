@@ -34,7 +34,7 @@ class CreateGift extends BaseService implements ServiceInterface
             'description' => 'nullable|string|max:65535',
             'donators_ids' => 'required',
             'recipients_ids' => 'required',
-            'estimated_price' => 'nullable|integer',
+            'budget' => 'nullable|integer',
             'received_at' => 'nullable|date_format:Y-m-d',
             'given_at' => 'nullable|date_format:Y-m-d',
             'bought_at' => 'nullable|date_format:Y-m-d',

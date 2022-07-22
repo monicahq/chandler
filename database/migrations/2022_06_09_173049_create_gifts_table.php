@@ -40,11 +40,12 @@ return new class () extends Migration {
             $table->unsignedBigInteger('gift_state_id')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('estimated_price')->nullable();
+            $table->integer('budget')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->datetime('received_at')->nullable();
             $table->datetime('given_at')->nullable();
             $table->datetime('bought_at')->nullable();
+            $table->uuid('shareable_link');
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('gift_occasion_id')->references('id')->on('gift_occasions')->onDelete('set null');
@@ -68,10 +69,15 @@ return new class () extends Migration {
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
-        Schema::create('gift_urls', function (Blueprint $table) {
+        Schema::create('gift_choices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('gift_id');
-            $table->string('url');
+            $table->string('name');
+            $table->integer('estimated_value')->nullable();
+            $table->string('location_type')->nullable();
+            $table->string('found_location')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('dismissed')->default(false);
             $table->timestamps();
             $table->foreign('gift_id')->references('id')->on('gifts')->onDelete('cascade');
         });

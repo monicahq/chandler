@@ -25,7 +25,7 @@ class Gift extends Model
         'gift_state_id',
         'name',
         'description',
-        'estimated_price',
+        'budget',
         'currency_id',
         'received_at',
         'given_at',

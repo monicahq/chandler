@@ -30,7 +30,7 @@ class GiftFactory extends Factory
             'gift_state_id' => GiftState::factory(),
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
-            'estimated_price' => $this->faker->randomNumber(),
+            'budget' => $this->faker->randomNumber(),
             'received_at' => $this->faker->dateTimeThisCentury(),
             'given_at' => $this->faker->dateTimeThisCentury(),
             'bought_at' => $this->faker->dateTimeThisCentury(),
