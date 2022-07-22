@@ -16,9 +16,13 @@ return [
 
     'breadcrumb_location' => 'You are here:',
     'breadcrumb_vault_index' => 'All the vaults',
-    'breadcrumb_vault_create' => 'add a vault',
+    'breadcrumb_vault_create' => 'Add a vault',
+    'breadcrumb_dashboard_index' => 'Dashboard',
+    'breadcrumb_dashboard_reminders' => 'All the planned reminders',
     'breadcrumb_contact_index' => 'Contacts',
+    'breadcrumb_contact_show' => 'Profile of :name',
     'breadcrumb_contact_create' => 'Create a contact',
+    'breadcrumb_contact_note_index' => 'All the notes',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
     'breadcrumb_settings_notification_channels' => 'Notification channels',
@@ -52,6 +56,7 @@ return [
     'view_all' => 'View all',
     'previous' => 'Previous',
     'next' => 'Next',
+    'view_all' => 'View all',
 
     'error_title' => '👇 Oops. An error occured.',
 
@@ -93,5 +98,4 @@ return [
     'emotion_negative' => '😡 Negative',
 
     'notification_channel_email' => 'My email',
-    'notification_channel_type_email' => 'Email',
 ];

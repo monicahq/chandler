@@ -56,6 +56,21 @@ return [
     'create_contact_success' => 'Le contact a été ajouté',
 
     /***************************************************************
+     * VAULT DASHBOARD
+     **************************************************************/
+
+    'dashboard_last_updated_contacts_title' => 'Récemment mis à jour',
+    'dashboard_reminders_title' => 'Rappels dans les 30 prochains jours',
+    'dashboard_reminders_blank' => 'Aucun rappel planifié.',
+
+    /***************************************************************
+     * VAULT DASHBOARD REMINDERS
+     **************************************************************/
+
+    'reminders_title' => 'Rappels planifiés dans les 12 prochains mois',
+    'reminders_blank' => 'Pas de rappels pour ce mois',
+
+    /***************************************************************
      * VAULT SETTINGS
      **************************************************************/
 

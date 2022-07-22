@@ -50,6 +50,8 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogCont
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotificationsController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
@@ -70,6 +72,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatCo
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
@@ -96,6 +99,11 @@ require __DIR__.'/auth.php';
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
 
+Route::post(
+    '/telegram/webhook/'.config('services.telegram-bot-api.webhook'),
+    [TelegramWebhookController::class, 'store']
+);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // vaults
     Route::prefix('vaults')->group(function () {
@@ -105,6 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+            Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -251,6 +260,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('', [NotificationsController::class, 'index'])->name('index');
             Route::post('', [NotificationsController::class, 'store'])->name('store');
+            Route::post('telegram', [TelegramNotificationsController::class, 'store'])->name('telegram.store');
             Route::get('{notification}/verify/{uuid}', [NotificationsVerificationController::class, 'store'])->name('verification.store');
             Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
             Route::put('{notification}/toggle', [NotificationsToggleController::class, 'update'])->name('toggle.update');

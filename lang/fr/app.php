@@ -17,8 +17,12 @@ return [
     'breadcrumb_location' => 'Vous êtes ici :',
     'breadcrumb_vault_index' => 'Toutes les voûtes',
     'breadcrumb_vault_create' => 'Ajouter une nouvelle voûte',
+    'breadcrumb_dashboard_index' => 'Tableau de bord',
+    'breadcrumb_dashboard_reminders' => 'Tous les rappels planifiés',
     'breadcrumb_contact_index' => 'Contacts',
+    'breadcrumb_contact_show' => 'Profil de :name',
     'breadcrumb_contact_create' => 'Créer un contact',
+    'breadcrumb_contact_note_index' => 'Toutes les notes',
     'breadcrumb_settings' => 'Paramètres',
     'breadcrumb_settings_preferences' => 'Préférences de l’utilisateur',
     'breadcrumb_settings_notification_channels' => 'Chaînes de notification',
@@ -52,6 +56,7 @@ return [
     'view_all' => 'Tout voir',
     'previous' => 'Précédent',
     'next' => 'Suivant',
+    'view_all' => 'Tout voir',
 
     'error_title' => '👇 Oops. Une erreur est survenue.',
 
@@ -93,5 +98,4 @@ return [
     'emotion_negative' => '😡 Négatif',
 
     'notification_channel_email' => 'Mon courriel',
-    'notification_channel_type_email' => 'Courriel',
 ];
