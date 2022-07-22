@@ -110,4 +110,14 @@ class Gift extends Model
     {
         return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
+
+    /**
+     * Get the gift urls associated with the gift.
+     *
+     * @return HasMany
+     */
+    public function giftUrls()
+    {
+        return $this->hasMany(GiftUrl::class);
+    }
 }

@@ -36,8 +36,8 @@ return new class () extends Migration {
         Schema::create('gifts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('gift_occasion_id');
-            $table->unsignedBigInteger('gift_state_id');
+            $table->unsignedBigInteger('gift_occasion_id')->nullable();
+            $table->unsignedBigInteger('gift_state_id')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('estimated_price')->nullable();
@@ -47,8 +47,8 @@ return new class () extends Migration {
             $table->datetime('bought_at')->nullable();
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
-            $table->foreign('gift_occasion_id')->references('id')->on('gift_occasions')->onDelete('cascade');
-            $table->foreign('gift_state_id')->references('id')->on('gift_states')->onDelete('cascade');
+            $table->foreign('gift_occasion_id')->references('id')->on('gift_occasions')->onDelete('set null');
+            $table->foreign('gift_state_id')->references('id')->on('gift_states')->onDelete('set null');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
         });
 
@@ -89,5 +89,6 @@ return new class () extends Migration {
         Schema::dropIfExists('gifts');
         Schema::dropIfExists('gift_donators');
         Schema::dropIfExists('gift_recipients');
+        Schema::dropIfExists('gift_urls');
     }
 };
