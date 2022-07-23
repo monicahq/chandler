@@ -22,8 +22,8 @@ class ContactInformationController extends Controller
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_important_date_type_id' => $request->input('contact_important_date_type_id') == 0 ? null : $request->input('contact_important_date_type_id'),
-            'label' => $request->input('label'),
+            'contact_information_type_id' => $request->input('contact_information_type_id'),
+            'data' => $request->input('data'),
         ]);
 
         $contact = Contact::find($contactId);
