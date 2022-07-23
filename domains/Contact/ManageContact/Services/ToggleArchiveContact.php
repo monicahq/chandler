@@ -55,6 +55,7 @@ class ToggleArchiveContact extends BaseService implements ServiceInterface
         $this->contact->listed = ! $this->contact->listed;
         $this->contact->save();
 
+        $this->updateLastEditedDate();
         $this->createFeedItem();
 
         return $this->contact;
@@ -63,6 +64,12 @@ class ToggleArchiveContact extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
+    }
+
+    private function updateLastEditedDate(): void
+    {
+        $this->contact->last_updated_at = Carbon::now();
+        $this->contact->save();
     }
 
     private function createFeedItem(): void
