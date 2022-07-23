@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Services\BaseService;
+use Carbon\Carbon;
 
 class ToggleArchiveContact extends BaseService implements ServiceInterface
 {
