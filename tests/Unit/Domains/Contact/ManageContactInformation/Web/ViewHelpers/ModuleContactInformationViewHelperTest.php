@@ -65,6 +65,7 @@ class ModuleContactInformationViewHelperTest extends TestCase
         $type = ContactInformationType::factory()->create([
             'name' => 'Facebook shit',
             'protocol' => 'mailto:',
+            'can_be_deleted' => true
         ]);
         $info = ContactInformation::factory()->create([
             'contact_id' => $contact->id,
