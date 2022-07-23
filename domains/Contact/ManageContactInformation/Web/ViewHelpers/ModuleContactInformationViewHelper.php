@@ -42,7 +42,7 @@ class ModuleContactInformationViewHelper
     {
         return [
             'id' => $info->id,
-            'label' => $info->contactInformationType->name,
+            'label' => $info->name,
             'data' => $info->contactInformationType->protocol ? $info->contactInformationType->protocol.$info->data : $info->data,
             'contact_information_type' => [
                 'id' => $info->contactInformationType->id,

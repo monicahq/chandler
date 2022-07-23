@@ -108,7 +108,7 @@ select {
           class="item-list border-b border-gray-200 hover:bg-slate-50">
           <!-- contact information -->
           <div v-if="editedContactInformationId != info.id" class="flex items-center justify-between px-3 py-2">
-            <inertia-link :href="info.data" class="text-blue-500 hover:underline">{{ info.label }}</inertia-link>
+            <a :href="info.data" class="text-blue-500 hover:underline">{{ info.label }} </a>
 
             <!-- actions -->
             <ul class="text-sm">
