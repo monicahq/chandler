@@ -30,8 +30,8 @@ class ContactInformationViewHelper
     {
         return [
             'id' => $info->id,
-            'label' => $info->contactInformation->name,
-            'data' => $info->contactInformation->protocol ? $info->contactInformation->protocol.$info->data : null,
+            'label' => $info->contactInformationType->name,
+            'data' => $info->contactInformationType->protocol ? $info->contactInformationType->protocol.$info->data : null,
             'url' => [
                 'update' => route('contact.contact_information.update', [
                     'vault' => $contact->vault_id,
