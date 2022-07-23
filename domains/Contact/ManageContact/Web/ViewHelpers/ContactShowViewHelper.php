@@ -232,6 +232,10 @@ class ContactShowViewHelper
                 $data = ModuleGroupsViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_CONTACT_INFORMATION) {
+                $data = ModuleContactAddressesViewHelper::data($contact, $user);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,
