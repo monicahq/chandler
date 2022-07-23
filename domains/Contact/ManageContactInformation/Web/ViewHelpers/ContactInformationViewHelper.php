@@ -2,36 +2,23 @@
 
 namespace App\Contact\ManageContactInformation\Web\ViewHelpers;
 
-use App\Helpers\DateHelper;
-use App\Helpers\ImportantDateHelper;
 use App\Models\Contact;
 use App\Models\ContactInformation;
-use App\Models\User;
 
 class ContactInformationViewHelper
 {
-    public static function data(Contact $contact, User $user): array
+    public static function data(Contact $contact): array
     {
         $infos = $contact->contactInformation()->with('contactInformationType')->get();
 
-        $infosCollection = $infos->map(function ($info) use ($user, $contact) {
-            return self::dto($contact, $info, $user);
+        $infosCollection = $infos->map(function ($info) use ($contact) {
+            return self::dto($contact, $info);
         });
 
         return [
-            'contact' => [
-                'name' => $contact->name,
-            ],
-            'dates' => $infosCollection,
-            'months' => DateHelper::getMonths(),
-            'days' => DateHelper::getDays(),
-            'date_types' => $infoTypesCollection,
+            'data' => $infosCollection,
             'url' => [
-                'store' => route('contact.date.store', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
-                ]),
-                'contact' => route('contact.show', [
+                'store' => route('contact.contact_information.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -39,32 +26,22 @@ class ContactInformationViewHelper
         ];
     }
 
-    public static function dto(Contact $contact, ContactInformation $info, User $user): array
+    public static function dto(Contact $contact, ContactInformation $info): array
     {
         return [
             'id' => $info->id,
             'label' => $info->contactInformation->name,
-            'url' => $info->contactInformation->protocol ? $info->contactInformation->protocol . '://' : '',
-            'date' => ImportantDateHelper::formatDate($info, $user),
-            'type' => $info->contactImportantDateType ? [
-                'id' =>  $info->contactImportantDateType->id,
-                'label' =>  $info->contactImportantDateType->label,
-            ] : null,
-            'age' => ImportantDateHelper::getAge($info),
-            'choice' => ImportantDateHelper::determineType($info),
-            'completeDate' => $completeDate,
-            'month' => $info->month,
-            'day' => $info->day,
+            'data' => $info->contactInformation->protocol ? $info->contactInformation->protocol.$info->data : null,
             'url' => [
-                'update' => route('contact.date.update', [
+                'update' => route('contact.contact_information.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'date' => $info->id,
+                    'info' => $info->id,
                 ]),
-                'destroy' => route('contact.date.destroy', [
+                'destroy' => route('contact.contact_information.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
-                    'date' => $info->id,
+                    'info' => $info->id,
                 ]),
             ],
         ];
