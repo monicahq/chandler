@@ -2,14 +2,12 @@
 
 namespace App\Contact\ManageContactInformation\Web\Controllers;
 
-use App\Contact\ManageContactImportantDates\Services\DestroyContactImportantDate;
-use App\Contact\ManageContactImportantDates\Services\UpdateContactImportantDate;
-use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ContactImportantDatesViewHelper;
 use App\Contact\ManageContactInformation\Services\CreateContactInformation;
+use App\Contact\ManageContactInformation\Services\DestroyContactInformation;
+use App\Contact\ManageContactInformation\Services\UpdateContactInformation;
+use App\Contact\ManageContactInformation\Web\ViewHelpers\ModuleContactInformationViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +15,7 @@ class ContactInformationController extends Controller
 {
     public function store(Request $request, int $vaultId, int $contactId)
     {
-        $date = (new CreateContactInformation())->execute([
+        $info = (new CreateContactInformation())->execute([
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
@@ -29,63 +27,41 @@ class ContactInformationController extends Controller
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ContactImportantDatesViewHelper::dto($contact, $date, Auth::user()),
+            'data' => ModuleContactInformationViewHelper::dto($contact, $info),
         ], 201);
     }
 
-    public function update(Request $request, int $vaultId, int $contactId, int $dateId)
+    public function update(Request $request, int $vaultId, int $contactId, int $infoId)
     {
-        if ($request->input('choice') === ContactImportantDate::TYPE_FULL_DATE) {
-            $year = Carbon::parse($request->input('date'))->year;
-            $month = Carbon::parse($request->input('date'))->month;
-            $day = Carbon::parse($request->input('date'))->day;
-        }
-
-        if ($request->input('choice') === ContactImportantDate::TYPE_MONTH_DAY) {
-            $month = $request->input('month');
-            $day = $request->input('day');
-            $year = '';
-        }
-
-        if ($request->input('choice') === ContactImportantDate::TYPE_YEAR) {
-            $month = '';
-            $day = '';
-            $year = Carbon::now()->subYears($request->input('age'))->format('Y');
-        }
-
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_important_date_id' => $dateId,
-            'contact_important_date_type_id' => $request->input('contact_important_date_type_id') == 0 ? null : $request->input('contact_important_date_type_id'),
-            'label' => $request->input('label'),
-            'day' => $day,
-            'month' => $month,
-            'year' => $year,
+            'contact_information_id' => $infoId,
+            'contact_information_type_id' => $request->input('contact_information_type_id'),
+            'data' => $request->input('data'),
         ];
 
-        $date = (new UpdateContactImportantDate())->execute($data);
-
+        $info = (new UpdateContactInformation())->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ContactImportantDatesViewHelper::dto($contact, $date, Auth::user()),
+            'data' => ModuleContactInformationViewHelper::dto($contact, $info),
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $dateId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $infoId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'contact_important_date_id' => $dateId,
+            'contact_information_id' => $infoId,
         ];
 
-        (new DestroyContactImportantDate())->execute($data);
+        (new DestroyContactInformation())->execute($data);
 
         return response()->json([
             'data' => true,

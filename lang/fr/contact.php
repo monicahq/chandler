@@ -60,4 +60,18 @@ return [
     'addresses_edit_success' => 'L’adresse a été mise à jour',
     'addresses_delete_confirm' => 'Êtes vous sûr ? Cela va supprimer l’adresse de façon permanente.',
     'addresses_delete_success' => 'L’adresse a été supprimée',
+
+    /***************************************************************
+     * MODULE: CONTACT INFORMATION
+     **************************************************************/
+
+    'contact_information_title' => 'Information de contact',
+    'contact_information_cta' => 'Ajouter une information de contact',
+    'contact_information_blank' => 'Il n’y a pas encore d’information de contact.',
+    'contact_information_name' => 'Contenu',
+    'contact_information_type' => 'Type',
+    'contact_information_new_success' => 'L’information de contact a été crée',
+    'contact_information_edit_success' => 'L’information de contact a été mise à jour',
+    'contact_information_delete_confirm' => 'Êtes vous sûr ? Cela va supprimer l’information de contact de façon permanente.',
+    'contact_information_delete_success' => 'L’information de contact a été supprimée',
 ];

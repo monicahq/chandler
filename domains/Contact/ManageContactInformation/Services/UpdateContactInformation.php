@@ -73,13 +73,13 @@ class UpdateContactInformation extends BaseService implements ServiceInterface
             ->findOrFail($this->data['contact_information_type_id']);
 
         $this->contactInformation = ContactInformation::where('contact_id', $this->contact->id)
-            ->where('type_id', $this->data['contact_information_type_id'])
             ->findOrFail($this->data['contact_information_id']);
     }
 
     private function update(): void
     {
         $this->contactInformation->data = $this->data['data'];
+        $this->contactInformation->type_id = $this->data['contact_information_type_id'];
         $this->contactInformation->save();
     }
 

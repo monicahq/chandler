@@ -60,4 +60,18 @@ return [
     'addresses_edit_success' => 'The address has been edited',
     'addresses_delete_confirm' => 'Are you sure? This will delete the address permanently.',
     'addresses_delete_success' => 'The address has been deleted',
+
+    /***************************************************************
+     * MODULE: CONTACT INFORMATION
+     **************************************************************/
+
+    'contact_information_title' => 'Contact information',
+    'contact_information_cta' => 'Add a contact information',
+    'contact_information_blank' => 'There are no contact information yet.',
+    'contact_information_name' => 'Content',
+    'contact_information_type' => 'Type',
+    'contact_information_new_success' => 'The contact information has been created',
+    'contact_information_edit_success' => 'The contact information has been edited',
+    'contact_information_delete_confirm' => 'Are you sure? This will delete the contact information permanently.',
+    'contact_information_delete_success' => 'The contact information has been deleted',
 ];

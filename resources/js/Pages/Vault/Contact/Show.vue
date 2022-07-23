@@ -153,7 +153,7 @@
 
                 <groups v-if="module.type == 'groups'" :data="groups" />
 
-                <contact-information v-if="module.type == 'contact_information'" :data="addresses" />
+                <contact-information v-if="module.type == 'contact_information'" :data="contactInformation" />
               </div>
             </div>
           </div>
@@ -334,7 +334,7 @@ export default {
         this.groups = this.data.modules[this.data.modules.findIndex((x) => x.type == 'groups')].data;
       }
 
-      if (this.data.modules.findIndex((x) => x.type == 'contactInformation') > -1) {
+      if (this.data.modules.findIndex((x) => x.type == 'contact_information') > -1) {
         this.contactInformation =
           this.data.modules[this.data.modules.findIndex((x) => x.type == 'contact_information')].data;
       }

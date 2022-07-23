@@ -3,8 +3,6 @@
 namespace App\Contact\ManageContactInformation\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\ContactInformation;
 use App\Models\ContactInformationType;
 use App\Services\BaseService;
@@ -27,7 +25,6 @@ class DestroyContactInformation extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'contact_information_type_id' => 'required|integer|exists:contact_information_types,id',
             'contact_information_id' => 'required|integer|exists:contact_information,id',
         ];
     }
@@ -60,49 +57,22 @@ class DestroyContactInformation extends BaseService implements ServiceInterface
         $this->contactInformation->delete();
 
         $this->updateLastEditedDate();
-        $this->log();
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->contactInformationType = ContactInformationType::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['contact_information_type_id']);
-
         $this->contactInformation = ContactInformation::where('contact_id', $this->contact->id)
-            ->where('type_id', $this->data['contact_information_type_id'])
             ->findOrFail($this->data['contact_information_id']);
+
+        ContactInformationType::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->contactInformation->contactInformationType->id);
     }
 
     private function updateLastEditedDate(): void
     {
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-    }
-
-    private function log(): void
-    {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_information_destroyed',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-                'contact_information_type_name' => $this->contactInformationType->name,
-            ]),
-        ])->onQueue('low');
-
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_information_destroyed',
-            'objects' => json_encode([
-                'contact_information_type_name' => $this->contactInformationType->name,
-            ]),
-        ])->onQueue('low');
     }
 }

@@ -19,6 +19,12 @@
     border-bottom-right-radius: 8px;
   }
 }
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
 </style>
 
 <template>
@@ -41,144 +47,128 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Contact information</span>
+        <span class="font-semibold">{{ $t('contact.contact_information_title') }}</span>
       </div>
       <pretty-button
-        :text="'Add an address'"
+        :text="$t('contact.contact_information_cta')"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
         @click="showCreateContactInformationModal" />
     </div>
 
-    <div>
-      <!-- add a contact information -->
-      <form
-        v-if="createAddressModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200"
-        @submit.prevent="submit()">
-        <div class="border-b border-gray-200">
-          <div v-if="form.errors.length > 0" class="p-5">
-            <errors :errors="form.errors" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
-            <dropdown
-              v-model="form.address_type_id"
-              :data="data.address_types"
-              :required="false"
-              :placeholder="$t('app.choose_value')"
-              :dropdown-class="'block w-full'"
-              :label="'Address type'" />
-          </div>
-
-          <!-- street + city -->
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
-            <text-input
-              :ref="'street'"
-              v-model="form.street"
-              :label="'Street'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'w-full mr-2'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressModalShown = false" />
-
-            <text-input
-              v-model="form.city"
-              :label="'City'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressModalShown = false" />
-          </div>
-
-          <!-- province + postal code + country -->
-          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
-            <text-input
-              v-model="form.province"
-              :label="'Province'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'w-full mr-2'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressModalShown = false" />
-
-            <text-input
-              v-model="form.postal_code"
-              :label="'Postal code'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressModalShown = false" />
-
-            <text-input
-              v-model="form.country"
-              :label="'Country'"
-              :type="'text'"
-              :autofocus="true"
-              :input-class="'w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="createAddressModalShown = false" />
-          </div>
-
-          <!-- past address -->
-          <div class="p-5">
-            <input
-              :id="form.is_past_address"
-              :name="form.is_past_address"
-              v-model="form.is_past_address"
-              type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-            <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
-              This address is not active anymore
-            </label>
-          </div>
+    <!-- add a contact information modal -->
+    <form
+      v-if="addContactInformationModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200">
+        <div v-if="form.errors.length > 0" class="p-5">
+          <errors :errors="form.errors" />
         </div>
 
-        <div class="flex justify-between p-5">
-          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createAddressModalShown = false" />
-          <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <!-- name -->
+        <div class="border-b border-gray-200 p-5">
+          <text-input
+            :ref="'newData'"
+            v-model="form.data"
+            :label="$t('contact.contact_information_name')"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="false"
+            :autocomplete="false"
+            :maxlength="255"
+            @esc-key-pressed="addContactInformationModalShown = false" />
         </div>
-      </form>
 
-      <!-- list of contact information -->
-      <div class="mb-2 rounded-lg border border-gray-200 bg-white">
-        <div class="item-list border-b border-gray-200 hover:bg-slate-50">
-          <div class="flex items-center justify-between p-3">
-            <!-- information detail -->
-            <div>
-              <p class="text-sm">Facebook</p>
-            </div>
+        <div class="p-5">
+          <!-- contact information types -->
+          <dropdown
+            v-model="form.contact_information_type_id"
+            :data="data.contact_information_types"
+            :required="true"
+            :placeholder="$t('app.choose_value')"
+            :dropdown-class="'block w-full'"
+            :label="$t('contact.contact_information_type')" />
+        </div>
+      </div>
+
+      <div class="flex justify-between p-5">
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addContactInformationModalShown = false" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+      </div>
+    </form>
+
+    <!-- contact infos -->
+    <div v-if="localContactInformation.length > 0">
+      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
+        <li
+          v-for="info in localContactInformation"
+          :key="info.id"
+          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          <!-- contact information -->
+          <div v-if="editedContactInformationId != info.id" class="flex items-center justify-between px-3 py-2">
+            <inertia-link :href="info.data" class="text-blue-500 hover:underline">{{ info.label }}</inertia-link>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
-                Edit
+              <li
+                class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+                @click="showEditContactInformationModal(info)">
+                {{ $t('app.edit') }}
               </li>
-              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
-                Delete
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(info)">
+                {{ $t('app.delete') }}
               </li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      <!-- blank state -->
-      <div class="mb-2 rounded-lg border border-gray-200 bg-white">
-        <p class="p-5 text-center">There are no active addresses yet.</p>
-      </div>
+          <!-- edit info modal -->
+          <form v-if="editedContactInformationId == info.id" class="bg-form" @submit.prevent="update(info)">
+            <div class="border-b border-gray-200">
+              <div v-if="form.errors.length > 0" class="p-5">
+                <errors :errors="form.errors" />
+              </div>
+
+              <!-- name -->
+              <div class="border-b border-gray-200 p-5">
+                <text-input
+                  :ref="'newData'"
+                  v-model="form.data"
+                  :label="$t('contact.contact_information_name')"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="false"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="addContactInformationModalShown = false" />
+              </div>
+
+              <div class="p-5">
+                <!-- contact information types -->
+                <dropdown
+                  v-model="form.contact_information_type_id"
+                  :data="data.contact_information_types"
+                  :required="true"
+                  :placeholder="$t('app.choose_value')"
+                  :dropdown-class="'block w-full'"
+                  :label="$t('contact.contact_information_type')" />
+              </div>
+            </div>
+
+            <div class="flex justify-between p-5">
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedContactInformationId = 0" />
+              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            </div>
+          </form>
+        </li>
+      </ul>
+    </div>
+
+    <!-- blank state -->
+    <div v-if="localContactInformation.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+      <p class="p-5 text-center">{{ $t('contact.contact_information_blank') }}</p>
     </div>
   </div>
 </template>
@@ -187,25 +177,19 @@
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import PrettySpan from '@/Shared/Form/PrettySpan';
 import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
 import Dropdown from '@/Shared/Form/Dropdown';
+import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
     PrettyButton,
     PrettySpan,
     TextInput,
-    TextArea,
-    Errors,
     Dropdown,
+    Errors,
   },
 
   props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
     data: {
       type: Object,
       default: null,
@@ -215,63 +199,38 @@ export default {
   data() {
     return {
       loadingState: '',
-      createAddressModalShown: false,
-      inactiveAddressesShown: false,
-      localActiveAddresses: [],
-      localInactiveAddresses: [],
-      editedAddressId: 0,
-      warning: '',
+      addContactInformationModalShown: false,
+      localContactInformation: [],
+      editedContactInformationId: 0,
       form: {
-        type: '',
-        address_type_id: 0,
-        is_past_address: false,
-        street: '',
-        city: '',
-        province: '',
-        postal_code: '',
-        country: '',
+        data: '',
+        contact_information_type_id: 0,
         errors: [],
       },
     };
   },
 
   created() {
-    this.localActiveAddresses = this.data.active_addresses;
-    this.localInactiveAddresses = this.data.inactive_addresses;
+    this.localContactInformation = this.data.contact_information;
   },
 
   methods: {
     showCreateContactInformationModal() {
+      this.addContactInformationModalShown = true;
       this.form.errors = [];
-
-      this.form.is_past_address = false;
-      this.form.address_type_id = 0;
-      this.form.street = '';
-      this.form.city = '';
-      this.form.province = '';
-      this.form.postal_code = '';
-      this.form.country = '';
-      this.createAddressModalShown = true;
+      this.form.data = '';
+      this.form.contact_information_type_id = 0;
 
       this.$nextTick(() => {
-        this.$refs.street.focus();
+        this.$refs.newData.focus();
       });
     },
 
-    toggleInactiveAdresses() {
-      this.inactiveAddressesShown = !this.inactiveAddressesShown;
-    },
-
-    showEditAddressModal(address) {
-      this.editedAddressId = address.id;
+    showEditContactInformationModal(info) {
       this.form.errors = [];
-      this.form.is_past_address = address.is_past_address;
-      this.form.address_type_id = address.type ? address.type.id : 0;
-      this.form.street = address.street;
-      this.form.city = address.city;
-      this.form.province = address.province;
-      this.form.postal_code = address.postal_code;
-      this.form.country = address.country;
+      this.editedContactInformationId = info.id;
+      this.form.contact_information_type_id = info.contact_information_type.id;
+      this.form.data = info.data;
     },
 
     submit() {
@@ -280,16 +239,10 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The address has been created', 'success');
-
-          if (this.form.is_past_address) {
-            this.localInactiveAddresses.unshift(response.data.data);
-          } else {
-            this.localActiveAddresses.unshift(response.data.data);
-          }
-
+          this.flash(this.$t('contact.contact_information_new_success'), 'success');
+          this.localContactInformation.unshift(response.data.data);
           this.loadingState = '';
-          this.createAddressModalShown = false;
+          this.addContactInformationModalShown = false;
         })
         .catch((error) => {
           this.loadingState = '';
@@ -297,23 +250,17 @@ export default {
         });
     },
 
-    update(address) {
+    update(info) {
       this.loadingState = 'loading';
 
       axios
-        .put(address.url.update, this.form)
+        .put(info.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash('The address has been edited', 'success');
-
-          if (this.form.is_past_address) {
-            this.localInactiveAddresses[this.localInactiveAddresses.findIndex((x) => x.id === address.id)] =
-              response.data.data;
-          } else {
-            this.localActiveAddresses[this.localActiveAddresses.findIndex((x) => x.id === address.id)] =
-              response.data.data;
-          }
-          this.editedAddressId = 0;
+          this.flash(this.$t('contact.contact_information_edit_success'), 'success');
+          this.localContactInformation[this.localContactInformation.findIndex((x) => x.id === info.id)] =
+            response.data.data;
+          this.editedContactInformationId = 0;
         })
         .catch((error) => {
           this.loadingState = '';
@@ -321,21 +268,14 @@ export default {
         });
     },
 
-    destroy(address) {
-      if (confirm('Are you sure? This will delete the address permanently.')) {
+    destroy(info) {
+      if (confirm(this.$t('contact.contact_information_delete_confirm'))) {
         axios
-          .delete(address.url.destroy)
+          .delete(info.url.destroy)
           .then((response) => {
-            this.flash('The address has been deleted', 'success');
-            var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
-
-            if (address.is_past_address) {
-              var id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
-              this.localInactiveAddresses.splice(id, 1);
-            } else {
-              var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
-              this.localActiveAddresses.splice(id, 1);
-            }
+            this.flash(this.$t('contact.contact_information_delete_success'), 'success');
+            var id = this.localContactInformation.findIndex((x) => x.id === info.id);
+            this.localContactInformation.splice(id, 1);
           })
           .catch((error) => {
             this.loadingState = null;

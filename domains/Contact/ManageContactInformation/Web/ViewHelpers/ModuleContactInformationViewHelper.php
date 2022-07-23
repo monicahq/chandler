@@ -4,10 +4,11 @@ namespace App\Contact\ManageContactInformation\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\ContactInformation;
+use App\Models\User;
 
-class ContactInformationViewHelper
+class ModuleContactInformationViewHelper
 {
-    public static function data(Contact $contact): array
+    public static function data(Contact $contact, User $user): array
     {
         $infos = $contact->contactInformation()->with('contactInformationType')->get();
 
@@ -15,8 +16,19 @@ class ContactInformationViewHelper
             return self::dto($contact, $info);
         });
 
+        $infoTypesCollection = $user->account
+            ->contactInformationTypes()
+            ->get()
+            ->map(function ($contactInformationType) {
+                return [
+                    'id' => $contactInformationType->id,
+                    'name' => $contactInformationType->name,
+                ];
+            });
+
         return [
-            'data' => $infosCollection,
+            'contact_information' => $infosCollection,
+            'contact_information_types' => $infoTypesCollection,
             'url' => [
                 'store' => route('contact.contact_information.store', [
                     'vault' => $contact->vault_id,
@@ -31,7 +43,11 @@ class ContactInformationViewHelper
         return [
             'id' => $info->id,
             'label' => $info->contactInformationType->name,
-            'data' => $info->contactInformationType->protocol ? $info->contactInformationType->protocol.$info->data : null,
+            'data' => $info->contactInformationType->protocol ? $info->contactInformationType->protocol.$info->data : $info->data,
+            'contact_information_type' => [
+                'id' => $info->contactInformationType->id,
+                'name' => $info->contactInformationType->name,
+            ],
             'url' => [
                 'update' => route('contact.contact_information.update', [
                     'vault' => $contact->vault_id,
