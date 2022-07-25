@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contact\ManageDocuments\Events\FileDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,13 @@ class File extends Model
     use HasFactory;
 
     protected $table = 'files';
+
+    /**
+     * Possible type.
+     */
+    public const TYPE_DOCUMENT = 'document';
+    public const TYPE_AVATAR = 'avatar';
+    public const TYPE_PHOTO = 'photo';
 
     /**
      * The attributes that are mass assignable.
