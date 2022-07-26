@@ -4,7 +4,6 @@ namespace App\Settings\ManageNotificationChannels\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Mail\TestEmailSent;
-use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
 use App\Services\BaseService;

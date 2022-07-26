@@ -23,9 +23,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -38,9 +40,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_personalize')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -52,7 +54,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Contact information types</li>
+            <li class="inline">{{ $t('app.breadcrumb_settings_personalize_contact_information_types') }}</li>
           </ul>
         </div>
       </div>
@@ -62,10 +64,12 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> ☎️ </span> All the contact information types</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> ☎️ </span> {{ $t('settings.personalize_contact_information_types_title') }}
+          </h3>
           <pretty-button
             v-if="!createContactInformationTypeModalShown"
-            :text="'Add a type'"
+            :text="$t('settings.personalize_contact_information_types_cta')"
             :icon="'plus'"
             @click="showContactInformationTypeModal" />
         </div>
@@ -81,7 +85,7 @@
             <text-input
               :ref="'newContactInformationType'"
               v-model="form.name"
-              :label="'Name'"
+              :label="$t('settings.personalize_contact_information_types_new_name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full mb-3'"
@@ -92,20 +96,23 @@
 
             <text-input
               v-model="form.protocol"
-              :label="'Protocol'"
+              :label="$t('settings.personalize_contact_information_types_new_protocol')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
               :required="false"
               :autocomplete="false"
               :maxlength="255"
-              :help="'A contact information can be clickable. For instance, a phone number can be clickable and we will launch the default application in your computer associated with a phone number. If you do not know the protocol for the type you are adding, you can simply omit this field.'"
+              :help="$t('settings.personalize_contact_information_types_new_protocol_help')"
               @esc-key-pressed="createContactInformationTypeModalShown = false" />
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createContactInformationTypeModalShown = false" />
-            <pretty-button :text="'Add the type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3'"
+              @click="createContactInformationTypeModalShown = false" />
+            <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -122,7 +129,11 @@
               <div>
                 <span class="text-base">{{ contactInformationType.name }}</span>
                 <code v-if="contactInformationType.protocol" class="code ml-3 text-xs"
-                  >[Protocol: {{ contactInformationType.protocol }}]</code
+                  >[{{
+                    $t('settings.personalize_contact_information_types_protocol', {
+                      name: contactInformationType.protocol,
+                    })
+                  }}]</code
                 >
               </div>
 
@@ -131,13 +142,13 @@
                 <li
                   class="inline cursor-pointer text-blue-500 hover:underline"
                   @click="updateAdressTypeModal(contactInformationType)">
-                  Rename
+                  {{ $t('app.rename') }}
                 </li>
                 <li
                   v-if="contactInformationType.can_be_deleted"
                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                   @click="destroy(contactInformationType)">
-                  Delete
+                  {{ $t('app.delete') }}
                 </li>
               </ul>
             </div>
@@ -153,7 +164,7 @@
                 <text-input
                   :ref="'rename' + contactInformationType.id"
                   v-model="form.name"
-                  :label="'Name'"
+                  :label="$t('settings.personalize_contact_information_types_new_name')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full mb-3'"
@@ -164,7 +175,7 @@
 
                 <text-input
                   v-model="form.protocol"
-                  :label="'Protocol'"
+                  :label="$t('settings.personalize_contact_information_types_new_protocol')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -177,10 +188,10 @@
 
               <div class="flex justify-between p-5">
                 <pretty-span
-                  :text="'Cancel'"
+                  :text="$t('app.cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameContactInformationTypeModalShownId = 0" />
-                <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>
@@ -189,7 +200,7 @@
         <!-- blank state -->
         <div v-if="localContactInformationTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
           <p class="p-5 text-center">
-            Contact information types let you define how you can contact all your contacts (phone, email, …).
+            {{ $t('settings.personalize_contact_information_types_blank') }}
           </p>
         </div>
       </div>
@@ -269,7 +280,7 @@ export default {
       axios
         .post(this.data.url.contact_information_type_store, this.form)
         .then((response) => {
-          this.flash('The contact information type has been created', 'success');
+          this.flash(this.$t('settings.personalize_contact_information_types_new_success'), 'success');
           this.localContactInformationTypes.unshift(response.data.data);
           this.loadingState = null;
           this.createContactInformationTypeModalShown = false;
@@ -286,7 +297,7 @@ export default {
       axios
         .put(contactInformationType.url.update, this.form)
         .then((response) => {
-          this.flash('The contact information type has been updated', 'success');
+          this.flash(this.$t('settings.personalize_contact_information_types_edit_success'), 'success');
           this.localContactInformationTypes[
             this.localContactInformationTypes.findIndex((x) => x.id === contactInformationType.id)
           ] = response.data.data;
@@ -300,15 +311,11 @@ export default {
     },
 
     destroy(contactInformationType) {
-      if (
-        confirm(
-          "Are you sure? This will remove the contact information types from all contacts, but won't delete the contacts themselves.",
-        )
-      ) {
+      if (confirm(this.$t('settings.personalize_contact_information_types_blank'))) {
         axios
           .delete(contactInformationType.url.destroy)
           .then((response) => {
-            this.flash('The contact information type has been deleted', 'success');
+            this.flash(this.$t('settings.personalize_contact_information_types_delete_success'), 'success');
             var id = this.localContactInformationTypes.findIndex((x) => x.id === contactInformationType.id);
             this.localContactInformationTypes.splice(id, 1);
           })

@@ -1,6 +1,6 @@
 <style lang="scss" scoped>
 .grid {
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 200px 1fr 300px;
 }
 
 @media (max-width: 480px) {
@@ -28,29 +28,10 @@ input[type='checkbox'] {
           <!-- left -->
           <div class="p-3 sm:p-0">
             <!-- favorites -->
-            <h3 class="mb-3 border-b border-gray-200 font-medium">
-              <span class="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                </svg>
-              </span>
-              Favorites
-            </h3>
-            <div class="mb-2 flex items-center text-sm">
-              <small-contact :show-name="false" />
-            </div>
-            <div class="mb-2 flex items-center text-sm">
-              <small-contact :show-name="false" />
-            </div>
+            <favorites v-if="favorites.length > 0" :data="favorites" />
+
+            <!-- last updated contacts -->
+            <last-updated :data="lastUpdatedContacts" />
           </div>
 
           <!-- middle -->
@@ -136,30 +117,10 @@ input[type='checkbox'] {
 
           <!-- right -->
           <div class="p-3 sm:p-0">
-            <div class="mb-10">
-              <h3 class="mb-3 border-b border-gray-200 font-medium">
-                <span class="relative">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </span>
-                Reminders
-              </h3>
-              <p class="text-xs text-gray-400">Nov 09</p>
-              <p class="mb-3 text-sm">Birthday John</p>
-              <p class="text-xs text-gray-400">Nov 13</p>
-              <p class="mb-3 text-sm">Wedding Henri</p>
-            </div>
-            <h3 class="mb-3 border-b border-gray-200 font-medium">
+            <!-- upcoming reminders -->
+            <upcoming-reminders :data="upcomingReminders" />
+
+            <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">
               <span class="relative">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -202,18 +163,24 @@ input[type='checkbox'] {
 </template>
 
 <script>
-import Layout from '@/Shared/Layout.vue';
-import SmallContact from '@/Shared/SmallContact.vue';
-import Activity from '@/Pages/Vault/Dashboard/Partials/Feed/Activity.vue';
-import Entry from '@/Pages/Vault/Dashboard/Partials/Feed/Entry.vue';
-import Goal from '@/Pages/Vault/Dashboard/Partials/Feed/Goal.vue';
-import FeedItem from '@/Pages/Vault/Dashboard/Partials/Feed/FeedItem.vue';
-import CreateLifeEvent from '@/Pages/Vault/Dashboard/Partials/Feed/CreateLifeEvent.vue';
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import Layout from '@/Shared/Layout';
+import SmallContact from '@/Shared/SmallContact';
+import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated';
+import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders';
+import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites';
+import Activity from '@/Pages/Vault/Dashboard/Partials/Feed/Activity';
+import Entry from '@/Pages/Vault/Dashboard/Partials/Feed/Entry';
+import Goal from '@/Pages/Vault/Dashboard/Partials/Feed/Goal';
+import FeedItem from '@/Pages/Vault/Dashboard/Partials/Feed/FeedItem';
+import CreateLifeEvent from '@/Pages/Vault/Dashboard/Partials/Feed/CreateLifeEvent';
+import PrettyButton from '@/Shared/Form/PrettyButton';
 
 export default {
   components: {
     Layout,
+    LastUpdated,
+    UpcomingReminders,
+    Favorites,
     PrettyButton,
     SmallContact,
     Entry,
@@ -228,9 +195,17 @@ export default {
       type: Object,
       default: null,
     },
-    data: {
-      type: Array,
-      default: () => [],
+    lastUpdatedContacts: {
+      type: Object,
+      default: null,
+    },
+    upcomingReminders: {
+      type: Object,
+      default: null,
+    },
+    favorites: {
+      type: Object,
+      default: null,
     },
   },
 

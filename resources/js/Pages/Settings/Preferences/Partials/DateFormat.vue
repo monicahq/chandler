@@ -14,8 +14,8 @@ pre {
   <div class="mb-16">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> How should we display dates</h3>
-      <pretty-button v-if="!editMode" :text="'Edit'" @click="enableEditMode" />
+      <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> {{ $t('settings.user_preferences_date_title') }}</h3>
+      <pretty-button v-if="!editMode" :text="$t('app.edit')" @click="enableEditMode" />
     </div>
 
     <!-- help text -->
@@ -34,14 +34,14 @@ pre {
       </svg>
 
       <div>
-        <p>You can choose how you want Monica to display dates in the application.</p>
+        <p>{{ $t('settings.user_preferences_date_description') }}</p>
       </div>
     </div>
 
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <p class="px-5 py-2">
-        <span class="mb-2 block">Current way of displaying dates:</span>
+        <span class="mb-2 block">{{ $t('settings.user_preferences_date_name') }}</span>
         <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm">{{ localHumanDateFormat }}</span>
       </p>
     </div>
@@ -67,8 +67,8 @@ pre {
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="'Cancel'" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-link :text="$t('app.cancel')" :classes="'mr-3'" @click="editMode = false" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
   </div>
@@ -123,7 +123,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('Changes saved', 'success');
+          this.flash(this.$t('app.notification_flash_changes_saved'), 'success');
           this.localDateFormat = this.form.dateFormat;
           this.localHumanDateFormat = response.data.data.human_date_format;
           this.editMode = false;

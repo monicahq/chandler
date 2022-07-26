@@ -3,12 +3,14 @@
 use App\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
 use App\Contact\ManageContact\Web\Controllers\ContactArchiveController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Contact\ManageContact\Web\Controllers\ContactFavoriteController;
 use App\Contact\ManageContact\Web\Controllers\ContactLabelController;
 use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Contact\ManageContactInformation\Web\Controllers\ContactInformationController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
@@ -50,6 +52,8 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogCont
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
 use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotificationsController;
+use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
@@ -63,12 +67,14 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesControl
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
@@ -95,6 +101,11 @@ require __DIR__.'/auth.php';
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
 
+Route::post(
+    '/telegram/webhook/'.config('services.telegram-bot-api.webhook'),
+    [TelegramWebhookController::class, 'store']
+);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // vaults
     Route::prefix('vaults')->group(function () {
@@ -104,6 +115,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+            Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -121,6 +133,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
+                    Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
                     Route::get('update-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
@@ -159,6 +172,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('addresses', [ContactModuleAddressController::class, 'store'])->name('contact.address.store');
                     Route::put('addresses/{address}', [ContactModuleAddressController::class, 'update'])->name('contact.address.update');
                     Route::delete('addresses/{address}', [ContactModuleAddressController::class, 'destroy'])->name('contact.address.destroy');
+
+                    // contact information
+                    Route::post('contactInformation', [ContactInformationController::class, 'store'])->name('contact.contact_information.store');
+                    Route::put('contactInformation/{info}', [ContactInformationController::class, 'update'])->name('contact.contact_information.update');
+                    Route::delete('contactInformation/{info}', [ContactInformationController::class, 'destroy'])->name('contact.contact_information.destroy');
 
                     // loans
                     Route::post('loans', [ContactModuleLoanController::class, 'store'])->name('contact.loan.store');
@@ -243,12 +261,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
+            Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
         });
 
         // notifications
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('', [NotificationsController::class, 'index'])->name('index');
             Route::post('', [NotificationsController::class, 'store'])->name('store');
+            Route::post('telegram', [TelegramNotificationsController::class, 'store'])->name('telegram.store');
             Route::get('{notification}/verify/{uuid}', [NotificationsVerificationController::class, 'store'])->name('verification.store');
             Route::post('{notification}/test', [NotificationsTestController::class, 'store'])->name('test.store');
             Route::put('{notification}/toggle', [NotificationsToggleController::class, 'update'])->name('toggle.update');

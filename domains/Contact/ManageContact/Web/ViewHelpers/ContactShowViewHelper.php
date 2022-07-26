@@ -7,6 +7,7 @@ use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
 use App\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
 use App\Contact\ManageContactImportantDates\Web\ViewHelpers\ModuleImportantDatesViewHelper;
+use App\Contact\ManageContactInformation\Web\ViewHelpers\ModuleContactInformationViewHelper;
 use App\Contact\ManageContactName\Web\ViewHelpers\ModuleContactNameViewHelper;
 use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
@@ -53,6 +54,7 @@ class ContactShowViewHelper
             'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
             'options' => [
+                'can_be_archived' => $user->getContactInVault($contact->vault)->id !== $contact->id,
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
             ],
             'url' => [
@@ -84,9 +86,14 @@ class ContactShowViewHelper
             'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => self::modules($templatePage, $contact, $user),
             'options' => [
+                'can_be_archived' => $user->getContactInVault($contact->vault)->id !== $contact->id,
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
             ],
             'url' => [
+                'toggle_archive' => route('contact.archive.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'update_template' => route('contact.blank', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -224,6 +231,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_GROUPS) {
                 $data = ModuleGroupsViewHelper::data($contact);
+            }
+
+            if ($module->type == Module::TYPE_CONTACT_INFORMATION) {
+                $data = ModuleContactInformationViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

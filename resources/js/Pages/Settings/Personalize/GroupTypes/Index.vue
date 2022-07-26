@@ -19,9 +19,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">Settings</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -34,9 +36,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline"
-                >Personalize your account</inertia-link
-              >
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_personalize')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -111,8 +113,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
-            <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -241,21 +243,25 @@
                           </div>
 
                           <div class="flex justify-between p-5">
-                            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="roleGroupTypeId = 0" />
-                            <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="roleGroupTypeId = 0" />
+                            <pretty-button
+                              :text="$t('app.rename')"
+                              :state="loadingState"
+                              :icon="'check'"
+                              :classes="'save'" />
                           </div>
                         </form>
                       </template>
                     </draggable>
 
-                    <!-- add a new role -->
+                    <!-- add a role -->
                     <span
                       @click="showCreateRoleModal(element)"
                       v-if="
                         element.group_type_roles.length != 0 && !createRoleModalShown && roleGroupTypeId != element.id
                       "
                       class="inline cursor-pointer text-sm text-blue-500 hover:underline"
-                      >Add a new role</span
+                      >add a role</span
                     >
 
                     <!-- form: create new role -->
@@ -280,8 +286,8 @@
                       </div>
 
                       <div class="flex justify-between p-5">
-                        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createRoleModalShown = false" />
-                        <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createRoleModalShown = false" />
+                        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
                       </div>
                     </form>
 
@@ -296,7 +302,7 @@
                         <span
                           @click="showCreateRoleModal(element)"
                           class="block cursor-pointer text-sm text-blue-500 hover:underline"
-                          >Add a new role</span
+                          >add a role</span
                         >
                       </p>
                     </div>
@@ -325,8 +331,8 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="'Cancel'" :classes="'mr-3'" @click.prevent="editGroupTypeId = 0" />
-                  <pretty-button :text="'Rename'" :state="loadingState" :icon="'check'" :classes="'save'" />
+                  <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editGroupTypeId = 0" />
+                  <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
             </template>

@@ -108,8 +108,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="createNoteModalShown = false" />
-        <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createNoteModalShown = false" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
 
@@ -218,7 +218,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedNoteId = 0" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedNoteId = 0" />
             <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
@@ -226,7 +226,11 @@
 
       <!-- view all button -->
       <div v-if="moduleMode" class="text-center">
-        <inertia-link :href="data.url.index" class="text-blue-500 hover:underline"> View all notes </inertia-link>
+        <inertia-link
+          :href="data.url.index"
+          class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500">
+          {{ $t('app.view_all') }}
+        </inertia-link>
       </div>
 
       <!-- pagination -->

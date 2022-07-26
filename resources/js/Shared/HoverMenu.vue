@@ -22,10 +22,10 @@
     <template #overlay>
       <a-menu>
         <a-menu-item v-if="showEdit">
-          <a href="" @click.prevent="$emit('edit', $event.target.value)">Edit</a>
+          <a href="" @click.prevent="$emit('edit', $event.target.value)">{{ $t('app.edit') }}</a>
         </a-menu-item>
         <a-menu-item v-if="showDelete">
-          <a href="" @click.prevent="$emit('delete', $event.target.value)">Delete</a>
+          <a href="" @click.prevent="$emit('delete', $event.target.value)">{{ $t('app.delete') }}</a>
         </a-menu-item>
       </a-menu>
     </template>

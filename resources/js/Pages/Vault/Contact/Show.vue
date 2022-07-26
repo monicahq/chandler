@@ -21,11 +21,11 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600">You are here:</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline"
-                >Contacts</inertia-link
-              >
+              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_contact_index') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -37,7 +37,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Profile of {{ data.contact_name.name }}</li>
+            <li class="inline">{{ $t('app.breadcrumb_contact_show', { name: data.contact_name.name }) }}</li>
           </ul>
         </div>
       </div>
@@ -48,7 +48,7 @@
         <!-- banner if contact is archived -->
         <!-- this is based on the `listed` boolean on the contact object -->
         <div v-if="!data.listed" class="mb-8 rounded-lg border border-gray-300 px-3 py-2 text-center">
-          <span class="mr-4">🕸️</span> The contact is archived <span class="ml-4">🕷️</span>
+          <span class="mr-4">🕸️</span> {{ $t('contact.contact_archived') }} <span class="ml-4">🕷️</span>
         </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -73,23 +73,25 @@
             </div>
 
             <ul class="text-xs">
-              <li v-if="data.listed" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
-                  >Archive contact</inertia-link
-                >
+              <li v-if="data.listed && data.options.can_be_archived" class="mb-2">
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
+                  $t('contact.contact_archive_cta')
+                }}</inertia-link>
               </li>
               <li v-if="!data.listed" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
-                  >Unarchive contact</inertia-link
-                >
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
+                  $t('contact.contact_unarchive_cta')
+                }}</inertia-link>
               </li>
               <li class="mb-2">
-                <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline"
-                  >Change template</inertia-link
-                >
+                <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline">{{
+                  $t('contact.contact_change_template_cta')
+                }}</inertia-link>
               </li>
               <li v-if="data.options.can_be_deleted">
-                <span class="cursor-pointer text-blue-500 hover:underline" @click="destroy">Delete contact</span>
+                <span class="cursor-pointer text-blue-500 hover:underline" @click="destroy">{{
+                  $t('contact.contact_delete_cta')
+                }}</span>
               </li>
             </ul>
           </div>
@@ -113,17 +115,17 @@
             </div>
 
             <!-- all the pages -->
-            <div class="mb-8 border-b border-gray-200">
-              <ul>
-                <li v-for="page in data.template_pages" :key="page.id" class="mr-2 inline">
+            <div class="mb-8 w-full border-b border-gray-200">
+              <div class="flex overflow-x-auto">
+                <div v-for="page in data.template_pages" :key="page.id" class="mr-2 flex-none">
                   <inertia-link
                     :href="page.url.show"
                     :class="{ 'border-orange-500 hover:border-orange-500': page.selected }"
-                    class="inline-block border-b-2 border-transparent px-4 pb-2 hover:border-gray-200">
+                    class="inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200">
                     <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100">{{ page.name }}</span>
                   </inertia-link>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
 
             <!-- all the modules -->
@@ -150,6 +152,8 @@
                 <addresses v-if="module.type == 'addresses'" :data="addresses" />
 
                 <groups v-if="module.type == 'groups'" :data="groups" />
+
+                <contact-information v-if="module.type == 'contact_information'" :data="contactInformation" />
               </div>
             </div>
           </div>
@@ -160,25 +164,26 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout.vue';
-import ContactName from '@/Shared/Modules/ContactName.vue';
-import GenderPronoun from '@/Shared/Modules/GenderPronoun.vue';
-import Avatar from '@/Shared/Modules/Avatar.vue';
-import FamilySummary from '@/Shared/Modules/FamilySummary.vue';
-import Notes from '@/Shared/Modules/Notes.vue';
-import ImportantDates from '@/Shared/Modules/ImportantDates.vue';
-import Labels from '@/Shared/Modules/Labels.vue';
-import Reminders from '@/Shared/Modules/Reminders.vue';
-import Feed from '@/Shared/Modules/Feed.vue';
-import Loans from '@/Shared/Modules/Loans.vue';
-import JobInformation from '@/Shared/Modules/JobInformation.vue';
-import Relationships from '@/Shared/Modules/Relationships.vue';
-import Tasks from '@/Shared/Modules/Tasks.vue';
-import Calls from '@/Shared/Modules/Calls.vue';
-import Pets from '@/Shared/Modules/Pets.vue';
-import Goals from '@/Shared/Modules/Goals.vue';
-import Addresses from '@/Shared/Modules/Addresses.vue';
-import Groups from '@/Shared/Modules/Groups.vue';
+import Layout from '@/Shared/Layout';
+import ContactName from '@/Shared/Modules/ContactName';
+import GenderPronoun from '@/Shared/Modules/GenderPronoun';
+import Avatar from '@/Shared/Modules/Avatar';
+import FamilySummary from '@/Shared/Modules/FamilySummary';
+import Notes from '@/Shared/Modules/Notes';
+import ImportantDates from '@/Shared/Modules/ImportantDates';
+import Labels from '@/Shared/Modules/Labels';
+import Reminders from '@/Shared/Modules/Reminders';
+import Feed from '@/Shared/Modules/Feed';
+import Loans from '@/Shared/Modules/Loans';
+import JobInformation from '@/Shared/Modules/JobInformation';
+import Relationships from '@/Shared/Modules/Relationships';
+import Tasks from '@/Shared/Modules/Tasks';
+import Calls from '@/Shared/Modules/Calls';
+import Pets from '@/Shared/Modules/Pets';
+import Goals from '@/Shared/Modules/Goals';
+import Addresses from '@/Shared/Modules/Addresses';
+import Groups from '@/Shared/Modules/Groups';
+import ContactInformation from '@/Shared/Modules/ContactInformation';
 
 export default {
   components: {
@@ -201,6 +206,7 @@ export default {
     Goals,
     Addresses,
     Groups,
+    ContactInformation,
   },
 
   props: {
@@ -234,6 +240,7 @@ export default {
       goals: [],
       addresses: [],
       groups: [],
+      contactInformation: [],
     };
   },
 
@@ -326,16 +333,21 @@ export default {
       if (this.data.modules.findIndex((x) => x.type == 'groups') > -1) {
         this.groups = this.data.modules[this.data.modules.findIndex((x) => x.type == 'groups')].data;
       }
+
+      if (this.data.modules.findIndex((x) => x.type == 'contact_information') > -1) {
+        this.contactInformation =
+          this.data.modules[this.data.modules.findIndex((x) => x.type == 'contact_information')].data;
+      }
     }
   },
 
   methods: {
     destroy() {
-      if (confirm('Are you sure? This will remove everything we know about this contact.')) {
+      if (confirm(this.$t('contact.contact_delete_confirm'))) {
         axios
           .delete(this.data.url.destroy)
           .then((response) => {
-            localStorage.success = 'The contact has been deleted';
+            localStorage.success = this.$t('contact.contact_delete_success');
             this.$inertia.visit(response.data.data);
           })
           .catch((error) => {
@@ -345,11 +357,11 @@ export default {
     },
 
     toggleArchive() {
-      if (confirm('Are you sure?')) {
+      if (confirm(this.$t('contact.contact_toggle_confirm'))) {
         axios
           .put(this.data.url.toggle_archive)
           .then((response) => {
-            localStorage.success = 'Changes saved';
+            localStorage.success = this.$t('app.notification_flash_changes_saved');
             this.$inertia.visit(response.data.data);
           })
           .catch((error) => {

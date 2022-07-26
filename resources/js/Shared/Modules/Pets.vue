@@ -81,14 +81,14 @@ select {
             v-model="form.pet_category_id"
             :data="data.pet_categories"
             :required="true"
-            :placeholder="'Choose a value'"
+            :placeholder="$t('app.choose_value')"
             :dropdown-class="'block w-full'"
             :label="'Pet category'" />
         </div>
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="addPetModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addPetModalShown = false" />
         <pretty-button :text="'Add pet'" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
@@ -109,7 +109,9 @@ select {
               <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="showEditPetModal(pet)">
                 Edit
               </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pet)">Delete</li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pet)">
+                {{ $t('app.delete') }}
+              </li>
             </ul>
           </div>
 
@@ -141,15 +143,15 @@ select {
                   v-model="form.pet_category_id"
                   :data="data.pet_categories"
                   :required="true"
-                  :placeholder="'Choose a value'"
+                  :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
                   :label="'Pet category'" />
               </div>
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedPetId = 0" />
-              <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedPetId = 0" />
+              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </li>
@@ -240,15 +242,15 @@ export default {
         });
     },
 
-    update(reminder) {
+    update(pet) {
       this.loadingState = 'loading';
 
       axios
-        .put(reminder.url.update, this.form)
+        .put(pet.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
           this.flash('The pet has been edited', 'success');
-          this.localPets[this.localPets.findIndex((x) => x.id === reminder.id)] = response.data.data;
+          this.localPets[this.localPets.findIndex((x) => x.id === pet.id)] = response.data.data;
           this.editedPetId = 0;
         })
         .catch((error) => {
@@ -257,13 +259,13 @@ export default {
         });
     },
 
-    destroy(reminder) {
+    destroy(pet) {
       if (confirm('Are you sure? This will delete the pet permanently.')) {
         axios
-          .delete(reminder.url.destroy)
+          .delete(pet.url.destroy)
           .then((response) => {
             this.flash('The pet has been deleted', 'success');
-            var id = this.localPets.findIndex((x) => x.id === reminder.id);
+            var id = this.localPets.findIndex((x) => x.id === pet.id);
             this.localPets.splice(id, 1);
           })
           .catch((error) => {

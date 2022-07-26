@@ -58,7 +58,7 @@
             :data="localCompanies"
             :required="false"
             :div-outer-class="'mb-2'"
-            :placeholder="'Choose a value'"
+            :placeholder="$t('app.choose_value')"
             :dropdown-class="'block w-full'"
             :label="'Existing company'" />
 
@@ -97,10 +97,10 @@
         </div>
 
         <div class="flex justify-between p-2">
-          <pretty-span @click="editJobInformation = false" :text="'Cancel'" :classes="'mr-3'" />
+          <pretty-span @click="editJobInformation = false" :text="$t('app.cancel')" :classes="'mr-3'" />
           <pretty-button
             :href="'data.url.vault.create'"
-            :text="'Save'"
+            :text="$t('app.save')"
             :state="loadingState"
             :icon="'check'"
             :classes="'save'" />

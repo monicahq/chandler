@@ -124,7 +124,7 @@ select {
               :data="data.months"
               :required="true"
               :div-outer-class="'mb-5 mr-2'"
-              :placeholder="'Choose a value'"
+              :placeholder="$t('app.choose_value')"
               :dropdown-class="'block w-full'"
               :label="'Month'" />
 
@@ -133,7 +133,7 @@ select {
               :data="data.days"
               :required="true"
               :div-outer-class="'mb-5'"
-              :placeholder="'Choose a value'"
+              :placeholder="$t('app.choose_value')"
               :dropdown-class="'block w-full'"
               :label="'Day'" />
           </div>
@@ -210,7 +210,7 @@ select {
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="addReminderModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addReminderModalShown = false" />
         <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
@@ -250,9 +250,11 @@ select {
               <li
                 class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
                 @click="showEditReminderModal(reminder)">
-                Edit
+                {{ $t('app.edit') }}
               </li>
-              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(reminder)">Delete</li>
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(reminder)">
+                {{ $t('app.delete') }}
+              </li>
             </ul>
           </div>
 
@@ -319,7 +321,7 @@ select {
                     :data="data.months"
                     :required="true"
                     :div-outer-class="'mr-2'"
-                    :placeholder="'Choose a value'"
+                    :placeholder="$t('app.choose_value')"
                     :dropdown-class="'block w-full'"
                     :label="'Month'" />
 
@@ -327,7 +329,7 @@ select {
                     v-model="form.day"
                     :data="data.days"
                     :required="true"
-                    :placeholder="'Choose a value'"
+                    :placeholder="$t('app.choose_value')"
                     :dropdown-class="'block w-full'"
                     :label="'Day'" />
                 </div>
@@ -404,8 +406,8 @@ select {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="'Cancel'" :classes="'mr-3'" @click="editedReminderId = 0" />
-              <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedReminderId = 0" />
+              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </li>
