@@ -28,35 +28,4 @@ class StorageHelper
 
         return $totalSizeInBytes < $accountLimit;
     }
-
-    /**
-     * Get the stats of all the files in the account.
-     *
-     * @param Account $account
-     * @return array
-     */
-    public static function statistics(Account $account): array
-    {
-        $vaultIds = $account->vaults()->select('id')->get()->pluck('id')->toArray();
-        $contactIds = Contact::whereIn('vault_id', $vaultIds)->select('id')->get()->pluck('id')->toArray();
-
-        $totalSizeDocumentInBytes = File::whereIn('contact_id', $contactIds)
-            ->where('type', File::TYPE_DOCUMENT)
-            ->sum('size');
-
-        $totalSizeAvatarInBytes = File::whereIn('contact_id', $contactIds)
-            ->where('type', File::TYPE_AVATAR)
-            ->sum('size');
-
-        $totalSizePhotosInBytes = File::whereIn('contact_id', $contactIds)
-            ->where('type', File::TYPE_PHOTO)
-            ->sum('size');
-
-        $totalSizeInBytes = $totalSizeDocumentInBytes + $totalSizeAvatarInBytes + $totalSizePhotosInBytes;
-
-        return [
-            'statistics' => FileHelper::formatFileSize($totalSizeInBytes),
-            'account_limit' => FileHelper::formatFileSize($account->storage_limit_in_mb * 1024 * 1024),
-        ];
-    }
 }

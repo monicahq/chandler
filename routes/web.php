@@ -61,6 +61,7 @@ use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
+use App\Settings\ManageStorage\Web\Controllers\AccountStorageController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
@@ -74,6 +75,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderContr
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
@@ -116,6 +118,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+
+            // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
             // vault contacts
@@ -220,6 +224,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
                 });
+            });
+
+            // vault files
+            Route::prefix('files')->name('vault.files.')->group(function () {
+                Route::get('', [VaultFileController::class, 'index'])->name('index');
+                Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
+                Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
             });
 
             // vault settings
@@ -434,6 +445,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('currencies', [PersonalizeCurrencyController::class, 'store'])->name('currency.store');
                 Route::delete('currencies', [PersonalizeCurrencyController::class, 'destroy'])->name('currency.destroy');
             });
+
+            // storage
+            Route::get('storage', [AccountStorageController::class, 'index'])->name('storage.index');
 
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');

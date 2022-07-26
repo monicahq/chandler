@@ -206,4 +206,15 @@ return [
     'personalize_contact_information_types_edit_success' => 'The contact information type has been updated',
     'personalize_contact_information_types_delete_success' => 'The contact information type has been deleted',
     'personalize_contact_information_types_blank' => 'Are you sure? This will remove the contact information types from all contacts, but won’t delete the contacts themselves.',
+
+    /***************************************************************
+     * STORAGE
+     **************************************************************/
+
+    'storage_title' => 'Storage',
+    'storage_account_limit' => 'Your account limit',
+    'storage_account_current_usage' => 'Your account current usage',
+    'storage_type_document' => 'Documents',
+    'storage_type_avatar' => 'Avatars',
+    'storage_type_photo' => 'Photos',
 ];

@@ -53,7 +53,7 @@
               </li>
               <li class="mb-2 flex justify-start">
                 <span class="mr-2">📸</span>
-                <inertia-link :href="data.url.personalize.index" class="text-blue-500 hover:underline">{{
+                <inertia-link :href="data.url.storage.index" class="text-blue-500 hover:underline">{{
                   $t('settings.manage_storage')
                 }}</inertia-link>
               </li>

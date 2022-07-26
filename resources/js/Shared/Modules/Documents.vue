@@ -4,10 +4,6 @@
   top: -2px;
 }
 
-.uploadcare--dialog .uploadcare--button_primary {
-  background: #3891ff;
-}
-
 .item-list {
   &:hover:first-child {
     border-top-left-radius: 8px;
@@ -81,17 +77,18 @@ select {
           class="item-list border-b border-gray-200 hover:bg-slate-50">
           <!-- document -->
           <div class="flex items-center justify-between px-3 py-2">
-            <span class="flex items-center"
-              >{{ document.name }}
-              <span class="ml-2 rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">{{
-                document.size
-              }}</span></span
-            >
+            <span class="flex items-center">
+              <span class="max-w-sm truncate">{{ document.name }}</span>
+
+              <span class="ml-2 rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">
+                {{ document.size }}
+              </span>
+            </span>
 
             <!-- actions -->
             <ul class="text-sm">
               <li class="mr-4 inline">
-                <a :href="document.download_url" class="text-blue-500 hover:underline">Download</a>
+                <a :href="document.download_url" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(document)">
                 {{ $t('app.delete') }}
