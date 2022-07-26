@@ -24,7 +24,7 @@ createInertiaApp({
       .use(plugin)
       .use(ZiggyVue, Ziggy)
       .use(i18nVue, {
-        resolve: (lang) => import(`../../lang/${lang}.json`),
+        resolve: (lang) => resolvePageComponent(`../../lang/${lang}.json`, import.meta.glob('../../lang/*.json')),
       })
       .use(Antd)
       .use(VCalendar)

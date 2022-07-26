@@ -1,39 +1,34 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
-export default defineConfig({
-  plugins: [
-    laravel({
-      input: 'resources/js/app.js',
-    }),
-    vue({
-      template: {
-        transformAssetUrls: {
-          // The Vue plugin will re-write asset URLs, when referenced
-          // in Single File Components, to point to the Laravel web
-          // server. Setting this to `null` allows the Laravel plugin
-          // to instead re-write asset URLs to point to the Vite
-          // server instead.
-          base: null,
-
-          // The Vue plugin will parse absolute URLs and treat them
-          // as absolute paths to files on disk. Setting this to
-          // `false` will leave absolute URLs un-touched so they can
-          // reference assets in the public directly as expected.
-          includeAbsolute: false,
+export default defineConfig(({ mode }) => {
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  const env = loadEnv(mode, process.cwd(), '');
+  return {
+    plugins: [
+      laravel({
+        input: 'resources/js/app.js',
+        refresh: true,
+      }),
+      vue({
+        template: {
+          transformAssetUrls: {
+            base: null,
+            includeAbsolute: false,
+          },
         },
-      },
-    }),
-  ],
-  resolve: {
-    alias: {
-      ziggy: '/vendor/tightenco/ziggy/dist/vue.m',
-      '@': '/resources/js',
+      }),
+      basicSsl(),
+    ],
+    server: {
+      https: true,
+      host: 'localhost',
     },
-  },
-  server: {
-    https: true,
-    host: 'localhost',
-  },
+    build: {
+      sourcemap: env.VITE_PROD_SOURCE_MAPS,
+    },
+  };
 });
