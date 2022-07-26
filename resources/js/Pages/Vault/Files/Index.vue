@@ -36,21 +36,31 @@
             <!-- filters -->
             <div>
               <ul class="mb-4">
-                <li class="border-l-2 border-orange-500 pl-2">
-                  All files <span class="text-sm text-gray-500">(12)</span>
+                <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'index' }">
+                  <inertia-link :href="data.statistics.url.index"
+                    >{{ $t('vault.files_filter_all') }} <span class="text-sm text-gray-500">(12)</span></inertia-link
+                  >
                 </li>
               </ul>
 
-              <p class="mb-2 pl-2 text-sm text-gray-500">Or filter by type</p>
+              <p class="mb-2 pl-2 text-sm text-gray-500">{{ $t('vault.files_filter_or') }}</p>
               <ul>
-                <li class="border-l-2 pl-2 hover:border-l-2 hover:border-orange-500">
-                  Documents <span class="text-sm text-gray-500">(12)</span>
+                <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'documents' }">
+                  <inertia-link :href="data.statistics.url.documents"
+                    >{{ $t('vault.files_filter_documents') }}
+                    <span class="text-sm text-gray-500">(12)</span></inertia-link
+                  >
                 </li>
-                <li class="border-l-2 pl-2 hover:border-l-2 hover:border-orange-500">
-                  Photos <span class="text-sm text-gray-500">(12)</span>
+                <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'photos' }">
+                  <inertia-link :href="data.statistics.url.photos"
+                    >{{ $t('vault.files_filter_photos') }} <span class="text-sm text-gray-500">(12)</span></inertia-link
+                  >
                 </li>
-                <li class="border-l-2 pl-2 hover:border-l-2 hover:border-orange-500">
-                  Avatars <span class="text-sm text-gray-500">(12)</span>
+                <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'avatars' }">
+                  <inertia-link :href="data.statistics.url.avatars"
+                    >{{ $t('vault.files_filter_avatars') }}
+                    <span class="text-sm text-gray-500">(12)</span></inertia-link
+                  >
                 </li>
               </ul>
             </div>
@@ -58,31 +68,51 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
+            <!-- title + cta -->
+            <div class="mb-6 flex items-center justify-between">
+              <h3><span class="mr-1"> 📸 </span> {{ $t('vault.files_filter_title') }}</h3>
+            </div>
+
             <!-- file list -->
-            <ul class="file-list mb-6 rounded-lg border border-gray-200 bg-white">
+            <ul v-if="data.files.length > 0" class="file-list mb-6 rounded-lg border border-gray-200 bg-white">
               <li
                 v-for="file in data.files"
                 :key="file.id"
-                class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
-                <!-- created at -->
-                <p class="mr-2 text-sm text-gray-400">{{ file.created_at }}</p>
+                class="items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 sm:flex">
+                <!-- left part -->
+                <div class="mb-4 block sm:mb-0 sm:flex">
+                  <!-- created at -->
+                  <p class="mr-2 text-sm text-gray-400">{{ file.created_at }}</p>
 
-                <!-- file name -->
-                <p class="mr-4">
-                  <span class="">{{ file.name }}</span>
+                  <!-- file name -->
+                  <p class="mr-4 flex w-24 sm:max-w-sm">
+                    <span class="block truncate">{{ file.name }}</span>
 
-                  <span class="ml-2 rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">
-                    {{ file.size }}
-                  </span>
-                </p>
+                    <span class="ml-2">
+                      <span class="rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">
+                        {{ file.size }}
+                      </span>
+                    </span>
+                  </p>
 
-                <!-- avatar -->
-                <div class="flex items-center">
-                  <div v-html="file.contact.avatar" class="mr-2 h-5 w-5"></div>
-                  <inertia-link :href="file.contact.url.show" class="text-blue-500 hover:underline">
-                    {{ file.contact.name }}
-                  </inertia-link>
+                  <!-- avatar -->
+                  <div class="flex items-center">
+                    <div v-html="file.contact.avatar" class="mr-2 h-4 w-4"></div>
+                    <inertia-link :href="file.contact.url.show" class="text-sm text-blue-500 hover:underline">
+                      {{ file.contact.name }}
+                    </inertia-link>
+                  </div>
                 </div>
+
+                <!-- right part -->
+                <ul class="text-sm">
+                  <li class="mr-4 inline">
+                    <a :href="file.download_url" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
+                  </li>
+                  <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
+                    {{ $t('app.delete') }}
+                  </li>
+                </ul>
               </li>
             </ul>
 
@@ -102,7 +132,7 @@
 
             <!-- blank state -->
             <div v-if="data.files.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-              <p class="p-5 text-center">{{ $t('settings.notification_channels_blank') }}</p>
+              <p class="p-5 text-center">{{ $t('vault.files_filter_blank') }}</p>
             </div>
           </div>
         </div>
@@ -133,6 +163,10 @@ export default {
     data: {
       type: Object,
       default: null,
+    },
+    tab: {
+      type: String,
+      default: 'index',
     },
   },
 

@@ -11,7 +11,7 @@ use App\Models\Vault;
 
 class VaultFileIndexViewHelper
 {
-    public static function data($files, User $user): array
+    public static function data($files, User $user, Vault $vault): array
     {
         $filesCollection = collect();
         foreach ($files as $file) {
@@ -47,6 +47,7 @@ class VaultFileIndexViewHelper
 
         return [
             'files' => $filesCollection,
+            'statistics' => self::statistics($vault),
             'url' => [
                 'vault' => [
                     'create' => route('vault.create'),
@@ -85,6 +86,9 @@ class VaultFileIndexViewHelper
                     'vault' => $vault->id,
                 ]),
                 'documents' => route('vault.files.documents', [
+                    'vault' => $vault->id,
+                ]),
+                'avatars' => route('vault.files.avatars', [
                     'vault' => $vault->id,
                 ]),
             ],

@@ -28,8 +28,69 @@ class VaultFileController extends Controller
 
         return Inertia::render('Vault/Files/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => VaultFileIndexViewHelper::data($files, Auth::user()),
+            'data' => VaultFileIndexViewHelper::data($files, Auth::user(), $vault),
             'paginator' => PaginatorHelper::getData($files),
+            'tab' => 'index',
+        ]);
+    }
+
+    public function photos(Request $request, int $vaultId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->pluck('id')->toArray();
+
+        $files = File::whereIn('contact_id', $contactIds)
+            ->where('type', File::TYPE_PHOTO)
+            ->with('contact')
+            ->orderBy('created_at', 'desc')
+            ->paginate(25);
+
+        return Inertia::render('Vault/Files/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => VaultFileIndexViewHelper::data($files, Auth::user(), $vault),
+            'paginator' => PaginatorHelper::getData($files),
+            'tab' => 'photos',
+        ]);
+    }
+
+    public function documents(Request $request, int $vaultId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->pluck('id')->toArray();
+
+        $files = File::whereIn('contact_id', $contactIds)
+            ->where('type', File::TYPE_DOCUMENT)
+            ->with('contact')
+            ->orderBy('created_at', 'desc')
+            ->paginate(25);
+
+        return Inertia::render('Vault/Files/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => VaultFileIndexViewHelper::data($files, Auth::user(), $vault),
+            'paginator' => PaginatorHelper::getData($files),
+            'tab' => 'documents',
+        ]);
+    }
+
+    public function avatars(Request $request, int $vaultId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->pluck('id')->toArray();
+
+        $files = File::whereIn('contact_id', $contactIds)
+            ->where('type', File::TYPE_AVATAR)
+            ->with('contact')
+            ->orderBy('created_at', 'desc')
+            ->paginate(25);
+
+        return Inertia::render('Vault/Files/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => VaultFileIndexViewHelper::data($files, Auth::user(), $vault),
+            'paginator' => PaginatorHelper::getData($files),
+            'tab' => 'avatars',
         ]);
     }
 }

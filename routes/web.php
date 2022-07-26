@@ -231,6 +231,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('', [VaultFileController::class, 'index'])->name('index');
                 Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
                 Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
+                Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
             });
 
             // vault settings
