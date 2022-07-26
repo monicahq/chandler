@@ -134,6 +134,7 @@ export default {
 
   data() {
     return {
+      localDocuments: [],
       form: {
         searchTerm: null,
         employeeId: 0,

@@ -38,7 +38,8 @@
               <ul class="mb-4">
                 <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'index' }">
                   <inertia-link :href="data.statistics.url.index"
-                    >{{ $t('vault.files_filter_all') }} <span class="text-sm text-gray-500">(12)</span></inertia-link
+                    >{{ $t('vault.files_filter_all') }}
+                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.all }})</span></inertia-link
                   >
                 </li>
               </ul>
@@ -48,18 +49,21 @@
                 <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'documents' }">
                   <inertia-link :href="data.statistics.url.documents"
                     >{{ $t('vault.files_filter_documents') }}
-                    <span class="text-sm text-gray-500">(12)</span></inertia-link
+                    <span class="text-sm text-gray-500"
+                      >({{ data.statistics.statistics.documents }})</span
+                    ></inertia-link
                   >
                 </li>
                 <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'photos' }">
                   <inertia-link :href="data.statistics.url.photos"
-                    >{{ $t('vault.files_filter_photos') }} <span class="text-sm text-gray-500">(12)</span></inertia-link
+                    >{{ $t('vault.files_filter_photos') }}
+                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.photos }})</span></inertia-link
                   >
                 </li>
                 <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'avatars' }">
                   <inertia-link :href="data.statistics.url.avatars"
                     >{{ $t('vault.files_filter_avatars') }}
-                    <span class="text-sm text-gray-500">(12)</span></inertia-link
+                    <span class="text-sm text-gray-500">({{ data.statistics.statistics.avatars }})</span></inertia-link
                   >
                 </li>
               </ul>
@@ -85,7 +89,7 @@
                   <p class="mr-2 text-sm text-gray-400">{{ file.created_at }}</p>
 
                   <!-- file name -->
-                  <p class="mr-4 flex w-24 sm:max-w-sm">
+                  <p class="mr-4 flex max-w-none sm:max-w-sm">
                     <span class="block truncate">{{ file.name }}</span>
 
                     <span class="ml-2">
@@ -171,9 +175,30 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      localFiles: [],
+    };
   },
 
-  methods: {},
+  created() {
+    this.localFiles = this.data.files;
+  },
+
+  methods: {
+    destroy(file) {
+      if (confirm(this.$t('contact.documents_delete_confirm'))) {
+        axios
+          .delete(file.url.destroy)
+          .then((response) => {
+            this.flash(this.$t('contact.documents_delete_success'), 'success');
+            var id = this.localFiles.findIndex((x) => x.id === file.id);
+            this.localFiles.splice(id, 1);
+          })
+          .catch((error) => {
+            this.form.errors = error.response.data;
+          });
+      }
+    },
+  },
 };
 </script>

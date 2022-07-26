@@ -74,6 +74,7 @@ class VaultFileIndexViewHelper
 
         return [
             'statistics' => [
+                'all' => $totalNumberOfPhotos + $totalNumberOfDocuments + $totalNumberOfAvatars,
                 'photos' => $totalNumberOfPhotos,
                 'documents' => $totalNumberOfDocuments,
                 'avatars' => $totalNumberOfAvatars,
