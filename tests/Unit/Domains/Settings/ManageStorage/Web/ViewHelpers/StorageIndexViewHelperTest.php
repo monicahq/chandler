@@ -69,7 +69,6 @@ class StorageIndexViewHelperTest extends TestCase
                     'settings' => [
                         'index' => env('APP_URL') . '/settings',
                     ],
-                    'purge' => env('APP_URL') . '/settings/storage',
                 ],
             ],
             StorageIndexViewHelper::data($account)

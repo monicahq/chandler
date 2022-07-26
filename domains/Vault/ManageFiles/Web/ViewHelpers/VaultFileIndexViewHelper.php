@@ -48,11 +48,6 @@ class VaultFileIndexViewHelper
         return [
             'files' => $filesCollection,
             'statistics' => self::statistics($vault),
-            'url' => [
-                'vault' => [
-                    'create' => route('vault.create'),
-                ],
-            ],
         ];
     }
 

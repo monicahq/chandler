@@ -67,7 +67,6 @@ class StorageIndexViewHelper
                 'settings' => [
                     'index' => route('settings.index'),
                 ],
-                'purge' => route('settings.storage.destroy')
             ],
         ];
     }
