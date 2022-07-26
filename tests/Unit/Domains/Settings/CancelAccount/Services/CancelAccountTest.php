@@ -79,7 +79,7 @@ class CancelAccountTest extends TestCase
         ]);
 
         $this->assertDatabaseMissing('files', [
-            'file_id' => $file->id,
+            'id' => $file->id,
         ]);
     }
 }
