@@ -2,10 +2,11 @@
 
 namespace App\Contact\ManageDocuments\Web\Controllers;
 
-use App\Contact\ManageDocuments\Events\Web\ViewHelpers\ModuleDocumentsViewHelper;
+use App\Contact\ManageDocuments\Web\ViewHelpers\ModuleDocumentsViewHelper;
+use App\Contact\ManageDocuments\Services\DestroyDocument;
 use App\Contact\ManageDocuments\Services\UploadFile;
-use App\Contact\ManageGoals\Services\DestroyGoal;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,22 +31,24 @@ class ContactModuleDocumentController extends Controller
 
         $file = (new UploadFile())->execute($data);
 
+        $contact = Contact::findOrFail($contactId);
+
         return response()->json([
-            'data' => ModuleDocumentsViewHelper::dto($file),
+            'data' => ModuleDocumentsViewHelper::dto($file, $contact),
         ], 201);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $goalId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $fileId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'goal_id' => $goalId,
+            'file_id' => $fileId,
         ];
 
-        (new DestroyGoal())->execute($data);
+        (new DestroyDocument())->execute($data);
 
         return response()->json([
             'data' => true,

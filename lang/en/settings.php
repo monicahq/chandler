@@ -6,6 +6,7 @@ return [
     'notification_channels' => 'Notification channels',
     'account_settings' => 'Account settings',
     'manage_users' => 'Manage users',
+    'manage_storage' => 'Manage storage',
     'personalize_your_contacts_data' => 'Personalize your contacts data',
     'cancel_your_account' => 'Cancel your account',
 

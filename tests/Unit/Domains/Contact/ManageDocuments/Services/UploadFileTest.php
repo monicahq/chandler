@@ -22,8 +22,8 @@ class UploadFileTest extends TestCase
     /** @test */
     public function it_uploads_a_file(): void
     {
-        config(['officelife.uploadcare_public_key' => 'test']);
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
 
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -36,8 +36,8 @@ class UploadFileTest extends TestCase
     /** @test */
     public function it_fails_if_wrong_parameters_are_given(): void
     {
-        config(['officelife.uploadcare_public_key' => 'test']);
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
 
         $request = [
             'title' => 'Ross',
@@ -50,8 +50,8 @@ class UploadFileTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_env_keys_are_not_set(): void
     {
-        config(['officelife.uploadcare_public_key' => null]);
-        config(['officelife.uploadcare_public_key' => null]);
+        config(['services.uploadcare.public_key' => null]);
+        config(['services.uploadcare.public_key' => null]);
 
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -61,19 +61,19 @@ class UploadFileTest extends TestCase
         $this->expectException(EnvVariablesNotSetException::class);
         $this->executeService($regis, $regis->account, $vault, $contact);
 
-        config(['officelife.uploadcare_public_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
         $this->expectException(EnvVariablesNotSetException::class);
         $this->executeService($regis, $regis->account, $vault, $contact);
 
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
         $this->executeService($regis, $regis->account, $vault, $contact);
     }
 
     /** @test */
     public function it_fails_if_user_doesnt_belong_to_account(): void
     {
-        config(['officelife.uploadcare_public_key' => 'test']);
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
 
         $this->expectException(ModelNotFoundException::class);
 
@@ -89,8 +89,8 @@ class UploadFileTest extends TestCase
     /** @test */
     public function it_fails_if_contact_doesnt_belong_to_vault(): void
     {
-        config(['officelife.uploadcare_public_key' => 'test']);
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
 
         $this->expectException(ModelNotFoundException::class);
 
@@ -105,8 +105,8 @@ class UploadFileTest extends TestCase
     /** @test */
     public function it_fails_if_user_doesnt_have_right_permission_in_initial_vault(): void
     {
-        config(['officelife.uploadcare_public_key' => 'test']);
-        config(['officelife.uploadcare_private_key' => 'test']);
+        config(['services.uploadcare.public_key' => 'test']);
+        config(['services.uploadcare.private_key' => 'test']);
 
         $this->expectException(NotEnoughPermissionException::class);
 

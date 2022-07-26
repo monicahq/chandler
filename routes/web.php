@@ -11,6 +11,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use App\Contact\ManageContactInformation\Web\Controllers\ContactInformationController;
+use App\Contact\ManageDocuments\Web\Controllers\ContactModuleDocumentController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
@@ -197,6 +198,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('pets', [ContactModulePetController::class, 'store'])->name('contact.pet.store');
                     Route::put('pets/{pet}', [ContactModulePetController::class, 'update'])->name('contact.pet.update');
                     Route::delete('pets/{pet}', [ContactModulePetController::class, 'destroy'])->name('contact.pet.destroy');
+
+                    // documents
+                    Route::post('documents', [ContactModuleDocumentController::class, 'store'])->name('contact.document.store');
+                    Route::delete('documents/{document}', [ContactModuleDocumentController::class, 'destroy'])->name('contact.document.destroy');
 
                     // tasks
                     Route::get('tasks/completed', [ContactModuleTaskController::class, 'index'])->name('contact.task.index');

@@ -95,6 +95,7 @@ return [
     'module_addresses' => 'Adresses',
     'module_groups' => 'Groupes',
     'module_contact_information' => 'Information de contact',
+    'module_documents' => 'Documents',
 
     'module_option_default_number_of_items_to_display' => 'Nombre par défaut d’éléments à afficher',
 

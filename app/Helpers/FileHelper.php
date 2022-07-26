@@ -10,7 +10,7 @@ class FileHelper
      * @param int $bytes
      * @return string|null
      */
-    public static function getSize(int $bytes): ?string
+    public static function formatFileSize(int $bytes): ?string
     {
         $units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $step = 1024;

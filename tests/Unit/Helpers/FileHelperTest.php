@@ -15,11 +15,11 @@ class FileHelperTest extends TestCase
     {
         $this->assertEquals(
             '12.61MB',
-            FileHelper::getSize(13223239)
+            FileHelper::formatFileSize(13223239)
         );
         $this->assertEquals(
             '12.93kB',
-            FileHelper::getSize(13240)
+            FileHelper::formatFileSize(13240)
         );
     }
 }

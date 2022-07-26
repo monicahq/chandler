@@ -56,18 +56,18 @@ class DeleteFileInStorage
 
     private function checkAPIKeyPresence(): void
     {
-        if (is_null(config('officelife.uploadcare_private_key'))) {
+        if (is_null(config('services.uploadcare.private_key'))) {
             throw new EnvVariablesNotSetException();
         }
 
-        if (is_null(config('officelife.uploadcare_public_key'))) {
+        if (is_null(config('services.uploadcare.public_key'))) {
             throw new EnvVariablesNotSetException();
         }
     }
 
     private function getFileFromUploadcare(): void
     {
-        $configuration = Configuration::create(config('officelife.uploadcare_public_key'), config('officelife.uploadcare_private_key'));
+        $configuration = Configuration::create(config('services.uploadcare.public_key'), config('services.uploadcare.private_key'));
         $this->api = new Api($configuration);
 
         try {
