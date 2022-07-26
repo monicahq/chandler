@@ -4,7 +4,7 @@
   top: -2px;
 }
 
-.uploadcare--button_primary {
+.uploadcare--dialog .uploadcare--button_primary {
   background: #3891ff;
 }
 
