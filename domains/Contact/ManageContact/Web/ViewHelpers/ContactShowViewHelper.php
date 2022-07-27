@@ -242,6 +242,10 @@ class ContactShowViewHelper
                 $data = ModuleDocumentsViewHelper::data($contact);
             }
 
+            if ($module->type == Module::TYPE_PHOTOS) {
+                $data = ModuleDocumentsViewHelper::data($contact);
+            }
+
             $modulesCollection->push([
                 'id' => $module->id,
                 'type' => $module->type,
