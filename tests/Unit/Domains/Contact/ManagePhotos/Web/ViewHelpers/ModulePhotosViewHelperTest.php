@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Domains\Contact\ManagePhotos\Web\ViewHelpers;
 
-use App\Contact\ManageDocuments\Web\ViewHelpers\ModuleDocumentsViewHelper;
+use App\Contact\ManagePhotos\Web\ViewHelpers\ModulePhotosViewHelper;
 use App\Models\Contact;
 use App\Models\File;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ModuleDocumentsViewHelperTest extends TestCase
+class ModulePhotosViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -22,14 +22,14 @@ class ModuleDocumentsViewHelperTest extends TestCase
             'contact_id' => $contact->id,
         ]);
 
-        $array = ModuleDocumentsViewHelper::data($contact);
+        $array = ModulePhotosViewHelper::data($contact);
 
         $this->assertEquals(
             4,
             count($array)
         );
 
-        $this->assertArrayHasKey('documents', $array);
+        $this->assertArrayHasKey('photos', $array);
         $this->assertArrayHasKey('uploadcarePublicKey', $array);
         $this->assertArrayHasKey('canUploadFile', $array);
         $this->assertArrayHasKey('url', $array);
@@ -41,7 +41,7 @@ class ModuleDocumentsViewHelperTest extends TestCase
         $this->assertFalse($array['canUploadFile']);
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/documents',
+                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/photos',
             ],
             $array['url']
         );
@@ -56,7 +56,7 @@ class ModuleDocumentsViewHelperTest extends TestCase
             'size' => 123,
         ]);
 
-        $array = ModuleDocumentsViewHelper::dto($file, $contact);
+        $array = ModulePhotosViewHelper::dto($file, $contact);
 
         $this->assertEquals(
             [
@@ -66,7 +66,7 @@ class ModuleDocumentsViewHelperTest extends TestCase
                 'mime_type' => $file->mime_type,
                 'size' => '123B',
                 'url' => [
-                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/documents/'.$file->id,
+                    'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/photos/'.$file->id,
                 ],
             ],
             $array

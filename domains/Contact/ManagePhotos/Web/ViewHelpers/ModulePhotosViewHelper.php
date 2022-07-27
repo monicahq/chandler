@@ -11,7 +11,7 @@ class ModulePhotosViewHelper
 {
     public static function data(Contact $contact): array
     {
-        $documentsCollection = $contact->files()
+        $photosCollection = $contact->files()
             ->where('type', File::TYPE_PHOTO)
             ->get()
             ->map(function (File $file) use ($contact) {
@@ -19,7 +19,7 @@ class ModulePhotosViewHelper
             });
 
         return [
-            'documents' => $documentsCollection,
+            'photos' => $photosCollection,
             'uploadcarePublicKey' => config('services.uploadcare.public_key'),
             'canUploadFile' => StorageHelper::canUploadFile($contact->vault->account),
             'url' => [
