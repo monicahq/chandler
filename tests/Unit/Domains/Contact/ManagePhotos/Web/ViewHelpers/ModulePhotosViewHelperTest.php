@@ -41,6 +41,7 @@ class ModulePhotosViewHelperTest extends TestCase
         $this->assertFalse($array['canUploadFile']);
         $this->assertEquals(
             [
+                'index' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/photos',
                 'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/photos',
             ],
             $array['url']
@@ -54,6 +55,7 @@ class ModulePhotosViewHelperTest extends TestCase
         $file = File::factory()->create([
             'contact_id' => $contact->id,
             'size' => 123,
+            'uuid' => 123,
         ]);
 
         $array = ModulePhotosViewHelper::dto($file, $contact);
@@ -62,6 +64,7 @@ class ModulePhotosViewHelperTest extends TestCase
             [
                 'id' => $file->id,
                 'download_url' => $file->cdn_url,
+                'display_url' => 'https://ucarecdn.com/123/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/',
                 'name' => $file->name,
                 'mime_type' => $file->mime_type,
                 'size' => '123B',

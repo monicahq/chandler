@@ -209,6 +209,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('documents/{document}', [ContactModuleDocumentController::class, 'destroy'])->name('contact.document.destroy');
 
                     // photos
+                    Route::get('photos', [ContactModulePhotoController::class, 'index'])->name('contact.photo.index');
                     Route::post('photos', [ContactModulePhotoController::class, 'store'])->name('contact.photo.store');
                     Route::delete('photos/{photo}', [ContactModulePhotoController::class, 'destroy'])->name('contact.photo.destroy');
 
