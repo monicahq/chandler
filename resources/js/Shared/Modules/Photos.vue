@@ -70,7 +70,7 @@ select {
 
     <!-- photos -->
     <div v-if="localPhotos.length > 0">
-      <div class="grid grid-cols-3 gap-4">
+      <div class="mb-4 grid grid-cols-3 gap-4">
         <div
           v-for="photo in localPhotos"
           :key="photo.id"
