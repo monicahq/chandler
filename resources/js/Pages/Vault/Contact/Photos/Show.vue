@@ -44,7 +44,7 @@
               </svg>
             </li>
             <li class="inline">
-              <inertia-link :href="data.url.show" class="text-blue-500 hover:underline">{{
+              <inertia-link :href="data.url.index" class="text-blue-500 hover:underline">{{
                 $t('app.breadcrumb_contact_photo')
               }}</inertia-link>
             </li>
@@ -58,7 +58,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">NAME</li>
+            <li class="inline">{{ data.name }}</li>
           </ul>
         </div>
       </div>
@@ -95,26 +95,16 @@
               </svg>
             </span>
 
-            <span class="font-semibold">Photos</span>
+            <span class="font-semibold">{{ data.name }}</span>
           </div>
 
-          <!-- upload -->
-          <uploadcare
-            v-if="data.uploadcarePublicKey && data.canUploadFile"
-            :public-key="data.uploadcarePublicKey"
-            :tabs="'file'"
-            :multiple="false"
-            :preview-step="false"
-            @success="onSuccess"
-            @error="onError">
-            <pretty-button :text="$t('contact.photos_cta')" :icon="'plus'" :classes="'sm:w-fit w-full'" />
-          </uploadcare>
+          <span class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(data)">{{
+            $t('app.delete')
+          }}</span>
         </div>
 
-        <!-- <div class="min-h-screen flex flex-col"></div> -->
-        <div class="grid grid-rows-2">
+        <div class="">
           <img :src="data.url.display" alt="data.name" />
-          <div>2</div>
         </div>
       </div>
     </main>
@@ -123,16 +113,10 @@
 
 <script>
 import Layout from '@/Shared/Layout';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import Pagination from '@/Shared/Pagination';
-import Uploadcare from 'uploadcare-vue/src/Uploadcare.vue';
 
 export default {
   components: {
     Layout,
-    PrettyButton,
-    Pagination,
-    Uploadcare,
   },
 
   props: {
@@ -144,57 +128,21 @@ export default {
       type: Object,
       default: null,
     },
-    paginator: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {
-      localPhotos: [],
-      form: {
-        searchTerm: null,
-        employeeId: 0,
-        uuid: null,
-        name: null,
-        original_url: null,
-        cdn_url: null,
-        mime_type: null,
-        size: null,
-        errors: [],
-      },
-    };
-  },
-
-  created() {
-    this.localPhotos = this.data.photos;
   },
 
   methods: {
-    onSuccess(file) {
-      this.form.uuid = file.uuid;
-      this.form.name = file.name;
-      this.form.original_url = file.originalUrl;
-      this.form.cdn_url = file.cdnUrl;
-      this.form.mime_type = file.mimeType;
-      this.form.size = file.size;
-
-      this.upload();
-    },
-
-    onError() {},
-
-    upload() {
-      axios
-        .post(this.data.url.store, this.form)
-        .then((response) => {
-          this.localPhotos.unshift(response.data.data);
-          this.flash(this.$t('contact.photos_new_success'), 'success');
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
+    destroy(photo) {
+      if (confirm(this.$t('contact.documents_delete_confirm'))) {
+        axios
+          .delete(photo.url.destroy)
+          .then((response) => {
+            localStorage.success = this.$t('contact.photos_delete_success');
+            this.$inertia.visit(response.data.data);
+          })
+          .catch((error) => {
+            this.form.errors = error.response.data;
+          });
+      }
     },
   },
 };

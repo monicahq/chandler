@@ -3,6 +3,7 @@
 namespace App\Contact\ManagePhotos\Web\Controllers;
 
 use App\Contact\ManagePhotos\Web\ViewHelpers\ContactPhotosIndexViewHelper;
+use App\Contact\ManagePhotos\Web\ViewHelpers\ContactPhotosShowViewHelper;
 use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -36,15 +37,13 @@ class ContactPhotoController extends Controller
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
 
-        $files = File::where('contact_id', $contactId)
+        $photo = File::where('contact_id', $contactId)
             ->where('type', File::TYPE_PHOTO)
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
+            ->findOrFail($photoId);
 
         return Inertia::render('Vault/Contact/Photos/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => ContactPhotosIndexViewHelper::data($files, $contact),
-            'paginator' => PaginatorHelper::getData($files),
+            'data' => ContactPhotosShowViewHelper::data($photo, $contact),
         ]);
     }
 }

@@ -51,7 +51,10 @@ class ContactModulePhotoController extends Controller
         (new DestroyPhoto())->execute($data);
 
         return response()->json([
-            'data' => true,
+            'data' => route('contact.photo.index', [
+                'vault' => $vaultId,
+                'contact' => $contactId,
+            ]),
         ], 200);
     }
 }

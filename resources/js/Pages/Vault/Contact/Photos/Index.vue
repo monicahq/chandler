@@ -109,6 +109,10 @@
 
         <!-- pagination -->
         <pagination :paginator="paginator" />
+
+        <div v-if="localPhotos.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <p class="p-5 text-center">{{ $t('contact.photos_blank') }}</p>
+        </div>
       </div>
     </main>
   </layout>
