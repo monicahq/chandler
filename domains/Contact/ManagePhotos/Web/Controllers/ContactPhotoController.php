@@ -30,4 +30,21 @@ class ContactPhotoController extends Controller
             'paginator' => PaginatorHelper::getData($files),
         ]);
     }
+
+    public function show(Request $request, int $vaultId, int $contactId, int $photoId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $contact = Contact::findOrFail($contactId);
+
+        $files = File::where('contact_id', $contactId)
+            ->where('type', File::TYPE_PHOTO)
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+        return Inertia::render('Vault/Contact/Photos/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => ContactPhotosIndexViewHelper::data($files, $contact),
+            'paginator' => PaginatorHelper::getData($files),
+        ]);
+    }
 }

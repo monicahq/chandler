@@ -39,12 +39,17 @@ class ContactPhotosIndexViewHelper
     {
         return [
             'id' => $file->id,
-            'download_url' => $file->cdn_url,
-            'display_url' => 'https://ucarecdn.com/'.$file->uuid. '/-/scale_crop/400x400/smart/-/format/auto/-/quality/smart_retina/',
             'name' => $file->name,
             'mime_type' => $file->mime_type,
             'size' => FileHelper::formatFileSize($file->size),
             'url' => [
+                'display' => 'https://ucarecdn.com/' . $file->uuid . '/-/scale_crop/400x400/smart/-/format/auto/-/quality/smart_retina/',
+                'download' => $file->cdn_url,
+                'show' => route('contact.photo.show', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'photo' => $file->id,
+                ]),
                 'destroy' => route('contact.photo.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,

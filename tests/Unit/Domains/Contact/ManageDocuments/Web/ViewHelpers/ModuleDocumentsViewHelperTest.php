@@ -61,11 +61,11 @@ class ModuleDocumentsViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'id' => $file->id,
-                'download_url' => $file->cdn_url,
                 'name' => $file->name,
                 'mime_type' => $file->mime_type,
                 'size' => '123B',
                 'url' => [
+                    'download' => $file->cdn_url,
                     'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/documents/'.$file->id,
                 ],
             ],

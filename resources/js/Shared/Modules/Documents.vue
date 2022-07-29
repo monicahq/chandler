@@ -88,7 +88,7 @@ select {
             <!-- actions -->
             <ul class="text-sm">
               <li class="mr-4 inline">
-                <a :href="document.download_url" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
+                <a :href="document.url.download" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(document)">
                 {{ $t('app.delete') }}

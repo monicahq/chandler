@@ -74,8 +74,8 @@ select {
         <div
           v-for="photo in localPhotos"
           :key="photo.id"
-          class="hover:bg-gray rounded-md border border-gray-200 p-2 shadow-sm">
-          <img :src="photo.display_url" :alt="photo.name" />
+          class="rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg">
+          <img :src="photo.url.display" :alt="photo.name" />
         </div>
       </div>
 

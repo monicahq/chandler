@@ -111,7 +111,7 @@
                 <!-- right part -->
                 <ul class="text-sm">
                   <li class="mr-4 inline">
-                    <a :href="file.download_url" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
+                    <a :href="file.url.download" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
                   </li>
                   <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
                     {{ $t('app.delete') }}

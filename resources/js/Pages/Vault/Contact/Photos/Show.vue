@@ -43,14 +43,29 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_contact_photo') }}</li>
+            <li class="inline">
+              <inertia-link :href="data.url.show" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_contact_photo')
+              }}</inertia-link>
+            </li>
+            <li class="relative mr-2 inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-breadcrumb relative inline h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+            <li class="inline">NAME</li>
           </ul>
         </div>
       </div>
     </nav>
 
     <main class="sm:mt-18 relative">
-      <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
           <div class="mb-2 sm:mb-0">
@@ -96,19 +111,11 @@
           </uploadcare>
         </div>
 
-        <div v-if="localPhotos.length > 0" class="mb-4">
-          <div class="grid grid-cols-3 gap-4">
-            <div
-              v-for="photo in localPhotos"
-              :key="photo.id"
-              class="rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg">
-              <inertia-link :href="photo.url.show"><img :src="photo.url.display" :alt="photo.name" /></inertia-link>
-            </div>
-          </div>
+        <!-- <div class="min-h-screen flex flex-col"></div> -->
+        <div class="grid grid-rows-2">
+          <img :src="data.url.display" alt="data.name" />
+          <div>2</div>
         </div>
-
-        <!-- pagination -->
-        <pagination :paginator="paginator" />
       </div>
     </main>
   </layout>

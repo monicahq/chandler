@@ -24,6 +24,7 @@ return [
     'breadcrumb_contact_show' => 'Profil de :name',
     'breadcrumb_contact_create' => 'Créer un contact',
     'breadcrumb_contact_note_index' => 'Toutes les notes',
+    'breadcrumb_contact_photo' => 'Toutes les photos',
     'breadcrumb_settings' => 'Paramètres',
     'breadcrumb_settings_preferences' => 'Préférences de l’utilisateur',
     'breadcrumb_settings_notification_channels' => 'Chaînes de notification',

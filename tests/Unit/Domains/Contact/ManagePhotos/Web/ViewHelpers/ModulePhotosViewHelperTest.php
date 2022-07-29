@@ -63,12 +63,12 @@ class ModulePhotosViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'id' => $file->id,
-                'download_url' => $file->cdn_url,
-                'display_url' => 'https://ucarecdn.com/123/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/',
                 'name' => $file->name,
                 'mime_type' => $file->mime_type,
                 'size' => '123B',
                 'url' => [
+                    'display' => 'https://ucarecdn.com/123/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/',
+                    'download' => $file->cdn_url,
                     'destroy' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/photos/'.$file->id,
                 ],
             ],
