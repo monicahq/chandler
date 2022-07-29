@@ -18,10 +18,12 @@ return new class () extends Migration {
         Schema::create('avatars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('file_id')->nullable();
             $table->string('type');
             $table->text('svg')->nullable();
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
         });
 
         Schema::table('contacts', function (Blueprint $table) {

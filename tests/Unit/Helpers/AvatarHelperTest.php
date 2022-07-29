@@ -5,6 +5,7 @@ namespace Tests\Unit\Helpers;
 use App\Helpers\AvatarHelper;
 use App\Models\Avatar;
 use App\Models\Contact;
+use App\Models\File;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -63,6 +64,31 @@ class AvatarHelperTest extends TestCase
         $svg = AvatarHelper::generateRandomAvatar($avatar->contact);
 
         $this->assertNotNull(
+            $svg
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_file_of_the_avatar(): void
+    {
+        $contact = Contact::factory()->create();
+        $file = File::factory()->create([
+            'contact_id' => $contact->id,
+            'size' => 123,
+            'uuid' => 123,
+        ]);
+        $avatar = Avatar::factory()->create([
+            'contact_id' => $contact->id,
+            'file_id' => $file->id,
+            'type' => Avatar::TYPE_FILE,
+        ]);
+        $contact->avatar_id = $avatar->id;
+        $contact->save();
+
+        $svg = AvatarHelper::get($contact);
+
+        $this->assertEquals(
+            'https://ucarecdn.com/123/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/',
             $svg
         );
     }

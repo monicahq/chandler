@@ -47,10 +47,16 @@ class AvatarHelper
      * @param  Contact  $contact
      * @return string
      */
-    public static function getSVG(Contact $contact): string
+    public static function get(Contact $contact): string
     {
         $avatar = $contact->currentAvatar;
 
-        return $avatar->svg;
+        if ($avatar->type === Avatar::TYPE_GENERATED) {
+            $avatarURL = $avatar->svg;
+        } else {
+            $avatarURL = 'https://ucarecdn.com/' . $avatar->file->uuid . '/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
+        }
+
+        return $avatarURL;
     }
 }

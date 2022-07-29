@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Avatar;
 use App\Models\Contact;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AvatarFactory extends Factory
@@ -24,6 +25,7 @@ class AvatarFactory extends Factory
     {
         return [
             'contact_id' => Contact::factory(),
+            'file_id' => File::factory(),
             'type' => Avatar::TYPE_GENERATED,
             'svg' => '123',
         ];

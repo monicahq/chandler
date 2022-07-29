@@ -73,21 +73,37 @@
             </div>
 
             <ul class="text-xs">
+              <!-- generate new avatar -->
+              <li v-if="data.listed" class="mb-2">
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Generate new avatar</inertia-link
+                >
+              </li>
+              <!-- upload new avatar -->
+              <li v-if="data.listed" class="mb-2">
+                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Upload photo as avatar</inertia-link
+                >
+              </li>
+              <!-- archive contact -->
               <li v-if="data.listed && data.options.can_be_archived" class="mb-2">
                 <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
                   $t('contact.contact_archive_cta')
                 }}</inertia-link>
               </li>
+              <!-- unarchive contact -->
               <li v-if="!data.listed" class="mb-2">
                 <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
                   $t('contact.contact_unarchive_cta')
                 }}</inertia-link>
               </li>
+              <!-- change template -->
               <li class="mb-2">
                 <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline">{{
                   $t('contact.contact_change_template_cta')
                 }}</inertia-link>
               </li>
+              <!-- delete contact -->
               <li v-if="data.options.can_be_deleted">
                 <span class="cursor-pointer text-blue-500 hover:underline" @click="destroy">{{
                   $t('contact.contact_delete_cta')

@@ -16,6 +16,7 @@ class Avatar extends Model
      * Possible type.
      */
     public const TYPE_GENERATED = 'generated';
+    public const TYPE_FILE = 'file';
 
     /**
      * The attributes that are mass assignable.
@@ -24,17 +25,28 @@ class Avatar extends Model
      */
     protected $fillable = [
         'contact_id',
+        'file_id',
         'type',
         'svg',
     ];
 
     /**
-     * Get the contact associated with the contact log.
+     * Get the contact associated with the avatar.
      *
      * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    /**
+     * Get the file associated with the avatar.
+     *
+     * @return BelongsTo
+     */
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(File::class);
     }
 }

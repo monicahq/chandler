@@ -195,6 +195,19 @@ class ContactTest extends TestCase
     }
 
     /** @test */
+    public function it_has_one_current_avatar(): void
+    {
+        $ross = Contact::factory()->create();
+        $avatar = Avatar::factory()->create([
+            'contact_id' => $ross->id,
+        ]);
+        $ross->avatar_id = $avatar->id;
+        $ross->save();
+
+        $this->assertTrue($ross->currentAvatar()->exists());
+    }
+
+    /** @test */
     public function it_has_many_avatars(): void
     {
         $ross = Contact::factory()->create();

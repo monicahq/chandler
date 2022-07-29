@@ -17,4 +17,12 @@ class AvatarTest extends TestCase
 
         $this->assertTrue($avatar->contact()->exists());
     }
+
+    /** @test */
+    public function it_has_one_file()
+    {
+        $avatar = Avatar::factory()->create();
+
+        $this->assertTrue($avatar->file()->exists());
+    }
 }

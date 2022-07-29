@@ -392,7 +392,7 @@ class Contact extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                return AvatarHelper::getSVG($this);
+                return AvatarHelper::get($this);
             }
         );
     }
