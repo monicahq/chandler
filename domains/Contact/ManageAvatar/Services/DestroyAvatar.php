@@ -2,15 +2,16 @@
 
 namespace App\Contact\ManageAvatar\Services;
 
+use App\Helpers\AvatarHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Avatar;
 use App\Models\File;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Exception;
 
-class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
+class DestroyAvatar extends BaseService implements ServiceInterface
 {
-    private File $file;
     private Avatar $avatar;
 
     /**
@@ -25,7 +26,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'file_id' => 'nullable|integer|exists:file_id,id',
         ];
     }
 
@@ -45,44 +45,44 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
     }
 
     /**
-     * Set the given photo as the contact's avatar.
+     * Remove the current file used as avatar and put the default avatar back.
      *
      * @param  array  $data
-     * @return File
+     * @return Avatar
      */
-    public function execute(array $data): File
+    public function execute(array $data): Avatar
     {
         $this->data = $data;
         $this->validate();
 
-        $this->createAvatar();
-        $this->setAvatar();
+        $this->getCurrentAvatar();
+        $this->setNewAvatar();
         $this->updateLastEditedDate();
 
-        return $this->file;
+        return $this->avatar;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
-
-        $this->file = File::where('contact_id', $this->data['contact_id'])
-            ->where('type', File::TYPE_PHOTO)
-            ->findOrFail($this->data['file_id']);
     }
 
-    private function createAvatar(): void
+    private function getCurrentAvatar(): void
     {
-        $this->avatar = Avatar::create([
-            'contact_id' => $this->data['contact_id'],
-            'type' => Avatar::TYPE_PHOTO,
+        $this->avatar = $this->contact->currentAvatar();
 
-        ]);
-        //$this->contact->avatar_id =
+        if ($this->avatar->type !== Avatar::TYPE_FILE) {
+            throw new Exception('The contact does not have a photo as avatar.');
+        }
+
+        $this->avatar->delete();
     }
 
-    private function setAvatar(): void
+    private function setNewAvatar(): void
     {
+        $this->avatar = AvatarHelper::generateRandomAvatar($this->contact);
+        $this->contact->avatar_id = $this->avatar->id;
+        $this->contact->save();
     }
 
     private function updateLastEditedDate(): void

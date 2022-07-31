@@ -73,10 +73,10 @@
             </div>
 
             <ul class="text-xs">
-              <!-- generate new avatar -->
+              <!-- remove avatar -->
               <li v-if="data.listed" class="mb-2">
                 <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
-                  >Generate new avatar</inertia-link
+                  >Remove avatar</inertia-link
                 >
               </li>
               <!-- upload new avatar -->
