@@ -14,7 +14,7 @@ select {
         <span class="mr-1">⁉️</span>
         <span class="mr-2">{{ $t('settings.user_preferences_locale_title') }}</span>
 
-        <help :url="$page.props.help_links.last_updated_contacts" :top="'4px'" />
+        <help :url="$page.props.help_links.last_updated_contacts" :top="'5px'" />
       </h3>
     </div>
 
