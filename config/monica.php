@@ -37,5 +37,7 @@ return [
 
     'help_links' => [
         'last_updated_contacts' => 'vaults/dashboard#last-updated-contacts',
+        'settings_preferences_help' => 'account-settings/manage-preferences#help-display',
+        'settings_preferences_language' => 'account-settings/manage-preferences#language',
     ],
 ];
