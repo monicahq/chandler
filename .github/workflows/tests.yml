@@ -99,7 +99,7 @@ jobs:
         if: matrix.connection == 'mysql'
         run: |
           sudo systemctl start mysql.service
-          mysql --protocol=tcp -u root -proot -e "CREATE DATABASE IF NOT EXISTS officelife CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+          mysql --protocol=tcp -u root -proot -e "CREATE DATABASE IF NOT EXISTS monica CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
       - name: Generate key
         run: php artisan key:generate
