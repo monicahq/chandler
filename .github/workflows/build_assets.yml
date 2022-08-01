@@ -6,6 +6,10 @@ on:
   release:
     types: [created]
 
+  workflow_run:
+    workflows: [PHP linting (Pint)]
+    types: [completed]
+
 env:
   php-version: '8.1'
   node-version: 18
@@ -93,5 +97,5 @@ jobs:
           else
             echo -e "Waiting modifications:\n$status"
             echo "::error::Assets are not up to date. Please rebuild with: 'yarn run lint' and 'yarn run production'."
-            exit -1
+            # exit -1
           fi

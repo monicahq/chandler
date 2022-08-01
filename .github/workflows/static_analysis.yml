@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+  workflow_run:
+    workflows: [PHP linting (Pint)]
+    types: [completed]
+
 env:
   php-version: '8.1'
 
