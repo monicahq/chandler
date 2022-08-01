@@ -1,8 +1,6 @@
 name: PHP linting (Pint)
 
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -21,5 +19,5 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: chore: php linting with pint
+          commit_message: "chore: php linting with pint"
           skip_fetch: true
