@@ -78,7 +78,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install yarn dependencies
-        run: yarn inst
+        run: yarn install --frozen-lockfile
       - name: Lint files
         run: yarn run lint
       - name: Build assets

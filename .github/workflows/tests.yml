@@ -25,9 +25,9 @@ jobs:
       pgsql:
         image: postgres:13.0
         env:
-          POSTGRES_DB: officelife
-          POSTGRES_USER: officelife
-          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: monica
+          POSTGRES_USER: monica
+          POSTGRES_PASSWORD: root
         ports:
           - 5432:5432
         options: --name=postgres --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
