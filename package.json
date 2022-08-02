@@ -23,6 +23,7 @@
     "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",
     "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.1.0",
     "husky": "^4.3.0",
     "laravel-mix": "^6.0.44",
@@ -44,13 +45,14 @@
     "vuedraggable": "^4.1.0"
   },
   "lint-staged": {
-    "*.js|.*.js|resources/js/**/*.{vue,js}": [
-      "prettier --write --ignore-unknown"
+    "*.js|resources/js/**/*.{vue,js}": [
+      "prettier --write --ignore-unknown",
+      "yarn run eslint --fix"
     ],
     "resources/**/*.{css,scss}": [
       "prettier --write --ignore-unknown"
     ],
-    "*.php": [
+    "**/*.php": [
       "php artisan ide-helper:models --nowrite",
       "./vendor/bin/pint"
     ]

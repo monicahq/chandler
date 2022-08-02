@@ -4,6 +4,7 @@ env:
 extends:
   - eslint:recommended
   - plugin:vue/vue3-essential
+  - prettier
 parserOptions:
   ecmaVersion: latest
   sourceType: module
@@ -24,9 +25,6 @@ rules:
     - error
     - ignoreComments: true
       skipBlankLines: true
-  quotes:
-    - error
-    - single
   semi:
     - error
     - always
