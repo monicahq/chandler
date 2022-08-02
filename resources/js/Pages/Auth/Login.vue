@@ -57,7 +57,7 @@
     </div>
 
     <div class="mt-6 flex w-full overflow-hidden bg-white shadow-md sm:max-w-4xl sm:rounded-lg">
-      <img :src="wallpaperUrl" class="w-10/12 sm:invisible md:visible" />
+      <img :src="wallpaperUrl" class="w-10/12 sm:invisible md:visible" :alt="'Wallpaper'" />
       <div class="w-full">
         <div class="border-b border-gray-200 px-6 pt-14 pb-10">
           <h1 class="mb-6 text-center text-xl">

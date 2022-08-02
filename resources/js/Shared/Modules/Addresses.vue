@@ -579,10 +579,10 @@ export default {
             this.flash(this.$t('contact.addresses_delete_success'), 'success');
 
             if (address.is_past_address) {
-              var id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
+              const id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
               this.localInactiveAddresses.splice(id, 1);
             } else {
-              var id2 = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+              const id2 = this.localActiveAddresses.findIndex((x) => x.id === address.id);
               this.localActiveAddresses.splice(id2, 1);
             }
           })

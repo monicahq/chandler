@@ -213,11 +213,7 @@ export default {
         return false;
       }
 
-      if (!this.addContactMode) {
-        return true;
-      }
-
-      return false;
+      return !this.addContactMode;
     },
   },
 
@@ -266,10 +262,10 @@ export default {
     },
 
     remove(contact) {
-      var id = this.localContacts.findIndex((existingContact) => existingContact.id === contact.id);
+      const id = this.localContacts.findIndex((existingContact) => existingContact.id === contact.id);
       this.localContacts.splice(id, 1);
 
-      var id2 = this.form.contactIds.findIndex((existingContact) => existingContact === contact.id);
+      const id2 = this.form.contactIds.findIndex((existingContact) => existingContact === contact.id);
       this.form.contactIds.splice(id2, 1);
 
       this.$emit('update:modelValue', this.form.contactIds);
