@@ -7,7 +7,7 @@ on:
     types: [created]
 
   workflow_run:
-    workflows: [Code Linters]
+    workflows: [PHP linting (Pint), Javascript linting]
     types: [completed]
 
 env:
