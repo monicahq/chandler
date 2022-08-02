@@ -23,3 +23,4 @@ jobs:
         with:
           commit_message: "chore: php linting with pint"
           skip_fetch: true
+          token: ${{ secrets.GH_TOKEN }}
