@@ -146,6 +146,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
+                    // avatar
+                    Route::put('dates/{date}', [ContactImportantDatesController::class, 'update'])->name('contact.date.update');
+
                     // important dates
                     Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');
                     Route::post('dates', [ContactImportantDatesController::class, 'store'])->name('contact.date.store');

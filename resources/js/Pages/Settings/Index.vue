@@ -27,9 +27,9 @@
             </li>
             <li class="flex justify-start">
               <span class="mr-2">📡</span>
-              <inertia-link :href="data.url.notifications.index" class="text-blue-500 hover:underline">{{
-                $t('settings.notification_channels')
-              }}</inertia-link>
+              <inertia-link :href="data.url.notifications.index" class="text-blue-500 hover:underline">
+                {{ $t('settings.notification_channels') }}
+              </inertia-link>
             </li>
           </ul>
         </div>
