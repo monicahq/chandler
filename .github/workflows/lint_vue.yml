@@ -18,17 +18,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        if: secrets.GH_TOKEN != ''
+        if: env.GH_TOKEN != ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GH_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/checkout@v3
-        if: secrets.GH_TOKEN == ''
+        if: env.GH_TOKEN == ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       # Yarn
       - name: Setup Node.js
@@ -56,14 +60,16 @@ jobs:
         run: yarn run format
 
       - name: Commit changes
-        if: secrets.GH_TOKEN != ''
+        if: env.GH_TOKEN != ''
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore: javascript linting with eslint and prettier'
           skip_fetch: true
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Check if there is any file update needed
-        if: secrets.GH_TOKEN == ''
+        if: env.GH_TOKEN == ''
         run: |
           status=$(git status --porcelain)
           if [ -n "$status" ]; then
@@ -71,3 +77,5 @@ jobs:
             echo "::error::Eslint and prettier found fixes. Please run 'yarn run lint' and 'yarn run format' prior to your next commit."
             exit -1
           fi
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

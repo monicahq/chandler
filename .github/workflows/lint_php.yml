@@ -18,17 +18,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        if: secrets.GH_TOKEN != ''
+        if: env.GH_TOKEN != ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GH_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/checkout@v3
-        if: secrets.GH_TOKEN == ''
+        if: env.GH_TOKEN == ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: laravel-pint
         uses: aglipanci/laravel-pint-action@0.1.0
@@ -36,14 +40,16 @@ jobs:
           preset: laravel
 
       - name: Commit changes
-        if: secrets.GH_TOKEN != ''
+        if: env.GH_TOKEN != ''
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore: php linting with pint'
           skip_fetch: true
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Check if there is any file update needed
-        if: secrets.GH_TOKEN == ''
+        if: env.GH_TOKEN == ''
         run: |
           status=$(git status --porcelain)
           if [ -n "$status" ]; then
@@ -51,3 +57,5 @@ jobs:
             echo "::error::Laravel pint found fixes. Please run 'vendor/bin/pint' prior to your next commit."
             exit -1
           fi
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
