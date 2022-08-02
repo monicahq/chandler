@@ -1,12 +1,3 @@
-<style lang="scss" scoped>
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-</style>
-
 <template>
   <div>
     <div class="mb-4 mt-8 items-center justify-between border-b pb-3 sm:mt-0 sm:flex">
@@ -30,7 +21,9 @@
         </div>
 
         <ul class="text-xs text-gray-400">
-          <li class="inline">{{ $t('settings.personalize_template_show_page_cant_moved') }}</li>
+          <li class="inline">
+            {{ $t('settings.personalize_template_show_page_cant_moved') }}
+          </li>
         </ul>
       </div>
     </div>
@@ -308,3 +301,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+</style>

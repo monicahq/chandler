@@ -1,14 +1,3 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.icon-note {
-  top: -1px;
-}
-</style>
-
 <template>
   <div>
     <div class="mb-2 sm:mb-1">
@@ -122,3 +111,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.icon-note {
+  top: -1px;
+}
+</style>

@@ -1,31 +1,9 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div class="mb-8">
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">{{ $t('settings.notification_channels_email_title') }}</span>
+      <span class="dark:text-gray-200">
+        {{ $t('settings.notification_channels_email_title') }}
+      </span>
 
       <pretty-button
         v-if="!addEmailModalShown"
@@ -70,9 +48,13 @@ select {
           @esc-key-pressed="addEmailModalShown = false" />
 
         <!-- preferred time -->
-        <p class="mb-2 block text-sm">{{ $t('settings.notification_channels_email_at') }}</p>
+        <p class="mb-2 block text-sm">
+          {{ $t('settings.notification_channels_email_at') }}
+        </p>
         <div class="flex items-center text-sm font-medium text-gray-700">
-          <span class="mr-2">{{ $t('settings.notification_channels_email_at_word') }}</span>
+          <span class="mr-2">
+            {{ $t('settings.notification_channels_email_at_word') }}
+          </span>
 
           <select
             v-model="form.hours"
@@ -103,7 +85,7 @@ select {
             <option value="23">23</option>
           </select>
 
-          <span class="mr-2">h:</span>
+          <span class="mr-2"> h: </span>
 
           <select
             v-model="form.minutes"
@@ -163,7 +145,9 @@ select {
           <div>
             <span class="mb-0 block">{{ email.content }}</span>
             <ul class="bulleted-list mr-2 text-sm text-gray-500">
-              <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
+              <li v-if="email.label" class="mr-1 inline">
+                {{ email.label }}
+              </li>
               <li class="inline">
                 {{ $t('settings.notification_channels_email_sent_at', { time: email.preferred_time }) }}
               </li>
@@ -202,9 +186,9 @@ select {
 
           <!-- view log -->
           <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-            <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">{{
-              $t('settings.notification_channels_email_log')
-            }}</inertia-link>
+            <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">
+              {{ $t('settings.notification_channels_email_log') }}
+            </inertia-link>
           </li>
 
           <!-- delete email -->
@@ -215,7 +199,9 @@ select {
 
         <!-- actions when the email has NOT been verified -->
         <ul v-else class="text-sm">
-          <li class="mr-4 inline">{{ $t('settings.notification_channels_verif_email_sent') }}</li>
+          <li class="mr-4 inline">
+            {{ $t('settings.notification_channels_verif_email_sent') }}
+          </li>
 
           <!-- delete email -->
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">
@@ -227,7 +213,9 @@ select {
 
     <!-- blank state -->
     <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('settings.notification_channels_blank') }}</p>
+      <p class="p-5 text-center">
+        {{ $t('settings.notification_channels_blank') }}
+      </p>
     </div>
   </div>
 </template>
@@ -345,3 +333,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

@@ -1,18 +1,3 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.icon-note {
-  top: -1px;
-}
-
-.icon-avatar {
-  top: 2px;
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
@@ -44,7 +29,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Notes</span>
+        <span class="font-semibold"> Notes </span>
       </div>
       <pretty-button :text="'Add a note'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
     </div>
@@ -80,9 +65,9 @@
           <p class="mb-2">How did you feel?</p>
           <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
             <input
-              :value="emotion.id"
-              v-model="form.emotion"
               :id="emotion.type"
+              v-model="form.emotion"
+              :value="emotion.id"
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -161,8 +146,8 @@
               <!-- author -->
               <div v-if="note.author" class="relative mr-3 inline">
                 <div class="relative flex">
-                  <div v-html="note.author.avatar" class="icon-avatar relative mr-1 h-3 w-3"></div>
-                  <span></span>{{ note.author.name }}
+                  <div class="icon-avatar relative mr-1 h-3 w-3" v-html="note.author.avatar" />
+                  <span />{{ note.author.name }}
                 </div>
               </div>
             </div>
@@ -206,9 +191,9 @@
               <p class="mb-2">How did you feel?</p>
               <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
                 <input
-                  :value="emotion.id"
-                  v-model="form.emotion"
                   :id="emotion.type"
+                  v-model="form.emotion"
+                  :value="emotion.id"
                   name="emotion"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
@@ -394,3 +379,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.icon-note {
+  top: -1px;
+}
+
+.icon-avatar {
+  top: 2px;
+}
+</style>

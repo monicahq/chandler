@@ -1,30 +1,3 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-
-input[type='checkbox'] {
-  top: -1px;
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
@@ -45,9 +18,9 @@ input[type='checkbox'] {
           </svg>
         </span>
 
-        <span class="font-semibold">Tasks</span>
+        <span class="font-semibold"> Tasks </span>
       </div>
-      <pretty-button @click="showCreateTaskModal()" :text="'Add a task'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+      <pretty-button :text="'Add a task'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateTaskModal()" />
     </div>
 
     <!-- add a task modal -->
@@ -81,11 +54,11 @@ input[type='checkbox'] {
           <div>
             <input
               :id="task.id"
-              :name="task.id"
               v-model="task.completed"
-              @change="toggle(task)"
+              :name="task.id"
               type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              @change="toggle(task)" />
             <label :for="task.id" class="ml-2 cursor-pointer text-gray-900">
               {{ task.label }}
             </label>
@@ -122,8 +95,8 @@ input[type='checkbox'] {
     <!-- button to display completed tasks -->
     <p
       v-if="data.completed_tasks_count > 0 && !showCompletedTasks"
-      @click="getCompleted()"
-      class="mx-4 mb-6 cursor-pointer text-xs text-blue-500 hover:underline">
+      class="mx-4 mb-6 cursor-pointer text-xs text-blue-500 hover:underline"
+      @click="getCompleted()">
       Show completed tasks ({{ data.completed_tasks_count }})
     </p>
 
@@ -135,11 +108,11 @@ input[type='checkbox'] {
             <div>
               <input
                 :id="task.id"
-                :name="task.id"
                 v-model="task.completed"
-                @change="toggle(task)"
+                :name="task.id"
                 type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
+                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                @change="toggle(task)" />
               <label :for="task.id" class="ml-2 cursor-pointer text-gray-900">
                 {{ task.label }}
               </label>
@@ -295,3 +268,30 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+input[type='checkbox'] {
+  top: -1px;
+}
+</style>

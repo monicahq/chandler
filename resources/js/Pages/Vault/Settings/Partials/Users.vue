@@ -1,26 +1,3 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-.dropdown-list {
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
@@ -46,7 +23,9 @@
         <errors :errors="form.errors" />
 
         <!-- list of potential new users -->
-        <p class="mb-2">{{ $t('vault.settings_users_invite_name') }}</p>
+        <p class="mb-2">
+          {{ $t('vault.settings_users_invite_name') }}
+        </p>
 
         <div v-for="user in localUsersInAccount" :key="user.id" class="dropdown-list mb-2 flex items-center">
           <input
@@ -66,7 +45,9 @@
       <div class="border-b border-gray-200 p-5">
         <!-- role types -->
         <div>
-          <p class="mb-2">{{ $t('vault.settings_users_invite_permission') }}</p>
+          <p class="mb-2">
+            {{ $t('vault.settings_users_invite_permission') }}
+          </p>
 
           <!-- view -->
           <div class="mb-2 flex items-center">
@@ -162,7 +143,9 @@
             <div class="border-b border-gray-200 p-5">
               <errors :errors="form.errors" />
 
-              <p class="mb-2">{{ $t('vault.settings_users_edit_permission', { name: user.name }) }}</p>
+              <p class="mb-2">
+                {{ $t('vault.settings_users_edit_permission', { name: user.name }) }}
+              </p>
 
               <!-- view -->
               <div class="mb-2 flex items-center">
@@ -228,7 +211,9 @@
 
       <!-- blank state -->
       <div v-if="localUsersInVault.length == 0">
-        <p class="p-5 text-center">{{ $t('vault.settings_users_edit_permission_blank') }}</p>
+        <p class="p-5 text-center">
+          {{ $t('vault.settings_users_edit_permission_blank') }}
+        </p>
       </div>
     </div>
   </div>
@@ -353,3 +338,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+.dropdown-list {
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>

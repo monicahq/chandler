@@ -1,21 +1,3 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
@@ -57,7 +39,9 @@
 
             <!-- actions -->
             <ul class="text-sm">
-              <li v-if="template.is_default">{{ $t('vault.settings_default_template_current_default_status') }}</li>
+              <li v-if="template.is_default">
+                {{ $t('vault.settings_default_template_current_default_status') }}
+              </li>
               <li v-else class="inline cursor-pointer text-blue-500 hover:underline" @click="update(template)">
                 {{ $t('vault.settings_default_template_cta') }}
               </li>
@@ -68,7 +52,9 @@
 
       <!-- blank state -->
       <div v-if="localTemplates.length == 0">
-        <p class="p-5 text-center">{{ $t('vault.settings_default_template_blank') }}</p>
+        <p class="p-5 text-center">
+          {{ $t('vault.settings_default_template_blank') }}
+        </p>
       </div>
     </div>
   </div>
@@ -123,3 +109,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

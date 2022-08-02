@@ -1,31 +1,9 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div>
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">{{ $t('settings.notification_channels_telegram_title') }}</span>
+      <span class="dark:text-gray-200">
+        {{ $t('settings.notification_channels_telegram_title') }}
+      </span>
 
       <pretty-button
         v-if="!setupTelegramModalShown && !localTelegram && envVariableSet"
@@ -43,9 +21,13 @@ select {
         <errors :errors="form.errors" />
 
         <!-- preferred time -->
-        <p class="mb-2 block text-sm">{{ $t('settings.notification_channels_email_at') }}</p>
+        <p class="mb-2 block text-sm">
+          {{ $t('settings.notification_channels_email_at') }}
+        </p>
         <div class="flex items-center text-sm font-medium text-gray-700">
-          <span class="mr-2">{{ $t('settings.notification_channels_email_at_word') }}</span>
+          <span class="mr-2">
+            {{ $t('settings.notification_channels_email_at_word') }}
+          </span>
 
           <select
             v-model="form.hours"
@@ -76,7 +58,7 @@ select {
             <option value="23">23</option>
           </select>
 
-          <span class="mr-2">h:</span>
+          <span class="mr-2"> h: </span>
 
           <select
             v-model="form.minutes"
@@ -123,7 +105,9 @@ select {
 
     <!-- case if env variables are not set -->
     <div v-if="!envVariableSet" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_not_set') }}</p>
+      <p class="p-5 text-center">
+        {{ $t('settings.notification_channels_telegram_not_set') }}
+      </p>
     </div>
 
     <div v-if="envVariableSet">
@@ -181,9 +165,9 @@ select {
 
             <!-- view log -->
             <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-              <inertia-link :href="localTelegram.url.logs" class="text-blue-500 hover:underline">{{
-                $t('settings.notification_channels_email_log')
-              }}</inertia-link>
+              <inertia-link :href="localTelegram.url.logs" class="text-blue-500 hover:underline">
+                {{ $t('settings.notification_channels_email_log') }}
+              </inertia-link>
             </li>
 
             <!-- delete email -->
@@ -196,7 +180,9 @@ select {
 
       <!-- blank state -->
       <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-        <p class="p-5 text-center">{{ $t('settings.notification_channels_telegram_blank') }}</p>
+        <p class="p-5 text-center">
+          {{ $t('settings.notification_channels_telegram_blank') }}
+        </p>
       </div>
     </div>
   </div>
@@ -312,3 +298,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

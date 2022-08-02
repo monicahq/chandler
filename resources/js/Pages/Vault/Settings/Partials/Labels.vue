@@ -1,21 +1,3 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
@@ -49,7 +31,9 @@
           :div-outer-class="'mb-4'"
           @esc-key-pressed="createlabelModalShown = false" />
 
-        <p class="mb-2 block text-sm">{{ $t('vault.settings_labels_create_color') }}</p>
+        <p class="mb-2 block text-sm">
+          {{ $t('vault.settings_labels_create_color') }}
+        </p>
         <div class="grid grid-cols-8 gap-4">
           <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
             <input
@@ -61,7 +45,7 @@
               class="h-4 w-4 border-gray-300 text-sky-500"
               @click="form.text_color = color.text_color" />
             <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-              <div class="rounded p-4" :class="color.bg_color"></div>
+              <div class="rounded p-4" :class="color.bg_color" />
             </label>
           </div>
         </div>
@@ -83,7 +67,7 @@
         <!-- detail of the label -->
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
-            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></div>
+            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color" />
             <span class="mr-2">{{ label.name }}</span>
             <span v-if="label.count > 0" class="text-xs text-gray-500"
               >({{ $t('vault.settings_labels_count', { count: label.count }) }})</span
@@ -122,7 +106,9 @@
               :div-outer-class="'mb-4'"
               @esc-key-pressed="editLabelModalShownId = 0" />
 
-            <p class="mb-2 block text-sm">{{ $t('vault.settings_labels_create_color') }}</p>
+            <p class="mb-2 block text-sm">
+              {{ $t('vault.settings_labels_create_color') }}
+            </p>
             <div class="grid grid-cols-8 gap-4">
               <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
                 <input
@@ -134,7 +120,7 @@
                   class="h-4 w-4 border-gray-300 text-sky-500"
                   @click="form.text_color = color.text_color" />
                 <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-                  <div class="rounded p-4" :class="color.bg_color"></div>
+                  <div class="rounded p-4" :class="color.bg_color" />
                 </label>
               </div>
             </div>
@@ -150,7 +136,9 @@
 
     <!-- blank state -->
     <div v-if="localLabels.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('vault.settings_labels_blank') }}</p>
+      <p class="p-5 text-center">
+        {{ $t('vault.settings_labels_blank') }}
+      </p>
     </div>
   </div>
 </template>
@@ -271,3 +259,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

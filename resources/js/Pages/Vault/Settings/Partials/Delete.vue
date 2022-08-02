@@ -1,5 +1,3 @@
-<style lang="scss" scoped></style>
-
 <template>
   <div>
     <!-- title + cta -->
@@ -80,3 +78,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped></style>
