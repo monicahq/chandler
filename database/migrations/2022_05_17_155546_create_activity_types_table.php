@@ -12,9 +12,6 @@ return new class () extends Migration {
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('life_event_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');

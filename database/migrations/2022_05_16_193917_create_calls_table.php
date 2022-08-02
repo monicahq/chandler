@@ -12,9 +12,6 @@ return new class () extends Migration {
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
