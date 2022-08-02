@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
   workflow_run:
-    workflows: [Javascript linting]
+    workflows: [PHP linting (Pint)]
     types: [completed]
 
 jobs:
