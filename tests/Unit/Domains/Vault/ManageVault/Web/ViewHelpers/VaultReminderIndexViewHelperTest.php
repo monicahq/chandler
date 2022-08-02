@@ -91,7 +91,7 @@ class VaultReminderIndexViewHelperTest extends TestCase
                         'name' => $mitchell->name,
                         'avatar' => '123',
                         'url' => [
-                            'show' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $mitchell->id,
+                            'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$mitchell->id,
                         ],
                     ],
                 ],

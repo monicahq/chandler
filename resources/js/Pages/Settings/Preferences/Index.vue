@@ -1,21 +1,3 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
@@ -23,11 +5,13 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-slate-200">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings')
-              }}</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -39,7 +23,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_settings_preferences') }}</li>
+            <li class="inline">
+              {{ $t('app.breadcrumb_settings_preferences') }}
+            </li>
           </ul>
         </div>
       </div>
@@ -47,6 +33,8 @@
 
     <main class="relative sm:mt-20">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+        <help-preference :data="data.help" />
+
         <locale :data="data.locale" />
 
         <name-order :data="data.name_order" />
@@ -64,13 +52,14 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import NameOrder from '@/Pages/Settings/Preferences/Partials/NameOrder';
-import DateFormat from '@/Pages/Settings/Preferences/Partials/DateFormat';
-import NumberFormat from '@/Pages/Settings/Preferences/Partials/NumberFormat';
-import Timezone from '@/Pages/Settings/Preferences/Partials/Timezone';
-import Maps from '@/Pages/Settings/Preferences/Partials/Maps';
-import Locale from '@/Pages/Settings/Preferences/Partials/Locale';
+import Layout from '@/Shared/Layout.vue';
+import NameOrder from '@/Pages/Settings/Preferences/Partials/NameOrder.vue';
+import DateFormat from '@/Pages/Settings/Preferences/Partials/DateFormat.vue';
+import NumberFormat from '@/Pages/Settings/Preferences/Partials/NumberFormat.vue';
+import Timezone from '@/Pages/Settings/Preferences/Partials/Timezone.vue';
+import Maps from '@/Pages/Settings/Preferences/Partials/Maps.vue';
+import Locale from '@/Pages/Settings/Preferences/Partials/Locale.vue';
+import HelpPreference from '@/Pages/Settings/Preferences/Partials/HelpPreference.vue';
 
 export default {
   components: {
@@ -81,6 +70,7 @@ export default {
     NumberFormat,
     Maps,
     Locale,
+    HelpPreference,
   },
 
   props: {
@@ -95,3 +85,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

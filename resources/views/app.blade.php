@@ -8,19 +8,14 @@
 
   <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-  @vite('resources/js/app.js')
-
   <!-- Scripts -->
   @routes
-
+  @vite('resources/js/app.js')
+  @inertiaHead
 </head>
 
 <body class="font-sans antialiased bg-white dark:bg-gray-800 dark:text-gray-300">
   @inertia
-
-  <!-- @env ('local')
-  <script src="https://cdn.jsdelivr.net/gh/underground-works/clockwork-browser@1/dist/toolbar.js"></script>
-  @endenv -->
 </body>
 
 </html>

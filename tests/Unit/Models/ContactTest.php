@@ -13,6 +13,7 @@ use App\Models\ContactInformation;
 use App\Models\ContactLog;
 use App\Models\ContactReminder;
 use App\Models\ContactTask;
+use App\Models\File;
 use App\Models\Gender;
 use App\Models\Goal;
 use App\Models\Group;
@@ -246,6 +247,17 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($ross->goals()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_files(): void
+    {
+        $ross = Contact::factory()->create();
+        File::factory()->count(2)->create([
+            'contact_id' => $ross->id,
+        ]);
+
+        $this->assertTrue($ross->files()->exists());
     }
 
     /** @test */

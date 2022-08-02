@@ -1,5 +1,3 @@
-<style lang="scss" scoped></style>
-
 <template>
   <div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
     <div>
@@ -59,11 +57,12 @@
     </div>
 
     <div class="mt-6 flex w-full overflow-hidden bg-white shadow-md sm:max-w-4xl sm:rounded-lg">
-      <img :src="this.wallpaperUrl" class="w-10/12 sm:invisible md:visible" />
+      <img :src="wallpaperUrl" class="w-10/12 sm:invisible md:visible" :alt="'Wallpaper'" />
       <div class="w-full">
         <div class="border-b border-gray-200 px-6 pt-14 pb-10">
           <h1 class="mb-6 text-center text-xl">
-            <span class="mr-2">👋</span> {{ $t('Please choose a product first') }}
+            <span class="mr-2"> 👋 </span>
+            Sign in to your account
           </h1>
 
           <breeze-validation-errors class="mb-4" />
@@ -130,10 +129,7 @@
 
 <script>
 import TextInput from '@/Shared/Form/TextInput.vue';
-import BreezeButton from '@/Components/Button.vue';
 import BreezeCheckbox from '@/Components/Checkbox.vue';
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 
@@ -141,10 +137,7 @@ export default {
   components: {
     TextInput,
     PrettyButton,
-    BreezeButton,
     BreezeCheckbox,
-    BreezeInput,
-    BreezeLabel,
     BreezeValidationErrors,
   },
 
@@ -182,3 +175,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped></style>

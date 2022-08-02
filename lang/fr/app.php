@@ -7,8 +7,9 @@ return [
     'layout_menu_dashboard' => 'Tableau de bord',
     'layout_menu_reports' => 'Rapports',
     'layout_menu_contacts' => 'Contacts',
-    'layout_menu_gift_center' => 'Centre de cadeaux',
-    'layout_menu_loans' => 'Centre des prêts et dettes',
+    'layout_menu_gift_center' => 'Cadeaux',
+    'layout_menu_loans' => 'Prêts et dettes',
+    'layout_menu_files' => 'Fichiers',
     'layout_menu_vault_settings' => 'Paramètres de la voûte',
     'layout_footer_monica' => 'Monica, depuis 2017.',
     'layout_footer_version' => 'Version courante: :version',
@@ -23,6 +24,7 @@ return [
     'breadcrumb_contact_show' => 'Profil de :name',
     'breadcrumb_contact_create' => 'Créer un contact',
     'breadcrumb_contact_note_index' => 'Toutes les notes',
+    'breadcrumb_contact_photo' => 'Toutes les photos',
     'breadcrumb_settings' => 'Paramètres',
     'breadcrumb_settings_preferences' => 'Préférences de l’utilisateur',
     'breadcrumb_settings_notification_channels' => 'Chaînes de notification',
@@ -33,6 +35,7 @@ return [
     'breadcrumb_settings_personalize_templates' => 'Modèles',
     'breadcrumb_settings_personalize_relationship_types' => 'Types de relation',
     'breadcrumb_settings_personalize_contact_information_types' => 'Types d’information de contact',
+    'breadcrumb_settings_storage' => 'Stockage',
 
     'notification_flash_changes_saved' => 'Changements effectués',
 
@@ -60,13 +63,13 @@ return [
     'next' => 'Suivant',
     'view_all' => 'Tout voir',
     'view_map' => 'Voir sur la carte',
+    'download' => 'Télécharger',
 
     'error_title' => '👇 Oops. Une erreur est survenue.',
 
     'no_results' => 'Pas de résultats',
 
-    'show_help' => 'Montrer l’aide',
-    'hide_help' => 'Cacher l’aide',
+    'help_open_new_page' => 'Ce lien ouvrira dans un nouvel onglet',
 
     'default_template_name' => 'Modèle par défaut',
     'default_template_page_contact_information' => 'Information du contact',
@@ -95,6 +98,8 @@ return [
     'module_addresses' => 'Adresses',
     'module_groups' => 'Groupes',
     'module_contact_information' => 'Information de contact',
+    'module_documents' => 'Documents',
+    'module_photos' => 'Photos',
 
     'module_option_default_number_of_items_to_display' => 'Nombre par défaut d’éléments à afficher',
 

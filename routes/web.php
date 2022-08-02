@@ -11,6 +11,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use App\Contact\ManageContactInformation\Web\Controllers\ContactInformationController;
+use App\Contact\ManageDocuments\Web\Controllers\ContactModuleDocumentController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
@@ -21,6 +22,8 @@ use App\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
 use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Contact\ManagePets\Web\Controllers\ContactModulePetController;
+use App\Contact\ManagePhotos\Web\Controllers\ContactModulePhotoController;
+use App\Contact\ManagePhotos\Web\Controllers\ContactPhotoController;
 use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
@@ -60,6 +63,7 @@ use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
 use App\Settings\ManageSettings\Web\Controllers\SettingsController;
+use App\Settings\ManageStorage\Web\Controllers\AccountStorageController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
@@ -67,12 +71,14 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesControl
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesHelpController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
@@ -107,6 +113,7 @@ Route::post(
 );
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vault.index');
@@ -115,6 +122,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+
+            // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
             // vault contacts
@@ -198,6 +207,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::put('pets/{pet}', [ContactModulePetController::class, 'update'])->name('contact.pet.update');
                     Route::delete('pets/{pet}', [ContactModulePetController::class, 'destroy'])->name('contact.pet.destroy');
 
+                    // documents
+                    Route::post('documents', [ContactModuleDocumentController::class, 'store'])->name('contact.document.store');
+                    Route::delete('documents/{document}', [ContactModuleDocumentController::class, 'destroy'])->name('contact.document.destroy');
+
+                    // photos
+                    Route::get('photos', [ContactPhotoController::class, 'index'])->name('contact.photo.index');
+                    Route::get('photos/{photo}', [ContactPhotoController::class, 'show'])->name('contact.photo.show');
+                    Route::post('photos', [ContactModulePhotoController::class, 'store'])->name('contact.photo.store');
+                    Route::delete('photos/{photo}', [ContactModulePhotoController::class, 'destroy'])->name('contact.photo.destroy');
+
                     // tasks
                     Route::get('tasks/completed', [ContactModuleTaskController::class, 'index'])->name('contact.task.index');
                     Route::post('tasks', [ContactModuleTaskController::class, 'store'])->name('contact.task.store');
@@ -215,6 +234,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
                 });
+            });
+
+            // vault files
+            Route::prefix('files')->name('vault.files.')->group(function () {
+                Route::get('', [VaultFileController::class, 'index'])->name('index');
+                Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
+                Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
+                Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
             });
 
             // vault settings
@@ -262,6 +289,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
             Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
+            Route::post('help', [PreferencesHelpController::class, 'store'])->name('help.store');
         });
 
         // notifications
@@ -429,6 +457,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('currencies', [PersonalizeCurrencyController::class, 'store'])->name('currency.store');
                 Route::delete('currencies', [PersonalizeCurrencyController::class, 'destroy'])->name('currency.destroy');
             });
+
+            // storage
+            Route::get('storage', [AccountStorageController::class, 'index'])->name('storage.index');
 
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');

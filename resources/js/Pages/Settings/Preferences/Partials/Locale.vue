@@ -1,16 +1,15 @@
-<style lang="scss" scoped>
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div class="mb-16">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1">🗓</span> {{ $t('settings.user_preferences_locale_title') }}</h3>
+      <h3 class="mb-4 flex font-semibold sm:mb-0">
+        <span class="mr-1"> 🗓 </span>
+        <span class="mr-2">
+          {{ $t('settings.user_preferences_locale_title') }}
+        </span>
+
+        <help :url="$page.props.help_links.settings_preferences_language" :top="'5px'" />
+      </h3>
       <pretty-button v-if="!editMode" :text="$t('app.edit')" @click="enableEditMode" />
     </div>
 
@@ -28,11 +27,15 @@ select {
         <errors :errors="form.errors" />
 
         <select
-          name="locale"
           v-model="form.locale"
+          name="locale"
           class="rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
-          <option value="en">{{ $t('settings.user_preferences_locale_en') }}</option>
-          <option value="fr">{{ $t('settings.user_preferences_locale_fr') }}</option>
+          <option value="en">
+            {{ $t('settings.user_preferences_locale_en') }}
+          </option>
+          <option value="fr">
+            {{ $t('settings.user_preferences_locale_fr') }}
+          </option>
         </select>
       </div>
 
@@ -46,9 +49,10 @@ select {
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettyLink from '@/Shared/Form/PrettyLink';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import Help from '@/Shared/Help.vue';
 import { loadLanguageAsync, getActiveLanguage } from 'laravel-vue-i18n';
 
 export default {
@@ -56,6 +60,7 @@ export default {
     PrettyButton,
     PrettyLink,
     Errors,
+    Help,
   },
 
   props: {
@@ -113,3 +118,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

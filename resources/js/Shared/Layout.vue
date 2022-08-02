@@ -1,22 +1,3 @@
-<style lang="scss" scoped>
-main {
-  color: #343a4b;
-}
-
-.icon-search {
-  left: 8px;
-  top: 8px;
-}
-
-.sha {
-  padding: 0.2em 0.4em;
-}
-
-.icon-cog {
-  top: -1px;
-}
-</style>
-
 <template>
   <main>
     <div class="min-h-full">
@@ -94,7 +75,7 @@ main {
                 </inertia-link>
               </li>
               <li class="inline">
-                <inertia-link @click="logout()" class="inline">
+                <inertia-link class="inline" @click="logout()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
@@ -127,11 +108,11 @@ main {
                   {{ $t('app.layout_menu_dashboard') }}
                 </inertia-link>
 
-                <inertia-link
+                <!-- <inertia-link
                   href=""
                   class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   {{ $t('app.layout_menu_reports') }}
-                </inertia-link>
+                </inertia-link> -->
 
                 <inertia-link
                   :href="layoutData.vault.url.contacts"
@@ -140,16 +121,23 @@ main {
                   {{ $t('app.layout_menu_contacts') }}
                 </inertia-link>
 
-                <inertia-link
+                <!-- <inertia-link
                   href=""
                   class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   {{ $t('app.layout_menu_gift_center') }}
-                </inertia-link>
+                </inertia-link> -->
 
-                <inertia-link
+                <!-- <inertia-link
                   href=""
                   class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   {{ $t('app.layout_menu_loans') }}
+                </inertia-link> -->
+
+                <inertia-link
+                  :href="layoutData.vault.url.files"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Files') }"
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  {{ $t('app.layout_menu_files') }}
                 </inertia-link>
 
                 <inertia-link
@@ -170,7 +158,9 @@ main {
 
       <footer class="mb-10 text-center text-xs">
         <ul class="dark:text-gray-300">
-          <li class="mr-4 mb-2 sm:mb-0 sm:inline">{{ $t('app.layout_footer_monica') }}</li>
+          <li class="mr-4 mb-2 sm:mb-0 sm:inline">
+            {{ $t('app.layout_footer_monica') }}
+          </li>
           <li class="sm:inline">
             {{ $t('app.layout_footer_version', { version: layoutData.version.date }) }}
 
@@ -232,3 +222,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+main {
+  color: #343a4b;
+}
+
+.icon-search {
+  left: 8px;
+  top: 8px;
+}
+
+.sha {
+  padding: 0.2em 0.4em;
+}
+
+.icon-cog {
+  top: -1px;
+}
+</style>

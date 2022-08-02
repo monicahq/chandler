@@ -50,7 +50,7 @@ class VaultShowViewHelperTest extends TestCase
                     'name' => $mitchell->name,
                     'avatar' => '123',
                     'url' => [
-                        'show' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $mitchell->id,
+                        'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$mitchell->id,
                     ],
                 ],
                 1 => [
@@ -58,7 +58,7 @@ class VaultShowViewHelperTest extends TestCase
                     'name' => $john->name,
                     'avatar' => '123',
                     'url' => [
-                        'show' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $john->id,
+                        'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$john->id,
                     ],
                 ],
             ],
@@ -124,7 +124,7 @@ class VaultShowViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'index' => env('APP_URL') . '/vaults/' . $vault->id . '/reminders',
+                'index' => env('APP_URL').'/vaults/'.$vault->id.'/reminders',
             ],
             $array['url']
         );
@@ -139,7 +139,7 @@ class VaultShowViewHelperTest extends TestCase
                         'name' => $mitchell->name,
                         'avatar' => '123',
                         'url' => [
-                            'show' => env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $mitchell->id,
+                            'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$mitchell->id,
                         ],
                     ],
                 ],
