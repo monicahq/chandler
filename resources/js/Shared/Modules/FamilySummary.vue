@@ -1,12 +1,16 @@
 <template>
   <div v-if="data.love_relationships.length != 0 || data.family_relationships.length != 0" class="mb-4">
     <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
-      <div class="mb-1 text-xs">Family summary</div>
+      <div class="mb-1 text-xs">
+Family summary
+</div>
     </div>
 
     <!-- love relationships -->
     <div v-if="data.love_relationships.length > 0" class="flex">
-      <span class="mr-2 inline text-sm"> ❤️ </span>
+      <span class="mr-2 inline text-sm">
+❤️
+</span>
       <ul>
         <li v-for="relationship in data.love_relationships" :key="relationship.id" class="mr-2 inline">
           <!-- name -->
@@ -28,7 +32,9 @@
 
     <!-- family relationships -->
     <div v-if="data.family_relationships.length > 0" class="flex">
-      <span class="mr-2 inline text-sm"> 👪 </span>
+      <span class="mr-2 inline text-sm">
+👪
+</span>
       <ul>
         <li v-for="relationship in data.family_relationships" :key="relationship.id" class="mr-2 inline">
           <!-- name -->

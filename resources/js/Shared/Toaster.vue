@@ -1,6 +1,8 @@
 <template>
   <div class="flash notification fixed" :class="[levelClass, isOpen ? isVisibleClass : '']">
-    <span class="mr-1"> 👋 </span>
+    <span class="mr-1">
+👋
+</span>
     {{ messageText }}
   </div>
 </template>

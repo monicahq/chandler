@@ -7,7 +7,9 @@
       <p class="inline">Went to the theater</p>
     </div>
     <div class="border-t border-gray-200 px-3 py-2">
-      <span class="mr-3 text-sm text-gray-500"> With </span>
+      <span class="mr-3 text-sm text-gray-500">
+With
+</span>
       <div class="relative mr-3 inline text-sm">
         <small-contact top="4px;" />
       </div>
@@ -36,11 +38,17 @@
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </span>
-        <div class="mb-2 mr-2 inline text-sm">Place Dupuis</div>
+        <div class="mb-2 mr-2 inline text-sm">
+Place Dupuis
+</div>
       </div>
       <div>
-        <span class="mr-3 text-sm text-gray-500"> Rating </span>
-        <div class="mb-2 mr-2 inline text-sm">★✩✩✩✩</div>
+        <span class="mr-3 text-sm text-gray-500">
+Rating
+</span>
+        <div class="mb-2 mr-2 inline text-sm">
+★✩✩✩✩
+</div>
       </div>
     </div>
     <div class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600">

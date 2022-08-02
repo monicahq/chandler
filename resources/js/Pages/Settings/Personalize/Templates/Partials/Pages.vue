@@ -261,7 +261,7 @@ export default {
 
     destroy(page) {
       if (
-        confirm("Are you sure? This will remove the pages from all contacts, but won't delete the contacts themselves.")
+        confirm('Are you sure? This will remove the pages from all contacts, but won\'t delete the contacts themselves.')
       ) {
         axios
           .delete(page.url.destroy)

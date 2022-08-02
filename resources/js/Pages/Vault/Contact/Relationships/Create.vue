@@ -48,13 +48,17 @@
       <div class="mx-auto max-w-lg px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <form class="mb-6 rounded-lg border border-gray-200 bg-white" @submit.prevent="submit()">
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5">
-            <h1 class="text-center text-2xl font-medium">Add a relationship</h1>
+            <h1 class="text-center text-2xl font-medium">
+Add a relationship
+</h1>
           </div>
           <div class="border-b border-gray-200 p-5">
             <errors :errors="form.errors" />
 
             <!-- relationship type -->
-            <label for="types" class="mb-2 block text-sm"> Select a relationship type </label>
+            <label for="types" class="mb-2 block text-sm">
+Select a relationship type
+</label>
             <select
               id="types"
               v-model="form.relationship_type_id"
@@ -102,7 +106,9 @@
                       stroke-linejoin="round"
                       d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                   </svg>
-                  <span class="text-xs"> Switch role </span>
+                  <span class="text-xs">
+Switch role
+</span>
                 </div>
               </div>
 

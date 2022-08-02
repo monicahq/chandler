@@ -48,7 +48,9 @@
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 sm:mt-0">
-          <h3 class="mb-4 text-center text-xl sm:mb-2">All the modules in the account</h3>
+          <h3 class="mb-4 text-center text-xl sm:mb-2">
+All the modules in the account
+</h3>
         </div>
 
         <!-- help text -->
@@ -113,7 +115,9 @@
 
           <!-- middle -->
           <div class="rounded-lg border border-gray-200">
-            <h3 class="border-b border-gray-200 px-5 py-2">Module details</h3>
+            <h3 class="border-b border-gray-200 px-5 py-2">
+Module details
+</h3>
 
             <errors :errors="form.errors" />
 

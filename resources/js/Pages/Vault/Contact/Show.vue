@@ -36,9 +36,13 @@
         <!-- banner if contact is archived -->
         <!-- this is based on the `listed` boolean on the contact object -->
         <div v-if="!data.listed" class="mb-8 rounded-lg border border-gray-300 px-3 py-2 text-center">
-          <span class="mr-4"> 🕸️ </span>
+          <span class="mr-4">
+🕸️
+</span>
           {{ $t('contact.contact_archived') }}
-          <span class="ml-4"> 🕷️ </span>
+          <span class="ml-4">
+🕷️
+</span>
         </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">

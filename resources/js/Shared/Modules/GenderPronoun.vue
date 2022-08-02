@@ -3,7 +3,9 @@
     <!-- gender -->
     <div>
       <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
-        <div class="mb-2 text-xs sm:mb-0">Gender</div>
+        <div class="mb-2 text-xs sm:mb-0">
+Gender
+</div>
         <inertia-link :href="data.url.edit" class="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +31,9 @@
     <!-- pronoun -->
     <div>
       <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
-        <div class="mb-2 text-xs sm:mb-0">Pronoun</div>
+        <div class="mb-2 text-xs sm:mb-0">
+Pronoun
+</div>
         <inertia-link :href="data.url.edit" class="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -20,7 +20,9 @@
           </svg>
         </span>
 
-        <span class="font-semibold"> Reminders </span>
+        <span class="font-semibold">
+Reminders
+</span>
       </div>
       <pretty-button
         :text="'Add a reminder'"
@@ -142,7 +144,9 @@
               <label
                 for="recurring"
                 class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
-                <span class="mr-2"> Every </span>
+                <span class="mr-2">
+Every
+</span>
 
                 <select
                   :id="id"
@@ -161,9 +165,15 @@
                   class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                   :required="required"
                   @change="change">
-                  <option value="recurring_day">day</option>
-                  <option value="recurring_month">month</option>
-                  <option value="recurring_year">year</option>
+                  <option value="recurring_day">
+day
+</option>
+                  <option value="recurring_month">
+month
+</option>
+                  <option value="recurring_year">
+year
+</option>
                 </select>
 
                 <span>after the next occurence of the date.</span>
