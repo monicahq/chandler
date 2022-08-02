@@ -7,6 +7,7 @@
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "lint": "eslint --ext .js,.vue *.js resources/js/",
+    "format": "prettier --write '**/*.{js,vue,css,scss}'",
     "prod": "npm run production",
     "production": "mix --production",
     "pretest": "DB_CONNECTION=testing php artisan migrate:fresh && DB_CONNECTION=testing php artisan db:seed",
@@ -46,8 +47,8 @@
   },
   "lint-staged": {
     "*.js|resources/js/**/*.{vue,js}": [
-      "prettier --write --ignore-unknown",
-      "yarn run eslint --fix"
+      "yarn run eslint --fix",
+      "prettier --write --ignore-unknown"
     ],
     "resources/**/*.{css,scss}": [
       "prettier --write --ignore-unknown"

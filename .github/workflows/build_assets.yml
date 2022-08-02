@@ -7,7 +7,7 @@ on:
     types: [created]
 
   workflow_run:
-    workflows: [PHP linting (Pint), Lint vue and js files]
+    workflows: [Code Linters]
     types: [completed]
 
 env:
@@ -30,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
 
-    # Yarn
+      # Yarn
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

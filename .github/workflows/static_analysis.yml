@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
   workflow_run:
-    workflows: [PHP linting (Pint), Lint vue and js files]
+    workflows: [Code Linters]
     types: [completed]
 
 env:

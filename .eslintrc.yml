@@ -38,10 +38,10 @@ rules:
   vue/component-name-in-template-casing:
     - error
     - kebab-case
-  vue/html-end-tags : error
+  vue/html-end-tags: error
   vue/html-self-closing: 0
   vue/no-v-model-argument: 0
-  vue/no-v-html : 0
+  vue/no-v-html: 0
   vue/multi-word-component-names: 0
   vue/max-attributes-per-line:
     - error
