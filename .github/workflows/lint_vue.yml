@@ -18,14 +18,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        if: env.GH_TOKEN != ''
+        if: secrets.GH_TOKEN != ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/checkout@v3
-        if: env.GH_TOKEN == ''
+        if: secrets.GH_TOKEN == ''
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -56,14 +56,14 @@ jobs:
         run: yarn run format
 
       - name: Commit changes
-        if: env.GH_TOKEN != ''
+        if: secrets.GH_TOKEN != ''
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore: javascript linting with eslint and prettier'
           skip_fetch: true
 
       - name: Check if there is any file update needed
-        if: env.GH_TOKEN == ''
+        if: secrets.GH_TOKEN == ''
         run: |
           status=$(git status --porcelain)
           if [ -n "$status" ]; then
