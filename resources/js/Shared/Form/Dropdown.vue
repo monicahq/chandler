@@ -79,10 +79,6 @@ export default {
       type: String,
       default: '',
     },
-    ref: {
-      type: String,
-      default: 'input',
-    },
   },
   emits: ['update:modelValue'],
 

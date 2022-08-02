@@ -268,7 +268,7 @@ export default {
       if (confirm('Are you sure? This will delete the goal permanently.')) {
         axios
           .delete(goal.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The goal has been deleted', 'success');
             var id = this.localGoals.findIndex((x) => x.id === goal.id);
             this.localGoals.splice(id, 1);

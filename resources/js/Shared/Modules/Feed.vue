@@ -38,15 +38,7 @@
 </template>
 
 <script>
-import Note from '@/Pages/Vault/Dashboard/Partials/Feed/Note';
-import FeedItem from '@/Pages/Vault/Dashboard/Partials/Feed/FeedItem';
-
 export default {
-  components: {
-    Note,
-    FeedItem,
-  },
-
   props: {
     data: {
       type: Object,

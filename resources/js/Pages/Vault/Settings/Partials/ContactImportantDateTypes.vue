@@ -2,7 +2,10 @@
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📁 </span> {{ $t('vault.settings_important_dates_title') }}</h3>
+      <h3 class="mb-4 sm:mb-0">
+        <span class="mr-1"> 📁 </span>
+        {{ $t('vault.settings_important_dates_title') }}
+      </h3>
       <pretty-button
         v-if="!createTypeModalShown"
         :text="$t('vault.settings_important_dates_cta')"
@@ -201,7 +204,7 @@ export default {
       if (confirm(this.$t('vault.settings_important_dates_destroy_confirmation'))) {
         axios
           .delete(type.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('vault.settings_important_dates_destroy_success'), 'success');
             var id = this.localTypes.findIndex((x) => x.id === type.id);
             this.localTypes.splice(id, 1);

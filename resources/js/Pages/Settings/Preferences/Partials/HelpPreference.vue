@@ -26,12 +26,10 @@
 </template>
 
 <script>
-import Errors from '@/Shared/Form/Errors';
 import Help from '@/Shared/Help';
 
 export default {
   components: {
-    Errors,
     Help,
   },
 
@@ -59,7 +57,7 @@ export default {
     submit() {
       axios
         .post(this.data.url.store, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('app.notification_flash_changes_saved'), 'success');
           this.$page.props.auth.user.help_shown = this.form.checked;
         })

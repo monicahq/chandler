@@ -51,7 +51,8 @@
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1"> 🥸 </span> {{ $t('settings.personalize_relationship_types_title') }}
+            <span class="mr-1"> 🥸 </span>
+            {{ $t('settings.personalize_relationship_types_title') }}
           </h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
@@ -453,7 +454,7 @@ export default {
       if (confirm(this.$t('settings.personalize_relationship_types_group_destroy_confirm'))) {
         axios
           .delete(groupType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('settings.personalize_relationship_types_group_destroy_success'), 'success');
             var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             this.localGroupTypes.splice(id, 1);
@@ -506,7 +507,7 @@ export default {
       if (confirm(this.$t('settings.personalize_relationship_types_destroy_confirm'))) {
         axios
           .delete(type.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('settings.personalize_relationship_types_destroy_success'), 'success');
             var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             var typeId = this.localGroupTypes[groupTypeId].types.findIndex((x) => x.id === type.id);

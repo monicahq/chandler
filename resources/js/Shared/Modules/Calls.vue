@@ -632,7 +632,7 @@ export default {
       if (confirm('Are you sure?')) {
         axios
           .delete(call.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The call has been deleted', 'success');
             var id = this.localCalls.findIndex((x) => x.id === call.id);
             this.localCalls.splice(id, 1);

@@ -96,17 +96,19 @@ export default {
     },
   },
 
-  setup(props) {
-    const localNotes = props.data;
-
+  data() {
     return {
-      localNotes,
+      localNotes: [],
     };
+  },
+
+  mounted() {
+    this.localNotes = this.data;
   },
 
   methods: {
     showFull(note) {
-      this.localNotes[this.localNotes.findIndex((x) => x.id === note.id)].show_full_content = true;
+      this.localNotes[this.data.localNotes((x) => x.id === note.id)].show_full_content = true;
     },
   },
 };

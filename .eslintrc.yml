@@ -60,3 +60,4 @@ rules:
         - a
         - p
         - li
+  vue/no-deprecated-events-api: 0

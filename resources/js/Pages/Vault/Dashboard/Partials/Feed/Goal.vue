@@ -17,7 +17,8 @@
             stroke-width="2"
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span class="font-semibold"> Goal: </span> Walk 500 steps every day
+        <span class="font-semibold"> Goal: </span>
+        Walk 500 steps every day
       </div>
     </div>
     <div class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600">

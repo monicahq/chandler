@@ -49,9 +49,12 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
-          <h3><span class="mr-1">
-📸
-</span> {{ $t('settings.storage_title') }}</h3>
+          <h3>
+            <span class="mr-1">
+              📸
+            </span>
+            {{ $t('settings.storage_title') }}
+          </h3>
         </div>
 
         <!-- stats -->

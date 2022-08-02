@@ -575,16 +575,15 @@ export default {
       if (confirm(this.$t('contact.addresses_delete_confirm'))) {
         axios
           .delete(address.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('contact.addresses_delete_success'), 'success');
-            var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
 
             if (address.is_past_address) {
               var id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
               this.localInactiveAddresses.splice(id, 1);
             } else {
-              var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
-              this.localActiveAddresses.splice(id, 1);
+              var id2 = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+              this.localActiveAddresses.splice(id2, 1);
             }
           })
           .catch((error) => {

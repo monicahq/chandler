@@ -182,7 +182,6 @@ export default {
       renamePageModalShownId: 0,
       localPages: [],
       isSelectedId: 0,
-      drag: false,
       form: {
         name: '',
         position: '',
@@ -266,7 +265,7 @@ export default {
       ) {
         axios
           .delete(page.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The page has been deleted', 'success');
             var id = this.localPages.findIndex((x) => x.id === page.id);
             this.localPages.splice(id, 1);
@@ -285,7 +284,7 @@ export default {
 
       axios
         .post(event.moved.element.url.order, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash('The order has been saved', 'success');
         })
         .catch((error) => {

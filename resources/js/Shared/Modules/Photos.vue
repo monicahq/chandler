@@ -150,7 +150,7 @@ export default {
       if (confirm(this.$t('contact.photos_delete_confirm'))) {
         axios
           .delete(photo.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('contact.photos_delete_success'), 'success');
             var id = this.localPhotos.findIndex((x) => x.id === photo.id);
             this.localPhotos.splice(id, 1);

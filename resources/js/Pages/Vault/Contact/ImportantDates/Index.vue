@@ -48,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🗓 </span> All the important dates</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 🗓 </span>
+            All the important dates
+          </h3>
           <pretty-button v-if="!createDateModalShown" :text="'Add a date'" :icon="'plus'" @click="showCreateModal" />
         </div>
 
@@ -529,7 +532,7 @@ export default {
       if (confirm('Are you sure? This is permanent.')) {
         axios
           .delete(date.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The date has been deleted', 'success');
             var id = this.localDates.findIndex((x) => x.id === date.id);
             this.localDates.splice(id, 1);

@@ -71,7 +71,9 @@
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-            <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
+            <label :for="emotion.type" class="ml-2 block font-medium text-gray-700">
+              {{ emotion.name }}
+            </label>
           </div>
         </div>
 
@@ -197,7 +199,9 @@
                   name="emotion"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
+                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700">
+                  {{ emotion.name }}
+                </label>
               </div>
             </div>
           </div>
@@ -365,7 +369,7 @@ export default {
       if (confirm('Are you sure? This will delete the note permanently.')) {
         axios
           .delete(note.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The note has been deleted', 'success');
             var id = this.localNotes.findIndex((x) => x.id === note.id);
             this.localNotes.splice(id, 1);

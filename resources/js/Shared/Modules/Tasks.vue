@@ -199,13 +199,10 @@ export default {
     },
 
     getCompleted() {
-      axios
-        .get(this.data.url.completed)
-        .then((response) => {
-          this.localCompletedTasks = response.data.data;
-          this.showCompletedTasks = true;
-        })
-        .catch((error) => {});
+      axios.get(this.data.url.completed).then((response) => {
+        this.localCompletedTasks = response.data.data;
+        this.showCompletedTasks = true;
+      });
     },
 
     submit() {
@@ -243,19 +240,16 @@ export default {
     },
 
     toggle(task) {
-      axios
-        .put(task.url.toggle)
-        .then((response) => {})
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
+      axios.put(task.url.toggle).catch((error) => {
+        this.form.errors = error.response.data;
+      });
     },
 
     destroy(task) {
       if (confirm('Are you sure?')) {
         axios
           .delete(task.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The task has been deleted', 'success');
             var id = this.localTasks.findIndex((x) => x.id === task.id);
             this.localTasks.splice(id, 1);

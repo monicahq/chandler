@@ -247,7 +247,7 @@ export default {
       if (confirm(this.$t('contact.contact_information_delete_confirm'))) {
         axios
           .delete(info.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('contact.contact_information_delete_success'), 'success');
             var id = this.localContactInformation.findIndex((x) => x.id === info.id);
             this.localContactInformation.splice(id, 1);

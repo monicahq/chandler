@@ -150,16 +150,9 @@
                   class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                   :required="required"
                   @change="change">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+                  <option v-for="n in 10" :key="n" :value="n">
+                    {{ n }}
+                  </option>
                 </select>
 
                 <select
@@ -346,16 +339,9 @@
                         class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
                         :required="required"
                         @change="change">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
+                        <option v-for="n in 10" :key="n" :value="n">
+                          {{ n }}
+                        </option>
                       </select>
 
                       <select
@@ -510,7 +496,7 @@ export default {
       if (confirm('Are you sure? This will delete the reminder permanently.')) {
         axios
           .delete(reminder.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The reminder has been deleted', 'success');
             var id = this.localReminders.findIndex((x) => x.id === reminder.id);
             this.localReminders.splice(id, 1);

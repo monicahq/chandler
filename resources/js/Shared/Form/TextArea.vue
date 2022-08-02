@@ -2,13 +2,14 @@
   <div class="mb3">
     <label v-if="label" class="mb-2 block text-sm" :for="id">
       {{ label }}
-      <span v-if="!required" class="optional-badge text-xs"> {{ $t('app.optional') }} </span>
+      <span v-if="!required" class="optional-badge text-xs">
+        {{ $t('app.optional') }}
+      </span>
     </label>
 
     <div class="relative">
       <textarea
         :id="id"
-        :ref="ref"
         v-model="proxyValue"
         :class="localTextAreaClasses"
         :required="required"
@@ -80,10 +81,6 @@ export default {
     maxlength: {
       type: Number,
       default: null,
-    },
-    ref: {
-      type: String,
-      default: 'textarea',
     },
   },
 

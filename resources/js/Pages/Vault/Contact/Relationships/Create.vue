@@ -54,7 +54,7 @@
             <errors :errors="form.errors" />
 
             <!-- relationship type -->
-            <label for="types" class="mb-2 block text-sm">Select a relationship type</label>
+            <label for="types" class="mb-2 block text-sm"> Select a relationship type </label>
             <select
               id="types"
               v-model="form.relationship_type_id"

@@ -145,7 +145,7 @@ export default {
   props: {
     modelValue: {
       type: [Array],
-      default: [],
+      default: () => [],
     },
     inputClass: {
       type: String,
@@ -216,6 +216,8 @@ export default {
       if (!this.addContactMode) {
         return true;
       }
+
+      return false;
     },
   },
 
@@ -246,12 +248,9 @@ export default {
     },
 
     lookupMostConsultedContacts() {
-      axios
-        .get(this.mostConsultedContactsUrl)
-        .then((response) => {
-          this.mostConsultedContacts = response.data.data;
-        })
-        .catch((error) => {});
+      axios.get(this.mostConsultedContactsUrl).then((response) => {
+        this.mostConsultedContacts = response.data.data;
+      });
     },
 
     add(contact) {
@@ -270,8 +269,8 @@ export default {
       var id = this.localContacts.findIndex((existingContact) => existingContact.id === contact.id);
       this.localContacts.splice(id, 1);
 
-      var id = this.form.contactIds.findIndex((existingContact) => existingContact === contact.id);
-      this.form.contactIds.splice(id, 1);
+      var id2 = this.form.contactIds.findIndex((existingContact) => existingContact === contact.id);
+      this.form.contactIds.splice(id2, 1);
 
       this.$emit('update:modelValue', this.form.contactIds);
     },

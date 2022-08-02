@@ -48,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 👥 </span> All the group types</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 👥 </span>
+            All the group types
+          </h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
             :text="'Add a group type'"
@@ -457,7 +460,7 @@ export default {
       if (confirm('Are you sure? This can not be undone.')) {
         axios
           .delete(groupType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The group type has been deleted', 'success');
             var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             this.localGroupTypes.splice(id, 1);
@@ -475,7 +478,7 @@ export default {
 
       axios
         .post(event.moved.element.url.position, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash('The order has been saved', 'success');
         })
         .catch((error) => {
@@ -529,7 +532,7 @@ export default {
       if (confirm('Are you sure? This can not be undone.')) {
         axios
           .delete(role.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The role has been deleted', 'success');
 
             var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === role.group_type_id);

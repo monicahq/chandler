@@ -50,7 +50,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📐 </span> {{ $t('settings.personalize_templates_title') }}</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 📐 </span>
+            {{ $t('settings.personalize_templates_title') }}
+          </h3>
           <pretty-button
             v-if="!createTemplateModalShown"
             :text="$t('settings.personalize_templates_cta')"
@@ -279,7 +282,7 @@ export default {
       if (confirm(this.$t('settings.personalize_templates_destroy_confirmation'))) {
         axios
           .delete(template.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('settings.personalize_templates_destroy_success'), 'success');
             var id = this.localTemplates.findIndex((x) => x.id === template.id);
             this.localTemplates.splice(id, 1);

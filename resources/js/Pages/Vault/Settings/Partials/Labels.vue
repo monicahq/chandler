@@ -2,7 +2,10 @@
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🏷 </span> {{ $t('vault.settings_labels_title') }}</h3>
+      <h3 class="mb-4 sm:mb-0">
+        <span class="mr-1"> 🏷 </span>
+        {{ $t('vault.settings_labels_title') }}
+      </h3>
       <pretty-button
         v-if="!createlabelModalShown"
         :text="$t('vault.settings_labels_cta')"
@@ -245,7 +248,7 @@ export default {
       if (confirm(this.$t('vault.settings_labels_destroy_confirmation'))) {
         axios
           .delete(label.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('vault.settings_labels_destroy_success'), 'success');
             var id = this.localLabels.findIndex((x) => x.id === label.id);
             this.localLabels.splice(id, 1);

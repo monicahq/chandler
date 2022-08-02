@@ -232,7 +232,7 @@ export default {
       if (confirm('Are you sure?')) {
         axios
           .delete(group.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The contact has been removed from the group', 'success');
             var id = this.localGroups.findIndex((x) => x.id === group.id);
             this.localGroups.splice(id, 1);

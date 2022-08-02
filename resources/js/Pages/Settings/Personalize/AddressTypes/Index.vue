@@ -48,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🏖 </span> All the address types</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 🏖 </span>
+            All the address types
+          </h3>
           <pretty-button
             v-if="!createAddressTypeModalShown"
             :text="'Add an address type'"
@@ -254,7 +257,7 @@ export default {
       ) {
         axios
           .delete(addressType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The address type has been deleted', 'success');
             var id = this.localAddressTypes.findIndex((x) => x.id === addressType.id);
             this.localAddressTypes.splice(id, 1);

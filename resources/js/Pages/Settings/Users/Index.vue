@@ -35,7 +35,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
-          <h3><span class="mr-1"> 🥸 </span> {{ $t('settings.users_management_title') }}</h3>
+          <h3>
+            <span class="mr-1"> 🥸 </span>
+            {{ $t('settings.users_management_title') }}
+          </h3>
           <pretty-link :href="data.url.users.create" :text="$t('settings.users_management_cta')" :icon="'plus'" />
         </div>
 
@@ -225,14 +228,11 @@ export default {
 
     destroy(user) {
       if (confirm(this.$t('settings.users_management_delete_confirmation'))) {
-        axios
-          .delete(user.url.destroy)
-          .then((response) => {
-            this.flash(this.$t('settings.users_management_delete_success'), 'success');
-            var id = this.localUsers.findIndex((x) => x.id === user.id);
-            this.localUsers.splice(id, 1);
-          })
-          .catch((error) => {});
+        axios.delete(user.url.destroy).then(() => {
+          this.flash(this.$t('settings.users_management_delete_success'), 'success');
+          var id = this.localUsers.findIndex((x) => x.id === user.id);
+          this.localUsers.splice(id, 1);
+        });
       }
     },
   },

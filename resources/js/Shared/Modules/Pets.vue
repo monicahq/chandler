@@ -234,7 +234,7 @@ export default {
       if (confirm('Are you sure? This will delete the pet permanently.')) {
         axios
           .delete(pet.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The pet has been deleted', 'success');
             var id = this.localPets.findIndex((x) => x.id === pet.id);
             this.localPets.splice(id, 1);

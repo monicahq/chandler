@@ -48,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 💵 </span> All the currencies</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 💵 </span>
+            All the currencies
+          </h3>
         </div>
 
         <!-- help text -->
@@ -167,7 +170,7 @@ export default {
     update(currency) {
       axios
         .put(currency.url.update, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash('The currency has been updated', 'success');
           this.localCurrencies[this.localCurrencies.findIndex((x) => x.id === currency.id)].active = !currency.active;
         })
@@ -179,7 +182,7 @@ export default {
     enableAll() {
       axios
         .post(this.data.url.enable_all)
-        .then((response) => {
+        .then(() => {
           this.flash('The currencies have been updated', 'success');
           this.localCurrencies.forEach((entry) => {
             entry.active = true;
@@ -193,7 +196,7 @@ export default {
     disableAll() {
       axios
         .delete(this.data.url.disable_all)
-        .then((response) => {
+        .then(() => {
           this.flash('The currencies have been updated', 'success');
           this.localCurrencies.forEach((entry) => {
             entry.active = false;

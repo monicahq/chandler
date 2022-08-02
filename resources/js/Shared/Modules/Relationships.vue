@@ -81,8 +81,6 @@
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
 import PrettyLink from '@/Shared/Form/PrettyLink';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
@@ -90,8 +88,6 @@ import Errors from '@/Shared/Form/Errors';
 
 export default {
   components: {
-    PrettyButton,
-    PrettySpan,
     PrettyLink,
     TextInput,
     TextArea,

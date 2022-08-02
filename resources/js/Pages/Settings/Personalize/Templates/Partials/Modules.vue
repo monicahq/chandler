@@ -165,7 +165,7 @@ export default {
     remove(module) {
       axios
         .delete(module.url.destroy)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('settings.personalize_template_show_module_remove_success'), 'success');
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = false;
 
@@ -183,7 +183,7 @@ export default {
 
       axios
         .post(event.moved.element.url.position, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
         })
         .catch((error) => {

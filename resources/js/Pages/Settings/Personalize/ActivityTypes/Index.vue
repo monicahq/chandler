@@ -48,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🚲 </span> All the activity types</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 🚲 </span>
+            All the activity types
+          </h3>
           <pretty-button
             v-if="!createActivityTypeModalShown"
             :text="'add a activity type'"
@@ -367,7 +370,7 @@ export default {
       ) {
         axios
           .delete(activityType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The activity type has been deleted', 'success');
             var id = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
             this.localActivityTypes.splice(id, 1);
@@ -424,7 +427,7 @@ export default {
       ) {
         axios
           .delete(activity.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The activity has been deleted', 'success');
             var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
             var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);

@@ -490,12 +490,9 @@ export default {
 
     getCurrencies() {
       if (this.localCurrencies.length == 0) {
-        axios
-          .get(this.data.url.currencies, this.form)
-          .then((response) => {
-            this.localCurrencies = response.data.data;
-          })
-          .catch((error) => {});
+        axios.get(this.data.url.currencies, this.form).then((response) => {
+          this.localCurrencies = response.data.data;
+        });
       }
     },
 
@@ -542,7 +539,7 @@ export default {
       if (confirm('Are you sure? This will delete the loan permanently.')) {
         axios
           .delete(loan.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The loan has been deleted', 'success');
             var id = this.localLoans.findIndex((x) => x.id === loan.id);
             this.localLoans.splice(id, 1);

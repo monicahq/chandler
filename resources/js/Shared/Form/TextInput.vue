@@ -2,13 +2,15 @@
   <div :class="divOuterClass">
     <label v-if="label" class="mb-2 block text-sm" :for="id">
       {{ label }}
-      <span v-if="!required" class="optional-badge text-xs"> {{ $t('app.optional') }} </span>
+      <span v-if="!required" class="optional-badge text-xs">
+        {{ $t('app.optional') }}
+      </span>
     </label>
 
     <div class="relative">
       <input
         :id="id"
-        :ref="ref"
+        ref="input"
         :class="localInputClasses"
         :value="modelValue"
         :type="type"
@@ -103,10 +105,6 @@ export default {
     max: {
       type: Number,
       default: null,
-    },
-    ref: {
-      type: String,
-      default: 'input',
     },
     step: {
       type: String,

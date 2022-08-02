@@ -160,7 +160,7 @@ export default {
       if (confirm(this.$t('contact.documents_delete_confirm'))) {
         axios
           .delete(document.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('contact.documents_delete_success'), 'success');
             var id = this.localDocuments.findIndex((x) => x.id === document.id);
             this.localDocuments.splice(id, 1);

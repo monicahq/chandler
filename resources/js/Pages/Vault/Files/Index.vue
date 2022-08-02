@@ -46,7 +46,10 @@
           <div class="p-3 sm:px-3 sm:py-0">
             <!-- title + cta -->
             <div class="mb-6 flex items-center justify-between">
-              <h3><span class="mr-1"> 📸 </span> {{ $t('vault.files_filter_title') }}</h3>
+              <h3>
+                <span class="mr-1"> 📸 </span>
+                {{ $t('vault.files_filter_title') }}
+              </h3>
             </div>
 
             <!-- file list -->
@@ -165,7 +168,7 @@ export default {
       if (confirm(this.$t('contact.documents_delete_confirm'))) {
         axios
           .delete(file.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('contact.documents_delete_success'), 'success');
             var id = this.localFiles.findIndex((x) => x.id === file.id);
             this.localFiles.splice(id, 1);

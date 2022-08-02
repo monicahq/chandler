@@ -8,7 +8,8 @@
             <!-- labels -->
             <div>
               <div class="mb-3 border-b border-gray-200">
-                <span class="mr-1"> 🏷️ </span> {{ $t('vault.show_contacts_labels') }}
+                <span class="mr-1"> 🏷️ </span>
+                {{ $t('vault.show_contacts_labels') }}
               </div>
               <ul v-if="data.labels.length > 0">
                 <li class="mb-1">
@@ -44,7 +45,10 @@
           <div class="p-3 sm:px-3 sm:py-0">
             <!-- title + cta -->
             <div class="mb-6 flex items-center justify-between">
-              <h3><span class="mr-1"> 🥸 </span> {{ $t('vault.show_contacts_index') }}</h3>
+              <h3>
+                <span class="mr-1"> 🥸 </span>
+                {{ $t('vault.show_contacts_index') }}
+              </h3>
               <pretty-link
                 v-if="layoutData.vault.permission.at_least_editor"
                 :href="data.url.contact.create"

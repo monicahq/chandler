@@ -127,7 +127,7 @@ export default {
           localStorage.success = this.$t('vault.create_success');
           this.$inertia.visit(response.data.data);
         })
-        .catch((error) => {
+        .catch(() => {
           this.loadingState = null;
         });
     },
