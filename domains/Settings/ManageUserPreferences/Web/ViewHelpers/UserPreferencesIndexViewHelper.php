@@ -12,6 +12,7 @@ class UserPreferencesIndexViewHelper
     public static function data(User $user): array
     {
         return [
+            'help' => self::dtoHelp($user),
             'name_order' => self::dtoNameOrder($user),
             'date_format' => self::dtoDateFormat($user),
             'timezone' => self::dtoTimezone($user),
@@ -21,6 +22,16 @@ class UserPreferencesIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'back' => route('settings.index'),
+            ],
+        ];
+    }
+
+    public static function dtoHelp(User $user): array
+    {
+        return [
+            'help_shown' => $user->help_shown,
+            'url' => [
+                'store' => route('settings.preferences.help.store'),
             ],
         ];
     }

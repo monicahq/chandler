@@ -1,5 +1,3 @@
-<style lang="scss" scoped></style>
-
 <template>
   <div>
     <div class="mx-auto mb-6 sm:w-1/2" v-html="data" />
@@ -22,3 +20,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped></style>

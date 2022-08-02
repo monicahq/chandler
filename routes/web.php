@@ -71,6 +71,7 @@ use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesControl
 use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesHelpController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
@@ -112,6 +113,7 @@ Route::post(
 );
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vault.index');
@@ -290,6 +292,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
             Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
+            Route::post('help', [PreferencesHelpController::class, 'store'])->name('help.store');
         });
 
         // notifications

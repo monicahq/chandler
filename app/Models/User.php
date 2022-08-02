@@ -23,13 +23,16 @@ class User extends Authenticatable implements MustVerifyEmail
      * Possible number format types.
      */
     public const NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL = '1,234.56';
+
     public const NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL = '1 234,56';
+
     public const NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL = '1234.56';
 
     /**
      * Possible maps site.
      */
     public const MAPS_SITE_GOOGLE_MAPS = 'google_maps';
+
     public const MAPS_SITE_OPEN_STREET_MAPS = 'open_street_maps';
 
     /**
@@ -53,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'timezone',
         'default_map_site',
         'locale',
+        'help_shown',
     ];
 
     /**
@@ -73,6 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'invitation_accepted_at' => 'datetime',
         'is_account_administrator' => 'boolean',
+        'help_shown' => 'boolean',
     ];
 
     /**
