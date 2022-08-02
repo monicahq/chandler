@@ -23,6 +23,7 @@ class TrustProxies extends Middleware
      * Get the trusted proxies.
      *
      * @return array|string|null
+     * @codeCoverageIgnore
      */
     protected function proxies()
     {
