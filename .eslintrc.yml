@@ -49,15 +49,5 @@ rules:
     - error
     - singleline: 6
       multiline: 6
-  vue/singleline-html-element-content-newline:
-    - error
-    - ignoreWhenNoAttributes: true
-      ignoreWhenEmpty: true
-      ignores:
-        - pre
-        - textarea
-        - inertia-link
-        - a
-        - p
-        - li
+  vue/singleline-html-element-content-newline: 0
   vue/no-deprecated-events-api: 0
