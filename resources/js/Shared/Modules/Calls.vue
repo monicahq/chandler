@@ -18,9 +18,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">
-Calls
-</span>
+        <span class="font-semibold"> Calls </span>
       </div>
       <pretty-button :text="'Log a call'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateCallModal()" />
     </div>
@@ -90,9 +88,7 @@ Calls
                 name="who_initiated"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
-I called
-</label>
+              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700"> I called </label>
             </div>
 
             <div class="flex items-center">

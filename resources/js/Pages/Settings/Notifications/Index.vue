@@ -36,9 +36,7 @@
         <!-- title + cta -->
         <div class="mb-3 mt-8 sm:mt-0">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1">
-🛰️
-</span>
+            <span class="mr-1"> 🛰️ </span>
             {{ $t('settings.notification_channels_title') }}
           </h3>
         </div>

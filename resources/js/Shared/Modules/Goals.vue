@@ -18,9 +18,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">
-Goals
-</span>
+        <span class="font-semibold"> Goals </span>
       </div>
       <pretty-button :text="'Add a goal'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateGoalModal" />
     </div>
@@ -121,17 +119,13 @@ Goals
             <!-- stats -->
             <div class="flex justify-between p-3">
               <div class="mr-6 flex items-center">
-                <div class="mr-3 w-14 text-right text-sm text-gray-500">
-Current streak
-</div>
+                <div class="mr-3 w-14 text-right text-sm text-gray-500">Current streak</div>
                 <div class="text-4xl">
                   {{ goal.streaks_statistics.current_streak }}
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="mr-3 w-14 text-right text-sm text-gray-500">
-Longest streak
-</div>
+                <div class="mr-3 w-14 text-right text-sm text-gray-500">Longest streak</div>
                 <div class="text-4xl">
                   {{ goal.streaks_statistics.max_streak }}
                 </div>

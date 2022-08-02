@@ -77,9 +77,7 @@
               </svg>
             </span>
 
-            <span class="font-semibold">
-Photos
-</span>
+            <span class="font-semibold"> Photos </span>
           </div>
 
           <!-- upload -->

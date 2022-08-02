@@ -60,9 +60,7 @@
 
             <!-- feed -->
             <div class="mb-10 overflow-auto">
-              <h3 class="mb-5 font-bold">
-Janvier 2010
-</h3>
+              <h3 class="mb-5 font-bold">Janvier 2010</h3>
 
               <!-- journal entry -->
               <entry />
@@ -133,9 +131,7 @@ Janvier 2010
                 name="remember-me"
                 type="checkbox"
                 class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900">
-Remember me
-</label>
+              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900"> Remember me </label>
             </div>
           </div>
         </div>

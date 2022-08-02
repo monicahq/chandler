@@ -5,9 +5,7 @@
     class="relative text-sm dark:bg-gray-700"
     name="save"
     type="submit">
-    <span v-if="state == 'loading'">
-Loading…
-</span>
+    <span v-if="state == 'loading'"> Loading… </span>
 
     <!-- + icon -->
     <svg

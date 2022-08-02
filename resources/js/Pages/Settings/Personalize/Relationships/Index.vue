@@ -51,9 +51,7 @@
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1">
-🥸
-</span>
+            <span class="mr-1"> 🥸 </span>
             {{ $t('settings.personalize_relationship_types_title') }}
           </h3>
           <pretty-button

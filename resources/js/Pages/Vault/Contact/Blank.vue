@@ -33,9 +33,7 @@
 
     <main class="relative sm:mt-24">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <h2 class="mb-6 text-center text-lg">
-Profile page of {{ data.contact.name }}
-</h2>
+        <h2 class="mb-6 text-center text-lg">Profile page of {{ data.contact.name }}</h2>
         <div class="mb-6 rounded border border-gray-200 bg-white">
           <!-- help -->
           <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2">

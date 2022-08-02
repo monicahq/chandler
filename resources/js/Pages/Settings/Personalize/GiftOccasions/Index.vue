@@ -49,9 +49,7 @@
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1">
-🎁
-</span>
+            <span class="mr-1"> 🎁 </span>
             All the gift occasions
           </h3>
           <pretty-button

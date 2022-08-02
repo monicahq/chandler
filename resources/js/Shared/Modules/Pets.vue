@@ -19,9 +19,7 @@
           </span>
         </span>
 
-        <span class="font-semibold">
-Pets
-</span>
+        <span class="font-semibold"> Pets </span>
       </div>
       <pretty-button :text="'Add a pet'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreatePetModal" />
     </div>

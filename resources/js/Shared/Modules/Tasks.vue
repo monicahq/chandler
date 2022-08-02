@@ -18,9 +18,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">
-Tasks
-</span>
+        <span class="font-semibold"> Tasks </span>
       </div>
       <pretty-button :text="'Add a task'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateTaskModal()" />
     </div>
