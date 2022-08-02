@@ -12,6 +12,7 @@ use Carbon\Carbon;
 class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 {
     private File $file;
+
     private Avatar $avatar;
 
     /**

@@ -16,6 +16,7 @@ class Avatar extends Model
      * Possible type.
      */
     public const TYPE_GENERATED = 'generated';
+
     public const TYPE_FILE = 'file';
 
     /**

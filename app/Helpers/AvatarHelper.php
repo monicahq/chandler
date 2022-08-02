@@ -54,7 +54,7 @@ class AvatarHelper
         if ($avatar->type === Avatar::TYPE_GENERATED) {
             $avatarURL = $avatar->svg;
         } else {
-            $avatarURL = 'https://ucarecdn.com/' . $avatar->file->uuid . '/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
+            $avatarURL = 'https://ucarecdn.com/'.$avatar->file->uuid.'/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
         }
 
         return $avatarURL;
