@@ -65,7 +65,9 @@
             </option>
           </select>
 
-          <span class="mr-2"> h: </span>
+          <span class="mr-2">
+h:
+</span>
 
           <select
             v-model="form.minutes"

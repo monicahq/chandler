@@ -18,7 +18,9 @@
           </svg>
         </span>
 
-        <span class="font-semibold"> Relationships </span>
+        <span class="font-semibold">
+Relationships
+</span>
       </div>
       <pretty-link :text="'Add a relationship'" :icon="'plus'" :href="data.url.create" :classes="'sm:w-fit w-full'" />
     </div>

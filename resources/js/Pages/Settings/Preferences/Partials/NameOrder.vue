@@ -3,7 +3,9 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 👉 </span>
+        <span class="mr-1">
+👉
+</span>
         <span class="mr-2">
           {{ $t('settings.user_preferences_name_order_title') }}
         </span>
@@ -61,7 +63,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500" />
           <label for="first_name_last_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
             {{ $t('settings.user_preferences_name_order_first_name_last_name') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond </span>
+            <span class="ml-4 font-normal text-gray-500">
+James Bond
+</span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -75,7 +79,9 @@
           <label for="last_name_first_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
             {{ $t('settings.user_preferences_name_order_last_name_first_name') }}
 
-            <span class="ml-4 font-normal text-gray-500"> Bond James </span>
+            <span class="ml-4 font-normal text-gray-500">
+Bond James
+</span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -90,7 +96,9 @@
             for="first_name_last_name_nickname"
             class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
             {{ $t('settings.user_preferences_name_order_first_name_last_name_nickname') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond (007) </span>
+            <span class="ml-4 font-normal text-gray-500">
+James Bond (007)
+</span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -103,7 +111,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500" />
           <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
             {{ $t('settings.user_preferences_name_order_nickname') }}
-            <span class="ml-4 font-normal text-gray-500"> 007 </span>
+            <span class="ml-4 font-normal text-gray-500">
+007
+</span>
           </label>
         </div>
         <div class="mb-2 flex items-center">

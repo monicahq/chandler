@@ -3,7 +3,9 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> ⁉️ </span>
+        <span class="mr-1">
+⁉️
+</span>
         <span class="mr-2">
           {{ $t('settings.user_preferences_help_title') }}
         </span>

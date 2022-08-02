@@ -18,7 +18,9 @@
           </svg>
         </span>
 
-        <span class="font-semibold"> Groups </span>
+        <span class="font-semibold">
+Groups
+</span>
       </div>
       <pretty-span :text="'Add to group'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="addGroupMode = true" />
     </div>

@@ -18,7 +18,9 @@
           </svg>
         </span>
 
-        <span class="font-semibold"> Loans </span>
+        <span class="font-semibold">
+Loans
+</span>
       </div>
       <pretty-button :text="'Record a loan'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateLoanModal" />
     </div>
@@ -154,7 +156,9 @@
           <errors :errors="form.errors" />
         </div>
 
-        <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
+        <div v-if="warning != ''" class="border-b p-3">
+⚠️ {{ warning }}
+</div>
 
         <div class="flex justify-between p-5">
           <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createLoanModalShown = false" />
@@ -204,7 +208,9 @@
                       {{ loan.currency_name }}
                     </span>
                     {{ loan.amount_lent }}
-                    <span class="ml-2"> • </span>
+                    <span class="ml-2">
+•
+</span>
                   </span>
                   {{ loan.name }}
                 </span>
@@ -376,7 +382,9 @@
             <errors :errors="form.errors" />
           </div>
 
-          <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
+          <div v-if="warning != ''" class="border-b p-3">
+⚠️ {{ warning }}
+</div>
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedLoanId = 0" />

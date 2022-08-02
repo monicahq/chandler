@@ -4,7 +4,9 @@
       <div class="mx-auto max-w-4xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <form class="mb-8 rounded-lg border border-gray-200 bg-white" @submit.prevent="search">
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5">
-            <h1 class="text-center text-2xl font-medium">Search something in the vault</h1>
+            <h1 class="text-center text-2xl font-medium">
+Search something in the vault
+</h1>
           </div>
           <div class="p-5">
             <text-input

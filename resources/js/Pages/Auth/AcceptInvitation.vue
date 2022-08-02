@@ -4,7 +4,9 @@
 
     <form @submit.prevent="submit">
       <h1 class="mb-3 text-center text-xl">
-        <span class="mr-2"> 👋 </span>
+        <span class="mr-2">
+👋
+</span>
         Welcome to Monica.
       </h1>
       <p class="mb-4 text-center">Please complete this form to finalize your account.</p>
