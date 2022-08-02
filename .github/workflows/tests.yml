@@ -9,7 +9,7 @@ on:
     types: [created]
 
   workflow_run:
-    workflows: [PHP linting (Pint)]
+    workflows: [PHP linting (Pint), Lint vue and js files]
     types: [completed]
 
 env:

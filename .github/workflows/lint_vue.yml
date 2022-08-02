@@ -1,4 +1,4 @@
-name: Build assets
+name: Lint vue and js files
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     types: [created]
 
   workflow_run:
-    workflows: [PHP linting (Pint), Lint vue and js files]
+    workflows: [PHP linting (Pint)]
     types: [completed]
 
 env:
@@ -15,20 +15,21 @@ env:
 
 jobs:
   #############
-  # Build
+  # Lint
   #############
-  build:
+  lint:
     runs-on: ubuntu-latest
-    name: Build Assets
+    name: Lint vue and js files
 
     strategy:
       fail-fast: false
 
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GH_TOKEN }}
 
     # Yarn
       - name: Setup Node.js
@@ -49,5 +50,11 @@ jobs:
 
       - name: Install yarn dependencies
         run: yarn install --frozen-lockfile
-      - name: Build assets
-        run: yarn run production
+      - name: Lint files
+        run: yarn run lint --fix
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: vue and javascript linting with eslint"
+          skip_fetch: true

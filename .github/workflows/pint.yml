@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+  workflow_run:
+    workflows: [Lint vue and js files]
+    types: [completed]
+
 jobs:
   phplint:
     runs-on: ubuntu-latest
