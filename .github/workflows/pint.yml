@@ -1,8 +1,6 @@
 name: PHP linting (Pint)
 
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -12,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
       - name: laravel-pint
         uses: aglipanci/laravel-pint-action@0.1.0
         with:
@@ -21,5 +21,5 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: chore: php linting with pint
+          commit_message: "chore: php linting with pint"
           skip_fetch: true
