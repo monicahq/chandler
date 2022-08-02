@@ -1418,17 +1418,17 @@ json-stable-stringify-without-jsonify@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
 
-laravel-vite-plugin@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/laravel-vite-plugin/-/laravel-vite-plugin-0.4.0.tgz#7c0c342f9c51f648e66944dfa03ef69f5feb8af4"
-  integrity sha512-ZAKCkRnMUnSt4+ZlZQEspcoBtUYRz48Duho9SMoUpwxyLsL7TswvNz35Vi3vOTz4B8Y6U88ZY9WwBiOHGyJByQ==
+laravel-vite-plugin@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/laravel-vite-plugin/-/laravel-vite-plugin-0.5.2.tgz#5b16ef189d8eab09ebd468f26d1b618b29f89c2b"
+  integrity sha512-6ufssMvfF3IK/t1hRiYApTB6MHnpIAEZxte+V89aOt5T4CP8OVCPY5qvFBGwddW+yoVEOH5lnojSAD5YzM5T1w==
   dependencies:
     vite-plugin-full-reload "^1.0.1"
 
-laravel-vue-i18n@^1.4.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/laravel-vue-i18n/-/laravel-vue-i18n-1.4.4.tgz#8781f5e29bc1b53f5a09cd826c5285250af0b823"
-  integrity sha512-/BqljTnWmITPBHnp2WPOe2YsiDcutEf4r4xHOxVjwKvuKMdl9lHBmprK5iXvHipPapyR5Q8QvIqUJmmWtnkIaQ==
+laravel-vue-i18n@^2.1.0:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/laravel-vue-i18n/-/laravel-vue-i18n-2.1.3.tgz#1169edaf96a045c0797fc1ba9a88320800e29099"
+  integrity sha512-zavwpKdVD1ZwQXnp6rEiaXSrRDUXgBvYThpJEvxextgowfur528b+cIEl5yLn29cm6vf+ARXZ6wMWvk3WP5spg==
   dependencies:
     php-parser "3.1.0-beta.4"
     vue "^3.2.37"
