@@ -25,11 +25,7 @@ class AuditLogFactory extends Factory
     {
         return [
             'account_id' => Account::factory(),
-            'author_id' => function (array $attributes) {
-                return User::factory()->create([
-                    'account_id' => $attributes['account_id'],
-                ])->id;
-            },
+            'author_id' => User::factory(),
             'action_name' => 'account_created',
             'author_name' => 'Dwight Schrute',
             'objects' => '{"user": 1}',

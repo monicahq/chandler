@@ -652,7 +652,7 @@ class AuditLogHelper
                 'other_contact_name' => $otherContact->name,
                 'relationship_name' => $log->object->{'relationship_name'},
             ]);
-        } elseif ($contact && ! $otherContact) {
+        } elseif ($contact) {
             $sentence = trans('log.relationship_set_second_contact_deleted', [
                 'contact_url' => route('contact.show', [
                     'vault' => $contact->vault_id,
@@ -701,7 +701,7 @@ class AuditLogHelper
                 'contact_name' => NameHelper::formatContactName($user, $contact),
                 'other_contact_name' => $otherContact->name,
             ]);
-        } elseif ($contact && ! $otherContact) {
+        } elseif ($contact) {
             $sentence = trans('log.relationship_unset_second_contact_deleted', [
                 'contact_url' => route('contact.show', [
                     'vault' => $contact->vault_id,

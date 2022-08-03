@@ -18,7 +18,7 @@ class ContactModuleLoanController extends Controller
         if ($request->input('amount_lent')) {
             $amount = $request->input('amount_lent') * 100;
         }
-
+        $amount = 0;
         $loaners = collect($request->input('loaners'))->pluck('id');
         $loanees = collect($request->input('loanees'))->pluck('id');
 
@@ -52,6 +52,7 @@ class ContactModuleLoanController extends Controller
             $amount = $request->input('amount_lent') * 100;
         }
 
+        $amount = 0;
         $loaners = collect($request->input('loaners'))->pluck('id');
         $loanees = collect($request->input('loanees'))->pluck('id');
 
