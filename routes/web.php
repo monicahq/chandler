@@ -1,5 +1,6 @@
 <?php
 
+use App\Contact\ManageAvatar\Web\Controllers\ModuleAvatarController;
 use App\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
 use App\Contact\ManageContact\Web\Controllers\ContactArchiveController;
 use App\Contact\ManageContact\Web\Controllers\ContactController;
@@ -149,7 +150,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
                     // avatar
-                    Route::put('dates/{date}', [ContactImportantDatesController::class, 'update'])->name('contact.date.update');
+                    Route::put('avatar', [ModuleAvatarController::class, 'update'])->name('contact.avatar.update');
 
                     // important dates
                     Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');

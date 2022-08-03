@@ -69,7 +69,7 @@ class DestroyAvatar extends BaseService implements ServiceInterface
 
     private function getCurrentAvatar(): void
     {
-        $this->avatar = $this->contact->currentAvatar();
+        $this->avatar = $this->contact->currentAvatar;
 
         if ($this->avatar->type !== Avatar::TYPE_FILE) {
             throw new Exception('The contact does not have a photo as avatar.');

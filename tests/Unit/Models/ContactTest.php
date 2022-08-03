@@ -36,251 +36,251 @@ class ContactTest extends TestCase
     /** @test */
     public function it_has_one_vault()
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
 
-        $this->assertTrue($ross->vault()->exists());
+        $this->assertTrue($contact->vault()->exists());
     }
 
     /** @test */
     public function it_has_one_gender()
     {
-        $ross = Contact::factory()->create([
+        $contact = Contact::factory()->create([
             'gender_id' => Gender::factory()->create(),
         ]);
 
-        $this->assertTrue($ross->gender()->exists());
+        $this->assertTrue($contact->gender()->exists());
     }
 
     /** @test */
     public function it_has_one_pronoun()
     {
-        $ross = Contact::factory()->create([
+        $contact = Contact::factory()->create([
             'pronoun_id' => Pronoun::factory()->create(),
         ]);
 
-        $this->assertTrue($ross->pronoun()->exists());
+        $this->assertTrue($contact->pronoun()->exists());
     }
 
     /** @test */
     public function it_has_one_template()
     {
-        $ross = Contact::factory()->create([
+        $contact = Contact::factory()->create([
             'template_id' => Template::factory()->create(),
         ]);
 
-        $this->assertTrue($ross->template()->exists());
+        $this->assertTrue($contact->template()->exists());
     }
 
     /** @test */
     public function it_has_many_relationships(): void
     {
-        $ross = Contact::factory()->create([]);
+        $contact = Contact::factory()->create([]);
         $monica = Contact::factory()->create();
         $relationshipType = RelationshipType::factory()->create();
 
-        $ross->relationships()->sync([$monica->id => ['relationship_type_id' => $relationshipType->id]]);
+        $contact->relationships()->sync([$monica->id => ['relationship_type_id' => $relationshipType->id]]);
 
-        $this->assertTrue($ross->relationships()->exists());
+        $this->assertTrue($contact->relationships()->exists());
     }
 
     /** @test */
     public function it_has_many_labels(): void
     {
-        $ross = Contact::factory()->create([]);
+        $contact = Contact::factory()->create([]);
         $label = Label::factory()->create();
 
-        $ross->labels()->sync([$label->id]);
+        $contact->labels()->sync([$label->id]);
 
-        $this->assertTrue($ross->labels()->exists());
+        $this->assertTrue($contact->labels()->exists());
     }
 
     /** @test */
     public function it_has_many_logs(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         ContactLog::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->contactLogs()->exists());
+        $this->assertTrue($contact->contactLogs()->exists());
     }
 
     /** @test */
     public function it_has_many_contact_information(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         ContactInformation::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->contactInformation()->exists());
+        $this->assertTrue($contact->contactInformation()->exists());
     }
 
     /** @test */
     public function it_has_many_addresses(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Address::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->addresses()->exists());
+        $this->assertTrue($contact->addresses()->exists());
     }
 
     /** @test */
     public function it_has_many_notes(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Note::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->notes()->exists());
+        $this->assertTrue($contact->notes()->exists());
     }
 
     /** @test */
     public function it_has_many_dates(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         ContactImportantDate::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->dates()->exists());
+        $this->assertTrue($contact->dates()->exists());
     }
 
     /** @test */
     public function it_has_many_reminders(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         ContactReminder::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->reminders()->exists());
+        $this->assertTrue($contact->reminders()->exists());
     }
 
     /** @test */
     public function it_has_many_loans_as_loaner(): void
     {
-        $ross = Contact::factory()->create([]);
+        $contact = Contact::factory()->create([]);
         $monica = Contact::factory()->create();
         $loan = Loan::factory()->create();
 
-        $ross->loansAsLoaner()->sync([$loan->id => ['loanee_id' => $monica->id]]);
+        $contact->loansAsLoaner()->sync([$loan->id => ['loanee_id' => $monica->id]]);
 
-        $this->assertTrue($ross->loansAsLoaner()->exists());
+        $this->assertTrue($contact->loansAsLoaner()->exists());
     }
 
     /** @test */
     public function it_has_many_loans_as_loanee(): void
     {
-        $ross = Contact::factory()->create([]);
+        $contact = Contact::factory()->create([]);
         $monica = Contact::factory()->create();
         $loan = Loan::factory()->create();
 
-        $ross->loansAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
+        $contact->loansAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
 
-        $this->assertTrue($ross->loansAsLoanee()->exists());
+        $this->assertTrue($contact->loansAsLoanee()->exists());
     }
 
     /** @test */
     public function it_has_one_company()
     {
-        $ross = Contact::factory()->create([
+        $contact = Contact::factory()->create([
             'company_id' => Company::factory()->create(),
         ]);
 
-        $this->assertTrue($ross->company()->exists());
+        $this->assertTrue($contact->company()->exists());
     }
 
     /** @test */
     public function it_has_one_current_avatar(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         $avatar = Avatar::factory()->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
-        $ross->avatar_id = $avatar->id;
-        $ross->save();
+        $contact->avatar_id = $avatar->id;
+        $contact->save();
 
-        $this->assertTrue($ross->currentAvatar()->exists());
+        $this->assertTrue($contact->currentAvatar()->exists());
     }
 
     /** @test */
     public function it_has_many_avatars(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Avatar::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->avatars()->exists());
+        $this->assertTrue($contact->avatars()->exists());
     }
 
     /** @test */
     public function it_has_many_tasks(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         ContactTask::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->tasks()->exists());
+        $this->assertTrue($contact->tasks()->exists());
     }
 
     /** @test */
     public function it_has_many_calls(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Call::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->calls()->exists());
+        $this->assertTrue($contact->calls()->exists());
     }
 
     /** @test */
     public function it_has_many_pets(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Pet::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->pets()->exists());
+        $this->assertTrue($contact->pets()->exists());
     }
 
     /** @test */
     public function it_has_many_goals(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         Goal::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->goals()->exists());
+        $this->assertTrue($contact->goals()->exists());
     }
 
     /** @test */
     public function it_has_many_files(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         File::factory()->count(2)->create([
-            'contact_id' => $ross->id,
+            'contact_id' => $contact->id,
         ]);
 
-        $this->assertTrue($ross->files()->exists());
+        $this->assertTrue($contact->files()->exists());
     }
 
     /** @test */
     public function it_has_many_groups(): void
     {
-        $ross = Contact::factory()->create();
+        $contact = Contact::factory()->create();
         $group = Group::factory()->create();
-        $ross->groups()->sync([$group->id]);
+        $contact->groups()->sync([$group->id]);
 
-        $this->assertTrue($ross->groups()->exists());
+        $this->assertTrue($contact->groups()->exists());
     }
 
     /** @test */

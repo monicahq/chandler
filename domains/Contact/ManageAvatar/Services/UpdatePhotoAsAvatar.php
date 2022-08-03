@@ -95,8 +95,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
     {
         $this->contact->avatar_id = $this->avatar->id;
         $this->contact->save();
-
-        dd($this->contact->currentAvatar);
     }
 
     private function updateLastEditedDate(): void

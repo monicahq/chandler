@@ -395,6 +395,20 @@ export default {
           });
       }
     },
+
+    updateArchive() {
+      if (confirm(this.$t('contact.contact_toggle_confirm'))) {
+        axios
+          .put(this.data.url.toggle_archive)
+          .then((response) => {
+            localStorage.success = this.$t('app.notification_flash_changes_saved');
+            this.$inertia.visit(response.data.data);
+          })
+          .catch((error) => {
+            this.form.errors = error.response.data;
+          });
+      }
+    },
   },
 };
 </script>

@@ -112,15 +112,17 @@ class UpdatePhotoAsAvatarTest extends TestCase
 
         $contact = (new UpdatePhotoAsAvatar())->execute($request);
 
+        $currentAvatar = Avatar::find($contact->avatar_id);
+
         $this->assertDatabaseHas('avatars', [
-            'id' => $contact->currentAvatar->id,
+            'id' => $currentAvatar->id,
             'file_id' => $file->id,
             'type' => Avatar::TYPE_FILE,
         ]);
 
         $this->assertDatabaseHas('contacts', [
             'id' => $contact->id,
-            'avatar_id' => $contact->currentAvatar->id,
+            'avatar_id' => $currentAvatar->id,
         ]);
     }
 }
