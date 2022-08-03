@@ -23,7 +23,7 @@ class VaultMostConsultedViewHelper
 
         $contactsCollection = collect();
         foreach ($records as $record) {
-            $contact = Contact::find($record);
+            $contact = Contact::find($record->contact_id);
 
             $contactsCollection->push([
                 'id' => $contact->id,
