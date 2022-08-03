@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\AvatarHelper;
 use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
+use App\Helpers\ScoutHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -97,6 +98,16 @@ class Contact extends Model
         static::deleting(function ($model) {
             Note::where('contact_id', $model->id)->unsearchable();
         });
+    }
+
+    /**
+     * When updating a model, this method determines if we should update the search index.
+     *
+     * @return bool
+     */
+    public function searchIndexShouldBeUpdated()
+    {
+        return ScoutHelper::searchIndexShouldBeUpdated();
     }
 
     /**

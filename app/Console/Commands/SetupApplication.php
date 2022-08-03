@@ -47,24 +47,26 @@ class SetupApplication extends Command
 
         $this->line('-> Creating indexes on Meilisearch. Make sure Meilisearch is running.');
 
-        $client = new Client(config('scout.meilisearch.host'), config('scout.meilisearch.key'));
-        $index = $client->index('contacts');
-        $index->updateFilterableAttributes([
-            'id',
-            'vault_id',
-        ]);
-        $index = $client->index('notes');
-        $index->updateFilterableAttributes([
-            'id',
-            'vault_id',
-            'contact_id',
-        ]);
-        $index = $client->index('groups');
-        $index->updateFilterableAttributes([
-            'id',
-            'vault_id',
-        ]);
+        if (config('scout.driver') === 'meilisearch' && ($host = config('scout.meilisearch.host')) !== '') {
+            $client = new Client($host, config('scout.meilisearch.key'));
+            $index = $client->index('contacts');
+            $index->updateFilterableAttributes([
+                'id',
+                'vault_id',
+            ]);
+            $index = $client->index('notes');
+            $index->updateFilterableAttributes([
+                'id',
+                'vault_id',
+                'contact_id',
+            ]);
+            $index = $client->index('groups');
+            $index->updateFilterableAttributes([
+                'id',
+                'vault_id',
+            ]);
 
-        $this->line('✓ Indexes created');
+            $this->line('✓ Indexes created');
+        }
     }
 }

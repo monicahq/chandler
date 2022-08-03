@@ -18,6 +18,7 @@ use App\Vault\ManageVault\Services\CreateVault;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class SetupDummyAccount extends Command
 {
@@ -81,9 +82,11 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/notes"');
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/contacts"');
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/groups"');
+        if (config('scout.driver') === 'meilisearch' && ($host = config('scout.meilisearch.host')) !== '') {
+            Http::delete("$host/indexes/notes");
+            Http::delete("$host/indexes/contacts");
+            Http::delete("$host/indexes/groups");
+        }
         $this->artisan('☐ Reset search engine', 'monica:setup');
         $this->artisan('☐ Migration of the database', 'migrate:fresh');
         $this->artisan('☐ Symlink the storage folder', 'storage:link');
@@ -124,7 +127,7 @@ class SetupDummyAccount extends Command
         ]);
         $this->firstUser->email_verified_at = Carbon::now();
         $this->firstUser->save();
-        sleep(5);
+        // sleep(5);
     }
 
     private function createVaults(): void

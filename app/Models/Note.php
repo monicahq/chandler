@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ScoutHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,6 +43,16 @@ class Note extends Model
         ];
 
         return $array;
+    }
+
+    /**
+     * When updating a model, this method determines if we should update the search index.
+     *
+     * @return bool
+     */
+    public function searchIndexShouldBeUpdated()
+    {
+        return ScoutHelper::searchIndexShouldBeUpdated();
     }
 
     /**
