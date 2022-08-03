@@ -144,6 +144,7 @@ class ContactShowViewHelper
 
         $modulesCollection = collect();
         foreach ($modules as $module) {
+            $data = [];
             if ($module->type == Module::TYPE_CONTACT_NAMES) {
                 $data = ModuleContactNameViewHelper::data($contact, $user);
             }
@@ -191,6 +192,7 @@ class ContactShowViewHelper
 
         $modulesCollection = collect();
         foreach ($modules as $module) {
+            $data = [];
             if ($module->type == Module::TYPE_NOTES) {
                 $data = ModuleNotesViewHelper::data($contact, $user);
             }

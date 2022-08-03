@@ -21,8 +21,8 @@ class ModuleGoalsViewHelper
             return ! $goal->active;
         });
 
-        $goalsCollection = $activeGoals->map(function ($goal) use ($contact, $user) {
-            return self::dto($contact, $goal, $user);
+        $goalsCollection = $activeGoals->map(function ($goal) use ($contact) {
+            return self::dto($contact, $goal);
         });
 
         return [

@@ -17,6 +17,8 @@ class ContactModuleCallController extends Controller
     public function store(Request $request, int $vaultId, int $contactId)
     {
         $carbonDate = Carbon::parse($request->input('called_at'));
+        $answered = false;
+        $whoInitiated = 'me';
 
         switch ($request->input('who_initiated')) {
             case 'contact_not_answered':
