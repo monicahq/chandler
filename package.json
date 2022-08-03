@@ -39,7 +39,8 @@
     "v-calendar": "^3.0.0-alpha.8",
     "vite": "^3.0.2",
     "vue": "^3.2.36",
-    "vuedraggable": "^4.1.0"
+    "vuedraggable": "^4.1.0",
+    "ziggy-js": "^1.4.6"
   },
   "lint-staged": {
     "*.js|resources/js/**/*.{vue,js}": [

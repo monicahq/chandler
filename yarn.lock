@@ -1887,6 +1887,11 @@ qs@^6.9.0:
   dependencies:
     side-channel "^1.0.4"
 
+qs@~6.9.7:
+  version "6.9.7"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.7.tgz#4610846871485e1e048f44ae3b94033f0e675afe"
+  integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
+
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
@@ -2424,3 +2429,10 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+ziggy-js@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/ziggy-js/-/ziggy-js-1.4.6.tgz#1b4bd0a9813fd833e7f14e0c354c40af8cd3ab8a"
+  integrity sha512-7bnzm+I9bDnlh98km8d43X8r99YXTfSbcIVWRRWZFBw+vtck3bhvUDmuvNoC/G7smblb0CFEFwwxZ+H0hLa1DA==
+  dependencies:
+    qs "~6.9.7"
