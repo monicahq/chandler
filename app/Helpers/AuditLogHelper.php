@@ -662,16 +662,6 @@ class AuditLogHelper
                 'other_contact_name' => $log->object->{'other_contact_name'},
                 'relationship_name' => $log->object->{'relationship_name'},
             ]);
-        } elseif (! $contact) {
-            $sentence = trans('log.relationship_set_first_contact_deleted', [
-                'other_contact_url' => route('contact.show', [
-                    'vault' => $otherContact->vault_id,
-                    'contact' => $otherContact->id,
-                ]),
-                'contact_name' => $log->object->{'contact_name'},
-                'other_contact_name' => $otherContact->name,
-                'relationship_name' => $log->object->{'relationship_name'},
-            ]);
         } else {
             $sentence = trans('log.relationship_set_object_deleted', [
                 'contact_name' => $log->object->{'contact_name'},
