@@ -700,15 +700,6 @@ class AuditLogHelper
                 'contact_name' => NameHelper::formatContactName($user, $contact),
                 'other_contact_name' => $log->object->{'other_contact_name'},
             ]);
-        } elseif (! $contact) {
-            $sentence = trans('log.relationship_unset_first_contact_deleted', [
-                'other_contact_url' => route('contact.show', [
-                    'vault' => $otherContact->vault_id,
-                    'contact' => $otherContact->id,
-                ]),
-                'contact_name' => $log->object->{'contact_name'},
-                'other_contact_name' => $otherContact->name,
-            ]);
         } else {
             $sentence = trans('log.relationship_unset_object_deleted', [
                 'contact_name' => $log->object->{'contact_name'},
