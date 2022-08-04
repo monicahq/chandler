@@ -13,9 +13,6 @@ return new class() extends Migration
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
@@ -29,6 +26,11 @@ return new class() extends Migration
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
+
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->unsignedBigInteger('file_id')->nullable()->after('company_id');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
+        });
     }
 
     /**
@@ -39,5 +41,8 @@ return new class() extends Migration
     public function down()
     {
         Schema::dropIfExists('files');
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->dropColumn('file_id');
+        });
     }
 };
