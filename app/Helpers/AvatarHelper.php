@@ -18,9 +18,9 @@ class AvatarHelper
      * based on that name.
      *
      * @param  Contact  $contact
-     * @return Avatar
+     * @return string
      */
-    public static function generateRandomAvatar(Contact $contact): Avatar
+    public static function generateRandomAvatar(Contact $contact): string
     {
         $multiavatar = new MultiAvatar();
 
@@ -30,33 +30,6 @@ class AvatarHelper
             $name = $contact->first_name.' '.$contact->last_name;
         }
 
-        $svgCode = $multiavatar($name, null, null);
-
-        $avatar = Avatar::create([
-            'contact_id' => $contact->id,
-            'type' => Avatar::TYPE_GENERATED,
-            'svg' => $svgCode,
-        ]);
-
-        return $avatar;
-    }
-
-    /**
-     * Get the avatar of a contact.
-     *
-     * @param  Contact  $contact
-     * @return string
-     */
-    public static function get(Contact $contact): string
-    {
-        $avatar = $contact->currentAvatar;
-
-        if ($avatar->type === Avatar::TYPE_GENERATED) {
-            $avatarURL = $avatar->svg;
-        } else {
-            $avatarURL = 'https://ucarecdn.com/'.$avatar->file->uuid.'/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
-        }
-
-        return $avatarURL;
+        return $multiavatar($name, null, null);
     }
 }

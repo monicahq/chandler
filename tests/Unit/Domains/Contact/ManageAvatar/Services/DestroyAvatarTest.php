@@ -4,7 +4,6 @@ namespace Tests\Unit\Domains\Contact\ManageAvatar\Services;
 
 use App\Contact\ManageAvatar\Services\DestroyAvatar;
 use App\Models\Account;
-use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\File;
 use App\Models\User;
@@ -30,14 +29,10 @@ class DestroyAvatarTest extends TestCase
             'contact_id' => $contact->id,
             'type' => File::TYPE_AVATAR,
         ]);
-        $avatar = Avatar::factory()->create([
-            'type' => Avatar::TYPE_FILE,
-            'file_id' => $file->id,
-        ]);
-        $contact->avatar_id = $avatar->id;
+        $contact->file_id = $file->id;
         $contact->save();
 
-        $this->executeService($user, $user->account, $vault, $contact);
+        $this->executeService($user, $user->account, $vault, $contact, $file);
     }
 
     /** @test */
@@ -51,7 +46,7 @@ class DestroyAvatarTest extends TestCase
         (new DestroyAvatar())->execute($request);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, File $file): void
     {
         Queue::fake();
         Event::fake();
@@ -63,17 +58,11 @@ class DestroyAvatarTest extends TestCase
             'contact_id' => $contact->id,
         ];
 
-        $avatar = (new DestroyAvatar())->execute($request);
-
-        $this->assertDatabaseHas('avatars', [
-            'id' => $avatar->id,
-            'file_id' => null,
-            'type' => Avatar::TYPE_GENERATED,
-        ]);
+        (new DestroyAvatar())->execute($request);
 
         $this->assertDatabaseHas('contacts', [
             'id' => $contact->id,
-            'avatar_id' => $avatar->id,
+            'file_id' => null,
         ]);
     }
 }

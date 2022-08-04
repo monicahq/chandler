@@ -2,18 +2,15 @@
 
 namespace App\Contact\ManageAvatar\Services;
 
-use App\Helpers\AvatarHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Avatar;
+use App\Models\Contact;
 use App\Models\File;
 use App\Services\BaseService;
 use Carbon\Carbon;
-use Exception;
 
 class DestroyAvatar extends BaseService implements ServiceInterface
 {
-    private Avatar $avatar;
-
     /**
      * Get the validation rules that apply to the service.
      *
@@ -48,18 +45,17 @@ class DestroyAvatar extends BaseService implements ServiceInterface
      * Remove the current file used as avatar and put the default avatar back.
      *
      * @param  array  $data
-     * @return Avatar
+     * @return Contact
      */
-    public function execute(array $data): Avatar
+    public function execute(array $data): Contact
     {
         $this->data = $data;
         $this->validate();
 
-        $this->getCurrentAvatar();
-        $this->setNewAvatar();
+        $this->deleteCurrentAvatar();
         $this->updateLastEditedDate();
 
-        return $this->avatar;
+        return $this->contact;
     }
 
     private function validate(): void
@@ -67,23 +63,13 @@ class DestroyAvatar extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
     }
 
-    private function getCurrentAvatar(): void
+    private function deleteCurrentAvatar(): void
     {
-        $this->avatar = $this->contact->currentAvatar;
-
-        if ($this->avatar->type !== Avatar::TYPE_FILE) {
-            throw new Exception('The contact does not have a photo as avatar.');
+        if ($this->contact->file) {
+            $this->contact->file->delete();
         }
 
-        $this->avatar->file->delete();
-        $this->avatar->delete();
-    }
-
-    private function setNewAvatar(): void
-    {
-        $this->avatar = AvatarHelper::generateRandomAvatar($this->contact);
-        $this->contact->avatar_id = $this->avatar->id;
-        $this->contact->save();
+        $this->contact->file_id = null;
     }
 
     private function updateLastEditedDate(): void

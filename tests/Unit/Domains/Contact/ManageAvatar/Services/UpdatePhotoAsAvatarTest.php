@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Contact\ManageAvatar\Services;
 use App\Contact\ManageAvatar\Services\UpdatePhotoAsAvatar;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\File;
 use App\Models\User;
@@ -112,17 +111,9 @@ class UpdatePhotoAsAvatarTest extends TestCase
 
         $contact = (new UpdatePhotoAsAvatar())->execute($request);
 
-        $currentAvatar = Avatar::find($contact->avatar_id);
-
-        $this->assertDatabaseHas('avatars', [
-            'id' => $currentAvatar->id,
-            'file_id' => $file->id,
-            'type' => Avatar::TYPE_FILE,
-        ]);
-
         $this->assertDatabaseHas('contacts', [
             'id' => $contact->id,
-            'avatar_id' => $currentAvatar->id,
+            'file_id' => $file->id,
         ]);
     }
 }

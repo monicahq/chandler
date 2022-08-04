@@ -13,8 +13,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 {
     private File $file;
 
-    private Avatar $avatar;
-
     /**
      * Get the validation rules that apply to the service.
      *
@@ -58,7 +56,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
         $this->validate();
 
         $this->deleteCurrentAvatar();
-        $this->createAvatar();
         $this->setAvatar();
         $this->updateLastEditedDate();
 
@@ -76,24 +73,14 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 
     private function deleteCurrentAvatar(): void
     {
-        if ($this->contact->currentAvatar) {
-            $this->avatar = $this->contact->currentAvatar;
-            $this->avatar->delete();
+        if ($this->contact->file) {
+            $this->contact->file->delete();
         }
-    }
-
-    private function createAvatar(): void
-    {
-        $this->avatar = Avatar::create([
-            'contact_id' => $this->data['contact_id'],
-            'type' => Avatar::TYPE_FILE,
-            'file_id' => $this->file->id,
-        ]);
     }
 
     private function setAvatar(): void
     {
-        $this->contact->avatar_id = $this->avatar->id;
+        $this->contact->file_id = $this->file->id;
         $this->contact->save();
     }
 

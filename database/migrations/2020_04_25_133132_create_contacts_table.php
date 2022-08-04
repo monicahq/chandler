@@ -18,6 +18,7 @@ return new class() extends Migration
             $table->unsignedBigInteger('pronoun_id')->nullable();
             $table->unsignedBigInteger('template_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('file_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
@@ -33,6 +34,7 @@ return new class() extends Migration
             $table->foreign('pronoun_id')->references('id')->on('pronouns')->onDelete('set null');
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
         });
 
         Schema::create('user_vault', function (Blueprint $table) {
