@@ -51,13 +51,20 @@ class GoalShowViewHelper
             'active' => $goal->active,
             'streaks_statistics' => GoalHelper::getStreakData($goal),
             'weeks' => $weeksCollection,
+            'count' => $streaks->count(),
             'contact' => [
                 'name' => $contact->name,
             ],
             'url' => [
-                'store' => route('contact.goal.store', [
+                'update' => route('contact.goal.update', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
+                    'goal' => $goal->id,
+                ]),
+                'destroy' => route('contact.goal.destroy', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'goal' => $goal->id,
                 ]),
                 'contact' => route('contact.show', [
                     'vault' => $contact->vault_id,
