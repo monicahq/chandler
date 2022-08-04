@@ -24,6 +24,7 @@ use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleFamilySummaryViewHelpe
 use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 use App\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
+use App\Helpers\StorageHelper;
 use App\Models\Contact;
 use App\Models\Module;
 use App\Models\TemplatePage;
@@ -55,6 +56,8 @@ class ContactShowViewHelper
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
+            'uploadcarePublicKey' => config('services.uploadcare.public_key'),
+            'canUploadFile' => StorageHelper::canUploadFile($contact->vault->account),
             'options' => [
                 'can_be_archived' => $user->getContactInVault($contact->vault)->id !== $contact->id,
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,
@@ -65,6 +68,10 @@ class ContactShowViewHelper
                     'contact' => $contact->id,
                 ]),
                 'update_avatar' => route('contact.avatar.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
+                'destroy_avatar' => route('contact.avatar.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),

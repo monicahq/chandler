@@ -113,8 +113,6 @@ export default {
     return {
       localDocuments: [],
       form: {
-        searchTerm: null,
-        employeeId: 0,
         uuid: null,
         name: null,
         original_url: null,

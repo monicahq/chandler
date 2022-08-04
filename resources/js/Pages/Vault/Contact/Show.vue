@@ -64,16 +64,23 @@
 
             <ul class="text-xs">
               <!-- remove avatar -->
-              <li v-if="data.listed" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
-                  >Remove avatar</inertia-link
+              <li class="mb-2">
+                <span @click.prevent="destroyAvatar()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Remove avatar</span
                 >
               </li>
               <!-- upload new avatar -->
-              <li v-if="data.listed" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline"
-                  >Upload photo as avatar</inertia-link
-                >
+              <li class="mb-2">
+                <uploadcare
+                  v-if="data.uploadcarePublicKey && data.canUploadFile"
+                  :public-key="data.uploadcarePublicKey"
+                  :tabs="'file'"
+                  :multiple="false"
+                  :preview-step="false"
+                  @success="onSuccess"
+                  @error="onError">
+                  <span class="cursor-pointer text-blue-500 hover:underline">Upload photo as avatar</span>
+                </uploadcare>
               </li>
               <!-- archive contact -->
               <li v-if="data.listed && data.options.can_be_archived" class="mb-2">
@@ -198,6 +205,7 @@ import Groups from '@/Shared/Modules/Groups';
 import ContactInformation from '@/Shared/Modules/ContactInformation';
 import Documents from '@/Shared/Modules/Documents';
 import Photos from '@/Shared/Modules/Photos';
+import Uploadcare from 'uploadcare-vue/src/Uploadcare.vue';
 
 export default {
   components: {
@@ -223,6 +231,7 @@ export default {
     ContactInformation,
     Documents,
     Photos,
+    Uploadcare,
   },
 
   props: {
@@ -259,6 +268,16 @@ export default {
       contactInformation: [],
       documents: [],
       photos: [],
+      form: {
+        searchTerm: null,
+        uuid: null,
+        name: null,
+        original_url: null,
+        cdn_url: null,
+        mime_type: null,
+        size: null,
+        errors: [],
+      },
     };
   },
 
@@ -396,18 +415,41 @@ export default {
       }
     },
 
-    updateArchive() {
-      if (confirm(this.$t('contact.contact_toggle_confirm'))) {
-        axios
-          .put(this.data.url.toggle_archive)
-          .then((response) => {
-            localStorage.success = this.$t('app.notification_flash_changes_saved');
-            this.$inertia.visit(response.data.data);
-          })
-          .catch((error) => {
-            this.form.errors = error.response.data;
-          });
-      }
+    onSuccess(file) {
+      this.form.uuid = file.uuid;
+      this.form.name = file.name;
+      this.form.original_url = file.originalUrl;
+      this.form.cdn_url = file.cdnUrl;
+      this.form.mime_type = file.mimeType;
+      this.form.size = file.size;
+
+      this.upload();
+    },
+
+    onError() {},
+
+    upload() {
+      axios
+        .put(this.data.url.update_avatar, this.form)
+        .then((response) => {
+          this.avatar = response.data.data;
+          this.flash(this.$t('contact.photos_new_success'), 'success');
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroyAvatar() {
+      axios
+        .delete(this.data.url.destroy_avatar)
+        .then((response) => {
+          this.avatar = response.data.data;
+          localStorage.success = this.$t('app.notification_flash_changes_saved');
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
   },
 };

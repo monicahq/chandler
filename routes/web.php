@@ -151,6 +151,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     // avatar
                     Route::put('avatar', [ModuleAvatarController::class, 'update'])->name('contact.avatar.update');
+                    Route::delete('avatar', [ModuleAvatarController::class, 'destroy'])->name('contact.avatar.destroy');
 
                     // important dates
                     Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');

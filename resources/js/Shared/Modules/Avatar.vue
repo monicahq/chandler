@@ -1,17 +1,12 @@
 <template>
   <div>
-    <div class="mx-auto mb-6 sm:w-1/2" v-html="data" />
+    <div v-if="data.type === 'generated'" class="mx-auto mb-6 sm:w-1/2" v-html="data.content" />
+    <img v-else class="mx-auto mb-6 rounded-full ring-2 ring-gray-200 sm:w-1/2" :src="data.content" />
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-
 export default {
-  components: {
-    PrettyButton,
-  },
-
   props: {
     data: {
       type: Object,

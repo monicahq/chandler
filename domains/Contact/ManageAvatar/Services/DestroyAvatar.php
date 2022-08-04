@@ -75,6 +75,7 @@ class DestroyAvatar extends BaseService implements ServiceInterface
             throw new Exception('The contact does not have a photo as avatar.');
         }
 
+        $this->avatar->file->delete();
         $this->avatar->delete();
     }
 

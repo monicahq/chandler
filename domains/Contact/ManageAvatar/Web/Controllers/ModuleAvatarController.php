@@ -2,11 +2,12 @@
 
 namespace App\Contact\ManageAvatar\Web\Controllers;
 
+use App\Contact\ManageAvatar\Services\DestroyAvatar;
 use App\Contact\ManageAvatar\Services\UpdatePhotoAsAvatar;
-use App\Contact\ManageCalls\Services\DestroyCall;
-use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
+use App\Contact\ManageAvatar\Web\ViewHelpers\ModuleAvatarViewHelper;
 use App\Contact\ManageDocuments\Services\UploadFile;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,27 +41,30 @@ class ModuleAvatarController extends Controller
             'file_id' => $file->id,
         ];
 
-        $call = (new UpdatePhotoAsAvatar())->execute($data);
+        (new UpdatePhotoAsAvatar())->execute($data);
+
+        $contact = Contact::findOrFail($contactId);
 
         return response()->json([
-            'data' => ModuleCallsViewHelper::dto($contact, $call, Auth::user()),
+            'data' => ModuleAvatarViewHelper::data($contact),
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $callId)
+    public function destroy(Request $request, int $vaultId, int $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'call_id' => $callId,
         ];
 
-        (new DestroyCall())->execute($data);
+        (new DestroyAvatar())->execute($data);
+
+        $contact = Contact::findOrFail($contactId);
 
         return response()->json([
-            'data' => true,
+            'data' => ModuleAvatarViewHelper::data($contact),
         ], 200);
     }
 }

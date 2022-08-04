@@ -6,8 +6,11 @@ use App\Models\Contact;
 
 class ModuleAvatarViewHelper
 {
-    public static function data(Contact $contact): string
+    public static function data(Contact $contact): array
     {
-        return $contact->avatar;
+        return [
+            'content' => $contact->avatar,
+            'type' => $contact->currentAvatar->type,
+        ];
     }
 }
