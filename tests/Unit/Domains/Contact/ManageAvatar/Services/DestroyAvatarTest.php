@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -53,6 +54,7 @@ class DestroyAvatarTest extends TestCase
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
     {
         Queue::fake();
+        Event::fake();
 
         $request = [
             'account_id' => $account->id,
