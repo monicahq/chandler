@@ -178,8 +178,6 @@ export default {
       this.upload();
     },
 
-    onError() {},
-
     upload() {
       axios
         .post(this.data.url.store, this.form)

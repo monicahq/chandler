@@ -6,7 +6,6 @@ use App\Contact\ManageAvatar\Services\DestroyAvatar;
 use App\Contact\ManageAvatar\Services\UpdatePhotoAsAvatar;
 use App\Contact\ManageDocuments\Services\UploadFile;
 use App\Http\Controllers\Controller;
-use App\Models\Contact;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,8 +40,6 @@ class ModuleAvatarController extends Controller
         ];
 
         (new UpdatePhotoAsAvatar())->execute($data);
-
-        $contact = Contact::findOrFail($contactId);
 
         return response()->json([
             'data' => route('contact.show', [

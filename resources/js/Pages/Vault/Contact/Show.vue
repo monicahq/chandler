@@ -426,8 +426,6 @@ export default {
       this.upload();
     },
 
-    onError() {},
-
     upload() {
       axios
         .put(this.data.url.update_avatar, this.form)
