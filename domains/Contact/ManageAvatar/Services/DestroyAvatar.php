@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Contact\ManageGoals\Services;
+namespace App\Contact\ManageAvatar\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Models\Goal;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class DestroyGoal extends BaseService implements ServiceInterface
+class DestroyAvatar extends BaseService implements ServiceInterface
 {
-    private Goal $goal;
-
-    private array $data;
-
     /**
      * Get the validation rules that apply to the service.
      *
@@ -26,7 +22,6 @@ class DestroyGoal extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
-            'goal_id' => 'required|integer|exists:goals,id',
         ];
     }
 
@@ -40,30 +35,47 @@ class DestroyGoal extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Destroy a goal.
+     * Remove the current file used as avatar and put the default avatar back.
      *
      * @param  array  $data
+     * @return Contact
      */
-    public function execute(array $data): void
+    public function execute(array $data): Contact
     {
         $this->data = $data;
-        $this->validateRules($data);
+        $this->validate();
 
-        $this->goal = Goal::where('contact_id', $data['contact_id'])
-            ->findOrFail($data['goal_id']);
+        $this->deleteCurrentAvatar();
+        $this->updateLastEditedDate();
+        $this->createFeedItem();
 
-        $this->goal->delete();
+        return $this->contact;
+    }
 
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+    }
+
+    private function deleteCurrentAvatar(): void
+    {
+        if ($this->contact->file) {
+            $this->contact->file->delete();
+        }
+
+        $this->contact->file_id = null;
+    }
+
+    private function updateLastEditedDate(): void
+    {
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
-
-        $this->createFeedItem();
     }
 
     private function createFeedItem(): void
@@ -71,7 +83,7 @@ class DestroyGoal extends BaseService implements ServiceInterface
         ContactFeedItem::create([
             'author_id' => $this->author->id,
             'contact_id' => $this->contact->id,
-            'action' => ContactFeedItem::ACTION_GOAL_DESTROYED,
+            'action' => ContactFeedItem::ACTION_CHANGE_AVATAR,
         ]);
     }
 }

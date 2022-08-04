@@ -56,15 +56,11 @@
 
 <script>
 import Layout from '@/Shared/Layout';
-import ContactName from '@/Shared/Modules/ContactName';
-import Avatar from '@/Shared/Modules/Avatar';
 import Notes from '@/Shared/Modules/Notes';
 
 export default {
   components: {
     Layout,
-    ContactName,
-    Avatar,
     Notes,
   },
 

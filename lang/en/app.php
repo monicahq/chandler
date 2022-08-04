@@ -25,6 +25,7 @@ return [
     'breadcrumb_contact_create' => 'Create a contact',
     'breadcrumb_contact_note_index' => 'All the notes',
     'breadcrumb_contact_photo' => 'All the photos',
+    'breadcrumb_contact_goal' => 'Detail of a goal',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
     'breadcrumb_settings_notification_channels' => 'Notification channels',
@@ -64,6 +65,8 @@ return [
     'view_all' => 'View all',
     'view_map' => 'View on map',
     'download' => 'Download',
+
+    'unknown_name' => 'Unknown name',
 
     'error_title' => '👇 Oops. An error occured.',
 
