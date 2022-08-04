@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\MultiAvatar;
 use Faker\Factory as Faker;

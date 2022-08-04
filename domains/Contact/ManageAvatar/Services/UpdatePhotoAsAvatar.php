@@ -3,7 +3,6 @@
 namespace App\Contact\ManageAvatar\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Avatar;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Models\File;
