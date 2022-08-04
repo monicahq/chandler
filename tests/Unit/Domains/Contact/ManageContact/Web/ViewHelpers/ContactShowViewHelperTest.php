@@ -48,7 +48,7 @@ class ContactShowViewHelperTest extends TestCase
         $array = ContactShowViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            10,
+            9,
             count($array)
         );
 

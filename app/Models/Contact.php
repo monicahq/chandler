@@ -20,6 +20,13 @@ class Contact extends Model
     use Searchable;
 
     /**
+     * Possible avatar types.
+     */
+    public const AVATAR_TYPE_SVG = 'svg';
+
+    public const AVATAR_TYPE_URL = 'url';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -383,11 +390,11 @@ class Contact extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                $type = 'svg';
+                $type = self::AVATAR_TYPE_SVG;
                 $content = AvatarHelper::generateRandomAvatar($this);
 
                 if ($this->file) {
-                    $type = 'url';
+                    $type = self::AVATAR_TYPE_URL;
                     $content = 'https://ucarecdn.com/'.$this->file->uuid.'/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
                 }
 

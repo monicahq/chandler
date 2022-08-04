@@ -5,7 +5,7 @@
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="icon-avatar relative w-6">
-            <avatar :data="feedItem.author.avatar" :classes="' relative h-6 w-6'" />
+            <avatar :data="feedItem.author.avatar" :classes="'rounded-full relative h-6 w-6'" />
           </div>
 
           <div>
