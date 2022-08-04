@@ -186,7 +186,7 @@
 import Layout from '@/Shared/Layout';
 import ContactName from '@/Shared/Modules/ContactName';
 import GenderPronoun from '@/Shared/Modules/GenderPronoun';
-import Avatar from '@/Shared/Modules/Avatar';
+import ContactAvatar from '@/Shared/Modules/ContactAvatar';
 import FamilySummary from '@/Shared/Modules/FamilySummary';
 import Notes from '@/Shared/Modules/Notes';
 import ImportantDates from '@/Shared/Modules/ImportantDates';
@@ -212,7 +212,7 @@ export default {
     Layout,
     ContactName,
     GenderPronoun,
-    Avatar,
+    ContactAvatar,
     FamilySummary,
     Notes,
     ImportantDates,
