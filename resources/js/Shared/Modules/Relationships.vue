@@ -41,7 +41,7 @@
             class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
             <div class="flex">
               <div class="mr-2 flex items-center">
-                <div class="mr-2 h-5 w-5" v-html="relationshipType.contact.avatar" />
+                <avatar :data="relationshipType.contact.avatar" :classes="'mr-2 h-5 w-5'" />
 
                 <!-- name -->
                 <inertia-link
@@ -82,10 +82,12 @@
 
 <script>
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import Avatar from '@/Shared/Avatar.vue';
 
 export default {
   components: {
     PrettyLink,
+    Avatar,
   },
 
   props: {

@@ -78,7 +78,7 @@
 
                   <!-- avatar -->
                   <div class="flex items-center">
-                    <div class="mr-2 h-4 w-4" v-html="file.contact.avatar" />
+                    <avatar :data="file.contact.avatar" :classes="'rounded-full mr-2 h-4 w-4'" />
                     <inertia-link :href="file.contact.url.show" class="text-sm text-blue-500 hover:underline">
                       {{ file.contact.name }}
                     </inertia-link>
@@ -126,10 +126,12 @@
 
 <script>
 import Layout from '@/Shared/Layout.vue';
+import Avatar from '@/Shared/Avatar.vue';
 
 export default {
   components: {
     Layout,
+    Avatar,
   },
 
   props: {
