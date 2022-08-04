@@ -59,8 +59,7 @@ class ContactShowViewHelperTest extends TestCase
         $this->assertArrayHasKey('group_summary_information', $array);
         $this->assertArrayHasKey('modules', $array);
         $this->assertArrayHasKey('options', $array);
-        $this->assertArrayHasKey('uploadcarePublicKey', $array);
-        $this->assertArrayHasKey('canUploadFile', $array);
+        $this->assertArrayHasKey('avatar', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(

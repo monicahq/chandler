@@ -9,8 +9,7 @@ class ModuleAvatarViewHelper
     public static function data(Contact $contact): array
     {
         return [
-            'content' => $contact->avatar,
-            'type' => $contact->currentAvatar->type,
+            'avatar' => $contact->avatar,
         ];
     }
 }

@@ -46,7 +46,7 @@
           <div class="p-3 sm:p-3">
             <div v-if="data.contact_information.length > 0" class="mb-8">
               <div v-for="module in data.contact_information" :key="module.id">
-                <avatar v-if="module.type == 'avatar'" :data="avatar" />
+                <contact-avatar v-if="module.type == 'avatar'" :data="avatar" />
 
                 <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
 
@@ -64,16 +64,16 @@
 
             <ul class="text-xs">
               <!-- remove avatar -->
-              <li class="mb-2">
+              <li v-if="data.avatar.hasFile" class="mb-2">
                 <span @click.prevent="destroyAvatar()" class="cursor-pointer text-blue-500 hover:underline"
                   >Remove avatar</span
                 >
               </li>
               <!-- upload new avatar -->
-              <li class="mb-2">
+              <li v-if="!data.avatar.hasFile" class="mb-2">
                 <uploadcare
-                  v-if="data.uploadcarePublicKey && data.canUploadFile"
-                  :public-key="data.uploadcarePublicKey"
+                  v-if="data.avatar.uploadcarePublicKey && data.avatar.canUploadFile"
+                  :public-key="data.avatar.uploadcarePublicKey"
                   :tabs="'file'"
                   :multiple="false"
                   :preview-step="false"
@@ -432,7 +432,7 @@ export default {
       axios
         .put(this.data.url.update_avatar, this.form)
         .then((response) => {
-          this.avatar = response.data.data;
+          this.$inertia.visit(response.data.data);
           this.flash(this.$t('contact.photos_new_success'), 'success');
         })
         .catch((error) => {
@@ -444,7 +444,7 @@ export default {
       axios
         .delete(this.data.url.destroy_avatar)
         .then((response) => {
-          this.avatar = response.data.data;
+          this.$inertia.visit(response.data.data);
           localStorage.success = this.$t('app.notification_flash_changes_saved');
         })
         .catch((error) => {

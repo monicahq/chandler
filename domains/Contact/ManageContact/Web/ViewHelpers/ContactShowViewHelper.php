@@ -56,8 +56,11 @@ class ContactShowViewHelper
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'group_summary_information' => GroupsViewHelper::summary($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
-            'uploadcarePublicKey' => config('services.uploadcare.public_key'),
-            'canUploadFile' => StorageHelper::canUploadFile($contact->vault->account),
+            'avatar' => [
+                'uploadcarePublicKey' => config('services.uploadcare.public_key'),
+                'canUploadFile' => StorageHelper::canUploadFile($contact->vault->account),
+                'hasFile' => $contact->avatar['type'] === 'url',
+            ],
             'options' => [
                 'can_be_archived' => $user->getContactInVault($contact->vault)->id !== $contact->id,
                 'can_be_deleted' => $user->getContactInVault($contact->vault)->id !== $contact->id,

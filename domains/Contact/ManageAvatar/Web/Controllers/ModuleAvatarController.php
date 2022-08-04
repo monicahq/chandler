@@ -4,7 +4,6 @@ namespace App\Contact\ManageAvatar\Web\Controllers;
 
 use App\Contact\ManageAvatar\Services\DestroyAvatar;
 use App\Contact\ManageAvatar\Services\UpdatePhotoAsAvatar;
-use App\Contact\ManageAvatar\Web\ViewHelpers\ModuleAvatarViewHelper;
 use App\Contact\ManageDocuments\Services\UploadFile;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -46,7 +45,10 @@ class ModuleAvatarController extends Controller
         $contact = Contact::findOrFail($contactId);
 
         return response()->json([
-            'data' => ModuleAvatarViewHelper::data($contact),
+            'data' => route('contact.show', [
+                'vault' => $vaultId,
+                'contact' => $contactId,
+            ]),
         ], 200);
     }
 
@@ -61,10 +63,11 @@ class ModuleAvatarController extends Controller
 
         (new DestroyAvatar())->execute($data);
 
-        $contact = Contact::findOrFail($contactId);
-
         return response()->json([
-            'data' => ModuleAvatarViewHelper::data($contact),
+            'data' => route('contact.show', [
+                'vault' => $vaultId,
+                'contact' => $contactId,
+            ]),
         ], 200);
     }
 }

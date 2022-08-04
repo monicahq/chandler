@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="img relative">
     <div v-if="data.type === 'svg'" :class="classes" v-html="data.content" />
-    <img v-else :class="classes" :src="data.content" />
+    <img v-else :class="classes + ' ' + imgClasses" :src="data.content" />
   </div>
 </template>
 
@@ -15,6 +15,10 @@ export default {
     classes: {
       type: String,
       default: null,
+    },
+    imgClasses: {
+      type: String,
+      default: '',
     },
   },
 };
