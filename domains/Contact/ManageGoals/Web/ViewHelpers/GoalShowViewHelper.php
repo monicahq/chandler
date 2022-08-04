@@ -16,7 +16,6 @@ class GoalShowViewHelper
     {
         $date = Carbon::now();
         $startDate = Carbon::now()->subYear()->startOfMonth();
-        $numberOfDays = $date->diffInDays($startDate) + 1;
         $numberOfWeeks = $date->diffInWeeks($startDate) + 1;
 
         $streaks = DB::table('streaks')->where('goal_id', $goal->id)
