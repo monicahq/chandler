@@ -123,7 +123,7 @@
 import Layout from '@/Shared/Layout.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import Pagination from '@/Shared/Pagination.vue';
-import Uploadcare from 'uploadcare-vue/src/Uploadcare.vue';
+import Uploadcare from '@/Components/Uploadcare.vue';
 
 export default {
   components: {

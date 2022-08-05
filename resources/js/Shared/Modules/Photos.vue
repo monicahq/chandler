@@ -80,7 +80,7 @@
 
 <script>
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
-import Uploadcare from 'uploadcare-vue/src/Uploadcare.vue';
+import Uploadcare from '@/Components/Uploadcare.vue';
 
 export default {
   components: {

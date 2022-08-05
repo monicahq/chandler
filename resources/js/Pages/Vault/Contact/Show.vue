@@ -204,7 +204,7 @@ import Groups from '@/Shared/Modules/Groups.vue';
 import ContactInformation from '@/Shared/Modules/ContactInformation.vue';
 import Documents from '@/Shared/Modules/Documents.vue';
 import Photos from '@/Shared/Modules/Photos.vue';
-import Uploadcare from 'uploadcare-vue/src/Uploadcare.vue';
+import Uploadcare from '@/Components/Uploadcare.vue';
 
 export default {
   components: {
