@@ -10,7 +10,7 @@ class ScoutHelper
      * @return bool
      * @codeCoverageIgnore
      */
-    public static function searchIndexShouldBeUpdated()
+    public static function activated()
     {
         switch (config('scout.driver')) {
             case 'algolia':

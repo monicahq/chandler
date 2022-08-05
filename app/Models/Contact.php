@@ -115,7 +115,7 @@ class Contact extends Model
      */
     public function searchIndexShouldBeUpdated()
     {
-        return ScoutHelper::searchIndexShouldBeUpdated();
+        return ScoutHelper::activated();
     }
 
     /**
