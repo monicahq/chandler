@@ -127,7 +127,6 @@ class SetupDummyAccount extends Command
         ]);
         $this->firstUser->email_verified_at = Carbon::now();
         $this->firstUser->save();
-        // sleep(5);
     }
 
     private function createVaults(): void
