@@ -33,6 +33,8 @@ class Group extends Model
      *
      * @return array
      */
+    #[SearchUsingPrefix(['id', 'vault_id'])]
+    #[SearchUsingFullText(['name'])]
     public function toSearchableArray(): array
     {
         return [

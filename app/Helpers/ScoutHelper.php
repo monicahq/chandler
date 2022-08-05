@@ -12,6 +12,16 @@ class ScoutHelper
      */
     public static function searchIndexShouldBeUpdated()
     {
-        return (config('scout.driver') === 'algolia' && config('scout.algolia.id') !== '') || (config('scout.driver') === 'meilisearch' && config('scout.meilisearch.host') !== '');
+        switch (config('scout.driver')) {
+            case 'algolia':
+                return config('scout.algolia.id') !== '';
+            case 'meilisearch':
+                return config('scout.meilisearch.host') !== '';
+            case 'database':
+            case 'collection':
+                return true;
+            default:
+                return false;
+        }
     }
 }

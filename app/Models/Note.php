@@ -21,6 +21,7 @@ class Note extends Model
      */
     protected $fillable = [
         'contact_id',
+        'vault_id',
         'author_id',
         'emotion_id',
         'title',
@@ -32,17 +33,17 @@ class Note extends Model
      *
      * @return array
      */
+    #[SearchUsingPrefix(['id', 'vault_id'])]
+    #[SearchUsingFullText(['title', 'body'])]
     public function toSearchableArray(): array
     {
-        $array = [
+        return [
             'id' => $this->id,
-            'vault_id' => $this->contact->vault_id,
-            'contact_id' => $this->contact->id,
+            'vault_id' => $this->vault_id,
+            'contact_id' => $this->contact_id,
             'title' => $this->title,
             'body' => $this->body,
         ];
-
-        return $array;
     }
 
     /**

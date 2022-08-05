@@ -66,6 +66,8 @@ class Contact extends Model
      *
      * @return array
      */
+    #[SearchUsingPrefix(['id', 'vault_id'])]
+    #[SearchUsingFullText(['first_name', 'last_name', 'middle_name', 'nickname', 'maiden_name'])]
     public function toSearchableArray(): array
     {
         return [
@@ -76,10 +78,6 @@ class Contact extends Model
             'middle_name' => $this->middle_name,
             'nickname' => $this->nickname,
             'maiden_name' => $this->maiden_name,
-            'url' => route('contact.show', [
-                'vault' => $this->vault_id,
-                'contact' => $this->id,
-            ]),
         ];
     }
 

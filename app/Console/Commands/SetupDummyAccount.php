@@ -11,6 +11,8 @@ use App\Contact\ManageTasks\Services\CreateContactTask;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
+use App\Models\Group;
+use App\Models\Note;
 use App\Models\User;
 use App\Models\Vault;
 use App\Settings\CreateAccount\Services\CreateAccount;
@@ -18,7 +20,6 @@ use App\Vault\ManageVault\Services\CreateVault;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class SetupDummyAccount extends Command
 {
@@ -82,11 +83,10 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        if (config('scout.driver') === 'meilisearch' && ($host = config('scout.meilisearch.host')) !== '') {
-            Http::delete("$host/indexes/notes");
-            Http::delete("$host/indexes/contacts");
-            Http::delete("$host/indexes/groups");
-        }
+        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Note::class]);
+        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Contact::class]);
+        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Group::class]);
+
         $this->artisan('☐ Reset search engine', 'monica:setup');
         $this->artisan('☐ Migration of the database', 'migrate:fresh');
         $this->artisan('☐ Symlink the storage folder', 'storage:link');

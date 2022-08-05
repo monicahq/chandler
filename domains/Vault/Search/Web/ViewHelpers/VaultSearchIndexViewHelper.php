@@ -40,6 +40,7 @@ class VaultSearchIndexViewHelper
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
+
             ];
         });
 
