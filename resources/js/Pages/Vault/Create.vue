@@ -52,11 +52,14 @@
               :required="true"
               :maxlength="255"
               :label="$t('vault.create_vault_name')" />
+
             <text-area
               v-model="form.description"
               :label="$t('vault.create_vault_description')"
               :maxlength="255"
               :textarea-class="'block w-full'" />
+
+            <rich-text-area v-model="form.description" />
           </div>
 
           <div class="flex justify-between p-5">
@@ -80,6 +83,7 @@ import PrettyLink from '@/Shared/Form/PrettyLink';
 import PrettyButton from '@/Shared/Form/PrettyButton';
 import TextInput from '@/Shared/Form/TextInput';
 import TextArea from '@/Shared/Form/TextArea';
+import RichTextArea from '@/Shared/Form/RichTextArea';
 
 export default {
   components: {
@@ -88,6 +92,7 @@ export default {
     PrettyButton,
     TextInput,
     TextArea,
+    RichTextArea,
   },
 
   props: {
