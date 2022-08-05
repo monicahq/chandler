@@ -22,6 +22,6 @@
     <env name="QUEUE_CONNECTION" value="sync"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="DEBUGBAR_ENABLED" value="false"/>
-    <env name="SCOUT_DRIVER" value="collection"/>
+    <env name="SCOUT_DRIVER" value="database"/>
   </php>
 </phpunit>
