@@ -56,7 +56,9 @@
             </div>
 
             <div>
-              <inertia-link class="text-sm text-blue-500 hover:underline"> View details </inertia-link>
+              <inertia-link :href="goal.url.show" class="text-sm text-blue-500 hover:underline">
+                View details
+              </inertia-link>
             </div>
           </div>
 
@@ -133,30 +135,6 @@
             </div>
           </div>
         </div>
-
-        <!-- edit modal form -->
-        <form v-if="editedGoalId === goal.id" class="bg-form" @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5">
-            <errors :errors="form.errors" />
-
-            <!-- name -->
-            <text-input
-              :ref="'newName'"
-              v-model="form.name"
-              :label="'Name'"
-              :type="'text'"
-              :input-class="'block w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="editedGoalId = 0" />
-          </div>
-
-          <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedGoalId = 0" />
-            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
-          </div>
-        </form>
       </div>
     </div>
 
@@ -228,19 +206,6 @@ export default {
           this.flash('The goal has been created', 'success');
           this.localGoals.unshift(response.data.data);
           this.createGoalModalShown = false;
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
-    },
-
-    update(goal) {
-      axios
-        .put(goal.url.update, this.form)
-        .then((response) => {
-          this.flash('The goal has been edited', 'success');
-          this.localGoals[this.localGoals.findIndex((x) => x.id === goal.id)] = response.data.data;
-          this.editedGoalId = 0;
         })
         .catch((error) => {
           this.form.errors = error.response.data;
