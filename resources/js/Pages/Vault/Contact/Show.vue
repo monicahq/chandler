@@ -185,6 +185,7 @@
 <script>
 import Layout from '@/Shared/Layout.vue';
 import ContactName from '@/Shared/Modules/ContactName.vue';
+import ContactAvatar from '@/Shared/Modules/ContactAvatar.vue';
 import GenderPronoun from '@/Shared/Modules/GenderPronoun.vue';
 import FamilySummary from '@/Shared/Modules/FamilySummary.vue';
 import Notes from '@/Shared/Modules/Notes.vue';
@@ -210,6 +211,7 @@ export default {
   components: {
     Layout,
     ContactName,
+    ContactAvatar,
     GenderPronoun,
     FamilySummary,
     Notes,
