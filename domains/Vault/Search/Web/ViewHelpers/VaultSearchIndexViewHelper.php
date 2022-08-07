@@ -28,6 +28,7 @@ class VaultSearchIndexViewHelper
 
     private static function contacts(Vault $vault, string $term): Collection
     {
+        /** @var Collection<int, Contact> */
         $contacts = Contact::search($term)
             ->where('vault_id', $vault->id)
             ->get();
@@ -48,11 +49,12 @@ class VaultSearchIndexViewHelper
 
     private static function notes(Vault $vault, string $term): Collection
     {
+        /** @var Collection<int, Note> */
         $notes = Note::search($term)
             ->where('vault_id', $vault->id)
             ->get();
 
-        $notesCollection = $notes->map(function (Note $note) use ($vault) {
+        $notesCollection = $notes->map(function (Note $note) use ($vault): array {
             return [
                 'id' => $note->id,
                 'title' => $note->title,
@@ -76,11 +78,12 @@ class VaultSearchIndexViewHelper
 
     private static function groups(Vault $vault, string $term): Collection
     {
+        /** @var Collection<int, Group> */
         $groups = Group::search($term)
             ->where('vault_id', $vault->id)
             ->get();
 
-        $groupsCollection = $groups->map(function (Group $group) {
+        $groupsCollection = $groups->map(function (Group $group): array {
             return [
                 'id' => $group->id,
                 'name' => $group->name,
