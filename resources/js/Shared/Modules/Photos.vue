@@ -28,6 +28,7 @@
         :tabs="'file'"
         :multiple="false"
         :preview-step="false"
+        :crop="'300x200'"
         @success="onSuccess"
         @error="onError">
         <pretty-button :text="$t('contact.photos_cta')" :icon="'plus'" :classes="'sm:w-fit w-full'" />
