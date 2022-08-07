@@ -16,7 +16,7 @@ class VaultContactSearchViewHelper
             ->take(5)
             ->get();
 
-        $contactsCollection = $contacts->map(function (Contact $contact): array {
+        return $contacts->map(function (Contact $contact): array {
             return [
                 'id' => $contact->id,
                 'name' => $contact->first_name.' '.$contact->last_name.' '.$contact->nickname.' '.$contact->maiden_name.' '.$contact->middle_name,
@@ -26,7 +26,5 @@ class VaultContactSearchViewHelper
                 ]),
             ];
         });
-
-        return $contactsCollection;
     }
 }

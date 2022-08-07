@@ -245,7 +245,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_GOALS) {
-                $data = ModuleGoalsViewHelper::data($contact, $user);
+                $data = ModuleGoalsViewHelper::data($contact);
             }
 
             if ($module->type == Module::TYPE_ADDRESSES) {

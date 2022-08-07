@@ -6,12 +6,11 @@ use App\Helpers\DateHelper;
 use App\Helpers\GoalHelper;
 use App\Models\Contact;
 use App\Models\Goal;
-use App\Models\User;
 use Carbon\Carbon;
 
 class ModuleGoalsViewHelper
 {
-    public static function data(Contact $contact, User $user): array
+    public static function data(Contact $contact): array
     {
         $goals = $contact->goals()->get();
         $activeGoals = $goals->filter(function ($goal) {

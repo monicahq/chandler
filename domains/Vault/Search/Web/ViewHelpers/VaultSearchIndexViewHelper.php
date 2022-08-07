@@ -28,34 +28,25 @@ class VaultSearchIndexViewHelper
 
     private static function contacts(Vault $vault, string $term): Collection
     {
-        /** @var Collection<int, Contact> */
-        $contacts = Contact::search($term)
+        return Contact::search($term)
             ->where('vault_id', $vault->id)
-            ->get();
-
-        $contactsCollection = $contacts->map(function (Contact $contact) {
-            return [
+            ->get()
+            ->map(fn (Contact $contact) => [
                 'id' => $contact->id,
                 'name' => $contact->first_name.' '.$contact->last_name.' '.$contact->nickname.' '.$contact->maiden_name.' '.$contact->middle_name,
                 'url' => route('contact.show', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
-            ];
-        });
-
-        return $contactsCollection;
+            ]);
     }
 
     private static function notes(Vault $vault, string $term): Collection
     {
-        /** @var Collection<int, Note> */
-        $notes = Note::search($term)
+        return Note::search($term)
             ->where('vault_id', $vault->id)
-            ->get();
-
-        $notesCollection = $notes->map(function (Note $note) use ($vault): array {
-            return [
+            ->get()
+            ->map(fn (Note $note) => [
                 'id' => $note->id,
                 'title' => $note->title,
                 'body' => $note->body,
@@ -70,26 +61,17 @@ class VaultSearchIndexViewHelper
                         'contact' => $note->contact_id,
                     ]),
                 ],
-            ];
-        });
-
-        return $notesCollection;
+            ]);
     }
 
     private static function groups(Vault $vault, string $term): Collection
     {
-        /** @var Collection<int, Group> */
-        $groups = Group::search($term)
+        return Group::search($term)
             ->where('vault_id', $vault->id)
-            ->get();
-
-        $groupsCollection = $groups->map(function (Group $group): array {
-            return [
+            ->get()
+            ->map(fn (Group $group) => [
                 'id' => $group->id,
                 'name' => $group->name,
-            ];
-        });
-
-        return $groupsCollection;
+            ]);
     }
 }
