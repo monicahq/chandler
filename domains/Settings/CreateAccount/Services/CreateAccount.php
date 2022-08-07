@@ -2,6 +2,7 @@
 
 namespace App\Settings\CreateAccount\Services;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\SetupAccount;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateAccount extends BaseService implements ServiceInterface
 {
+    use PasswordValidationRules;
+
     private User $user;
 
     private Account $account;
@@ -29,7 +32,7 @@ class CreateAccount extends BaseService implements ServiceInterface
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|unique:users,email|email|max:255',
-            'password' => 'required|alpha_dash|string|max:255',
+            'password' => $this->passwordRules(false),
         ];
     }
 

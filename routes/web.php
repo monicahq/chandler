@@ -91,20 +91,14 @@ use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\Search\Web\Controllers\VaultContactSearchController;
 use App\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
 use App\Vault\Search\Web\Controllers\VaultSearchController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-require __DIR__.'/auth.php';
+Route::get('/', fn () => Inertia::render('Welcome', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+])
+);
 
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
@@ -114,8 +108,11 @@ Route::post(
     [TelegramWebhookController::class, 'store']
 );
 
-Route::middleware(['auth', 'verified'])->group(function () {
-
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vault.index');
