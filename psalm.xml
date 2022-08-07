@@ -7,7 +7,6 @@
         <directory name="app"/>
         <directory name="database/factories"/>
         <directory name="database/seeders"/>
-        <directory name="tests"/>
         <directory name="routes"/>
         <ignoreFiles>
             <directory name="vendor"/>
