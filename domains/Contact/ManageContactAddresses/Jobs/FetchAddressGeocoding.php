@@ -16,7 +16,7 @@ class FetchAddressGeocoding implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The place instance.
+     * The address instance.
      *
      * @var Place
      */
@@ -25,7 +25,7 @@ class FetchAddressGeocoding implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @param  Place  $address
+     * @param  Address  $address
      */
     public function __construct(Address $address)
     {
