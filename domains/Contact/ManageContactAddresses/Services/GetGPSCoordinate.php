@@ -2,6 +2,7 @@
 
 namespace App\Contact\ManageContactAddresses\Services;
 
+use App\Exceptions\EnvVariablesNotSetException;
 use App\Helpers\MapHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Address;
@@ -24,10 +25,6 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
             'address_id' => 'required|integer|exists:addresses,id',
         ];
     }
@@ -39,18 +36,14 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
      */
     public function permissions(): array
     {
-        return [
-            'author_must_belong_to_account',
-            'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
-        ];
+        return [];
     }
 
     /**
      * Get the latitude and longitude from a place.
      * This method uses LocationIQ to process the geocoding.
-     * Should always be done through a job, and not be called directly.
-     * You should use the FetchAddressGeocoding job for this.
+     * It should always be done through a job, and not be called directly.
+     * Typically, the job FetchAddressGeocoding calls this service.
      *
      * @param  array  $data
      * @return Address
@@ -58,7 +51,7 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
     public function execute(array $data): Address
     {
         $this->data = $data;
-        $this->validateRules($data);
+        $this->validate();
 
         $this->getCoordinates();
 
@@ -69,46 +62,38 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->address = Address::where('contact_id', $this->contact->id)
-            ->findOrFail($this->data['address_id']);
+        $this->address = Address::findOrFail($this->data['address_id']);
     }
 
-    private function getCoordinates(): void
+    private function getCoordinates()
     {
-        $query = $this->buildQuery($place);
-
-        if (is_null($query)) {
-            return null;
-        }
+        $query = $this->buildQuery();
 
         try {
             $response = Http::get($query);
             $response->throw();
 
-            $place->latitude = $response->json('0.lat');
-            $place->longitude = $response->json('0.lon');
-            $place->save();
-
-            return $place;
+            $this->address->latitude = $response->json('0.lat');
+            $this->address->longitude = $response->json('0.lon');
+            $this->address->save();
         } catch (HttpClientException $e) {
             Log::error('Error calling location_iq: '.$e);
+            throw new HttpClientException();
         }
-
-        return null;
     }
 
     private function buildQuery(): ?string
     {
-        if (is_null(config('officelife.location_iq_api_key'))) {
-            return null;
+        if (is_null(config('monica.location_iq_api_key'))) {
+            throw new EnvVariablesNotSetException('Env variables are not set for Location IQ');
         }
 
         $query = http_build_query([
             'format' => 'json',
-            'key' => config('officelife.location_iq_api_key'),
+            'key' => config('monica.location_iq_api_key'),
             'q' => MapHelper::getAddressAsString($this->address),
         ]);
 
-        return Str::finish(config('officelife.location_iq_url'), '/').'search.php?'.$query;
+        return Str::finish(config('monica.location_iq_url'), '/').'search.php?'.$query;
     }
 }
