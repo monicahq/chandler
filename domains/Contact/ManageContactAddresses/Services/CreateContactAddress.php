@@ -91,19 +91,13 @@ class CreateContactAddress extends BaseService implements ServiceInterface
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
-        $this->geocodePlace();
+        $this->geocodeAddress();
         $this->log();
 
         return $this->address;
     }
 
-    /**
-     * Fetch the longitude/latitude for the new address.
-     * This is placed on a queue so it doesn't slow down the app.
-     *
-     * @param  Address  $address
-     */
-    private function geocodePlace(): void
+    private function geocodeAddress(): void
     {
         FetchAddressGeocoding::dispatch($this->address)->onQueue('low');
     }

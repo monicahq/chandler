@@ -4,7 +4,6 @@ namespace App\Contact\ManageContactAddresses\Jobs;
 
 use App\Contact\ManageContactAddresses\Services\GetGPSCoordinate;
 use App\Models\Address;
-use App\Models\Company\Place;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -18,7 +17,7 @@ class FetchAddressGeocoding implements ShouldQueue
     /**
      * The address instance.
      *
-     * @var Place
+     * @var Address
      */
     public Address $address;
 

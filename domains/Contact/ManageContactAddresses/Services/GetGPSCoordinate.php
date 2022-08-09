@@ -17,6 +17,8 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
 {
     private Address $address;
 
+    private array $data;
+
     /**
      * Get the validation rules that apply to the service.
      *
@@ -82,7 +84,7 @@ class GetGPSCoordinate extends BaseService implements ServiceInterface
         }
     }
 
-    private function buildQuery(): ?string
+    private function buildQuery(): string
     {
         if (is_null(config('monica.location_iq_api_key'))) {
             throw new EnvVariablesNotSetException('Env variables are not set for Location IQ');
