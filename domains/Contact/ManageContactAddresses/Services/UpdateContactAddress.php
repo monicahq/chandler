@@ -76,7 +76,7 @@ class UpdateContactAddress extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         if ($this->valueOrNull($this->data, 'address_type_id')) {
-            $this->addressType = AddressType::where('account_id', $this->data['account_id'])
+            AddressType::where('account_id', $this->data['account_id'])
                 ->findOrFail($this->data['address_type_id']);
         }
 

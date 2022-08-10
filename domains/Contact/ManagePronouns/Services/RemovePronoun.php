@@ -9,8 +9,6 @@ use Carbon\Carbon;
 
 class RemovePronoun extends BaseService implements ServiceInterface
 {
-    private Pronoun $pronoun;
-
     /**
      * Get the validation rules that apply to the service.
      *
@@ -49,11 +47,6 @@ class RemovePronoun extends BaseService implements ServiceInterface
     public function execute(array $data): void
     {
         $this->validateRules($data);
-
-        $this->pronoun = null;
-        if ($this->contact->pronoun) {
-            $this->pronoun = $this->contact->pronoun;
-        }
 
         $this->contact->pronoun_id = null;
         $this->contact->save();

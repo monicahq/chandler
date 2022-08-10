@@ -62,7 +62,7 @@ class CreateContactAddress extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         if ($this->valueOrNull($data, 'address_type_id')) {
-            $this->addressType = AddressType::where('account_id', $data['account_id'])
+            AddressType::where('account_id', $data['account_id'])
                 ->findOrFail($data['address_type_id']);
         }
 

@@ -67,7 +67,7 @@ class UpdateContactInformation extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contactInformationType = ContactInformationType::where('account_id', $this->data['account_id'])
+        ContactInformationType::where('account_id', $this->data['account_id'])
             ->findOrFail($this->data['contact_information_type_id']);
 
         $this->contactInformation = ContactInformation::where('contact_id', $this->contact->id)
