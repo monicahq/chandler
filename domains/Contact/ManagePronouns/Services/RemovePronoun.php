@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 class RemovePronoun extends BaseService implements ServiceInterface
 {
+    private Pronoun $pronoun;
+
     /**
      * Get the validation rules that apply to the service.
      *

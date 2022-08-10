@@ -12,8 +12,6 @@ class UpdateContactAddress extends BaseService implements ServiceInterface
 {
     private Address $address;
 
-    private ?AddressType $addressType;
-
     private array $data;
 
     /**

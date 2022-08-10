@@ -10,8 +10,6 @@ use Carbon\Carbon;
 
 class CreateContactAddress extends BaseService implements ServiceInterface
 {
-    private AddressType $addressType;
-
     /**
      * Get the validation rules that apply to the service.
      *

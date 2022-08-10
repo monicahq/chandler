@@ -12,8 +12,6 @@ class UpdateContactInformation extends BaseService implements ServiceInterface
 {
     private ContactInformation $contactInformation;
 
-    private ContactInformationType $contactInformationType;
-
     private array $data;
 
     /**
