@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use App\Models\Contact;
+use App\Models\ContactFeedItem;
 use App\Models\Gender;
 use App\Models\Pronoun;
 use App\Models\Template;
@@ -67,6 +68,7 @@ class CreateContact extends BaseService implements ServiceInterface
         $this->createContact();
         $this->updateLastEditedDate();
         $this->log();
+        $this->createFeedItem();
 
         return $this->contact;
     }
@@ -119,6 +121,15 @@ class CreateContact extends BaseService implements ServiceInterface
     {
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
+    }
+
+    private function createFeedItem(): void
+    {
+        ContactFeedItem::create([
+            'author_id' => $this->author->id,
+            'contact_id' => $this->contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_CREATED,
+        ]);
     }
 
     private function log(): void

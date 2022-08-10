@@ -8,6 +8,7 @@ use App\Jobs\CreateAuditLog;
 use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\ContactFeedItem;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -101,6 +102,11 @@ class CreateContactTest extends TestCase
             Contact::class,
             $contact
         );
+
+        $this->assertDatabaseHas('contact_feed_items', [
+            'contact_id' => $contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_CREATED,
+        ]);
 
         Queue::assertPushed(CreateAuditLog::class, function ($job) {
             return $job->auditLog['action_name'] === 'contact_created';
