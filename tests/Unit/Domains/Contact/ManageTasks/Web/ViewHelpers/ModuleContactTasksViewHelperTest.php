@@ -75,6 +75,7 @@ class ModuleContactTasksViewHelperTest extends TestCase
                 'completed' => false,
                 'completed_at' => null,
                 'due_at' => 'Jan 01, 2018',
+                'due_at_late' => false,
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id,
                     'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id.'/toggle',
