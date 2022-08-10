@@ -88,8 +88,8 @@
               <!-- due date -->
               <span
                 v-if="task.due_at"
-                :class="task.due_at_late ? 'bg-red-400/10 text-red-600' : ''"
-                class="ml-2 flex items-center rounded-full bg-sky-400/10 px-2 py-0.5 text-xs font-medium leading-5 text-sky-600 dark:text-sky-400">
+                :class="task.due_at_late ? 'bg-red-400/10 text-red-600' : 'bg-sky-400/10 text-sky-600'"
+                class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 dark:text-sky-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="mr-1 h-3 w-3"
