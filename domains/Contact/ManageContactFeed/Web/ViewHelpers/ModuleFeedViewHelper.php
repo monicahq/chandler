@@ -2,6 +2,7 @@
 
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedContactCreated;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
 use App\Models\Contact;
@@ -14,6 +15,7 @@ class ModuleFeedViewHelper
     {
         $items = ContactFeedItem::where('contact_id', $contact->id)
             ->with('author')
+            ->with('contact')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -21,9 +23,9 @@ class ModuleFeedViewHelper
             return [
                 'id' => $item->id,
                 'action' => $item->action,
-                'author' => self::getAuthor($item, $user),
+                'author' => self::getAuthor($item),
                 'sentence' => self::getSentence($item),
-                'description' => $item->description,
+                'data' => self::getData($item),
                 'created_at' => DateHelper::format($item->created_at, $user),
             ];
         });
@@ -38,7 +40,7 @@ class ModuleFeedViewHelper
         return trans('contact.feed_item_'.$item->action);
     }
 
-    private static function getAuthor(ContactFeedItem $item, User $user): ?array
+    private static function getAuthor(ContactFeedItem $item): ?array
     {
         $author = $item->author;
         if (! $author) {
@@ -57,9 +59,17 @@ class ModuleFeedViewHelper
             return [
                 'name' => trans('contact.feed_item_author_deleted'),
                 'avatar' => $monicaSvg,
+                'url' => null,
             ];
         }
 
         return UserHelper::getInformationAboutContact($author, $item->contact->vault);
+    }
+
+    private static function getData(ContactFeedItem $item)
+    {
+        if ($item->action === ContactFeedItem::ACTION_CONTACT_CREATED) {
+            return ActionFeedContactCreated::data($item);
+        }
     }
 }

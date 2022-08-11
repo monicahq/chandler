@@ -5,18 +5,32 @@
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="icon-avatar relative w-6">
-            <avatar :data="feedItem.author.avatar" :classes="'rounded-full relative h-6 w-6'" />
+            <avatar :data="feedItem.author.avatar" :classes="'rounded-full border-gray-200 border relative h-5 w-5'" />
           </div>
 
           <div>
             <p class="mr-2 inline text-gray-400">
-              <span class="font-medium text-gray-800">{{ feedItem.author.name }}</span> {{ feedItem.sentence }}
+              <!-- contact name + link -->
+              <inertia-link
+                v-if="feedItem.author.url"
+                :href="feedItem.author.url"
+                class="font-medium text-gray-800 hover:underline"
+                >{{ feedItem.author.name }}</inertia-link
+              >
+              <span v-else class="font-medium text-gray-800">{{ feedItem.author.name }}</span>
+
+              <!-- action -->
+              <span class="ml-2">{{ feedItem.sentence }}</span>
             </p>
             <p class="mr-2 inline">•</p>
             <p class="inline text-sm text-gray-400">
               {{ feedItem.created_at }}
             </p>
           </div>
+        </div>
+
+        <div v-if="feedItem.data" class="ml-6">
+          <contact-created v-if="feedItem.action === 'contact_created'" :data="feedItem.data" />
         </div>
 
         <!-- details -->
@@ -39,10 +53,12 @@
 
 <script>
 import Avatar from '@/Shared/Avatar.vue';
+import ContactCreated from '@/Shared/Modules/FeedItems/ContactCreated.vue';
 
 export default {
   components: {
     Avatar,
+    ContactCreated,
   },
 
   props: {
@@ -56,7 +72,7 @@ export default {
 
 <style lang="scss" scoped>
 .icon-avatar {
-  top: -1px;
-  left: -12px;
+  top: 3px;
+  left: -11px;
 }
 </style>
