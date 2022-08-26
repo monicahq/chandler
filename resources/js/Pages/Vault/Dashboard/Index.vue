@@ -58,6 +58,8 @@
               </button>
             </div>
 
+            <feed :data="feed" :contact-view-mode="false" />
+
             <!-- feed -->
             <div class="mb-10 overflow-auto">
               <h3 class="mb-5 font-bold">Janvier 2010</h3>
@@ -151,6 +153,7 @@ import Goal from '@/Pages/Vault/Dashboard/Partials/Feed/Goal.vue';
 import FeedItem from '@/Pages/Vault/Dashboard/Partials/Feed/FeedItem.vue';
 import CreateLifeEvent from '@/Pages/Vault/Dashboard/Partials/Feed/CreateLifeEvent.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import Feed from '@/Shared/Modules/Feed.vue';
 
 export default {
   components: {
@@ -164,6 +167,7 @@ export default {
     Goal,
     FeedItem,
     CreateLifeEvent,
+    Feed,
   },
 
   props: {
@@ -180,6 +184,10 @@ export default {
       default: null,
     },
     favorites: {
+      type: Object,
+      default: null,
+    },
+    feed: {
       type: Object,
       default: null,
     },

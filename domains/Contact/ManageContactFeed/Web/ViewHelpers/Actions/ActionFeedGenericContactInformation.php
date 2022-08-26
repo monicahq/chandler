@@ -4,7 +4,7 @@ namespace App\Contact\ManageContactFeed\Web\ViewHelpers\Actions;
 
 use App\Models\ContactFeedItem;
 
-class ActionFeedContactCreated
+class ActionFeedGenericContactInformation
 {
     public static function data(ContactFeedItem $item): array
     {

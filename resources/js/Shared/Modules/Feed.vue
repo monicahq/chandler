@@ -10,7 +10,7 @@
 
           <div>
             <p class="mr-2 inline text-gray-400">
-              <!-- contact name + link -->
+              <!-- author name + link to profile -->
               <inertia-link
                 v-if="feedItem.author.url"
                 :href="feedItem.author.url"
@@ -19,7 +19,7 @@
               >
               <span v-else class="font-medium text-gray-800">{{ feedItem.author.name }}</span>
 
-              <!-- action -->
+              <!-- action done -->
               <span class="ml-2">{{ feedItem.sentence }}</span>
             </p>
             <p class="mr-2 inline">•</p>
@@ -29,8 +29,12 @@
           </div>
         </div>
 
+        <!-- feed object -->
         <div v-if="feedItem.data" class="ml-6">
-          <contact-created v-if="feedItem.action === 'contact_created'" :data="feedItem.data" />
+          <contact-created
+            v-if="feedItem.action === 'contact_created'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
         </div>
 
         <!-- details -->
@@ -65,6 +69,10 @@ export default {
     data: {
       type: Object,
       default: null,
+    },
+    contactViewMode: {
+      type: Boolean,
+      default: true,
     },
   },
 };

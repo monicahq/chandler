@@ -2,23 +2,16 @@
 
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
-use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedContactCreated;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
-use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Models\User;
 
 class ModuleFeedViewHelper
 {
-    public static function data(Contact $contact, User $user): array
+    public static function data($items, User $user): array
     {
-        $items = ContactFeedItem::where('contact_id', $contact->id)
-            ->with('author')
-            ->with('contact')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
         $itemsCollection = $items->map(function ($item) use ($user) {
             return [
                 'id' => $item->id,
@@ -44,6 +37,8 @@ class ModuleFeedViewHelper
     {
         $author = $item->author;
         if (! $author) {
+            // the author is not existing anymore, so we have to display a random
+            // avatar and an unknown name
             $monicaSvg = '<svg viewBox="0 0 390 353" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M198.147 353C289.425 353 390.705 294.334 377.899 181.5C365.093 68.6657 289.425 10 198.147 10C106.869 10 31.794 61.4285 12.2144 181.5C-7.36527 301.571 106.869 353 198.147 353Z" fill="#2C2B29"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M196.926 320C270.146 320 351.389 272.965 341.117 182.5C330.844 92.0352 270.146 45 196.926 45C123.705 45 63.4825 86.2328 47.7763 182.5C32.0701 278.767 123.705 320 196.926 320Z" fill="white"/>
@@ -68,8 +63,9 @@ class ModuleFeedViewHelper
 
     private static function getData(ContactFeedItem $item)
     {
-        if ($item->action === ContactFeedItem::ACTION_CONTACT_CREATED) {
-            return ActionFeedContactCreated::data($item);
+        switch ($item->action) {
+            default:
+                return ActionFeedGenericContactInformation::data($item);
         }
     }
 }
