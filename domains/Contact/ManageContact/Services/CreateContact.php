@@ -3,8 +3,6 @@
 namespace App\Contact\ManageContact\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Models\Gender;
@@ -67,7 +65,6 @@ class CreateContact extends BaseService implements ServiceInterface
         $this->validate();
         $this->createContact();
         $this->updateLastEditedDate();
-        $this->log();
         $this->createFeedItem();
 
         return $this->contact;
@@ -130,27 +127,5 @@ class CreateContact extends BaseService implements ServiceInterface
             'contact_id' => $this->contact->id,
             'action' => ContactFeedItem::ACTION_CONTACT_CREATED,
         ]);
-    }
-
-    private function log(): void
-    {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_created',
-            'objects' => json_encode([
-                'id' => $this->contact->id,
-                'name' => $this->contact->name,
-            ]),
-        ])->onQueue('low');
-
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_created',
-            'objects' => json_encode([]),
-        ])->onQueue('low');
     }
 }
