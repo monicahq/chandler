@@ -31,8 +31,43 @@
 
         <!-- feed object -->
         <div v-if="feedItem.data" class="ml-6">
-          <contact-created
+          <generic-action
             v-if="feedItem.action === 'contact_created'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <generic-action
+            v-if="feedItem.action === 'contact_information_updated'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <generic-action
+            v-if="feedItem.action === 'job_information_updated'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <generic-action
+            v-if="feedItem.action === 'archived'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <generic-action
+            v-if="feedItem.action === 'unarchived'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <generic-action
+            v-if="feedItem.action === 'changed_avatar'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <label-assigned
+            v-if="feedItem.action === 'label_assigned'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
+          <label-assigned
+            v-if="feedItem.action === 'label_removed'"
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
         </div>
@@ -57,12 +92,14 @@
 
 <script>
 import Avatar from '@/Shared/Avatar.vue';
-import ContactCreated from '@/Shared/Modules/FeedItems/ContactCreated.vue';
+import GenericAction from '@/Shared/Modules/FeedItems/GenericAction.vue';
+import LabelAssigned from '@/Shared/Modules/FeedItems/LabelAssigned.vue';
 
 export default {
   components: {
     Avatar,
-    ContactCreated,
+    GenericAction,
+    LabelAssigned,
   },
 
   props: {

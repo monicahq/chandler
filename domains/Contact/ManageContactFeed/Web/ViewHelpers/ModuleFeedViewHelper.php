@@ -3,6 +3,7 @@
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
 use App\Models\ContactFeedItem;
@@ -64,6 +65,10 @@ class ModuleFeedViewHelper
     private static function getData(ContactFeedItem $item)
     {
         switch ($item->action) {
+            case 'label_assigned':
+            case 'label_removed':
+                return ActionFeedLabelAssigned::data($item);
+
             default:
                 return ActionFeedGenericContactInformation::data($item);
         }
