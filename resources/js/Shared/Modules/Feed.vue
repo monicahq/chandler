@@ -61,6 +61,11 @@
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
 
+          <generic-action
+            v-if="feedItem.action === 'favorited'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
           <label-assigned
             v-if="feedItem.action === 'label_assigned'"
             :data="feedItem.data"
