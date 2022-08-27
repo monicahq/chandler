@@ -90,7 +90,7 @@
 
     <!-- blank state -->
     <div v-if="data.items.length == 0">
-      <p class="p-5 text-center">This person doesn't have any activity yet.</p>
+      <p class="p-5 text-center">There is no activity yet.</p>
     </div>
   </div>
 </template>
