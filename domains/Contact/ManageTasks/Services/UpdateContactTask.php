@@ -26,7 +26,7 @@ class UpdateContactTask extends BaseService implements ServiceInterface
             'contact_task_id' => 'required|integer|exists:contact_tasks,id',
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'due_at' => 'nullable|date_format:Y-m-d',
+            'due_at' => 'nullable|date',
         ];
     }
 
