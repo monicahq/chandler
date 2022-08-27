@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
 
+use App\Contact\ManageContactAddresses\Jobs\FetchAddressGeocoding;
 use App\Contact\ManageContactAddresses\Services\UpdateContactAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
