@@ -103,6 +103,8 @@ class CreateContactAddressTest extends TestCase
 
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact, AddressType $type): void
     {
+        Queue::fake();
+
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
