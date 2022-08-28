@@ -115,6 +115,14 @@ class ContactShowViewHelper
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
+                'update_avatar' => route('contact.avatar.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
+                'destroy_avatar' => route('contact.avatar.destroy', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'update_template' => route('contact.blank', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -163,6 +171,7 @@ class ContactShowViewHelper
 
         $modulesCollection = collect();
         foreach ($modules as $module) {
+            $data = [];
             if ($module->type == Module::TYPE_CONTACT_NAMES) {
                 $data = ModuleContactNameViewHelper::data($contact, $user);
             }
@@ -210,6 +219,7 @@ class ContactShowViewHelper
 
         $modulesCollection = collect();
         foreach ($modules as $module) {
+            $data = [];
             if ($module->type == Module::TYPE_NOTES) {
                 $data = ModuleNotesViewHelper::data($contact, $user);
             }
@@ -243,7 +253,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_GOALS) {
-                $data = ModuleGoalsViewHelper::data($contact, $user);
+                $data = ModuleGoalsViewHelper::data($contact);
             }
 
             if ($module->type == Module::TYPE_ADDRESSES) {

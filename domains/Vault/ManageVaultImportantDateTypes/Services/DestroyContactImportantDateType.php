@@ -2,12 +2,11 @@
 
 namespace App\Vault\ManageVaultImportantDateTypes\Services;
 
+use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
 use App\Models\ContactImportantDateType;
 use App\Models\User;
 use App\Services\BaseService;
-use Illuminate\Validation\ValidationException;
 
 class DestroyContactImportantDateType extends BaseService implements ServiceInterface
 {
@@ -53,19 +52,9 @@ class DestroyContactImportantDateType extends BaseService implements ServiceInte
             ->findOrFail($data['contact_important_date_type_id']);
 
         if (! $type->can_be_deleted) {
-            throw new ValidationException();
+            throw new CantBeDeletedException();
         }
 
         $type->delete();
-
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_important_date_type_destroyed',
-            'objects' => json_encode([
-                'type_label' => $type->label,
-            ]),
-        ])->onQueue('low');
     }
 }

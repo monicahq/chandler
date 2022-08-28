@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
 
+use App\Contact\ManageContactAddresses\Jobs\FetchAddressGeocoding;
 use App\Contact\ManageContactAddresses\Services\CreateContactAddress;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Address;
 use App\Models\AddressType;
@@ -140,12 +139,8 @@ class CreateContactAddressTest extends TestCase
             $address
         );
 
-        Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_address_created';
-        });
-
-        Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_address_created';
+        Queue::assertPushed(FetchAddressGeocoding::class, function ($job) use ($address) {
+            return $job->address->id === $address->id;
         });
     }
 }

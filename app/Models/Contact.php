@@ -32,7 +32,7 @@ class Contact extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'vault_id',
@@ -55,7 +55,7 @@ class Contact extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'can_be_deleted' => 'boolean',
@@ -156,16 +156,6 @@ class Contact extends Model
     public function template(): BelongsTo
     {
         return $this->belongsTo(Template::class);
-    }
-
-    /**
-     * Get the contact log records associated with the contact.
-     *
-     * @return HasMany
-     */
-    public function contactLogs(): HasMany
-    {
-        return $this->hasMany(ContactLog::class)->orderBy('created_at', 'desc');
     }
 
     /**

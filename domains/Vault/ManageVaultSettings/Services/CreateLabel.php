@@ -3,15 +3,12 @@
 namespace App\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
 use App\Models\Label;
 use App\Services\BaseService;
 use Illuminate\Support\Str;
 
 class CreateLabel extends BaseService implements ServiceInterface
 {
-    private array $data;
-
     private Label $label;
 
     /**
@@ -65,21 +62,6 @@ class CreateLabel extends BaseService implements ServiceInterface
             'text_color' => $data['text_color'],
         ]);
 
-        $this->log();
-
         return $this->label;
-    }
-
-    private function log(): void
-    {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'label_created',
-            'objects' => json_encode([
-                'label_name' => $this->label->name,
-            ]),
-        ])->onQueue('low');
     }
 }

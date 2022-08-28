@@ -2,9 +2,8 @@
 
 namespace App\Contact\ManageContactAddresses\Services;
 
+use App\Contact\ManageContactAddresses\Jobs\FetchAddressGeocoding;
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Services\BaseService;
@@ -12,7 +11,7 @@ use Carbon\Carbon;
 
 class CreateContactAddress extends BaseService implements ServiceInterface
 {
-    private AddressType $addressType;
+    private Address $address;
 
     /**
      * Get the validation rules that apply to the service.
@@ -66,11 +65,11 @@ class CreateContactAddress extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         if ($this->valueOrNull($data, 'address_type_id')) {
-            $this->addressType = AddressType::where('account_id', $data['account_id'])
+            AddressType::where('account_id', $data['account_id'])
                 ->findOrFail($data['address_type_id']);
         }
 
-        $address = Address::create([
+        $this->address = Address::create([
             'contact_id' => $data['contact_id'],
             'address_type_id' => $this->valueOrNull($data, 'address_type_id'),
             'street' => $this->valueOrNull($data, 'street'),
@@ -88,33 +87,13 @@ class CreateContactAddress extends BaseService implements ServiceInterface
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
 
-        $this->log();
+        $this->geocodeAddress();
 
-        return $address;
+        return $this->address;
     }
 
-    private function log(): void
+    private function geocodeAddress(): void
     {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_address_created',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-                'address_type_name' => isset($this->addressType) ? $this->addressType->name : null,
-            ]),
-        ])->onQueue('low');
-
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'contact_address_created',
-            'objects' => json_encode([
-                'address_type_name' => isset($this->addressType) ? $this->addressType->name : null,
-            ]),
-        ])->onQueue('low');
+        FetchAddressGeocoding::dispatch($this->address)->onQueue('low');
     }
 }
