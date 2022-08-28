@@ -110,7 +110,7 @@
       </ul>
 
       <!-- ADD SCREEN -->
-      <div v-if="add" class="br2 pt4 border border-gray-200">
+      <div v-if="add" class="br2 pt4 border border-gray-200 dark:border-gray-800">
         <div class="life-event-add-icon tc center">
           <img
             :src="'img/people/life-events/types/' + activeType.default_life_event_type_key + '.svg'"
@@ -128,7 +128,7 @@
         </h3>
 
         <!-- This field will be the same for every life event type no matter what, as the date is the only required field -->
-        <div class="ph4 pv3 mb3 mb0-ns bb border-gray-200">
+        <div class="ph4 pv3 mb3 mb0-ns bb border-gray-200 dark:border-gray-800">
           <label for="year" class="mr-2">
             {{ $t('people.life_event_date_it_happened') }}
           </label>
@@ -169,7 +169,7 @@
         <create-default-life-event @contentChange="updateLifeEventContent($event)" />
 
         <!-- YEARLY REMINDER -->
-        <div class="ph4 pv3 mb3 mb0-ns bb border-gray-200">
+        <div class="ph4 pv3 mb3 mb0-ns bb border-gray-200 dark:border-gray-800">
           <form-checkbox
             v-model.lazy="newLifeEvent.has_reminder"
             :name="'addReminder'"
@@ -179,7 +179,7 @@
         </div>
 
         <!-- FORM ACTIONS -->
-        <div class="ph4-ns ph3 pv3 bb border-gray-200">
+        <div class="ph4-ns ph3 pv3 bb border-gray-200 dark:border-gray-800">
           <div class="flex-ns justify-between">
             <div>
               <a

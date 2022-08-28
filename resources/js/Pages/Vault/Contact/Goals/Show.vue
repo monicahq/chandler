@@ -62,7 +62,10 @@
             <h1 v-if="!editMode" class="mb-4 font-semibold">{{ localGoal.name }}</h1>
 
             <!-- edit modal form -->
-            <form v-if="editMode" class="bg-form mb-4 rounded-lg border border-gray-200" @submit.prevent="update()">
+            <form
+              v-if="editMode"
+              class="bg-form mb-4 rounded-lg border border-gray-200 dark:border-gray-800"
+              @submit.prevent="update()">
               <div class="border-b border-gray-200 p-5">
                 <errors :errors="form.errors" />
 

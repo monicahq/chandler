@@ -5,7 +5,7 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400 dark:text-slate-200">
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
@@ -34,7 +34,7 @@
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title -->
-        <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+        <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-800 sm:flex">
           <div class="mb-2 sm:mb-0">
             <span class="relative mr-1">
               <svg

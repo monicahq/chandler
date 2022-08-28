@@ -32,9 +32,9 @@
     <!-- add a reminder modal -->
     <form
       v-if="addReminderModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+      <div class="border-b border-gray-200 dark:border-gray-800">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
@@ -224,7 +224,7 @@
 
           <!-- edit reminder modal -->
           <form v-if="editedReminderId == reminder.id" class="bg-form" @submit.prevent="update(reminder)">
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 dark:border-gray-800">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>

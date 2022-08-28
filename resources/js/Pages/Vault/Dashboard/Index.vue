@@ -15,9 +15,9 @@
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <!-- actions -->
-            <div style="background-color: #fcfeff" class="mb-6 rounded-lg border border-gray-200 bg-white">
+            <div class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
               <div v-if="!addMode" class="p-3">
-                <p class="mb-5 text-center"><span class="mr-2">👋</span> Good evening, Regis.</p>
+                <p class="mb-5 text-center dark:text-gray-100"><span class="mr-2">👋</span> Good evening, Regis.</p>
 
                 <div class="mb-2 justify-center sm:flex">
                   <pretty-button
@@ -41,7 +41,7 @@
             <!-- filters -->
             <div class="mb-3 text-right">
               <button
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 hover:dark:bg-gray-800">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-4 w-4"
@@ -102,7 +102,7 @@
               <span class="relative">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
+                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 hover:dark:text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">
@@ -120,8 +120,8 @@
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900">
+                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900 dark:text-gray-100">
                 Remember mea sdfasdf asdf asdf asdf sdf
               </label>
             </div>
@@ -130,8 +130,10 @@
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900"> Remember me </label>
+                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900 dark:text-gray-100">
+                Remember me
+              </label>
             </div>
           </div>
         </div>

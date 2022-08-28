@@ -23,8 +23,11 @@
       <pretty-span :text="'Add to group'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="addGroupMode = true" />
     </div>
 
-    <form v-if="addGroupMode" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+    <form
+      v-if="addGroupMode"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200 dark:border-gray-800">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>

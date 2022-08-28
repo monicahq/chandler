@@ -60,7 +60,7 @@
         <!-- stats -->
         <div class="border border-gray-200 rounded-lg grid grid-cols-2 mb-8">
           <!-- account limit -->
-          <div class="flex justify-between p-3 border-r border-gray-200">
+          <div class="flex justify-between p-3 border-r border-gray-200 dark:border-gray-800">
             <p>{{ $t('settings.storage_account_limit') }}</p>
             <p class="font-bold">
               {{ data.account_limit }}

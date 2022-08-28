@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="rounded-b-lg border border-gray-200 bg-slate-50 p-5">
+        <div class="rounded-b-lg border border-gray-200 bg-slate-50 p-5 dark:border-gray-800 dark:bg-slate-900">
           <p class="mb-3">
             {{ $t('vault.index_blank_sentence_3') }}
           </p>

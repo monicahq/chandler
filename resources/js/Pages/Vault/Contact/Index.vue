@@ -7,7 +7,7 @@
           <div>
             <!-- labels -->
             <div>
-              <div class="mb-3 border-b border-gray-200">
+              <div class="mb-3 border-b border-gray-200 dark:border-gray-800">
                 <span class="mr-1"> 🏷️ </span>
                 {{ $t('vault.show_contacts_labels') }}
               </div>

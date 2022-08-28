@@ -212,10 +212,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-main {
-  color: #343a4b;
-}
-
 .icon-search {
   left: 8px;
   top: 8px;

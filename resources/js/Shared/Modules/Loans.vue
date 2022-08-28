@@ -27,9 +27,9 @@
       <!-- add a loan modal -->
       <form
         v-if="createLoanModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200"
+        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
         @submit.prevent="submit()">
-        <div class="border-b border-gray-200">
+        <div class="border-b border-gray-200 dark:border-gray-800">
           <!-- loan options -->
           <div class="border-b border-gray-200 px-5 pt-5 pb-3">
             <ul class="">
@@ -118,7 +118,7 @@
           </div>
 
           <!-- loaned by or to -->
-          <div class="flex items-center items-stretch border-b border-gray-200">
+          <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-800">
             <contact-selector
               v-model="form.loaners"
               :search-url="layoutData.vault.url.search_contacts_only"
@@ -249,9 +249,9 @@
         <!-- edit loan modal -->
         <form
           v-if="editedLoanId === loan.id"
-          class="bg-form mb-6 w-full rounded-lg border border-gray-200"
+          class="bg-form mb-6 w-full rounded-lg border border-gray-200 dark:border-gray-800"
           @submit.prevent="update(loan)">
-          <div class="border-b border-gray-200">
+          <div class="border-b border-gray-200 dark:border-gray-800">
             <!-- loan options -->
             <div class="border-b border-gray-200 px-5 pt-5 pb-3">
               <ul class="">
@@ -340,7 +340,7 @@
             </div>
 
             <!-- loaned by or to -->
-            <div class="flex items-center items-stretch border-b border-gray-200">
+            <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-800">
               <contact-selector
                 v-model="form.loaners"
                 :search-url="layoutData.vault.url.search_contacts_only"

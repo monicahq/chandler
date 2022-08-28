@@ -32,9 +32,9 @@
     <!-- add a contact information modal -->
     <form
       v-if="addContactInformationModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+      <div class="border-b border-gray-200 dark:border-gray-800">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
@@ -98,7 +98,7 @@
 
           <!-- edit info modal -->
           <form v-if="editedContactInformationId == info.id" class="bg-form" @submit.prevent="update(info)">
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 dark:border-gray-800">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>

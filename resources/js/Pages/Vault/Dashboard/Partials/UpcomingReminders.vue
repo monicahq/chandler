@@ -1,10 +1,10 @@
 <template>
   <div class="mb-10">
-    <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">
+    <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium dark:border-gray-800">
       <span class="relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
+          class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 hover:dark:text-gray-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">
@@ -21,11 +21,11 @@
 
     <!-- list of reminders -->
     <div v-if="data.reminders.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
+      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
         <li
           v-for="reminder in data.reminders"
           :key="reminder.id"
-          class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-800 hover:dark:bg-slate-900">
           <div class="flex items-center">
             <p class="mr-3 text-xs text-gray-400">
               {{ reminder.scheduled_at }}
@@ -46,7 +46,9 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="data.reminders.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div
+      v-if="data.reminders.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       <p class="p-5 text-center">
         {{ $t('vault.dashboard_reminders_blank') }}
       </p>

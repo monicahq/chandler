@@ -130,7 +130,7 @@
             </div>
 
             <!-- all the pages -->
-            <div class="mb-8 w-full border-b border-gray-200">
+            <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-800">
               <div class="flex overflow-x-auto">
                 <div v-for="page in data.template_pages" :key="page.id" class="mr-2 flex-none">
                   <inertia-link

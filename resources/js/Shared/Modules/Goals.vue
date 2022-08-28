@@ -24,7 +24,10 @@
     </div>
 
     <!-- add a note modal -->
-    <form v-if="createGoalModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
+    <form
+      v-if="createGoalModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5">
         <errors :errors="form.errors" />
         <!-- name -->

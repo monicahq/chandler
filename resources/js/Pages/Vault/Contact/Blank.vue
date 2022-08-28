@@ -36,7 +36,8 @@
         <h2 class="mb-6 text-center text-lg">Profile page of {{ data.contact.name }}</h2>
         <div class="mb-6 rounded border border-gray-200 bg-white">
           <!-- help -->
-          <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2">
+          <div
+            class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-800 dark:bg-slate-900">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 grow pr-2"

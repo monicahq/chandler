@@ -112,7 +112,7 @@
           </div>
 
           <!-- middle -->
-          <div class="rounded-lg border border-gray-200">
+          <div class="rounded-lg border border-gray-200 dark:border-gray-800">
             <h3 class="border-b border-gray-200 px-5 py-2">Module details</h3>
 
             <errors :errors="form.errors" />

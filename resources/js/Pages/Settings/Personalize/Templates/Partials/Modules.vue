@@ -19,7 +19,8 @@
 
     <!-- list of all the existing modules -->
     <ul v-if="addModuleModalShown" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm">
+      <li
+        class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm dark:border-gray-800 dark:bg-slate-900">
         {{ $t('settings.personalize_template_show_module_available_modules') }}
       </li>
       <li

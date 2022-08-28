@@ -24,14 +24,17 @@
     </div>
 
     <!-- add a call modal -->
-    <form v-if="createCallModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
+    <form
+      v-if="createCallModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      @submit.prevent="submit()">
       <div>
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
         <!-- date -->
-        <div class="flex border-b border-gray-200">
+        <div class="flex border-b border-gray-200 dark:border-gray-800">
           <div class="p-5">
             <p class="mb-2 block text-sm">When did the call happened?</p>
             <v-date-picker v-model="form.called_at" class="inline-block h-full" :model-config="modelConfig">
@@ -282,9 +285,9 @@
         <form v-if="editedCallId === call.id" class="bg-form" @submit.prevent="update(call)">
           <errors :errors="form.errors" />
 
-          <div class="border-b border-gray-200">
+          <div class="border-b border-gray-200 dark:border-gray-800">
             <!-- date -->
-            <div class="flex border-b border-gray-200">
+            <div class="flex border-b border-gray-200 dark:border-gray-800">
               <div class="p-5">
                 <p class="mb-2 block text-sm">When did the call happened?</p>
                 <v-date-picker v-model="form.called_at" class="inline-block h-full" :model-config="modelConfig">
