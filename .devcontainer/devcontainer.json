@@ -1,7 +1,11 @@
 // Update the VARIANT arg in docker-compose.yml to pick a PHP version: 7, 7.3, 7.4
 {
   "name": "PHP & SQLite",
+  "service": "cli",
+  "remoteUser": "user",
   "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "dockerComposeFile": "docker-compose.yaml",
 
   "build": {
     "dockerfile": "Dockerfile",
@@ -37,7 +41,7 @@
   ],
 
   // For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-  "forwardPorts": [8080, 8000, 3306],
+  "forwardPorts": [8080, 8000],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": [
@@ -47,12 +51,19 @@
     "sed -i \"s%DB_DATABASE=.*%DB_DATABASE=$(pwd)/database/database.sqlite%\" .env;",
     "touch database/database.sqlite && chgrp www-data database database/database.sqlite && chmod g+w database database/database.sqlite;",
     "chgrp -R www-data storage && chmod -R g+w storage;",
+    "a2enmod rewrite;"
+  ],
+
+  "postStartCommand": [
+    "apache2ctl restart;"
+  ],
+
+  "postAttachCommand": [
     "composer install;",
-    "yarn run install;",
-    "yarn run build;",
     "php artisan key:generate --no-interaction;",
-    "php artisan setup -vvv;",
-    "a2enmod rewrite && apache2ctl restart;"
+    "php artisan monica:setup -vvv;",
+    "yarn run install;",
+    "yarn run build;"
   ]
 
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
