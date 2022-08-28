@@ -15,7 +15,7 @@ const myTransport = (options) => {
       headers: options.headers,
       ...options.fetchOptions,
     };
-    return await axios(requestOptions).then((response) => ({
+    return axios(requestOptions).then((response) => ({
       statusCode: response.status,
       headers: response.headers,
     }));
