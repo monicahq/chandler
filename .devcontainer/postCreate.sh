@@ -12,7 +12,7 @@ chgrp -R www-data storage && chmod -R g+w storage
 composer install
 php artisan key:generate --no-interaction
 php artisan monica:setup -vvv
-yarn run install
+yarn install
 yarn run build
 
 a2enmod rewrite
