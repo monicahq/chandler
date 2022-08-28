@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Vault\ManageFiles\Web\ViewHelpers;
+namespace App\Vault\ManageTasks\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
 use App\Models\User;
@@ -8,7 +8,7 @@ use App\Models\Vault;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class VaultReminderIndexViewHelper
+class VaultTasksIndexViewHelper
 {
     public static function data(Vault $vault, User $user): Collection
     {
