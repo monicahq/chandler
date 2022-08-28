@@ -135,7 +135,7 @@ class VaultShowViewHelper
         $tasks = DB::table('contact_tasks')
             ->where('completed', false)
             ->whereIn('contact_id', $contactIds)
-            ->where('due_at', '<=', Carbon::now()->copy()->addDays(30))
+            ->where('due_at', '<=', Carbon::now()->addDays(30))
             ->orderBy('due_at', 'asc')
             ->get();
 
