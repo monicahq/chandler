@@ -22,7 +22,7 @@ const logout = () => {
 
 <template>
   <div>
-    <Head :title="$t(title)" />
+    <Head :title="title" />
 
     <JetBanner />
 
