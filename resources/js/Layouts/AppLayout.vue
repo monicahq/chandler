@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Head } from '@inertiajs/inertia-vue3';
-import JetBanner from '@/Jetstream/Banner.vue';
-import JetDropdown from '@/Jetstream/Dropdown.vue';
-import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
-import JetNavLink from '@/Jetstream/NavLink.vue';
-import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
+import JetBanner from '@/Components/Jetstream/Banner.vue';
+import JetDropdown from '@/Components/Jetstream/Dropdown.vue';
+import JetDropdownLink from '@/Components/Jetstream/DropdownLink.vue';
+import JetNavLink from '@/Components/Jetstream/NavLink.vue';
+import JetResponsiveNavLink from '@/Components/Jetstream/ResponsiveNavLink.vue';
 import Footer from '@/Layouts/Footer.vue';
 
 defineProps({

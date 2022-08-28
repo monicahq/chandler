@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import JetActionMessage from '@/Jetstream/ActionMessage.vue';
-import JetActionSection from '@/Jetstream/ActionSection.vue';
-import JetButton from '@/Jetstream/Button.vue';
-import JetDialogModal from '@/Jetstream/DialogModal.vue';
-import JetInput from '@/Jetstream/Input.vue';
-import JetInputError from '@/Jetstream/InputError.vue';
-import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import JetActionMessage from '@/Components/Jetstream/ActionMessage.vue';
+import JetActionSection from '@/Components/Jetstream/ActionSection.vue';
+import JetButton from '@/Components/Jetstream/Button.vue';
+import JetDialogModal from '@/Components/Jetstream/DialogModal.vue';
+import JetInput from '@/Components/Jetstream/Input.vue';
+import JetInputError from '@/Components/Jetstream/InputError.vue';
+import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 
 defineProps({
   sessions: Array,
