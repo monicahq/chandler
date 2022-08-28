@@ -64,7 +64,7 @@ class ContactModuleTaskController extends Controller
             'contact_task_id' => $taskId,
             'label' => $request->input('label'),
             'description' => null,
-            'due_at' => $dueAt == '' ? null : $dueAt,
+            'due_at' => $dueAt === '' ? null : $dueAt,
         ];
 
         $task = (new UpdateContactTask())->execute($data);
