@@ -16,4 +16,4 @@ yarn install
 yarn run build
 
 a2enmod rewrite
-apache2ctl restart
+service apache2 restart
