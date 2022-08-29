@@ -90,7 +90,7 @@ export default {
 
   created() {
     this.localDropdownClasses =
-      'py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm ' +
+      'py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white dark:bg-gray-900 rounded-md shadow-sm focus:outline-none sm:text-sm ' +
       this.dropdownClass;
   },
 

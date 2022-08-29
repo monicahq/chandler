@@ -8,11 +8,13 @@
       </label>
 
       <!-- list of selected contacts -->
-      <ul v-if="localContacts.length > 0" class="mb-4 rounded-lg border border-gray-200 bg-white">
+      <ul
+        v-if="localContacts.length > 0"
+        class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <li
           v-for="contact in localContacts"
           :key="contact.id"
-          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <inertia-link :href="contact.url">
             {{ contact.name }}
           </inertia-link>
@@ -72,12 +74,12 @@
           form.searchTerm.length == 0
         "
         class="mb-6">
-        <p class="mb-2 mt-2 text-center text-sm text-gray-600">Maybe one of these contacts?</p>
-        <ul class="rounded-lg border border-gray-200 bg-white">
+        <p class="mb-2 mt-2 text-center text-sm text-gray-600 dark:text-gray-400">Maybe one of these contacts?</p>
+        <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li
             v-for="contact in mostConsultedContacts"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <inertia-link :href="contact.url" class="text-blue-500 hover:underline">
               {{ contact.name }}
             </inertia-link>
@@ -92,14 +94,14 @@
       <!-- searching results -->
       <div
         v-if="processingSearch"
-        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
+        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
         <p>Searching...</p>
       </div>
 
       <!-- not enough characters -->
       <div
         v-if="form.searchTerm.length < 3 && form.searchTerm.length != 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
+        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
         <p>Please enter at least 3 characters to initiate a search.</p>
       </div>
 
@@ -107,11 +109,11 @@
       <div v-if="searchResults.length != 0 && form.searchTerm.length != 0" class="mb-3">
         <errors :errors="form.errors" />
 
-        <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
+        <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li
             v-for="contact in searchResults"
             :key="contact.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+            class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <inertia-link :href="contact.url">
               {{ contact.name }}
             </inertia-link>
@@ -127,7 +129,7 @@
       <!-- search results: no results found -->
       <div
         v-if="searchResults.length == 0 && form.searchTerm.length >= 3"
-        class="mb-3 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500">
+        class="mb-3 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
         <p>No search results</p>
       </div>
     </div>
@@ -219,7 +221,7 @@ export default {
 
   created() {
     this.localInputClasses =
-      'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-slate-50 pl-8 w-full' +
+      'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-slate-50 dark:bg-slate-900 pl-8 w-full' +
       this.inputClass;
 
     if (this.displayMostConsultedContacts) {

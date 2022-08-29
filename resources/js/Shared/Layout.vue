@@ -6,7 +6,7 @@
         <nav
           class="max-w-8xl mx-auto flex h-10 items-center justify-between border-b bg-gray-50 px-3 dark:border-slate-600 dark:bg-gray-700 dark:text-slate-200 sm:px-6">
           <div
-            class="dark:highlight-white/5 items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-0 dark:bg-gray-400/20 sm:flex">
+            class="dark:highlight-white/5 items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-0 dark:border-gray-700 dark:bg-gray-900 dark:bg-gray-400/20 sm:flex">
             <inertia-link :href="layoutData.url.vaults" class="flex-shrink-0 dark:text-sky-400">
               {{ layoutData.user.name }}
             </inertia-link>
@@ -55,7 +55,7 @@
                 <inertia-link :href="layoutData.url.settings" class="relative inline">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="icon-cog relative mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
+                    class="icon-cog relative mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-400 dark:text-gray-300 sm:h-4 sm:w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -78,7 +78,7 @@
                 <inertia-link class="inline" @click="logout()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
+                    class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-400 dark:text-gray-300 sm:h-4 sm:w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -97,7 +97,7 @@
         </nav>
 
         <!-- vault sub menu -->
-        <nav v-if="insideVault" class="bg-white dark:border-slate-300/10 dark:bg-gray-700 sm:border-b">
+        <nav v-if="insideVault" class="bg-white dark:border-slate-300/10 dark:bg-gray-900 dark:bg-gray-700 sm:border-b">
           <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
             <div class="flex items-baseline justify-between space-x-6">
               <div>

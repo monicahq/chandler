@@ -16,9 +16,9 @@
     <!-- modal to create a new label -->
     <form
       v-if="createlabelModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-800">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700 dark:border-gray-800">
         <errors :errors="form.errors" />
 
         <text-input
@@ -62,18 +62,18 @@
           :text="$t('vault.settings_labels_create_cta')"
           :state="loadingState"
           :icon="'plus'"
-          :classes="'save'" />
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
 
     <!-- list of label -->
     <ul
       v-if="localLabels.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
       <li
         v-for="label in localLabels"
         :key="label.id"
-        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-800 hover:dark:bg-slate-900">
+        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:border-gray-800 dark:bg-slate-900 hover:dark:bg-slate-800 hover:dark:bg-slate-900">
         <!-- detail of the label -->
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
@@ -100,9 +100,9 @@
         <!-- edit a label modal -->
         <form
           v-if="editLabelModalShownId == label.id"
-          class="item-list bg-form border-b border-gray-200 hover:bg-slate-50 dark:border-gray-800 hover:dark:bg-slate-900"
+          class="item-list bg-form border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:border-gray-800 dark:bg-slate-900 hover:dark:bg-slate-800 hover:dark:bg-slate-900"
           @submit.prevent="update(label)">
-          <div class="border-b border-gray-200 p-5 dark:border-gray-800">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700 dark:border-gray-800">
             <errors :errors="form.errors" />
 
             <text-input
@@ -142,7 +142,11 @@
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editLabelModalShownId = 0" />
-            <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-button
+              :text="$t('app.rename')"
+              :state="loadingState"
+              :icon="'check'"
+              :classes="'save dark:save dark:text-gray-800'" />
           </div>
         </form>
       </li>
@@ -151,7 +155,7 @@
     <!-- blank state -->
     <div
       v-if="localLabels.length == 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
       <p class="p-5 text-center">
         {{ $t('vault.settings_labels_blank') }}
       </p>

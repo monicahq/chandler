@@ -15,7 +15,8 @@
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <!-- actions -->
-            <div class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div
+              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
               <div v-if="!addMode" class="p-3">
                 <p class="mb-5 text-center dark:text-gray-100"><span class="mr-2">👋</span> Good evening, Regis.</p>
 
@@ -41,7 +42,7 @@
             <!-- filters -->
             <div class="mb-3 text-right">
               <button
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 hover:dark:bg-gray-800">
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-900 dark:bg-gray-900 dark:text-gray-300 dark:text-gray-300 hover:dark:bg-gray-800">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-4 w-4"
@@ -98,11 +99,11 @@
             <!-- upcoming reminders -->
             <upcoming-reminders :data="upcomingReminders" />
 
-            <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">
+            <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
               <span class="relative">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 hover:dark:text-gray-400"
+                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400 dark:text-gray-700 dark:text-gray-300 hover:dark:text-gray-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">

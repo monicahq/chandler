@@ -14,7 +14,7 @@
     </div>
 
     <!-- help text -->
-    <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+    <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 grow pr-2"
@@ -36,12 +36,12 @@
     </div>
 
     <!-- normal mode -->
-    <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="border-b border-gray-200 px-5 py-2">
+    <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <p class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
         <span class="mb-2 block">{{ $t('settings.user_preferences_name_order_current') }}</span>
-        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm">{{ localNameOrder }}</span>
+        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ localNameOrder }}</span>
       </p>
-      <p class="example bg-orange-50 px-5 py-2 text-sm font-medium">
+      <p class="example bg-orange-50 px-5 py-2 text-sm font-medium dark:bg-orange-900">
         <span class="font-light">{{ $t('settings.user_preferences_name_order_example') }}</span> {{ localNameExample }}
       </p>
     </div>
@@ -49,9 +49,9 @@
     <!-- edit mode -->
     <form
       v-if="editMode"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 px-5 py-2">
+      <div class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <div class="mb-2 flex items-center">
@@ -62,7 +62,9 @@
             name="name-order"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500" />
-          <label for="first_name_last_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+          <label
+            for="first_name_last_name"
+            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_first_name_last_name') }}
             <span class="ml-4 font-normal text-gray-500"> James Bond </span>
           </label>
@@ -75,7 +77,9 @@
             name="name-order"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500" />
-          <label for="last_name_first_name" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+          <label
+            for="last_name_first_name"
+            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_last_name_first_name') }}
 
             <span class="ml-4 font-normal text-gray-500"> Bond James </span>
@@ -91,7 +95,7 @@
             class="h-4 w-4 border-gray-300 text-sky-500" />
           <label
             for="first_name_last_name_nickname"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_first_name_last_name_nickname') }}
             <span class="ml-4 font-normal text-gray-500"> James Bond (007) </span>
           </label>
@@ -104,7 +108,7 @@
             name="name-order"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500" />
-          <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+          <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_nickname') }}
             <span class="ml-4 font-normal text-gray-500"> 007 </span>
           </label>
@@ -116,7 +120,7 @@
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500"
             @click="focusNameOrder" />
-          <label for="custom" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+          <label for="custom" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_custom') }}
           </label>
         </div>
@@ -148,7 +152,11 @@
       <!-- actions -->
       <div class="flex justify-between p-5">
         <pretty-link :text="$t('app.cancel')" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-button
+          :text="$t('app.save')"
+          :state="loadingState"
+          :icon="'check'"
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
   </div>

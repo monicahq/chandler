@@ -56,10 +56,11 @@
       </inertia-link>
     </div>
 
-    <div class="mt-6 flex w-full overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:max-w-4xl sm:rounded-lg">
+    <div
+      class="mt-6 flex w-full overflow-hidden bg-white shadow-md dark:bg-gray-900 dark:bg-gray-800 sm:max-w-4xl sm:rounded-lg">
       <img :src="wallpaperUrl" class="w-10/12 sm:invisible md:visible" :alt="'Wallpaper'" />
       <div class="w-full">
-        <div class="border-b border-gray-200 px-6 pt-14 pb-10 dark:border-gray-800">
+        <div class="border-b border-gray-200 px-6 pt-14 pb-10 dark:border-gray-700 dark:border-gray-800">
           <h1 class="mb-6 text-center text-xl text-gray-800 dark:text-gray-200">
             <span class="mr-2"> 👋 </span>
             Sign in to your account
@@ -99,7 +100,7 @@
             <div class="mb-4 block">
               <label class="flex items-center">
                 <breeze-checkbox v-model:checked="form.remember" name="remember" />
-                <span class="ml-2 text-sm text-gray-600 dark:text-green-400"> Remember me </span>
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400 dark:text-green-400"> Remember me </span>
               </label>
             </div>
 
@@ -111,7 +112,7 @@
                 Forgot password?
               </inertia-link>
 
-              <pretty-button :text="'Log in'" :state="loadingState" :classes="'save ml-4'" />
+              <pretty-button :text="'Log in'" :state="loadingState" :classes="'save dark:save ml-4'" />
             </div>
           </form>
         </div>

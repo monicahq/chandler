@@ -2,7 +2,7 @@
   <button
     :class="classes"
     :disabled="state == 'loading' || state == 'disabled'"
-    class="save dark:save relative bg-white text-sm dark:bg-gray-900"
+    class="relative bg-white text-sm dark:bg-gray-900 dark:bg-gray-800"
     type="submit">
     <span v-if="state == 'loading'"> Loading… </span>
 

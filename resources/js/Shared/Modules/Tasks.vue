@@ -1,7 +1,7 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -26,9 +26,9 @@
     <!-- add a task modal -->
     <form
       v-if="createTaskModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <!-- title -->
@@ -45,7 +45,7 @@
       </div>
 
       <!-- due date -->
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <div class="flex items-center">
           <input
             id="reminder"
@@ -61,7 +61,10 @@
         <div v-if="form.due_at_checked" class="mt-4 ml-4">
           <v-date-picker v-model="form.due_at" class="inline-block h-full" :model-config="modelConfig">
             <template #default="{ inputValue, inputEvents }">
-              <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+              <input
+                class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                :value="inputValue"
+                v-on="inputEvents" />
             </template>
           </v-date-picker>
         </div>
@@ -69,13 +72,22 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createTaskModalShown = false" />
-        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-button
+          :text="$t('app.save')"
+          :state="loadingState"
+          :icon="'check'"
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
 
     <!-- tasks -->
-    <ul v-if="localTasks.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
-      <li v-for="task in localTasks" :key="task.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+    <ul
+      v-if="localTasks.length > 0"
+      class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <li
+        v-for="task in localTasks"
+        :key="task.id"
+        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <div v-if="editedTaskId !== task.id" class="flex items-center justify-between p-3">
           <div class="flex items-center">
             <input
@@ -117,7 +129,7 @@
         <form v-if="editedTaskId === task.id" class="bg-form" @submit.prevent="update(task)">
           <errors :errors="form.errors" />
 
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'update' + task.id"
               v-model="form.label"
@@ -131,7 +143,7 @@
           </div>
 
           <!-- due date -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <div class="flex items-center">
               <input
                 id="reminder"
@@ -147,7 +159,10 @@
             <div v-if="form.due_at_checked" class="mt-4 ml-4">
               <v-date-picker v-model="form.due_at" class="inline-block h-full" :model-config="modelConfig">
                 <template #default="{ inputValue, inputEvents }">
-                  <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                  <input
+                    class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                    :value="inputValue"
+                    v-on="inputEvents" />
                 </template>
               </v-date-picker>
             </div>
@@ -155,7 +170,11 @@
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedTaskId = 0" />
-            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-button
+              :text="'Update'"
+              :state="loadingState"
+              :icon="'check'"
+              :classes="'save dark:save dark:text-gray-800'" />
           </div>
         </form>
       </li>
@@ -171,7 +190,10 @@
 
     <!-- list of completed tasks -->
     <div v-if="showCompletedTasks" class="mx-4 text-xs">
-      <ul v-for="task in localCompletedTasks" :key="task.id" class="mb-2 rounded-lg border border-gray-200 bg-white">
+      <ul
+        v-for="task in localCompletedTasks"
+        :key="task.id"
+        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <li>
           <div class="flex items-center justify-between p-3">
             <div class="flex items-center">
@@ -219,7 +241,9 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="localTasks.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div
+      v-if="localTasks.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="p-5 text-center">There are no tasks yet.</p>
     </div>
   </div>

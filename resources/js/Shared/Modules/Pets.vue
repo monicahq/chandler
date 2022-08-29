@@ -1,7 +1,7 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <span class="relative mr-1">
@@ -27,15 +27,15 @@
     <!-- add a pet modal -->
     <form
       v-if="addPetModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-800">
+      <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
         <!-- name -->
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <text-input
             :ref="'newName'"
             v-model="form.name"
@@ -63,14 +63,21 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addPetModalShown = false" />
-        <pretty-button :text="'Add pet'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-button
+          :text="'Add pet'"
+          :state="loadingState"
+          :icon="'plus'"
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
 
     <!-- pets -->
     <div v-if="localPets.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
-        <li v-for="pet in localPets" :key="pet.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <li
+          v-for="pet in localPets"
+          :key="pet.id"
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <!-- pet -->
           <div v-if="editedPetId != pet.id" class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
@@ -91,13 +98,13 @@
 
           <!-- edit pet modal -->
           <form v-if="editedPetId == pet.id" class="bg-form" @submit.prevent="update(pet)">
-            <div class="border-b border-gray-200 dark:border-gray-800">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
               <!-- name -->
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'label'"
                   v-model="form.name"
@@ -125,7 +132,11 @@
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedPetId = 0" />
-              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-button
+                :text="$t('app.save')"
+                :state="loadingState"
+                :icon="'check'"
+                :classes="'save dark:save dark:text-gray-800'" />
             </div>
           </form>
         </li>
@@ -133,7 +144,9 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="localPets.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div
+      v-if="localPets.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="p-5 text-center">There are no pets yet.</p>
     </div>
   </div>

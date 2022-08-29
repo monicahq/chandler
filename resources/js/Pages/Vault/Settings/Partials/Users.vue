@@ -20,9 +20,9 @@
     <!-- modal to add a user -->
     <form
       v-if="addUserModalShown && localUsersInAccount.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5 dark:border-gray-800">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <!-- list of potential new users -->
@@ -47,7 +47,7 @@
       </div>
 
       <!-- permissions -->
-      <div class="border-b border-gray-200 p-5 dark:border-gray-800">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <!-- role types -->
         <div>
           <p class="mb-2">
@@ -109,24 +109,28 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" @click="addUserModalShown = false" />
-        <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-button
+          :text="$t('app.add')"
+          :state="loadingState"
+          :icon="'plus'"
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
 
     <!-- blank state -->
     <div
       v-if="addUserModalShown && localUsersInAccount.length == 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-800 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
       <p>{{ $t('vault.settings_users_invite_blank') }}</p>
     </div>
 
     <!-- list of existing users -->
     <div class="mb-6 rounded border text-sm">
-      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-white">
+      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-white dark:bg-gray-900">
         <li
           v-for="user in localUsersInVault"
           :key="user.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-800">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:border-gray-800 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="editedUser.id != user.id" class="flex items-center justify-between px-5 py-2">
             <span>{{ user.name }}</span>
 
@@ -144,8 +148,8 @@
           </div>
 
           <!-- change permission modal -->
-          <form v-if="editedUser.id == user.id" class="bg-white" @submit.prevent="update(user)">
-            <div class="border-b border-gray-200 p-5 dark:border-gray-800">
+          <form v-if="editedUser.id == user.id" class="bg-white dark:bg-gray-900" @submit.prevent="update(user)">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700 dark:border-gray-800">
               <errors :errors="form.errors" />
 
               <p class="mb-2">
@@ -212,7 +216,7 @@
                 :text="$t('vault.settings_users_edit_permission_cta')"
                 :state="loadingState"
                 :icon="'check'"
-                :classes="'save'" />
+                :classes="'save dark:save dark:text-gray-800'" />
             </div>
           </form>
         </li>

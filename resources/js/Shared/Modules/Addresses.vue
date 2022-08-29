@@ -1,7 +1,7 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -34,14 +34,14 @@
       <!-- add an address modal -->
       <form
         v-if="createAddressModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
         @submit.prevent="submit()">
-        <div class="border-b border-gray-200 dark:border-gray-800">
+        <div class="border-b border-gray-200 dark:border-gray-700">
           <div v-if="form.errors.length > 0" class="p-5">
             <errors :errors="form.errors" />
           </div>
 
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <dropdown
               v-model="form.address_type_id"
               :data="data.address_types"
@@ -52,7 +52,7 @@
           </div>
 
           <!-- street + city -->
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'street'"
               v-model="form.street"
@@ -78,7 +78,7 @@
           </div>
 
           <!-- province + postal code + country -->
-          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               v-model="form.province"
               :label="$t('contact.addresses_province')"
@@ -129,16 +129,22 @@
 
         <div class="flex justify-between p-5">
           <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createAddressModalShown = false" />
-          <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+          <pretty-button
+            :text="$t('app.save')"
+            :state="loadingState"
+            :icon="'plus'"
+            :classes="'save dark:save dark:text-gray-800'" />
         </div>
       </form>
 
       <!-- list of addresses -->
-      <div v-if="localActiveAddresses.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
+      <div
+        v-if="localActiveAddresses.length > 0"
+        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div
           v-for="address in localActiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
@@ -174,12 +180,12 @@
 
           <!-- edit address -->
           <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
-            <div class="border-b border-gray-200 dark:border-gray-800">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <dropdown
                   v-model="form.address_type_id"
                   :data="data.address_types"
@@ -190,7 +196,7 @@
               </div>
 
               <!-- street + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'street'"
                   v-model="form.street"
@@ -216,7 +222,7 @@
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   v-model="form.province"
                   :label="$t('contact.addresses_province')"
@@ -267,14 +273,20 @@
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedAddressId = 0" />
-              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+              <pretty-button
+                :text="$t('app.save')"
+                :state="loadingState"
+                :icon="'plus'"
+                :classes="'save dark:save dark:text-gray-800'" />
             </div>
           </form>
         </div>
       </div>
 
       <!-- blank state -->
-      <div v-if="localActiveAddresses.length == 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
+      <div
+        v-if="localActiveAddresses.length == 0"
+        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <p class="p-5 text-center">
           {{ $t('contact.addresses_blank') }}
         </p>
@@ -291,11 +303,11 @@
       <!-- list of previous addresses -->
       <div
         v-if="localInactiveAddresses.length > 0 && inactiveAddressesShown"
-        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white">
+        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div
           v-for="address in localInactiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
@@ -331,12 +343,12 @@
 
           <!-- edit address -->
           <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
-            <div class="border-b border-gray-200 dark:border-gray-800">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <dropdown
                   v-model="form.address_type_id"
                   :data="data.address_types"
@@ -347,7 +359,7 @@
               </div>
 
               <!-- street + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'street'"
                   v-model="form.street"
@@ -373,7 +385,7 @@
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   v-model="form.province"
                   :label="$t('contact.addresses_province')"
@@ -424,7 +436,11 @@
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedAddressId = 0" />
-              <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+              <pretty-button
+                :text="$t('app.save')"
+                :state="loadingState"
+                :icon="'plus'"
+                :classes="'save dark:save dark:text-gray-800'" />
             </div>
           </form>
         </div>

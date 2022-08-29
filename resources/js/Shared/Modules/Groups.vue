@@ -1,7 +1,7 @@
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -25,14 +25,14 @@
 
     <form
       v-if="addGroupMode"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-800">
+      <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- group type -->
           <dropdown
             v-model="form.group_id"
@@ -45,7 +45,7 @@
         </div>
 
         <!-- name -->
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5">
+        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <text-input
             :ref="'newName'"
             v-model="form.name"
@@ -59,7 +59,7 @@
             @esc-key-pressed="addPetModalShown = false" />
         </div>
 
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5">
+        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- group type -->
           <dropdown
             v-model="form.group_type_id"
@@ -85,16 +85,20 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addGroupMode = false" />
-        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-button
+          :text="$t('app.save')"
+          :state="loadingState"
+          :icon="'plus'"
+          :classes="'save dark:save dark:text-gray-800'" />
       </div>
     </form>
 
     <!-- groups -->
-    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0 dark:border-gray-700">
       <li
         v-for="group in filteredGroups"
         :key="group.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <div>
           <p>{{ group.name }}</p>
 
@@ -115,7 +119,9 @@
     </ul>
 
     <!-- blank state -->
-    <div v-if="localGroups.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div
+      v-if="localGroups.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="p-5 text-center">The contact does not belong to any group yet.</p>
     </div>
   </div>

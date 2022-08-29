@@ -1,5 +1,6 @@
 <template>
-  <div class="relative border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900 sm:rounded-lg">
+  <div
+    class="relative border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900 dark:bg-gray-900 sm:rounded-lg">
     <span
       class="absolute rounded border bg-blue-50 px-2 py-0 text-xs text-blue-500 dark:bg-blue-800 dark:text-blue-300"
       style="top: -10px; left: 10px">
@@ -7,7 +8,7 @@
     </span>
     <div class="p-3 pt-5" />
     <div
-      class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-800 dark:text-gray-400">
+      class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-700 dark:border-gray-800 dark:text-gray-400 dark:text-gray-400">
       <div>
         <div class="relative mr-3 inline">
           <svg

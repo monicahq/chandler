@@ -133,7 +133,7 @@ export default {
 
   created() {
     this.localInputClasses =
-      'dark:text-gray-100 border-gray-300 dark:border-gray-700 focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900 rounded-md shadow-sm disabled:bg-slate-50 disabled:dark:bg-slate-900 ' +
+      'dark:text-gray-100 border-gray-300 dark:border-gray-700 focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900 rounded-md shadow-sm disabled:bg-slate-50 dark:bg-slate-900 disabled:dark:bg-slate-900 ' +
       this.inputClass;
   },
 
