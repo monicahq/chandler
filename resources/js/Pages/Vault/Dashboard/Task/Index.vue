@@ -1,70 +1,26 @@
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
-    <!-- breadcrumb -->
-    <nav class="bg-white sm:mt-20 sm:border-b">
-      <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
-        <div class="flex items-baseline justify-between space-x-6">
-          <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">
-              {{ $t('app.breadcrumb_location') }}
-            </li>
-            <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.tasks" class="text-blue-500 hover:underline">
-                {{ $t('app.layout_menu_tasks') }}
-              </inertia-link>
-            </li>
-            <li class="relative mr-2 inline">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon-breadcrumb relative inline h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </li>
-            <li class="inline">
-              {{ $t('app.breadcrumb_dashboard_reminders') }}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <main class="sm:mt-18 relative">
+    <main class="relative sm:mt-24">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title -->
         <div class="mb-5 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
           <div class="mb-2 sm:mb-0">
-            <span class="relative mr-1">
+            <span class="relative">
               <svg
-                class="icon-sidebar relative inline h-4 w-4"
-                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path
-                  d="M6 6C6 5.44772 6.44772 5 7 5H17C17.5523 5 18 5.44772 18 6C18 6.55228 17.5523 7 17 7H7C6.44771 7 6 6.55228 6 6Z"
-                  fill="currentColor" />
-                <path
-                  d="M6 10C6 9.44771 6.44772 9 7 9H17C17.5523 9 18 9.44771 18 10C18 10.5523 17.5523 11 17 11H7C6.44771 11 6 10.5523 6 10Z"
-                  fill="currentColor" />
-                <path
-                  d="M7 13C6.44772 13 6 13.4477 6 14C6 14.5523 6.44771 15 7 15H17C17.5523 15 18 14.5523 18 14C18 13.4477 17.5523 13 17 13H7Z"
-                  fill="currentColor" />
-                <path
-                  d="M6 18C6 17.4477 6.44772 17 7 17H11C11.5523 17 12 17.4477 12 18C12 18.5523 11.5523 19 11 19H7C6.44772 19 6 18.5523 6 18Z"
-                  fill="currentColor" />
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M2 4C2 2.34315 3.34315 1 5 1H19C20.6569 1 22 2.34315 22 4V20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V4ZM5 3H19C19.5523 3 20 3.44771 20 4V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44771 3 5 3Z"
-                  fill="currentColor" />
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
             </span>
 
-            <span class="font-semibold">
-              {{ $t('vault.reminders_title') }}
-            </span>
+            {{ $t('vault.tasks_title') }}
           </div>
         </div>
 
@@ -91,7 +47,7 @@
                   :name="currentTask.id"
                   type="checkbox"
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                  @change="toggle(task)" />
+                  @change="toggle(currentTask)" />
 
                 <label :for="currentTask.id" class="ml-2 flex cursor-pointer items-center text-gray-900">
                   {{ currentTask.label }}
@@ -99,8 +55,8 @@
                   <!-- due date -->
                   <span
                     v-if="currentTask.due_at"
-                    :class="currentTask.due_at_late ? 'bg-red-400/10' : ''"
-                    class="ml-2 flex items-center rounded-full bg-sky-400/10 px-2 py-0.5 text-xs font-medium leading-5 text-sky-600 dark:text-sky-400">
+                    :class="currentTask.due_at_late ? 'bg-red-400/10 text-red-600' : 'bg-sky-400/10 text-sky-600'"
+                    class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 text-sky-600 dark:text-sky-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="mr-1 h-3 w-3"
@@ -113,12 +69,19 @@
                         stroke-linejoin="round"
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
+
                     <span class="">{{ currentTask.due_at }}</span>
                   </span>
                 </label>
               </div>
             </li>
           </ul>
+        </div>
+
+        <div v-if="data.length <= 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+          <p class="p-5 text-center">
+            {{ $t('vault.tasks_blank') }}
+          </p>
         </div>
       </div>
     </main>
@@ -146,13 +109,13 @@ export default {
     },
   },
 
-  data() {
-    return {};
+  methods: {
+    toggle(task) {
+      axios.put(task.url.toggle).catch((error) => {
+        this.form.errors = error.response.data;
+      });
+    },
   },
-
-  created() {},
-
-  methods: {},
 };
 </script>
 

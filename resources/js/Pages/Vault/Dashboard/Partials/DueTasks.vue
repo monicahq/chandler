@@ -20,10 +20,10 @@
     </h3>
 
     <!-- list of tasks -->
-    <div v-if="data.length > 0">
+    <div v-if="data.tasks.length > 0">
       <ul class="mb-4 rounded-lg border border-gray-200">
         <li
-          v-for="task in data"
+          v-for="task in data.tasks"
           :key="task.id"
           class="item-list flex border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
           <input
@@ -75,10 +75,18 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="data.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <div v-if="data.tasks.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
       <p class="p-5 text-center">
         {{ $t('vault.dashboard_due_tasks_blank') }}
       </p>
+    </div>
+
+    <div class="text-center">
+      <inertia-link
+        :href="data.url.index"
+        class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500">
+        {{ $t('app.view_all') }}
+      </inertia-link>
     </div>
   </div>
 </template>
