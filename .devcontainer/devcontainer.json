@@ -18,14 +18,6 @@
 
   // Set *default* container specific settings.json values on container create.
   "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
-    "sqltools.useNodeRuntime": true,
-    "sqltools.connections": [{
-      "name": "Sqlite database",
-      "driver": "SQLite",
-      "previewLimit": 50,
-      "database": "./database/database.sqlite"
-    }]
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -35,8 +27,11 @@
     "absszero.vscode-laravel-goto",
     "mohamedbenhida.laravel-intellisense",
     "mrmlnc.vscode-apache",
-    "mtxr.sqltools",
-    "mtxr.sqltools-driver-sqlite"
+    "qwtel.sqlite-viewer",
+    "calebporzio.better-phpunit",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ],
 
   // For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
