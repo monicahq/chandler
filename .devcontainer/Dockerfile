@@ -2,6 +2,16 @@
 ARG VARIANT=8
 FROM mcr.microsoft.com/vscode/devcontainers/php:dev-${VARIANT}
 
+# Install packages
+RUN set -ex; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        sqlite3 \
+        mariadb-client \
+    ; \
+    rm -rf /var/lib/apt/lists/*
+
 # Update args in docker-compose.yaml to set the UID/GID of the "vscode" user.
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -26,6 +36,8 @@ RUN set -ex; \
         zlib1g-dev \
         libzip-dev \
         libsqlite3-dev \
+        libxml2-dev \
+        libfreetype6-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -33,6 +45,8 @@ RUN set -ex; \
     docker-php-ext-install -j$(nproc) \
         intl \
         zip \
+        pdo_mysql \
+        mysqli \
         pdo_sqlite \
     ; \
     rm -rf /var/lib/apt/lists/*
