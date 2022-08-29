@@ -29,12 +29,12 @@ class VaultTasksIndexViewHelperTest extends TestCase
         ]);
         $task = ContactTask::factory()->create([
             'contact_id' => $contact->id,
-            'completed' => true,
+            'completed' => false,
             'due_at' => '2021-01-01',
         ]);
 
         $collection = VaultTasksIndexViewHelper::data($vault, $user);
-        dd($collection->toArray()[0]['tasks']);
+
         $this->assertEquals(
             [
                 0 => [
@@ -42,9 +42,8 @@ class VaultTasksIndexViewHelperTest extends TestCase
                     'label' => $task->label,
                     'due_at' => 'Jan 01, 2021',
                     'due_at_late' => true,
-                    'created_at' => 'Jan 01, 2022',
                     'url' => [
-                        'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id,
+                        'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id.'/toggle',
                     ],
                 ],
             ],

@@ -122,8 +122,8 @@
                 </inertia-link>
 
                 <inertia-link
-                  :href="layoutData.vault.url.contacts"
-                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
+                  :href="layoutData.vault.url.tasks"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Task') }"
                   class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   {{ $t('app.layout_menu_tasks') }}
                 </inertia-link>

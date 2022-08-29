@@ -5,6 +5,7 @@ namespace App\Vault\ManageTasks\Web\ViewHelpers;
 use App\Helpers\DateHelper;
 use App\Models\User;
 use App\Models\Vault;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -29,8 +30,8 @@ class VaultTasksIndexViewHelper
                 $tasksCollection->push([
                     'id' => $task->id,
                     'label' => $task->label,
-                    'due_at' => $task->due_at ? DateHelper::format($task->due_at, $user) : null,
-                    'due_at_late' => optional($task->due_at)->isPast() ?? false,
+                    'due_at' => $task->due_at ? DateHelper::format(Carbon::parse($task->due_at), $user) : null,
+                    'due_at_late' => optional(Carbon::parse($task->due_at))->isPast() ?? false,
                     'url' => [
                         'toggle' => route('contact.task.toggle', [
                             'vault' => $contact->vault_id,
@@ -39,6 +40,10 @@ class VaultTasksIndexViewHelper
                         ]),
                     ],
                 ]);
+            }
+
+            if ($tasksCollection->count() <= 0) {
+                continue;
             }
 
             $contactsCollection->push([
