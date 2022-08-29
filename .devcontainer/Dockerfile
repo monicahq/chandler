@@ -8,7 +8,6 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         sqlite3 \
-        mariadb-client \
     ; \
     rm -rf /var/lib/apt/lists/*
 
@@ -36,8 +35,6 @@ RUN set -ex; \
         zlib1g-dev \
         libzip-dev \
         libsqlite3-dev \
-        libxml2-dev \
-        libfreetype6-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -45,11 +42,9 @@ RUN set -ex; \
     docker-php-ext-install -j$(nproc) \
         intl \
         zip \
-        pdo_mysql \
-        mysqli \
         pdo_sqlite \
     ; \
     rm -rf /var/lib/apt/lists/*
 
 # [Optional] Uncomment this line to install global node packages.
-RUN npm install -g --unsafe-perm yarn sqlite3
+RUN npm install -g --unsafe-perm yarn
