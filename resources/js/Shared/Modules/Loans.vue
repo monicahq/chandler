@@ -41,7 +41,7 @@
                     value="object"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="object"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -58,7 +58,7 @@
                     value="monetary"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="monetary"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -208,7 +208,7 @@
 
         <div
           v-if="editedLoanId != loan.id"
-          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800">
+          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
           <div class="border-b border-gray-200 px-3 py-2 dark:border-gray-700">
             <div class="flex items-center justify-between">
               <div>
@@ -277,7 +277,7 @@
                       value="object"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="object"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -294,7 +294,7 @@
                       value="monetary"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="monetary"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">

@@ -63,7 +63,7 @@
               value="full_date"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="full_date"
               class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -89,7 +89,7 @@
               value="month_day"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="month_day"
               class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -132,7 +132,7 @@
                 value="one_time"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="one_time"
                 class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -147,7 +147,7 @@
                 value="recurring"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="recurring"
                 class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -269,7 +269,7 @@
                     value="full_date"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="full_date"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -295,7 +295,7 @@
                     value="month_day"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="month_day"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -337,7 +337,7 @@
                       value="one_time"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="one_time"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -352,7 +352,7 @@
                       value="recurring"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="recurring"
                       class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">

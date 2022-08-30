@@ -12,7 +12,7 @@
     <!-- contact information page | can't be removed -->
     <div
       :class="isSelectedId == data.template_page_contact_information.id ? 'border-2	bg-sky-100' : ''"
-      class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800"
+      class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
       @click="selectPage(data.template_page_contact_information)">
       <!-- detail of a page -->
       <div>
@@ -46,7 +46,7 @@
         <div
           v-if="renamePageModalShownId != element.id"
           :class="isSelectedId == element.id ? 'border-2	bg-sky-100' : ''"
-          class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800"
+          class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @click="selectPage(element)">
           <!-- icon to move position -->
           <div class="mr-2">
@@ -89,7 +89,7 @@
         <!-- modal to edit the page -->
         <form
           v-else
-          class="item-list mb-2 rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800"
+          class="item-list mb-2 rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @submit.prevent="update(element)">
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />

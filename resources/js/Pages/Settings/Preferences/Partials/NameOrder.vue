@@ -61,7 +61,7 @@
             value="%first_name% %last_name%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name"
             class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -76,7 +76,7 @@
             value="%last_name% %first_name%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="last_name_first_name"
             class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -92,7 +92,7 @@
             value="%first_name% %last_name% (%nickname%)"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name_nickname"
             class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -107,7 +107,7 @@
             value="%nickname%"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_nickname') }}
             <span class="ml-4 font-normal text-gray-500"> 007 </span>
@@ -118,7 +118,7 @@
             id="custom"
             name="name-order"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500"
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
             @click="focusNameOrder" />
           <label for="custom" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('settings.user_preferences_name_order_custom') }}

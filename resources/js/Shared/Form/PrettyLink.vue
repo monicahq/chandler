@@ -1,7 +1,7 @@
 <template>
   <inertia-link
     :class="classes"
-    class="dark:box-s relative bg-white text-sm dark:bg-gray-900 dark:bg-gray-700 dark:text-gray-300"
+    class="dark:box-s relative bg-white text-sm dark:bg-gray-900 dark:text-gray-300"
     :href="href">
     <!-- + icon -->
     <svg

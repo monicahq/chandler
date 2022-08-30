@@ -59,7 +59,7 @@
                   value="audio"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="audio"
                   class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -74,7 +74,7 @@
                   value="video"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="video"
                   class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -97,7 +97,7 @@
                 value="me"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 I called
               </label>
@@ -110,7 +110,7 @@
                 value="me_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="me_not_answered"
                 class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -127,7 +127,7 @@
                 value="contact"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="contact"
                 class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -142,7 +142,7 @@
                 value="contact_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="contact_not_answered"
                 class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -339,7 +339,7 @@
                       value="audio"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="audio"
                       class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -354,7 +354,7 @@
                       value="video"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="video"
                       class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -377,7 +377,7 @@
                     value="me"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="me"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -392,7 +392,7 @@
                     value="me_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="me_not_answered"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -409,7 +409,7 @@
                     value="contact"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="contact"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -424,7 +424,7 @@
                     value="contact_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="contact_not_answered"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">

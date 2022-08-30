@@ -97,7 +97,7 @@
         </nav>
 
         <!-- vault sub menu -->
-        <nav v-if="insideVault" class="bg-white dark:border-slate-300/10 dark:bg-gray-900 dark:bg-gray-700 sm:border-b">
+        <nav v-if="insideVault" class="bg-white dark:border-slate-300/10 dark:bg-gray-900 sm:border-b">
           <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
             <div class="flex items-baseline justify-between space-x-6">
               <div>

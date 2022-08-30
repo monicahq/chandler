@@ -9,7 +9,7 @@
     <!-- title, if it exists -->
     <div
       v-if="note.title"
-      class="font-semibol mb-1 border-b border-gray-200 p-3 pt-5 text-xs text-gray-600 dark:border-gray-700 dark:border-gray-800 dark:text-gray-400 dark:text-gray-400">
+      class="font-semibol mb-1 border-b border-gray-200 p-3 pt-5 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-400 dark:text-gray-400">
       {{ note.title }}
     </div>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div
-      class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:border-gray-800 dark:bg-slate-900 dark:text-gray-400 dark:text-gray-400 hover:dark:bg-slate-800 hover:dark:bg-slate-900">
+      class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:text-gray-400 hover:dark:bg-slate-800 hover:dark:bg-slate-900">
       <div>
         <!-- emotion -->
         <div v-if="note.emotion" class="relative mr-3 inline">

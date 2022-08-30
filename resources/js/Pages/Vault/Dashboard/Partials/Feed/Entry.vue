@@ -17,7 +17,7 @@
         quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
       </p>
     </div>
-    <div class="flex border-t border-gray-200 px-3 py-2 dark:border-gray-700 dark:border-gray-800">
+    <div class="flex border-t border-gray-200 px-3 py-2 dark:border-gray-700">
       <div class="mr-3">
         <span class="relative mr-1 text-sm text-gray-500">
           <svg
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div
-      class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-700 dark:border-gray-800 dark:text-gray-400 dark:text-gray-400">
+      class="flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-400 dark:text-gray-400">
       <div>
         <div class="relative mr-3 inline">
           <svg

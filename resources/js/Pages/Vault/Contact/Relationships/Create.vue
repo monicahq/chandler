@@ -5,7 +5,7 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400 dark:text-slate-200">
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
@@ -123,7 +123,7 @@
                       value="unknown"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="unknown"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -139,7 +139,7 @@
                       value="name"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500"
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
                       @click="displayContactNameField" />
                     <label
                       for="name"
@@ -205,7 +205,7 @@
                       value="contact"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500"
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
                       @click="displayContactSelector" />
                     <label
                       for="contact"

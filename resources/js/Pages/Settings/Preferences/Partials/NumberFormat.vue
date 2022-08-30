@@ -36,7 +36,7 @@
             :value="numberFormat.format"
             name="date-format"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             :for="'input' + numberFormat.id"
             class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">

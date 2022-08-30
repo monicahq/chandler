@@ -5,7 +5,7 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400 dark:text-slate-200">
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
@@ -104,7 +104,7 @@
             <template #item="{ element }">
               <div v-if="editGiftStateId != element.id" class="">
                 <div
-                  class="item-list mb-2 flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  class="item-list mb-2 flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
                   <!-- icon to move position -->
                   <div class="mr-2 flex">
                     <svg

@@ -8,7 +8,7 @@
     <div class="p-3 pt-5">
       <p class="inline">Went to the theater</p>
     </div>
-    <div class="border-t border-gray-200 px-3 py-2 dark:border-gray-700 dark:border-gray-800">
+    <div class="border-t border-gray-200 px-3 py-2 dark:border-gray-700">
       <span class="mr-3 text-sm text-gray-500"> With </span>
       <div class="relative mr-3 inline text-sm">
         <small-contact top="4px;" />
@@ -17,7 +17,7 @@
         <small-contact top="4px;" />
       </div>
     </div>
-    <div class="flex border-t border-gray-200 px-3 py-2 dark:border-gray-700 dark:border-gray-800">
+    <div class="flex border-t border-gray-200 px-3 py-2 dark:border-gray-700">
       <div class="mr-3">
         <span class="relative mr-1 text-sm text-gray-500">
           <svg
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div
-      class="dark: flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-700 dark:border-gray-800 dark:text-gray-400">
+      class="dark: flex justify-between border-t border-gray-200 px-3 py-2 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-400">
       <div>
         <div class="relative mr-3 inline">
           <svg

@@ -15,8 +15,7 @@
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <!-- actions -->
-            <div
-              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900">
+            <div class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <div v-if="!addMode" class="p-3">
                 <p class="mb-5 text-center dark:text-gray-100"><span class="mr-2">👋</span> Good evening, Regis.</p>
 

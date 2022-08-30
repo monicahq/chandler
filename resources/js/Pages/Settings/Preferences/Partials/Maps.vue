@@ -36,7 +36,7 @@
             :value="mapType.value"
             name="date-format"
             type="radio"
-            class="relative mr-3 h-4 w-4 border-gray-300 text-sky-500" />
+            class="relative mr-3 h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <div>
             <label
               :for="'input' + mapType.id"

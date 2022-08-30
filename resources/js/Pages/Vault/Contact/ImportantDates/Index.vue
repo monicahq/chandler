@@ -5,7 +5,7 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400 dark:text-slate-200">
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
@@ -101,7 +101,7 @@
                   value="full_date"
                   name="date"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="full_date"
                   class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -127,7 +127,7 @@
                   value="month_day"
                   name="date"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="month_day"
                   class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -162,7 +162,7 @@
                   value="year"
                   name="date"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500"
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
                   @selected="showyear" />
                 <label
                   for="year"
@@ -208,7 +208,7 @@
                     value="recurring_year"
                     name="reminder-frequency"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="recurring_year"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -223,7 +223,7 @@
                     value="one_time"
                     name="reminder-frequency"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="one_time"
                     class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -321,7 +321,7 @@
                       value="full_date"
                       name="date"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="full_date"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -351,7 +351,7 @@
                       value="month_day"
                       name="date"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="month_day"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -386,7 +386,7 @@
                       value="year"
                       name="date"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500"
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
                       @selected="showAge" />
                     <label
                       for="year"

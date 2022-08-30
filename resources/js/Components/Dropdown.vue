@@ -43,7 +43,7 @@ export default {
     },
     contentClasses: {
       type: [String, Array],
-      default: () => ['py-1', 'bg-white dark:bg-gray-900'],
+      default: () => ['py-1', 'bg-white', 'dark:bg-gray-900'],
     },
   },
 
