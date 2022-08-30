@@ -120,7 +120,7 @@
     <!-- blank state -->
     <div
       v-if="addUserModalShown && localUsersInAccount.length == 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900">
       <p>{{ $t('vault.settings_users_invite_blank') }}</p>
     </div>
 

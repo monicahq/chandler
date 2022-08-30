@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="relative border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900 dark:bg-gray-900 sm:rounded-lg">
+  <div class="relative border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900 sm:rounded-lg">
     <span
       class="absolute rounded border bg-blue-50 px-2 py-0 text-xs text-blue-500 dark:bg-blue-800 dark:text-blue-300"
       style="top: -10px; left: 10px">
@@ -23,7 +22,7 @@
         <span class="relative mr-1 text-sm text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon-location relative inline h-5 w-5 text-gray-400 dark:text-gray-600 dark:text-gray-400"
+            class="icon-location relative inline h-5 w-5 text-gray-400 dark:text-gray-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -45,7 +44,7 @@
         <span class="relative mr-1 text-sm text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon-location relative inline h-5 w-5 text-gray-400 dark:text-gray-600 dark:text-gray-400"
+            class="icon-location relative inline h-5 w-5 text-gray-400 dark:text-gray-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -73,7 +72,7 @@
         <div class="relative mr-3 inline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon-date relative inline h-4 w-4 text-gray-400 dark:text-gray-600 dark:text-gray-400"
+            class="icon-date relative inline h-4 w-4 text-gray-400 dark:text-gray-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">

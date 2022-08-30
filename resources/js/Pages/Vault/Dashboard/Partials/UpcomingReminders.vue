@@ -22,7 +22,7 @@
     <!-- list of reminders -->
     <div v-if="data.reminders.length > 0">
       <ul
-        class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
+        class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900">
         <li
           v-for="reminder in data.reminders"
           :key="reminder.id"
@@ -49,7 +49,7 @@
     <!-- blank state -->
     <div
       v-if="data.reminders.length == 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900">
       <p class="p-5 text-center">
         {{ $t('vault.dashboard_reminders_blank') }}
       </p>
