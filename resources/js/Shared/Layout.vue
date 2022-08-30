@@ -4,7 +4,7 @@
       <div class="fixed top-0 z-10 w-full">
         <!-- main nav -->
         <nav
-          class="max-w-8xl mx-auto flex h-10 items-center justify-between border-b bg-gray-50 px-3 dark:border-slate-600 dark:bg-gray-700 dark:text-slate-200 sm:px-6">
+          class="max-w-8xl mx-auto flex h-10 items-center justify-between border-b bg-gray-50 px-3 dark:border-slate-600 dark:bg-gray-800 dark:text-slate-200 sm:px-6">
           <div
             class="dark:highlight-white/5 items-center rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm dark:border-0 dark:border-gray-700 dark:bg-gray-900 dark:bg-gray-400/20 sm:flex">
             <inertia-link :href="layoutData.url.vaults" class="flex-shrink-0 dark:text-sky-400">
@@ -43,7 +43,7 @@
             </svg>
             <input
               type="text"
-              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:bg-slate-800 dark:hover:bg-slate-700 sm:text-sm"
+              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:bg-slate-900 dark:hover:bg-slate-700 sm:text-sm"
               :placeholder="$t('app.layout_menu_search')"
               @focus="goToSearchPage" />
           </div>
