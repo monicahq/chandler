@@ -81,7 +81,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGenderModalShown = false" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3 dark:text-gray-900'"
+              @click="createGenderModalShown = false" />
             <pretty-button
               :text="'Create gender'"
               :state="loadingState"
@@ -135,7 +138,10 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="renameGenderModalShownId = 0" />
+                <pretty-span
+                  :text="$t('app.cancel')"
+                  :classes="'mr-3 dark:text-gray-900'"
+                  @click.prevent="renameGenderModalShownId = 0" />
                 <pretty-button
                   :text="$t('app.rename')"
                   :state="loadingState"

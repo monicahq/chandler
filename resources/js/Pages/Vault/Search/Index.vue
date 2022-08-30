@@ -6,7 +6,7 @@
           class="mb-8 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:bg-gray-900"
           @submit.prevent="search">
           <div
-            class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:border-gray-800 dark:bg-blue-900">
+            class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:border-gray-800 dark:bg-blue-900 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">Search something in the vault</h1>
           </div>
           <div class="p-5">

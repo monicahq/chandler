@@ -26,7 +26,7 @@
     <!-- add a note modal -->
     <form
       v-if="createGoalModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
@@ -44,7 +44,10 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGoalModalShown = false" />
+        <pretty-span
+          :text="$t('app.cancel')"
+          :classes="'mr-3 dark:text-gray-900'"
+          @click="createGoalModalShown = false" />
         <pretty-button
           :text="$t('app.save')"
           :state="loadingState"

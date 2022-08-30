@@ -81,7 +81,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createAddressTypeModalShown = false" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3 dark:text-gray-900'"
+              @click="createAddressTypeModalShown = false" />
             <pretty-button
               :text="'Create address type'"
               :state="loadingState"

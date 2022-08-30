@@ -81,7 +81,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGiftOccasionModalShown = false" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3 dark:text-gray-900'"
+              @click="createGiftOccasionModalShown = false" />
             <pretty-button
               :text="$t('app.save')"
               :state="loadingState"
@@ -161,7 +164,10 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editGiftOccasionId = 0" />
+                  <pretty-span
+                    :text="$t('app.cancel')"
+                    :classes="'mr-3 dark:text-gray-900'"
+                    @click.prevent="editGiftOccasionId = 0" />
                   <pretty-button
                     :text="$t('app.rename')"
                     :state="loadingState"

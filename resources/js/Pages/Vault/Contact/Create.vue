@@ -36,7 +36,7 @@
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700">
+          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">
               {{ $t('vault.create_contact_title') }}
             </h1>
@@ -134,37 +134,37 @@
             <div class="flex flex-wrap text-xs">
               <span
                 v-if="!showMiddleNameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayMiddleNameField">
                 {{ $t('vault.create_contact_add_middle_name') }}
               </span>
               <span
                 v-if="!showNicknameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayNicknameField">
                 {{ $t('vault.create_contact_add_nickname') }}
               </span>
               <span
                 v-if="!showMaidenNameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayMaidenNameField">
                 {{ $t('vault.create_contact_add_maiden_name') }}
               </span>
               <span
                 v-if="data.genders.length > 0 && !showGenderField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayGenderField">
                 {{ $t('vault.create_contact_add_gender') }}
               </span>
               <span
                 v-if="data.pronouns.length > 0 && !showPronounField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayPronounField">
                 {{ $t('vault.create_contact_add_pronoun') }}
               </span>
               <span
                 v-if="data.templates.length > 0 && !showTemplateField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                 @click="displayTemplateField">
                 {{ $t('vault.create_contact_add_change_template') }}
               </span>

@@ -26,7 +26,7 @@
     <!-- add a task modal -->
     <form
       v-if="createTaskModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
@@ -71,7 +71,10 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createTaskModalShown = false" />
+        <pretty-span
+          :text="$t('app.cancel')"
+          :classes="'mr-3 dark:text-gray-900'"
+          @click="createTaskModalShown = false" />
         <pretty-button
           :text="$t('app.save')"
           :state="loadingState"
@@ -169,7 +172,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedTaskId = 0" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3 dark:text-gray-900'" @click="editedTaskId = 0" />
             <pretty-button
               :text="'Update'"
               :state="loadingState"

@@ -69,7 +69,10 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="setupTelegramModalShown = false" />
+        <pretty-span
+          :text="$t('app.cancel')"
+          :classes="'mr-3 dark:text-gray-900'"
+          @click.prevent="setupTelegramModalShown = false" />
         <pretty-button
           :text="$t('app.add')"
           :state="loadingState"

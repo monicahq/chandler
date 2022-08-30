@@ -32,7 +32,7 @@
     <!-- add a reminder modal -->
     <form
       v-if="addReminderModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
@@ -183,7 +183,10 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addReminderModalShown = false" />
+        <pretty-span
+          :text="$t('app.cancel')"
+          :classes="'mr-3 dark:text-gray-900'"
+          @click="addReminderModalShown = false" />
         <pretty-button
           :text="'Add date'"
           :state="loadingState"
@@ -385,7 +388,10 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedReminderId = 0" />
+              <pretty-span
+                :text="$t('app.cancel')"
+                :classes="'mr-3 dark:text-gray-900'"
+                @click="editedReminderId = 0" />
               <pretty-button
                 :text="$t('app.save')"
                 :state="loadingState"

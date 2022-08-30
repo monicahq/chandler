@@ -104,7 +104,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3 dark:text-gray-900'"
+              @click="createGroupTypeModalShown = false" />
             <pretty-button
               :text="$t('app.save')"
               :state="loadingState"
@@ -239,7 +242,10 @@
                           </div>
 
                           <div class="flex justify-between p-5">
-                            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="roleGroupTypeId = 0" />
+                            <pretty-span
+                              :text="$t('app.cancel')"
+                              :classes="'mr-3 dark:text-gray-900'"
+                              @click="roleGroupTypeId = 0" />
                             <pretty-button
                               :text="$t('app.rename')"
                               :state="loadingState"
@@ -282,7 +288,10 @@
                       </div>
 
                       <div class="flex justify-between p-5">
-                        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createRoleModalShown = false" />
+                        <pretty-span
+                          :text="$t('app.cancel')"
+                          :classes="'mr-3 dark:text-gray-900'"
+                          @click="createRoleModalShown = false" />
                         <pretty-button
                           :text="$t('app.save')"
                           :state="loadingState"
@@ -331,7 +340,10 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editGroupTypeId = 0" />
+                  <pretty-span
+                    :text="$t('app.cancel')"
+                    :classes="'mr-3 dark:text-gray-900'"
+                    @click.prevent="editGroupTypeId = 0" />
                   <pretty-button
                     :text="$t('app.rename')"
                     :state="loadingState"

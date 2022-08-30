@@ -28,7 +28,7 @@
         @keydown.esc="sendEscKey"
         @focus="showMaxLength"
         @blur="displayMaxLength = false" />
-      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs">
+      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs dark:text-gray-900">
         {{ charactersLeft }}
       </span>
     </div>

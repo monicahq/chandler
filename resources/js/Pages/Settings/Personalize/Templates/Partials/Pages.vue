@@ -108,7 +108,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="renamePageModalShownId = 0" />
+            <pretty-span
+              :text="$t('app.cancel')"
+              :classes="'mr-3 dark:text-gray-900'"
+              @click.prevent="renamePageModalShownId = 0" />
             <pretty-button
               :text="$t('app.rename')"
               :state="loadingState"
@@ -141,7 +144,10 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createPageModalShown = false" />
+        <pretty-span
+          :text="$t('app.cancel')"
+          :classes="'mr-3 dark:text-gray-900'"
+          @click="createPageModalShown = false" />
         <pretty-button
           :text="$t('app.add')"
           :state="loadingState"

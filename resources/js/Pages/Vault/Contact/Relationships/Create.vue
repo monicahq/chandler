@@ -49,7 +49,7 @@
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700">
+          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">Add a relationship</h1>
           </div>
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -172,25 +172,25 @@
                     <div class="mb-4 flex flex-wrap text-xs">
                       <span
                         v-if="!showLastNameField"
-                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                         @click="displayLastNameField">
                         + last name
                       </span>
                       <span
                         v-if="!showMiddleNameField"
-                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                         @click="displayMiddleNameField">
                         + middle name
                       </span>
                       <span
                         v-if="!showNicknameField"
-                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                         @click="displayNicknameField">
                         + nickname
                       </span>
                       <span
                         v-if="!showMaidenNameField"
-                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                        class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                         @click="displayMaidenNameField">
                         + maiden name
                       </span>
@@ -288,13 +288,13 @@
               <div class="flex flex-wrap text-xs">
                 <span
                   v-if="data.genders.length > 0 && !showGenderField"
-                  class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                  class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                   @click="displayGenderField">
                   + gender
                 </span>
                 <span
                   v-if="data.pronouns.length > 0 && !showPronounField"
-                  class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300"
+                  class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
                   @click="displayPronounField">
                   + pronoun
                 </span>

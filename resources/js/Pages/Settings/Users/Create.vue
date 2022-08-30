@@ -53,7 +53,7 @@ k
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
           <!-- title -->
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700">
+          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="mb-1 text-center text-2xl font-medium">
               {{ $t('settings.users_management_new_title') }}
             </h1>
