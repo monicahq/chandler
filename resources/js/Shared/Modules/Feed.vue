@@ -5,7 +5,7 @@
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="icon-avatar relative w-6">
-            <avatar :data="feedItem.author.avatar" :classes="'rounded-full border-gray-200 border relative h-5 w-5'" />
+            <avatar :data="feedItem.author.avatar" :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5'" />
           </div>
 
           <div>
