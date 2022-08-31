@@ -17,7 +17,7 @@
                 class="font-medium text-gray-800 dark:text-gray-200 hover:underline"
                 >{{ feedItem.author.name }}</inertia-link
               >
-              <span v-else class="font-medium text-gray-800">{{ feedItem.author.name }}</span>
+              <span v-else class="font-medium text-gray-800 dark:text-gray-200">{{ feedItem.author.name }}</span>
 
               <!-- action done -->
               <span class="ml-2">{{ feedItem.sentence }}</span>
