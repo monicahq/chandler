@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg border border-gray-300">
+  <div class="rounded-lg border border-gray-300 dark:border-gray-700">
     <!-- contact information -->
     <div v-if="!contactViewMode" class="flex items-center border-b border-gray-300 px-3 py-2 text-sm">
       <avatar :data="data.contact.avatar" :classes="'rounded-full border-gray-200 border relative h-5 w-5 mr-2'" />
