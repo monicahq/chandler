@@ -5,7 +5,7 @@
       <avatar :data="data.contact.avatar" :classes="'rounded-full border-gray-200 border relative h-5 w-5 mr-2'" />
 
       <div class="flex flex-col">
-        <inertia-link :href="data.contact.url" class="text-gray-800 hover:underline">{{
+        <inertia-link :href="data.contact.url" class="text-gray-800 dark:text-gray-200 hover:underline">{{
           data.contact.name
         }}</inertia-link>
       </div>
