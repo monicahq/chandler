@@ -3,6 +3,7 @@
 namespace App\Vault\ManageTasks\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
@@ -13,12 +14,18 @@ class VaultTasksIndexViewHelper
 {
     public static function data(Vault $vault, User $user): Collection
     {
-        $contacts = $vault->contacts()
-            ->orderBy('last_name', 'asc')
+        $contacts = DB::table('contacts')
+            ->join('contact_tasks', 'contact_tasks.contact_id', '=', 'contacts.id')
+            ->select('contacts.id', 'contacts.vault_id')
+            ->where('contacts.vault_id', $vault->id)
+            ->where('contact_tasks.completed', false)
+            ->orderBy('contacts.last_name', 'asc')
             ->get();
 
         $contactsCollection = collect();
         foreach ($contacts as $contact) {
+            $contact = Contact::find($contact->id);
+
             $tasks = DB::table('contact_tasks')
                 ->where('completed', false)
                 ->where('contact_id', $contact->id)
