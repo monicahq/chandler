@@ -20,9 +20,12 @@ use App\Vault\ManageVault\Services\CreateVault;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class SetupDummyAccount extends Command
 {
+    use ConfirmableTrait;
+
     protected ?\Faker\Generator $faker;
 
     protected User $firstUser;
@@ -63,7 +66,7 @@ class SetupDummyAccount extends Command
 
     private function start(): void
     {
-        if (! $this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
+        if (! $this->confirmToProceed('Are you sure you want to proceed? This will delete ALL data in your environment.', true)) {
             exit;
         }
 

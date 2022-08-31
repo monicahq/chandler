@@ -1,13 +1,13 @@
 // Update the VARIANT arg in docker-compose.yml to pick a PHP version: 7, 7.3, 7.4
 {
-  "name": "PHP & SQLite",
+  "name": "PHP & SQLite with dummy account",
   "service": "app",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "dockerComposeFile": "docker-compose.yaml",
 
   "build": {
-    "dockerfile": "Dockerfile",
+    "dockerfile": "../Dockerfile",
     // Update 'VARIANT' to pick a PHP version: 8, 8.0, 8.1
     "args": {
       "VARIANT": "8",
@@ -38,7 +38,7 @@
   //"forwardPorts": [8080, 8000],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": ".devcontainer/postCreate.sh"
+  "postCreateCommand": ".devcontainer/postCreate.sh dummy"
 
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
   // "remoteUser": "vscode"
