@@ -37,7 +37,8 @@ class SetupDummyAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'monica:dummy';
+    protected $signature = 'monica:dummy
+                            {--force : Force the operation to run.}';
 
     /**
      * The console command description.
