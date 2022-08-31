@@ -5,7 +5,9 @@
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="icon-avatar relative w-6">
-            <avatar :data="feedItem.author.avatar" :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5'" />
+            <avatar
+              :data="feedItem.author.avatar"
+              :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5'" />
           </div>
 
           <div>
@@ -14,7 +16,7 @@
               <inertia-link
                 v-if="feedItem.author.url"
                 :href="feedItem.author.url"
-                class="font-medium text-gray-800 dark:text-gray-200 hover:underline"
+                class="font-medium text-gray-800 hover:underline dark:text-gray-200"
                 >{{ feedItem.author.name }}</inertia-link
               >
               <span v-else class="font-medium text-gray-800 dark:text-gray-200">{{ feedItem.author.name }}</span>
