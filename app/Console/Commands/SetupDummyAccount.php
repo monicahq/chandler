@@ -22,6 +22,9 @@ use Faker\Factory as Faker;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 
+/**
+ * @codeCoverageIgnore
+ */
 class SetupDummyAccount extends Command
 {
     use ConfirmableTrait;
