@@ -14,7 +14,7 @@
               <inertia-link
                 v-if="feedItem.author.url"
                 :href="feedItem.author.url"
-                class="font-medium text-gray-800 hover:underline"
+                class="font-medium text-gray-800 dark:text-gray-200 hover:underline"
                 >{{ feedItem.author.name }}</inertia-link
               >
               <span v-else class="font-medium text-gray-800">{{ feedItem.author.name }}</span>
