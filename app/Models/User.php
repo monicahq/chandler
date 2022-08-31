@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use LaravelWebauthn\WebauthnAuthenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use HasApiTokens;
     use TwoFactorAuthenticatable;
+    use WebauthnAuthenticatable;
 
     /**
      * Possible number format types.

@@ -1,7 +1,92 @@
+<script setup>
+import { ref, watch, onMounted } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
+import { Link, useForm } from '@inertiajs/inertia-vue3';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import BreezeCheckbox from '@/Components/Checkbox.vue';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import WebauthnLogin from '@/Pages/Webauthn/WebauthnLogin.vue';
+import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
+
+const props = defineProps({
+  canResetPassword: Boolean,
+  status: String,
+  wallpaperUrl: String,
+  providers: Array,
+  providersName: Object,
+  publicKey: Object,
+  userName: String,
+});
+const webauthn = ref(true);
+const publicKeyRef = ref(null);
+
+const form = useForm({
+  email: '',
+  password: '',
+  remember: false,
+});
+const providerForm = useForm();
+
+watch(
+  () => props.publicKey,
+  (value) => {
+    publicKeyRef.value = value;
+  },
+);
+
+onMounted(() => {
+  publicKeyRef.value = props.publicKey;
+});
+
+const submit = () => {
+  form
+    .transform((data) => ({
+      ...data,
+      remember: form.remember ? 'on' : '',
+    }))
+    .post(route('login'), {
+      onFinish: () => form.reset('password'),
+    });
+};
+
+const open = (provider) => {
+  providerForm
+    .transform(() => ({
+      redirect: location.href,
+      remember: form.remember ? 'on' : '',
+    }))
+    .get(route('login.provider', { driver: provider }), {
+      preserveScroll: true,
+      onFinish: () => {
+        providerForm.reset();
+      },
+    });
+};
+
+const reload = () => {
+  publicKeyRef.value = null;
+  webauthn.value = true;
+  Inertia.reload({ only: ['publicKey'] });
+};
+</script>
+
+<style scoped>
+.auth-provider {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  top: 2px;
+}
+.w-43 {
+  width: 43%;
+}
+</style>
+
 <template>
   <div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
     <div>
-      <inertia-link href="/">
+      <Link href="/">
         <svg
           class="h-20 w-20 fill-current text-gray-500"
           viewBox="0 0 390 353"
@@ -53,7 +138,7 @@
             d="M196.204 276C210.316 276 224 255.244 224 246.342C224 237.441 210.112 236 196 236C181.888 236 168 237.441 168 246.342C168 255.244 182.092 276 196.204 276Z"
             fill="#2C2B29" />
         </svg>
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="mt-6 flex w-full overflow-hidden bg-white shadow-md sm:max-w-4xl sm:rounded-lg">
@@ -65,15 +150,30 @@
             Sign in to your account
           </h1>
 
-          <breeze-validation-errors class="mb-4" />
+          <BreezeValidationErrors class="mb-4" />
 
           <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
           </div>
 
-          <form @submit.prevent="submit">
+          <div v-if="publicKey && webauthn">
+            <div class="mb-4 text-center text-lg text-gray-900">
+              {{ userName }}
+            </div>
+            <div class="mb-4 max-w-xl text-gray-600 dark:text-gray-400">
+              {{ $t('Connect with your security key') }}
+            </div>
+
+            <WebauthnLogin :remember="true" :public-key="publicKeyRef" />
+
+            <JetSecondaryButton class="mr-2 mt-4" @click.prevent="webauthn = false">
+              {{ $t('Use your password') }}
+            </JetSecondaryButton>
+          </div>
+
+          <form v-else @submit.prevent="submit">
             <div class="mb-4">
-              <text-input
+              <TextInput
                 v-model="form.email"
                 :label="'Email'"
                 :type="'email'"
@@ -85,7 +185,7 @@
             </div>
 
             <div class="mb-4">
-              <text-input
+              <TextInput
                 v-model="form.password"
                 :label="'Password'"
                 :type="'password'"
@@ -98,82 +198,52 @@
 
             <div class="mb-4 block">
               <label class="flex items-center">
-                <breeze-checkbox v-model:checked="form.remember" name="remember" />
+                <BreezeCheckbox v-model:checked="form.remember" name="remember" />
                 <span class="ml-2 text-sm text-gray-600"> Remember me </span>
               </label>
             </div>
 
             <div class="flex items-center justify-end">
-              <inertia-link
+              <Link
                 v-if="canResetPassword"
                 :href="route('password.request')"
                 class="text-sm text-blue-500 hover:underline">
                 Forgot password?
-              </inertia-link>
+              </Link>
 
-              <pretty-button :text="'Log in'" :state="loadingState" :classes="'save ml-4'" />
+              <PrettyButton :text="'Log in'" :state="loadingState" :classes="'save ml-4'" />
+            </div>
+
+            <div class="mt-4 block">
+              <p v-if="providers.length > 0" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                {{ $t('Login with:') }}
+              </p>
+              <div class="flex flex-wrap">
+                <JetSecondaryButton
+                  v-for="provider in providers"
+                  :key="provider"
+                  class="mr-2"
+                  :href="route('login.provider', { driver: provider })"
+                  @click.prevent="open(provider)">
+                  <img :src="`/img/auth/${provider}.svg`" alt="" class="auth-provider relative" />
+                  {{ providersName[provider] }}
+                </JetSecondaryButton>
+              </div>
+            </div>
+
+            <div v-if="publicKeyRef" class="mt-4 block">
+              <JetSecondaryButton class="mr-2" @click.prevent="reload">
+                {{ $t('Use your security key') }}
+              </JetSecondaryButton>
             </div>
           </form>
         </div>
 
         <div class="px-6 py-6 text-sm">
           New to Monica?
-          <inertia-link :href="route('register')" class="text-blue-500 hover:underline">
-            Create an account
-          </inertia-link>
+          <Link :href="route('register')" class="text-blue-500 hover:underline"> Create an account </Link>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import TextInput from '@/Shared/Form/TextInput.vue';
-import BreezeCheckbox from '@/Components/Checkbox.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
-
-export default {
-  components: {
-    TextInput,
-    PrettyButton,
-    BreezeCheckbox,
-    BreezeValidationErrors,
-  },
-
-  props: {
-    status: {
-      type: String,
-      default: null,
-    },
-    canResetPassword: {
-      type: Boolean,
-      default: false,
-    },
-    wallpaperUrl: {
-      type: String,
-      default: '',
-    },
-  },
-
-  data() {
-    return {
-      form: this.$inertia.form({
-        email: '',
-        password: '',
-        remember: false,
-      }),
-    };
-  },
-
-  methods: {
-    submit() {
-      this.form.post(this.route('login'), {
-        onFinish: () => this.form.reset('password'),
-      });
-    },
-  },
-};
-</script>
-
-<style lang="scss" scoped></style>

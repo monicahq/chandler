@@ -34,11 +34,19 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::authenticateThrough(fn () => [
+            RedirectIfTwoFactorAuthenticatable::class,
+            AttemptToAuthenticate::class,
+            PrepareAuthenticatedSession::class,
+        ]);
+
         Fortify::loginView(fn ($request) => (new LoginController())($request));
-        Fortify::confirmPasswordsUsing(fn ($user, ?string $password = null) => $user->password ? app(StatefulGuard::class)->validate([
-            'email' => $user->email,
-            'password' => $password,
-        ]) : true
+        Fortify::confirmPasswordsUsing(fn ($user, ?string $password = null) => $user->password
+                ? app(StatefulGuard::class)->validate([
+                    'email' => $user->email,
+                    'password' => $password,
+                ])
+                : true
         );
 
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -53,7 +61,6 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($email.$request->ip());
         });
 
-        RateLimiter::for('two-factor', fn (Request $request) => Limit::perMinute(5)->by($request->session()->get('login.id'))
-        );
+        RateLimiter::for('two-factor', fn (Request $request) => Limit::perMinute(5)->by($request->session()->get('login.id')));
     }
 }
