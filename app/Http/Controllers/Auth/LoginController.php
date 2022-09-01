@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\WallpaperHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class LoginController extends Controller
         return Inertia::render('Auth/Login', $data + [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'wallpaperUrl' => WallpaperHelper::getRandomWallpaper(),
             'providers' => $providers,
             'providersName' => $providersName,
         ]);

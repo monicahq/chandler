@@ -177,4 +177,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $contact;
     }
+
+    /**
+     * Get the user tokens for external login providers.
+     *
+     * @return HasMany
+     */
+    public function userTokens()
+    {
+        return $this->hasMany(UserToken::class);
+    }
 }

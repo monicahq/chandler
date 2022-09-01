@@ -101,6 +101,12 @@ Route::get('/', function () {
         : redirect()->route('login');
 });
 
+Route::middleware(['throttle:oauth2-socialite'])->group(function () {
+    Route::get('auth/{driver}', [SocialiteCallbackController::class, 'login'])->name('login.provider');
+    Route::get('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
+    Route::post('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
+});
+
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
 
@@ -473,4 +479,7 @@ Route::middleware([
 
     // General stuff called by everyone/everywhere
     Route::get('currencies', [CurrencyController::class, 'index'])->name('currencies.index');
+
+    // User & Profile...
+    Route::delete('auth/{driver}', [UserTokenController::class, 'destroy'])->name('provider.delete');
 });

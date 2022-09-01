@@ -34,7 +34,7 @@ class UserProfile
 
         $data['providers'] = $providers;
         $data['providersName'] = $providersName;
-        $data['userTokens'] = $request->user()->usertokens()->get();
+        $data['userTokens'] = $request->user()->userTokens()->get();
         $data['webauthnKeys'] = $webauthnKeys;
 
         $data['locales'] = collect(config('lang-detector.languages'))->map(fn ($locale) => [

@@ -2,7 +2,7 @@
 import { ref, watch, nextTick } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import JetLabel from '@/Components/Jetstream/Label.vue';
-import JetInput from '@/vJetstream/Input.vue';
+import JetInput from '@/Components/Jetstream/Input.vue';
 import JetInputError from '@/Components/Jetstream/InputError.vue';
 import JetButton from '@/Components/Jetstream/Button.vue';
 import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
