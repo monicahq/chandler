@@ -14,27 +14,19 @@ class VaultTasksIndexViewHelper
 {
     public static function data(Vault $vault, User $user): Collection
     {
-        $contacts = DB::table('contacts')
-            ->join('contact_tasks', 'contact_tasks.contact_id', '=', 'contacts.id')
-            ->select('contacts.id', 'contacts.vault_id')
-            ->where('contacts.vault_id', $vault->id)
-            ->where('contact_tasks.completed', false)
-            ->orderBy('contacts.last_name', 'asc')
+        $contacts = $vault->contacts()
+            ->with('tasks')
+            ->whereHas('tasks', fn (Builder $query) =>
+                $query->where('completed', false)
+            )
+            ->orderBy('last_name', 'asc')
             ->get();
 
         $contactsCollection = collect();
         foreach ($contacts as $contact) {
-            $contact = Contact::find($contact->id);
-
-            $tasks = DB::table('contact_tasks')
-                ->where('completed', false)
-                ->where('contact_id', $contact->id)
-                ->orderBy('due_at', 'asc')
-                ->get();
-
-            $tasksCollection = collect();
-            foreach ($tasks as $task) {
-                $tasksCollection->push([
+            $tasksCollection = $contact->tasks
+                ->sortBy('due_at')
+                ->map(fn ($task) => [
                     'id' => $task->id,
                     'label' => $task->label,
                     'due_at' => $task->due_at ? DateHelper::format(Carbon::parse($task->due_at), $user) : null,
@@ -47,6 +39,9 @@ class VaultTasksIndexViewHelper
                         ]),
                     ],
                 ]);
+
+            if ($tasksCollection->count() <= 0) {
+                continue;
             }
 
             if ($tasksCollection->count() <= 0) {
