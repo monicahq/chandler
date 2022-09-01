@@ -3,12 +3,11 @@
 namespace App\Vault\ManageTasks\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
-use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class VaultTasksIndexViewHelper
 {
@@ -16,8 +15,7 @@ class VaultTasksIndexViewHelper
     {
         $contacts = $vault->contacts()
             ->with('tasks')
-            ->whereHas('tasks', fn (Builder $query) =>
-                $query->where('completed', false)
+            ->whereHas('tasks', fn (Builder $query) => $query->where('completed', false)
             )
             ->orderBy('last_name', 'asc')
             ->get();
