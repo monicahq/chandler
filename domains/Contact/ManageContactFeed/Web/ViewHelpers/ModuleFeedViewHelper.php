@@ -2,6 +2,7 @@
 
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddressCreatedOrUpdated;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
 use App\Helpers\DateHelper;
@@ -19,7 +20,7 @@ class ModuleFeedViewHelper
                 'action' => $item->action,
                 'author' => self::getAuthor($item),
                 'sentence' => self::getSentence($item),
-                'data' => self::getData($item),
+                'data' => self::getData($item, $user),
                 'created_at' => DateHelper::format($item->created_at, $user),
             ];
         });
@@ -62,12 +63,16 @@ class ModuleFeedViewHelper
         return UserHelper::getInformationAboutContact($author, $item->contact->vault);
     }
 
-    private static function getData(ContactFeedItem $item)
+    private static function getData(ContactFeedItem $item, User $user)
     {
         switch ($item->action) {
             case 'label_assigned':
             case 'label_removed':
                 return ActionFeedLabelAssigned::data($item);
+
+            case 'address_created':
+            case 'address_updated':
+                return ActionFeedAddressCreatedOrUpdated::data($item, $user);
 
             default:
                 return ActionFeedGenericContactInformation::data($item);

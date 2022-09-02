@@ -27,6 +27,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Mapbox username
+    |--------------------------------------------------------------------------
+    |
+    | Used to display static maps. See https://docs.mapbox.com/help/how-mapbox-works/static-maps/
+    | This should be the username used when creating the account.
+    |
+    */
+
+    'mapbox_api_username' => env('MAPBOX_USERNAME', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | API key for geolocation service.
     |--------------------------------------------------------------------------
     |
@@ -49,18 +61,6 @@ return [
     */
 
     'location_iq_url' => env('LOCATION_IQ_URL', 'https://us1.locationiq.com/v1/'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Mapbox username
-    |--------------------------------------------------------------------------
-    |
-    | Used to display static maps. See https://docs.mapbox.com/help/how-mapbox-works/static-maps/
-    | This should be the username used when creating the account.
-    |
-    */
-
-    'mapbox_api_username' => env('MAPBOX_USERNAME', null),
 
     /*
     |--------------------------------------------------------------------------

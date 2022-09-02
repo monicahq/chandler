@@ -77,6 +77,11 @@
             v-if="feedItem.action === 'label_removed'"
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
+
+          <address-created-or-updated
+            v-if="feedItem.action === 'address_updated' || feedItem.action === 'address_created'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
         </div>
 
         <!-- details -->
@@ -101,12 +106,14 @@
 import Avatar from '@/Shared/Avatar.vue';
 import GenericAction from '@/Shared/Modules/FeedItems/GenericAction.vue';
 import LabelAssigned from '@/Shared/Modules/FeedItems/LabelAssigned.vue';
+import AddressCreatedOrUpdated from '@/Shared/Modules/FeedItems/AddressCreatedOrUpdated.vue';
 
 export default {
   components: {
     Avatar,
     GenericAction,
     LabelAssigned,
+    AddressCreatedOrUpdated,
   },
 
   props: {

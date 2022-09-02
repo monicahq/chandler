@@ -1,0 +1,83 @@
+<?php
+
+namespace Tests\Unit\Domains\Contact\ManageContactFeed\Web\ViewHelpers\Actions;
+
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddressCreatedOrUpdated;
+use App\Models\Address;
+use App\Models\AddressType;
+use App\Models\Contact;
+use App\Models\ContactFeedItem;
+use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
+
+class ActionFeedAddressCreatedOrUpdatedTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    /** @test */
+    public function it_gets_the_data_needed_for_the_view(): void
+    {
+        $user = User::factory()->create();
+        $contact = Contact::factory()->create([
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+        ]);
+        $addressType = AddressType::factory()->create([
+            'account_id' => $contact->vault->account_id,
+            'name' => 'super type',
+        ]);
+
+        $activeAddress = Address::factory()->create([
+            'street' => '123 main st',
+            'city' => 'montreal',
+            'province' => 'quebec',
+            'postal_code' => 'h1k 12k',
+            'country' => 'Canada',
+            'is_past_address' => false,
+            'address_type_id' => $addressType->id,
+            'longitude' => '-74.005941',
+            'latitude' => '40.712784',
+        ]);
+
+        config(['monica.mapbox_api_key' => 'api_key']);
+        config(['monica.mapbox_api_username' => 'test']);
+
+        $feedItem = ContactFeedItem::factory()->create([
+            'contact_id' => $contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_ADDRESS_CREATED,
+        ]);
+        $activeAddress->feedItem()->save($feedItem);
+
+        $array = ActionFeedAddressCreatedOrUpdated::data($feedItem, $user);
+
+        $this->assertEquals(
+            [
+                'address' => [
+                    'id' => $activeAddress->id,
+                    'street' => '123 main st',
+                    'city' => 'montreal',
+                    'province' => 'quebec',
+                    'postal_code' => 'h1k 12k',
+                    'country' => 'Canada',
+                    'type' => [
+                        'id' => $addressType->id,
+                        'name' => 'super type',
+                    ],
+                    'image' => 'https://api.mapbox.com/styles/v1/test/cl7jqlqqu002p14oiadjfz76v/static/-74.005941,40.712784,7/300x100?access_token=api_key',
+                    'url' => [
+                        'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
+                    ],
+                ],
+                'contact' => [
+                    'id' => $contact->id,
+                    'name' => 'John Doe',
+                    'age' => null,
+                    'avatar' => $contact->avatar,
+                    'url' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id,
+                ],
+            ],
+            $array
+        );
+    }
+}
