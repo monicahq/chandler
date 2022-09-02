@@ -73,7 +73,7 @@ class MapHelper
     /**
      * Return the URL for a static image for the given place.
      *
-     * @param  Place  $place
+     * @param  Address  $address
      * @param  int  $width
      * @param  int  $height
      * @param  int  $zoom
