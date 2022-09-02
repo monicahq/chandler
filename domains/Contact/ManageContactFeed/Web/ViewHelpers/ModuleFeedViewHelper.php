@@ -2,7 +2,7 @@
 
 namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 
-use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddressCreatedOrUpdated;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddress;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
 use App\Helpers\DateHelper;
@@ -72,7 +72,8 @@ class ModuleFeedViewHelper
 
             case 'address_created':
             case 'address_updated':
-                return ActionFeedAddressCreatedOrUpdated::data($item, $user);
+            case 'address_destroyed':
+                return ActionFeedAddress::data($item, $user);
 
             default:
                 return ActionFeedGenericContactInformation::data($item);

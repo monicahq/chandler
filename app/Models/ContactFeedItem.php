@@ -48,7 +48,7 @@ class ContactFeedItem extends Model
 
     public const ACTION_CONTACT_ADDRESS_UPDATED = 'address_updated';
 
-    public const ACTION_CONTACT_ADDRESS_DESTROYED = 'address_deleted';
+    public const ACTION_CONTACT_ADDRESS_DESTROYED = 'address_destroyed';
 
     public const ACTION_CONTACT_EVENT_CREATED = 'added an event';
 

@@ -79,7 +79,11 @@
             :contact-view-mode="contactViewMode" />
 
           <address-created-or-updated
-            v-if="feedItem.action === 'address_updated' || feedItem.action === 'address_created'"
+            v-if="
+              feedItem.action === 'address_updated' ||
+              feedItem.action === 'address_created' ||
+              feedItem.action === 'address_destroyed'
+            "
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
         </div>

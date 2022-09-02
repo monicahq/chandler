@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactFeed\Web\ViewHelpers\Actions;
 
-use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddressCreatedOrUpdated;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddress;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Contact;
@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ActionFeedAddressCreatedOrUpdatedTest extends TestCase
+class ActionFeedAddressTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -46,28 +46,32 @@ class ActionFeedAddressCreatedOrUpdatedTest extends TestCase
         $feedItem = ContactFeedItem::factory()->create([
             'contact_id' => $contact->id,
             'action' => ContactFeedItem::ACTION_CONTACT_ADDRESS_CREATED,
+            'description' => 'test',
         ]);
         $activeAddress->feedItem()->save($feedItem);
 
-        $array = ActionFeedAddressCreatedOrUpdated::data($feedItem, $user);
+        $array = ActionFeedAddress::data($feedItem, $user);
 
         $this->assertEquals(
             [
                 'address' => [
-                    'id' => $activeAddress->id,
-                    'street' => '123 main st',
-                    'city' => 'montreal',
-                    'province' => 'quebec',
-                    'postal_code' => 'h1k 12k',
-                    'country' => 'Canada',
-                    'type' => [
-                        'id' => $addressType->id,
-                        'name' => 'super type',
+                    'object' => [
+                        'id' => $activeAddress->id,
+                        'street' => '123 main st',
+                        'city' => 'montreal',
+                        'province' => 'quebec',
+                        'postal_code' => 'h1k 12k',
+                        'country' => 'Canada',
+                        'type' => [
+                            'id' => $addressType->id,
+                            'name' => 'super type',
+                        ],
+                        'image' => 'https://api.mapbox.com/styles/v1/test/cl7jqlqqu002p14oiadjfz76v/static/-74.005941,40.712784,7/300x100?access_token=api_key',
+                        'url' => [
+                            'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
+                        ],
                     ],
-                    'image' => 'https://api.mapbox.com/styles/v1/test/cl7jqlqqu002p14oiadjfz76v/static/-74.005941,40.712784,7/300x100?access_token=api_key',
-                    'url' => [
-                        'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
-                    ],
+                    'description' => 'test',
                 ],
                 'contact' => [
                     'id' => $contact->id,

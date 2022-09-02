@@ -15,31 +15,35 @@
       </div>
     </div>
 
-    <div class="flex justify-between px-3 py-3">
+    <div v-if="data.address.object" class="flex justify-between px-3 py-3">
       <!-- address detail -->
       <div>
-        <p v-if="data.address.type" class="mb-2 text-sm font-semibold">
-          {{ data.address.type.name }}
+        <p v-if="data.address.object.type" class="mb-2 text-sm font-semibold">
+          {{ data.address.object.type.name }}
         </p>
         <div>
-          <p v-if="data.address.street">
-            {{ data.address.street }}
+          <p v-if="data.address.object.street">
+            {{ data.address.object.street }}
           </p>
-          <p v-if="data.address.postal_code || data.address.city">
-            {{ data.address.postal_code }} {{ data.address.city }}
+          <p v-if="data.address.object.postal_code || data.address.object.city">
+            {{ data.address.object.postal_code }} {{ data.address.object.city }}
           </p>
-          <p v-if="data.address.country">
-            {{ data.address.country }}
+          <p v-if="data.address.object.country">
+            {{ data.address.object.country }}
           </p>
         </div>
       </div>
 
       <!-- map image -->
-      <div v-if="data.address.image">
-        <a :href="data.address.url.show" target="_blank">
-          <img :src="data.address.image" class="rounded" />
+      <div v-if="data.address.object.image">
+        <a :href="data.address.object.url.show" target="_blank">
+          <img :src="data.address.object.image" class="rounded" />
         </a>
       </div>
+    </div>
+
+    <div v-else class="flex justify-between px-3 py-3">
+      <p>{{ data.address.description }}</p>
     </div>
   </div>
 </template>
