@@ -42,10 +42,6 @@ class VaultTasksIndexViewHelper
                 continue;
             }
 
-            if ($tasksCollection->count() <= 0) {
-                continue;
-            }
-
             $contactsCollection->push([
                 'tasks' => $tasksCollection,
                 'contact' => [
