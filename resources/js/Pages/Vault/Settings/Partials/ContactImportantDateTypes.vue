@@ -16,7 +16,7 @@
     <!-- modal to create a type -->
     <form
       v-if="createTypeModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
@@ -38,7 +38,7 @@
       <div class="flex justify-between p-5">
         <pretty-span
           :text="$t('app.cancel')"
-          :classes="'mr-3 dark:text-gray-900'"
+          :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
           @click="createTypeModalShown = false" />
         <pretty-button
           :text="$t('app.add')"

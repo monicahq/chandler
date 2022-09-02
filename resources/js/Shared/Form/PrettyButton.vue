@@ -2,7 +2,7 @@
   <button
     :class="classes"
     :disabled="state == 'loading' || state == 'disabled'"
-    class="relative bg-white text-sm dark:bg-gray-900 dark:bg-gray-800"
+    class="dark:box-s relative bg-white text-sm dark:bg-gray-800 dark:text-gray-300"
     type="submit">
     <span v-if="state == 'loading'"> Loading… </span>
 
@@ -94,10 +94,11 @@ export default {
 }
 
 button {
+  --tw-shadow: 2px 2px 0 #575a5d !important;
   border-radius: 0.25rem !important;
   border-color: #191a1b;
   border-width: 1px !important;
-  box-shadow: 2px 2px 0 #191a1b;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
   display: inline-block !important;
   position: relative !important;
   text-decoration: none !important;
@@ -122,7 +123,7 @@ button {
 }
 
 @media (prefers-color-scheme: dark) {
-  a {
+  button {
     --tw-shadow: 2px 2px 0 #575a5d !important;
   }
 }

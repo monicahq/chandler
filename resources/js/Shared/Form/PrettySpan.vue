@@ -46,8 +46,10 @@ span {
 }
 
 @media (prefers-color-scheme: dark) {
-  a {
+  span {
     --tw-shadow: 2px 2px 0 #575a5d !important;
+    --tw-text-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity)); // bg-gray-800
   }
 }
 </style>
