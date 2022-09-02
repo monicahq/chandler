@@ -33,7 +33,7 @@ class ActionFeedContactInformationTest extends TestCase
 
         $feedItem = ContactFeedItem::factory()->create([
             'contact_id' => $contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_INFORMATION_ADDED,
+            'action' => ContactFeedItem::ACTION_CONTACT_INFORMATION_CREATED,
             'description' => 'label',
         ]);
         $info->feedItem()->save($feedItem);
