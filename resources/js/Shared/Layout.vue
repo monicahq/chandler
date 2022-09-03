@@ -43,7 +43,7 @@
             </svg>
             <input
               type="text"
-              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 placeholder:dark:text-gray-400 dark:hover:bg-slate-700 sm:text-sm"
+              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 placeholder:dark:text-gray-400 hover:dark:bg-slate-700 sm:text-sm"
               :placeholder="$t('app.layout_menu_search')"
               @focus="goToSearchPage" />
           </div>
@@ -104,39 +104,39 @@
                 <inertia-link
                   :href="layoutData.vault.url.dashboard"
                   :class="{ 'bg-blue-700 text-white dark:text-white': $page.component.startsWith('Vault/Dashboard') }"
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_dashboard') }}
                 </inertia-link>
 
                 <!-- <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_reports') }}
                 </inertia-link> -->
 
                 <inertia-link
                   :href="layoutData.vault.url.contacts"
                   :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_contacts') }}
                 </inertia-link>
 
                 <!-- <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_gift_center') }}
                 </inertia-link> -->
 
                 <!-- <inertia-link
                   href=""
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_loans') }}
                 </inertia-link> -->
 
                 <inertia-link
                   :href="layoutData.vault.url.files"
                   :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Files') }"
-                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
+                  class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
                   {{ $t('app.layout_menu_files') }}
                 </inertia-link>
 

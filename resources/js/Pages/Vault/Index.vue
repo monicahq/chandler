@@ -89,7 +89,7 @@
                 <inertia-link :href="vault.url.settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-600"
+                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
