@@ -43,7 +43,7 @@
             </svg>
             <input
               type="text"
-              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:bg-slate-900 dark:hover:bg-slate-700 sm:text-sm"
+              class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 placeholder:dark:text-gray-400 dark:hover:bg-slate-700 sm:text-sm"
               :placeholder="$t('app.layout_menu_search')"
               @focus="goToSearchPage" />
           </div>

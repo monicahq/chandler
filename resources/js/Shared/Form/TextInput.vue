@@ -133,6 +133,7 @@ export default {
       return [
         'rounded-md shadow-sm',
         'bg-white dark:bg-slate-900 dark:text-gray-100 border-gray-300 dark:border-gray-700',
+        'placeholder:text-gray-600 placeholder:dark:text-gray-400',
         'focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900',
         'disabled:bg-slate-50 disabled:dark:bg-slate-900',
         this.inputClass,
