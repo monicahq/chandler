@@ -43,12 +43,22 @@ class ModuleLoanViewHelper
             return [
                 'id' => $loaner->id,
                 'name' => $loaner->name,
+                'avatar' => $loaner->avatar,
+                'url' => route('contact.show', [
+                    'vault' => $loaner->vault_id,
+                    'contact' => $loaner->id,
+                ]),
             ];
         });
         $loaneesCollection = $loanees->map(function ($loanee) {
             return [
                 'id' => $loanee->id,
                 'name' => $loanee->name,
+                'avatar' => $loanee->avatar,
+                'url' => route('contact.show', [
+                    'vault' => $loanee->vault_id,
+                    'contact' => $loanee->id,
+                ]),
             ];
         });
 
