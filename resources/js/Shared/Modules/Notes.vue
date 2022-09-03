@@ -129,7 +129,7 @@
 
           <!-- details -->
           <div
-            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 hover:dark:bg-slate-800">
+            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:text-gray-400 hover:dark:bg-slate-900">
             <div class="flex items-center">
               <!-- emotion -->
               <div v-if="note.emotion" class="relative mr-3 inline">
@@ -206,7 +206,7 @@
                   :value="emotion.id"
                   name="emotion"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400" />
                 <label :for="emotion.type" class="ml-2 block font-medium text-gray-700 dark:text-gray-300">
                   {{ emotion.name }}
                 </label>

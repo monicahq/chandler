@@ -97,13 +97,13 @@ export default {
 
 @media (prefers-color-scheme: dark) {
   .save {
-    background-color: #fcf27e;
+    background-color: #d0c10d;
     color: rgb(31 41 55); // text-gray-800
   }
 }
 
 button {
-  --tw-shadow: 2px 2px 0 #575a5d !important;
+  --tw-shadow: 2px 2px 0 #191a1b !important;
   border-radius: 0.25rem !important;
   border-width: 1px !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
@@ -132,7 +132,7 @@ button {
 
 @media (prefers-color-scheme: dark) {
   button {
-    --tw-shadow: 2px 2px 0 #787a7d !important;
+    --tw-shadow: 2px 2px 0 rgb(242, 242, 245) !important;
   }
 }
 </style>

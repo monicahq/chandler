@@ -55,7 +55,7 @@
           <div
             v-for="vault in data.vaults"
             :key="vault.id"
-            class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-700">
+            class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <div class="vault-detail grid">
               <inertia-link
                 :href="vault.url.show"
@@ -68,11 +68,13 @@
                 <div v-if="vault.contacts.length > 0" class="relative flex -space-x-2 overflow-hidden p-3">
                   <!-- list of contacts -->
                   <div v-for="contact in vault.contacts" :key="contact.id" class="inline-block">
-                    <avatar :data="contact.avatar" :classes="'h-8 w-8 rounded-full ring-2 ring-white'" />
+                    <avatar
+                      :data="contact.avatar"
+                      :classes="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
                   </div>
                   <div
                     v-if="vault.remaining_contacts != 0"
-                    class="remaining-contact relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800">
+                    class="remaining-contact relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-gray-300 dark:text-gray-900 hover:dark:bg-gray-400">
                     + {{ vault.remaining_contacts }}
                   </div>
                 </div>
@@ -89,7 +91,7 @@
                 <inertia-link :href="vault.url.settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-600"
+                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-600 hover:dark:text-gray-100"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -109,7 +111,7 @@
                 <inertia-link :href="vault.url.show">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900"
+                    class="pointer h-5 w-5 text-gray-400 hover:text-gray-900 dark:text-gray-600 hover:dark:text-gray-100"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor">
