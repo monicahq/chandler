@@ -36,10 +36,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span
-          :text="$t('app.cancel')"
-          :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
-          @click="createTypeModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createTypeModalShown = false" />
         <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>

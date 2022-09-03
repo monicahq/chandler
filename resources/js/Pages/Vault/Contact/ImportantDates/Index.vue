@@ -403,10 +403,7 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span
-                  :text="$t('app.cancel')"
-                  :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
-                  @click="editedDateId = 0" />
+                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedDateId = 0" />
                 <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>

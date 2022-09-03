@@ -67,10 +67,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span
-          :text="$t('app.cancel')"
-          :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
-          @click="addContactInformationModalShown = false" />
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addContactInformationModalShown = false" />
         <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
@@ -134,10 +131,7 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span
-                :text="$t('app.cancel')"
-                :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
-                @click="editedContactInformationId = 0" />
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedContactInformationId = 0" />
               <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
