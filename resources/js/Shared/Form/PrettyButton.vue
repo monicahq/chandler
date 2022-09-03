@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" :disabled="state == 'loading' || state == 'disabled'" type="submit">
+  <button :class="buttonClasses" :disabled="state == 'loading' || state == 'disabled'" type="submit">
     <span v-if="state == 'loading'"> Loading… </span>
 
     <!-- + icon -->
@@ -77,7 +77,7 @@ export default {
   computed: {
     buttonClasses() {
       return [
-        'relative text-sm dark:text-gray-300 dark:box-s',
+        'relative text-sm dark:text-gray-100 dark:box-s',
         'bg-white dark:bg-gray-800 border-zinc-900 dark:border-zinc-100',
         this.classes,
       ];

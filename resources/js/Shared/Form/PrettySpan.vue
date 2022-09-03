@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 span {
-  --tw-shadow: 2px 2px 0 #191a1b !important;
+  --tw-shadow: 2px 2px 0 #575a5d !important;
   border-radius: 0.25rem !important;
   border-width: 1px !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
@@ -51,7 +51,7 @@ span {
 
 @media (prefers-color-scheme: dark) {
   span {
-    --tw-shadow: 2px 2px 0 rgb(244 244 245) !important; // zinc-100
+    --tw-shadow: 2px 2px 0 #787a7d !important;
   }
 }
 </style>
