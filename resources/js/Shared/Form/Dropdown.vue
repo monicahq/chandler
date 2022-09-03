@@ -80,7 +80,7 @@ export default {
       default: '',
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['esc-key-pressed', 'update:modelValue'],
 
   computed: {
     localDropdownClasses() {

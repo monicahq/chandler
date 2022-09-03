@@ -111,7 +111,7 @@ export default {
       default: 'any',
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['esc-key-pressed', 'update:modelValue'],
 
   data() {
     return {
