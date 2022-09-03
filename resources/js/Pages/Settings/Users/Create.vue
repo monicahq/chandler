@@ -128,7 +128,7 @@ k
               :text="$t('settings.users_management_new_cta')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save dark:save dark:text-gray-800'" />
+              :classes="'save'" />
           </div>
         </form>
       </div>

@@ -271,7 +271,7 @@
                 :text="$t('app.add')"
                 :state="loadingState"
                 :icon="'check'"
-                :classes="'save dark:save dark:text-gray-800'" />
+                :classes="'save'" />
             </div>
 
             <!-- blank state -->

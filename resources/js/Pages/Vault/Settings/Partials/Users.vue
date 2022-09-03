@@ -109,11 +109,7 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" @click="addUserModalShown = false" />
-        <pretty-button
-          :text="$t('app.add')"
-          :state="loadingState"
-          :icon="'plus'"
-          :classes="'save dark:save dark:text-gray-800'" />
+        <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
@@ -216,7 +212,7 @@
                 :text="$t('vault.settings_users_edit_permission_cta')"
                 :state="loadingState"
                 :icon="'check'"
-                :classes="'save dark:save dark:text-gray-800'" />
+                :classes="'save'" />
             </div>
           </form>
         </li>

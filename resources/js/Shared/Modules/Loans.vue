@@ -168,11 +168,7 @@
             :text="$t('app.cancel')"
             :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
             @click="createLoanModalShown = false" />
-          <pretty-button
-            :text="'Add loan'"
-            :state="loadingState"
-            :icon="'plus'"
-            :classes="'save dark:save dark:text-gray-800'" />
+          <pretty-button :text="'Add loan'" :state="loadingState" :icon="'plus'" :classes="'save'" />
         </div>
       </form>
 
@@ -404,11 +400,7 @@
               :text="$t('app.cancel')"
               :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
               @click="editedLoanId = 0" />
-            <pretty-button
-              :text="$t('app.save')"
-              :state="loadingState"
-              :icon="'plus'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
       </div>

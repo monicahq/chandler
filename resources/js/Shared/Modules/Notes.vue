@@ -73,7 +73,7 @@
               :value="emotion.id"
               name="emotion"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+              class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-700 dark:bg-slate-900 dark:text-indigo-400" />
             <label :for="emotion.type" class="ml-2 block font-medium text-gray-700 dark:text-gray-300">
               {{ emotion.name }}
             </label>
@@ -83,7 +83,7 @@
         <!-- cta to add a title -->
         <span
           v-if="!titleFieldShown"
-          class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+          class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
           @click="showTitleField">
           + add title
         </span>
@@ -91,7 +91,7 @@
         <!-- cta to add emotion -->
         <span
           v-if="!emotionFieldShown"
-          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
           @click="showEmotionField">
           + add emotion
         </span>
@@ -102,11 +102,7 @@
           :text="$t('app.cancel')"
           :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
           @click="createNoteModalShown = false" />
-        <pretty-button
-          :text="$t('app.save')"
-          :state="loadingState"
-          :icon="'check'"
-          :classes="'save dark:save dark:text-gray-800'" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
 
@@ -226,11 +222,7 @@
               :text="$t('app.cancel')"
               :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
               @click="editedNoteId = 0" />
-            <pretty-button
-              :text="'Update'"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </div>

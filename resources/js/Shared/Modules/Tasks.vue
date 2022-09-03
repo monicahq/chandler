@@ -75,11 +75,7 @@
           :text="$t('app.cancel')"
           :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
           @click="createTaskModalShown = false" />
-        <pretty-button
-          :text="$t('app.save')"
-          :state="loadingState"
-          :icon="'check'"
-          :classes="'save dark:save dark:text-gray-800'" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
 
@@ -176,11 +172,7 @@
               :text="$t('app.cancel')"
               :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
               @click="editedTaskId = 0" />
-            <pretty-button
-              :text="'Update'"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </li>

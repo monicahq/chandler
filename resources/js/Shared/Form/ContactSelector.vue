@@ -197,7 +197,6 @@ export default {
     return {
       addContactMode: false,
       processingSearch: false,
-      localInputClasses: '',
       localContacts: [],
       mostConsultedContacts: [],
       searchResults: [],
@@ -217,13 +216,18 @@ export default {
 
       return !this.addContactMode;
     },
+    localInputClasses() {
+      return [
+        'pl-8 w-full rounded-md shadow-sm',
+        'bg-white dark:bg-slate-900 border-gray-300 dark:border-gray-700',
+        'focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
+        'disabled:bg-slate-50 disabled:dark:bg-slate-900',
+        this.inputClass,
+      ];
+    },
   },
 
   created() {
-    this.localInputClasses =
-      'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-slate-50 dark:bg-slate-900 pl-8 w-full' +
-      this.inputClass;
-
     if (this.displayMostConsultedContacts) {
       this.lookupMostConsultedContacts();
     }
@@ -303,6 +307,13 @@ export default {
   color: #283e59;
   background-color: #edf2f9;
   padding: 1px 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .optional-badge {
+    color: #d4d8dd;
+    background-color: #2f3031;
+  }
 }
 
 .icon-search {

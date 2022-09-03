@@ -232,11 +232,7 @@
           :text="$t('app.cancel')"
           :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
           @click="createCallModalShown = false" />
-        <pretty-button
-          :text="$t('app.save')"
-          :state="loadingState"
-          :icon="'plus'"
-          :classes="'save dark:save dark:text-gray-800'" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
@@ -516,11 +512,7 @@
               :text="$t('app.cancel')"
               :classes="'mr-3 dark:bg-gray-800 dark:text-gray-100'"
               @click="editedCallId = 0" />
-            <pretty-button
-              :text="'Update'"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </li>

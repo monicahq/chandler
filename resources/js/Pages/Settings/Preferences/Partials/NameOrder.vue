@@ -152,11 +152,7 @@
       <!-- actions -->
       <div class="flex justify-between p-5">
         <pretty-link :text="$t('app.cancel')" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button
-          :text="$t('app.save')"
-          :state="loadingState"
-          :icon="'check'"
-          :classes="'save dark:save dark:text-gray-800'" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
   </div>

@@ -99,11 +99,7 @@
               :text="$t('app.cancel')"
               :classes="'mr-3'"
               @click="createContactInformationTypeModalShown = false" />
-            <pretty-button
-              :text="$t('app.add')"
-              :state="loadingState"
-              :icon="'plus'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -184,11 +180,7 @@
                   :text="$t('app.cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameContactInformationTypeModalShownId = 0" />
-                <pretty-button
-                  :text="$t('app.rename')"
-                  :state="loadingState"
-                  :icon="'check'"
-                  :classes="'save dark:save dark:text-gray-800'" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>

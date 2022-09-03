@@ -1,9 +1,5 @@
 <template>
-  <button
-    :class="classes"
-    :disabled="state == 'loading' || state == 'disabled'"
-    class="dark:box-s relative bg-white text-sm dark:bg-gray-800 dark:text-gray-300"
-    type="submit">
+  <button :class="classes" :disabled="state == 'loading' || state == 'disabled'" type="submit">
     <span v-if="state == 'loading'"> Loading… </span>
 
     <!-- + icon -->
@@ -77,6 +73,16 @@ export default {
       default: '',
     },
   },
+
+  computed: {
+    buttonClasses() {
+      return [
+        'relative text-sm dark:text-gray-300 dark:box-s',
+        'bg-white dark:bg-gray-800 border-zinc-900 dark:border-zinc-100',
+        this.classes,
+      ];
+    },
+  },
 };
 </script>
 
@@ -89,14 +95,16 @@ export default {
   background-color: #fcf27e;
 }
 
-.dark\:save {
-  background-color: #fcf27e;
+@media (prefers-color-scheme: dark) {
+  .save {
+    background-color: #fcf27e;
+    color: rgb(31 41 55); // text-gray-800
+  }
 }
 
 button {
   --tw-shadow: 2px 2px 0 #575a5d !important;
   border-radius: 0.25rem !important;
-  border-color: #191a1b;
   border-width: 1px !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 transparent), var(--tw-ring-shadow, 0 0 transparent), var(--tw-shadow) !important;
   display: inline-block !important;
@@ -124,7 +132,7 @@ button {
 
 @media (prefers-color-scheme: dark) {
   button {
-    --tw-shadow: 2px 2px 0 #575a5d !important;
+    --tw-shadow: 2px 2px 0 #787a7d !important;
   }
 }
 </style>

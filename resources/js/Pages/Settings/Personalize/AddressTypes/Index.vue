@@ -81,15 +81,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span
-              :text="$t('app.cancel')"
-              :classes="'mr-3 dark:text-gray-900'"
-              @click="createAddressTypeModalShown = false" />
-            <pretty-button
-              :text="'Create address type'"
-              :state="loadingState"
-              :icon="'plus'"
-              :classes="'save dark:save dark:text-gray-800'" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createAddressTypeModalShown = false" />
+            <pretty-button :text="'Create address type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -146,11 +139,7 @@
                   :text="$t('app.cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameAddressTypeModalShownId = 0" />
-                <pretty-button
-                  :text="$t('app.rename')"
-                  :state="loadingState"
-                  :icon="'check'"
-                  :classes="'save dark:save dark:text-gray-800'" />
+                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>

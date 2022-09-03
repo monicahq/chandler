@@ -71,7 +71,7 @@
               :text="'Cancel account'"
               :state="loadingState"
               :icon="'arrow'"
-              :classes="'save dark:save dark:text-gray-800'" />
+              :classes="'save'" />
           </div>
         </form>
       </div>

@@ -26,9 +26,9 @@
         :placeholder="placeholder"
         @input="$emit('update:modelValue', $event.target.value)"
         @keydown.esc="sendEscKey"
-        @focus="showMaxLength"
+        @focus="displayMaxLength = true"
         @blur="displayMaxLength = false" />
-      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs dark:text-gray-900">
+      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs dark:text-gray-100">
         {{ charactersLeft }}
       </span>
     </div>
@@ -115,7 +115,6 @@ export default {
 
   data() {
     return {
-      localInputClasses: '',
       displayMaxLength: false,
     };
   },
@@ -129,21 +128,21 @@ export default {
 
       return `${this.maxlength - char} / ${this.maxlength}`;
     },
-  },
 
-  created() {
-    this.localInputClasses =
-      'dark:text-gray-100 border-gray-300 dark:border-gray-700 focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900 rounded-md shadow-sm disabled:bg-slate-50 dark:bg-slate-900 disabled:dark:bg-slate-900 ' +
-      this.inputClass;
+    localInputClasses() {
+      return [
+        'rounded-md shadow-sm',
+        'bg-white dark:bg-slate-900 dark:text-gray-100 border-gray-300 dark:border-gray-700',
+        'focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900',
+        'disabled:bg-slate-50 disabled:dark:bg-slate-900',
+        this.inputClass,
+      ];
+    },
   },
 
   methods: {
     focus() {
       this.$refs.input.focus();
-    },
-
-    showMaxLength() {
-      this.displayMaxLength = true;
     },
 
     sendEscKey() {
@@ -166,6 +165,16 @@ export default {
   right: 10px;
   background-color: #e5eeff;
   padding: 3px 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .optional-badge {
+    color: #d4d8dd;
+    background-color: #2f3031;
+  }
+  .length {
+    background-color: #2d2f33;
+  }
 }
 
 .counter {

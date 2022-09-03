@@ -87,7 +87,8 @@ a {
 
 @media (prefers-color-scheme: dark) {
   a {
-    --tw-shadow: 2px 2px 0 #575a5d !important;
+    --tw-shadow: 2px 2px 0 #222425 !important;
+    border-color: rgb(244 244 245); // border-zinc-100
   }
 }
 </style>

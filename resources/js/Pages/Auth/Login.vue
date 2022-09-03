@@ -78,7 +78,7 @@
                 :label="'Email'"
                 :type="'email'"
                 :autofocus="true"
-                :input-class="'block w-full dark:bg-gray-900'"
+                :input-class="'block w-full'"
                 :required="true"
                 :autocomplete="false"
                 :maxlength="255" />
@@ -90,7 +90,7 @@
                 :label="'Password'"
                 :type="'password'"
                 :autofocus="true"
-                :input-class="'block w-full dark:bg-gray-900'"
+                :input-class="'block w-full'"
                 :required="true"
                 :autocomplete="false"
                 :maxlength="255" />
@@ -111,7 +111,7 @@
                 Forgot password?
               </inertia-link>
 
-              <pretty-button :text="'Log in'" :state="loadingState" :classes="'save dark:save ml-4'" />
+              <pretty-button :text="'Log in'" :state="loadingState" :classes="'save ml-4'" />
             </div>
           </form>
         </div>

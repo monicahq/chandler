@@ -51,7 +51,7 @@
               v-model="form.name"
               :autofocus="true"
               :div-outer-class="'mb-5'"
-              :input-class="'block w-full dark:bg-gray-900'"
+              :input-class="'block w-full'"
               :required="true"
               :maxlength="255"
               :label="$t('vault.create_vault_name')" />
@@ -59,7 +59,7 @@
               v-model="form.description"
               :label="$t('vault.create_vault_description')"
               :maxlength="255"
-              :textarea-class="'block w-full dark:bg-gray-900'" />
+              :textarea-class="'block w-full'" />
           </div>
 
           <div class="flex justify-between p-5">
@@ -69,7 +69,7 @@
               :text="$t('app.add')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save dark:save dark:text-gray-800'" />
+              :classes="'save'" />
           </div>
         </form>
       </div>
