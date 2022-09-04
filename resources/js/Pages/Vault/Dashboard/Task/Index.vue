@@ -39,7 +39,7 @@
             <li
               v-for="currentTask in task.tasks"
               :key="currentTask.id"
-              class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+              class="item-list border-b border-gray-200 dark:border-gray-800 px-3 py-2 hover:bg-slate-50 hover:dark:bg-slate-900">
               <div class="flex items-center">
                 <input
                   :id="currentTask.id"
