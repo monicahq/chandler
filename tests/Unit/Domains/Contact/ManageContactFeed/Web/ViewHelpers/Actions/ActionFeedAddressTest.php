@@ -41,7 +41,7 @@ class ActionFeedAddressTest extends TestCase
         ]);
 
         config(['monica.mapbox_api_key' => 'api_key']);
-        config(['monica.mapbox_api_username' => 'test']);
+        config(['monica.mapbox_username' => 'test']);
 
         $feedItem = ContactFeedItem::factory()->create([
             'contact_id' => $contact->id,
