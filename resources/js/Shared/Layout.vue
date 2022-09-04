@@ -50,8 +50,8 @@
 
           <!-- icons -->
           <div class="flew-grow">
-            <ul>
-              <li class="mr-4 inline">
+            <ul class="relative">
+              <li class="icon-dark-mode relative mr-4 inline">
                 <label for="default-toggle" class="relative inline-flex cursor-pointer">
                   <input
                     id="default-toggle"
@@ -355,5 +355,9 @@ export default {
 
 .icon-cog {
   top: -1px;
+}
+
+.icon-dark-mode {
+  top: 3px;
 }
 </style>
