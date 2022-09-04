@@ -78,10 +78,10 @@
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
 
-          <address-created-or-updated
+          <addresses
             v-if="
-              feedItem.action === 'address_updated' ||
               feedItem.action === 'address_created' ||
+              feedItem.action === 'address_updated' ||
               feedItem.action === 'address_destroyed'
             "
             :data="feedItem.data"
@@ -119,7 +119,7 @@
 import Avatar from '@/Shared/Avatar.vue';
 import GenericAction from '@/Shared/Modules/FeedItems/GenericAction.vue';
 import LabelAssigned from '@/Shared/Modules/FeedItems/LabelAssigned.vue';
-import AddressCreatedOrUpdated from '@/Shared/Modules/FeedItems/AddressCreatedOrUpdated.vue';
+import Addresses from '@/Shared/Modules/FeedItems/Address.vue';
 import ContactInformation from '@/Shared/Modules/FeedItems/ContactInformation.vue';
 
 export default {
@@ -127,7 +127,7 @@ export default {
     Avatar,
     GenericAction,
     LabelAssigned,
-    AddressCreatedOrUpdated,
+    Addresses,
     ContactInformation,
   },
 
