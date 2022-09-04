@@ -25,7 +25,7 @@
 
       <!-- the label was deleted -->
       <span v-else>
-        <span>{{ data.information.description }}</span>
+        {{ data.information.description }}
       </span>
     </div>
   </div>
