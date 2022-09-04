@@ -23,7 +23,7 @@ class ContactModuleAddressImageController extends Controller
             ->throw();
 
         return Response::stream(function () use ($response) {
-        echo $response->body();
+            echo $response->body();
         }, 200,
             Arr::only($response->headers(), [
                 'Content-Length',
