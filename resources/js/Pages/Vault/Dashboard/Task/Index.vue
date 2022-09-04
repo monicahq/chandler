@@ -35,7 +35,7 @@
           </div>
 
           <!-- tasks -->
-          <ul class="rounded-lg border border-gray-200 bg-white">
+          <ul class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             <li
               v-for="currentTask in task.tasks"
               :key="currentTask.id"
