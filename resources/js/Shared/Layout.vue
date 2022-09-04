@@ -123,7 +123,7 @@
 
                 <inertia-link
                   :href="layoutData.vault.url.tasks"
-                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Dashboard/Task') }"
+                  :class="{ 'bg-blue-700 dark:bg-blue-300 text-white dark:text-gray-900': $page.component.startsWith('Vault/Dashboard/Task') }"
                   class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
                   {{ $t('app.layout_menu_tasks') }}
                 </inertia-link>
