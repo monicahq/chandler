@@ -84,7 +84,7 @@
     <div class="text-center">
       <inertia-link
         :href="data.url.index"
-        class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500">
+        class="rounded border border-gray-200 dark:border-gray-700 px-3 py-1 text-sm text-blue-500 hover:border-gray-500">
         {{ $t('app.view_all') }}
       </inertia-link>
     </div>
