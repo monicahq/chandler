@@ -6,13 +6,15 @@ use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedContactInfor
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
 use App\Helpers\DateHelper;
+use App\Helpers\PaginatorHelper;
 use App\Helpers\UserHelper;
 use App\Models\ContactFeedItem;
 use App\Models\User;
+use App\Models\Vault;
 
 class ModuleFeedViewHelper
 {
-    public static function data($items, User $user): array
+    public static function data($items, User $user, Vault $vault): array
     {
         $itemsCollection = $items->map(function ($item) use ($user) {
             return [
@@ -27,6 +29,7 @@ class ModuleFeedViewHelper
 
         return [
             'items' => $itemsCollection,
+            'paginator' => PaginatorHelper::getData($items),
         ];
     }
 

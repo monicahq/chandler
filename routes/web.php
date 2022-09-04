@@ -83,6 +83,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneContro
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
 use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
@@ -125,6 +126,9 @@ Route::middleware([
 
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
+
+            // feed entries
+            Route::get('feed', [VaultFeedController::class, 'show'])->name('vault.feed.show');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {

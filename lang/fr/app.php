@@ -64,6 +64,7 @@ return [
     'next' => 'Suivant',
     'view_all' => 'Tout voir',
     'view_map' => 'Voir sur la carte',
+    'view_older' => 'Voir les entrées précédentes',
     'download' => 'Télécharger',
 
     'unknown_name' => 'Nom non renseigné',

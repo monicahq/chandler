@@ -61,14 +61,14 @@ class VaultController extends Controller
             ->with('author')
             ->with('contact')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(3);
 
         return Inertia::render('Vault/Dashboard/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'lastUpdatedContacts' => VaultShowViewHelper::lastUpdatedContacts($vault),
             'upcomingReminders' => VaultShowViewHelper::upcomingReminders($vault, Auth::user()),
             'favorites' => VaultShowViewHelper::favorites($vault, Auth::user()),
-            'feed' => ModuleFeedViewHelper::data($items, Auth::user()),
+            'feed' => ModuleFeedViewHelper::data($items, Auth::user(), $vault),
             'dueTasks' => VaultShowViewHelper::dueTasks($vault, Auth::user()),
         ]);
     }

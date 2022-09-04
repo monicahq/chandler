@@ -231,7 +231,7 @@ class ContactShowViewHelper
                     ->with('contact')
                     ->orderBy('created_at', 'desc')
                     ->get();
-                $data = ModuleFeedViewHelper::data($items, $user);
+                $data = ModuleFeedViewHelper::data($items, $user, $contact->vault);
             }
 
             if ($module->type == Module::TYPE_REMINDERS) {

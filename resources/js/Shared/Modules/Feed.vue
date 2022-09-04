@@ -1,7 +1,7 @@
 <template>
   <div class="mb-4">
     <div class="ml-4 border-l border-gray-200 dark:border-gray-700">
-      <div v-for="feedItem in data.items" :key="feedItem.id" class="mb-8">
+      <div v-for="feedItem in feed" :key="feedItem.id" class="mb-8">
         <!-- action & user -->
         <div class="mb-3 flex">
           <div class="icon-avatar relative w-6">
@@ -100,8 +100,17 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="data.items.length == 0">
+    <div v-if="feed.length == 0">
       <p class="p-5 text-center">There is no activity yet.</p>
+    </div>
+
+    <!-- load more -->
+    <div class="text-center">
+      <span
+        @click="load()"
+        class="cursor-pointer rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
+        {{ $t('app.view_older') }}
+      </span>
     </div>
   </div>
 </template>
@@ -128,6 +137,31 @@ export default {
     contactViewMode: {
       type: Boolean,
       default: true,
+    },
+  },
+
+  data() {
+    return {
+      feed: [],
+    };
+  },
+
+  created() {
+    this.feed = this.data.items;
+  },
+
+  methods: {
+    load() {
+      axios
+        .get(this.data.url.load)
+        .then((response) => {
+          response.data.data.items.forEach((entry) => {
+            this.feed.push(entry);
+          });
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
     },
   },
 };
