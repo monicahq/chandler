@@ -85,6 +85,10 @@ class MapHelper
             return null;
         }
 
+        if (! config('monica.mapbox_username')) {
+            return null;
+        }
+
         $url = 'https://api.mapbox.com/styles/v1/';
         $url .= config('monica.mapbox_username').'/';
         $url .= config('monica.mapbox_custom_style_name').'/static/';

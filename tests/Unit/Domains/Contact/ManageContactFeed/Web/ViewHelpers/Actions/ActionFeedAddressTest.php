@@ -66,7 +66,7 @@ class ActionFeedAddressTest extends TestCase
                             'id' => $addressType->id,
                             'name' => 'super type',
                         ],
-                        'image' => 'https://api.mapbox.com/styles/v1/test/cl7jqlqqu002p14oiadjfz76v/static/-74.005941,40.712784,7/300x100?access_token=api_key',
+                        'image' => env('APP_URL')."/vaults/{$contact->vault_id}/contacts/{$contact->id}/addresses/{$activeAddress->id}/image/300x100",
                         'url' => [
                             'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
                         ],

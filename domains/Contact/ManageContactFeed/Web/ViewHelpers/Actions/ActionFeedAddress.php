@@ -26,7 +26,13 @@ class ActionFeedAddress
                         'id' => $address->addressType->id,
                         'name' => $address->addressType->name,
                     ] : null,
-                    'image' => MapHelper::getStaticImage($address, 300, 100),
+                    'image' => route('contact.address.image.show', [
+                        'vault' => $contact->vault_id,
+                        'contact' => $contact->id,
+                        'address' => $address->id,
+                        'width' => 300,
+                        'height' => 100,
+                    ]),
                     'url' => [
                         'show' => MapHelper::getMapLink($address, $user),
                     ],
