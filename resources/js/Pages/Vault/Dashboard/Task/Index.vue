@@ -3,12 +3,12 @@
     <main class="relative sm:mt-24">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title -->
-        <div class="mb-5 items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2 sm:flex">
+        <div class="mb-5 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
           <div class="mb-2 sm:mb-0">
             <span class="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon-sidebar relative inline h-4 w-4 text-gray-300 dark:text-gray-700 hover:text-gray-600 hover:dark:text-gray-400"
+                class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-700 hover:dark:text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -35,11 +35,11 @@
           </div>
 
           <!-- tasks -->
-          <ul class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+          <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <li
               v-for="currentTask in task.tasks"
               :key="currentTask.id"
-              class="item-list border-b border-gray-200 dark:border-gray-800 px-3 py-2 hover:bg-slate-50 hover:dark:bg-slate-900">
+              class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-800 hover:dark:bg-slate-900">
               <div class="flex items-center">
                 <input
                   :id="currentTask.id"
@@ -49,13 +49,19 @@
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                   @change="toggle(currentTask)" />
 
-                <label :for="currentTask.id" class="ml-2 flex cursor-pointer items-center text-gray-900 dark:text-gray-100">
+                <label
+                  :for="currentTask.id"
+                  class="ml-2 flex cursor-pointer items-center text-gray-900 dark:text-gray-100">
                   {{ currentTask.label }}
 
                   <!-- due date -->
                   <span
                     v-if="currentTask.due_at"
-                    :class="currentTask.due_at_late ? 'bg-red-400/10 dark:bg-red-600/10 text-red-600 dark:text-red-400' : 'bg-sky-400/10 dark:bg-sky-600/10 text-sky-600 dark:text-sky-400'"
+                    :class="
+                      currentTask.due_at_late
+                        ? 'bg-red-400/10 text-red-600 dark:bg-red-600/10 dark:text-red-400'
+                        : 'bg-sky-400/10 text-sky-600 dark:bg-sky-600/10 dark:text-sky-400'
+                    "
                     class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +84,9 @@
           </ul>
         </div>
 
-        <div v-if="data.length <= 0" class="mb-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <div
+          v-if="data.length <= 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">
             {{ $t('vault.tasks_blank') }}
           </p>
