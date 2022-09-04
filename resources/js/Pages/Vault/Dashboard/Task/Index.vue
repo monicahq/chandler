@@ -55,8 +55,8 @@
                   <!-- due date -->
                   <span
                     v-if="currentTask.due_at"
-                    :class="currentTask.due_at_late ? 'bg-red-400/10 text-red-600' : 'bg-sky-400/10 text-sky-600'"
-                    class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 text-sky-600 dark:text-sky-400">
+                    :class="currentTask.due_at_late ? 'bg-red-400/10 dark:bg-red-600/10 text-red-600 dark:text-red-400' : 'bg-sky-400/10 dark:bg-sky-600/10 text-sky-600 dark:text-sky-400'"
+                    class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="mr-1 h-3 w-3"
