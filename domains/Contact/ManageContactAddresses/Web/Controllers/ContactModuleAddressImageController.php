@@ -24,13 +24,15 @@ class ContactModuleAddressImageController extends Controller
 
         return Response::stream(function () use ($response) {
             echo $response->body();
-        }, 200,
+        },
+            200,
             Arr::only($response->headers(), [
                 'Content-Length',
                 'Content-Type',
                 'Cache-Control',
                 'Date',
                 'ETag',
-            ]));
+            ])
+        );
     }
 }
