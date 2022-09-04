@@ -62,6 +62,7 @@ class MapHelperTest extends TestCase
     {
         config(['monica.mapbox_api_key' => 'api_key']);
         config(['monica.mapbox_username' => 'test']);
+        config(['monica.mapbox_custom_style_name' => 'style']);
 
         $address = Address::factory()->create([
             'longitude' => '-74.005941',
@@ -71,7 +72,7 @@ class MapHelperTest extends TestCase
         $url = MapHelper::getStaticImage($address, 300, 300, 7);
 
         $this->assertEquals(
-            'https://api.mapbox.com/styles/v1/test/cl7jqlqqu002p14oiadjfz76v/static/-74.005941,40.712784,7/300x300?access_token=api_key',
+            'https://api.mapbox.com/styles/v1/test/style/static/-74.005941,40.712784,7/300x300?access_token=api_key',
             $url
         );
     }
