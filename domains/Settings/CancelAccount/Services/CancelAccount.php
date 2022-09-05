@@ -2,14 +2,17 @@
 
 namespace App\Settings\CancelAccount\Services;
 
-use App\Interfaces\ServiceInterface;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\File;
 use App\Services\BaseService;
+use App\Services\DispatchableService;
+use App\Services\QueuableService;
 
-class CancelAccount extends BaseService implements ServiceInterface
+class CancelAccount extends BaseService implements QueuableService
 {
+    use DispatchableService;
+
     private Account $account;
 
     /**
@@ -43,7 +46,7 @@ class CancelAccount extends BaseService implements ServiceInterface
      *
      * @param  array  $data
      */
-    public function execute(array $data): void
+    public function handle(array $data): void
     {
         $this->validateRules($data);
 
