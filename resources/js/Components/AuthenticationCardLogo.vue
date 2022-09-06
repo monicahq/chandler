@@ -1,14 +1,12 @@
 <script setup>
 import { Link } from '@inertiajs/inertia-vue3';
-import MonicaLogo from '@/Layouts/MonicaLogo.vue';
-import OfficeLifeLogo from '@/Layouts/OfficeLifeLogo.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 </script>
 
 <template>
   <Link :href="'/'">
     <div class="flex items-center">
-      <OfficeLifeLogo class="mr-4" />
-      <MonicaLogo />
+      <ApplicationLogo />
     </div>
   </Link>
 </template>

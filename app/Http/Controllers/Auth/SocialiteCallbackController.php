@@ -53,7 +53,7 @@ class SocialiteCallbackController extends Controller
             $this->checkForErrors($request, $driver);
 
             return $this->loginPipeline($request)->then(function (/*$request*/) {
-                return Redirect::intended(route('dashboard'));
+                return Redirect::intended(route('vault.index'));
             });
         } catch (ValidationException $e) {
             throw $e->redirectTo(Redirect::intended(route('home'))->getTargetUrl());

@@ -6,10 +6,10 @@ import JetActionSection from '@/Components/Jetstream/ActionSection.vue';
 import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 import JetConfirmsPassword from '@/Components/Jetstream/ConfirmsPassword.vue';
 import JetButton from '@/Components/Jetstream/Button.vue';
-import RegisterKey from './Partials/RegisterKey.vue';
-import DeleteKeyModal from './Partials/DeleteKeyModal.vue';
-import UpdateKey from './Partials/UpdateKey.vue';
-import WebAuthn from '../../webauthn.js';
+import RegisterKey from '@/Pages/Webauthn/Partials/RegisterKey.vue';
+import DeleteKeyModal from '@/Pages/Webauthn/Partials/DeleteKeyModal.vue';
+import UpdateKey from '@/Pages/Webauthn/Partials/UpdateKey.vue';
+import WebAuthn from '@/webauthn.js';
 
 const props = defineProps({
   webauthnKeys: Array,

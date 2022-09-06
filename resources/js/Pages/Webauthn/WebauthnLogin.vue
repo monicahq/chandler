@@ -5,8 +5,8 @@ import { Inertia } from '@inertiajs/inertia';
 import { trans } from 'laravel-vue-i18n';
 import JetInputError from '@/Components/Jetstream/InputError.vue';
 import JetButton from '@/Components/Jetstream/Button.vue';
-import WaitForKey from './Partials/WaitForKey.vue';
-import WebAuthn from '../../webauthn.js';
+import WaitForKey from '@/Pages/Webauthn/Partials/WaitForKey.vue';
+import WebAuthn from '@/webauthn.js';
 
 const props = defineProps({
   publicKey: Object,

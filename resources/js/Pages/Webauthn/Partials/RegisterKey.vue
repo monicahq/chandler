@@ -5,7 +5,7 @@ import JetInput from '@/Components/Jetstream/Input.vue';
 import JetInputError from '@/Components/Jetstream/InputError.vue';
 import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 import JetButton from '@/Components/Jetstream/Button.vue';
-import WaitForKey from './WaitForKey.vue';
+import WaitForKey from '@/Pages/Webauthn/Partials/WaitForKey.vue';
 
 const props = defineProps({
   errorMessage: String,
