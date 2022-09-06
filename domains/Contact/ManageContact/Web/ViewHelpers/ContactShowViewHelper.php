@@ -224,7 +224,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_FEED) {
-                // this is the only module that the contact is loaded asynchroniously
+                // this is the only module where the data is loaded asynchroniously
                 // so it needs an URL to load the data from
                 $data = route('contact.feed.show', [
                     'vault' => $contact->vault_id,
