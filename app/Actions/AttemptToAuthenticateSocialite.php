@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Events\TwoFactorAuthenticationChallenged;
 use Laravel\Fortify\LoginRateLimiter;
@@ -159,9 +160,11 @@ class AttemptToAuthenticateSocialite
      */
     private function createUser(SocialiteUser $socialite): User
     {
+        $names = Str::of($socialite->getName())->split('/ /', 2);
         $data = [
             'email' => $socialite->getEmail(),
-            'name' => empty($socialite->getName()) ? $socialite->getEmail() : $socialite->getName(),
+            'first_name' => $names[0],
+            'last_name' => $names[1] ?? $names[0],
             'locale' => App::getLocale(),
             'terms' => true,
         ];
