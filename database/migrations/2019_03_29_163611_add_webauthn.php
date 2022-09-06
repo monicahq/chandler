@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
 
             $table->string('name')->default('key');
-            $table->mediumText('credentialId');
+            $table->string('credentialId', 768);
             $table->string('type', 255);
             $table->text('transports');
             $table->string('attestationType', 255);
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            //$table->index('credentialId');
+            $table->index('credentialId');
         });
     }
 

@@ -109,7 +109,7 @@ return [
     */
 
     'redirects' => [
-        'login' => '/vault',
+        'login' => '/vaults',
         'register' => '/user/profile',
     ],
 
