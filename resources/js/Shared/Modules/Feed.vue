@@ -114,12 +114,12 @@
     </div>
 
     <!-- loading mode -->
-    <div v-if="loading" class="p-20 text-center">
+    <div v-if="loading" class="mb-5 rounded-lg border border-gray-200 p-20 text-center">
       <loading />
     </div>
 
     <!-- load more -->
-    <div class="text-center">
+    <div class="text-center" v-if="paginator.hasMorePages">
       <span
         @click="load()"
         class="cursor-pointer rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
@@ -192,6 +192,7 @@ export default {
           response.data.data.items.forEach((entry) => {
             this.feed.push(entry);
           });
+          this.paginator = response.data.paginator;
         })
         .catch(() => {});
     },
