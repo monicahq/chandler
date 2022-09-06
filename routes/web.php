@@ -129,7 +129,7 @@ Route::middleware([
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
-            // feed entries
+            // vault feed entries
             Route::get('feed', [VaultFeedController::class, 'show'])->name('vault.feed.show');
 
             // tasks

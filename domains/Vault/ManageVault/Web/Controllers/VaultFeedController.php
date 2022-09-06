@@ -3,6 +3,7 @@
 namespace App\Vault\ManageVault\Web\Controllers;
 
 use App\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
+use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
@@ -22,10 +23,11 @@ class VaultFeedController extends Controller
             ->with('author')
             ->with('contact')
             ->orderBy('created_at', 'desc')
-            ->paginate(3);
+            ->paginate(15);
 
         return response()->json([
             'data' => ModuleFeedViewHelper::data($items, Auth::user(), $vault),
+            'paginator' => PaginatorHelper::getData($items),
         ], 200);
     }
 }

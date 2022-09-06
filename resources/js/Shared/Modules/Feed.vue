@@ -109,8 +109,13 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="feed.length == 0">
+    <div v-if="feed.length == 0 && !loading">
       <p class="p-5 text-center">There is no activity yet.</p>
+    </div>
+
+    <!-- loading mode -->
+    <div v-if="loading" class="p-20 text-center">
+      <loading />
     </div>
 
     <!-- load more -->
@@ -125,6 +130,7 @@
 </template>
 
 <script>
+import Loading from '@/Shared/Loading.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import GenericAction from '@/Shared/Modules/FeedItems/GenericAction.vue';
 import LabelAssigned from '@/Shared/Modules/FeedItems/LabelAssigned.vue';
@@ -133,6 +139,7 @@ import ContactInformation from '@/Shared/Modules/FeedItems/ContactInformation.vu
 
 export default {
   components: {
+    Loading,
     Avatar,
     GenericAction,
     LabelAssigned,
@@ -141,38 +148,52 @@ export default {
   },
 
   props: {
-    data: {
-      type: Object,
-      default: null,
-    },
     contactViewMode: {
       type: Boolean,
       default: true,
+    },
+    url: {
+      type: String,
+      default: '',
     },
   },
 
   data() {
     return {
       feed: [],
+      loading: false,
+      paginator: [],
     };
   },
 
-  created() {
-    this.feed = this.data.items;
+  mounted() {
+    this.initialLoad();
   },
 
   methods: {
+    initialLoad() {
+      this.loading = true;
+      axios
+        .get(this.url)
+        .then((response) => {
+          this.loading = false;
+          response.data.data.items.forEach((entry) => {
+            this.feed.push(entry);
+          });
+          this.paginator = response.data.paginator;
+        })
+        .catch(() => {});
+    },
+
     load() {
       axios
-        .get(this.data.url.load)
+        .get(this.paginator.nextPageUrl)
         .then((response) => {
           response.data.data.items.forEach((entry) => {
             this.feed.push(entry);
           });
         })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
+        .catch(() => {});
     },
   },
 };
