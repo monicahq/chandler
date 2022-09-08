@@ -29,7 +29,6 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
-
         Jetstream::inertia()->whenRendering('Profile/Show', new UserProfile());
     }
 
