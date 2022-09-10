@@ -35,7 +35,7 @@ WebAuthn.prototype.register = function (publicKey, callback) {
     publicKeyCredential.excludeCredentials = this._credentialDecode(publicKey.excludeCredentials);
   }
 
-  var self = this;
+  const self = this;
   navigator.credentials
     .create({
       publicKey: publicKeyCredential,
@@ -84,7 +84,7 @@ WebAuthn.prototype.sign = function (publicKey, callback) {
     publicKeyCredential.allowCredentials = this._credentialDecode(publicKey.allowCredentials);
   }
 
-  var self = this;
+  const self = this;
   navigator.credentials
     .get({
       publicKey: publicKeyCredential,
@@ -139,7 +139,7 @@ WebAuthn.prototype._bufferEncode = function (value) {
  * @return {string}
  */
 WebAuthn.prototype._bufferDecode = function (value) {
-  var t = window.atob(value);
+  const t = window.atob(value);
   return Uint8Array.from(t, (c) => c.charCodeAt(0));
 };
 
@@ -172,7 +172,7 @@ WebAuthn.prototype._base64Decode = function (input) {
  * @return {PublicKeyCredentialDescriptor}
  */
 WebAuthn.prototype._credentialDecode = function (credentials) {
-  var self = this;
+  const self = this;
   return credentials.map(function (data) {
     return {
       id: self._bufferDecode(self._base64Decode(data.id)),
