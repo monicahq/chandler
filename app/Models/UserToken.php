@@ -30,7 +30,7 @@ class UserToken extends Model
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'token',
@@ -41,7 +41,7 @@ class UserToken extends Model
     /**
      * The attributes that should be visible in serialization.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $visible = [
         'driver',

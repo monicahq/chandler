@@ -48,7 +48,7 @@ defineProps({
 </style>
 
 <template>
-  <JetActionSection id="socialite" @submitted="updatePassword">
+  <JetActionSection id="socialite">
     <template #title>
       {{ $t('External connections') }}
     </template>
@@ -64,13 +64,16 @@ defineProps({
 
       <div class="mt-5 space-y-6">
         <div v-for="provider in providers" :key="provider" class="flex items-center">
-          <img :src="`/img/auth/${provider}.svg`" alt="" class="auth-provider relative" />
+          <img :src="`/img/auth/${provider}.svg`" :alt="provider" class="auth-provider relative" />
           <span class="mr-3 text-sm text-gray-600 dark:text-gray-400">
             {{ providersName[provider] }}
           </span>
 
           <template v-if="userTokens.findIndex((driver) => driver.driver === provider) > -1">
-            <JetSecondaryButton class="mr-3" @click.prevent="deleteProvider(provider)">
+            <span class="text-sm text-green-600 dark:text-green-400">
+              {{ $t('Connected') }}
+            </span>
+            <JetSecondaryButton class="ml-3" @click.prevent="deleteProvider(provider)">
               {{ $t('Disconnect') }}
             </JetSecondaryButton>
 
@@ -78,7 +81,7 @@ defineProps({
           </template>
 
           <template v-else>
-            <JetButton class="mr-3" @click.prevent="open(provider)">
+            <JetButton class="ml-3" @click.prevent="open(provider)">
               {{ $t('Connect') }}
             </JetButton>
 
