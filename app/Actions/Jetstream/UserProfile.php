@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 
 class UserProfile
@@ -17,7 +18,9 @@ class UserProfile
     {
         $providers = collect(config('auth.login_providers'))->filter(fn ($provider) => ! empty($provider));
         $providersName = $providers->mapWithKeys(function ($provider) {
-            return [$provider => config("services.$provider.name") ?? __("auth.login_provider_{$provider}")];
+            return [
+                $provider => config("services.$provider.name") ?? __("auth.login_provider_{$provider}"),
+            ];
         });
 
         $webauthnKeys = $request->user()->webauthnKeys()
@@ -41,6 +44,8 @@ class UserProfile
             'id' => $locale,
             'name' => __('auth.lang', [], $locale),
         ]);
+
+        $data['layoutData'] = VaultIndexViewHelper::layoutData();
 
         return $data;
     }
