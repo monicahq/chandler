@@ -116,7 +116,7 @@ const clearPhotoFileInput = () => {
       </div>
 
       <!-- First Name -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-6 mb-4 sm:col-span-4">
         <JetLabel for="first_name" value="First name" />
         <JetInput
           id="first_name"
@@ -128,7 +128,7 @@ const clearPhotoFileInput = () => {
       </div>
 
       <!-- Last Name -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-6 mb-4 sm:col-span-4">
         <JetLabel for="last_name" value="Last name" />
         <JetInput
           id="last_name"
@@ -140,7 +140,7 @@ const clearPhotoFileInput = () => {
       </div>
 
       <!-- Email -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-6 mb-4 sm:col-span-4">
         <JetLabel for="email" value="Email" />
         <JetInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" autocomplete="email" />
         <JetInputError :message="form.errors.email" class="mt-2" />
