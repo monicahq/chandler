@@ -12,8 +12,10 @@ defineEmits(['retry']);
 <template>
   <div>
     <div v-if="errorMessage !== ''" class="form-error-message mb3">
-      <div class="relative rounded border border-red-400 bg-red-100 px-4 py-3" role="alert">
-        <p class="font-bold text-red-700">
+      <div
+        class="relative rounded border border-red-400 bg-red-100 px-4 py-3 dark:border-red-600 dark:bg-red-900"
+        role="alert">
+        <p class="font-bold text-red-700 dark:text-red-300">
           {{ errorMessage }}
         </p>
         <JetButton class="mt-4" @click="$emit('retry')">
@@ -24,9 +26,9 @@ defineEmits(['retry']);
     <template v-else>
       <div
         v-if="form.processing"
-        class="mb-4 flex rounded-b border-t-4 border-teal-500 bg-teal-100 px-4 py-8 shadow-md dark:shadow-gray-700"
+        class="mb-4 flex rounded-b border-t-4 border-teal-500 bg-teal-100 px-4 py-8 shadow-md dark:bg-teal-900 dark:shadow-gray-700"
         role="alert">
-        <div class="mr-2 text-teal-800">
+        <div class="mr-2 text-teal-800 dark:text-teal-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -45,14 +47,14 @@ defineEmits(['retry']);
             </g>
           </svg>
         </div>
-        <p class="text-2xl font-bold text-teal-900">
+        <p class="text-2xl font-bold text-teal-900 dark:text-teal-100">
           {{ $t('Validating key…') }}
         </p>
       </div>
       <div
         v-else-if="!form.hasErrors"
-        class="mb-4 flex rounded-b border-t-4 border-indigo-500 bg-indigo-100 px-4 py-8 shadow-md dark:shadow-gray-700">
-        <div class="mr-2 text-indigo-800">
+        class="mb-4 flex rounded-b border-t-4 border-indigo-500 bg-indigo-100 px-4 py-8 shadow-md dark:bg-indigo-900 dark:shadow-gray-700">
+        <div class="mr-2 text-indigo-800 dark:text-indigo-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -71,7 +73,7 @@ defineEmits(['retry']);
             </g>
           </svg>
         </div>
-        <p class="text-2xl font-bold text-indigo-900">
+        <p class="text-2xl font-bold text-indigo-900 dark:text-indigo-100">
           {{ $t('Waiting for key…') }}
         </p>
       </div>
