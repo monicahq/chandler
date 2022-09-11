@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PaginatorHelper
 {
