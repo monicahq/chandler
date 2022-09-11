@@ -48,7 +48,7 @@ const linkClasses =
     </div>
 
     <div class="hidden sm:flex sm:flex-1 sm:flex-col sm:items-center sm:justify-between">
-      <p v-if="withSummary" class="text-sm leading-5 text-gray-700 dark:text-gray-300">
+      <p v-if="withSummary" class="mb-2 text-xs leading-5 text-gray-700 dark:text-gray-300">
         <span v-if="items.firstItem">
           {{
             $t('Showing :first to :last of :total results', {
@@ -77,6 +77,7 @@ const linkClasses =
           aria-disabled="true">
           <ChevronLeft />
         </span>
+
         <Link
           v-else
           :href="items.previousPageUrl"
