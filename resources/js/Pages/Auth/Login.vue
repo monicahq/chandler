@@ -77,7 +77,6 @@ const reload = () => {
   width: 15px;
   height: 15px;
   margin-right: 8px;
-  top: 2px;
 }
 .w-43 {
   width: 43%;
@@ -164,18 +163,20 @@ const reload = () => {
             </div>
 
             <div class="mt-4 block">
-              <p v-if="providers.length > 0" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <p v-if="providers.length > 0" class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('Login with:') }}
               </p>
               <div class="flex flex-wrap">
                 <JetSecondaryButton
                   v-for="provider in providers"
                   :key="provider"
-                  class="mr-2"
+                  class="mr-2 inline align-middle"
                   :href="route('login.provider', { driver: provider })"
                   @click.prevent="open(provider)">
-                  <img :src="`/img/auth/${provider}.svg`" alt="" class="auth-provider relative" />
-                  {{ providersName[provider] }}
+                  <img :src="`/img/auth/${provider}.svg`" alt="" class="relative mr-2 h-4 w-4 align-middle" />
+                  <span class="align-middle">
+                    {{ providersName[provider] }}
+                  </span>
                 </JetSecondaryButton>
               </div>
             </div>
