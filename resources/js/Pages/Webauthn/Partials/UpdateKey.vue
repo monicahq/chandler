@@ -1,10 +1,10 @@
 <script setup>
 import { ref, watch, nextTick } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import JetLabel from '@/Components/Jetstream/Label.vue';
-import JetInput from '@/Components/Jetstream/Input.vue';
-import JetInputError from '@/Components/Jetstream/InputError.vue';
-import JetButton from '@/Components/Jetstream/Button.vue';
+import JetLabel from '@/Components/Label.vue';
+import JetInput from '@/Components/Input.vue';
+import JetInputError from '@/Components/InputError.vue';
+import JetButton from '@/Components/Button.vue';
 import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 
 const form = useForm({

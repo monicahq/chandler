@@ -1,12 +1,12 @@
 <script setup>
 import { nextTick, ref } from 'vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
-import JetAuthenticationCard from '@/Components/Jetstream/AuthenticationCard.vue';
+import AuthenticationCard from '@/Layouts/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import JetButton from '@/Components/Jetstream/Button.vue';
-import JetInput from '@/Components/Jetstream/Input.vue';
-import JetLabel from '@/Components/Jetstream/Label.vue';
-import JetValidationErrors from '@/Components/Jetstream/ValidationErrors.vue';
+import JetButton from '@/Components/Button.vue';
+import JetInput from '@/Components/Input.vue';
+import JetLabel from '@/Components/Label.vue';
+import JetValidationErrors from '@/Components/ValidationErrors.vue';
 import WebauthnLogin from '@/Pages/Webauthn/WebauthnLogin.vue';
 
 const recovery = ref(false);
@@ -47,7 +47,7 @@ defineProps({
 <template>
   <Head :title="$t('Two-factor Confirmation')" />
 
-  <JetAuthenticationCard>
+  <AuthenticationCard>
     <template #logo>
       <AuthenticationCardLogo />
     </template>
@@ -122,5 +122,5 @@ defineProps({
         </div>
       </form>
     </div>
-  </JetAuthenticationCard>
+  </AuthenticationCard>
 </template>

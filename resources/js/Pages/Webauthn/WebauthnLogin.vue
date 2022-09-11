@@ -3,8 +3,8 @@ import { ref, nextTick, watch, onMounted } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import { trans } from 'laravel-vue-i18n';
-import JetInputError from '@/Components/Jetstream/InputError.vue';
-import JetButton from '@/Components/Jetstream/Button.vue';
+import JetInputError from '@/Components/InputError.vue';
+import JetButton from '@/Components/Button.vue';
 import WaitForKey from '@/Pages/Webauthn/Partials/WaitForKey.vue';
 import WebAuthn from '@/webauthn.js';
 

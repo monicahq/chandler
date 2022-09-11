@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import JetActionMessage from '@/Components/Jetstream/ActionMessage.vue';
-import JetButton from '@/Components/Jetstream/Button.vue';
+import JetButton from '@/Components/Button.vue';
 import JetFormSection from '@/Components/Jetstream/FormSection.vue';
-import JetInput from '@/Components/Jetstream/Input.vue';
-import JetInputError from '@/Components/Jetstream/InputError.vue';
-import JetLabel from '@/Components/Jetstream/Label.vue';
+import JetInput from '@/Components/Input.vue';
+import JetInputError from '@/Components/InputError.vue';
+import JetLabel from '@/Components/Label.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);

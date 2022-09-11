@@ -2,13 +2,20 @@
 import { computed, ref, useSlots } from 'vue';
 import JetSectionTitle from './SectionTitle.vue';
 
-defineEmits(['submitted']);
+const emit = defineEmits(['submitted']);
 const props = defineProps({
   useEditMode: Boolean,
 });
 
 const hasActions = computed(() => !!useSlots().actions);
 const editMode = ref(!props.useEditMode);
+
+const submit = () => {
+  emit('submitted');
+  if (props.useEditMode) {
+    editMode.value = false;
+  }
+};
 </script>
 
 <template>
@@ -37,12 +44,7 @@ const editMode = ref(!props.useEditMode);
     <form
       v-if="editMode"
       class="bg-form mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
-      @submit.prevent="
-        $emit('submitted');
-        if (useEditMode) {
-          editMode = false;
-        }
-      ">
+      @submit.prevent="submit">
       <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
         <slot name="form" />
       </div>

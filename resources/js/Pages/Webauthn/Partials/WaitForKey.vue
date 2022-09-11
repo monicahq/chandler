@@ -1,5 +1,5 @@
 <script setup>
-import JetButton from '@/Components/Jetstream/Button.vue';
+import JetButton from '@/Components/Button.vue';
 
 defineProps({
   errorMessage: String,

@@ -5,7 +5,7 @@ import { trans } from 'laravel-vue-i18n';
 import JetActionSection from '@/Components/Jetstream/ActionSection.vue';
 import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 import JetConfirmsPassword from '@/Components/Jetstream/ConfirmsPassword.vue';
-import JetButton from '@/Components/Jetstream/Button.vue';
+import JetButton from '@/Components/Button.vue';
 import RegisterKey from '@/Pages/Webauthn/Partials/RegisterKey.vue';
 import DeleteKeyModal from '@/Pages/Webauthn/Partials/DeleteKeyModal.vue';
 import UpdateKey from '@/Pages/Webauthn/Partials/UpdateKey.vue';
