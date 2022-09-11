@@ -1,11 +1,11 @@
 <script setup>
 import { ref, reactive, nextTick } from 'vue';
 import { trans } from 'laravel-vue-i18n';
-import JetButton from './Button.vue';
-import JetDialogModal from './DialogModal.vue';
-import JetInput from './Input.vue';
-import JetInputError from './InputError.vue';
-import JetSecondaryButton from './SecondaryButton.vue';
+import Button from '@/Components/Button.vue';
+import JetDialogModal from '@/Components/Jetstream/DialogModal.vue';
+import Input from '@/Components/Input.vue';
+import InputError from '@/Components/InputError.vue';
+import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 
 const emit = defineEmits(['confirmed']);
 
@@ -88,7 +88,7 @@ const closeModal = () => {
         {{ content }}
 
         <div class="mt-4">
-          <JetInput
+          <Input
             ref="passwordInput"
             v-model="form.password"
             type="password"
@@ -96,7 +96,7 @@ const closeModal = () => {
             :placeholder="$t('Password')"
             @keyup.enter="confirmPassword" />
 
-          <JetInputError :message="form.error" class="mt-2" />
+          <InputError :message="form.error" class="mt-2" />
         </div>
       </template>
 
@@ -105,13 +105,13 @@ const closeModal = () => {
           {{ $t('Cancel') }}
         </JetSecondaryButton>
 
-        <JetButton
+        <Button
           class="ml-3"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
           @click="confirmPassword">
           {{ button }}
-        </JetButton>
+        </Button>
       </template>
     </JetDialogModal>
   </span>
