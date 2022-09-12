@@ -22,14 +22,14 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $providers = collect(config('auth.login_providers'))->filter(fn ($provider) => ! empty($provider));
-        $providersName = $providers->mapWithKeys(function ($provider) {
-            return [$provider => config("services.$provider.name") ?? __("auth.login_provider_{$provider}")];
-        });
+        $providers = collect(config('auth.login_providers'))->reject(fn ($provider) => empty($provider));
+        $providersName = $providers->mapWithKeys(fn ($provider) => [
+            $provider => config("services.$provider.name") ?? __("auth.login_provider_{$provider}"),
+        ]);
 
-        $webauthnRemember = $request->cookie('webauthn_remember');
         $data = [];
-        if ($webauthnRemember) {
+
+        if ($webauthnRemember = $request->cookie('webauthn_remember')) {
             if (($user = User::find($webauthnRemember)) && $user->webauthnKeys()->count() > 0) {
                 $data['publicKey'] = Webauthn::prepareAssertion($user);
                 $data['userName'] = $user->name;
