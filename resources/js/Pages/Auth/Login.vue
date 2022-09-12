@@ -92,15 +92,15 @@ const reload = () => {
     <div class="mt-6 flex w-full overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:max-w-4xl sm:rounded-lg">
       <img :src="wallpaperUrl" class="w-10/12 sm:invisible md:visible" :alt="'Wallpaper'" />
       <div class="w-full">
-        <div class="border-b border-gray-200 px-6 pt-14 pb-10 dark:border-gray-700">
-          <h1 class="mb-6 text-center text-xl text-gray-800 dark:text-gray-200">
+        <div class="border-b border-gray-200 px-6 pt-8 pb-6 dark:border-gray-700">
+          <h1 class="mb-4 text-center text-xl text-gray-800 dark:text-gray-200">
             <span class="mr-2"> 👋 </span>
             Sign in to your account
           </h1>
 
-          <BreezeValidationErrors class="mb-4" />
+          <BreezeValidationErrors class="mb-2" />
 
-          <div v-if="status" class="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
+          <div v-if="status" class="mb-2 text-sm font-medium text-green-600 dark:text-green-400">
             {{ status }}
           </div>
 
@@ -120,7 +120,7 @@ const reload = () => {
           </div>
 
           <form v-else @submit.prevent="submit" class="dark:text-gray-800">
-            <div class="mb-4">
+            <div class="mb-3">
               <TextInput
                 v-model="form.email"
                 :label="'Email'"
@@ -132,7 +132,7 @@ const reload = () => {
                 :maxlength="255" />
             </div>
 
-            <div class="mb-4">
+            <div class="mb-3">
               <TextInput
                 v-model="form.password"
                 :label="'Password'"
@@ -144,7 +144,7 @@ const reload = () => {
                 :maxlength="255" />
             </div>
 
-            <div class="mb-4 block">
+            <div class="mb-3 block">
               <label class="flex items-center">
                 <BreezeCheckbox v-model:checked="form.remember" name="remember" />
                 <span class="ml-2 text-sm text-gray-600 dark:text-gray-400"> Remember me </span>
@@ -162,7 +162,7 @@ const reload = () => {
               <PrettyButton :text="'Log in'" :state="loadingState" :classes="'save ml-4'" />
             </div>
 
-            <div class="mt-4 block">
+            <div class="mt-3 block">
               <p v-if="providers.length > 0" class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('Login with:') }}
               </p>
@@ -181,7 +181,7 @@ const reload = () => {
               </div>
             </div>
 
-            <div v-if="publicKeyRef" class="mt-4 block">
+            <div v-if="publicKeyRef" class="mt-3 block">
               <JetSecondaryButton class="mr-2" @click.prevent="reload">
                 {{ $t('Use your security key') }}
               </JetSecondaryButton>
