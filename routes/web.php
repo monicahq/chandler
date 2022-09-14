@@ -269,6 +269,11 @@ Route::middleware([
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
                 });
+
+                // group page
+                Route::middleware(['group'])->prefix('{contact}')->group(function () {
+                    Route::get('', [ContactController::class, 'show'])->name('contact.show');
+                });
             });
 
             // vault files
