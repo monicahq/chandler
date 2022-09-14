@@ -123,22 +123,12 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['currency_name']
         );
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => $contact->id,
-                    'name' => $contact->name,
-                ],
-            ],
-            $array['loaners']->toArray()
+            1,
+            count($array['loaners']->toArray())
         );
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => $otherContact->id,
-                    'name' => $otherContact->name,
-                ],
-            ],
-            $array['loanees']->toArray()
+            1,
+            count($array['loanees']->toArray())
         );
         $this->assertEquals(
             [
