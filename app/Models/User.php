@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use LaravelWebauthn\WebauthnAuthenticatable;
@@ -171,22 +170,19 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getContactInVault(Vault $vault): ?Contact
     {
-        $userVault = DB::table('user_vault')
-            ->where('vault_id', $vault->id)
-            ->where('user_id', $this->id)
-            ->first();
+        $entry = $this->vaults()
+                ->wherePivot('vault_id', $vault->id)
+                ->first();
 
-        if (! $userVault) {
+        if ($entry === null) {
             return null;
         }
 
         try {
-            $contact = Contact::findOrFail($userVault->contact_id);
+            return Contact::findOrFail($entry->pivot->contact_id);
         } catch (ModelNotFoundException) {
             return null;
         }
-
-        return $contact;
     }
 
     /**

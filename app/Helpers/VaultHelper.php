@@ -46,12 +46,16 @@ class VaultHelper
      */
     public static function getPermission(User $user, Vault $vault): ?int
     {
-        return Cache::store('array')->remember("Permission:{$user->id}:{$vault->id}", 5, function () use ($user, $vault): ?int {
-            $vaults = $user->vaults()
+        return Cache::store('array')
+            ->remember("Permission:{$user->id}:{$vault->id}", 5, fn () => self::internalGetPermission($user, $vault));
+    }
+
+    private static function internalGetPermission(User $user, Vault $vault): ?int
+    {
+        $entry = $user->vaults()
             ->wherePivot('vault_id', $vault->id)
             ->first();
 
-            return $vaults !== null ? $vaults->pivot->permission : null;
-        });
+        return $entry !== null ? $entry->pivot->permission : null;
     }
 }
