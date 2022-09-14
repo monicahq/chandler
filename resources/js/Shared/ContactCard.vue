@@ -96,7 +96,7 @@ export default {
       type: String,
       default: '',
     },
-    showName: {
+    displayName: {
       type: Boolean,
       default: true,
     },

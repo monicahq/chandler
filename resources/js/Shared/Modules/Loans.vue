@@ -174,7 +174,7 @@
         <div v-if="editedLoanId != loan.id" class="mr-3 flex items-center">
           <div class="flex -space-x-2 overflow-hidden">
             <div v-for="loaner in loan.loaners" :key="loaner.id">
-              <contact-card :contact="loaner" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :showName="false" />
+              <contact-card :contact="loaner" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
             </div>
           </div>
 
@@ -189,7 +189,7 @@
           </svg>
 
           <div v-for="loanee in loan.loanees" :key="loanee.id">
-            <contact-card :contact="loanee" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :showName="false" />
+            <contact-card :contact="loanee" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
           </div>
         </div>
 
