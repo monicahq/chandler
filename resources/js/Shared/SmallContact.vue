@@ -3,10 +3,7 @@
     <a-popover placement="bottomLeft">
       <template #content>
         <div class="flex">
-          <img
-            class="mr-2 inline rounded-full"
-            src="https://ucarecdn.com/2f86ee48-9258-4b5c-aaf5-82269edcf770/-/scale_crop/45x45/smart/"
-            alt="" />
+          <avatar :data="contact.avatar" :classes="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
           <div>
             <p>Last talked to: Apr 20, 2012</p>
             <p>Last activity: Apr 20, 2012</p>
@@ -17,17 +14,7 @@
         <span>FOU</span>
       </template>
       <div class="inline-flex items-center text-sm">
-        <img
-          class="inline rounded-full"
-          :class="showName ? 'mr-2' : ''"
-          :src="
-            'https://ucarecdn.com/2f86ee48-9258-4b5c-aaf5-82269edcf770/-/scale_crop/' +
-            previewContactSize +
-            'x' +
-            previewContactSize +
-            '/smart/'
-          "
-          alt="" />
+        <avatar :data="contact.avatar" :classes="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
         <a v-if="showName" class="colored-link" href="">FOU</a>
       </div>
     </a-popover>
@@ -35,17 +22,21 @@
 </template>
 
 <script>
+import Avatar from '@/Shared/Avatar.vue';
+
 export default {
-  components: {},
+  components: {
+    Avatar,
+  },
 
   props: {
     top: {
       type: String,
       default: '0px',
     },
-    contactId: {
-      type: Number,
-      default: 0,
+    contact: {
+      type: Object,
+      default: null,
     },
     previewContactSize: {
       type: Number,

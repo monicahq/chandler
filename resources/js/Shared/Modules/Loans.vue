@@ -175,6 +175,7 @@
           <div class="flex -space-x-2 overflow-hidden">
             <div v-for="loaner in loan.loaners" :key="loaner.id">
               <small-contact
+                :contact="loaner"
                 :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
                 :show-name="false"
                 :preview-contact-size="30" />

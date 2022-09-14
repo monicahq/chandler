@@ -39,6 +39,7 @@ class ModuleLoanViewHelper
     {
         $loaners = $loan->loaners->unique('id');
         $loanees = $loan->loanees->unique('id');
+
         $loanersCollection = $loaners->map(function ($loaner) {
             return [
                 'id' => $loaner->id,
