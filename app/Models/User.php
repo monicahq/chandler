@@ -103,7 +103,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function vaults(): BelongsToMany
     {
-        return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission', 'contact_id');
+        return $this->belongsToMany(Vault::class)
+            ->withPivot('permission', 'contact_id')
+            ->withTimestamps();
     }
 
     /**
@@ -113,7 +115,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function contacts(): BelongsToMany
     {
-        return $this->belongsToMany(Contact::class, 'contact_vault_user')->withTimestamps()->withPivot('is_favorite');
+        return $this->belongsToMany(Contact::class, 'contact_vault_user')
+            ->withPivot('is_favorite')
+            ->withTimestamps();
     }
 
     /**
