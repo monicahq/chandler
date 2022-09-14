@@ -13,14 +13,12 @@
     <!-- Scripts -->
     @if (app()->bound('sentry') && config('sentry.dsn') !== null)
     <script type="text/javascript">
-      const SentryConfig = {
-        !!\json_encode([
-          'dsn' => config('sentry.dsn'),
-          'environment' => config('sentry.environment'),
-          'sendDefaultPii' => config('sentry.send_default_pii'),
-          'tracesSampleRate' => config('sentry.traces_sample_rate'),
-        ]);!!
-      }
+      const SentryConfig = {!! \json_encode([
+        'dsn' => config('sentry.dsn'),
+        'environment' => config('sentry.environment'),
+        'sendDefaultPii' => config('sentry.send_default_pii'),
+        'tracesSampleRate' => config('sentry.traces_sample_rate'),
+      ]); !!}
     </script>
     @endif
 
