@@ -45,10 +45,10 @@ class VaultHelper
      */
     public static function getPermission(User $user, Vault $vault): ?int
     {
-        return $user->vaults()
+        $vaults = $user->vaults()
                ->wherePivot('vault_id', $vault->id)
-               ->first()
-               ->pivot
-               ->permission;
+               ->first();
+
+        return $vaults !== null ? $vaults->pivot->permission : null;
     }
 }

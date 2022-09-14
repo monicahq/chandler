@@ -80,7 +80,9 @@ class RemoveVaultAccess extends BaseService implements ServiceInterface
              ->wherePivot('vault_id', $this->vault->id)
              ->first();
 
-        Contact::find($vault->pivot->contact_id)->delete();
+        if ($vault !== null) {
+            Contact::find($vault->pivot->contact_id)->delete();
+        }
     }
 
     /**
