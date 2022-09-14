@@ -169,7 +169,7 @@ class VaultShowViewHelperTest extends TestCase
         $this->assertCount(1, $array);
         $this->assertEquals(
             [
-                [
+                0 => [
                     'id' => $contact->id,
                     'name' => $contact->name,
                     'avatar' => $contact->avatar,
