@@ -6,14 +6,16 @@ use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddress;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedPet;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
 use App\Models\ContactFeedItem;
 use App\Models\User;
+use App\Models\Vault;
 
 class ModuleFeedViewHelper
 {
-    public static function data($items, User $user): array
+    public static function data($items, User $user, Vault $vault): array
     {
         $itemsCollection = $items->map(function ($item) use ($user) {
             return [
@@ -80,6 +82,11 @@ class ModuleFeedViewHelper
             case 'contact_information_updated':
             case 'contact_information_destroyed':
                 return ActionFeedContactInformation::data($item);
+
+            case 'pet_created':
+            case 'pet_updated':
+            case 'pet_destroyed':
+                return ActionFeedPet::data($item);
 
             default:
                 return ActionFeedGenericContactInformation::data($item);

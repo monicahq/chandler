@@ -11,6 +11,7 @@ use App\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
 use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
 use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressImageController;
+use App\Contact\ManageContactFeed\Web\Controllers\ContactFeedController;
 use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
 use App\Contact\ManageContactInformation\Web\Controllers\ContactInformationController;
 use App\Contact\ManageDocuments\Web\Controllers\ContactModuleDocumentController;
@@ -31,6 +32,8 @@ use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsControll
 use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
+use App\Http\Controllers\Auth\SocialiteCallbackController;
+use App\Http\Controllers\Profile\UserTokenController;
 use App\Providers\RouteServiceProvider;
 use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
 use App\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
@@ -85,6 +88,7 @@ use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
 use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
@@ -101,6 +105,12 @@ Route::get('/', function () {
     return Auth::check()
         ? redirect()->intended(RouteServiceProvider::HOME)
         : redirect()->route('login');
+})->name('home');
+
+Route::middleware(['throttle:oauth2-socialite'])->group(function () {
+    Route::get('auth/{driver}', [SocialiteCallbackController::class, 'login'])->name('login.provider');
+    Route::get('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
+    Route::post('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
 });
 
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
@@ -128,6 +138,9 @@ Route::middleware([
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
+            // vault feed entries
+            Route::get('feed', [VaultFeedController::class, 'show'])->name('vault.feed.show');
+
             // tasks
             Route::get('tasks', [VaultTaskController::class, 'index'])->name('vault.tasks.index');
 
@@ -142,20 +155,29 @@ Route::middleware([
 
                 // contact page
                 Route::middleware(['contact'])->prefix('{contact}')->group(function () {
+                    // general page information
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
                     Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
+
+                    // toggle archive/favorite
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
                     Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
+
+                    // template
                     Route::get('update-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
+                    // get the proper tab
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
 
                     // avatar
                     Route::put('avatar', [ModuleAvatarController::class, 'update'])->name('contact.avatar.update');
                     Route::delete('avatar', [ModuleAvatarController::class, 'destroy'])->name('contact.avatar.destroy');
+
+                    // contact feed entries
+                    Route::get('feed', [ContactFeedController::class, 'show'])->name('contact.feed.show');
 
                     // important dates
                     Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');
@@ -482,4 +504,7 @@ Route::middleware([
 
     // General stuff called by everyone/everywhere
     Route::get('currencies', [CurrencyController::class, 'index'])->name('currencies.index');
+
+    // User & Profile...
+    Route::delete('auth/{driver}', [UserTokenController::class, 'destroy'])->name('provider.delete');
 });
