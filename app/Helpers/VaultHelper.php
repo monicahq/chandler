@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\User;
 use App\Models\Vault;
-use Illuminate\Support\Facades\DB;
 
 class VaultHelper
 {
@@ -46,14 +45,10 @@ class VaultHelper
      */
     public static function getPermission(User $user, Vault $vault): ?int
     {
-        $permission = DB::table('user_vault')->where('vault_id', $vault->id)
-            ->where('user_id', $user->id)
-            ->select('permission')->first();
-
-        if (! $permission) {
-            return null;
-        }
-
-        return $permission->permission;
+        return $user->vaults()
+               ->wherePivot('vault_id', $vault->id)
+               ->first()
+               ->pivot
+               ->permission;
     }
 }

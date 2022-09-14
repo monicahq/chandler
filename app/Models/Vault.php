@@ -109,7 +109,7 @@ class Vault extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('permission');
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('permission', 'contact_id');
     }
 
     /**

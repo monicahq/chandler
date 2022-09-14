@@ -104,7 +104,17 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function vaults(): BelongsToMany
     {
-        return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission');
+        return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission', 'contact_id');
+    }
+
+    /**
+     * Get the contact records associated with the user.
+     *
+     * @return BelongsToMany
+     */
+    public function contacts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class, 'contact_vault_user')->withTimestamps()->withPivot('is_favorite');
     }
 
     /**
@@ -161,16 +171,17 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getContactInVault(Vault $vault): ?Contact
     {
-        $contact = DB::table('user_vault')->where('vault_id', $vault->id)
+        $userVault = DB::table('user_vault')
+            ->where('vault_id', $vault->id)
             ->where('user_id', $this->id)
             ->first();
 
-        if (! $contact) {
+        if (! $userVault) {
             return null;
         }
 
         try {
-            $contact = Contact::findOrFail($contact->contact_id);
+            $contact = Contact::findOrFail($userVault->contact_id);
         } catch (ModelNotFoundException) {
             return null;
         }

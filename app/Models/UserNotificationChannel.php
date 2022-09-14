@@ -84,6 +84,6 @@ class UserNotificationChannel extends Model
      */
     public function contactReminders(): BelongsToMany
     {
-        return $this->belongsToMany(ContactReminder::class, 'contact_reminder_scheduled')->withTimestamps()->withPivot('scheduled_at', 'triggered');
+        return $this->belongsToMany(ContactReminder::class, 'contact_reminder_scheduled')->withTimestamps()->withPivot('scheduled_at', 'triggered_at');
     }
 }
