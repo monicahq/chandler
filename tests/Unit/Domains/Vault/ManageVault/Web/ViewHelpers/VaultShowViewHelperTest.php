@@ -11,6 +11,7 @@ use App\Vault\ManageVault\Web\ViewHelpers\VaultShowViewHelper;
 use Carbon\Carbon;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -138,6 +139,45 @@ class VaultShowViewHelperTest extends TestCase
                 ],
             ],
             $array['reminders']->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_favorite_contacts(): void
+    {
+        $user = User::factory()->create();
+        $vault = Vault::factory()->create();
+        $contact = Contact::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $vault->users()->save($user, [
+            'permission' => Vault::PERMISSION_MANAGE,
+            'contact_id' => $contact->id,
+        ]);
+        DB::table('contact_vault_user')->insert([
+            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
+            'user_id' => $user->id,
+            'number_of_views' => 0,
+            'is_favorite' => true,
+        ]);
+
+        $array = VaultShowViewHelper::favorites($vault, $user);
+
+        $this->assertInstanceOf(Collection::class, $array);
+        $this->assertCount(1, $array);
+        $this->assertEquals(
+            [
+                [
+                    'id' => $contact->id,
+                    'name' => $contact->name,
+                    'avatar' => $contact->avatar,
+                    'url' => [
+                        'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id,
+                    ],
+                ],
+            ],
+            $array->toArray()
         );
     }
 }
