@@ -18,16 +18,15 @@ class CheckGroupAccess
     public function handle(Request $request, Closure $next)
     {
         $requestedVaultId = $request->route()->parameter('vault');
-        $requestedContactId = $request->route()->parameter('contact');
+        $requestedGroupId = $request->route()->parameter('group');
 
-        $exists = DB::table('contacts')->where('vault_id', $requestedVaultId)
-            ->where('id', $requestedContactId)
-            ->count() > 0;
+        $exists = DB::table('groups')->where([
+            'vault_id' => $requestedVaultId,
+            'id' => $requestedGroupId,
+        ])->exists();
 
-        if ($exists) {
-            return $next($request);
-        } else {
-            abort(401);
-        }
+        abort_if(! $exists, 401);
+
+        return $next($request);
     }
 }

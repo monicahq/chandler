@@ -109,6 +109,11 @@
 
         <!-- actions -->
         <ul class="text-sm">
+          <li class="mr-4 inline cursor-pointer">
+            <inertia-link :href="group.url.show" class="text-blue-500 hover:underline">{{
+              $t('app.view')
+            }}</inertia-link>
+          </li>
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(group)">Leave</li>
         </ul>
       </li>

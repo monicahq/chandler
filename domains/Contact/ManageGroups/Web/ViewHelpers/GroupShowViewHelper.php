@@ -4,7 +4,6 @@ namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\Group;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GroupShowViewHelper
@@ -16,9 +15,9 @@ class GroupShowViewHelper
      * alphabetically otherwise.
      *
      * @param  Group  $group
-     * @return Collection
+     * @return array
      */
-    public static function data(Group $group): Collection
+    public static function data(Group $group): array
     {
         $roles = $group->groupType->groupTypeRoles()->orderBy('position')->get();
 
@@ -32,10 +31,12 @@ class GroupShowViewHelper
 
                 $contactsCollection = collect();
                 foreach ($contacts as $contact) {
-                    $contact = Contact::find($contact->id);
+                    $contact = Contact::find($contact->contact_id);
 
                     $contactsCollection->push([
                         'name' => $contact->name,
+                        'avatar' => $contact->avatar,
+                        'age' => $contact->age,
                     ]);
                 }
 
@@ -55,10 +56,12 @@ class GroupShowViewHelper
 
         $contactsCollection = collect();
         foreach ($contacts as $contact) {
-            $contact = Contact::find($contact->id);
+            $contact = Contact::find($contact->contact_id);
 
             $contactsCollection->push([
                 'name' => $contact->name,
+                'avatar' => $contact->avatar,
+                'age' => $contact->age,
             ]);
         }
         $rolesCollection->push([
