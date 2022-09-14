@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline" :class="divOuterClass" :style="'top: ' + top">
+  <div class="relative inline" :style="'top: ' + top">
     <a-popover placement="bottomLeft">
       <!-- popup that appears on mouse over -->
       <template #content>
@@ -99,10 +99,6 @@ export default {
     displayName: {
       type: Boolean,
       default: true,
-    },
-    divOuterClass: {
-      type: String,
-      default: '',
     },
   },
 };

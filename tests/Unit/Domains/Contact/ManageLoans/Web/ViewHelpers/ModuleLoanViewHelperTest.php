@@ -126,9 +126,9 @@ class ModuleLoanViewHelperTest extends TestCase
             1,
             count($array['loaners']->toArray())
         );
-        $this->assertEquals(
+        $this->assertCount(
             1,
-            count($array['loanees']->toArray())
+            $array['loanees']->toArray()
         );
         $this->assertEquals(
             [
