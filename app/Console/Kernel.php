@@ -17,6 +17,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new ProcessScheduledContactReminders())->everyMinute();
+        if ($this->app->environment('local')) {
+            $schedule->command('telescope:prune')->daily();
+        }
     }
 
     /**
