@@ -26,7 +26,7 @@ class UserProfileTest extends TestCase
         $data = app(UserProfile::class)($request, []);
 
         $this->assertArrayHasKey('providers', $data);
-        $this->assertEquals(['provider'], $data['providers']->toArray());
+        $this->assertEquals(['provider' => ['name' => 'auth.login_provider_provider']], $data['providers']->toArray());
     }
 
     /**
