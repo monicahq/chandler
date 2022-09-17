@@ -16,12 +16,11 @@ class UserProfile
      */
     public function __invoke(Request $request, array $data): array
     {
-        $providers = collect(config('auth.login_providers'))->filter(fn ($provider) => ! empty($provider));
-        $providersName = $providers->mapWithKeys(function ($provider) {
-            return [
-                $provider => config("services.$provider.name") ?? __("auth.login_provider_{$provider}"),
-            ];
-        });
+        $providers = collect(config('auth.login_providers'))->filter(fn ($provider) => ! empty($provider))
+            ->mapWithKeys(fn ($provider) => [
+                $provider => ['name' => config("services.$provider.name") ?? __("auth.login_provider_{$provider}")]
+                    + (($logo = config("services.$provider.logo")) ? ['logo' => $logo] : []),
+            ]);
 
         $webauthnKeys = $request->user()->webauthnKeys()
             ->get()
@@ -36,7 +35,6 @@ class UserProfile
             ->toArray();
 
         $data['providers'] = $providers;
-        $data['providersName'] = $providersName;
         $data['userTokens'] = $request->user()->userTokens()->get();
         $data['webauthnKeys'] = $webauthnKeys;
 
