@@ -4,8 +4,8 @@ namespace App\Contact\ManageGroups\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\GroupTypeRole;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class GroupShowViewHelper
 {
@@ -22,21 +22,14 @@ class GroupShowViewHelper
      */
     public static function data(Group $group, User $user): array
     {
-        $roles = $group->groupType->groupTypeRoles()->orderBy('position')->get();
-
-        $rolesCollection = collect();
-        if ($roles->count() > 0) {
-            foreach ($roles as $role) {
-                $contacts = DB::table('contact_group')
-                    ->where('group_type_role_id', $role->id)
-                    ->where('group_id', $group->id)
-                    ->get();
-
-                $contactsCollection = collect();
-                foreach ($contacts as $contact) {
-                    $contact = Contact::find($contact->contact_id);
-
-                    $contactsCollection->push([
+        $rolesCollection = $group->groupType->groupTypeRoles()
+            ->orderBy('position')
+            ->get()
+            ->map(function (GroupTypeRole $role) use ($group) {
+                $contactsCollection = $group->contacts()
+                    ->wherePivot('group_type_role_id', $role->id)
+                    ->get()
+                    ->map(fn (Contact $contact) => [
                         'id' => $contact->id,
                         'name' => $contact->name,
                         'age' => $contact->age,
@@ -46,27 +39,19 @@ class GroupShowViewHelper
                             'contact' => $contact->id,
                         ]),
                     ]);
-                }
 
-                $rolesCollection->push([
+                return [
                     'id' => $role->id,
                     'label' => $role->label,
                     'contacts' => $contactsCollection,
-                ]);
-            }
-        }
+                ];
+            });
 
         // now we get all the contacts that are not assigned to a role
-        $contacts = DB::table('contact_group')
-            ->whereNull('group_type_role_id')
-            ->where('group_id', $group->id)
-            ->get();
-
-        $contactsCollection = collect();
-        foreach ($contacts as $contact) {
-            $contact = Contact::find($contact->contact_id);
-
-            $contactsCollection->push([
+        $contactsCollection = $group->contacts()
+            ->wherePivotNull('group_type_role_id')
+            ->get()
+            ->map(fn (Contact $contact) => [
                 'id' => $contact->id,
                 'name' => $contact->name,
                 'age' => $contact->age,
@@ -76,11 +61,11 @@ class GroupShowViewHelper
                     'contact' => $contact->id,
                 ]),
             ]);
-        }
+
         // only adds this row if there is at least one contact
-        if ($contactsCollection->count() > 0) {
+        if ($contactsCollection->isNotEmpty()) {
             $rolesCollection->push([
-                'id' => $rolesCollection->count() + 1,
+                'id' => -1,
                 'label' => 'No role',
                 'contacts' => $contactsCollection,
             ]);
