@@ -1,3 +1,13 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import Avatar from '@/Shared/Avatar.vue';
+
+defineProps({
+  layoutData: Object,
+  data: Object,
+});
+</script>
+
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
@@ -99,34 +109,3 @@
     </main>
   </layout>
 </template>
-
-<script>
-import Layout from '@/Shared/Layout.vue';
-import Avatar from '@/Shared/Avatar.vue';
-
-export default {
-  components: {
-    Layout,
-    Avatar,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {};
-  },
-
-  methods: {},
-};
-</script>
-
-<style lang="scss" scoped></style>
