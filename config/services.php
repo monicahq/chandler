@@ -77,6 +77,7 @@ return [
         'entityid' => env('SAML2_ENTITY_ID'),
         'certificate' => env('SAML2_CERTIFICATE'),
         'sp_acs' => env('SAML2_REDIRECT_URI', '/auth/saml2/callback'),
+        'logo' => env('SAML2_LOGO', '/img/auth/saml2.svg'),
     ],
 
     'twitter' => [

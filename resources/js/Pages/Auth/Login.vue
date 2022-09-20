@@ -175,10 +175,7 @@ const reload = () => {
                   class="mr-2 mb-2 inline w-32 align-middle"
                   :href="route('login.provider', { driver: id })"
                   @click.prevent="open(id)">
-                  <img
-                    :src="provider.logo ?? `/img/auth/${id}.svg`"
-                    alt=""
-                    class="relative mr-2 h-4 w-4 align-middle" />
+                  <img :src="provider.logo" :alt="provider.name" class="relative mr-2 h-4 w-4 align-middle" />
                   <span class="align-middle">
                     {{ provider.name }}
                   </span>

@@ -63,7 +63,7 @@ defineProps({
 
       <div class="mt-5 space-y-6">
         <div v-for="(provider, id) in providers" :key="id" class="flex items-center">
-          <img :src="provider.logo ?? `/img/auth/${id}.svg`" :alt="provider.name" class="auth-provider relative" />
+          <img :src="provider.logo" :alt="provider.name" class="auth-provider relative" />
           <span class="mr-3 text-sm text-gray-600 dark:text-gray-400">
             {{ provider.name }}
           </span>
