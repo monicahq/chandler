@@ -78,9 +78,7 @@ class VaultShowViewHelper
 
         // this line removes the null values that are added when the contact
         // is not in the vault (in the method above)
-        $remindersCollection = $remindersCollection->filter(function ($value, $key) {
-            return $value != null;
-        });
+        $remindersCollection = $remindersCollection->filter(fn ($value) => $value != null);
 
         return [
             'reminders' => $remindersCollection,
