@@ -6,6 +6,7 @@ use App\Contact\ManageGroups\Web\ViewHelpers\GroupShowViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Vault;
+use App\Vault\ManageJournals\Web\ViewHelpers\JournalCreateViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class JournalController extends Controller
 
         return Inertia::render('Vault/Journal/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => JournalCreateViewHelper::data($vault),
         ]);
     }
 

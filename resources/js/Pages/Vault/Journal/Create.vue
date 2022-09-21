@@ -29,7 +29,7 @@ const form = useForm({
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.back" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_contact_index') }}
+                {{ $t('app.breadcrumb_journal_index') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -43,7 +43,7 @@ const form = useForm({
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_contact_create') }}
+              {{ $t('app.breadcrumb_journal_create') }}
             </li>
           </ul>
         </div>

@@ -280,13 +280,15 @@ Route::middleware([
             });
 
             // journal page
-            Route::get('journals', [JournalController::class, 'index'])->name('journal.index');
+            Route::prefix('journals')->group(function () {
+                Route::get('', [JournalController::class, 'index'])->name('journal.index');
 
-            // create a journal
-            Route::middleware(['atLeastVaultEditor'])->get('journals/create', [JournalController::class, 'create'])->name('journal.create');
-            Route::middleware(['atLeastVaultEditor'])->post('journals', [JournalController::class, 'store'])->name('journal.store');
+                // create a journal
+                Route::middleware(['atLeastVaultEditor'])->get('/create', [JournalController::class, 'create'])->name('journal.create');
+                Route::middleware(['atLeastVaultEditor'])->post('', [JournalController::class, 'store'])->name('journal.store');
 
-            Route::prefix('journals')->middleware(['journal'])->group(function () {
+                Route::prefix('')->middleware(['journal'])->group(function () {
+                });
             });
 
             // vault files
