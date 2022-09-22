@@ -106,6 +106,8 @@ return [
     'journal_create_title' => 'Create a journal',
     'journal_create_name' => 'Name of the journal',
     'journal_create_description' => 'Description',
+    'journal_index_title' => 'All the journals',
+    'journal_index_create' => 'Create a journal',
 
     /***************************************************************
      * VAULT SETTINGS

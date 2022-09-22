@@ -12,6 +12,7 @@ return [
     'layout_menu_gift_center' => 'Gifts',
     'layout_menu_loans' => 'Loans & debts',
     'layout_menu_files' => 'Files',
+    'layout_menu_journals' => 'Journals',
     'layout_menu_vault_settings' => 'Vault settings',
     'layout_footer_monica' => 'Monica, since 2017.',
     'layout_footer_version' => 'Current version: :version',
