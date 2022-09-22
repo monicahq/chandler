@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->unsignedBigInteger('journal_id');
+            $table->text('content');
+            $table->text('excerpt')->nullable();
+            $table->datetime('written_at');
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
+            $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('posts');
     }
 };

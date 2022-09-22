@@ -24,12 +24,22 @@ class Journal extends Model
     ];
 
     /**
-     * Get the vault associated with the group.
+     * Get the vault associated with the journal.
      *
      * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
+    }
+
+    /**
+     * Get the posts associated with the journal.
+     *
+     * @return HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
