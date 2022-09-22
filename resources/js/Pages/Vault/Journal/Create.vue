@@ -21,8 +21,7 @@ const form = useForm({
 });
 
 onMounted(() => {
-  //inputName.focus();
-  console.log('test');
+  inputName.value.focus();
 });
 
 const submit = () => {
