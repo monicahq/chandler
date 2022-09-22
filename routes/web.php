@@ -287,7 +287,8 @@ Route::middleware([
                 Route::middleware(['atLeastVaultEditor'])->get('/create', [JournalController::class, 'create'])->name('journal.create');
                 Route::middleware(['atLeastVaultEditor'])->post('', [JournalController::class, 'store'])->name('journal.store');
 
-                Route::prefix('')->middleware(['journal'])->group(function () {
+                Route::prefix('{journal}')->middleware(['journal'])->group(function () {
+                    Route::get('', [JournalController::class, 'show'])->name('journal.show');
                 });
             });
 

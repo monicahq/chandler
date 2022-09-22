@@ -4,9 +4,10 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
+import TextArea from '@/Shared/Form/TextArea.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 
-defineProps({
+const props = defineProps({
   layoutData: Object,
   data: Object,
 });
@@ -15,6 +16,12 @@ const form = useForm({
   name: '',
   description: '',
 });
+
+const submit = () => {
+  form.post(props.data.url.store, {
+    onFinish: () => {},
+  });
+};
 </script>
 
 <template>
@@ -57,21 +64,26 @@ const form = useForm({
           @submit.prevent="submit()">
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">
-              {{ $t('vault.create_contact_title') }}
+              {{ $t('vault.journal_create_title') }}
             </h1>
           </div>
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
-            <!-- first name -->
             <text-input
-              v-model="form.first_name"
+              v-model="form.name"
               :autofocus="true"
               :div-outer-class="'mb-5'"
               :input-class="'block w-full'"
               :required="true"
               :maxlength="255"
-              :label="$t('vault.create_contact_first_name')" />
+              :label="$t('vault.journal_create_name')" />
+
+            <text-area
+              v-model="form.description"
+              :label="$t('vault.journal_create_description')"
+              :maxlength="255"
+              :textarea-class="'block w-full'" />
           </div>
 
           <!-- actions -->

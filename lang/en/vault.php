@@ -100,6 +100,14 @@ return [
     'files_filter_blank' => 'There are no files yet.',
 
     /***************************************************************
+     * VAULT JOURNAL
+     **************************************************************/
+
+    'journal_create_title' => 'Create a journal',
+    'journal_create_name' => 'Name of the journal',
+    'journal_create_description' => 'Description',
+
+    /***************************************************************
      * VAULT SETTINGS
      **************************************************************/
 
