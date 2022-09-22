@@ -1,5 +1,6 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
+import { onMounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
@@ -12,9 +13,16 @@ const props = defineProps({
   data: Object,
 });
 
+const inputName = ref(null);
+
 const form = useForm({
   name: '',
   description: '',
+});
+
+onMounted(() => {
+  //inputName.focus();
+  console.log('test');
 });
 
 const submit = () => {
@@ -77,6 +85,7 @@ const submit = () => {
               :input-class="'block w-full'"
               :required="true"
               :maxlength="255"
+              ref="inputName"
               :label="$t('vault.journal_create_name')" />
 
             <text-area
