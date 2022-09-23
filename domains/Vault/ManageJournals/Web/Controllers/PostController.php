@@ -5,10 +5,8 @@ namespace App\Vault\ManageJournals\Web\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use App\Models\Vault;
-use App\Vault\ManageJournals\Services\CreateJournal;
-use App\Vault\ManageJournals\Web\ViewHelpers\JournalCreateViewHelper;
-use App\Vault\ManageJournals\Web\ViewHelpers\JournalIndexViewHelper;
-use App\Vault\ManageJournals\Web\ViewHelpers\JournalShowViewHelper;
+use App\Vault\ManageJournals\Services\CreatePost;
+use App\Vault\ManageJournals\Web\ViewHelpers\PostCreateViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,49 +18,31 @@ class PostController extends Controller
     public function create(Request $request, int $vaultId, int $journalId)
     {
         $vault = Vault::findOrFail($vaultId);
+        $journal = Journal::findOrFail($journalId);
 
-        return Inertia::render('Vault/Journal/Create', [
+        return Inertia::render('Vault/Journal/Post/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalCreateViewHelper::data($vault),
+            'data' => PostCreateViewHelper::data($journal),
         ]);
     }
 
-    public function store(Request $request, int $vaultId)
+    public function store(Request $request, int $vaultId, int $journalId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'vault_id' => $vaultId,
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
+            'journal_id' => $journalId,
+            'content' => $request->input('content'),
+            'excerpt' => $request->input('excerpt'),
+            'written_at' => $request->input('written_at'),
         ];
 
-        $journal = (new CreateJournal())->execute($data);
+        $post = (new CreatePost())->execute($data);
 
         return Redirect::route('journal.show', [
-            'vault' => $vaultId,
-            'journal' => $journal,
-        ]);
-    }
-
-    public function index(Request $request, int $vaultId)
-    {
-        $vault = Vault::findOrFail($vaultId);
-
-        return Inertia::render('Vault/Journal/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalIndexViewHelper::data($vault),
-        ]);
-    }
-
-    public function show(Request $request, int $vaultId, int $journalId)
-    {
-        $vault = Vault::findOrFail($vaultId);
-        $journal = Journal::findOrFail($journalId);
-
-        return Inertia::render('Vault/Journal/Show', [
-            'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalShowViewHelper::data($journal),
+            'vault' => $post->journal->vault_id,
+            'journal' => $post->journal,
         ]);
     }
 }

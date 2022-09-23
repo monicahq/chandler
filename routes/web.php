@@ -88,6 +88,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneContro
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -289,6 +290,12 @@ Route::middleware([
 
                 Route::prefix('{journal}')->middleware(['journal'])->group(function () {
                     Route::get('', [JournalController::class, 'show'])->name('journal.show');
+
+                    // posts
+                    Route::get('posts/create', [PostController::class, 'create'])->name('post.create');
+                    Route::post('posts', [PostController::class, 'store'])->name('post.store');
+
+                    Route::get('posts', [PostController::class, 'index'])->name('post.index');
                 });
             });
 
