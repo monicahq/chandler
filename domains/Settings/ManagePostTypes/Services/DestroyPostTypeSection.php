@@ -3,12 +3,13 @@
 namespace App\Settings\ManagePostTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
+use App\Models\PostType;
+use App\Models\PostTypeSection;
 use App\Services\BaseService;
 
-class DestroyTemplate extends BaseService implements ServiceInterface
+class DestroyPostTypeSection extends BaseService implements ServiceInterface
 {
-    private Template $template;
+    private PostTypeSection $postTypeSection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -20,7 +21,8 @@ class DestroyTemplate extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
+            'post_type_id' => 'required|integer|exists:post_types,id',
+            'post_type_section_id' => 'required|integer|exists:post_type_sections,id',
         ];
     }
 
@@ -38,7 +40,7 @@ class DestroyTemplate extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a template.
+     * Destroy a post type section.
      *
      * @param  array  $data
      */
@@ -46,9 +48,12 @@ class DestroyTemplate extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->template = Template::where('account_id', $data['account_id'])
-            ->findOrFail($data['template_id']);
+        PostType::where('account_id', $data['account_id'])
+            ->findOrFail($data['post_type_id']);
 
-        $this->template->delete();
+        $this->postTypeSection = PostTypeSection::where('post_type_id', $data['post_type_id'])
+            ->findOrFail($data['post_type_section_id']);
+
+        $this->postTypeSection->delete();
     }
 }

@@ -3,13 +3,12 @@
 namespace App\Settings\ManagePostTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
-use App\Models\TemplatePage;
+use App\Models\PostType;
 use App\Services\BaseService;
 
-class DestroyTemplatePage extends BaseService implements ServiceInterface
+class DestroyPostType extends BaseService implements ServiceInterface
 {
-    private TemplatePage $templatePage;
+    private PostType $postType;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,8 +20,7 @@ class DestroyTemplatePage extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
-            'template_page_id' => 'required|integer|exists:template_pages,id',
+            'post_type_id' => 'required|integer|exists:post_types,id',
         ];
     }
 
@@ -40,7 +38,7 @@ class DestroyTemplatePage extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a template.
+     * Destroy a post type.
      *
      * @param  array  $data
      */
@@ -48,12 +46,9 @@ class DestroyTemplatePage extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        Template::where('account_id', $data['account_id'])
-            ->findOrFail($data['template_id']);
+        $this->postType = PostType::where('account_id', $data['account_id'])
+            ->findOrFail($data['post_type_id']);
 
-        $this->templatePage = TemplatePage::where('template_id', $data['template_id'])
-            ->findOrFail($data['template_page_id']);
-
-        $this->templatePage->delete();
+        $this->postType->delete();
     }
 }

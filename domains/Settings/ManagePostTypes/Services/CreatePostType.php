@@ -3,12 +3,13 @@
 namespace App\Settings\ManagePostTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\PostType;
 use App\Models\Template;
 use App\Services\BaseService;
 
-class UpdateTemplate extends BaseService implements ServiceInterface
+class CreatePostType extends BaseService implements ServiceInterface
 {
-    private Template $template;
+    private PostType $postType;
 
     /**
      * Get the validation rules that apply to the service.
@@ -20,8 +21,7 @@ class UpdateTemplate extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -39,21 +39,26 @@ class UpdateTemplate extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a template.
+     * Create a post type.
      *
      * @param  array  $data
-     * @return Template
+     * @return PostType
      */
-    public function execute(array $data): Template
+    public function execute(array $data): PostType
     {
         $this->validateRules($data);
 
-        $this->template = Template::where('account_id', $data['account_id'])
-            ->findOrFail($data['template_id']);
+        // determine the new position of the template page
+        $newPosition = PostType::where('account_id', $data['account_id'])
+            ->max('position');
+        $newPosition++;
 
-        $this->template->name = $data['name'];
-        $this->template->save();
+        $this->postType = PostType::create([
+            'account_id' => $data['account_id'],
+            'label' => $data['label'],
+            'position' => $newPosition,
+        ]);
 
-        return $this->template;
+        return $this->postType;
     }
 }

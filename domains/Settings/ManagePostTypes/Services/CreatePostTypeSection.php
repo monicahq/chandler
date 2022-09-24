@@ -3,14 +3,14 @@
 namespace App\Settings\ManagePostTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\PostType;
+use App\Models\PostTypeSection;
 use App\Models\Template;
-use App\Models\TemplatePage;
 use App\Services\BaseService;
-use Illuminate\Support\Str;
 
-class CreateTemplatePage extends BaseService implements ServiceInterface
+class CreatePostTypeSection extends BaseService implements ServiceInterface
 {
-    private TemplatePage $templatePage;
+    private PostTypeSection $postTypeSection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -22,10 +22,8 @@ class CreateTemplatePage extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
-            'name' => 'required|string|max:255',
-            'type' => 'nullable|string|max:255',
-            'can_be_deleted' => 'nullable|boolean',
+            'post_type_id' => 'required|integer|exists:post_types,id',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -43,33 +41,30 @@ class CreateTemplatePage extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a template page.
+     * Create a post type section.
      *
      * @param  array  $data
-     * @return TemplatePage
+     * @return PostTypeSection
      */
-    public function execute(array $data): TemplatePage
+    public function execute(array $data): PostTypeSection
     {
         $this->validateRules($data);
 
-        Template::where('account_id', $data['account_id'])
-            ->where('id', $data['template_id'])
+        PostType::where('account_id', $data['account_id'])
+            ->where('id', $data['post_type_id'])
             ->firstOrFail();
 
         // determine the new position of the template page
-        $newPosition = TemplatePage::where('template_id', $data['template_id'])
+        $newPosition = PostTypeSection::where('post_type_id', $data['post_type_id'])
             ->max('position');
         $newPosition++;
 
-        $this->templatePage = TemplatePage::create([
-            'template_id' => $data['template_id'],
+        $this->postTypeSection = PostTypeSection::create([
+            'post_type_id' => $data['post_type_id'],
             'name' => $data['name'],
-            'slug' => Str::slug($data['name'], '-'),
-            'type' => $this->valueOrNull($data, 'type'),
             'position' => $newPosition,
-            'can_be_deleted' => $this->valueOrTrue($data, 'can_be_deleted'),
         ]);
 
-        return $this->templatePage;
+        return $this->postTypeSection;
     }
 }
