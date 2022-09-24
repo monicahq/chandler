@@ -24,8 +24,8 @@ class PostFactory extends Factory
     {
         return [
             'journal_id' => Journal::factory(),
+            'title' => $this->faker->sentence(),
             'content' => $this->faker->name(),
-            'excerpt' => null,
             'written_at' => $this->faker->dateTimeThisCentury(),
         ];
     }

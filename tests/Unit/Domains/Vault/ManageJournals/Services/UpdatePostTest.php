@@ -126,7 +126,7 @@ class UpdatePostTest extends TestCase
             'journal_id' => $journal->id,
             'post_id' => $post->id,
             'content' => 'super content',
-            'excerpt' => null,
+            'title' => 'title',
             'written_at' => null,
         ];
 
@@ -136,7 +136,7 @@ class UpdatePostTest extends TestCase
             'id' => $post->id,
             'journal_id' => $journal->id,
             'content' => 'super content',
-            'excerpt' => null,
+            'title' => 'title',
             'written_at' => '2022-01-01 00:00:00',
         ]);
     }

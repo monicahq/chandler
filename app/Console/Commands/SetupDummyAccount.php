@@ -287,8 +287,8 @@ class SetupDummyAccount extends Command
                         'author_id' => $this->firstUser->id,
                         'vault_id' => $vault->id,
                         'journal_id' => $journal->id,
+                        'title' => $this->faker->sentence(),
                         'content' => $this->faker->paragraphs(rand(1, 30), true),
-                        'excerpt' => rand(1, 2) == 1 ? $this->faker->sentence() : null,
                         'written_at' => $this->faker->dateTimeThisYear()->format('Y-m-d'),
                     ]);
                 }

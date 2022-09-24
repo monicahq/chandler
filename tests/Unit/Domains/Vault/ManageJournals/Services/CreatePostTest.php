@@ -96,7 +96,7 @@ class CreatePostTest extends TestCase
             'author_id' => $author->id,
             'journal_id' => $journal->id,
             'content' => 'content',
-            'excerpt' => null,
+            'title' => 'null',
             'written_at' => '2020-01-01',
         ];
 
@@ -106,7 +106,7 @@ class CreatePostTest extends TestCase
             'id' => $post->id,
             'journal_id' => $journal->id,
             'content' => 'content',
-            'excerpt' => null,
+            'title' => 'null',
             'written_at' => '2020-01-01 00:00:00',
         ]);
     }

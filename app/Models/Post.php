@@ -19,8 +19,8 @@ class Post extends Model
      */
     protected $fillable = [
         'journal_id',
+        'title',
         'content',
-        'excerpt',
         'written_at',
     ];
 

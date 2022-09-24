@@ -16,8 +16,7 @@ class JournalShowViewHelper
             ->get()
             ->map(fn (Post $post) => [
                 'id' => $post->id,
-                'content' => $post->content,
-                'excerpt' => $post->excerpt,
+                'title' => $post->title,
                 'written_at' => DateHelper::format($post->written_at, $user),
             ]);
 

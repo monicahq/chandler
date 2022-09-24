@@ -11,8 +11,6 @@ class CreatePost extends BaseService implements ServiceInterface
 {
     private array $data;
 
-    private Journal $journal;
-
     private Post $post;
 
     /**
@@ -27,8 +25,8 @@ class CreatePost extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
+            'title' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
-            'excerpt' => 'nullable|string|max:65535',
             'written_at' => 'nullable|date_format:Y-m-d',
         ];
     }
@@ -67,7 +65,7 @@ class CreatePost extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->journal = Journal::where('vault_id', $this->data['vault_id'])
+        Journal::where('vault_id', $this->data['vault_id'])
             ->findOrfail($this->data['journal_id']);
     }
 
@@ -81,8 +79,8 @@ class CreatePost extends BaseService implements ServiceInterface
 
         $this->post = Post::create([
             'journal_id' => $this->data['journal_id'],
+            'title' => $this->data['title'],
             'content' => $this->data['content'],
-            'excerpt' => $this->valueOrNull($this->data, 'excerpt'),
             'written_at' => $writtenAt,
         ]);
     }

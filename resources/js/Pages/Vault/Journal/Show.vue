@@ -18,7 +18,7 @@ defineProps({
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
+              <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
                 {{ $t('app.breadcrumb_journal_index') }}
               </inertia-link>
             </li>
@@ -42,10 +42,41 @@ defineProps({
 
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <h1 class="text-2xl">{{ data.name }}</h1>
+        <h1 class="mb-8 text-2xl">{{ data.name }}</h1>
+
+        <ul class="post-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <li
+            v-for="post in data.posts"
+            :key="post.id"
+            class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            <!-- written at -->
+            <span class="mr-2">{{ post.written_at }}</span>
+
+            <!-- content -->
+            <inertia-link :href="'journal.url.show'" class="text-blue-500 hover:underline">{{
+              post.title
+            }}</inertia-link>
+          </li>
+        </ul>
       </div>
     </main>
   </layout>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.post-list {
+  li:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  li:last-child {
+    border-bottom: 0;
+  }
+
+  li:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>
