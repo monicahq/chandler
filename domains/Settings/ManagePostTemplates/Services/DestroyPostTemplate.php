@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Settings\ManagePostTypes\Services;
+namespace App\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostType;
+use App\Models\PostTemplate;
 use App\Services\BaseService;
 
-class UpdatePostType extends BaseService implements ServiceInterface
+class DestroyPostTemplate extends BaseService implements ServiceInterface
 {
-    private PostType $postType;
+    private PostTemplate $postTemplate;
 
     /**
      * Get the validation rules that apply to the service.
@@ -20,8 +20,7 @@ class UpdatePostType extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'post_type_id' => 'required|integer|exists:post_types,id',
-            'label' => 'required|string|max:255',
+            'post_template_id' => 'required|integer|exists:post_templates,id',
         ];
     }
 
@@ -39,21 +38,17 @@ class UpdatePostType extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a post type.
+     * Destroy a post type.
      *
      * @param  array  $data
-     * @return PostType
      */
-    public function execute(array $data): PostType
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $this->postType = PostType::where('account_id', $data['account_id'])
-            ->findOrFail($data['post_type_id']);
+        $this->postTemplate = PostTemplate::where('account_id', $data['account_id'])
+            ->findOrFail($data['post_template_id']);
 
-        $this->postType->label = $data['label'];
-        $this->postType->save();
-
-        return $this->postType;
+        $this->postTemplate->delete();
     }
 }

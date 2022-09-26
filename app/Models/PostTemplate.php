@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PostType extends Model
+class PostTemplate extends Model
 {
     use HasFactory;
 
-    protected $table = 'post_types';
+    protected $table = 'post_templates';
 
     /**
      * The attributes that are mass assignable.
@@ -39,8 +39,8 @@ class PostType extends Model
      *
      * @return HasMany
      */
-    public function postTypeSections(): HasMany
+    public function postTemplateSections(): HasMany
     {
-        return $this->hasMany(PostTypeSection::class);
+        return $this->hasMany(PostTemplateSection::class);
     }
 }

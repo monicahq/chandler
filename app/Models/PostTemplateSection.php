@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PostTypeSection extends Model
+class PostTemplateSection extends Model
 {
     use HasFactory;
 
-    protected $table = 'post_type_sections';
+    protected $table = 'post_template_sections';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,7 @@ class PostTypeSection extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'post_type_id',
+        'post_template_id',
         'label',
         'position',
     ];
@@ -28,8 +28,8 @@ class PostTypeSection extends Model
      *
      * @return BelongsTo
      */
-    public function postType(): BelongsTo
+    public function postTemplate(): BelongsTo
     {
-        return $this->belongsTo(PostType::class);
+        return $this->belongsTo(PostTemplate::class);
     }
 }

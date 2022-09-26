@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Settings\ManagePostTypes\Services;
+namespace App\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostType;
-use App\Models\PostTypeSection;
+use App\Models\PostTemplate;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 
-class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterface
+class UpdatePostTemplatePosition extends BaseService implements ServiceInterface
 {
-    private PostType $postType;
-
-    private PostTypeSection $postTypeSection;
+    private PostTemplate $postTemplate;
 
     private array $data;
 
@@ -28,8 +25,7 @@ class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterf
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'post_type_id' => 'required|integer|exists:post_types,id',
-            'post_type_section_id' => 'required|integer|exists:post_type_sections,id',
+            'post_template_id' => 'required|integer|exists:post_templates,id',
             'new_position' => 'required|integer',
         ];
     }
@@ -48,31 +44,28 @@ class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterf
     }
 
     /**
-     * Update the post type section position.
+     * Update the post type position.
      *
      * @param  array  $data
-     * @return PostTypeSection
+     * @return PostTemplate
      */
-    public function execute(array $data): PostTypeSection
+    public function execute(array $data): PostTemplate
     {
         $this->data = $data;
         $this->validate();
         $this->updatePosition();
 
-        return $this->postTypeSection;
+        return $this->postTemplate;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->postType = PostType::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['post_type_id']);
+        $this->postTemplate = PostTemplate::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['post_template_id']);
 
-        $this->postTypeSection = PostTypeSection::where('post_type_id', $this->data['post_type_id'])
-            ->findOrFail($this->data['post_type_section_id']);
-
-        $this->pastPosition = $this->postTypeSection->position;
+        $this->pastPosition = $this->postTemplate->position;
     }
 
     private function updatePosition(): void
@@ -83,9 +76,9 @@ class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterf
             $this->updateDescendingPosition();
         }
 
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
-            ->where('id', $this->postTypeSection->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
+            ->where('id', $this->postTemplate->id)
             ->update([
                 'position' => $this->data['new_position'],
             ]);
@@ -93,8 +86,8 @@ class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterf
 
     private function updateAscendingPosition(): void
     {
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -102,8 +95,8 @@ class UpdatePostTypeSectionPosition extends BaseService implements ServiceInterf
 
     private function updateDescendingPosition(): void
     {
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');

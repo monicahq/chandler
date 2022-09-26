@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Settings\ManagePostTypes\Services;
+namespace App\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostType;
-use App\Models\PostTypeSection;
+use App\Models\PostTemplate;
+use App\Models\PostTemplateSection;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 
-class UpdatePostTypePosition extends BaseService implements ServiceInterface
+class UpdatePostTemplateSectionPosition extends BaseService implements ServiceInterface
 {
-    private PostType $postType;
+    private PostTemplate $postTemplate;
 
-    private PostTypeSection $postTypeSection;
+    private PostTemplateSection $postTemplateSection;
 
     private array $data;
 
@@ -28,7 +28,8 @@ class UpdatePostTypePosition extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'post_type_id' => 'required|integer|exists:post_types,id',
+            'post_template_id' => 'required|integer|exists:post_templates,id',
+            'post_template_section_id' => 'required|integer|exists:post_template_sections,id',
             'new_position' => 'required|integer',
         ];
     }
@@ -47,28 +48,31 @@ class UpdatePostTypePosition extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update the post type position.
+     * Update the post type section position.
      *
      * @param  array  $data
-     * @return PostType
+     * @return PostTemplateSection
      */
-    public function execute(array $data): PostType
+    public function execute(array $data): PostTemplateSection
     {
         $this->data = $data;
         $this->validate();
         $this->updatePosition();
 
-        return $this->postType;
+        return $this->postTemplateSection;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->postType = PostType::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['post_type_id']);
+        $this->postTemplate = PostTemplate::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['post_template_id']);
 
-        $this->pastPosition = $this->postType->position;
+        $this->postTemplateSection = PostTemplateSection::where('post_template_id', $this->data['post_template_id'])
+            ->findOrFail($this->data['post_template_section_id']);
+
+        $this->pastPosition = $this->postTemplateSection->position;
     }
 
     private function updatePosition(): void
@@ -79,9 +83,9 @@ class UpdatePostTypePosition extends BaseService implements ServiceInterface
             $this->updateDescendingPosition();
         }
 
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
-            ->where('id', $this->postType->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
+            ->where('id', $this->postTemplateSection->id)
             ->update([
                 'position' => $this->data['new_position'],
             ]);
@@ -89,8 +93,8 @@ class UpdatePostTypePosition extends BaseService implements ServiceInterface
 
     private function updateAscendingPosition(): void
     {
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -98,8 +102,8 @@ class UpdatePostTypePosition extends BaseService implements ServiceInterface
 
     private function updateDescendingPosition(): void
     {
-        DB::table('post_types')
-            ->where('post_type_id', $this->postType->id)
+        DB::table('post_templates')
+            ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');

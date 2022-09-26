@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Settings\ManagePostTypes\Services;
+namespace App\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostType;
-use App\Models\PostTypeSection;
+use App\Models\PostTemplate;
 use App\Models\Template;
 use App\Services\BaseService;
 
-class CreatePostTypeSection extends BaseService implements ServiceInterface
+class CreatePostTemplate extends BaseService implements ServiceInterface
 {
-    private PostTypeSection $postTypeSection;
+    private PostTemplate $postTemplate;
 
     /**
      * Get the validation rules that apply to the service.
@@ -22,7 +21,6 @@ class CreatePostTypeSection extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'post_type_id' => 'required|integer|exists:post_types,id',
             'label' => 'required|string|max:255',
         ];
     }
@@ -41,30 +39,26 @@ class CreatePostTypeSection extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a post type section.
+     * Create a post type.
      *
      * @param  array  $data
-     * @return PostTypeSection
+     * @return PostTemplate
      */
-    public function execute(array $data): PostTypeSection
+    public function execute(array $data): PostTemplate
     {
         $this->validateRules($data);
 
-        PostType::where('account_id', $data['account_id'])
-            ->where('id', $data['post_type_id'])
-            ->firstOrFail();
-
         // determine the new position of the template page
-        $newPosition = PostTypeSection::where('post_type_id', $data['post_type_id'])
+        $newPosition = PostTemplate::where('account_id', $data['account_id'])
             ->max('position');
         $newPosition++;
 
-        $this->postTypeSection = PostTypeSection::create([
-            'post_type_id' => $data['post_type_id'],
-            'name' => $data['name'],
+        $this->postTemplate = PostTemplate::create([
+            'account_id' => $data['account_id'],
+            'label' => $data['label'],
             'position' => $newPosition,
         ]);
 
-        return $this->postTypeSection;
+        return $this->postTemplate;
     }
 }

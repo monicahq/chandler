@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\PostType;
-use App\Models\PostTypeSection;
+use App\Models\Account;
+use App\Models\PostTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostTypeSectionFactory extends Factory
+class PostTemplateFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = PostTypeSection::class;
+    protected $model = PostTemplate::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class PostTypeSectionFactory extends Factory
     public function definition()
     {
         return [
-            'post_type_id' => PostType::factory(),
+            'account_id' => Account::factory(),
             'label' => 'business',
             'position' => 1,
         ];

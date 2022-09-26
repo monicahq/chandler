@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Settings\ManagePostTypes\Services;
+namespace App\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostType;
-use App\Models\PostTypeSection;
+use App\Models\PostTemplate;
+use App\Models\PostTemplateSection;
 use App\Services\BaseService;
 
-class DestroyPostTypeSection extends BaseService implements ServiceInterface
+class DestroyPostTemplateSection extends BaseService implements ServiceInterface
 {
-    private PostTypeSection $postTypeSection;
+    private PostTemplateSection $postTemplateSection;
 
     /**
      * Get the validation rules that apply to the service.
@@ -21,8 +21,8 @@ class DestroyPostTypeSection extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'post_type_id' => 'required|integer|exists:post_types,id',
-            'post_type_section_id' => 'required|integer|exists:post_type_sections,id',
+            'post_template_id' => 'required|integer|exists:post_templates,id',
+            'post_template_section_id' => 'required|integer|exists:post_template_sections,id',
         ];
     }
 
@@ -48,12 +48,12 @@ class DestroyPostTypeSection extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        PostType::where('account_id', $data['account_id'])
-            ->findOrFail($data['post_type_id']);
+        PostTemplate::where('account_id', $data['account_id'])
+            ->findOrFail($data['post_template_id']);
 
-        $this->postTypeSection = PostTypeSection::where('post_type_id', $data['post_type_id'])
-            ->findOrFail($data['post_type_section_id']);
+        $this->postTemplateSection = PostTemplateSection::where('post_template_id', $data['post_template_id'])
+            ->findOrFail($data['post_template_section_id']);
 
-        $this->postTypeSection->delete();
+        $this->postTemplateSection->delete();
     }
 }
