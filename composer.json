@@ -6,9 +6,10 @@
     "framework",
     "laravel",
     "crm",
-    "prm"
+    "prm",
+    "social"
   ],
-  "license": "MIT",
+  "license": "AGPL",
   "require": {
     "php": "^8.1",
     "asbiin/laravel-webauthn": "^3.2",
@@ -23,6 +24,7 @@
     "laravel/sanctum": "^2.15.1",
     "laravel/scout": "^9.4.10",
     "laravel/socialite": "^5.5",
+    "laravel/telescope": "^4.9",
     "laravel/tinker": "^2.7.2",
     "meilisearch/meilisearch-php": "^0.23.3",
     "naugrim/laravel-sentry-tunnel": "^1.0",
@@ -39,7 +41,6 @@
     "fakerphp/faker": "^1.9.1",
     "laravel/pint": "^1.1",
     "laravel/sail": "^1.14.6",
-    "laravel/telescope": "^4.9",
     "mockery/mockery": "^1.4.4",
     "nunomaduro/collision": "^6.0",
     "nunomaduro/larastan": "^2.0",
@@ -67,27 +68,14 @@
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-    ],
-    "post-root-package-install": [
-      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-    ],
-    "post-create-project-cmd": [
-      "@php artisan key:generate --ansi"
     ]
-  },
-  "extra": {
-    "laravel": {
-      "dont-discover": [
-        "laravel/telescope"
-      ]
-    }
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true,
     "allow-plugins": {
-        "composer/package-versions-deprecated": true
+      "composer/package-versions-deprecated": true
     }
   },
   "minimum-stability": "dev",
