@@ -67,6 +67,7 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotification
 use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
+use App\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
@@ -443,6 +444,13 @@ Route::middleware([
                 Route::put('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'update'])->name('gift_states.update');
                 Route::delete('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'destroy'])->name('gift_states.destroy');
                 Route::post('giftStates/{giftState}/position', [PersonalizeGiftStatesPositionController::class, 'update'])->name('gift_states.order.update');
+
+                // post templates
+                Route::get('postTemplates', [PersonalizePostTemplateController::class, 'index'])->name('post_templates.index');
+                Route::post('postTemplates', [PersonalizePostTemplateController::class, 'store'])->name('post_templates.store');
+                Route::put('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'update'])->name('post_templates.update');
+                Route::delete('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'destroy'])->name('post_templates.destroy');
+                Route::post('postTemplates/{postTemplate}/position', [PersonalizePostTemplatePositionController::class, 'update'])->name('post_templates.order.update');
 
                 // group types
                 Route::get('groupTypes', [PersonalizeGroupTypeController::class, 'index'])->name('group_types.index');
