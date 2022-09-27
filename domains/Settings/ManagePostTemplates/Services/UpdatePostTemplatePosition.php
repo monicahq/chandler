@@ -77,7 +77,7 @@ class UpdatePostTemplatePosition extends BaseService implements ServiceInterface
         }
 
         DB::table('post_templates')
-            ->where('post_template_id', $this->postTemplate->id)
+            ->where('account_id', $this->data['account_id'])
             ->where('id', $this->postTemplate->id)
             ->update([
                 'position' => $this->data['new_position'],
@@ -87,7 +87,7 @@ class UpdatePostTemplatePosition extends BaseService implements ServiceInterface
     private function updateAscendingPosition(): void
     {
         DB::table('post_templates')
-            ->where('post_template_id', $this->postTemplate->id)
+            ->where('account_id', $this->data['account_id'])
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -96,7 +96,7 @@ class UpdatePostTemplatePosition extends BaseService implements ServiceInterface
     private function updateDescendingPosition(): void
     {
         DB::table('post_templates')
-            ->where('post_template_id', $this->postTemplate->id)
+            ->where('account_id', $this->data['account_id'])
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');

@@ -21,6 +21,7 @@ class UpdatePostTemplatePositionTest extends TestCase
         $ross = $this->createAdministrator();
         $postTemplate = PostTemplate::factory()->create([
             'account_id' => $ross->account_id,
+            'position' => 2,
         ]);
         $this->executeService($ross, $ross->account, $postTemplate);
     }
@@ -78,7 +79,6 @@ class UpdatePostTemplatePositionTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'post_template_id' => $postTemplate->id,
-            'template_page_id' => $postTemplate->id,
             'new_position' => 3,
         ];
 

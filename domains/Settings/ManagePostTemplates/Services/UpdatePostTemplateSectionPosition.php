@@ -83,7 +83,7 @@ class UpdatePostTemplateSectionPosition extends BaseService implements ServiceIn
             $this->updateDescendingPosition();
         }
 
-        DB::table('post_templates')
+        DB::table('post_template_sections')
             ->where('post_template_id', $this->postTemplate->id)
             ->where('id', $this->postTemplateSection->id)
             ->update([
@@ -93,7 +93,7 @@ class UpdatePostTemplateSectionPosition extends BaseService implements ServiceIn
 
     private function updateAscendingPosition(): void
     {
-        DB::table('post_templates')
+        DB::table('post_template_sections')
             ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
@@ -102,7 +102,7 @@ class UpdatePostTemplateSectionPosition extends BaseService implements ServiceIn
 
     private function updateDescendingPosition(): void
     {
-        DB::table('post_templates')
+        DB::table('post_template_sections')
             ->where('post_template_id', $this->postTemplate->id)
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
