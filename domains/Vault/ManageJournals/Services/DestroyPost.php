@@ -11,8 +11,6 @@ class DestroyPost extends BaseService implements ServiceInterface
 {
     private array $data;
 
-    private Journal $journal;
-
     private Post $post;
 
     /**
@@ -63,7 +61,7 @@ class DestroyPost extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->journal = Journal::where('vault_id', $this->data['vault_id'])
+        Journal::where('vault_id', $this->data['vault_id'])
             ->findOrFail($this->data['journal_id']);
 
         $this->post = Post::where('journal_id', $this->data['journal_id'])
