@@ -19,6 +19,7 @@ use App\Contact\ManageGoals\Web\Controllers\ContactGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
 use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
 use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
+use App\Contact\ManageGroups\Web\Controllers\GroupController;
 use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
@@ -86,6 +87,7 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatCo
 use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
+use App\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -268,6 +270,25 @@ Route::middleware([
                     Route::get('groups', [ContactModuleGroupController::class, 'index'])->name('contact.group.index');
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
+                });
+            });
+
+            // group page
+            Route::get('groups', [GroupController::class, 'index'])->name('group.index');
+            Route::prefix('groups')->middleware(['group'])->group(function () {
+                Route::get('{group}', [GroupController::class, 'show'])->name('group.show');
+            });
+
+            // journal page
+            Route::prefix('journals')->group(function () {
+                Route::get('', [JournalController::class, 'index'])->name('journal.index');
+
+                // create a journal
+                Route::middleware(['atLeastVaultEditor'])->get('/create', [JournalController::class, 'create'])->name('journal.create');
+                Route::middleware(['atLeastVaultEditor'])->post('', [JournalController::class, 'store'])->name('journal.store');
+
+                Route::prefix('{journal}')->middleware(['journal'])->group(function () {
+                    Route::get('', [JournalController::class, 'show'])->name('journal.show');
                 });
             });
 

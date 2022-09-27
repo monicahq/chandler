@@ -35,6 +35,13 @@ return [
     'show_contacts_cta' => 'Add a contact',
 
     /***************************************************************
+     * VAULT - GROUP LIST
+     **************************************************************/
+
+    'show_groups_index' => 'All groups in the vault',
+    'show_groups_blank' => 'Groups let you put your contacts together in a single place.',
+
+    /***************************************************************
      * VAULT - ADD A CONTACT
      **************************************************************/
 
@@ -91,6 +98,17 @@ return [
     'files_filter_photos' => 'Photos',
     'files_filter_avatars' => 'Avatars',
     'files_filter_blank' => 'There are no files yet.',
+
+    /***************************************************************
+     * VAULT JOURNAL
+     **************************************************************/
+
+    'journal_create_title' => 'Create a journal',
+    'journal_create_name' => 'Name of the journal',
+    'journal_create_description' => 'Description',
+    'journal_index_title' => 'All the journals',
+    'journal_index_create' => 'Create a journal',
+    'journal_index_blank' => 'Create a journal to document your life.',
 
     /***************************************************************
      * VAULT SETTINGS
