@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('account_id');
             $table->string('label');
             $table->integer('position');
+            $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('post_template_id');
             $table->string('label');
             $table->integer('position');
+            $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();
             $table->foreign('post_template_id')->references('id')->on('post_templates')->onDelete('cascade');
         });

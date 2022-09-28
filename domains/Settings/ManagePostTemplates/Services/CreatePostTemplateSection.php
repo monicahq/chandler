@@ -24,6 +24,7 @@ class CreatePostTemplateSection extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'post_template_id' => 'required|integer|exists:post_templates,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -63,6 +64,7 @@ class CreatePostTemplateSection extends BaseService implements ServiceInterface
             'post_template_id' => $data['post_template_id'],
             'label' => $data['label'],
             'position' => $newPosition,
+            'can_be_deleted' => $this->valueOrTrue($data, 'can_be_deleted'),
         ]);
 
         return $this->postTemplateSection;

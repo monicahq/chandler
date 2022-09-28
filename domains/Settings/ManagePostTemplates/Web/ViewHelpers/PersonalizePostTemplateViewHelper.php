@@ -38,6 +38,9 @@ class PersonalizePostTemplateViewHelper
                 'position' => route('settings.personalize.post_templates.order.update', [
                     'postTemplate' => $postTemplate->id,
                 ]),
+                'show' => route('settings.personalize.post_templates.show', [
+                    'postTemplate' => $postTemplate->id,
+                ]),
                 'update' => route('settings.personalize.post_templates.update', [
                     'postTemplate' => $postTemplate->id,
                 ]),

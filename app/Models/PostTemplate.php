@@ -22,6 +22,16 @@ class PostTemplate extends Model
         'account_id',
         'label',
         'position',
+        'can_be_deleted',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'can_be_deleted' => 'boolean',
     ];
 
     /**

@@ -44,6 +44,7 @@ class PersonalizePostTemplateViewHelperTest extends TestCase
                 'position' => $postTemplate->position,
                 'url' => [
                     'position' => env('APP_URL').'/settings/personalize/postTemplates/'.$postTemplate->id.'/position',
+                    'show' => env('APP_URL').'/settings/personalize/postTemplates/'.$postTemplate->id,
                     'update' => env('APP_URL').'/settings/personalize/postTemplates/'.$postTemplate->id,
                     'destroy' => env('APP_URL').'/settings/personalize/postTemplates/'.$postTemplate->id,
                 ],

@@ -22,6 +22,7 @@ class CreatePostTemplate extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'label' => 'required|string|max:255',
+            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -57,6 +58,7 @@ class CreatePostTemplate extends BaseService implements ServiceInterface
             'account_id' => $data['account_id'],
             'label' => $data['label'],
             'position' => $newPosition,
+            'can_be_deleted' => $this->valueOrTrue($data, 'can_be_deleted'),
         ]);
 
         return $this->postTemplate;

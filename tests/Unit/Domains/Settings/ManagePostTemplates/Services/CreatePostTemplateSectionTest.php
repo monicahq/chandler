@@ -66,6 +66,7 @@ class CreatePostTemplateSectionTest extends TestCase
             'author_id' => $author->id,
             'post_template_id' => $postTemplate->id,
             'label' => 'Business awesome',
+            'can_be_deleted' => true,
         ];
 
         $postTemplateSection = (new CreatePostTemplateSection())->execute($request);

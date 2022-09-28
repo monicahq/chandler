@@ -137,6 +137,7 @@ return [
     'personalize_title_manage_gift_occasions' => 'Manage gift occasions',
     'personalize_title_manage_gift_states' => 'Manage gift states',
     'personalize_title_manage_currencies' => 'Manage currencies',
+    'personalize_title_post_templates' => 'Manage post templates',
 
     /***************************************************************
      * PERSONNALIZE TEMPLATES
@@ -183,6 +184,29 @@ return [
     'personalize_relationship_types_help_4' => 'We call them a relation, and its reverse relation. For each relation you define, you need to define its counterpart.',
     'personalize_relationship_types_new_name' => 'Name of the group type',
     'personalize_relationship_types_new_relationship_name' => 'Name of the relationship',
+    'personalize_relationship_types_new_relationship_reverse_name' => 'Name of the reverse relationship',
+    'personalize_relationship_types_add_relationship' => 'Add a relationship type',
+    'personalize_relationship_types_blank' => 'Relationship types let you link contacts and document how they are connected.',
+    'personalize_relationship_types_group_update_success' => 'The group type has been updated',
+    'personalize_relationship_types_group_destroy_confirm' => 'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
+    'personalize_relationship_types_group_destroy_success' => 'The group type has been deleted',
+    'personalize_relationship_types_new_success' => 'The relationship type has been created',
+    'personalize_relationship_types_update_success' => 'The relationship type has been updated',
+    'personalize_relationship_types_destroy_confirm' => 'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
+    'personalize_relationship_types_destroy_success' => 'The relationship type has been deleted',
+
+    /***************************************************************
+     * PERSONNALIZE POST TEMPLATES
+     **************************************************************/
+
+    'personalize_post_templates_title' => 'Post templates',
+    'personalize_post_templates_cta' => 'Add a relationship type',
+    'personalize_post_templates_help_1' => 'When you define a relationship between two contacts, for instance a father-son relationship, Monica creates two relations, one for each contact:',
+    'personalize_post_templates_help_2' => 'a father-son relation—shown on the father page,',
+    'personalize_post_templates_help_3' => 'a son-father relation—shown on the son page.',
+    'personalize_post_templates_help_4' => 'We call them a relation, and its reverse relation. For each relation you define, you need to define its counterpart.',
+    'personalize_post_templates_new_name' => 'Name of the group type',
+    'personalize_post_templates_new_relationship_name' => 'Name of the relationship',
     'personalize_relationship_types_new_relationship_reverse_name' => 'Name of the reverse relationship',
     'personalize_relationship_types_add_relationship' => 'Add a relationship type',
     'personalize_relationship_types_blank' => 'Relationship types let you link contacts and document how they are connected.',

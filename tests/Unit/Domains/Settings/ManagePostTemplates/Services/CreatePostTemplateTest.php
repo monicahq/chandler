@@ -49,6 +49,7 @@ class CreatePostTemplateTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'label' => 'Business',
+            'can_be_deleted' => false,
         ];
 
         $postTemplate = (new CreatePostTemplate())->execute($request);
