@@ -28,6 +28,7 @@ class PersonalizePostTemplateController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
             'label' => $request->input('label'),
+            'can_be_deleted' => true,
         ];
 
         $postTemplate = (new CreatePostTemplate())->execute($data);

@@ -4,6 +4,7 @@ namespace App\Settings\ManagePostTemplates\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\PostTemplate;
+use App\Models\PostTemplateSection;
 
 class PersonalizePostTemplateViewHelper
 {
@@ -11,6 +12,7 @@ class PersonalizePostTemplateViewHelper
     {
         $postTemplates = $account->postTemplates()
             ->orderBy('position', 'asc')
+            ->with('postTemplateSections')
             ->get();
 
         $collection = collect();
@@ -30,15 +32,23 @@ class PersonalizePostTemplateViewHelper
 
     public static function dto(PostTemplate $postTemplate): array
     {
+        $postTemplateSections = $postTemplate->postTemplateSections()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(function (PostTemplateSection $postTemplateSection) use ($postTemplate) {
+                return self::dtoPostTemplateSection($postTemplate, $postTemplateSection);
+            });
+
         return [
             'id' => $postTemplate->id,
             'label' => $postTemplate->label,
             'position' => $postTemplate->position,
+            'post_template_sections' => $postTemplateSections,
             'url' => [
-                'position' => route('settings.personalize.post_templates.order.update', [
+                'store' => route('settings.personalize.post_templates.section.store', [
                     'postTemplate' => $postTemplate->id,
                 ]),
-                'show' => route('settings.personalize.post_templates.show', [
+                'position' => route('settings.personalize.post_templates.order.update', [
                     'postTemplate' => $postTemplate->id,
                 ]),
                 'update' => route('settings.personalize.post_templates.update', [
@@ -46,6 +56,30 @@ class PersonalizePostTemplateViewHelper
                 ]),
                 'destroy' => route('settings.personalize.post_templates.destroy', [
                     'postTemplate' => $postTemplate->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoPostTemplateSection(PostTemplate $postTemplate, PostTemplateSection $postTemplateSection): array
+    {
+        return [
+            'id' => $postTemplateSection->id,
+            'label' => $postTemplateSection->label,
+            'position' => $postTemplateSection->position,
+            'post_template_id' => $postTemplate->id,
+            'url' => [
+                'position' => route('settings.personalize.post_templates.section.order.update', [
+                    'postTemplate' => $postTemplate->id,
+                    'section' => $postTemplateSection->id,
+                ]),
+                'update' => route('settings.personalize.post_templates.section.update', [
+                    'postTemplate' => $postTemplate->id,
+                    'section' => $postTemplateSection->id,
+                ]),
+                'destroy' => route('settings.personalize.post_templates.section.destroy', [
+                    'postTemplate' => $postTemplate->id,
+                    'section' => $postTemplateSection->id,
                 ]),
             ],
         ];
