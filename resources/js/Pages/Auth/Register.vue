@@ -1,9 +1,11 @@
 <script setup>
 import { Link, useForm } from '@inertiajs/inertia-vue3';
+import { trans } from 'laravel-vue-i18n';
 import JetGuestLayout from '@/Shared/Guest.vue';
 import JetInput from '@/Components/Input.vue';
 import JetLabel from '@/Components/Label.vue';
 import JetValidationErrors from '@/Components/ValidationErrors.vue';
+import JetCheckbox from '@/Components/Checkbox.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 
 const form = useForm({
@@ -19,6 +21,21 @@ const submit = () => {
   form.post(route('register'), {
     onFinish: () => form.reset('password', 'password_confirmation'),
   });
+};
+
+const terms = () => {
+  return `<a target="_blank" href="${route(
+    'terms.show',
+  )}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">${trans(
+    'Terms of Service',
+  )}</a>`;
+};
+const policy = () => {
+  return `<a target="_blank" href="${route(
+    'policy.show',
+  )}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">${trans(
+    'Privacy Policy',
+  )}</a>`;
 };
 </script>
 
@@ -84,6 +101,18 @@ const submit = () => {
           class="mt-1 block w-full"
           required
           autocomplete="new-password" />
+      </div>
+
+      <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+        <JetLabel for="terms">
+          <div class="flex">
+            <JetCheckbox id="terms" v-model:checked="form.terms" name="terms" />
+
+            <div
+              class="ml-2"
+              v-html="$t('I agree to the :terms and :policy', { terms: terms(), policy: policy() })"></div>
+          </div>
+        </JetLabel>
       </div>
 
       <div class="mt-4 flex items-center justify-end">
