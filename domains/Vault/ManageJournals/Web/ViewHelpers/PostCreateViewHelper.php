@@ -39,10 +39,6 @@ class PostCreateViewHelper
             ],
             'templates' => $templatesCollection,
             'url' => [
-                'store' => route('post.store', [
-                    'vault' => $journal->vault_id,
-                    'journal' => $journal->id,
-                ]),
                 'back' => route('journal.show', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
