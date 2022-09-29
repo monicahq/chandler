@@ -338,13 +338,6 @@
             </template>
           </draggable>
         </div>
-
-        <!-- blank state -->
-        <div
-          v-if="localPostTemplates.length == 0"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">Group types let you group people together.</p>
-        </div>
       </div>
     </main>
   </layout>
