@@ -26,6 +26,7 @@ class PostTemplateFactory extends Factory
             'account_id' => Account::factory(),
             'label' => 'business',
             'position' => 1,
+            'can_be_deleted' => false,
         ];
     }
 }

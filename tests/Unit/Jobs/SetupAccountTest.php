@@ -578,11 +578,11 @@ class SetupAccountTest extends TestCase
         ]);
         $this->assertDatabaseHas('post_template_sections', [
             'label' => trans('settings.personalize_post_templates_default_template_section_day'),
-            'position' => 3,
+            'position' => 4,
         ]);
         $this->assertDatabaseHas('post_template_sections', [
             'label' => trans('settings.personalize_post_templates_default_template_section_three_things'),
-            'position' => 3,
+            'position' => 5,
         ]);
     }
 }
