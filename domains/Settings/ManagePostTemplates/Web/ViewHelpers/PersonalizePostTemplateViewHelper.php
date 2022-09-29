@@ -43,6 +43,7 @@ class PersonalizePostTemplateViewHelper
             'id' => $postTemplate->id,
             'label' => $postTemplate->label,
             'position' => $postTemplate->position,
+            'can_be_deleted' => $postTemplate->can_be_deleted,
             'post_template_sections' => $postTemplateSections,
             'url' => [
                 'store' => route('settings.personalize.post_templates.section.store', [
@@ -67,6 +68,7 @@ class PersonalizePostTemplateViewHelper
             'id' => $postTemplateSection->id,
             'label' => $postTemplateSection->label,
             'position' => $postTemplateSection->position,
+            'can_be_deleted' => $postTemplateSection->can_be_deleted,
             'post_template_id' => $postTemplate->id,
             'url' => [
                 'position' => route('settings.personalize.post_templates.section.order.update', [

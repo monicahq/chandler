@@ -49,12 +49,12 @@
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1"> 👥 </span>
-            All the group types
+            <span class="mr-1"> 📮 </span>
+            {{ $t('settings.personalize_post_templates_title') }}
           </h3>
           <pretty-button
             v-if="!createPostTemplateModalShown"
-            :text="'Add a group type'"
+            :text="$t('settings.personalize_post_templates_cta')"
             :icon="'plus'"
             @click="showCreatePostTemplateModal" />
         </div>
@@ -75,10 +75,7 @@
           </svg>
 
           <div>
-            <p>
-              A group is two or more people together. It can be a family, a household, a sport club. Whatever is
-              important to you.
-            </p>
+            <p>{{ $t('settings.personalize_post_templates_help') }}</p>
           </div>
         </div>
 
@@ -152,7 +149,10 @@
                         @click="renamePostTemplateModal(element)">
                         {{ $t('app.rename') }}
                       </li>
-                      <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
+                      <li
+                        v-if="element.can_be_deleted"
+                        class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                        @click="destroy(element)">
                         {{ $t('app.delete') }}
                       </li>
                     </ul>
@@ -204,8 +204,9 @@
                                   {{ $t('app.rename') }}
                                 </li>
                                 <li
+                                  v-if="element.can_be_deleted"
                                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                                  @click="destroyRole(element)">
+                                  @click="destroySection(element)">
                                   {{ $t('app.delete') }}
                                 </li>
                               </ul>
@@ -541,7 +542,7 @@ export default {
         });
     },
 
-    destroyRole(section) {
+    destroySection(section) {
       if (confirm('Are you sure? This can not be undone.')) {
         axios
           .delete(section.url.destroy)
