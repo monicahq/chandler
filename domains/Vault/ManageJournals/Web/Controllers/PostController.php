@@ -8,7 +8,6 @@ use App\Models\Post;
 use App\Models\Vault;
 use App\Vault\ManageJournals\Services\CreatePost;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostCreateViewHelper;
-use App\Vault\ManageJournals\Web\ViewHelpers\PostShowViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +34,7 @@ class PostController extends Controller
 
         return Inertia::render('Vault/Journal/Post/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => PostCreateViewHelper::data($journal),
+            'data' => PostCreateViewHelper::template($journal),
         ]);
     }
 
@@ -67,7 +66,7 @@ class PostController extends Controller
 
         return Inertia::render('Vault/Journal/Post/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => PostShowViewHelper::data($journal),
+            'data' => PostCreateViewHelper::template($journal),
         ]);
     }
 }
