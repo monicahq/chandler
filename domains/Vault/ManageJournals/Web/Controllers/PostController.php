@@ -5,10 +5,12 @@ namespace App\Vault\ManageJournals\Web\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use App\Models\Post;
+use App\Models\PostTemplate;
 use App\Models\Vault;
 use App\Vault\ManageJournals\Services\CreatePost;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostCreateViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -27,14 +29,24 @@ class PostController extends Controller
         ]);
     }
 
-    public function create(Request $request, int $vaultId, int $journalId)
+    public function create(Request $request, int $vaultId, int $journalId, int $templateId)
     {
         $vault = Vault::findOrFail($vaultId);
         $journal = Journal::findOrFail($journalId);
 
+        try {
+            $postTemplate = PostTemplate::where('account_id', $vault->account_id)
+                ->findOrFail($templateId);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('post.choose_template', [
+                'vault' => $vaultId,
+                'journal' => $journalId,
+            ]);
+        }
+
         return Inertia::render('Vault/Journal/Post/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => PostCreateViewHelper::template($journal),
+            'data' => PostCreateViewHelper::data($journal, $postTemplate),
         ]);
     }
 

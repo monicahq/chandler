@@ -46,4 +46,32 @@ class PostCreateViewHelper
             ],
         ];
     }
+
+    public static function data(Journal $journal, PostTemplate $postTemplate): array
+    {
+        $sectionsCollection = $postTemplate->postTemplateSections()
+            ->orderBy('position')
+            ->get()
+            ->map(fn (PostTemplateSection $postTemplateSection) => [
+                'id' => $postTemplateSection->id,
+                'label' => $postTemplateSection->label,
+            ]);
+
+        return [
+            'journal' => [
+                'name' => $journal->name,
+            ],
+            'sections' => $sectionsCollection,
+            'url' => [
+                'store' => route('post.store', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
+                'back' => route('journal.show', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
+            ],
+        ];
+    }
 }
