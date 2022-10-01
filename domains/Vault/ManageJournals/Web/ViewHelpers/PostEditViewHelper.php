@@ -16,13 +16,16 @@ class PostEditViewHelper
             ->map(fn (PostSection $postSection) => [
                 'id' => $postSection->id,
                 'label' => $postSection->label,
+                'content' => $postSection->content,
             ]);
 
         return [
+            'id' => $post->id,
+            'title' => $post->title,
+            'sections' => $sectionsCollection,
             'journal' => [
                 'name' => $journal->name,
             ],
-            'sections' => $sectionsCollection,
             'url' => [
                 'update' => route('post.update', [
                     'vault' => $journal->vault_id,

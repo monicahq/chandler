@@ -84,7 +84,6 @@ class UpdatePost extends BaseService implements ServiceInterface
 
         $this->post->title = $this->data['title'];
         $this->post->written_at = $writtenAt;
-        $this->post->updated_at = now();
         $this->post->save();
     }
 

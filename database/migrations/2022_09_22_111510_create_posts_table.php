@@ -39,7 +39,6 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->string('title')->nullable();
             $table->datetime('written_at');
-            $table->datetime('updated_at')->nullable();
             $table->timestamps();
             $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
         });
