@@ -4,7 +4,8 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted } from 'vue';
+import { onMounted, watch, ref } from 'vue';
+import { debounce } from 'lodash';
 
 const props = defineProps({
   layoutData: Object,
@@ -15,6 +16,9 @@ const form = useForm({
   title: '',
   sections: [],
 });
+
+const loadingState = ref('');
+const saveInProgress = ref(false);
 
 onMounted(() => {
   form.title = props.data.title;
@@ -28,11 +32,31 @@ onMounted(() => {
   });
 });
 
+watch(
+  () => _.cloneDeep(form.sections),
+  () => {
+    debouncedWatch(form.sections);
+  },
+);
+
+watch(
+  () => form.title,
+  () => {
+    debouncedWatch(form.title);
+  },
+);
+
+const debouncedWatch = debounce(() => {
+  update();
+}, 500);
+
 const update = () => {
+  saveInProgress.value = true;
+
   axios
     .put(props.data.url.update, form)
     .then(() => {
-      console.log('done');
+      setTimeout(() => (saveInProgress.value = false), 350);
     })
     .catch(() => {});
 };
@@ -135,21 +159,33 @@ const update = () => {
             </div>
 
             <!-- auto save -->
-            <div class="mb-6 flex items-center justify-center text-sm">
-              <svg
-                class="mr-2 h-4 w-4 text-green-700"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-              </svg>
+            <div class="mb-6 text-sm">
+              <div v-if="!saveInProgress" class="flex items-center justify-center">
+                <svg
+                  class="mr-2 h-4 w-4 text-green-700"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
 
-              <span>Auto saved a few seconds ago</span>
+                <span>Auto saved a few seconds ago</span>
+              </div>
+
+              <div v-if="saveInProgress" class="flex items-center justify-center">
+                <div class="saving-spinner mr-3">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+
+                <span>Saving in progress</span>
+              </div>
             </div>
 
             <!-- contacts -->
@@ -237,6 +273,53 @@ const update = () => {
 @media (max-width: 480px) {
   .special-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+.saving-spinner,
+.saving-spinner * {
+  box-sizing: border-box;
+}
+
+.saving-spinner {
+  width: calc(15px * 4);
+  height: 9px;
+  position: relative;
+}
+
+.saving-spinner .dot {
+  height: 10px;
+  width: 10px;
+  background-color: #88d772;
+  left: calc(15px * 4);
+  position: absolute;
+  margin: 0 auto;
+  border-radius: 2px;
+  transform: translateY(0) rotate(45deg) scale(0);
+  animation: saving-spinner-animation 2500ms linear infinite;
+}
+
+.saving-spinner .dot:nth-child(1) {
+  animation-delay: calc(2500ms * 1 / -1.5);
+}
+
+.saving-spinner .dot:nth-child(2) {
+  animation-delay: calc(2500ms * 2 / -1.5);
+}
+
+.saving-spinner .dot:nth-child(3) {
+  animation-delay: calc(2500ms * 3 / -1.5);
+}
+
+@keyframes saving-spinner-animation {
+  0% {
+    transform: translateX(0) rotate(45deg) scale(0);
+  }
+  50% {
+    transform: translateX(-233%) rotate(45deg) scale(1);
+  }
+  100% {
+    transform: translateX(-466%) rotate(45deg) scale(0);
   }
 }
 </style>
