@@ -4,16 +4,38 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
 
-defineProps({
+const props = defineProps({
   layoutData: Object,
   data: Object,
 });
 
 const form = useForm({
   title: '',
-  body: '',
+  sections: [],
 });
+
+onMounted(() => {
+  form.title = props.data.title;
+
+  props.data.sections.forEach((section) => {
+    form.sections.push({
+      id: section.id,
+      label: section.label,
+      content: section.content,
+    });
+  });
+});
+
+const update = () => {
+  axios
+    .put(props.data.url.update, form)
+    .then(() => {
+      console.log('done');
+    })
+    .catch(() => {});
+};
 </script>
 
 <template>
@@ -71,8 +93,6 @@ const form = useForm({
           <div class="">
             <form class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
               <div class="border-gray-200 p-5 dark:border-gray-700">
-                <errors :errors="form.errors" />
-
                 <!-- title -->
                 <text-input
                   :ref="'newTitle'"
@@ -85,9 +105,9 @@ const form = useForm({
                   :maxlength="255"
                   @esc-key-pressed="createNoteModalShown = false" />
 
-                <div v-for="section in data.sections" :key="section.id">
+                <div v-for="section in form.sections" :key="section.id">
                   <text-area
-                    v-model="form.body"
+                    v-model="section.content"
                     :label="section.label"
                     :rows="10"
                     :required="true"
@@ -101,9 +121,17 @@ const form = useForm({
           <!-- right -->
           <div class="">
             <!-- Publish action -->
-            <div
-              class="bg-form mb-2 rounded-lg border border-gray-200 p-5 text-center dark:border-gray-700 dark:bg-gray-900">
-              <pretty-button :text="'Publish'" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
+              <div class="border-b border-gray-200 p-2 text-sm dark:border-gray-700">Post status: draft</div>
+
+              <div class="bg-form rounded-b-lg p-5">
+                <pretty-button
+                  @click="update()"
+                  :text="'Publish'"
+                  :state="loadingState"
+                  :icon="'check'"
+                  :classes="'save'" />
+              </div>
             </div>
 
             <!-- auto save -->
