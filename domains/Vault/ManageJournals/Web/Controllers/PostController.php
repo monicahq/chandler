@@ -2,6 +2,7 @@
 
 namespace App\Vault\ManageJournals\Web\Controllers;
 
+use App\Helpers\PostHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use App\Models\Post;
@@ -101,7 +102,6 @@ class PostController extends Controller
     {
         $vault = Vault::findOrFail($vaultId);
 
-        //dd($request->input('sections'));
         $post = (new UpdatePost())->execute([
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::user()->id,
@@ -112,5 +112,9 @@ class PostController extends Controller
             'sections' => $request->input('sections'),
             'written_at' => Carbon::now()->format('Y-m-d'),
         ]);
+
+        return response()->json([
+            'data' => PostHelper::statistics($post),
+        ], 200);
     }
 }

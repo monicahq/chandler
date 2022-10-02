@@ -2,6 +2,7 @@
 
 namespace App\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\PostHelper;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\PostSection;
@@ -23,6 +24,7 @@ class PostEditViewHelper
             'id' => $post->id,
             'title' => $post->title,
             'sections' => $sectionsCollection,
+            'statistics' => PostHelper::statistics($post),
             'journal' => [
                 'name' => $journal->name,
             ],

@@ -1,6 +1,7 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
@@ -19,9 +20,11 @@ const form = useForm({
 
 const loadingState = ref('');
 const saveInProgress = ref(false);
+const statistics = ref([]);
 
 onMounted(() => {
   form.title = props.data.title;
+  statistics.value = props.data.statistics;
 
   props.data.sections.forEach((section) => {
     form.sections.push({
@@ -55,8 +58,9 @@ const update = () => {
 
   axios
     .put(props.data.url.update, form)
-    .then(() => {
+    .then((response) => {
       setTimeout(() => (saveInProgress.value = false), 350);
+      statistics.value = response.data.data;
     })
     .catch(() => {});
 };
@@ -149,6 +153,8 @@ const update = () => {
               <div class="border-b border-gray-200 p-2 text-sm dark:border-gray-700">Post status: draft</div>
 
               <div class="bg-form rounded-b-lg p-5">
+                <pretty-link :classes="'mr-8'" :text="'Close'" :icon="'exit'" />
+
                 <pretty-button
                   @click="update()"
                   :text="'Publish'"
@@ -219,7 +225,7 @@ const update = () => {
                     d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                 </svg>
 
-                <span>3432 words</span>
+                <span>{{ statistics.word_count }} words</span>
               </li>
               <li class="mb-2 flex items-center">
                 <svg
@@ -235,7 +241,7 @@ const update = () => {
                     d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
 
-                <span>21min reading time</span>
+                <span>{{ statistics.time_to_read_in_minute }} min read</span>
               </li>
               <li class="flex items-center">
                 <svg
