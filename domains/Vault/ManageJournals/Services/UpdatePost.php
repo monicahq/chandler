@@ -27,6 +27,7 @@ class UpdatePost extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'post_id' => 'required|integer|exists:posts,id',
+            'title' => 'nullable|string|max:255',
             'sections' => 'required',
             'written_at' => 'nullable|date_format:Y-m-d',
         ];
