@@ -75,7 +75,8 @@ class Post extends Model
                 }
 
                 return trans('app.undefined');
-            }
+            },
+            set: fn ($value) => $value,
         );
     }
 }
