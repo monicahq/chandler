@@ -13,6 +13,7 @@ class PostShowViewHelper
     {
         $sections = $post->postSections()
             ->orderBy('position')
+            ->whereNotNull('content')
             ->get()
             ->map(fn (PostSection $section) => [
                 'id' => $section->id,

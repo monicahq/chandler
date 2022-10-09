@@ -12,6 +12,7 @@ use App\Vault\ManageJournals\Services\CreatePost;
 use App\Vault\ManageJournals\Services\UpdatePost;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostCreateViewHelper;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostEditViewHelper;
+use App\Vault\ManageJournals\Web\ViewHelpers\PostShowViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -78,11 +79,11 @@ class PostController extends Controller
     public function show(Request $request, int $vaultId, int $journalId, int $postId)
     {
         $vault = Vault::findOrFail($vaultId);
-        $journal = Journal::findOrFail($journalId);
         $post = Post::findOrFail($postId);
 
-        return Inertia::render('Vault/Journal/Post/Create', [
+        return Inertia::render('Vault/Journal/Post/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => PostShowViewHelper::data($post, Auth::user()),
         ]);
     }
 

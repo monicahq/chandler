@@ -297,7 +297,7 @@ Route::middleware([
 
                     // posts
                     Route::get('posts/create', [PostController::class, 'create'])->name('post.create');
-                    Route::get('posts/{template}', [PostController::class, 'store'])->name('post.store');
+                    Route::get('posts/template/{template}', [PostController::class, 'store'])->name('post.store');
 
                     // details of a post
                     Route::prefix('posts/{post}')->middleware(['post'])->group(function () {
