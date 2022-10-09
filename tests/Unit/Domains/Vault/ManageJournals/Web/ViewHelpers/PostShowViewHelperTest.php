@@ -59,11 +59,15 @@ class PostShowViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'name' => $journal->name,
+                'url' => [
+                    'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
+                ],
             ],
             $array['journal']
         );
         $this->assertEquals(
             [
+                'edit' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/edit',
                 'back' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
             ],
             $array['url']

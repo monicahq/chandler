@@ -49,6 +49,7 @@ class PostEditViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/update',
+                'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id,
                 'back' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
             ],
             $array['url']

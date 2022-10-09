@@ -29,8 +29,19 @@ class PostShowViewHelper
             'sections' => $sections,
             'journal' => [
                 'name' => $post->journal->name,
+                'url' => [
+                    'show' => route('journal.show', [
+                        'vault' => $post->journal->vault_id,
+                        'journal' => $post->journal->id,
+                    ]),
+                ],
             ],
             'url' => [
+                'edit' => route('post.edit', [
+                    'vault' => $post->journal->vault_id,
+                    'journal' => $post->journal->id,
+                    'post' => $post->id,
+                ]),
                 'back' => route('journal.show', [
                     'vault' => $post->journal->vault_id,
                     'journal' => $post->journal->id,
