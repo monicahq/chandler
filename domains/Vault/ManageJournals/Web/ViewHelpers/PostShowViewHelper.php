@@ -31,8 +31,8 @@ class PostShowViewHelper
             ],
             'url' => [
                 'back' => route('journal.show', [
-                    'vault' => $journal->vault_id,
-                    'journal' => $journal->id,
+                    'vault' => $post->journal->vault_id,
+                    'journal' => $post->journal->id,
                 ]),
             ],
         ];
