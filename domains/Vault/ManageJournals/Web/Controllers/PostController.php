@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Redirect;
 
 class PostController extends Controller
 {
@@ -130,11 +131,11 @@ class PostController extends Controller
             'post_id' => $postId,
         ]);
 
-        return response()->json([
-            'data' => route('journal.show', [
-                'vault' => $vaultId,
-                'journal' => $journalId,
-            ]),
-        ], 200);
+        $journal = Journal::findOrFail($journalId);
+
+        return Redirect::route('journal.show', [
+            'vault' => $vaultId,
+            'journal' => $journal,
+        ]);
     }
 }

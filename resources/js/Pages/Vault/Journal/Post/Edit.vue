@@ -64,6 +64,14 @@ const update = () => {
     })
     .catch(() => {});
 };
+
+const destroy = () => {
+  if (confirm('Are you sure you want to delete this post?')) {
+    form.delete(props.data.url.destroy, {
+      onFinish: () => {},
+    });
+  }
+};
 </script>
 
 <template>
@@ -263,7 +271,7 @@ const update = () => {
             </ul>
 
             <!-- delete -->
-            <div class="cursor-pointer text-red-500 hover:text-red-900">{{ $t('app.delete') }}</div>
+            <div @click="destroy" class="cursor-pointer text-red-500 hover:text-red-900">{{ $t('app.delete') }}</div>
           </div>
         </div>
       </div>
