@@ -57,6 +57,8 @@ class Module extends Model
 
     public const TYPE_PHOTOS = 'photos';
 
+    public const TYPE_POSTS = 'posts';
+
     /**
      * The attributes that are mass assignable.
      *

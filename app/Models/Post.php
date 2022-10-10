@@ -101,4 +101,22 @@ class Post extends Model
             set: fn ($value) => $value,
         );
     }
+
+    protected function excerpt(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $section = $this->postSections()
+                    ->orderBy('position')
+                    ->whereNotNull('content')
+                    ->first();
+
+                if (! $section) {
+                    return null;
+                }
+
+                return $section->content;
+            }
+        );
+    }
 }

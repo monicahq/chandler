@@ -63,4 +63,31 @@ class PostTest extends TestCase
             $post->title
         );
     }
+
+    /** @test */
+    public function it_gets_the_excerpt(): void
+    {
+        $post = Post::factory()->create([
+            'title' => null,
+        ]);
+
+        $this->assertNull(
+            $post->excerpt
+        );
+
+        PostSection::factory()->create([
+            'post_id' => $post->id,
+            'content' => null,
+        ]);
+
+        PostSection::factory()->create([
+            'post_id' => $post->id,
+            'content' => 'this is incredible',
+        ]);
+
+        $this->assertEquals(
+            'this is incredible',
+            $post->excerpt
+        );
+    }
 }

@@ -27,6 +27,7 @@ const statistics = ref([]);
 onMounted(() => {
   form.title = props.data.title;
   statistics.value = props.data.statistics;
+  form.contacts = props.data.contacts;
 
   props.data.sections.forEach((section) => {
     form.sections.push({
