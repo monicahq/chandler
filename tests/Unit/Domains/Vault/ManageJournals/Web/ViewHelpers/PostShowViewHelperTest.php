@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Models\Contact;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\PostSection;
@@ -74,6 +75,35 @@ class PostShowViewHelperTest extends TestCase
                 'back' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
             ],
             $array['url']
+        );
+    }
+
+    /** @test */
+    public function it_gets_all_the_groups_for_the_contact(): void
+    {
+        $contact = Contact::factory()->create([]);
+
+        $array = PostShowViewHelper::dtoContact($contact);
+
+        $this->assertEquals(
+            4,
+            count($array)
+        );
+        $this->assertArrayHasKey('id', $array);
+        $this->assertArrayHasKey('name', $array);
+        $this->assertArrayHasKey('avatar', $array);
+        $this->assertArrayHasKey('url', $array);
+
+        $this->assertEquals(
+            [
+                'id' => $contact->id,
+                'name' => $contact->name,
+                'avatar' => $contact->avatar,
+                'url' => [
+                    'show' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id,
+                ],
+            ],
+            $array
         );
     }
 }

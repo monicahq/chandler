@@ -8,6 +8,7 @@ use App\Models\Journal;
 use App\Models\Post;
 use App\Models\PostTemplate;
 use App\Models\Vault;
+use App\Vault\ManageJournals\Services\AddContactToPost;
 use App\Vault\ManageJournals\Services\CreatePost;
 use App\Vault\ManageJournals\Services\DestroyPost;
 use App\Vault\ManageJournals\Services\UpdatePost;
@@ -115,6 +116,23 @@ class PostController extends Controller
             'sections' => $request->input('sections'),
             'written_at' => Carbon::now()->format('Y-m-d'),
         ]);
+
+        $post->contacts()->detach();
+
+        if (count($request->input('contacts')) > 0) {
+            foreach ($request->input('contacts') as $contact) {
+                $data = [
+                    'account_id' => Auth::user()->account_id,
+                    'author_id' => Auth::user()->id,
+                    'vault_id' => $vaultId,
+                    'journal_id' => $journalId,
+                    'post_id' => $postId,
+                    'contact_id' => $contact['id'],
+                ];
+
+                (new AddContactToPost())->execute($data);
+            }
+        }
 
         return response()->json([
             'data' => PostHelper::statistics($post),

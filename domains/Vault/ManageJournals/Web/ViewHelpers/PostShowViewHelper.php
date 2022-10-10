@@ -3,6 +3,7 @@
 namespace App\Vault\ManageJournals\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
+use App\Models\Contact;
 use App\Models\Post;
 use App\Models\PostSection;
 use App\Models\User;
@@ -46,6 +47,21 @@ class PostShowViewHelper
                 'back' => route('journal.show', [
                     'vault' => $post->journal->vault_id,
                     'journal' => $post->journal->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoContact(Contact $contact): array
+    {
+        return [
+            'id' => $contact->id,
+            'name' => $contact->name,
+            'avatar' => $contact->avatar,
+            'url' => [
+                'show' => route('contact.show', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
                 ]),
             ],
         ];

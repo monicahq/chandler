@@ -7,6 +7,7 @@ import TextArea from '@/Shared/Form/TextArea.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
+import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -16,6 +17,7 @@ const props = defineProps({
 const form = useForm({
   title: '',
   sections: [],
+  contacts: [],
 });
 
 const loadingState = ref('');
@@ -46,6 +48,13 @@ watch(
   () => form.title,
   () => {
     debouncedWatch(form.title);
+  },
+);
+
+watch(
+  () => _.cloneDeep(form.contacts),
+  () => {
+    debouncedWatch(form.contacts);
   },
 );
 
@@ -206,9 +215,14 @@ const destroy = () => {
             <p class="mb-2 flex items-center font-bold">
               <span>Contacts in this post</span>
             </p>
-            <div class="bg-form mb-6 rounded-lg border border-gray-200 p-5 dark:border-gray-700 dark:bg-gray-900">
-              This post is about
-            </div>
+            <contact-selector
+              v-model="form.contacts"
+              :search-url="layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
+              :display-most-consulted-contacts="true"
+              :add-multiple-contacts="true"
+              :required="true"
+              :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700 mb-6'" />
 
             <!-- categories -->
             <p class="mb-2 flex items-center font-bold">
