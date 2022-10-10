@@ -92,7 +92,6 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneContro
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageJournals\Web\Controllers\JournalController;
-use App\Vault\ManageJournals\Web\Controllers\PostContactController;
 use App\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
@@ -305,11 +304,6 @@ Route::middleware([
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
                         Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
-
-                        // contacts
-                        Route::get('contacts', [PostContactController::class, 'index'])->name('post.contact.index');
-                        Route::post('contacts/{contact}', [PostContactController::class, 'store'])->name('post.contact.store');
-                        Route::delete('contacts/{contact}', [PostContactController::class, 'destroy'])->name('post.contact.destroy');
                     });
                 });
             });
