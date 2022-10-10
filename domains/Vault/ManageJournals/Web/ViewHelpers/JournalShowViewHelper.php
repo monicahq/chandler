@@ -17,7 +17,8 @@ class JournalShowViewHelper
             ->map(fn (Post $post) => [
                 'id' => $post->id,
                 'title' => $post->title,
-                'written_at' => DateHelper::format($post->written_at, $user),
+                'written_at_human_format' => DateHelper::format($post->written_at, $user),
+                'written_at' => $post->written_at,
                 'url' => [
                     'show' => route('post.show', [
                         'vault' => $journal->vault_id,

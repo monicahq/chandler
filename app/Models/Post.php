@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Post extends Model
 {
@@ -64,6 +66,26 @@ class Post extends Model
     public function postSections(): HasMany
     {
         return $this->hasMany(PostSection::class);
+    }
+
+    /**
+     * Get the contacts associated with the post.
+     *
+     * @return BelongsToMany
+     */
+    public function contacts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class);
+    }
+
+    /**
+     * Get the post's feed item.
+     *
+     * @return MorphOne
+     */
+    public function feedItem(): MorphOne
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 
     protected function title(): Attribute

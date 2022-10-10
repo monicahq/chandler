@@ -61,7 +61,7 @@ defineProps({
             :key="post.id"
             class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- written at -->
-            <span class="mr-2">{{ post.written_at }}</span>
+            <span class="mr-2">{{ post.written_at_human_format }}</span>
 
             <!-- content -->
             <inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{ post.title }}</inertia-link>

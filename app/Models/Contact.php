@@ -335,6 +335,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the posts associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'contact_post');
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute

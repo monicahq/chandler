@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Contact;
 use App\Models\Post;
 use App\Models\PostSection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -28,6 +29,17 @@ class PostTest extends TestCase
         ]);
 
         $this->assertTrue($post->postSections()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_contacts(): void
+    {
+        $ross = Contact::factory()->create([]);
+        $post = Post::factory()->create();
+
+        $post->contacts()->sync([$ross->id]);
+
+        $this->assertTrue($post->contacts()->exists());
     }
 
     /** @test */
