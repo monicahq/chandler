@@ -304,6 +304,7 @@ Route::middleware([
                         Route::get('', [PostController::class, 'show'])->name('post.show');
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
+                        Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
                     });
                 });
             });

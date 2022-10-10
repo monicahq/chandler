@@ -24,6 +24,7 @@ class PostShowViewHelper
         return [
             'id' => $post->id,
             'title' => $post->title,
+            'title_exists' => $post->title === trans('app.undefined') ? false : true,
             'written_at' => DateHelper::format($post->written_at, $user),
             'published' => $post->published,
             'sections' => $sections,

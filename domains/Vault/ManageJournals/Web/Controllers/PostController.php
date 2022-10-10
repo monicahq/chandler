@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\PostTemplate;
 use App\Models\Vault;
 use App\Vault\ManageJournals\Services\CreatePost;
+use App\Vault\ManageJournals\Services\DestroyPost;
 use App\Vault\ManageJournals\Services\UpdatePost;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostCreateViewHelper;
 use App\Vault\ManageJournals\Web\ViewHelpers\PostEditViewHelper;
@@ -116,6 +117,24 @@ class PostController extends Controller
 
         return response()->json([
             'data' => PostHelper::statistics($post),
+        ], 200);
+    }
+
+    public function destroy(Request $request, int $vaultId, int $journalId, int $postId)
+    {
+        (new DestroyPost())->execute([
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'journal_id' => $journalId,
+            'post_id' => $postId,
+        ]);
+
+        return response()->json([
+            'data' => route('journal.show', [
+                'vault' => $vaultId,
+                'journal' => $journalId,
+            ]),
         ], 200);
     }
 }

@@ -61,15 +61,23 @@ defineProps({
           <!-- left -->
           <div class="mr-8">
             <div class="post prose relative rounded bg-white">
-              <h1 v-if="data.title" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
+              <p class="text-sm text-gray-400">{{ data.written_at }}</p>
 
-              <div v-for="section in data.sections" :key="section.id" class="mb-4">
-                <div class="mb-1 italic text-gray-400">
-                  {{ section.label }}
+              <h1 v-if="data.title_exists" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
+
+              <!-- sections -->
+              <div v-if="data.sections.length > 0">
+                <div v-for="section in data.sections" :key="section.id" class="mb-4">
+                  <div class="mb-1 italic text-gray-400">
+                    {{ section.label }}
+                  </div>
+
+                  <div class="mb-6">{{ section.content }}</div>
                 </div>
-
-                <div class="mb-6">{{ section.content }}</div>
               </div>
+
+              <!-- no section yet -->
+              <div v-else class="text-gray-400">This post has no content yet.</div>
             </div>
           </div>
 

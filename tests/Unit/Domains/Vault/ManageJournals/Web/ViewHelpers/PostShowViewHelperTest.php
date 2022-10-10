@@ -37,7 +37,7 @@ class PostShowViewHelperTest extends TestCase
 
         $array = PostShowViewHelper::data($post, $user);
 
-        $this->assertCount(7, $array);
+        $this->assertCount(8, $array);
         $this->assertEquals(
             $post->id,
             $array['id']
@@ -45,6 +45,9 @@ class PostShowViewHelperTest extends TestCase
         $this->assertEquals(
             'this is a title',
             $array['title']
+        );
+        $this->assertTrue(
+            $array['title_exists']
         );
         $this->assertEquals(
             [

@@ -51,6 +51,7 @@ class PostEditViewHelperTest extends TestCase
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/update',
                 'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id,
                 'back' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
+                'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id,
             ],
             $array['url']
         );

@@ -43,6 +43,11 @@ class PostEditViewHelper
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                 ]),
+                'destroy' => route('post.destroy', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                    'post' => $post->id,
+                ]),
             ],
         ];
     }
