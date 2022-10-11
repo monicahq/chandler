@@ -26,13 +26,13 @@ class Tag extends Model
     ];
 
     /**
-     * Get the journal associated with the journal tag.
+     * Get the vault associated with the journal tag.
      *
      * @return BelongsTo
      */
-    public function journal(): BelongsTo
+    public function vault(): BelongsTo
     {
-        return $this->belongsTo(Journal::class);
+        return $this->belongsTo(Vault::class);
     }
 
     /**

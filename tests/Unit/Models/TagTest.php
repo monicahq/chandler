@@ -12,11 +12,11 @@ class TagTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_has_one_journal()
+    public function it_has_one_vault()
     {
         $tag = Tag::factory()->create();
 
-        $this->assertTrue($tag->journal()->exists());
+        $this->assertTrue($tag->vault()->exists());
     }
 
     /** @test */

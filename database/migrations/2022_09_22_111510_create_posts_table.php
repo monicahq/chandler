@@ -55,11 +55,11 @@ return new class extends Migration
 
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('journal_id');
+            $table->unsignedBigInteger('vault_id');
             $table->string('name');
             $table->string('slug');
             $table->timestamps();
-            $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
+            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::create('post_tag', function (Blueprint $table) {

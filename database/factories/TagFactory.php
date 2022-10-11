@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Journal;
 use App\Models\Tag;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagFactory extends Factory
@@ -23,7 +23,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'journal_id' => Journal::factory(),
+            'vault_id' => Vault::factory(),
             'name' => $this->faker->name(),
             'slug' => $this->faker->name(),
         ];
