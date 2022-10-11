@@ -100,6 +100,7 @@ use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\Search\Web\Controllers\VaultContactSearchController;
@@ -332,6 +333,12 @@ Route::middleware([
                 Route::post('settings/labels', [VaultSettingsLabelController::class, 'store'])->name('vault.settings.label.store');
                 Route::put('settings/labels/{label}', [VaultSettingsLabelController::class, 'update'])->name('vault.settings.label.update');
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
+
+                // tags
+                Route::get('settings/tags', [VaultSettingsTagController::class, 'index'])->name('vault.settings.tag.index');
+                Route::post('settings/tags', [VaultSettingsTagController::class, 'store'])->name('vault.settings.tag.store');
+                Route::put('settings/tags/{tag}', [VaultSettingsTagController::class, 'update'])->name('vault.settings.tag.update');
+                Route::delete('settings/tags/{tag}', [VaultSettingsTagController::class, 'destroy'])->name('vault.settings.tag.destroy');
 
                 // contact important date types
                 Route::post('settings/contactImportantDateTypes', [VaultSettingsContactImportantDateTypeController::class, 'store'])->name('vault.settings.important_date_type.store');
