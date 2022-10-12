@@ -45,24 +45,22 @@ defineProps({
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <h1 class="mb-8 text-2xl">{{ data.name }}</h1>
 
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="p-3 sm:p-0">
             <!-- years -->
-            <p class="mb-2 font-medium"><span class="mr-1"> 📆 </span> Years</p>
-            <ul class="mb-8">
-              <li class="mb-2 flex items-center justify-between">
-                <span>2022</span>
-                <span class="text-sm text-gray-400">12 posts</span>
-              </li>
-              <li class="flex items-center justify-between">
-                <span>2021</span>
-                <span class="text-sm text-gray-400">43 posts</span>
+            <p v-if="data.years.length > 0" class="mb-2 font-medium">
+              <span class="mr-1"> 📆 </span> {{ $t('vault.journal_show_years') }}
+            </p>
+            <ul v-if="data.years.length > 0" class="mb-8">
+              <li v-for="year in data.years" :key="year.year" class="mb-2 flex items-center justify-between last:mb-0">
+                <inertia-link :href="year.url.show" class="text-blue-500 hover:underline">{{ year.year }}</inertia-link>
+                <span class="text-sm text-gray-400">{{ year.posts }}</span>
               </li>
             </ul>
 
             <!-- tags -->
-            <p class="mb-2 font-medium"><span class="mr-1"> ⚡ </span> All tags</p>
+            <p class="mb-2 font-medium"><span class="mr-1"> ⚡ </span> {{ $t('vault.journal_show_tags') }}</p>
             <ul>
               <li class="mb-2 flex items-center justify-between">
                 <span>Motorcycle</span>
@@ -77,30 +75,111 @@ defineProps({
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
+            <!-- all months in the year -->
+            <div class="mb-2 grid grid-cols-12">
+              <div class="text-center">
+                <div class="mb-1">JAN</div>
+
+                <div class="h-2 rounded-l-md border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">FEB</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">MAR</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">APR</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">MAY</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">JUN</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">JUL</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">AUG</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">SEP</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">OCT</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">NOV</div>
+
+                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+              <div class="text-center">
+                <div class="mb-1">DEC</div>
+
+                <div class="h-2 rounded-r-md border-r border-t border-b border-gray-200 bg-gray-100"></div>
+              </div>
+            </div>
+
             <!-- list of posts -->
-            <ul class="post-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-              <li class="border-b border-gray-200 px-5 py-2 text-sm font-semibold">December 2022</li>
-              <li
-                v-for="post in data.posts"
-                :key="post.id"
-                class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                <!-- written at -->
-                <div class="mr-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
-                  <span class="block text-xs uppercase">wed</span>
-                  <span class="text-xl">24</span>
+            <ul
+              v-if="data.months.length > 0"
+              class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <!-- loop on months -->
+              <li v-for="month in data.months" :key="month.id" class="">
+                <div class="border-b border-gray-200 bg-slate-200 px-5 py-2 text-sm font-semibold">
+                  {{ month.month }}
                 </div>
 
-                <!-- content -->
-                <div>
-                  <span
-                    ><inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{
-                      post.title
-                    }}</inertia-link></span
-                  >
-                  <p class="">Labore voluptate non duis occaecat ...</p>
-                </div>
+                <ul class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                  <li
+                    v-for="post in month.posts"
+                    :key="post.id"
+                    class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                    <!-- written at -->
+                    <div class="mr-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
+                      <span class="block text-xs uppercase">{{ post.written_at_day }}</span>
+                      <span class="text-xl">{{ post.written_at_day_number }}</span>
+                    </div>
+
+                    <!-- content -->
+                    <div>
+                      <span
+                        ><inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{
+                          post.title
+                        }}</inertia-link></span
+                      >
+                      <p v-if="post.excerpt" class="">{{ post.excerpt }}</p>
+                    </div>
+                  </li>
+                </ul>
               </li>
             </ul>
+
+            <!-- blank state -->
+            <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <p class="p-5 text-center">
+                {{ $t('vault.journal_show_blank') }}
+              </p>
+            </div>
           </div>
 
           <!-- right -->
@@ -163,12 +242,12 @@ defineProps({
   }
 }
 
-.grid {
+.special-grid {
   grid-template-columns: 150px 1fr 200px;
 }
 
 @media (max-width: 480px) {
-  .grid {
+  .special-grid {
     grid-template-columns: 1fr;
   }
 }
