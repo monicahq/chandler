@@ -23,7 +23,7 @@ class JournalController extends Controller
 
         return Inertia::render('Vault/Journal/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalIndexViewHelper::data($vault),
+            'data' => JournalIndexViewHelper::data($vault, Auth::user()),
         ]);
     }
 
