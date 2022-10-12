@@ -64,9 +64,13 @@ defineProps({
             <!-- tags -->
             <p class="mb-2 font-medium"><span class="mr-1"> ⚡ </span> All tags</p>
             <ul>
-              <li class="flex items-center justify-between">
-                <span>Tag 1</span>
+              <li class="mb-2 flex items-center justify-between">
+                <span>Motorcycle</span>
                 <span class="text-sm text-gray-400">12</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span>Holiday</span>
+                <span class="text-sm text-gray-400">1</span>
               </li>
             </ul>
           </div>
@@ -102,12 +106,38 @@ defineProps({
           <!-- right -->
           <div class="p-3 sm:p-0">
             <!-- cta -->
-            <div class="mb-4 flex items-end">
+            <div class="mb-6 flex justify-center">
               <pretty-link
                 v-if="layoutData.vault.permission.at_least_editor"
                 :href="data.url.create"
                 :text="$t('vault.journal_show_cta')"
                 :icon="'plus'" />
+            </div>
+
+            <!-- slices of life -->
+            <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
+            <div class="mb-6">
+              <img
+                class="h-32 w-full rounded-t"
+                src="https://images.unsplash.com/photo-1665328236871-4932f62b72de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+                alt="" />
+              <div
+                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                <p class="font-semibold">Trip to Venice</p>
+                <p class="text-sm text-gray-600">Jan 23 - Mar 20</p>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <img
+                class="h-32 w-full rounded-t"
+                src="https://images.unsplash.com/photo-1665324031594-382930e876df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80"
+                alt="" />
+              <div
+                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                <p class="font-semibold">Holiday 2022</p>
+                <p class="text-sm text-gray-600">Jun 21 - Aug 12</p>
+              </div>
             </div>
           </div>
         </div>
