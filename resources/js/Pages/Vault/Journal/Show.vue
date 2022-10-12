@@ -45,28 +45,72 @@ defineProps({
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <h1 class="mb-8 text-2xl">{{ data.name }}</h1>
 
-        <!-- cta -->
-        <div class="mb-4 flex items-end">
-          <pretty-link
-            v-if="layoutData.vault.permission.at_least_editor"
-            :href="data.url.create"
-            :text="$t('vault.journal_show_cta')"
-            :icon="'plus'" />
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <!-- left -->
+          <div class="p-3 sm:p-0">
+            <!-- years -->
+            <p class="mb-2 font-medium"><span class="mr-1"> 📆 </span> Years</p>
+            <ul class="mb-8">
+              <li class="mb-2 flex items-center justify-between">
+                <span>2022</span>
+                <span class="text-sm text-gray-400">12 posts</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span>2021</span>
+                <span class="text-sm text-gray-400">43 posts</span>
+              </li>
+            </ul>
+
+            <!-- tags -->
+            <p class="mb-2 font-medium"><span class="mr-1"> ⚡ </span> All tags</p>
+            <ul>
+              <li class="flex items-center justify-between">
+                <span>Tag 1</span>
+                <span class="text-sm text-gray-400">12</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- middle -->
+          <div class="p-3 sm:p-0">
+            <!-- list of posts -->
+            <ul class="post-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <li class="border-b border-gray-200 px-5 py-2 text-sm font-semibold">December 2022</li>
+              <li
+                v-for="post in data.posts"
+                :key="post.id"
+                class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                <!-- written at -->
+                <div class="mr-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
+                  <span class="block text-xs uppercase">wed</span>
+                  <span class="text-xl">24</span>
+                </div>
+
+                <!-- content -->
+                <div>
+                  <span
+                    ><inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{
+                      post.title
+                    }}</inertia-link></span
+                  >
+                  <p class="">Labore voluptate non duis occaecat ...</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- right -->
+          <div class="p-3 sm:p-0">
+            <!-- cta -->
+            <div class="mb-4 flex items-end">
+              <pretty-link
+                v-if="layoutData.vault.permission.at_least_editor"
+                :href="data.url.create"
+                :text="$t('vault.journal_show_cta')"
+                :icon="'plus'" />
+            </div>
+          </div>
         </div>
-
-        <!-- list of posts -->
-        <ul class="post-list mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <li
-            v-for="post in data.posts"
-            :key="post.id"
-            class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-            <!-- written at -->
-            <span class="mr-2">{{ post.written_at }}</span>
-
-            <!-- content -->
-            <inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{ post.title }}</inertia-link>
-          </li>
-        </ul>
       </div>
     </main>
   </layout>
@@ -86,6 +130,16 @@ defineProps({
   li:hover:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+}
+
+.grid {
+  grid-template-columns: 150px 1fr 200px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
