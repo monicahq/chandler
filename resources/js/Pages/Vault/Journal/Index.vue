@@ -32,14 +32,14 @@ defineProps({
             <li
               v-for="journal in data.journals"
               :key="journal.id"
-              class="flex border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+              class="border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 sm:flex">
               <!-- name and date -->
-              <div class="mr-8">
+              <div class="sm:mr-8">
                 <inertia-link :href="journal.url.show" class="mb-1 block font-semibold text-blue-500 hover:underline">{{
                   journal.name
                 }}</inertia-link>
 
-                <div v-if="journal.last_updated" class="flex items-center text-sm">
+                <div v-if="journal.last_updated" class="mb-2 flex items-center text-sm sm:mb-0">
                   <span class="mr-1">
                     <svg
                       class="h-4 w-4 text-gray-500"
