@@ -78,7 +78,7 @@ defineProps({
             <!-- all months in the year -->
             <div class="mb-2 grid grid-cols-12">
               <div class="text-center">
-                <div class="mb-1">JAN</div>
+                <div class="mb-1">{{ data.months[11].month }}</div>
 
                 <div class="h-2 rounded-l-md border-l border-t border-b border-gray-200 bg-gray-100"></div>
               </div>
@@ -145,8 +145,8 @@ defineProps({
               class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <!-- loop on months -->
               <li v-for="month in data.months" :key="month.id" class="">
-                <div class="border-b border-gray-200 bg-slate-200 px-5 py-2 text-sm font-semibold">
-                  {{ month.month }}
+                <div class="border-b border-gray-200 bg-gray-100 px-5 py-2 text-sm font-semibold">
+                  {{ month.month_human_format }}
                 </div>
 
                 <ul class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">

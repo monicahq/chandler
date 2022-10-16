@@ -7,8 +7,10 @@ use App\Helpers\SQLHelper;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class JournalShowViewHelper
@@ -52,10 +54,6 @@ class JournalShowViewHelper
                 ->whereMonth('written_at', (string) $month)
                 ->get();
 
-            // if ($posts->count() === 0) {
-            //     continue;
-            // }
-
             foreach ($posts as $post) {
                 $postsCollection->push([
                     'id' => $post->id,
@@ -74,10 +72,35 @@ class JournalShowViewHelper
             }
 
             $monthsCollection->push([
-                'month' => DateHelper::formatLongMonthAndYear($post->written_at),
+                'id' => $month,
+                'month' => Str::upper(Carbon::createFromDate($year, $month, 1)->format('M')),
+                'month_human_format' => DateHelper::formatLongMonthAndYear(Carbon::createFromDate($year, $month, 1)),
                 'posts' => $postsCollection,
+                'color' => 'bg-green-',
             ]);
         }
+
+        // Now we have a collection of months. We still need to color each month
+        // according to the number of posts they have.
+        $minPostsInMonth = 0;
+        $maxPostsInMonth = 0;
+        $maxPosts = 0;
+        foreach ($monthsCollection as $month) {
+            if ($month['posts']->count() > $maxPostsInMonth) {
+                $maxPostsInMonth = $month['posts']->count();
+            }
+
+            if ($month['posts']->count() < $minPostsInMonth) {
+                $minPostsInMonth = $month['posts']->count();
+            }
+            $maxPosts = $maxPosts + $month['posts']->count();
+        }
+
+        foreach ($monthsCollection as $month) {
+            $month['color'] = 'bg-green-'.(string) round(($month['posts']->count() / $maxPostsInMonth) * 100);
+            Log::info(round(($month['posts']->count() / $maxPostsInMonth) * 100));
+        }
+        dd($monthsCollection);
 
         return $monthsCollection;
     }

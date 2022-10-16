@@ -66,7 +66,15 @@ class JournalShowViewHelperTest extends TestCase
         $collection = JournalShowViewHelper::postsInYear($journal, 2020, $user);
 
         $this->assertEquals(
-            'January 2020',
+            '12',
+            $collection->toArray()[0]['id']
+        );
+        $this->assertEquals(
+            'December 2020',
+            $collection->toArray()[0]['month_human_format']
+        );
+        $this->assertEquals(
+            'DEC',
             $collection->toArray()[0]['month']
         );
         $this->assertEquals(
