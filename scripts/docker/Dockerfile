@@ -6,6 +6,18 @@
 ### This file is based off of the `apache` variant in the above mentioned repo
 ###
 
+## Build assets
+FROM node:18 AS yarn
+
+WORKDIR /var/www/html
+COPY . ./
+RUN set -ex; \
+    \
+    yarn install; \
+    yarn run build
+
+
+## Image
 FROM php:8.1-apache
 
 # opencontainers annotations https://github.com/opencontainers/image-spec/blob/master/annotations.md
@@ -158,20 +170,12 @@ RUN install-composer.sh
 RUN set -ex; \
     \
     mkdir -p storage/framework/views; \
-    composer install --no-interaction --no-progress --no-dev; \
+    composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev; \
     composer clear-cache; \
     rm -rf .composer
 
-# Install node dependencies
-RUN set -ex; \
-    \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash -; \
-    apt-get install -y nodejs; \
-    npm install -g yarn; \
-    yarn install; \
-    yarn run build; \
-    \
-    rm -rf /var/lib/apt/lists/*
+# Install assets
+COPY --from=yarn --chown=www-data:www-data /var/www/html/public/build ./public/build
 
 COPY --chown=www-data:www-data scripts/docker/.env.production .env
 COPY scripts/docker/entrypoint.sh \
