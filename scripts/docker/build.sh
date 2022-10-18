@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -veo pipefail
+#set -eo pipefail
 
 SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && /bin/pwd -P)
 source $SELF_PATH/../realpath.sh
