@@ -6,7 +6,7 @@ SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && /bin/pwd -P)
 source $SELF_PATH/../realpath.sh
 ROOT=$(realpath $SELF_PATH/../..)
 
-version=$(git --git-dir $ROOT/.git describe --abbrev=0 --tags | sed 's/^v//')
+version=$(git --git-dir $ROOT/.git describe --abbrev=0 --tags 2>/dev/null | sed 's/^v//')
 
 commit=$1
 if [ "$commit" == "--skip-build" ]; then
