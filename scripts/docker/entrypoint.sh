@@ -2,7 +2,6 @@
 
 set -Eeo pipefail
 
-
 # set environment variables with docker secrets in /run/secrets/*
 supportedSecrets=( "DB_PASSWORD"
                    "DATABASE_URL"
@@ -43,11 +42,11 @@ if expr "$1" : "apache" 1>/dev/null || [ "$1" = "php-fpm" ]; then
     chmod -R g+rw ${STORAGE}
 
     if [ "${DB_CONNECTION:-sqlite}" == "sqlite" ]; then
-        PATH="${DB_DATABASE:-database/database.sqlite}"
-        if [ ! -f "$PATH" ]; then
-            echo "Creating sqlite database at ${PATH} — make sure it will be saved in a persistent volume."
-            touch "$PATH"
-            chown www-data:www-data "$PATH"
+        dbPath="${DB_DATABASE:-database/database.sqlite}"
+        if [ ! -f "$dbPath" ]; then
+            echo "Creating sqlite database at ${dbPath} — make sure it will be saved in a persistent volume."
+            touch "$dbPath"
+            chown www-data:www-data "$dbPath"
         fi
     fi
 
