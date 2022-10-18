@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eo pipefail
+set -veo pipefail
 
 SELF_PATH=$(cd -P -- "$(dirname -- "$0")" && /bin/pwd -P)
 source $SELF_PATH/../realpath.sh
@@ -46,5 +46,6 @@ yarn --cwd $ROOT run build
 # DOCKER BUILD
 if [ "$tag" != "--skip-build" ]; then
   docker build -t $tag -f $SELF_PATH/Dockerfile $ROOT
-  rm -f config/.{version,commit,release}
 fi
+
+rm -f config/.{version,commit,release}
