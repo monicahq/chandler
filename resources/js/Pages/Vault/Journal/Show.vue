@@ -76,70 +76,11 @@ defineProps({
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <!-- all months in the year -->
-            <div class="mb-2 grid grid-cols-12">
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[11].month }}</div>
+            <div class="mb-2 grid grid-cols-12 gap-2">
+              <div v-for="month in data.months" :key="month.id" class="text-center">
+                <div class="mb-1 text-xs">{{ month.month }}</div>
 
-                <div
-                  :class="data.months[11].color"
-                  class="h-2 rounded-l-md border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[10].month }}</div>
-
-                <div :class="data.months[10].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[9].month }}</div>
-
-                <div :class="data.months[9].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[8].month }}</div>
-
-                <div :class="data.months[8].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[7].month }}</div>
-
-                <div :class="data.months[7].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[6].month }}</div>
-
-                <div :class="data.months[6].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[5].month }}</div>
-
-                <div :class="data.months[5].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[4].month }}</div>
-
-                <div :class="data.months[4].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[3].month }}</div>
-
-                <div :class="data.months[3].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[2].month }}</div>
-
-                <div :class="data.months[2].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[1].month }}</div>
-
-                <div :class="data.months[1].color" class="h-2 border-l border-t border-b border-gray-200"></div>
-              </div>
-              <div class="text-center">
-                <div class="mb-1">{{ data.months[0].month }}</div>
-
-                <div
-                  :class="data.months[0].color"
-                  class="h-2 rounded-r-md border-r border-t border-b border-gray-200"></div>
+                <div :class="month.color" class="h-3 rounded-md border border-gray-200"></div>
               </div>
             </div>
 
@@ -148,33 +89,35 @@ defineProps({
               v-if="data.months.length > 0"
               class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <!-- loop on months -->
-              <li v-for="month in data.months" :key="month.id" class="">
-                <div class="border-b border-gray-200 bg-gray-100 px-5 py-2 text-sm font-semibold">
-                  {{ month.month_human_format }}
+              <li v-for="month in data.months" :key="month.id">
+                <div v-if="month.posts.length > 0">
+                  <div class="border-b border-gray-200 bg-gray-100 px-5 py-2 text-sm font-semibold">
+                    {{ month.month_human_format }}
+                  </div>
+
+                  <ul class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                    <li
+                      v-for="post in month.posts"
+                      :key="post.id"
+                      class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                      <!-- written at -->
+                      <div class="mr-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
+                        <span class="block text-xs uppercase">{{ post.written_at_day }}</span>
+                        <span class="text-xl">{{ post.written_at_day_number }}</span>
+                      </div>
+
+                      <!-- content -->
+                      <div>
+                        <span
+                          ><inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{
+                            post.title
+                          }}</inertia-link></span
+                        >
+                        <p v-if="post.excerpt" class="">{{ post.excerpt }}</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-
-                <ul class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-                  <li
-                    v-for="post in month.posts"
-                    :key="post.id"
-                    class="flex items-center border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                    <!-- written at -->
-                    <div class="mr-4 rounded-lg border border-gray-200 p-2 text-center leading-tight">
-                      <span class="block text-xs uppercase">{{ post.written_at_day }}</span>
-                      <span class="text-xl">{{ post.written_at_day_number }}</span>
-                    </div>
-
-                    <!-- content -->
-                    <div>
-                      <span
-                        ><inertia-link :href="post.url.show" class="text-blue-500 hover:underline">{{
-                          post.title
-                        }}</inertia-link></span
-                      >
-                      <p v-if="post.excerpt" class="">{{ post.excerpt }}</p>
-                    </div>
-                  </li>
-                </ul>
               </li>
             </ul>
 
