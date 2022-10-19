@@ -11,6 +11,11 @@ on:
 env:
   php-version: '8.1'
 
+concurrency:
+  group: Static ${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
   psalm:
     runs-on: ubuntu-latest
@@ -28,7 +33,7 @@ jobs:
       # Composer
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
         uses: actions/cache@v3
         with:
@@ -61,7 +66,7 @@ jobs:
       # Composer
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
         uses: actions/cache@v3
         with:
