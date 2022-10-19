@@ -10,7 +10,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class JournalShowViewHelper
@@ -80,9 +79,9 @@ class JournalShowViewHelper
             ]);
         }
 
-        // Now we have a collection of months. We still need to color each month
-        // according to the number of posts they have.
-        $minPostsInMonth = 0;
+        // Now we have a collection of months. We need to color each month
+        // according to the number of posts they have. The more posts, the darker
+        // the color.
         $maxPostsInMonth = 0;
         $maxPosts = 0;
         foreach ($monthsCollection as $month) {
@@ -90,17 +89,29 @@ class JournalShowViewHelper
                 $maxPostsInMonth = $month['posts']->count();
             }
 
-            if ($month['posts']->count() < $minPostsInMonth) {
-                $minPostsInMonth = $month['posts']->count();
-            }
             $maxPosts = $maxPosts + $month['posts']->count();
         }
 
         foreach ($monthsCollection as $month) {
-            $month['color'] = 'bg-green-'.(string) round(($month['posts']->count() / $maxPostsInMonth) * 100);
-            Log::info(round(($month['posts']->count() / $maxPostsInMonth) * 100));
+            if ($month['posts']->count() === 0) {
+                $color = 'bg-gray-50';
+            } else {
+                $percent = round(($month['posts']->count() / $maxPostsInMonth) * 100);
+                // now we round to the nearest 100
+                $round = $percent - ($percent % 100 - 100);
+                $color = 'bg-green-'.(string) $round;
+            }
+
+            // a really barbaric piece of code so we replace the current collection
+            // value with the proper value
+            $monthsCollection->transform(function ($item, $key) use ($month, $color) {
+                if ($item['id'] === $month['id']) {
+                    $item['color'] = $color;
+                }
+
+                return $item;
+            });
         }
-        dd($monthsCollection);
 
         return $monthsCollection;
     }

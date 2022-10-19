@@ -80,62 +80,66 @@ defineProps({
               <div class="text-center">
                 <div class="mb-1">{{ data.months[11].month }}</div>
 
-                <div class="h-2 rounded-l-md border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div
+                  :class="data.months[11].color"
+                  class="h-2 rounded-l-md border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">FEB</div>
+                <div class="mb-1">{{ data.months[10].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[10].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">MAR</div>
+                <div class="mb-1">{{ data.months[9].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[9].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">APR</div>
+                <div class="mb-1">{{ data.months[8].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[8].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">MAY</div>
+                <div class="mb-1">{{ data.months[7].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[7].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">JUN</div>
+                <div class="mb-1">{{ data.months[6].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[6].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">JUL</div>
+                <div class="mb-1">{{ data.months[5].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[5].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">AUG</div>
+                <div class="mb-1">{{ data.months[4].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[4].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">SEP</div>
+                <div class="mb-1">{{ data.months[3].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[3].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">OCT</div>
+                <div class="mb-1">{{ data.months[2].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[2].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">NOV</div>
+                <div class="mb-1">{{ data.months[1].month }}</div>
 
-                <div class="h-2 border-l border-t border-b border-gray-200 bg-gray-100"></div>
+                <div :class="data.months[1].color" class="h-2 border-l border-t border-b border-gray-200"></div>
               </div>
               <div class="text-center">
-                <div class="mb-1">DEC</div>
+                <div class="mb-1">{{ data.months[0].month }}</div>
 
-                <div class="h-2 rounded-r-md border-r border-t border-b border-gray-200 bg-gray-100"></div>
+                <div
+                  :class="data.months[0].color"
+                  class="h-2 rounded-r-md border-r border-t border-b border-gray-200"></div>
               </div>
             </div>
 
