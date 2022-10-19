@@ -77,27 +77,12 @@ class JournalShowViewHelperTest extends TestCase
             'DEC',
             $collection->toArray()[0]['month']
         );
-        $this->assertEquals(
-            [
-                0 => [
-                    'id' => $post->id,
-                    'title' => 'My Post',
-                    'excerpt' => null,
-                    'written_at_day' => 'WED',
-                    'written_at_day_number' => '01',
-                    'url' => [
-                        'show' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id.'/posts/'.$post->id,
-                    ],
-                ],
-            ],
-            $collection->toArray()[0]['posts']->toArray()
-        );
     }
 
     /** @test */
     public function it_gets_the_years_in_the_given_journal(): void
     {
-        $user = User::factory()->create();
+        User::factory()->create();
         $journal = Journal::factory()->create([
             'name' => 'My Journal',
             'description' => 'My Journal Description',
