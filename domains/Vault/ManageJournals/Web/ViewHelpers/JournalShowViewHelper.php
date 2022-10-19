@@ -23,7 +23,7 @@ class JournalShowViewHelper
             'name' => $journal->name,
             'description' => $journal->description,
             'months' => $monthsCollection,
-            'years' => self::yearsOfContentInJournal($journal, $user),
+            'years' => self::yearsOfContentInJournal($journal),
             'url' => [
                 'create' => route('post.create', [
                     'vault' => $journal->vault_id,
@@ -58,7 +58,7 @@ class JournalShowViewHelper
                     'id' => $post->id,
                     'title' => $post->title,
                     'excerpt' => $post->excerpt,
-                    'written_at_day' => Str::upper(DateHelper::formatShortDay($post->written_at, $user)),
+                    'written_at_day' => Str::upper(DateHelper::formatShortDay($post->written_at)),
                     'written_at_day_number' => DateHelper::formatDayNumber($post->written_at),
                     'url' => [
                         'show' => route('post.show', [
