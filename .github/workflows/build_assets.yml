@@ -13,6 +13,11 @@ on:
 env:
   node-version: 18
 
+concurrency:
+  group: Build assets ${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
   #############
   # Build
@@ -37,7 +42,7 @@ jobs:
           node-version: ${{ env.node-version }}
       - name: Get yarn cache directory path
         id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       - name: Cache yarn files
         uses: actions/cache@v3
         with:
