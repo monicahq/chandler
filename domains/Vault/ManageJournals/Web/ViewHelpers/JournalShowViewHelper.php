@@ -144,4 +144,13 @@ class JournalShowViewHelper
             ],
         ]);
     }
+
+    public static function tags(Journal $journal): Collection
+    {
+        $tags = Tag::where('journal_id', $journal->id)
+            ->select(DB::raw(SQLHelper::year('written_at').' as year'))
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->get();
+    }
 }
