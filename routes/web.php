@@ -93,6 +93,7 @@ use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -307,6 +308,11 @@ Route::middleware([
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
                         Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
+
+                        // tags
+                        Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
+                        Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
+                        Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
                     });
                 });
             });

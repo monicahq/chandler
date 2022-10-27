@@ -55,7 +55,7 @@ class RemoveTag extends BaseService implements ServiceInterface
             ->findOrFail($data['journal_id']);
 
         $post = Post::where('journal_id', $data['journal_id'])
-            ->findOrFail($data['tag_id']);
+            ->findOrFail($data['post_id']);
 
         $tag = Tag::where('vault_id', $data['vault_id'])
             ->findOrFail($data['tag_id']);

@@ -114,6 +114,7 @@ return [
     'journal_show_years' => 'Years',
     'journal_show_tags' => 'All tags',
     'journal_show_blank' => 'The journal lets you document your life with your own words.',
+    'journal_post_edit_tags' => 'Tags',
 
     /***************************************************************
      * VAULT SETTINGS
