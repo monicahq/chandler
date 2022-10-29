@@ -24,6 +24,7 @@ class JournalShowViewHelper
             'description' => $journal->description,
             'months' => $monthsCollection,
             'years' => self::yearsOfContentInJournal($journal),
+            'tags' => self::tags($journal),
             'url' => [
                 'create' => route('post.create', [
                     'vault' => $journal->vault_id,
@@ -147,10 +148,13 @@ class JournalShowViewHelper
 
     public static function tags(Journal $journal): Collection
     {
-        $tags = Tag::where('journal_id', $journal->id)
-            ->select(DB::raw(SQLHelper::year('written_at').' as year'))
-            ->distinct()
-            ->orderBy('year', 'desc')
+        $tags = DB::table('tags')
+            ->join('post_tag', 'tags.id', '=', 'post_tag.tag_id')
+            ->join('posts', 'post_tag.post_id', '=', 'post.journal_id')
+            ->where('journal_id', '=', $journal->id)
+            ->select('tags.id', 'tags.name')
+            ->selectRaw('count(posts.id) as count')
             ->get();
+        dd($tags);
     }
 }
