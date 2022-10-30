@@ -6,6 +6,7 @@ use App\Helpers\DateHelper;
 use App\Helpers\SQLHelper;
 use App\Models\Journal;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -148,13 +149,26 @@ class JournalShowViewHelper
 
     public static function tags(Journal $journal): Collection
     {
-        $tags = DB::table('tags')
-            ->join('post_tag', 'tags.id', '=', 'post_tag.tag_id')
-            ->join('posts', 'post_tag.post_id', '=', 'post.journal_id')
-            ->where('journal_id', '=', $journal->id)
-            ->select('tags.id', 'tags.name')
-            ->selectRaw('count(posts.id) as count')
-            ->get();
-        dd($tags);
+        // this is not optimized
+        $posts = $journal->posts->pluck('id')->toArray();
+
+        $tags = DB::table('post_tag')
+            ->whereIn('post_id', $posts)
+            ->get()
+            ->unique('tag_id')
+            ->toArray();
+
+        $tagsCollection = collect();
+        foreach ($tags as $tag) {
+            $tag = Tag::find($tag->tag_id);
+
+            $tagsCollection->push([
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'count' => $tag->posts()->get()->count(),
+            ]);
+        }
+
+        return $tagsCollection;
     }
 }
