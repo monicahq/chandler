@@ -160,12 +160,12 @@ class JournalShowViewHelper
 
         $tagsCollection = collect();
         foreach ($tags as $tag) {
-            $tag = Tag::find($tag->tag_id);
+            $tag = Tag::with('posts')->find($tag->tag_id);
 
             $tagsCollection->push([
                 'id' => $tag->id,
                 'name' => $tag->name,
-                'count' => $tag->posts()->get()->count(),
+                'count' => $tag->posts()->count(),
             ]);
         }
 
