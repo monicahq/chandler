@@ -6,7 +6,6 @@ use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Journal;
 use App\Models\Post;
-use App\Models\PostSection;
 use App\Models\User;
 use App\Models\Vault;
 use App\Vault\ManageJournals\Services\IncrementPostReadCounter;
@@ -15,12 +14,12 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class UpdatePostTest extends TestCase
+class IncrementPostReadCounterTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_updates_a_post(): void
+    public function it_increments_a_post_counter(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -117,25 +116,12 @@ class UpdatePostTest extends TestCase
 
     private function executeService(User $author, Account $account, Vault $vault, Journal $journal, Post $post): void
     {
-        PostSection::factory()->create([
-            'post_id' => $post->id,
-            'content' => 'this is a content',
-        ]);
-
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'journal_id' => $journal->id,
             'post_id' => $post->id,
-            'title' => 'title',
-            'sections' => [
-                0 => [
-                    'id' => PostSection::first()->id,
-                    'content' => 'this is a content',
-                ],
-            ],
-            'written_at' => null,
         ];
 
         $post = (new IncrementPostReadCounter())->execute($request);
@@ -143,12 +129,7 @@ class UpdatePostTest extends TestCase
         $this->assertDatabaseHas('posts', [
             'id' => $post->id,
             'journal_id' => $journal->id,
-            'title' => 'title',
-        ]);
-
-        $this->assertDatabaseHas('post_sections', [
-            'post_id' => $post->id,
-            'content' => 'this is a content',
+            'view_count' => 1,
         ]);
     }
 }
