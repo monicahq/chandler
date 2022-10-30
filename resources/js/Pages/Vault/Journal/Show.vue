@@ -60,7 +60,9 @@ defineProps({
             </ul>
 
             <!-- tags -->
-            <p class="mb-2 font-medium"><span class="mr-1"> ⚡ </span> {{ $t('vault.journal_show_tags') }}</p>
+            <p v-if="data.tags.length > 0" class="mb-2 font-medium">
+              <span class="mr-1"> ⚡ </span> {{ $t('vault.journal_show_tags') }}
+            </p>
             <ul v-if="data.tags.length > 0">
               <li v-for="tag in data.tags" :key="tag.id" class="mb-2 flex items-center justify-between">
                 <span>{{ tag.name }}</span>
