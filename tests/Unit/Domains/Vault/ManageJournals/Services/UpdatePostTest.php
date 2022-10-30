@@ -9,7 +9,7 @@ use App\Models\Post;
 use App\Models\PostSection;
 use App\Models\User;
 use App\Models\Vault;
-use App\Vault\ManageJournals\Services\IncrementPostReadCounter;
+use App\Vault\ManageJournals\Services\UpdatePost;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
@@ -43,7 +43,7 @@ class UpdatePostTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new IncrementPostReadCounter())->execute($request);
+        (new UpdatePost())->execute($request);
     }
 
     /** @test */
@@ -138,7 +138,7 @@ class UpdatePostTest extends TestCase
             'written_at' => null,
         ];
 
-        $post = (new IncrementPostReadCounter())->execute($request);
+        $post = (new UpdatePost())->execute($request);
 
         $this->assertDatabaseHas('posts', [
             'id' => $post->id,
