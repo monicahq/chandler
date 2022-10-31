@@ -10,6 +10,7 @@ use App\Vault\ManageJournals\Web\ViewHelpers\JournalCreateViewHelper;
 use App\Vault\ManageJournals\Web\ViewHelpers\JournalIndexViewHelper;
 use App\Vault\ManageJournals\Web\ViewHelpers\JournalShowViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -17,6 +18,16 @@ use Redirect;
 
 class JournalController extends Controller
 {
+    public function index(Request $request, int $vaultId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        return Inertia::render('Vault/Journal/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => JournalIndexViewHelper::data($vault, Auth::user()),
+        ]);
+    }
+
     public function create(Request $request, int $vaultId)
     {
         $vault = Vault::findOrFail($vaultId);
@@ -45,16 +56,6 @@ class JournalController extends Controller
         ]);
     }
 
-    public function index(Request $request, int $vaultId)
-    {
-        $vault = Vault::findOrFail($vaultId);
-
-        return Inertia::render('Vault/Journal/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalIndexViewHelper::data($vault),
-        ]);
-    }
-
     public function show(Request $request, int $vaultId, int $journalId)
     {
         $vault = Vault::findOrFail($vaultId);
@@ -62,7 +63,18 @@ class JournalController extends Controller
 
         return Inertia::render('Vault/Journal/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalShowViewHelper::data($journal),
+            'data' => JournalShowViewHelper::data($journal, Carbon::now()->year, Auth::user()),
+        ]);
+    }
+
+    public function year(Request $request, int $vaultId, int $journalId, int $year)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $journal = Journal::findOrFail($journalId);
+
+        return Inertia::render('Vault/Journal/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => JournalShowViewHelper::data($journal, $year, Auth::user()),
         ]);
     }
 }

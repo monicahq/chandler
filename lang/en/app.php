@@ -32,6 +32,8 @@ return [
     'breadcrumb_contact_goal' => 'Detail of a goal',
     'breadcrumb_journal_index' => 'Journals',
     'breadcrumb_journal_create' => 'Create a journal',
+    'breadcrumb_post_edit' => 'Edit a post',
+    'breadcrumb_post_create_template' => 'Choose a template',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
     'breadcrumb_settings_notification_channels' => 'Notification channels',
@@ -42,6 +44,7 @@ return [
     'breadcrumb_settings_personalize_templates' => 'Templates',
     'breadcrumb_settings_personalize_relationship_types' => 'Relationship types',
     'breadcrumb_settings_personalize_contact_information_types' => 'Contact information types',
+    'breadcrumb_settings_personalize_post_templates' => 'Post templates',
     'breadcrumb_settings_storage' => 'Storage',
 
     'notification_flash_changes_saved' => 'Changes saved',
@@ -50,6 +53,7 @@ return [
     'save' => 'Save',
     'add' => 'Add',
     'cancel' => 'Cancel',
+    'close' => 'Close',
     'delete_confirm' => 'Sure?',
     'delete' => 'Delete',
     'edit' => 'Edit',
@@ -68,10 +72,10 @@ return [
     'view_all' => 'View all',
     'previous' => 'Previous',
     'next' => 'Next',
-    'view_all' => 'View all',
     'view_map' => 'View on map',
     'view_older' => 'Load previous entries',
     'download' => 'Download',
+    'undefined' => 'Undefined',
 
     'unknown_name' => 'Unknown name',
 
@@ -118,4 +122,7 @@ return [
     'emotion_negative' => '😡 Negative',
 
     'notification_channel_email' => 'My email',
+
+    'min_read' => '{count} min read',
+    'word_count' => '{count} words',
 ];

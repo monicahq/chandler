@@ -67,6 +67,10 @@ use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotification
 use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
 use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
 use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
+use App\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateController;
+use App\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplatePositionController;
+use App\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateSectionController;
+use App\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateSectionPositionController;
 use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
 use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
@@ -88,6 +92,8 @@ use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneContro
 use App\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -95,6 +101,7 @@ use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
 use App\Vault\Search\Web\Controllers\VaultContactSearchController;
@@ -289,6 +296,24 @@ Route::middleware([
 
                 Route::prefix('{journal}')->middleware(['journal'])->group(function () {
                     Route::get('', [JournalController::class, 'show'])->name('journal.show');
+                    Route::get('years/{year}', [JournalController::class, 'year'])->name('journal.year');
+
+                    // posts
+                    Route::get('posts/create', [PostController::class, 'create'])->name('post.create');
+                    Route::get('posts/template/{template}', [PostController::class, 'store'])->name('post.store');
+
+                    // details of a post
+                    Route::prefix('posts/{post}')->middleware(['post'])->group(function () {
+                        Route::get('', [PostController::class, 'show'])->name('post.show');
+                        Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
+                        Route::put('update', [PostController::class, 'update'])->name('post.update');
+                        Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
+
+                        // tags
+                        Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
+                        Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
+                        Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
+                    });
                 });
             });
 
@@ -315,6 +340,12 @@ Route::middleware([
                 Route::post('settings/labels', [VaultSettingsLabelController::class, 'store'])->name('vault.settings.label.store');
                 Route::put('settings/labels/{label}', [VaultSettingsLabelController::class, 'update'])->name('vault.settings.label.update');
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
+
+                // tags
+                Route::get('settings/tags', [VaultSettingsTagController::class, 'index'])->name('vault.settings.tag.index');
+                Route::post('settings/tags', [VaultSettingsTagController::class, 'store'])->name('vault.settings.tag.store');
+                Route::put('settings/tags/{tag}', [VaultSettingsTagController::class, 'update'])->name('vault.settings.tag.update');
+                Route::delete('settings/tags/{tag}', [VaultSettingsTagController::class, 'destroy'])->name('vault.settings.tag.destroy');
 
                 // contact important date types
                 Route::post('settings/contactImportantDateTypes', [VaultSettingsContactImportantDateTypeController::class, 'store'])->name('vault.settings.important_date_type.store');
@@ -436,6 +467,19 @@ Route::middleware([
                 Route::put('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'update'])->name('gift_states.update');
                 Route::delete('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'destroy'])->name('gift_states.destroy');
                 Route::post('giftStates/{giftState}/position', [PersonalizeGiftStatesPositionController::class, 'update'])->name('gift_states.order.update');
+
+                // post templates
+                Route::get('postTemplates', [PersonalizePostTemplateController::class, 'index'])->name('post_templates.index');
+                Route::post('postTemplates', [PersonalizePostTemplateController::class, 'store'])->name('post_templates.store');
+                Route::put('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'update'])->name('post_templates.update');
+                Route::delete('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'destroy'])->name('post_templates.destroy');
+                Route::post('postTemplates/{postTemplate}/position', [PersonalizePostTemplatePositionController::class, 'update'])->name('post_templates.order.update');
+
+                // post template sections
+                Route::post('postTemplates/{postTemplate}/sections', [PersonalizePostTemplateSectionController::class, 'store'])->name('post_templates.section.store');
+                Route::put('postTemplates/{postTemplate}/sections/{section}', [PersonalizePostTemplateSectionController::class, 'update'])->name('post_templates.section.update');
+                Route::delete('postTemplates/{postTemplate}/sections/{section}', [PersonalizePostTemplateSectionController::class, 'destroy'])->name('post_templates.section.destroy');
+                Route::post('postTemplates/{postTemplate}/sections/{section}/position', [PersonalizePostTemplateSectionPositionController::class, 'update'])->name('post_templates.section.order.update');
 
                 // group types
                 Route::get('groupTypes', [PersonalizeGroupTypeController::class, 'index'])->name('group_types.index');
