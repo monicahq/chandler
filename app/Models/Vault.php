@@ -109,7 +109,9 @@ class Vault extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('permission');
+        return $this->belongsToMany(User::class)
+            ->withPivot('permission', 'contact_id')
+            ->withTimestamps();
     }
 
     /**
@@ -140,5 +142,25 @@ class Vault extends Model
     public function groups()
     {
         return $this->hasMany(Group::class);
+    }
+
+    /**
+     * Get the journals associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
+    }
+
+    /**
+     * Get the tags associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
     }
 }

@@ -16,12 +16,15 @@ parameters:
         - '#Access to an undefined property App\\Models\\Contact.*::\$name\.#'
         - '#Access to an undefined property App\\Models\\Contact::\$avatar\.#'
         - '#Access to an undefined property App\\Models\\Contact::\$age\.#'
+        - '#Access to an undefined property App\\Models\\Post::\$excerpt\.#'
+        - '#Access to an undefined property App\\Models\\Post::\$year\.#'
         - '#Access to an undefined property App\\Models\\Label::\$contacts_count\.#'
+        - '#Access to an undefined property App\\Models\\Tag::\$posts_count\.#'
         - '#Access to an undefined property App\\Models\\LifeEventCategory.*::\$label\.#'
         - '#Access to an undefined property App\\Models\\LifeEventType.*::\$label.#'
         - '#Access to an undefined property App\\Models\\Module::\$position\.#'
-        - "#Called [a-zA-Z0-9\\']+ on Laravel collection, but could have been retrieved as a query#"
-        - '#Parameter \$get of static method Illuminate\\Database\\Eloquent\\Casts\\Attribute<mixed,mixed>::make\(\) expects \(callable\(mixed, mixed=\): .*\)\|null, Closure\(mixed, mixed\): .* given\.#'
+        - '#Access to an undefined property App\\Models\\Post::\$title\.#'
+        - '#Access to an undefined property App\\Models\\.*::\$pivot\.#'
 
         - message: '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Note>::unsearchable\(\)\.#'
           path: */app/Models/Contact.php
@@ -29,3 +32,5 @@ parameters:
           path: */app/Models/Vault.php
         - message: '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder<App\\Models\\Contact>::unsearchable\(\)\.#'
           path: */app/Models/Vault.php
+        - message: '#Parameter \#1 \$value of function count expects array\|Countable, App\\Models\\Contact given\.#'
+          path: */domains/Vault/ManageVault/Web/ViewHelpers/VaultIndexViewHelper.php

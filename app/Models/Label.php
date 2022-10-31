@@ -12,6 +12,8 @@ class Label extends Model
 {
     use HasFactory;
 
+    protected $table = 'labels';
+
     /**
      * The attributes that are mass assignable.
      *

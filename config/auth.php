@@ -61,14 +61,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'webauthn',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -107,5 +102,19 @@ return [
     */
 
     'password_timeout' => 10800,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login providers
+    |--------------------------------------------------------------------------
+    |
+    | List of available login providers, coma separated. This uses socialite
+    | packages.
+    |
+    | Supported: azure, facebook, github, google, linkedin, saml2, twitter.
+    |
+    */
+
+    'login_providers' => explode(',', env('LOGIN_PROVIDERS', '')),
 
 ];

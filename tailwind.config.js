@@ -6,6 +6,8 @@ module.exports = {
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
+    './lang/**/*.php',
+    './lang/*.json',
   ],
 
   safelist: [
@@ -21,6 +23,9 @@ module.exports = {
     'text-slate-600',
     'bg-sky-200',
     'text-sky-600',
+    {
+      pattern: /bg-(green)-(100|200|300|400|500|600|700|800|900)/,
+    },
   ],
 
   theme: {
@@ -31,5 +36,7 @@ module.exports = {
     },
   },
 
-  plugins: [require('@tailwindcss/forms')],
+  darkMode: 'class',
+
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

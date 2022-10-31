@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class VaultIndexViewHelper
 {
@@ -37,6 +36,12 @@ class VaultIndexViewHelper
                         'vault' => $vault->id,
                     ]),
                     'contacts' => route('contact.index', [
+                        'vault' => $vault->id,
+                    ]),
+                    'journals' => route('journal.index', [
+                        'vault' => $vault->id,
+                    ]),
+                    'groups' => route('group.index', [
                         'vault' => $vault->id,
                     ]),
                     'tasks' => route('vault.tasks.index', [
@@ -69,11 +74,8 @@ class VaultIndexViewHelper
 
     public static function data(User $user): array
     {
-        $vaultIds = DB::table('user_vault')->where('user_id', $user->id)
-            ->pluck('vault_id')->toArray();
-
-        $vaults = Vault::where('account_id', $user->account->id)
-            ->whereIn('id', $vaultIds)
+        $vaults = $user->vaults()
+            ->where('account_id', $user->account_id)
             ->with('contacts')
             ->orderBy('name', 'asc')
             ->get();
@@ -111,18 +113,12 @@ class VaultIndexViewHelper
 
     private static function getContacts(Vault $vault): Collection
     {
-        $contacts = $vault->contacts()
-            ->inRandomOrder()
-            ->take(5)
-            ->get()
-            ->map(function (Contact $contact): array {
-                return [
-                    'id' => $contact->id,
-                    'name' => $contact->name,
-                    'avatar' => $contact->avatar,
-                ];
-            });
-
-        return $contacts;
+        return $vault->contacts
+            ->random(fn ($items) => min(5, count($items)))
+            ->map(fn (Contact $contact) => [
+                'id' => $contact->id,
+                'name' => $contact->name,
+                'avatar' => $contact->avatar,
+            ]);
     }
 }

@@ -29,10 +29,16 @@
                 {{ $t('settings.user_preferences') }}
               </inertia-link>
             </li>
-            <li class="flex justify-start">
+            <li class="mb-2 flex justify-start">
               <span class="mr-2">📡</span>
               <inertia-link :href="data.url.notifications.index" class="text-blue-500 hover:underline">
                 {{ $t('settings.notification_channels') }}
+              </inertia-link>
+            </li>
+            <li class="flex justify-start">
+              <span class="mr-2">🔐</span>
+              <inertia-link :href="route('profile.show')" class="text-blue-500 hover:underline">
+                Profile and security
               </inertia-link>
             </li>
           </ul>
@@ -91,8 +97,8 @@ export default {
       default: null,
     },
     data: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: null,
     },
   },
 };

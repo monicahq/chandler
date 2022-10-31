@@ -144,7 +144,7 @@ export default {
     this.localLabels = this.data.labels_in_contact;
 
     // TODO: this should not be loaded up front. we should do a async call once
-    // the edit mode is active to load all the labels from the backend instead..
+    // the edit mode is active to load all the labels from the backend instead.
     this.localLabelsInVault = this.data.labels_in_vault;
   },
 

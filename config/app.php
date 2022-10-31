@@ -125,18 +125,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Trust proxies
-    |--------------------------------------------------------------------------
-    |
-    | List of trusted proxies.
-    | Example: set it to '*' to allow any proxy.
-    |
-    */
-
-    'trust_proxies' => env('APP_TRUSTED_PROXIES'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -177,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -35,6 +35,13 @@ return [
     'show_contacts_cta' => 'Add a contact',
 
     /***************************************************************
+     * VAULT - GROUP LIST
+     **************************************************************/
+
+    'show_groups_index' => 'All groups in the vault',
+    'show_groups_blank' => 'Groups let you put your contacts together in a single place.',
+
+    /***************************************************************
      * VAULT - ADD A CONTACT
      **************************************************************/
 
@@ -93,6 +100,23 @@ return [
     'files_filter_blank' => 'There are no files yet.',
 
     /***************************************************************
+     * VAULT JOURNAL
+     **************************************************************/
+
+    'journal_create_title' => 'Create a journal',
+    'journal_create_name' => 'Name of the journal',
+    'journal_create_description' => 'Description',
+    'journal_index_title' => 'All the journals',
+    'journal_index_create' => 'Create a journal',
+    'journal_index_blank' => 'Create a journal to document your life.',
+    'journal_index_last_updated' => 'Updated on :date',
+    'journal_show_cta' => 'Create a post',
+    'journal_show_years' => 'Years',
+    'journal_show_tags' => 'All tags',
+    'journal_show_blank' => 'The journal lets you document your life with your own words.',
+    'journal_post_edit_tags' => 'Tags',
+
+    /***************************************************************
      * VAULT SETTINGS
      **************************************************************/
 
@@ -132,7 +156,18 @@ return [
     'settings_labels_create_success' => 'The label has been created',
     'settings_labels_update_success' => 'The label has been updated',
     'settings_labels_destroy_success' => 'The label has been deleted',
-    'settings_labels_destroy_confirmation' => 'Are you sure? This will remove the label from all contacts, but won’t delete the contacts themselves.',
+    'settings_labels_destroy_confirmation' => 'Are you sure? This will remove the label from all the contacts, but won’t delete the contacts themselves.',
+
+    'settings_tags_title' => 'All the tags used in the vault',
+    'settings_tags_cta' => 'Add a tag',
+    'settings_tags_create_name' => 'Name',
+    'settings_tags_create_cta' => 'Create tag',
+    'settings_tags_count' => ':count posts',
+    'settings_tags_blank' => 'Tags let you classify journal posts using a system that matters to you.',
+    'settings_tags_create_success' => 'The tag has been created',
+    'settings_tags_update_success' => 'The tag has been updated',
+    'settings_tags_destroy_success' => 'The tag has been deleted',
+    'settings_tags_destroy_confirmation' => 'Are you sure? This will remove the tag from all the posts, but won’t delete the posts themselves.',
 
     'settings_important_dates_title' => 'All the important date types used in the vault',
     'settings_important_dates_cta' => 'Add a type',

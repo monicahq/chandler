@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use LaravelWebauthn\WebauthnAuthenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,6 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use HasApiTokens;
     use TwoFactorAuthenticatable;
+    use WebauthnAuthenticatable;
 
     /**
      * Possible number format types.
@@ -102,7 +103,21 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function vaults(): BelongsToMany
     {
-        return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission');
+        return $this->belongsToMany(Vault::class)
+            ->withPivot('permission', 'contact_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the contact records associated with the user.
+     *
+     * @return BelongsToMany
+     */
+    public function contacts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class, 'contact_vault_user')
+            ->withPivot('is_favorite')
+            ->withTimestamps();
     }
 
     /**
@@ -159,20 +174,28 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getContactInVault(Vault $vault): ?Contact
     {
-        $contact = DB::table('user_vault')->where('vault_id', $vault->id)
-            ->where('user_id', $this->id)
-            ->first();
+        $entry = $this->vaults()
+                ->wherePivot('vault_id', $vault->id)
+                ->first();
 
-        if (! $contact) {
+        if ($entry === null) {
             return null;
         }
 
         try {
-            $contact = Contact::findOrFail($contact->contact_id);
+            return Contact::findOrFail($entry->pivot->contact_id);
         } catch (ModelNotFoundException) {
             return null;
         }
+    }
 
-        return $contact;
+    /**
+     * Get the user tokens for external login providers.
+     *
+     * @return HasMany
+     */
+    public function userTokens()
+    {
+        return $this->hasMany(UserToken::class);
     }
 }

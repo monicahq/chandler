@@ -5,26 +5,27 @@ namespace App\Contact\ManageContactFeed\Web\ViewHelpers;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedAddress;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedContactInformation;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGenericContactInformation;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGoal;
 use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedLabelAssigned;
+use App\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedPet;
 use App\Helpers\DateHelper;
 use App\Helpers\UserHelper;
 use App\Models\ContactFeedItem;
 use App\Models\User;
+use App\Models\Vault;
 
 class ModuleFeedViewHelper
 {
-    public static function data($items, User $user): array
+    public static function data($items, User $user, Vault $vault): array
     {
-        $itemsCollection = $items->map(function ($item) use ($user) {
-            return [
-                'id' => $item->id,
-                'action' => $item->action,
-                'author' => self::getAuthor($item),
-                'sentence' => self::getSentence($item),
-                'data' => self::getData($item, $user),
-                'created_at' => DateHelper::format($item->created_at, $user),
-            ];
-        });
+        $itemsCollection = $items->map(fn ($item) => [
+            'id' => $item->id,
+            'action' => $item->action,
+            'author' => self::getAuthor($item, $vault),
+            'sentence' => self::getSentence($item),
+            'data' => self::getData($item, $user),
+            'created_at' => DateHelper::format($item->created_at, $user),
+        ]);
 
         return [
             'items' => $itemsCollection,
@@ -36,7 +37,7 @@ class ModuleFeedViewHelper
         return trans('contact.feed_item_'.$item->action);
     }
 
-    private static function getAuthor(ContactFeedItem $item): ?array
+    private static function getAuthor(ContactFeedItem $item, Vault $vault): ?array
     {
         $author = $item->author;
         if (! $author) {
@@ -61,7 +62,7 @@ class ModuleFeedViewHelper
             ];
         }
 
-        return UserHelper::getInformationAboutContact($author, $item->contact->vault);
+        return UserHelper::getInformationAboutContact($author, $vault);
     }
 
     private static function getData(ContactFeedItem $item, User $user)
@@ -80,6 +81,16 @@ class ModuleFeedViewHelper
             case 'contact_information_updated':
             case 'contact_information_destroyed':
                 return ActionFeedContactInformation::data($item);
+
+            case 'pet_created':
+            case 'pet_updated':
+            case 'pet_destroyed':
+                return ActionFeedPet::data($item);
+
+            case 'goal_created':
+            case 'goal_updated':
+            case 'goal_destroyed':
+                return ActionFeedGoal::data($item);
 
             default:
                 return ActionFeedGenericContactInformation::data($item);

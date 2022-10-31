@@ -1,8 +1,8 @@
 <template>
-  <inertia-link :class="linkClasses" :href="href">
+  <inertia-link :class="linkClasses" :href="href" preserve-scroll>
     <!-- + icon -->
     <svg
-      v-if="icon === 'plus' && state != 'loading'"
+      v-if="icon === 'plus'"
       xmlns="http://www.w3.org/2000/svg"
       class="icon relative inline h-5 w-5"
       fill="none"
@@ -13,13 +13,28 @@
 
     <!-- check icon -->
     <svg
-      v-if="icon === 'check' && state != 'loading'"
+      v-else-if="icon === 'check'"
       xmlns="http://www.w3.org/2000/svg"
       class="icon relative inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+
+    <!-- door icon -->
+    <svg
+      v-else-if="icon === 'exit'"
+      class="icon relative mr-1 inline h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
     </svg>
 
     <span>

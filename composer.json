@@ -3,14 +3,15 @@
   "type": "project",
   "description": "Monica is a personal relationship manager.",
   "keywords": [
-    "framework",
     "laravel",
     "crm",
-    "prm"
+    "prm",
+    "social"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "require": {
     "php": "^8.1",
+    "asbiin/laravel-webauthn": "^3.2",
     "fruitcake/laravel-cors": "^2.2",
     "guzzlehttp/guzzle": "^7.4.5",
     "http-interop/http-factory-guzzle": "^1.2",
@@ -21,10 +22,17 @@
     "laravel/jetstream": "^2.10",
     "laravel/sanctum": "^2.15.1",
     "laravel/scout": "^9.4.10",
+    "laravel/socialite": "^5.5",
     "laravel/tinker": "^2.7.2",
     "meilisearch/meilisearch-php": "^0.23.3",
     "naugrim/laravel-sentry-tunnel": "^1.0",
     "sentry/sentry-laravel": "^2.13",
+    "socialiteproviders/facebook": "^4.1",
+    "socialiteproviders/github": "^4.1",
+    "socialiteproviders/google": "^4.1",
+    "socialiteproviders/linkedin": "dev-master",
+    "socialiteproviders/microsoft-azure": "^5.1",
+    "socialiteproviders/twitter": "^4.1",
     "tightenco/ziggy": "^1.4.6",
     "uploadcare/uploadcare-php": "^3.2.4",
     "vluzrmos/language-detector": "^2.3.3"
@@ -61,15 +69,7 @@
       "@php artisan package:discover --ansi"
     ],
     "post-update-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "@php artisan ide-helper:generate",
-      "@php artisan ide-helper:meta"
-    ],
-    "post-root-package-install": [
-      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-    ],
-    "post-create-project-cmd": [
-      "@php artisan key:generate --ansi"
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate"
     ]
   },
   "extra": {
@@ -82,7 +82,7 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "allow-plugins": {
-        "composer/package-versions-deprecated": true
+      "composer/package-versions-deprecated": true
     }
   },
   "minimum-stability": "dev",

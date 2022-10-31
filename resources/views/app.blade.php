@@ -8,9 +8,11 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="shortcut icon" href="/img/favicon.svg">
+
     <!-- Scripts -->
     @if (app()->bound('sentry') && config('sentry.dsn') !== null)
-    <script>
+    <script type="text/javascript">
       const SentryConfig = {!! \json_encode([
         'dsn' => config('sentry.dsn'),
         'environment' => config('sentry.environment'),
@@ -19,6 +21,14 @@
       ]); !!}
     </script>
     @endif
+
+    <script type="text/javascript">
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
 
     @routes
     @vite('resources/js/app.js')
