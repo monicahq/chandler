@@ -52,7 +52,15 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
+      - name: Setup PHP ${{ matrix.php-version }} without coverage
+        if: matrix.connection != env.coverage-with || matrix.php-version != env.default-php-version || ! matrix.coverage
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, dom, fileinfo, ${{ matrix.connection }}
+          coverage: none
       - name: Setup PHP ${{ matrix.php-version }}
+        if: matrix.connection == env.coverage-with && matrix.php-version == env.default-php-version && matrix.coverage
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
