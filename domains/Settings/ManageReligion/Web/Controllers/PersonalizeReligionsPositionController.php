@@ -3,8 +3,8 @@
 namespace App\Settings\ManageReligion\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
 use App\Settings\ManageReligion\Services\UpdateReligionPosition;
+use App\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class PersonalizeReligionsPositionController extends Controller
         $religion = (new UpdateReligionPosition())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGiftOccasionViewHelper::dto($religion),
+            'data' => PersonalizeReligionViewHelper::dto($religion),
         ], 200);
     }
 }

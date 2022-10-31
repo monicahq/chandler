@@ -3,10 +3,10 @@
 namespace App\Settings\ManageReligion\Web\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Settings\ManageGiftOccasions\Web\ViewHelpers\PersonalizeGiftOccasionViewHelper;
 use App\Settings\ManageReligion\Services\CreateReligion;
 use App\Settings\ManageReligion\Services\DestroyReligion;
 use App\Settings\ManageReligion\Services\UpdateReligion;
+use App\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
 use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class PersonalizeReligionController extends Controller
     {
         return Inertia::render('Settings/Personalize/Religions/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeGiftOccasionViewHelper::data(Auth::user()->account),
+            'data' => PersonalizeReligionViewHelper::data(Auth::user()->account),
         ]);
     }
 
@@ -35,7 +35,7 @@ class PersonalizeReligionController extends Controller
         $religion = (new CreateReligion())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGiftOccasionViewHelper::dto($religion),
+            'data' => PersonalizeReligionViewHelper::dto($religion),
         ], 201);
     }
 
@@ -51,7 +51,7 @@ class PersonalizeReligionController extends Controller
         $religion = (new UpdateReligion())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGiftOccasionViewHelper::dto($religion),
+            'data' => PersonalizeReligionViewHelper::dto($religion),
         ], 200);
     }
 
