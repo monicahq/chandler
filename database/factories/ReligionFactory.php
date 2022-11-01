@@ -25,6 +25,7 @@ class ReligionFactory extends Factory
         return [
             'account_id' => Account::factory(),
             'name' => $this->faker->name(),
+            'translation_key' => $this->faker->word(),
             'position' => 1,
         ];
     }

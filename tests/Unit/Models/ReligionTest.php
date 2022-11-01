@@ -16,4 +16,28 @@ class ReligionTest extends TestCase
         $religion = Religion::factory()->create();
         $this->assertTrue($religion->account()->exists());
     }
+
+    /** @test */
+    public function it_gets_the_religion_name()
+    {
+        $religion = Religion::factory()->create([
+            'name' => null,
+            'translation_key' => 'religion_sikhism',
+        ]);
+
+        $this->assertEquals(
+            'Sikhism',
+            $religion->name
+        );
+
+        $religion = Religion::factory()->create([
+            'name' => 'God',
+            'translation_key' => null,
+        ]);
+
+        $this->assertEquals(
+            'God',
+            $religion->name
+        );
+    }
 }

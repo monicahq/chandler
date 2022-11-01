@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domains\Settings\ManageReligion\Services;
 
+use App\Domains\Settings\ManageReligion\Services\UpdateReligion;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Religion;
 use App\Models\User;
-use App\Settings\ManageReligion\Services\UpdateReligion;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;

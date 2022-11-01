@@ -586,15 +586,15 @@ class SetupAccountTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('religions', [
-            'name' => trans('account.religion_christian'),
+            'translation_key' => 'account.religion_christian',
             'position' => 1,
         ]);
         $this->assertDatabaseHas('religions', [
-            'name' => trans('account.religion_islam'),
+            'translation_key' => 'account.religion_islam',
             'position' => 2,
         ]);
         $this->assertDatabaseHas('religions', [
-            'name' => trans('account.religion_hinduism'),
+            'translation_key' => 'account.religion_hinduism',
             'position' => 3,
         ]);
     }

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Settings\ManageReligion\Services;
+namespace App\Domains\Settings\ManageReligion\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Religion;
 use App\Models\User;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 
-class DestroyReligion extends BaseService implements ServiceInterface
+class UpdateReligion extends BaseService implements ServiceInterface
 {
+    private array $data;
+
     private Religion $religion;
 
     /**
@@ -21,8 +22,9 @@ class DestroyReligion extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'religion_id' => 'required|integer|exists:religions,id',
             'author_id' => 'required|integer|exists:users,id',
+            'religion_id' => 'required|integer|exists:religions,id',
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -40,24 +42,30 @@ class DestroyReligion extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a religion.
+     * Update a religion.
      *
      * @param  array  $data
+     * @return Religion
      */
-    public function execute(array $data): void
+    public function execute(array $data): Religion
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validate();
+        $this->update();
 
-        $this->religion = Religion::where('account_id', $data['account_id'])
-            ->findOrFail($data['religion_id']);
-
-        $this->religion->delete();
-
-        $this->repositionEverything();
+        return $this->religion;
     }
 
-    private function repositionEverything(): void
+    private function validate(): void
     {
-        DB::table('religions')->where('position', '>', $this->religion->position)->decrement('position');
+        $this->validateRules($this->data);
+        $this->religion = Religion::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['religion_id']);
+    }
+
+    private function update(): void
+    {
+        $this->religion->name = $this->data['name'];
+        $this->religion->save();
     }
 }

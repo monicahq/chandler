@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Settings\ManageReligion\Web\Controllers;
+namespace App\Domains\Settings\ManageReligion\Web\Controllers;
 
+use App\Domains\Settings\ManageReligion\Services\CreateReligion;
+use App\Domains\Settings\ManageReligion\Services\DestroyReligion;
+use App\Domains\Settings\ManageReligion\Services\UpdateReligion;
+use App\Domains\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
+use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
-use App\Settings\ManageReligion\Services\CreateReligion;
-use App\Settings\ManageReligion\Services\DestroyReligion;
-use App\Settings\ManageReligion\Services\UpdateReligion;
-use App\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
-use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

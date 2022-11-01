@@ -1614,47 +1614,47 @@ class SetupAccount implements ShouldQueue
         DB::table('religions')->insert([
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_christian'),
+                'translation_key' => 'account.religion_christian',
                 'position' => 1,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_islam'),
+                'translation_key' => 'account.religion_islam',
                 'position' => 2,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_hinduism'),
+                'translation_key' => 'account.religion_hinduism',
                 'position' => 3,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_buddhism'),
+                'translation_key' => 'account.religion_buddhism',
                 'position' => 4,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_shinto'),
+                'translation_key' => 'account.religion_shinto',
                 'position' => 5,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_taoism'),
+                'translation_key' => 'account.religion_taoism',
                 'position' => 6,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_sikhism'),
+                'translation_key' => 'account.religion_sikhism',
                 'position' => 7,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_judaism'),
+                'translation_key' => 'account.religion_judaism',
                 'position' => 8,
             ],
             [
                 'account_id' => $this->user->account_id,
-                'name' => trans('account.religion_atheism'),
+                'translation_key' => 'account.religion_atheism',
                 'position' => 9,
             ],
         ]);

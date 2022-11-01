@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('religions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('translation_key')->nullable();
             $table->integer('position')->nullable();
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');

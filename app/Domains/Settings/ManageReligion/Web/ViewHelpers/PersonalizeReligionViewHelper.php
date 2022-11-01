@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Settings\ManageReligion\Web\ViewHelpers;
+namespace App\Domains\Settings\ManageReligion\Web\ViewHelpers;
 
 use App\Models\Account;
 use App\Models\Religion;

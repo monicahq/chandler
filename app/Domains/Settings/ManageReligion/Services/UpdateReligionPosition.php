@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Settings\ManageReligion\Services;
+namespace App\Domains\Settings\ManageReligion\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Religion;

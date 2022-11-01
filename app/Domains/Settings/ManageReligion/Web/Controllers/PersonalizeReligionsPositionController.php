@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Settings\ManageReligion\Web\Controllers;
+namespace App\Domains\Settings\ManageReligion\Web\Controllers;
 
+use App\Domains\Settings\ManageReligion\Services\UpdateReligionPosition;
+use App\Domains\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
 use App\Http\Controllers\Controller;
-use App\Settings\ManageReligion\Services\UpdateReligionPosition;
-use App\Settings\ManageReligion\Web\ViewHelpers\PersonalizeReligionViewHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

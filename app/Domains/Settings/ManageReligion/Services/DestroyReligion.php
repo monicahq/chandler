@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Settings\ManageReligion\Services;
+namespace App\Domains\Settings\ManageReligion\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Religion;
 use App\Models\User;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
 
-class UpdateReligion extends BaseService implements ServiceInterface
+class DestroyReligion extends BaseService implements ServiceInterface
 {
-    private array $data;
-
     private Religion $religion;
 
     /**
@@ -22,9 +21,8 @@ class UpdateReligion extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
             'religion_id' => 'required|integer|exists:religions,id',
-            'name' => 'required|string|max:255',
+            'author_id' => 'required|integer|exists:users,id',
         ];
     }
 
@@ -42,30 +40,24 @@ class UpdateReligion extends BaseService implements ServiceInterface
     }
 
     /**
-     * Update a religion.
+     * Destroy a religion.
      *
      * @param  array  $data
-     * @return Religion
      */
-    public function execute(array $data): Religion
+    public function execute(array $data): void
     {
-        $this->data = $data;
-        $this->validate();
-        $this->update();
+        $this->validateRules($data);
 
-        return $this->religion;
+        $this->religion = Religion::where('account_id', $data['account_id'])
+            ->findOrFail($data['religion_id']);
+
+        $this->religion->delete();
+
+        $this->repositionEverything();
     }
 
-    private function validate(): void
+    private function repositionEverything(): void
     {
-        $this->validateRules($this->data);
-        $this->religion = Religion::where('account_id', $this->data['account_id'])
-            ->findOrFail($this->data['religion_id']);
-    }
-
-    private function update(): void
-    {
-        $this->religion->name = $this->data['name'];
-        $this->religion->save();
+        DB::table('religions')->where('position', '>', $this->religion->position)->decrement('position');
     }
 }
