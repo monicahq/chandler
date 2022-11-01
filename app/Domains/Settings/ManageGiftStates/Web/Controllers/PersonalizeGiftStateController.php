@@ -46,10 +46,10 @@ class PersonalizeGiftStateController extends Controller
             'label' => $request->input('label'),
         ];
 
-        $giftState = (new UpdateGiftState())->execute($data);
+        $newGiftState = (new UpdateGiftState())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeGiftStateViewHelper::dto($giftState),
+            'data' => PersonalizeGiftStateViewHelper::dto($newGiftState),
         ], 200);
     }
 
