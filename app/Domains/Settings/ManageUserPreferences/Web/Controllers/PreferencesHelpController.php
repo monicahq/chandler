@@ -5,7 +5,6 @@ namespace App\Domains\Settings\ManageUserPreferences\Web\Controllers;
 use App\Domains\Settings\ManageUserPreferences\Services\StoreHelpPreference;
 use App\Domains\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PreferencesHelpController extends Controller
