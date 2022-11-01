@@ -49,7 +49,8 @@ class Religion extends Model
                 }
 
                 return $attributes['name'];
-            }
+            },
+            set: fn ($value) => $value,
         );
     }
 }
