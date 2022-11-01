@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Domains\Vault\ManageJournals\Web\ViewHelpers\JournalShowViewHelper;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\User;
-use App\Vault\ManageJournals\Web\ViewHelpers\JournalShowViewHelper;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -28,7 +28,7 @@ class JournalShowViewHelperTest extends TestCase
         ]);
 
         $array = JournalShowViewHelper::data($journal, 2020, $user);
-        $this->assertCount(6, $array);
+        $this->assertCount(7, $array);
         $this->assertEquals(
             $journal->id,
             $array['id']
