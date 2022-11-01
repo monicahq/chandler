@@ -22,7 +22,7 @@ class ReligionTest extends TestCase
     {
         $religion = Religion::factory()->create([
             'name' => null,
-            'translation_key' => 'religion_sikhism',
+            'translation_key' => 'Sikhism',
         ]);
 
         $this->assertEquals(
