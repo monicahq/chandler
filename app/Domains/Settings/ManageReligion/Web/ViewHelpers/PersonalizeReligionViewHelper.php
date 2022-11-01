@@ -11,15 +11,11 @@ class PersonalizeReligionViewHelper
     {
         $religions = $account->religions()
             ->orderBy('position', 'asc')
-            ->get();
-
-        $collection = collect();
-        foreach ($religions as $religion) {
-            $collection->push(self::dto($religion));
-        }
+            ->get()
+            ->map(fn (Religion $religion) => self::dto($religion));
 
         return [
-            'religions' => $collection,
+            'religions' => $religions,
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
