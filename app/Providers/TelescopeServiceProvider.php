@@ -21,6 +21,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $this->hideSensitiveRequestDetails();
 
         Telescope::filter(function (IncomingEntry $entry) {
+            // @codeCoverageIgnoreStart
             if ($this->app->environment('local')) {
                 return true;
             }
@@ -30,6 +31,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
                    $entry->isFailedJob() ||
                    $entry->isScheduledTask() ||
                    $entry->hasMonitoredTag();
+            // @codeCoverageIgnoreEnd
         });
     }
 
@@ -41,7 +43,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     protected function hideSensitiveRequestDetails()
     {
         if ($this->app->environment('local')) {
-            return;
+            return; // @codeCoverageIgnore
         }
 
         Telescope::hideRequestParameters(['_token']);
