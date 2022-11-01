@@ -7,7 +7,6 @@ parameters:
         - database/factories
         - database/seeders
         - routes
-        - domains
 
     inferPrivatePropertyTypeFromConstructor: true
     level: 5
