@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PreferencesHelpController extends Controller
 {
-    public function store(Request $request)
+    public function store()
     {
         $request = [
             'account_id' => Auth::user()->account_id,
