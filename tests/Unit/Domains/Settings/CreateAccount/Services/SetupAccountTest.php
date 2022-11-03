@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Domains\Settings\CreateAccount\Services;
 
+use App\Domains\Settings\CreateAccount\Services\SetupAccount;
 use App\Models\Currency;
 use App\Models\RelationshipGroupType;
-use App\Settings\CreateAccount\Services\SetupAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Settings\CreateAccount\Services;
+namespace App\Domains\Settings\CreateAccount\Services;
 
 use App\Domains\Settings\ManageActivityTypes\Services\CreateActivityType;
 use App\Domains\Settings\ManageAddressTypes\Services\CreateAddressType;
@@ -20,6 +20,7 @@ use App\Domains\Settings\ManageTemplates\Services\AssociateModuleToTemplatePage;
 use App\Domains\Settings\ManageTemplates\Services\CreateModule;
 use App\Domains\Settings\ManageTemplates\Services\CreateTemplate;
 use App\Domains\Settings\ManageTemplates\Services\CreateTemplatePage;
+use App\Interfaces\ServiceInterface;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\LifeEventCategory;
@@ -30,6 +31,7 @@ use App\Models\RelationshipType;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Models\UserNotificationChannel;
+use App\Services\QueuableService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -1608,47 +1610,47 @@ class SetupAccount extends QueuableService implements ServiceInterface
     {
         DB::table('religions')->insert([
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_christian',
                 'position' => 1,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_islam',
                 'position' => 2,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_hinduism',
                 'position' => 3,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_buddhism',
                 'position' => 4,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_shinto',
                 'position' => 5,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_taoism',
                 'position' => 6,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_sikhism',
                 'position' => 7,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_judaism',
                 'position' => 8,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_atheism',
                 'position' => 9,
             ],
