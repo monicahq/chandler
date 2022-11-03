@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Access to paid features
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if the instance can access the paid features that
+    | are available on https://monicahq.com, for free.
+    | If set to false, the instance won't have access to the paid features.
+    |
+    */
+
+    'requires_subscription' => env('REQUIRES_SUBSCRIPTION', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | DEFAULT STORAGE LIMIT IN MB
     |--------------------------------------------------------------------------
     |
