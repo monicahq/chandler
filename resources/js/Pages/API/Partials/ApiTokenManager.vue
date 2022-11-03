@@ -85,8 +85,8 @@ const deleteApiToken = () => {
 
       <template #form>
         <!-- Token Name -->
-        <div class="col-span-6 sm:col-span-4">
-          <JetLabel for="name" :value="Name" />
+        <div class="col-span-6 mb-4 sm:col-span-4">
+          <JetLabel for="name" :value="'Token name (for your reference only)'" />
           <JetInput id="name" v-model="createApiTokenForm.name" type="text" class="mt-1 block w-full" autofocus />
           <JetInputError :message="createApiTokenForm.errors.name" class="mt-2" />
         </div>
