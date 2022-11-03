@@ -31,10 +31,12 @@ class JetstreamServiceProvider extends ServiceProvider
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
         Jetstream::inertia()->whenRendering('Profile/Show', new UserProfile());
-        Jetstream::inertia()->whenRendering('API/Index', function ($request, $data) {
+        Jetstream::inertia()->whenRendering('API/Index', function ($_request, $data) {
+            // @codeCoverageIgnoreStart
             $data['layoutData'] = VaultIndexViewHelper::layoutData();
 
             return $data;
+            // @codeCoverageIgnoreEnd
         });
     }
 
