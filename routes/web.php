@@ -74,6 +74,7 @@ use App\Domains\Settings\ManageReligion\Web\Controllers\PersonalizeReligionContr
 use App\Domains\Settings\ManageReligion\Web\Controllers\PersonalizeReligionsPositionController;
 use App\Domains\Settings\ManageSettings\Web\Controllers\SettingsController;
 use App\Domains\Settings\ManageStorage\Web\Controllers\AccountStorageController;
+use App\Domains\Settings\ManageSubscription\Web\Controllers\SubscriptionController;
 use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
 use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
 use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
@@ -569,6 +570,9 @@ Route::middleware([
 
             // storage
             Route::get('storage', [AccountStorageController::class, 'index'])->name('storage.index');
+
+            // subscription
+            Route::get('subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');

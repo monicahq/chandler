@@ -15,6 +15,8 @@ class SettingsIndexViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
+        config(['monica.requires_subscription' => true]);
+
         $user = User::factory()->create([
             'is_account_administrator' => true,
         ]);
@@ -22,6 +24,7 @@ class SettingsIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'is_account_administrator' => true,
+                'requires_subscription' => true,
                 'url' => [
                     'preferences' => [
                         'index' => env('APP_URL').'/settings/preferences',
@@ -37,6 +40,9 @@ class SettingsIndexViewHelperTest extends TestCase
                     ],
                     'storage' => [
                         'index' => env('APP_URL').'/settings/storage',
+                    ],
+                    'subscription' => [
+                        'index' => env('APP_URL').'/settings/subscription',
                     ],
                     'cancel' => [
                         'index' => env('APP_URL').'/settings/cancel',

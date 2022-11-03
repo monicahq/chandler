@@ -253,4 +253,10 @@ return [
     'religion_update_success' => 'The religion has been updated',
     'religion_delete_success' => 'The religion has been deleted',
     'religion_delete_warning' => 'Are you sure? This can not be undone.',
+
+    /***************************************************************
+     * SUBSCRIPTION MANAGEMENT
+     **************************************************************/
+
+    'subscription_title' => 'Subscription management',
 ];
