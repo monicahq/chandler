@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Settings\ManagePersonalization\Web\ViewHelpers;
 
-use App\Settings\ManagePersonalization\Web\ViewHelpers\PersonalizeIndexViewHelper;
+use App\Domains\Settings\ManagePersonalization\Web\ViewHelpers\PersonalizeIndexViewHelper;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -36,6 +36,7 @@ class PersonalizeIndexViewHelperTest extends TestCase
                     'manage_gift_states' => env('APP_URL').'/settings/personalize/giftStates',
                     'manage_group_types' => env('APP_URL').'/settings/personalize/groupTypes',
                     'manage_post_templates' => env('APP_URL').'/settings/personalize/postTemplates',
+                    'manage_religions' => env('APP_URL').'/settings/personalize/religions',
                 ],
             ],
             $array
