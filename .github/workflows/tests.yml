@@ -190,8 +190,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: |
-            -Dsonar.projectKey=monicahq_chandler
-            -Dsonar.organization=monicahq
+            -Dsonar.projectKey=fbatioja_chandler
+            -Dsonar.organization=fbatioja
             -Dsonar.sources=app,bootstrap,config,database,public,resources,routes
             -Dsonar.exclusions=bootstrap/cache/*,public/vendor/**,resources/lang/**
             -Dsonar.tests=tests
