@@ -2,10 +2,13 @@
 
 namespace App\Models\Instance;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cron extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
