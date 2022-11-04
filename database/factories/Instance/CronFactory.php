@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Instance;
 
 use App\Models\Instance\Cron;
 use Carbon\Carbon;
