@@ -114,7 +114,7 @@
             <!-- family summary -->
             <div v-if="data.group_summary_information.length > 0">
               <div class="mb-6 flex rounded border border-gray-200 p-3 dark:border-gray-700">
-                <img src="/img/group.svg" class="mr-2 h-6 w-6" />
+                <img src="/img/group.svg" alt="Group summary information" class="mr-2 h-6 w-6" />
                 <ul>
                   <li class="mr-2 inline">Part of</li>
                   <li
