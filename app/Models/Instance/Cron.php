@@ -16,7 +16,7 @@ class Cron extends Model
      */
     protected $fillable = [
         'command',
-        'last_run',
+        'last_run_at',
     ];
 
     /**
@@ -25,6 +25,6 @@ class Cron extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'last_run' => 'datetime',
+        'last_run_at' => 'datetime',
     ];
 }

@@ -119,8 +119,8 @@ class CronEvent
     {
         $now = now();
 
-        if ($this->cron->last_run !== null) {
-            $t = $this->cron->last_run;
+        if ($this->cron->last_run_at !== null) {
+            $t = $this->cron->last_run_at;
 
             if ($this->minutes !== 0) {
                 $nextRun = Carbon::create($t->year, $t->month, $t->day, $t->hour, (int) floor($t->minute / $this->minutes) * $this->minutes, 0)
@@ -135,7 +135,7 @@ class CronEvent
             }
         }
 
-        $this->cron->update(['last_run' => $now]);
+        $this->cron->update(['last_run_at' => $now]);
 
         return true;
     }
