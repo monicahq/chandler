@@ -24,7 +24,7 @@ class CronFactory extends Factory
     {
         return [
             'command' => $this->faker->word,
-            'last_run' => Carbon::now(),
+            'last_run_at' => Carbon::now(),
         ];
     }
 }

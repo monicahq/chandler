@@ -47,7 +47,7 @@ class CronEventTest extends TestCase
 
         $this->assertDatabaseHas('crons', [
             'command' => $cron->command,
-            'last_run' => '2019-05-01 07:01:00',
+            'last_run_at' => '2019-05-01 07:01:00',
         ]);
     }
 
@@ -68,7 +68,7 @@ class CronEventTest extends TestCase
 
         $this->assertDatabaseHas('crons', [
             'command' => $cron->command,
-            'last_run' => '2019-05-01 08:22:00',
+            'last_run_at' => '2019-05-01 08:22:00',
         ]);
 
         Carbon::setTestNow(Carbon::create(2019, 5, 1, 8, 59, 0));
@@ -81,7 +81,7 @@ class CronEventTest extends TestCase
 
         $this->assertDatabaseHas('crons', [
             'command' => $cron->command,
-            'last_run' => '2019-05-01 09:01:00',
+            'last_run_at' => '2019-05-01 09:01:00',
         ]);
     }
 
@@ -100,7 +100,7 @@ class CronEventTest extends TestCase
 
         $this->assertDatabaseHas('crons', [
             'command' => $cron->command,
-            'last_run' => '2019-05-02 08:10:00',
+            'last_run_at' => '2019-05-02 08:10:00',
         ]);
 
         Carbon::setTestNow(Carbon::create(2019, 5, 2, 10, 0, 0));
@@ -113,7 +113,7 @@ class CronEventTest extends TestCase
 
         $this->assertDatabaseHas('crons', [
             'command' => $cron->command,
-            'last_run' => '2019-05-03 00:00:00',
+            'last_run_at' => '2019-05-03 00:00:00',
         ]);
     }
 }
