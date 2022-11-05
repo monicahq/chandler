@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Domains\Settings\CreateAccount\Services;
 
 use App\Domains\Settings\ManageActivityTypes\Services\CreateActivityType;
 use App\Domains\Settings\ManageAddressTypes\Services\CreateAddressType;
@@ -20,6 +20,7 @@ use App\Domains\Settings\ManageTemplates\Services\AssociateModuleToTemplatePage;
 use App\Domains\Settings\ManageTemplates\Services\CreateModule;
 use App\Domains\Settings\ManageTemplates\Services\CreateTemplate;
 use App\Domains\Settings\ManageTemplates\Services\CreateTemplatePage;
+use App\Interfaces\ServiceInterface;
 use App\Models\Currency;
 use App\Models\Emotion;
 use App\Models\LifeEventCategory;
@@ -29,30 +30,13 @@ use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 use App\Models\Template;
 use App\Models\TemplatePage;
-use App\Models\User;
 use App\Models\UserNotificationChannel;
+use App\Services\QueuableService;
 use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
-class SetupAccount implements ShouldQueue
+class SetupAccount extends QueuableService implements ServiceInterface
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
-
-    /**
-     * The user instance.
-     *
-     * @var User
-     */
-    public User $user;
-
     /**
      * The template instance.
      *
@@ -61,27 +45,40 @@ class SetupAccount implements ShouldQueue
     protected $template;
 
     /**
-     * The position instance.
+     * Get the validation rules that apply to the service.
      *
-     * @var int
+     * @return array
      */
-    protected int $position = 1;
-
-    /**
-     * Create a new job instance.
-     *
-     * @param  User  $user
-     */
-    public function __construct(User $user)
+    public function rules(): array
     {
-        $this->user = $user;
+        return [
+            'account_id' => 'required|integer|exists:accounts,id',
+            'author_id' => 'required|integer|exists:users,id',
+        ];
     }
 
     /**
-     * Execute the job.
+     * Get the permissions that apply to the user calling the service.
+     *
+     * @return array
      */
-    public function handle()
+    public function permissions(): array
     {
+        return [
+            'author_must_belong_to_account',
+        ];
+    }
+
+    /**
+     * Execute the service.
+     *
+     * @param  array  $data
+     * @return void
+     */
+    public function execute(array $data): void
+    {
+        $this->validateRules($data);
+
         $this->populateCurrencies();
         $this->addNotificationChannel();
         $this->addTemplate();
@@ -103,7 +100,7 @@ class SetupAccount implements ShouldQueue
     {
         $currencies = Currency::get();
         foreach ($currencies as $currency) {
-            $this->user->account->currencies()->attach($currency->id);
+            $this->author->account->currencies()->attach($currency->id);
         }
     }
 
@@ -115,11 +112,11 @@ class SetupAccount implements ShouldQueue
     private function addNotificationChannel(): void
     {
         $channel = (new CreateUserNotificationChannel())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('app.notification_channel_email'),
             'type' => UserNotificationChannel::TYPE_EMAIL,
-            'content' => $this->user->email,
+            'content' => $this->author->email,
             'verify_email' => false,
             'preferred_time' => '09:00',
         ]);
@@ -135,8 +132,8 @@ class SetupAccount implements ShouldQueue
     private function addTemplate(): void
     {
         $request = [
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.default_template_name'),
         ];
 
@@ -153,16 +150,16 @@ class SetupAccount implements ShouldQueue
 
         // avatar
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_avatar'),
             'type' => Module::TYPE_AVATAR,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -170,16 +167,16 @@ class SetupAccount implements ShouldQueue
 
         // names
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_names'),
             'type' => Module::TYPE_CONTACT_NAMES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -187,16 +184,16 @@ class SetupAccount implements ShouldQueue
 
         // family summary
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_family_summary'),
             'type' => Module::TYPE_FAMILY_SUMMARY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -204,16 +201,16 @@ class SetupAccount implements ShouldQueue
 
         // important dates
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_important_dates'),
             'type' => Module::TYPE_IMPORTANT_DATES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -221,16 +218,16 @@ class SetupAccount implements ShouldQueue
 
         // gender/pronouns
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_gender_pronoun'),
             'type' => Module::TYPE_GENDER_PRONOUN,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -238,16 +235,16 @@ class SetupAccount implements ShouldQueue
 
         // labels
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_labels'),
             'type' => Module::TYPE_LABELS,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -255,16 +252,16 @@ class SetupAccount implements ShouldQueue
 
         // companies
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_companies'),
             'type' => Module::TYPE_COMPANY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageContact->id,
             'module_id' => $module->id,
@@ -291,22 +288,22 @@ class SetupAccount implements ShouldQueue
     private function addTemplatePageFeed(): void
     {
         $templatePageFeed = (new CreateTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_feed'),
             'can_be_deleted' => true,
         ]);
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_feed'),
             'type' => Module::TYPE_FEED,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageFeed->id,
             'module_id' => $module->id,
@@ -316,8 +313,8 @@ class SetupAccount implements ShouldQueue
     private function addTemplatePageContact(): void
     {
         $template = (new CreateTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_contact'),
             'can_be_deleted' => true,
@@ -325,15 +322,15 @@ class SetupAccount implements ShouldQueue
 
         // Addresses
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_addresses'),
             'type' => Module::TYPE_ADDRESSES,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $template->id,
             'module_id' => $module->id,
@@ -341,15 +338,15 @@ class SetupAccount implements ShouldQueue
 
         // Contact information
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_contact_information'),
             'type' => Module::TYPE_CONTACT_INFORMATION,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $template->id,
             'module_id' => $module->id,
@@ -359,8 +356,8 @@ class SetupAccount implements ShouldQueue
     private function addTemplatePageSocial(): void
     {
         $templatePageSocial = (new CreateTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_social'),
             'can_be_deleted' => true,
@@ -368,15 +365,15 @@ class SetupAccount implements ShouldQueue
 
         // Relationships
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_relationships'),
             'type' => Module::TYPE_RELATIONSHIPS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageSocial->id,
             'module_id' => $module->id,
@@ -384,15 +381,15 @@ class SetupAccount implements ShouldQueue
 
         // Pets
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_pets'),
             'type' => Module::TYPE_PETS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageSocial->id,
             'module_id' => $module->id,
@@ -400,15 +397,15 @@ class SetupAccount implements ShouldQueue
 
         // Groups
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_groups'),
             'type' => Module::TYPE_GROUPS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageSocial->id,
             'module_id' => $module->id,
@@ -418,8 +415,8 @@ class SetupAccount implements ShouldQueue
     private function addTemplatePageLifeEvents(): void
     {
         $templatePageSocial = (new CreateTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_life_events'),
             'can_be_deleted' => true,
@@ -427,15 +424,15 @@ class SetupAccount implements ShouldQueue
 
         // goals
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_goals'),
             'type' => Module::TYPE_GOALS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageSocial->id,
             'module_id' => $module->id,
@@ -445,8 +442,8 @@ class SetupAccount implements ShouldQueue
     private function addTemplatePageInformation(): void
     {
         $templatePageInformation = (new CreateTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_information'),
             'can_be_deleted' => true,
@@ -454,15 +451,15 @@ class SetupAccount implements ShouldQueue
 
         // Documents
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_documents'),
             'type' => Module::TYPE_DOCUMENTS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -470,15 +467,15 @@ class SetupAccount implements ShouldQueue
 
         // Documents
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_photos'),
             'type' => Module::TYPE_PHOTOS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -486,16 +483,16 @@ class SetupAccount implements ShouldQueue
 
         // Notes
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_notes'),
             'type' => Module::TYPE_NOTES,
             'can_be_deleted' => false,
             'pagination' => 3,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -503,15 +500,15 @@ class SetupAccount implements ShouldQueue
 
         // Reminders
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_reminders'),
             'type' => Module::TYPE_REMINDERS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -519,15 +516,15 @@ class SetupAccount implements ShouldQueue
 
         // Loans
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_loans'),
             'type' => Module::TYPE_LOANS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -535,15 +532,15 @@ class SetupAccount implements ShouldQueue
 
         // Tasks
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_tasks'),
             'type' => Module::TYPE_TASKS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -551,15 +548,15 @@ class SetupAccount implements ShouldQueue
 
         // Calls
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_calls'),
             'type' => Module::TYPE_CALLS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,
@@ -598,8 +595,8 @@ class SetupAccount implements ShouldQueue
 
         foreach ($types as $type) {
             $request = [
-                'account_id' => $this->user->account_id,
-                'author_id' => $this->user->id,
+                'account_id' => $this->author->account_id,
+                'author_id' => $this->author->id,
                 'name' => $type,
             ];
 
@@ -624,8 +621,8 @@ class SetupAccount implements ShouldQueue
 
         foreach ($pronouns as $pronoun) {
             $request = [
-                'account_id' => $this->user->account_id,
-                'author_id' => $this->user->id,
+                'account_id' => $this->author->account_id,
+                'author_id' => $this->author->id,
                 'name' => $pronoun,
             ];
 
@@ -639,50 +636,50 @@ class SetupAccount implements ShouldQueue
     private function addGroupTypes(): void
     {
         $groupType = (new CreateGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.group_type_family'),
         ]);
         (new CreateGroupTypeRole())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
             'label' => trans('account.group_type_family_role_parent'),
         ]);
         (new CreateGroupTypeRole())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
             'label' => trans('account.group_type_family_role_child'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.group_type_couple_without_children'),
         ]);
         (new CreateGroupTypeRole())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
             'label' => trans('account.group_type_couple_role'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.group_type_club'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.group_type_association'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.group_type_roomates'),
         ]);
     }
@@ -691,8 +688,8 @@ class SetupAccount implements ShouldQueue
     {
         // Love type
         $group = (new CreateRelationshipGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.relationship_type_love'),
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_LOVE,
@@ -745,8 +742,8 @@ class SetupAccount implements ShouldQueue
 
         // Family type
         $group = (new CreateRelationshipGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.relationship_type_family'),
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_FAMILY,
@@ -799,8 +796,8 @@ class SetupAccount implements ShouldQueue
 
         // Friend
         $group = (new CreateRelationshipGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.relationship_type_friend_title'),
             'can_be_deleted' => true,
         ]);
@@ -824,8 +821,8 @@ class SetupAccount implements ShouldQueue
 
         // Work
         $group = (new CreateRelationshipGroupType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.relationship_type_work'),
             'can_be_deleted' => true,
         ]);
@@ -866,8 +863,8 @@ class SetupAccount implements ShouldQueue
 
         foreach ($addresses as $address) {
             (new CreateAddressType())->execute([
-                'account_id' => $this->user->account_id,
-                'author_id' => $this->user->id,
+                'account_id' => $this->author->account_id,
+                'author_id' => $this->author->id,
                 'name' => $address,
             ]);
         }
@@ -876,62 +873,62 @@ class SetupAccount implements ShouldQueue
     private function addCallReasonTypes(): void
     {
         $type = (new CreateCallReasonType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.default_call_reason_types_personal'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_advice'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_say_hello'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_need_anything'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_respect'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_story'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_personal_love'),
         ]);
 
         // business
         $type = (new CreateCallReasonType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.default_call_reason_types_business'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_business_purchases'),
         ]);
         (new CreateCallReason())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
             'label' => trans('account.default_call_reason_business_partnership'),
         ]);
@@ -940,8 +937,8 @@ class SetupAccount implements ShouldQueue
     private function addContactInformation(): void
     {
         $information = (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_email'),
             'protocol' => 'mailto:',
         ]);
@@ -950,8 +947,8 @@ class SetupAccount implements ShouldQueue
         $information->save();
 
         $information = (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_phone'),
             'protocol' => 'tel:',
         ]);
@@ -960,38 +957,38 @@ class SetupAccount implements ShouldQueue
         $information->save();
 
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_facebook'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_twitter'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_whatsapp'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_telegram'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_hangouts'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_linkedin'),
         ]);
         (new CreateContactInformationType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('account.contact_information_type_instagram'),
         ]);
     }
@@ -1014,8 +1011,8 @@ class SetupAccount implements ShouldQueue
 
         foreach ($categories as $category) {
             (new CreatePetCategory())->execute([
-                'account_id' => $this->user->account_id,
-                'author_id' => $this->user->id,
+                'account_id' => $this->author->account_id,
+                'author_id' => $this->author->id,
                 'name' => $category,
             ]);
         }
@@ -1025,17 +1022,17 @@ class SetupAccount implements ShouldQueue
     {
         DB::table('emotions')->insert([
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'name' => trans('app.emotion_negative'),
                 'type' => Emotion::TYPE_NEGATIVE,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'name' => trans('app.emotion_neutral'),
                 'type' => Emotion::TYPE_NEUTRAL,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'name' => trans('app.emotion_positive'),
                 'type' => Emotion::TYPE_POSITIVE,
             ],
@@ -1045,8 +1042,8 @@ class SetupAccount implements ShouldQueue
     private function addActivityTypes(): void
     {
         $type = (new CreateActivityType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.activity_type_category_simple_activities'),
         ]);
 
@@ -1066,8 +1063,8 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $type = (new CreateActivityType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.activity_type_category_sport'),
         ]);
 
@@ -1079,8 +1076,8 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $type = (new CreateActivityType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.activity_type_category_food'),
         ]);
 
@@ -1108,8 +1105,8 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $type = (new CreateActivityType())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('account.activity_type_category_cultural_activities'),
         ]);
 
@@ -1136,7 +1133,7 @@ class SetupAccount implements ShouldQueue
     private function addLifeEventCategories(): void
     {
         $categoryId = DB::table('life_event_categories')->insertGetId([
-            'account_id' => $this->user->account_id,
+            'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_travel_experiences',
             'can_be_deleted' => false,
             'type' => LifeEventCategory::TYPE_TRAVEL_EXPERIENCES,
@@ -1230,7 +1227,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $categoryId = DB::table('life_event_categories')->insertGetId([
-            'account_id' => $this->user->account_id,
+            'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_work_education',
             'can_be_deleted' => false,
             'type' => LifeEventCategory::TYPE_WORK_EDUCATION,
@@ -1289,7 +1286,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $categoryId = DB::table('life_event_categories')->insertGetId([
-            'account_id' => $this->user->account_id,
+            'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_family_relationships',
             'can_be_deleted' => false,
             'type' => LifeEventCategory::TYPE_FAMILY_RELATIONSHIPS,
@@ -1376,7 +1373,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $categoryId = DB::table('life_event_categories')->insertGetId([
-            'account_id' => $this->user->account_id,
+            'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_home_living',
             'can_be_deleted' => false,
             'type' => LifeEventCategory::TYPE_HOME_LIVING,
@@ -1428,7 +1425,7 @@ class SetupAccount implements ShouldQueue
         ]);
 
         $categoryId = DB::table('life_event_categories')->insertGetId([
-            'account_id' => $this->user->account_id,
+            'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_health_wellness',
             'can_be_deleted' => false,
             'type' => LifeEventCategory::TYPE_HEALTH_WELLNESS,
@@ -1505,27 +1502,27 @@ class SetupAccount implements ShouldQueue
     {
         DB::table('gift_occasions')->insert([
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_occasion_birthday'),
                 'position' => 1,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_occasion_anniversary'),
                 'position' => 2,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_occasion_christmas'),
                 'position' => 3,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_occasion_just_because'),
                 'position' => 4,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_occasion_wedding'),
                 'position' => 5,
             ],
@@ -1536,27 +1533,27 @@ class SetupAccount implements ShouldQueue
     {
         DB::table('gift_states')->insert([
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_state_idea'),
                 'position' => 1,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_state_searched'),
                 'position' => 2,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_state_found'),
                 'position' => 3,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_state_bought'),
                 'position' => 4,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'label' => trans('account.gift_state_offered'),
                 'position' => 5,
             ],
@@ -1567,15 +1564,15 @@ class SetupAccount implements ShouldQueue
     {
         // default template
         $postTemplate = (new CreatePostTemplate())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('settings.personalize_post_templates_default_template'),
             'can_be_deleted' => false,
         ]);
 
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section'),
             'can_be_deleted' => false,
@@ -1583,43 +1580,43 @@ class SetupAccount implements ShouldQueue
 
         // inspirational template
         $postTemplate = (new CreatePostTemplate())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'label' => trans('settings.personalize_post_templates_default_template_inspirational'),
             'can_be_deleted' => true,
         ]);
 
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section_grateful'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section_daily_affirmation'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section_better'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section_day'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
             'label' => trans('settings.personalize_post_templates_default_template_section_three_things'),
             'can_be_deleted' => true,
@@ -1630,47 +1627,47 @@ class SetupAccount implements ShouldQueue
     {
         DB::table('religions')->insert([
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_christian',
                 'position' => 1,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_islam',
                 'position' => 2,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_hinduism',
                 'position' => 3,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_buddhism',
                 'position' => 4,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_shinto',
                 'position' => 5,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_taoism',
                 'position' => 6,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_sikhism',
                 'position' => 7,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_judaism',
                 'position' => 8,
             ],
             [
-                'account_id' => $this->user->account_id,
+                'account_id' => $this->author->account_id,
                 'translation_key' => 'account.religion_atheism',
                 'position' => 9,
             ],
