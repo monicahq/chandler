@@ -27,12 +27,11 @@ class ModuleReligionViewHelper
 
     public static function list(Contact $contact): Collection
     {
-        $collection = $contact->vault->account->religions()->orderBy('position', 'asc')
-            ->get()->map(function ($religion) use ($contact) {
-                return self::dto($religion, $contact);
-            });
-
-        return $collection;
+        return $contact->vault->account
+            ->religions()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(fn (Religion $religion) => self::dto($religion, $contact));
     }
 
     public static function dto(Religion $religion, Contact $contact): array
