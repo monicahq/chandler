@@ -4,6 +4,7 @@ namespace App\Domains\Settings\ManageTemplates\Web\Controllers;
 
 use App\Domains\Settings\ManageTemplates\Services\CreateTemplate;
 use App\Domains\Settings\ManageTemplates\Services\DestroyTemplate;
+use App\Domains\Settings\ManageTemplates\Services\ExportTemplate;
 use App\Domains\Settings\ManageTemplates\Services\UpdateTemplate;
 use App\Domains\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateIndexViewHelper;
 use App\Domains\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplateShowViewHelper;
@@ -19,6 +20,14 @@ class PersonalizeTemplatesController extends Controller
 {
     public function index()
     {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::id(),
+            'template_id' => 1,
+        ];
+
+        dd((new ExportTemplate())->execute($data));
+
         return Inertia::render('Settings/Personalize/Templates/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData(),
             'data' => PersonalizeTemplateIndexViewHelper::data(Auth::user()->account),

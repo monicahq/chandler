@@ -134,6 +134,11 @@
                   @click="showUpdateTemplateModal(template)">
                   {{ $t('app.rename') }}
                 </li>
+                <li
+                  class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+                  @click="showUpdateTemplateModal(template)">
+                  {{ $t('app.export') }}
+                </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(template)">
                   {{ $t('app.delete') }}
                 </li>

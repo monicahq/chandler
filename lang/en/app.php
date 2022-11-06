@@ -60,6 +60,7 @@ return [
     'edit' => 'Edit',
     'view' => 'View',
     'rename' => 'Rename',
+    'export' => 'Export',
     'search' => 'Search',
     'choose' => 'Choose',
     'remove' => 'Remove',
