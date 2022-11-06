@@ -74,7 +74,12 @@ class SetupDummyAccount extends Command
 
     private function start(): void
     {
-        if (! $this->confirmToProceed('Are you sure you want to proceed? This will delete ALL data in your environment.', true)) {
+        if (
+            !$this->confirmToProceed(
+                'Are you sure you want to proceed? This will delete ALL data in your environment.',
+                true
+            )
+        ) {
             exit;
         }
 
@@ -95,23 +100,24 @@ class SetupDummyAccount extends Command
 
     private function stop(): void
     {
+        $separator = '-----------------------------';
         $this->line('');
-        $this->line('-----------------------------');
+        $this->line($separator);
         $this->line('|');
         $this->line('| Welcome to Monica');
         $this->line('|');
-        $this->line('-----------------------------');
+        $this->line($separator);
         $this->info('| You can now sign in with one of these two accounts:');
         $this->line('| An account with a lot of data:');
         $this->line('| username: admin@admin.com');
         $this->line('| password: admin123');
-        $this->line('|------------------------–––-');
+        $this->line($separator);
         $this->line('|A blank account:');
         $this->line('| username: blank@blank.com');
         $this->line('| password: blank123');
         $this->line('|------------------------–––-');
         $this->line('| URL:      '.config('app.url'));
-        $this->line('-----------------------------');
+        $this->line($separator);
 
         $this->info('Setup is done. Have fun.');
     }
@@ -288,7 +294,8 @@ class SetupDummyAccount extends Command
                         'author_id' => $this->firstUser->id,
                         'vault_id' => $vault->id,
                         'journal_id' => $journal->id,
-                        'post_template_id' => PostTemplate::where('account_id', $this->firstUser->account_id)->inRandomOrder()->first()->id,
+                        'post_template_id' => PostTemplate::where('account_id', $this->firstUser->account_id)
+                            ->inRandomOrder()->first()->id,
                         'title' => $this->faker->sentence(),
                         'published' => false,
                         'written_at' => $this->faker->dateTimeThisYear()->format('Y-m-d'),
