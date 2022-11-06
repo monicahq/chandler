@@ -5,13 +5,10 @@ on:
     branches:
       - main
 
-env:
-  php-version: '8.1'
-  node-version: 18
-
 concurrency:
   group: Docker ${{ github.ref }}
   cancel-in-progress: true
+
 
 jobs:
   docker-run:
@@ -44,8 +41,8 @@ jobs:
           username: ${{ secrets.CR_USER }}
           password: ${{ secrets.CR_PAT }}
 
-    # Install
-      - name: Install
+    # Configure
+      - name: Configure variables
         run: scripts/docker/build.sh --skip-build $GITHUB_SHA
 
     # Build docker
@@ -55,6 +52,7 @@ jobs:
         with:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
+          cache-from: type=registry,ref=ghcr.io/monicahq/monica-next:main
           labels: ${{ steps.docker_meta.outputs.labels }}
           file: scripts/docker/Dockerfile
           context: .
