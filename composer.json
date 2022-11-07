@@ -34,6 +34,7 @@
     "socialiteproviders/linkedin": "dev-master",
     "socialiteproviders/microsoft-azure": "^5.1",
     "socialiteproviders/twitter": "^4.1",
+    "spatie/laravel-route-attributes": "^1.15",
     "tightenco/ziggy": "^1.4.6",
     "uploadcare/uploadcare-php": "^3.2.4",
     "vluzrmos/language-detector": "^2.3.3"
