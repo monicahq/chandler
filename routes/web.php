@@ -107,7 +107,6 @@ use App\Domains\Vault\Search\Web\Controllers\VaultContactSearchController;
 use App\Domains\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
 use App\Domains\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
-use App\Http\Controllers\Auth\SocialiteCallbackController;
 use App\Http\Controllers\Profile\UserTokenController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -118,12 +117,6 @@ Route::get('/', function () {
         ? redirect()->intended(RouteServiceProvider::HOME)
         : redirect()->route('login');
 })->name('home');
-
-Route::middleware(['throttle:oauth2-socialite'])->group(function () {
-    Route::get('auth/{driver}', [SocialiteCallbackController::class, 'login'])->name('login.provider');
-    Route::get('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
-    Route::post('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
-});
 
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');

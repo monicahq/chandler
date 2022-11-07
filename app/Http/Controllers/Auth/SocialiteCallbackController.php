@@ -13,7 +13,13 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Socialite\Facades\Socialite;
+use Spatie\RouteAttributes\Attributes\Get;
+use Spatie\RouteAttributes\Attributes\Middleware;
+use Spatie\RouteAttributes\Attributes\Post;
+use Spatie\RouteAttributes\Attributes\Prefix;
 
+#[Prefix('auth')]
+#[Middleware('throttle:oauth2-socialite')]
 class SocialiteCallbackController extends Controller
 {
     /**
@@ -23,6 +29,7 @@ class SocialiteCallbackController extends Controller
      * @param  string  $driver
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Get('{driver}', name: 'login.provider')]
     public function login(Request $request, string $driver)
     {
         $this->checkProvider($driver);
@@ -46,6 +53,8 @@ class SocialiteCallbackController extends Controller
      * @param  string  $driver
      * @return \Illuminate\Http\RedirectResponse
      */
+    #[Get('{driver}/callback')]
+    #[Post('{driver}/callback')]
     public function callback(Request $request, string $driver): RedirectResponse
     {
         try {

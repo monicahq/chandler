@@ -13,8 +13,13 @@ return [
      * Optionally, you can specify group configuration by using key/values
      */
     'directories' => [
-        app_path('Http/Controllers'),
-        app_path('Domains'),
+        app_path('Http/Controllers') => [
+            'middleware' => 'web',
+        ],
+
+        app_path('Domains') => [
+            'middleware' => 'web',
+        ],
 
         app_path('Http/Controllers/Api') => [
             'prefix' => 'api',
@@ -26,7 +31,5 @@ return [
      * This middleware will be applied to all routes.
      */
     'middleware' => [
-        \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'auth:sanctum',
     ],
 ];
