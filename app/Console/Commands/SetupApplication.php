@@ -43,6 +43,7 @@ class SetupApplication extends Command
             $this->migrate();
             $this->cacheConfig();
             $this->scout();
+            $this->l5swagger();
         }
     }
 
@@ -138,6 +139,16 @@ class SetupApplication extends Command
 
             $this->info('✓ Indexes created');
         }
+    }
+
+    /**
+     * Configure swagger.
+     *
+     * @return void
+     */
+    protected function l5swagger(): void
+    {
+        $this->artisan('✓ Generating swagger documentation', 'l5-swagger:generate');
     }
 
     private function artisan(string $message, string $command, array $options = [])
