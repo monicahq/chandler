@@ -40,6 +40,9 @@ class ContactModuleCallController extends Controller
                 $whoInitiated = 'me';
                 $answered = true;
                 break;
+
+            default:
+                break;
         }
 
         $data = [
