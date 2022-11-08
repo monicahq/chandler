@@ -81,6 +81,11 @@
             :data="feedItem.data"
             :contact-view-mode="contactViewMode" />
 
+          <generic-action
+            v-if="feedItem.action === 'religion_updated'"
+            :data="feedItem.data"
+            :contact-view-mode="contactViewMode" />
+
           <label-assigned
             v-if="feedItem.action === 'label_assigned'"
             :data="feedItem.data"
@@ -142,6 +147,7 @@
     <!-- blank state -->
     <div v-if="feed.length == 0 && !loading">
       <p class="p-5 text-center">There is no activity yet.</p>
+      <img src="/img/dashboard_blank_activity_feed.svg" class="mx-auto h-96 w-96" />
     </div>
 
     <!-- loading mode -->
