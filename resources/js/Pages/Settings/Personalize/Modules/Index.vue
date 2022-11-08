@@ -133,12 +133,6 @@
 
             <!-- content of the module -->
             <div class="border-b border-gray-200 bg-gray-100 p-5 dark:border-gray-700">
-              <div
-                class="mb-2 rounded border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
-                @click="addRow()">
-                + Add row
-              </div>
-
               <div v-for="row in form.rows" :key="row.realId" class="mb-2">
                 <div class="rounded border border-gray-300 bg-white dark:bg-gray-900">
                   <!-- row options -->
@@ -228,7 +222,9 @@
                           </div>
                         </div>
 
-                        <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
+                        <div
+                          class="inline flex cursor-pointer items-center text-red-500 hover:text-red-900"
+                          @click="destroyField(row, field)">
                           <svg
                             class="mr-1 inline h-3 w-3"
                             viewBox="0 0 24 24"
@@ -249,17 +245,73 @@
 
                       <!-- choose a field type -->
                       <div class="px-5 py-5">
-                        <p>Choose a field type:</p>
+                        <p class="text-sm">Choose a field type:</p>
                         <ul>
-                          <li>
-                            <span>Add a text field</span>
-                          </li>
-                          <li>Add a text area</li>
+                          <li @click="addFieldToRight(row)">Text field</li>
+                          <li>Text area</li>
+                          <li>Dropdown</li>
                         </ul>
+                      </div>
+
+                      <!-- case of text input  -->
+                      <div class="p-5" v-if="field.type == 'input'">
+                        <text-input
+                          class="mb-4"
+                          v-model="field.name"
+                          :type="'text'"
+                          :autofocus="true"
+                          :label="'Name of the input field'"
+                          :input-class="'block w-full'"
+                          :required="true"
+                          :autocomplete="false"
+                          :maxlength="255" />
+
+                        <text-input
+                          class="mb-4"
+                          v-model="field.placeholder"
+                          :type="'text'"
+                          :autofocus="true"
+                          :label="'Placeholder value'"
+                          :input-class="'block w-full'"
+                          :help="'This text will be displayed when the field is empty.'"
+                          :required="true"
+                          :autocomplete="false"
+                          :maxlength="255" />
+
+                        <text-input
+                          v-model="field.help"
+                          :type="'text'"
+                          :autofocus="true"
+                          :label="'Help text'"
+                          :help="'This text will be displayed beneath the input field.'"
+                          :input-class="'block w-full'"
+                          :required="true"
+                          :autocomplete="false"
+                          :maxlength="255" />
+
+                        <div class="flex items-center">
+                          <input
+                            v-model="field.required"
+                            :id="'required' + row.position + field.position"
+                            :name="'required' + row.position + field.position"
+                            type="checkbox"
+                            class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+                          <label
+                            :for="'required' + row.position + field.position"
+                            class="ml-2 cursor-pointer text-sm text-gray-900 dark:text-gray-100">
+                            This field is mandatory for the form to be submitted
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div
+                class="mb-2 cursor-pointer rounded border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
+                @click="addRow()">
+                + Add row
               </div>
             </div>
 
@@ -313,9 +365,7 @@ export default {
   data() {
     return {
       addMode: false,
-      relativeId: 0,
       localModules: [],
-      realId: 0, // real id doesn't get updated when array is reordered. this is used to uniquely identify the item in the array.
       form: {
         search: '',
         name: '',
@@ -327,16 +377,14 @@ export default {
 
   methods: {
     addRow() {
-      this.relativeId = this.relativeId + 1;
-      this.realId = this.realId + 1;
+      // position starts at 1
+      var position = this.form.rows.length + 1;
 
       this.form.rows.push({
-        id: this.relativeId,
-        realId: this.realId,
+        position: position,
         fields: [
           {
             id: 1,
-            name: 'sdsfa',
           },
         ],
       });
@@ -348,13 +396,39 @@ export default {
     },
 
     addFieldToRight(row) {
-      var id = this.form.rows.findIndex((x) => x.id === row.id);
-      var highestId = this.form.rows[id].fields.reduce((a, b) => (Number(a.id) > Number(b.id) ? a : b));
+      var id = this.form.rows.findIndex((x) => x.position === row.position);
+      //var highestFieldId = this.form.rows[id].fields.reduce((a, b) => (Number(a.id) > Number(b.id) ? a : b));
+      var highestPosition = this.form.rows[id].fields.length;
 
-      this.form.rows[id].fields.push({
-        id: highestId + 1,
+      this.form.rows[id].fields.push(this.addInput(highestPosition));
+    },
+
+    destroyField(row, field) {
+      var rowId = this.form.rows.findIndex((x) => x.position === row.position);
+
+      if (this.form.rows[rowId].fields.length == 0) {
+        this.destroyRow(row);
+      } else {
+        var fieldId = this.form.rows[rowId].fields.findIndex((x) => x.position === field.position);
+        this.form.rows[rowId].fields.splice(fieldId, 1);
+      }
+    },
+
+    addInput(row, field, position) {
+      var id = this.form.rows.findIndex((x) => x.position === row.position);
+      //var highestFieldId = this.form.rows[id].fields.reduce((a, b) => (Number(a.id) > Number(b.id) ? a : b));
+      var highestPosition = this.form.rows[id].fields.length;
+
+      this.form.rows[id].fields.push(this.addInput(highestPosition));
+
+      return {
+        position: position + 1,
+        type: 'input',
         name: 'sdkfjl',
-      });
+        placeholder: 'sdkfjl',
+        help: 'sdkfjl',
+        required: false,
+      };
     },
   },
 };
