@@ -15,8 +15,8 @@ use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Socialite\Facades\Socialite;
 use Spatie\RouteAttributes\Attributes\Get;
 use Spatie\RouteAttributes\Attributes\Middleware;
-use Spatie\RouteAttributes\Attributes\Post;
 use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\Route;
 
 #[Prefix('auth')]
 #[Middleware('throttle:oauth2-socialite')]
@@ -53,8 +53,7 @@ class SocialiteCallbackController extends Controller
      * @param  string  $driver
      * @return \Illuminate\Http\RedirectResponse
      */
-    #[Get('{driver}/callback')]
-    #[Post('{driver}/callback')]
+    #[Route(['get', 'post'], '{driver}/callback')]
     public function callback(Request $request, string $driver): RedirectResponse
     {
         try {
