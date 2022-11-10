@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domains\Settings\ManageUsers\Services;
+namespace Tests\Unit\Domains\Settings\ManageUsers\Api;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Sanctum\Sanctum;
