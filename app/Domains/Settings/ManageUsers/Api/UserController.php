@@ -4,9 +4,7 @@ namespace App\Domains\Settings\ManageUsers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\RouteAttributes\Attributes\Get;
-use Spatie\RouteAttributes\Attributes\Middleware;
-use Spatie\RouteAttributes\Attributes\Prefix;
+use Spatie\RouteAttributes\Attributes\{Get, Middleware, Prefix};
 
 #[Middleware('api')]
 #[Prefix('api')]

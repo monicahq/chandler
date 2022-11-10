@@ -13,10 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Socialite\Facades\Socialite;
-use Spatie\RouteAttributes\Attributes\Get;
-use Spatie\RouteAttributes\Attributes\Middleware;
-use Spatie\RouteAttributes\Attributes\Prefix;
-use Spatie\RouteAttributes\Attributes\Route;
+use Spatie\RouteAttributes\Attributes\{Get, Middleware, Prefix, Route};
 
 #[Prefix('auth')]
 #[Middleware('throttle:oauth2-socialite')]
