@@ -131,24 +131,7 @@ class SetupApplication extends Command
      */
     protected function documentation(): void
     {
-        $this->info('✓ Generate api documentation');
-
-        putenv('DB_CONNECTION=docs');
-        putenv('APP_ENV=testing');
-        putenv('CACHE_DRIVER=array');
-        putenv('QUEUE_CONNECTION=sync');
-        putenv('SESSION_DRIVER=array');
-        putenv('MAIL_MAILER=log');
-        putenv('SCOUT_DRIVER=null');
-
-        exec('php artisan scribe:generate --verbose --force', $output);
-
-        if ($this->getOutput()->getOutput()->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            foreach ($output as $line) {
-                $this->line($line);
-            }
-            $this->line('');
-        }
+        $this->artisan('✓ Generate api documentation', 'scribe:setup', ['--force' => true]);
     }
 
     private function artisan(string $message, string $command, array $options = [])

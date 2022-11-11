@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * /api/user
+     * GET api/user
      *
      * Get the authenticated User.
      *

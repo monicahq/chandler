@@ -40,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
         Webauthn::updateViewResponseUsing(WebauthnUpdateResponse::class);
         Webauthn::destroyViewResponseUsing(WebauthnDestroyResponse::class);
 
-        Scribe::beforeResponseCall(function (Request $request) {
+        Scribe::beforeResponseCall(function () {
+            // @codeCoverageIgnoreStart
             Carbon::setTestNow(Carbon::create(2020, 1, 1, 0, 0, 0, 'UTC'));
             Artisan::call('monica:dummy', [
                 '--migrate' => true,
@@ -48,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
             $user = User::first();
             Sanctum::actingAs($user, ['*']);
+            // @codeCoverageIgnoreEnd
         });
     }
 }

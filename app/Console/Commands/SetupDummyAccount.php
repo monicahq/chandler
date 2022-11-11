@@ -281,16 +281,16 @@ class SetupDummyAccount extends Command
                 ]);
 
                 for ($j = 0; $j < rand(1, 20); $j++) {
-                    // (new CreatePost())->execute([
-                    //     'account_id' => $this->firstUser->account_id,
-                    //     'author_id' => $this->firstUser->id,
-                    //     'vault_id' => $vault->id,
-                    //     'journal_id' => $journal->id,
-                    //     'post_template_id' => PostTemplate::where('account_id', $this->firstUser->account_id)->inRandomOrder()->first()->id,
-                    //     'title' => $this->faker->sentence(),
-                    //     'published' => false,
-                    //     'written_at' => $this->faker->dateTimeThisYear()->format('Y-m-d'),
-                    // ]);
+                    (new CreatePost())->execute([
+                        'account_id' => $this->firstUser->account_id,
+                        'author_id' => $this->firstUser->id,
+                        'vault_id' => $vault->id,
+                        'journal_id' => $journal->id,
+                        'post_template_id' => PostTemplate::where('account_id', $this->firstUser->account_id)->inRandomOrder()->first()->id,
+                        'title' => $this->faker->sentence(),
+                        'published' => false,
+                        'written_at' => $this->faker->dateTimeThisYear()->format('Y-m-d'),
+                    ]);
                 }
             }
         }
