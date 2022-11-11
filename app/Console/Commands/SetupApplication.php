@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Schema;
-use MeiliSearch\Client;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -43,6 +42,7 @@ class SetupApplication extends Command
             $this->migrate();
             $this->cacheConfig();
             $this->scout();
+            $this->documentation();
         }
     }
 
@@ -121,22 +121,33 @@ class SetupApplication extends Command
      */
     protected function scout(): void
     {
-        if (config('scout.driver') === 'meilisearch' && ($host = config('scout.meilisearch.host')) !== '') {
-            $this->info('-> Creating indexes on Meilisearch. Make sure Meilisearch is running.');
+        $this->artisan('✓ Setup scout', 'scout:setup', ['--force' => true]);
+    }
 
-            $config = [
-                'contacts' => ['id', 'vault_id'],
-                'notes' => ['id', 'vault_id', 'contact_id'],
-                'groups' => ['id', 'vault_id'],
-            ];
+    /**
+     * Regenerate api documentation.
+     *
+     * @return void
+     */
+    protected function documentation(): void
+    {
+        $this->info('✓ Generate api documentation');
 
-            $client = new Client($host, config('scout.meilisearch.key'));
-            foreach ($config as $name => $fields) {
-                $index = $client->index($name);
-                $index->updateFilterableAttributes($fields);
+        putenv('DB_CONNECTION=docs');
+        putenv('APP_ENV=testing');
+        putenv('CACHE_DRIVER=array');
+        putenv('QUEUE_CONNECTION=sync');
+        putenv('SESSION_DRIVER=array');
+        putenv('MAIL_MAILER=log');
+        putenv('SCOUT_DRIVER=null');
+
+        exec('php artisan scribe:generate --verbose --force', $output);
+
+        if ($this->getOutput()->getOutput()->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            foreach ($output as $line) {
+                $this->line($line);
             }
-
-            $this->info('✓ Indexes created');
+            $this->line('');
         }
     }
 
