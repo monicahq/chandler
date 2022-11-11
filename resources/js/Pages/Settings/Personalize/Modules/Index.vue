@@ -89,7 +89,7 @@
               <div
                 class="module-list rounded-t-md border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <text-input
-                  v-model="form.search"
+                  v-model="form.name"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -195,7 +195,7 @@
                   </div>
 
                   <!-- row fields -->
-                  <div class="grid auto-cols-fr grid-flow-col">
+                  <div class="m-3 grid auto-cols-fr grid-flow-col rounded border border-gray-200">
                     <div
                       v-for="field in row.fields"
                       :key="field.id"
@@ -203,7 +203,7 @@
                       <!-- row options -->
                       <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                         <div>
-                          <div class="relative mr-3 inline cursor-pointer">
+                          <div v-if="!field.inputSelectionMode" class="relative mr-3 inline cursor-pointer">
                             <svg
                               class="mr-1 inline h-3 w-3"
                               viewBox="0 0 24 24"
@@ -218,7 +218,7 @@
                                 d="M5 22C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z"
                                 fill="currentColor" />
                             </svg>
-                            <span>Change field type</span>
+                            <span @click="changeType(row, field)">Change field type</span>
                           </div>
                         </div>
 
@@ -244,10 +244,10 @@
                       </div>
 
                       <!-- choose a field type -->
-                      <div class="px-5 py-5">
-                        <p class="text-sm">Choose a field type:</p>
+                      <div v-if="field.inputSelectionMode" class="px-5 py-5 text-center">
+                        <p class="mb-3 text-xs text-gray-600">Choose a field type:</p>
                         <ul>
-                          <li @click="addFieldToRight(row)">Text field</li>
+                          <li @click="addInput(row, field)" class="cursor-pointer">Text field</li>
                           <li>Text area</li>
                           <li>Dropdown</li>
                         </ul>
@@ -303,6 +303,11 @@
                           </label>
                         </div>
                       </div>
+                    </div>
+
+                    <!-- no row / blank state -->
+                    <div v-if="row.fields.length == 0" class="p3 rounded bg-gray-50 py-5 text-center">
+                      Please add a field
                     </div>
                   </div>
                 </div>
@@ -384,7 +389,8 @@ export default {
         position: position,
         fields: [
           {
-            id: 1,
+            inputSelectionMode: true,
+            position: 1,
           },
         ],
       });
@@ -397,10 +403,12 @@ export default {
 
     addFieldToRight(row) {
       var id = this.form.rows.findIndex((x) => x.position === row.position);
-      //var highestFieldId = this.form.rows[id].fields.reduce((a, b) => (Number(a.id) > Number(b.id) ? a : b));
       var highestPosition = this.form.rows[id].fields.length;
 
-      this.form.rows[id].fields.push(this.addInput(highestPosition));
+      this.form.rows[id].fields.push({
+        inputSelectionMode: true,
+        position: highestPosition + 1,
+      });
     },
 
     destroyField(row, field) {
@@ -414,20 +422,28 @@ export default {
       }
     },
 
-    addInput(row, field, position) {
-      var id = this.form.rows.findIndex((x) => x.position === row.position);
-      //var highestFieldId = this.form.rows[id].fields.reduce((a, b) => (Number(a.id) > Number(b.id) ? a : b));
-      var highestPosition = this.form.rows[id].fields.length;
+    addInput(row, field) {
+      var rowId = this.form.rows.findIndex((x) => x.position === row.position);
+      var fieldId = this.form.rows[rowId].fields.findIndex((x) => x.position === field.position);
 
-      this.form.rows[id].fields.push(this.addInput(highestPosition));
-
-      return {
-        position: position + 1,
+      this.form.rows[rowId].fields[fieldId] = {
+        position: this.form.rows[rowId].fields[fieldId].position,
         type: 'input',
         name: 'sdkfjl',
         placeholder: 'sdkfjl',
         help: 'sdkfjl',
         required: false,
+        inputSelectionMode: false,
+      };
+    },
+
+    changeType(row, field) {
+      var rowId = this.form.rows.findIndex((x) => x.position === row.position);
+      var fieldId = this.form.rows[rowId].fields.findIndex((x) => x.position === field.position);
+
+      this.form.rows[rowId].fields[fieldId] = {
+        position: this.form.rows[rowId].fields[fieldId].position,
+        inputSelectionMode: true,
       };
     },
   },
