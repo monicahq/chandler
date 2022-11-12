@@ -10,6 +10,13 @@ use Spatie\RouteAttributes\Attributes\{Get, Middleware, Prefix};
 #[Prefix('api')]
 class UserController extends Controller
 {
+    /**
+     * GET api/user
+     *
+     * Get the authenticated User.
+     *
+     * @apiResourceModel \App\Models\User
+     */
     #[Get('user', middleware: 'abilities:read')]
     public function __invoke(Request $request)
     {
