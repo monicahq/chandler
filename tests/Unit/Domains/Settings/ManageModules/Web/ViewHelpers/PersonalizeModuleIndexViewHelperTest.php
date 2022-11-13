@@ -15,7 +15,9 @@ class PersonalizeModuleIndexViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
-        $module = Module::factory()->create();
+        $module = Module::factory()->create([
+            'can_be_deleted' => true,
+        ]);
         $array = PersonalizeModuleIndexViewHelper::data($module->account);
         $this->assertEquals(
             2,
@@ -26,7 +28,7 @@ class PersonalizeModuleIndexViewHelperTest extends TestCase
             [
                 'settings' => env('APP_URL').'/settings',
                 'personalize' => env('APP_URL').'/settings/personalize',
-                'module_store' => env('APP_URL').'/settings/personalize/modules',
+                'create' => env('APP_URL').'/settings/personalize/modules/create',
             ],
             $array['url']
         );
