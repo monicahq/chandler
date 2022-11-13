@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Module;
 use App\Models\ModuleRow;
 use App\Models\ModuleRowField;
+use App\Models\ModuleRowFieldChoice;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -100,15 +101,19 @@ class CreateModule extends BaseService implements ServiceInterface
     private function analyzeField(array $field, ModuleRow $moduleRow): void
     {
         if ($field['type'] == 'input') {
-            $this->addInputField($field, $moduleRow);
+            $this->addTextField($field, $moduleRow);
         }
 
         if ($field['type'] == 'textarea') {
-            $this->addInputField($field, $moduleRow);
+            $this->addTextField($field, $moduleRow);
+        }
+
+        if ($field['type'] == 'dropdown') {
+            $this->addDropdownChoices($field, $moduleRow);
         }
     }
 
-    private function addInputField($field, ModuleRow $moduleRow): void
+    private function addTextField($field, ModuleRow $moduleRow): void
     {
         ModuleRowField::create([
             'module_row_id' => $moduleRow->id,
@@ -119,5 +124,25 @@ class CreateModule extends BaseService implements ServiceInterface
             'placeholder' => $field['placeholder'],
             'required' => $field['required'],
         ]);
+    }
+
+    private function addDropdownChoices($field, ModuleRow $moduleRow): void
+    {
+        $rowField = ModuleRowField::create([
+            'module_row_id' => $moduleRow->id,
+            'module_field_type' => ModuleRowField::TYPE_DROPDOWN,
+            'label' => $field['name'],
+            'position' => $field['position'],
+            'help' => $field['help'],
+            'placeholder' => null,
+            'required' => $field['required'],
+        ]);
+
+        foreach ($field['choices'] as $choice) {
+            ModuleRowFieldChoice::create([
+                'module_row_field_id' => $rowField->id,
+                'label' => $choice['label'],
+            ]);
+        }
     }
 }

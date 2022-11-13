@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ModuleRowField extends Model
 {
@@ -18,6 +19,8 @@ class ModuleRowField extends Model
     public const TYPE_INPUT_TEXT = 'input_text';
 
     public const TYPE_TEXTAREA = 'textarea';
+
+    public const TYPE_DROPDOWN = 'dropdown';
 
     /**
      * The attributes that are mass assignable.
@@ -44,12 +47,22 @@ class ModuleRowField extends Model
     ];
 
     /**
-     * Get the module row associated with the module.
+     * Get the module row associated with the module row field.
      *
      * @return BelongsTo
      */
     public function row(): BelongsTo
     {
         return $this->belongsTo(ModuleRow::class, 'module_row_id');
+    }
+
+    /**
+     * Get the module row field choices associated with the module row field.
+     *
+     * @return HasMany
+     */
+    public function choices(): HasMany
+    {
+        return $this->hasMany(ModuleRowFieldChoice::class);
     }
 }

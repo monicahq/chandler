@@ -101,6 +101,36 @@ const addTextarea = (row, field) => {
   };
 };
 
+const addDropdown = (row, field) => {
+  var rowId = form.rows.findIndex((x) => x.position === row.position);
+  var fieldId = form.rows[rowId].fields.findIndex((x) => x.position === field.position);
+
+  form.rows[rowId].fields[fieldId] = {
+    position: form.rows[rowId].fields[fieldId].position,
+    type: 'dropdown',
+    name: '',
+    placeholder: '',
+    help: '',
+    required: true,
+    inputSelectionMode: false,
+    choices: [],
+  };
+};
+
+const addDropdownChoice = (field) => {
+  var highestPosition = field.choices.length;
+
+  field.choices.push({
+    position: highestPosition + 1,
+    label: '',
+  });
+};
+
+const destroyChoice = (field, choice) => {
+  var choiceId = field.choices.findIndex((x) => x.position === choice.position);
+  field.choices.splice(choiceId, 1);
+};
+
 const changeType = (row, field) => {
   var rowId = form.rows.findIndex((x) => x.position === row.position);
   var fieldId = form.rows[rowId].fields.findIndex((x) => x.position === field.position);
@@ -240,6 +270,7 @@ const submit = () => {
           <div class="rounded-lg border border-gray-200 dark:border-gray-700">
             <h3 class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">Module details</h3>
 
+            <!-- add module -->
             <form @submit.prevent="submit">
               <errors :errors="form.errors" />
 
@@ -278,7 +309,7 @@ const submit = () => {
                               d="M5 22C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z"
                               fill="currentColor" />
                           </svg>
-                          <span>Add a field to the left</span>
+                          <span class="text-blue-500 hover:underline">Add a field to the left</span>
                         </div>
 
                         <div class="relative mr-2 inline cursor-pointer" @click="addFieldToRight(row)">
@@ -296,7 +327,7 @@ const submit = () => {
                               d="M5 22C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z"
                               fill="currentColor" />
                           </svg>
-                          <span>Add a field to the right</span>
+                          <span class="text-blue-500 hover:underline">Add a field to the right</span>
                         </div>
                       </div>
 
@@ -346,7 +377,9 @@ const submit = () => {
                                   d="M5 22C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z"
                                   fill="currentColor" />
                               </svg>
-                              <span @click="changeType(row, field)">Change field type</span>
+                              <span @click="changeType(row, field)" class="text-blue-500 hover:underline"
+                                >Change field type</span
+                              >
                             </div>
                           </div>
 
@@ -377,12 +410,13 @@ const submit = () => {
                           <ul>
                             <li @click="addInput(row, field)" class="cursor-pointer">Text field</li>
                             <li @click="addTextarea(row, field)" class="cursor-pointer">Text area</li>
-                            <li>Dropdown</li>
+                            <li @click="addDropdown(row, field)" class="cursor-pointer">Dropdown</li>
                           </ul>
                         </div>
 
                         <!-- case of text input or textarea  -->
                         <div class="p-5" v-if="field.type == 'input' || field.type == 'textarea'">
+                          <!-- type -->
                           <div
                             v-if="field.type == 'input'"
                             class="mr-2 mb-4 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0">
@@ -444,6 +478,68 @@ const submit = () => {
                             </label>
                           </div>
                         </div>
+
+                        <!-- case of dropdown  -->
+                        <div class="p-5" v-if="field.type == 'dropdown'">
+                          <!-- type -->
+                          <div
+                            class="mr-2 mb-4 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0">
+                            dropdown
+                          </div>
+
+                          <!-- name of the field -->
+                          <text-input
+                            class="mb-4"
+                            v-model="field.name"
+                            :type="'text'"
+                            :autofocus="true"
+                            :label="'Name of the field'"
+                            :input-class="'block w-full'"
+                            :required="true"
+                            :autocomplete="false"
+                            :maxlength="255" />
+
+                          <!-- help text -->
+                          <text-input
+                            v-model="field.help"
+                            :type="'text'"
+                            :label="'Help text'"
+                            :help="'This text will be displayed beneath the dropdown.'"
+                            :input-class="'block w-full'"
+                            :required="false"
+                            :autocomplete="false"
+                            :maxlength="255" />
+
+                          <!-- dropdown choices -->
+                          <p class="mb-2 text-sm">List of choices that will be presented to the user</p>
+
+                          <div v-for="choice in field.choices" :key="choice.id">
+                            <div class="mb-4 flex items-center">
+                              <text-input
+                                class="w-2/3"
+                                v-model="choice.label"
+                                :type="'text'"
+                                :autofocus="true"
+                                :input-class="'block w-full'"
+                                :required="true"
+                                :autocomplete="false"
+                                :maxlength="255" />
+
+                              <div
+                                class="ml-2 cursor-pointer text-sm text-red-500 hover:text-red-900"
+                                @click="destroyChoice(field, choice)">
+                                <span>Delete</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- if there are no choices yet -->
+                          <div
+                            @click="addDropdownChoice(field)"
+                            class="cursor-pointer text-sm text-blue-500 hover:underline">
+                            + Add an item in the dropdown
+                          </div>
+                        </div>
                       </div>
 
                       <!-- no row / blank state -->
@@ -454,8 +550,9 @@ const submit = () => {
                   </div>
                 </div>
 
+                <!-- add a new row CTA -->
                 <div
-                  class="mb-2 cursor-pointer rounded border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
+                  class="mx-16 mb-2 cursor-pointer rounded border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
                   @click="addRow()">
                   + Add row
                 </div>
