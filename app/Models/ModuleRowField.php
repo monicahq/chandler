@@ -25,6 +25,8 @@ class ModuleRowField extends Model
     protected $fillable = [
         'module_row_id',
         'label',
+        'help',
+        'placeholder',
         'module_field_type',
         'required',
         'position',
