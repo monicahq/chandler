@@ -5,6 +5,7 @@ namespace App\Domains\Settings\ManageModules\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\Module;
 use App\Models\ModuleRow;
+use App\Models\ModuleRowField;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -99,7 +100,20 @@ class CreateModule extends BaseService implements ServiceInterface
     private function analyzeField(array $field, ModuleRow $row): void
     {
         if ($field['type'] == 'input') {
-            $this->addInputField($field);
+            $this->addInputField($field, $row);
         }
+    }
+
+    private function addInputField(array $field, ModuleRow $row): void
+    {
+        ModuleRowField::create([
+            'module_row_id' => $row->id,
+            'module_field_type' => ModuleRowField::TYPE_INPUT_TEXT,
+            'label' => $field['name'],
+            'position' => $field['position'],
+            'help' => $field['help'],
+            'placeholder' => $field['placeholder'],
+            'required' => $field['required'],
+        ]);
     }
 }
