@@ -201,9 +201,8 @@ const submit = () => {
                 <text-input
                   v-model="form.search"
                   :type="'text'"
-                  :autofocus="true"
                   :input-class="'block w-full'"
-                  :required="true"
+                  :required="false"
                   :autocomplete="false"
                   :placeholder="'Filter'"
                   :maxlength="255" />
@@ -382,22 +381,20 @@ const submit = () => {
                             class="mb-4"
                             v-model="field.placeholder"
                             :type="'text'"
-                            :autofocus="true"
                             :label="'Placeholder value'"
                             :input-class="'block w-full'"
                             :help="'This text will be displayed when the field is empty.'"
-                            :required="true"
+                            :required="false"
                             :autocomplete="false"
                             :maxlength="255" />
 
                           <text-input
                             v-model="field.help"
                             :type="'text'"
-                            :autofocus="true"
                             :label="'Help text'"
                             :help="'This text will be displayed beneath the input field.'"
                             :input-class="'block w-full'"
-                            :required="true"
+                            :required="false"
                             :autocomplete="false"
                             :maxlength="255" />
 

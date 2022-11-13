@@ -76,38 +76,38 @@ class CreateModule extends BaseService implements ServiceInterface
         $rows = $this->data['rows'];
 
         foreach ($rows as $row) {
-            $this->analyzeRow($row['fields']);
+            $this->createModuleRow($row);
         }
     }
 
-    private function analyzeRow(array $row): void
+    private function createModuleRow(array $row): void
     {
-        $row = ModuleRow::create([
+        $moduleRow = ModuleRow::create([
             'module_id' => $this->module->id,
             'position' => $row['position'],
         ]);
 
-        $this->analyzeFields($row['fields'], $row);
+        $this->analyzeFields($row['fields'], $moduleRow);
     }
 
-    private function analyzeFields(array $fields, ModuleRow $row): void
+    private function analyzeFields($fields, ModuleRow $moduleRow): void
     {
         foreach ($fields as $field) {
-            $this->analyzeField($field, $row);
+            $this->analyzeField($field, $moduleRow);
         }
     }
 
-    private function analyzeField(array $field, ModuleRow $row): void
+    private function analyzeField(array $field, ModuleRow $moduleRow): void
     {
         if ($field['type'] == 'input') {
-            $this->addInputField($field, $row);
+            $this->addInputField($field, $moduleRow);
         }
     }
 
-    private function addInputField(array $field, ModuleRow $row): void
+    private function addInputField($field, ModuleRow $moduleRow): void
     {
         ModuleRowField::create([
-            'module_row_id' => $row->id,
+            'module_row_id' => $moduleRow->id,
             'module_field_type' => ModuleRowField::TYPE_INPUT_TEXT,
             'label' => $field['name'],
             'position' => $field['position'],
