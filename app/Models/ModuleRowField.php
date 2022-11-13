@@ -17,6 +17,8 @@ class ModuleRowField extends Model
      */
     public const TYPE_INPUT_TEXT = 'input_text';
 
+    public const TYPE_TEXTAREA = 'textarea';
+
     /**
      * The attributes that are mass assignable.
      *

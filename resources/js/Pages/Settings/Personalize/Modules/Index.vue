@@ -78,10 +78,25 @@ const addInput = (row, field) => {
   form.rows[rowId].fields[fieldId] = {
     position: form.rows[rowId].fields[fieldId].position,
     type: 'input',
-    name: 'sdkfjl',
-    placeholder: 'sdkfjl',
-    help: 'sdkfjl',
-    required: false,
+    name: '',
+    placeholder: '',
+    help: '',
+    required: true,
+    inputSelectionMode: false,
+  };
+};
+
+const addTextarea = (row, field) => {
+  var rowId = form.rows.findIndex((x) => x.position === row.position);
+  var fieldId = form.rows[rowId].fields.findIndex((x) => x.position === field.position);
+
+  form.rows[rowId].fields[fieldId] = {
+    position: form.rows[rowId].fields[fieldId].position,
+    type: 'textarea',
+    name: '',
+    placeholder: '',
+    help: '',
+    required: true,
     inputSelectionMode: false,
   };
 };
@@ -247,7 +262,7 @@ const submit = () => {
                   <div class="rounded border border-gray-300 bg-white dark:bg-gray-900">
                     <!-- row options -->
                     <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
-                      <div>
+                      <div v-if="row.fields.length <= 2" class="flex items-center">
                         <div class="relative mr-3 inline cursor-pointer" @click="addFieldToLeft(row)">
                           <svg
                             class="mr-1 inline h-3 w-3"
@@ -285,7 +300,9 @@ const submit = () => {
                         </div>
                       </div>
 
-                      <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
+                      <div
+                        class="flex cursor-pointer items-center text-red-500 hover:text-red-900"
+                        @click="destroyRow(row)">
                         <svg
                           class="mr-1 inline h-3 w-3"
                           viewBox="0 0 24 24"
@@ -334,7 +351,7 @@ const submit = () => {
                           </div>
 
                           <div
-                            class="inline flex cursor-pointer items-center text-red-500 hover:text-red-900"
+                            class="flex cursor-pointer items-center text-red-500 hover:text-red-900"
                             @click="destroyField(row, field)">
                             <svg
                               class="mr-1 inline h-3 w-3"
@@ -359,24 +376,37 @@ const submit = () => {
                           <p class="mb-3 text-xs text-gray-600">Choose a field type:</p>
                           <ul>
                             <li @click="addInput(row, field)" class="cursor-pointer">Text field</li>
-                            <li>Text area</li>
+                            <li @click="addTextarea(row, field)" class="cursor-pointer">Text area</li>
                             <li>Dropdown</li>
                           </ul>
                         </div>
 
-                        <!-- case of text input  -->
-                        <div class="p-5" v-if="field.type == 'input'">
+                        <!-- case of text input or textarea  -->
+                        <div class="p-5" v-if="field.type == 'input' || field.type == 'textarea'">
+                          <div
+                            v-if="field.type == 'input'"
+                            class="mr-2 mb-4 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0">
+                            text field
+                          </div>
+                          <div
+                            v-if="field.type == 'textarea'"
+                            class="mr-2 mb-4 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-800 last:mr-0">
+                            text area
+                          </div>
+
+                          <!-- name of the field -->
                           <text-input
                             class="mb-4"
                             v-model="field.name"
                             :type="'text'"
                             :autofocus="true"
-                            :label="'Name of the input field'"
+                            :label="'Name of the field'"
                             :input-class="'block w-full'"
                             :required="true"
                             :autocomplete="false"
                             :maxlength="255" />
 
+                          <!-- placeholder -->
                           <text-input
                             class="mb-4"
                             v-model="field.placeholder"
@@ -388,6 +418,7 @@ const submit = () => {
                             :autocomplete="false"
                             :maxlength="255" />
 
+                          <!-- help text -->
                           <text-input
                             v-model="field.help"
                             :type="'text'"
@@ -398,6 +429,7 @@ const submit = () => {
                             :autocomplete="false"
                             :maxlength="255" />
 
+                          <!-- mandatory or not -->
                           <div class="flex items-center">
                             <input
                               v-model="field.required"

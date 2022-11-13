@@ -102,13 +102,17 @@ class CreateModule extends BaseService implements ServiceInterface
         if ($field['type'] == 'input') {
             $this->addInputField($field, $moduleRow);
         }
+
+        if ($field['type'] == 'textarea') {
+            $this->addInputField($field, $moduleRow);
+        }
     }
 
     private function addInputField($field, ModuleRow $moduleRow): void
     {
         ModuleRowField::create([
             'module_row_id' => $moduleRow->id,
-            'module_field_type' => ModuleRowField::TYPE_INPUT_TEXT,
+            'module_field_type' => ModuleRowField::TYPE_TEXTAREA,
             'label' => $field['name'],
             'position' => $field['position'],
             'help' => $field['help'],
