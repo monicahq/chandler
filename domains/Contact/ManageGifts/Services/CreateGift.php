@@ -12,8 +12,11 @@ use Illuminate\Support\Collection;
 class CreateGift extends BaseService implements ServiceInterface
 {
     private Gift $gift;
+
     private Collection $donatorsCollection;
+
     private Collection $recipientsCollection;
+
     private array $data;
 
     /**
