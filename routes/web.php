@@ -556,7 +556,6 @@ Route::middleware([
                 Route::get('modules/create', [PersonalizeModulesController::class, 'create'])->name('module.create');
                 Route::get('modules/{module}', [PersonalizeModulesController::class, 'show'])->name('module.show');
                 Route::post('modules', [PersonalizeModulesController::class, 'store'])->name('module.store');
-                Route::put('modules/{module}', [PersonalizeModulesController::class, 'update'])->name('module.update');
                 Route::delete('modules/{module}', [PersonalizeModulesController::class, 'destroy'])->name('module.destroy');
 
                 // currencies

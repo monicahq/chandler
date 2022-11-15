@@ -191,7 +191,9 @@ const submit = () => {
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.modules" class="text-blue-500 hover:underline">Modules</inertia-link>
+              <inertia-link :href="data.url.modules" class="text-blue-500 hover:underline">{{
+                $t('app.breadcrumb_settings_modules')
+              }}</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg

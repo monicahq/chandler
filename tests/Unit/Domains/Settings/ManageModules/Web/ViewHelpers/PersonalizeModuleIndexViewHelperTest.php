@@ -47,6 +47,7 @@ class PersonalizeModuleIndexViewHelperTest extends TestCase
                 'reserved_to_contact_information' => $module->reserved_to_contact_information,
                 'can_be_deleted' => $module->can_be_deleted,
                 'url' => [
+                    'show' => env('APP_URL').'/settings/personalize/modules/'.$module->id,
                     'update' => env('APP_URL').'/settings/personalize/modules/'.$module->id,
                     'destroy' => env('APP_URL').'/settings/personalize/modules/'.$module->id,
                 ],

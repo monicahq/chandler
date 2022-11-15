@@ -48,7 +48,7 @@ const props = defineProps({
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Modules</li>
+            <li class="inline">{{ $t('app.breadcrumb_settings_modules') }}</li>
           </ul>
         </div>
       </div>
@@ -60,9 +60,9 @@ const props = defineProps({
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-2"> 🥪 </span>
-            All the custom modules in the account
+            {{ $t('settings.personalize_modules_title') }}
           </h3>
-          <pretty-link :href="data.url.create" :text="'Add a module'" :icon="'plus'" @click="showGenderModal" />
+          <pretty-link :href="data.url.create" :text="$t('settings.personalize_modules_cta')" :icon="'plus'" />
         </div>
 
         <!-- help text -->
@@ -81,12 +81,8 @@ const props = defineProps({
           </svg>
 
           <div>
-            <p class="mb-1">Modules contain each one of your contact's data.</p>
-            <p class="mb-1">
-              Monica comes with a set of predefined modules that can't be edited or deleted – because we need them for
-              Monica to function properly. However, you can create your own modules to record the data you want in your
-              account.
-            </p>
+            <p class="mb-1">{{ $t('settings.personalize_modules_help') }}</p>
+            <p class="mb-1">{{ $t('settings.personalize_modules_help_2') }}</p>
           </div>
         </div>
 
@@ -104,11 +100,10 @@ const props = defineProps({
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-                  {{ $t('app.view') }}
-                </li>
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(module)">
-                  {{ $t('app.delete') }}
+                <li class="inline">
+                  <inertia-link :href="module.url.show" class="text-blue-500 hover:underline">{{
+                    $t('app.view')
+                  }}</inertia-link>
                 </li>
               </ul>
             </div>
@@ -119,7 +114,7 @@ const props = defineProps({
         <div
           v-if="props.data.modules.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">Create modules to record data that matter to you.</p>
+          <p class="p-5 text-center">{{ $t('settings.personalize_modules_blank') }}</p>
         </div>
       </div>
     </main>

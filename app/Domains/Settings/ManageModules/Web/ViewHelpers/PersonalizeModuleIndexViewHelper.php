@@ -38,6 +38,9 @@ class PersonalizeModuleIndexViewHelper
             'reserved_to_contact_information' => $module->reserved_to_contact_information,
             'can_be_deleted' => $module->can_be_deleted,
             'url' => [
+                'show' => route('settings.personalize.module.show', [
+                    'module' => $module->id,
+                ]),
                 'update' => route('settings.personalize.module.update', [
                     'module' => $module->id,
                 ]),
