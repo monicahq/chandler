@@ -41,9 +41,6 @@ class PersonalizeModuleIndexViewHelper
                 'show' => route('settings.personalize.module.show', [
                     'module' => $module->id,
                 ]),
-                'update' => route('settings.personalize.module.update', [
-                    'module' => $module->id,
-                ]),
                 'destroy' => route('settings.personalize.module.destroy', [
                     'module' => $module->id,
                 ]),
