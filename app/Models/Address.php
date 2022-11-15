@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Address extends Model
 {
@@ -15,7 +16,7 @@ class Address extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contact_id',
@@ -45,7 +46,7 @@ class Address extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'is_past_address' => 'boolean',
@@ -69,5 +70,15 @@ class Address extends Model
     public function addressType(): BelongsTo
     {
         return $this->belongsTo(AddressType::class);
+    }
+
+    /**
+     * Get the address's feed item.
+     *
+     * @return MorphOne
+     */
+    public function feedItem(): MorphOne
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 }

@@ -2,16 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageRelationships\Web\ViewHelpers;
 
-use App\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
-use App\Models\Avatar;
+use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 use App\Models\Contact;
 use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 use App\Models\User;
 use App\Models\Vault;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleRelationshipViewHelperTest extends TestCase
 {
@@ -33,11 +32,6 @@ class ModuleRelationshipViewHelperTest extends TestCase
         $contact = Contact::factory()->create([
             'vault_id' => $vault->id,
         ]);
-        $avatar = Avatar::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
-        $contact->avatar_id = $avatar->id;
-        $contact->save();
 
         $array = ModuleRelationshipViewHelper::data($contact, $user);
         $this->assertEquals(

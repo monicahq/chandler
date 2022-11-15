@@ -18,15 +18,19 @@ class ContactLifeEventActivity extends Model
      * Possible type.
      */
     public const TYPE_PERIOD_FULL_DAY = 'full day';
+
     public const TYPE_PERIOD_MORNING = 'morning';
+
     public const TYPE_PERIOD_AFTERNOON = 'afternoon';
+
     public const TYPE_PERIOD_EVENING = 'evening';
+
     public const TYPE_PERIOD_NIGHT = 'all night';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'life_event_id',

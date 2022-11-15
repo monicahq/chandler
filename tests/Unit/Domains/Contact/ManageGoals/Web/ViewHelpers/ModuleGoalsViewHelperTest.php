@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGoals\Web\ViewHelpers;
 
-use App\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
+use App\Domains\Contact\ManageGoals\Web\ViewHelpers\ModuleGoalsViewHelper;
 use App\Models\Contact;
 use App\Models\Goal;
 use App\Models\User;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleGoalsViewHelperTest extends TestCase
 {
@@ -29,7 +29,7 @@ class ModuleGoalsViewHelperTest extends TestCase
             'active' => false,
         ]);
 
-        $array = ModuleGoalsViewHelper::data($contact, $user);
+        $array = ModuleGoalsViewHelper::data($contact);
 
         $this->assertEquals(
             3,
@@ -88,6 +88,7 @@ class ModuleGoalsViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
+                'show' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
                 'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,
                 'streak_update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id.'/streaks',
                 'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/goals/'.$goal->id,

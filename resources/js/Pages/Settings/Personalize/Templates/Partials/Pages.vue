@@ -1,12 +1,3 @@
-<style lang="scss" scoped>
-.flip-list-move {
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-</style>
-
 <template>
   <div>
     <div class="mb-4 mt-8 items-center justify-between border-b pb-3 sm:mt-0 sm:flex">
@@ -21,7 +12,7 @@
     <!-- contact information page | can't be removed -->
     <div
       :class="isSelectedId == data.template_page_contact_information.id ? 'border-2	bg-sky-100' : ''"
-      class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2 hover:bg-slate-50"
+      class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
       @click="selectPage(data.template_page_contact_information)">
       <!-- detail of a page -->
       <div>
@@ -30,7 +21,9 @@
         </div>
 
         <ul class="text-xs text-gray-400">
-          <li class="inline">{{ $t('settings.personalize_template_show_page_cant_moved') }}</li>
+          <li class="inline">
+            {{ $t('settings.personalize_template_show_page_cant_moved') }}
+          </li>
         </ul>
       </div>
     </div>
@@ -53,7 +46,7 @@
         <div
           v-if="renamePageModalShownId != element.id"
           :class="isSelectedId == element.id ? 'border-2	bg-sky-100' : ''"
-          class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50"
+          class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @click="selectPage(element)">
           <!-- icon to move position -->
           <div class="mr-2">
@@ -96,9 +89,9 @@
         <!-- modal to edit the page -->
         <form
           v-else
-          class="item-list mb-2 rounded-lg border border-gray-200 bg-white hover:bg-slate-50"
+          class="item-list mb-2 rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @submit.prevent="update(element)">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-input
@@ -125,9 +118,9 @@
     <!-- modal to create a new page -->
     <form
       v-if="createPageModalShown"
-      class="mb-6 rounded-lg border border-gray-200 bg-white"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <text-input
@@ -151,7 +144,7 @@
 
     <!-- blank state -->
     <div v-if="localPages.length == 0">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">
+      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
         {{ $t('settings.personalize_template_show_page_blank') }}
       </p>
     </div>
@@ -159,10 +152,10 @@
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 import draggable from 'vuedraggable';
 
 export default {
@@ -176,8 +169,8 @@ export default {
 
   props: {
     data: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: null,
     },
   },
 
@@ -189,7 +182,6 @@ export default {
       renamePageModalShownId: 0,
       localPages: [],
       isSelectedId: 0,
-      drag: false,
       form: {
         name: '',
         position: '',
@@ -271,7 +263,7 @@ export default {
       if (confirm(this.$t('settings.personalize_templates_destroy_confirmation'))) {
         axios
           .delete(page.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The page has been deleted', 'success');
             var id = this.localPages.findIndex((x) => x.id === page.id);
             this.localPages.splice(id, 1);
@@ -290,8 +282,8 @@ export default {
 
       axios
         .post(event.moved.element.url.order, this.form)
-        .then((response) => {
-          this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
+        .then(() => {
+          this.flash('The order has been saved', 'success');
         })
         .catch((error) => {
           this.loadingState = null;
@@ -306,3 +298,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+</style>

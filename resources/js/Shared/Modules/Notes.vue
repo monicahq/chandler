@@ -1,22 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.icon-note {
-  top: -1px;
-}
-
-.icon-avatar {
-  top: 2px;
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -44,14 +29,17 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Notes</span>
+        <span class="font-semibold"> Notes </span>
       </div>
       <pretty-button :text="'Add a note'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateNoteModal" />
     </div>
 
     <!-- add a note modal -->
-    <form v-if="createNoteModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
+    <form
+      v-if="createNoteModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <text-area
@@ -80,20 +68,22 @@
           <p class="mb-2">How did you feel?</p>
           <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
             <input
-              :value="emotion.id"
-              v-model="form.emotion"
               :id="emotion.type"
+              v-model="form.emotion"
+              :value="emotion.id"
               name="emotion"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-            <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
+              class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-700 dark:bg-slate-900 dark:text-indigo-400" />
+            <label :for="emotion.type" class="ml-2 block font-medium text-gray-700 dark:text-gray-300">
+              {{ emotion.name }}
+            </label>
           </div>
         </div>
 
         <!-- cta to add a title -->
         <span
           v-if="!titleFieldShown"
-          class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+          class="mr-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
           @click="showTitleField">
           + add title
         </span>
@@ -101,7 +91,7 @@
         <!-- cta to add emotion -->
         <span
           v-if="!emotionFieldShown"
-          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
           @click="showEmotionField">
           + add emotion
         </span>
@@ -115,10 +105,15 @@
 
     <!-- notes -->
     <div v-if="localNotes.length > 0">
-      <div v-for="note in localNotes" :key="note.id" class="mb-4 rounded border border-gray-200 last:mb-0">
+      <div
+        v-for="note in localNotes"
+        :key="note.id"
+        class="mb-4 rounded border border-gray-200 last:mb-0 dark:border-gray-700">
         <!-- body of the note, if not being edited -->
         <div v-if="editedNoteId !== note.id">
-          <div v-if="note.title" class="border-b border-gray-200 p-3 text-xs font-semibold text-gray-600">
+          <div
+            v-if="note.title"
+            class="border-b border-gray-200 p-3 text-xs font-semibold text-gray-600 dark:border-gray-700 dark:text-gray-400">
             {{ note.title }}
           </div>
 
@@ -134,7 +129,7 @@
 
           <!-- details -->
           <div
-            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50">
+            class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:text-gray-400 hover:dark:bg-slate-900">
             <div class="flex items-center">
               <!-- emotion -->
               <div v-if="note.emotion" class="relative mr-3 inline">
@@ -160,9 +155,9 @@
 
               <!-- author -->
               <div v-if="note.author" class="relative mr-3 inline">
-                <div class="relative flex">
-                  <div v-html="note.author.avatar" class="icon-avatar relative mr-1 h-3 w-3"></div>
-                  <span></span>{{ note.author.name }}
+                <div class="icon-avatar relative flex">
+                  <avatar :data="note.author.avatar" :classes="'rounded-full relative mr-1 h-3 w-3'" />
+                  <span>{{ note.author.name }}</span>
                 </div>
               </div>
             </div>
@@ -178,7 +173,7 @@
 
         <!-- edit modal form -->
         <form v-if="editedNoteId === note.id" class="bg-form" @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-area
@@ -206,13 +201,15 @@
               <p class="mb-2">How did you feel?</p>
               <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
                 <input
-                  :value="emotion.id"
-                  v-model="form.emotion"
                   :id="emotion.type"
+                  v-model="form.emotion"
+                  :value="emotion.id"
                   name="emotion"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700"> {{ emotion.name }} </label>
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400" />
+                <label :for="emotion.type" class="ml-2 block font-medium text-gray-700 dark:text-gray-300">
+                  {{ emotion.name }}
+                </label>
               </div>
             </div>
           </div>
@@ -228,40 +225,34 @@
       <div v-if="moduleMode" class="text-center">
         <inertia-link
           :href="data.url.index"
-          class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500">
+          class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
           {{ $t('app.view_all') }}
         </inertia-link>
       </div>
 
       <!-- pagination -->
-      <div v-if="!moduleMode" class="flex justify-between text-center">
-        <inertia-link
-          v-show="paginator.previousPageUrl"
-          class="fl dib"
-          :href="paginator.previousPageUrl"
-          title="Previous">
-          &larr; Previous
-        </inertia-link>
-        <inertia-link v-show="paginator.nextPageUrl" class="fr dib" :href="paginator.nextPageUrl" title="Next">
-          Next &rarr;
-        </inertia-link>
-      </div>
+      <Pagination v-if="!moduleMode" :items="paginator" />
     </div>
 
     <!-- blank state -->
-    <div v-if="localNotes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no notes yet.</p>
+    <div
+      v-if="localNotes.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_note.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no notes yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import HoverMenu from '@/Shared/HoverMenu';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
+import HoverMenu from '@/Shared/HoverMenu.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import TextArea from '@/Shared/Form/TextArea.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import Avatar from '@/Shared/Avatar.vue';
+import Pagination from '@/Components/Pagination.vue';
 
 export default {
   components: {
@@ -271,6 +262,8 @@ export default {
     TextInput,
     TextArea,
     Errors,
+    Avatar,
+    Pagination,
   },
 
   props: {
@@ -380,7 +373,7 @@ export default {
       if (confirm('Are you sure? This will delete the note permanently.')) {
         axios
           .delete(note.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The note has been deleted', 'success');
             var id = this.localNotes.findIndex((x) => x.id === note.id);
             this.localNotes.splice(id, 1);
@@ -394,3 +387,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.icon-note {
+  top: -1px;
+}
+
+.icon-avatar .img {
+  top: 2px;
+}
+</style>

@@ -4,16 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContactsTable extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vault_id');
@@ -31,11 +28,20 @@ class CreateContactsTable extends Migration
             $table->boolean('listed')->default(true);
             $table->datetime('last_updated_at')->nullable();
             $table->timestamps();
+
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('gender_id')->references('id')->on('genders')->onDelete('set null');
             $table->foreign('pronoun_id')->references('id')->on('pronouns')->onDelete('set null');
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
+
+            if (config('scout.driver') === 'database' && in_array(DB::connection()->getDriverName(), ['mysql', 'pgsql'])) {
+                $table->fullText('first_name');
+                $table->fullText('last_name');
+                $table->fullText('middle_name');
+                $table->fullText('nickname');
+                $table->fullText('maiden_name');
+            }
         });
 
         Schema::create('user_vault', function (Blueprint $table) {
@@ -54,6 +60,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('number_of_views');
+            $table->boolean('is_favorite')->default(false);
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -70,4 +77,4 @@ class CreateContactsTable extends Migration
         Schema::dropIfExists('user_vault');
         Schema::dropIfExists('contact_vault_user');
     }
-}
+};

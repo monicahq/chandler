@@ -16,14 +16,17 @@ class Call extends Model
      * Possible type.
      */
     public const TYPE_AUDIO = 'audio';
+
     public const TYPE_VIDEO = 'video';
+
     public const INITIATOR_ME = 'me';
+
     public const INITIATOR_CONTACT = 'contact';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contact_id',
@@ -42,7 +45,7 @@ class Call extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'answered' => 'boolean',

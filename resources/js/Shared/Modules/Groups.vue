@@ -1,30 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -41,18 +18,21 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Groups</span>
+        <span class="font-semibold"> Groups </span>
       </div>
-      <pretty-span @click="addGroupMode = true" :text="'Add to group'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+      <pretty-button :text="'Add to group'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="addGroupMode = true" />
     </div>
 
-    <form v-if="addGroupMode" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+    <form
+      v-if="addGroupMode"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- group type -->
           <dropdown
             v-model="form.group_id"
@@ -60,12 +40,12 @@
             :required="true"
             :placeholder="$t('app.choose_value')"
             :dropdown-class="'block w-full'"
-            @change="toggleCreateGroup()"
-            :label="'Select a group or create a new one'" />
+            :label="'Select a group or create a new one'"
+            @change="toggleCreateGroup()" />
         </div>
 
         <!-- name -->
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5">
+        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <text-input
             :ref="'newName'"
             v-model="form.name"
@@ -79,7 +59,7 @@
             @esc-key-pressed="addPetModalShown = false" />
         </div>
 
-        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5">
+        <div v-if="chooseGroupTypeShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- group type -->
           <dropdown
             v-model="form.group_type_id"
@@ -110,43 +90,52 @@
     </form>
 
     <!-- groups -->
-    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+    <ul v-if="filteredGroups.length > 0" class="mb-4 rounded-lg border border-gray-200 last:mb-0 dark:border-gray-700">
       <li
         v-for="group in filteredGroups"
         :key="group.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <div>
-          <p>{{ group.name }}</p>
+          <p class="font-semibold">{{ group.name }}</p>
 
           <div v-if="group.contacts" class="relative flex -space-x-2 overflow-hidden py-1">
             <div v-for="contact in group.contacts" :key="contact.id" class="inline-block">
-              <inertia-link :href="contact.url.show"
-                ><div v-html="contact.avatar" class="h-8 w-8 rounded-full ring-2 ring-white"></div
-              ></inertia-link>
+              <inertia-link :href="contact.url.show">
+                <avatar :data="contact.avatar" :classes="'h-8 w-8 rounded-full ring-2 ring-white'" />
+              </inertia-link>
             </div>
           </div>
         </div>
 
         <!-- actions -->
         <ul class="text-sm">
+          <li class="mr-4 inline cursor-pointer">
+            <inertia-link :href="group.url.show" class="text-blue-500 hover:underline">{{
+              $t('app.view')
+            }}</inertia-link>
+          </li>
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(group)">Leave</li>
         </ul>
       </li>
     </ul>
 
     <!-- blank state -->
-    <div v-if="localGroups.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">The contact does not belong to any group yet.</p>
+    <div
+      v-if="localGroups.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_group.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">The contact does not belong to any group yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Dropdown from '@/Shared/Form/Dropdown';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import Avatar from '@/Shared/Avatar.vue';
 
 export default {
   components: {
@@ -155,6 +144,7 @@ export default {
     TextInput,
     Dropdown,
     Errors,
+    Avatar,
   },
 
   props: {
@@ -185,17 +175,17 @@ export default {
     };
   },
 
-  created() {
-    this.localGroups = this.data.groups;
-    this.localAvailableGroups = this.data.available_groups;
-  },
-
   computed: {
     filteredGroups() {
       return this.localGroups.filter((group) => {
         return group.id > 0;
       });
     },
+  },
+
+  created() {
+    this.localGroups = this.data.groups;
+    this.localAvailableGroups = this.data.available_groups;
   },
 
   methods: {
@@ -255,7 +245,7 @@ export default {
       if (confirm('Are you sure?')) {
         axios
           .delete(group.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The contact has been removed from the group', 'success');
             var id = this.localGroups.findIndex((x) => x.id === group.id);
             this.localGroups.splice(id, 1);
@@ -269,3 +259,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

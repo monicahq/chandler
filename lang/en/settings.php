@@ -6,12 +6,16 @@ return [
     'notification_channels' => 'Notification channels',
     'account_settings' => 'Account settings',
     'manage_users' => 'Manage users',
+    'manage_storage' => 'Manage storage',
     'personalize_your_contacts_data' => 'Personalize your contacts data',
     'cancel_your_account' => 'Cancel your account',
 
     /***************************************************************
      * USER PREFERENCES
      **************************************************************/
+
+    'user_preferences_help_title' => 'Help',
+    'user_preferences_help_current_language' => 'Display help links in the interface to help you (English only)',
 
     'user_preferences_locale_title' => 'Language of the application',
     'user_preferences_locale_current_language' => 'Current language:',
@@ -117,22 +121,24 @@ return [
      * PERSONNALIZE
      **************************************************************/
 
-     'personalize_title' => 'Personalize your account',
-     'personalize_title_manage_template' => 'Manage templates',
-     'personalize_title_manage_module' => 'Manage modules',
-     'personalize_title_manage_rel_types' => 'Manage relationship types',
-     'personalize_title_manage_life_event_categories' => 'Manage life event categories',
-     'personalize_title_manage_group_types' => 'Manage group types',
-     'personalize_title_manage_activity_types' => 'Manage activity types',
-     'personalize_title_manage_pronouns' => 'Manage pronouns',
-     'personalize_title_manage_genders' => 'Manage genders',
-     'personalize_title_manage_adress_types' => 'Manage address types',
-     'personalize_title_manage_contact_information_types' => 'Manage contact information types',
-     'personalize_title_manage_call_reasons' => 'Manage call reasons',
-     'personalize_title_manage_pet_categories' => 'Manage pet categories',
-     'personalize_title_manage_gift_occasions' => 'Manage gift occasions',
-     'personalize_title_manage_gift_states' => 'Manage gift states',
-     'personalize_title_manage_currencies' => 'Manage currencies',
+    'personalize_title' => 'Personalize your account',
+    'personalize_title_manage_template' => 'Manage templates',
+    'personalize_title_manage_module' => 'Manage modules',
+    'personalize_title_manage_rel_types' => 'Manage relationship types',
+    'personalize_title_manage_life_event_categories' => 'Manage life event categories',
+    'personalize_title_manage_group_types' => 'Manage group types',
+    'personalize_title_manage_activity_types' => 'Manage activity types',
+    'personalize_title_manage_pronouns' => 'Manage pronouns',
+    'personalize_title_manage_genders' => 'Manage genders',
+    'personalize_title_manage_adress_types' => 'Manage address types',
+    'personalize_title_manage_contact_information_types' => 'Manage contact information types',
+    'personalize_title_manage_call_reasons' => 'Manage call reasons',
+    'personalize_title_manage_pet_categories' => 'Manage pet categories',
+    'personalize_title_manage_gift_occasions' => 'Manage gift occasions',
+    'personalize_title_manage_gift_states' => 'Manage gift states',
+    'personalize_title_manage_currencies' => 'Manage currencies',
+    'personalize_title_manage_religions' => 'Manage religions',
+    'personalize_title_post_templates' => 'Manage post templates',
 
     /***************************************************************
      * PERSONNALIZE TEMPLATES
@@ -179,7 +185,7 @@ return [
     'personalize_relationship_types_help_2' => 'a father-son relation—shown on the father page,',
     'personalize_relationship_types_help_3' => 'a son-father relation—shown on the son page.',
     'personalize_relationship_types_help_4' => 'We call them a relation, and its reverse relation. For each relation you define, you need to define its counterpart.',
-    'personalize_relationship_types_new_name' =>'Name of the group type',
+    'personalize_relationship_types_new_name' => 'Name of the group type',
     'personalize_relationship_types_new_relationship_name' => 'Name of the relationship',
     'personalize_relationship_types_new_relationship_reverse_name' => 'Name of the reverse relationship',
     'personalize_relationship_types_add_relationship' => 'Add a relationship type',
@@ -187,8 +193,65 @@ return [
     'personalize_relationship_types_group_update_success' => 'The group type has been updated',
     'personalize_relationship_types_group_destroy_confirm' => 'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
     'personalize_relationship_types_group_destroy_success' => 'The group type has been deleted',
-    'personalize_relationship_types_new_success' =>'The relationship type has been created',
-    'personalize_relationship_types_update_success' =>'The relationship type has been updated',
+    'personalize_relationship_types_new_success' => 'The relationship type has been created',
+    'personalize_relationship_types_update_success' => 'The relationship type has been updated',
     'personalize_relationship_types_destroy_confirm' => 'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
-    'personalize_relationship_types_destroy_success' =>'The relationship type has been deleted',
+    'personalize_relationship_types_destroy_success' => 'The relationship type has been deleted',
+
+    /***************************************************************
+     * PERSONNALIZE POST TEMPLATES
+     **************************************************************/
+
+    'personalize_post_templates_title' => 'Post templates',
+    'personalize_post_templates_cta' => 'Add a post template',
+    'personalize_post_templates_help' => 'A post template defines how the content of a post should be displayed. You can define as many templates as you want, and choose which template should be used on which post.',
+    'personalize_post_templates_new_name' => 'Name',
+    'personalize_post_templates_default_template' => 'Regular post',
+    'personalize_post_templates_default_template_section' => 'Content',
+    'personalize_post_templates_default_template_inspirational' => 'Inspirational post',
+    'personalize_post_templates_default_template_section_grateful' => 'I am grateful for',
+    'personalize_post_templates_default_template_section_daily_affirmation' => 'Daily affirmation',
+    'personalize_post_templates_default_template_section_better' => 'How could I have done this day better?',
+    'personalize_post_templates_default_template_section_day' => 'What would make today great?',
+    'personalize_post_templates_default_template_section_three_things' => 'Three things that happened today',
+
+    /***************************************************************
+     * PERSONNALIZE CONTACT TYPE INFORMATION
+     **************************************************************/
+
+    'personalize_contact_information_types_title' => 'All the contact information types',
+    'personalize_contact_information_types_cta' => 'Add a type',
+    'personalize_contact_information_types_new_name' => 'Name',
+    'personalize_contact_information_types_new_protocol' => 'Protocol',
+    'personalize_contact_information_types_new_protocol_help' => 'A contact information can be clickable. For instance, a phone number can be clickable and launch the default application in your computer. If you do not know the protocol for the type you are adding, you can simply omit this field.',
+    'personalize_contact_information_types_protocol' => 'Protocol: :name',
+    'personalize_contact_information_types_blank' => 'Contact information types let you define how you can contact all your contacts (phone, email, …).',
+    'personalize_contact_information_types_new_success' => 'The contact information type has been created',
+    'personalize_contact_information_types_edit_success' => 'The contact information type has been updated',
+    'personalize_contact_information_types_delete_success' => 'The contact information type has been deleted',
+    'personalize_contact_information_types_blank' => 'Are you sure? This will remove the contact information types from all contacts, but won’t delete the contacts themselves.',
+
+    /***************************************************************
+     * STORAGE
+     **************************************************************/
+
+    'storage_title' => 'Storage',
+    'storage_account_limit' => 'Your account limit',
+    'storage_account_current_usage' => 'Your account current usage',
+    'storage_type_document' => 'Documents',
+    'storage_type_avatar' => 'Avatars',
+    'storage_type_photo' => 'Photos',
+
+    /***************************************************************
+     * RELIGIONS
+     **************************************************************/
+
+    'religion_title' => 'All the religions',
+    'religion_blank' => 'Religions is all about faith.',
+    'religion_cta' => 'Add a religion',
+    'religion_name' => 'Name',
+    'religion_new_success' => 'The religion has been created',
+    'religion_update_success' => 'The religion has been updated',
+    'religion_delete_success' => 'The religion has been deleted',
+    'religion_delete_warning' => 'Are you sure? This can not be undone.',
 ];

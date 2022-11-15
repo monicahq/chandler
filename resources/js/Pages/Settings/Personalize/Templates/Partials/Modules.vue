@@ -1,35 +1,16 @@
-<style lang="scss" scoped>
-.item-list {
-  &:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div>
     <div class="mb-4 mt-8 items-center justify-between border-b pb-3 sm:mt-0 sm:flex">
       <h3>{{ $t('settings.personalize_template_show_module_title') }}</h3>
+
+      <!-- add module -->
       <pretty-button
         v-if="!addModuleModalShown && moduleLoaded"
         :text="$t('settings.personalize_template_show_module_cta')"
         :icon="'plus'"
         @click="showModuleModal" />
+
+      <!-- cancel button -->
       <pretty-button
         v-if="addModuleModalShown && moduleLoaded"
         :text="$t('app.cancel')"
@@ -37,14 +18,17 @@
     </div>
 
     <!-- list of all the existing modules -->
-    <ul v-if="addModuleModalShown" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm">
+    <ul
+      v-if="addModuleModalShown"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <li
+        class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm dark:border-gray-700 dark:bg-slate-900 dark:bg-slate-900">
         {{ $t('settings.personalize_template_show_module_available_modules') }}
       </li>
       <li
         v-for="module in localAllModules"
         :key="module.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-2 pr-5 hover:bg-slate-50">
+        class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <span>{{ module.name }}</span>
         <span
           v-if="!module.already_used"
@@ -59,7 +43,9 @@
     </ul>
 
     <!-- list of modules -->
-    <ul v-if="localPageModules.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <ul
+      v-if="localPageModules.length > 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <draggable
         :list="localPageModules"
         item-key="id"
@@ -67,7 +53,8 @@
         handle=".handle"
         @change="updatePosition">
         <template #item="{ element }">
-          <div class="item-list flex items-center border-b border-gray-200 py-2 pl-2 pr-5 hover:bg-slate-50">
+          <div
+            class="item-list flex items-center border-b border-gray-200 py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- anchor to move module -->
             <div class="mr-2">
               <svg
@@ -107,14 +94,14 @@
 
     <!-- blank state -->
     <div v-if="localPageModules.length == 0 && moduleLoaded">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">
+      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
         {{ $t('settings.personalize_template_show_module_add_module') }}
       </p>
     </div>
 
     <!-- no page selected -->
     <div v-if="!moduleLoaded">
-      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center">
+      <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
         {{ $t('settings.personalize_template_show_module_select') }}
       </p>
     </div>
@@ -122,7 +109,7 @@
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import draggable from 'vuedraggable';
 
 export default {
@@ -133,8 +120,8 @@ export default {
 
   props: {
     data: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: null,
     },
   },
 
@@ -188,7 +175,7 @@ export default {
     remove(module) {
       axios
         .delete(module.url.destroy)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('settings.personalize_template_show_module_remove_success'), 'success');
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = false;
 
@@ -206,7 +193,7 @@ export default {
 
       axios
         .post(event.moved.element.url.position, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
         })
         .catch((error) => {
@@ -217,3 +204,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

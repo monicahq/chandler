@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Domains\Vault\ManageVault\Web\ViewHelpers;
 
+use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
-use App\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class VaultIndexViewHelperTest extends TestCase
 {
@@ -27,7 +27,7 @@ class VaultIndexViewHelperTest extends TestCase
         $this->be($user);
 
         $array = VaultIndexViewHelper::layoutData($vault);
-        $this->assertCount(4, $array);
+        $this->assertCount(3, $array);
         $this->assertEquals(
             [
                 'id' => $user->id,
@@ -46,6 +46,10 @@ class VaultIndexViewHelperTest extends TestCase
                 'url' => [
                     'dashboard' => env('APP_URL').'/vaults/'.$vault->id,
                     'contacts' => env('APP_URL').'/vaults/'.$vault->id.'/contacts',
+                    'journals' => env('APP_URL').'/vaults/'.$vault->id.'/journals',
+                    'groups' => env('APP_URL').'/vaults/'.$vault->id.'/groups',
+                    'tasks' => env('APP_URL').'/vaults/'.$vault->id.'/tasks',
+                    'files' => env('APP_URL').'/vaults/'.$vault->id.'/files',
                     'settings' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
                     'search' => env('APP_URL').'/vaults/'.$vault->id.'/search',
                     'get_most_consulted_contacts' => env('APP_URL').'/vaults/'.$vault->id.'/search/user/contact/mostConsulted',

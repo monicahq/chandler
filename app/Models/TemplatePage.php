@@ -17,12 +17,13 @@ class TemplatePage extends Model
      * Possible template page types.
      */
     public const TYPE_CONTACT = 'contact_information';
+
     public const TYPE_FEED = 'feed';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'template_id',
@@ -36,7 +37,7 @@ class TemplatePage extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'position' => 'integer',
@@ -60,6 +61,7 @@ class TemplatePage extends Model
      */
     public function modules(): BelongsToMany
     {
-        return $this->belongsToMany(Module::class, 'module_template_page')->withTimestamps();
+        return $this->belongsToMany(Module::class, 'module_template_page')
+            ->withTimestamps();
     }
 }

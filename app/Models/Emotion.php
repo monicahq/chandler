@@ -16,13 +16,15 @@ class Emotion extends Model
      * Possible category.
      */
     public const TYPE_POSITIVE = 'positive';
+
     public const TYPE_NEUTRAL = 'neutral';
+
     public const TYPE_NEGATIVE = 'negative';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'account_id',

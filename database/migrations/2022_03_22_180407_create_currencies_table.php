@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -13,9 +14,6 @@ return new class () extends Migration {
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('code');

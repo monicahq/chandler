@@ -1,100 +1,129 @@
 <?php
 
-use App\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
-use App\Contact\ManageContact\Web\Controllers\ContactArchiveController;
-use App\Contact\ManageContact\Web\Controllers\ContactController;
-use App\Contact\ManageContact\Web\Controllers\ContactLabelController;
-use App\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
-use App\Contact\ManageContact\Web\Controllers\ContactPageController;
-use App\Contact\ManageContact\Web\Controllers\ContactTemplateController;
-use App\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
-use App\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
-use App\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
-use App\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
-use App\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
-use App\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
-use App\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
-use App\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
-use App\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
-use App\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
-use App\Contact\ManageNotes\Web\Controllers\ContactNotesController;
-use App\Contact\ManagePets\Web\Controllers\ContactModulePetController;
-use App\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
-use App\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
-use App\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
+use App\Domains\Contact\ManageAvatar\Web\Controllers\ModuleAvatarController;
+use App\Domains\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactArchiveController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactFavoriteController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactLabelController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactPageController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactTemplateController;
+use App\Domains\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressController;
+use App\Domains\Contact\ManageContactAddresses\Web\Controllers\ContactModuleAddressImageController;
+use App\Domains\Contact\ManageContactFeed\Web\Controllers\ContactFeedController;
+use App\Domains\Contact\ManageContactImportantDates\Web\Controllers\ContactImportantDatesController;
+use App\Domains\Contact\ManageContactInformation\Web\Controllers\ContactInformationController;
+use App\Domains\Contact\ManageDocuments\Web\Controllers\ContactModuleDocumentController;
+use App\Domains\Contact\ManageGoals\Web\Controllers\ContactGoalController;
+use App\Domains\Contact\ManageGoals\Web\Controllers\ContactModuleGoalController;
+use App\Domains\Contact\ManageGoals\Web\Controllers\ContactModuleStreakController;
+use App\Domains\Contact\ManageGroups\Web\Controllers\ContactModuleGroupController;
+use App\Domains\Contact\ManageGroups\Web\Controllers\GroupController;
+use App\Domains\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
+use App\Domains\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
+use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
+use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
+use App\Domains\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
+use App\Domains\Contact\ManageNotes\Web\Controllers\ContactNotesController;
+use App\Domains\Contact\ManagePets\Web\Controllers\ContactModulePetController;
+use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactModulePhotoController;
+use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactPhotoController;
+use App\Domains\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
+use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionController;
+use App\Domains\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
+use App\Domains\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
+use App\Domains\Settings\CancelAccount\Web\Controllers\CancelAccountController;
+use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
+use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivityTypesController;
+use App\Domains\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
+use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
+use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
+use App\Domains\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
+use App\Domains\Settings\ManageCurrencies\Web\Controllers\CurrencyController;
+use App\Domains\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
+use App\Domains\Settings\ManageGenders\Web\Controllers\ManageGenderController;
+use App\Domains\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionController;
+use App\Domains\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionsPositionController;
+use App\Domains\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController;
+use App\Domains\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
+use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeController;
+use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
+use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
+use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRolePositionController;
+use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
+use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
+use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
+use App\Domains\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotificationsController;
+use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
+use App\Domains\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
+use App\Domains\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
+use App\Domains\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateController;
+use App\Domains\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplatePositionController;
+use App\Domains\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateSectionController;
+use App\Domains\Settings\ManagePostTemplates\Web\Controllers\PersonalizePostTemplateSectionPositionController;
+use App\Domains\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
+use App\Domains\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
+use App\Domains\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
+use App\Domains\Settings\ManageReligion\Web\Controllers\PersonalizeReligionController;
+use App\Domains\Settings\ManageReligion\Web\Controllers\PersonalizeReligionsPositionController;
+use App\Domains\Settings\ManageSettings\Web\Controllers\SettingsController;
+use App\Domains\Settings\ManageStorage\Web\Controllers\AccountStorageController;
+use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
+use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
+use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
+use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
+use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesHelpController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
+use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
+use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
+use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
+use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
+use App\Domains\Vault\Search\Web\Controllers\VaultContactSearchController;
+use App\Domains\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
+use App\Domains\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
-use App\Settings\CancelAccount\Web\Controllers\CancelAccountController;
-use App\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
-use App\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivityTypesController;
-use App\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
-use App\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
-use App\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
-use App\Settings\ManageContactInformationTypes\Web\Controllers\PersonalizeContatInformationTypesController;
-use App\Settings\ManageCurrencies\Web\Controllers\CurrencyController;
-use App\Settings\ManageCurrencies\Web\Controllers\PersonalizeCurrencyController;
-use App\Settings\ManageGenders\Web\Controllers\ManageGenderController;
-use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionController;
-use App\Settings\ManageGiftOccasions\Web\Controllers\PersonalizeGiftOccasionsPositionController;
-use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStateController;
-use App\Settings\ManageGiftStates\Web\Controllers\PersonalizeGiftStatesPositionController;
-use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeController;
-use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
-use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
-use App\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRolePositionController;
-use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
-use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
-use App\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
-use App\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsTestController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsToggleController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\NotificationsVerificationController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramNotificationsController;
-use App\Settings\ManageNotificationChannels\Web\Controllers\TelegramWebhookController;
-use App\Settings\ManagePersonalization\Web\Controllers\PersonalizeController;
-use App\Settings\ManagePetCategories\Web\Controllers\PersonalizePetCategoriesController;
-use App\Settings\ManagePronouns\Web\Controllers\PersonalizePronounController;
-use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipController;
-use App\Settings\ManageRelationshipTypes\Web\Controllers\PersonalizeRelationshipTypeController;
-use App\Settings\ManageSettings\Web\Controllers\SettingsController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePageModulesPositionController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagePositionController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePagesController;
-use App\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOrderController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
-use App\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
-use App\Settings\ManageUsers\Web\Controllers\UserController;
-use App\Vault\ManageVault\Web\Controllers\VaultController;
-use App\Vault\ManageVault\Web\Controllers\VaultReminderController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
-use App\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
-use App\Vault\Search\Web\Controllers\VaultContactSearchController;
-use App\Vault\Search\Web\Controllers\VaultMostConsultedContactsController;
-use App\Vault\Search\Web\Controllers\VaultSearchController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Auth\SocialiteCallbackController;
+use App\Http\Controllers\Profile\UserTokenController;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return Auth::check()
+        ? redirect()->intended(RouteServiceProvider::HOME)
+        : redirect()->route('login');
+})->name('home');
 
-require __DIR__.'/auth.php';
+Route::middleware(['throttle:oauth2-socialite'])->group(function () {
+    Route::get('auth/{driver}', [SocialiteCallbackController::class, 'login'])->name('login.provider');
+    Route::get('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
+    Route::post('auth/{driver}/callback', [SocialiteCallbackController::class, 'callback']);
+});
 
 Route::get('invitation/{code}', [AcceptInvitationController::class, 'show'])->name('invitation.show');
 Route::post('invitation', [AcceptInvitationController::class, 'store'])->name('invitation.store');
@@ -104,7 +133,11 @@ Route::post(
     [TelegramWebhookController::class, 'store']
 );
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vault.index');
@@ -113,7 +146,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+
+            // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
+
+            // vault feed entries
+            Route::get('feed', [VaultFeedController::class, 'show'])->name('vault.feed.show');
+
+            // tasks
+            Route::get('tasks', [VaultTaskController::class, 'index'])->name('vault.tasks.index');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -126,15 +167,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                 // contact page
                 Route::middleware(['contact'])->prefix('{contact}')->group(function () {
+                    // general page information
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
                     Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
+
+                    // toggle archive/favorite
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
+                    Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
+
+                    // template
                     Route::get('update-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
 
+                    // get the proper tab
                     Route::get('tabs/{slug}', [ContactPageController::class, 'show'])->name('contact.page.show');
+
+                    // avatar
+                    Route::put('avatar', [ModuleAvatarController::class, 'update'])->name('contact.avatar.update');
+                    Route::delete('avatar', [ModuleAvatarController::class, 'destroy'])->name('contact.avatar.destroy');
+
+                    // contact feed entries
+                    Route::get('feed', [ContactFeedController::class, 'show'])->name('contact.feed.show');
 
                     // important dates
                     Route::get('dates', [ContactImportantDatesController::class, 'index'])->name('contact.date.index');
@@ -149,11 +204,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::delete('notes/{note}', [ContactModuleNoteController::class, 'destroy'])->name('contact.note.destroy');
 
                     // goals
+                    Route::get('goals/{goal}', [ContactGoalController::class, 'show'])->name('contact.goal.show');
                     Route::post('goals', [ContactModuleGoalController::class, 'store'])->name('contact.goal.store');
-                    Route::put('goals/{goal}', [ContactModuleGoalController::class, 'update'])->name('contact.goal.update');
-                    Route::get('goals/{goal}', [ContactModuleGoalController::class, 'show'])->name('contact.goal.show');
+                    Route::put('goals/{goal}', [ContactGoalController::class, 'update'])->name('contact.goal.update');
                     Route::put('goals/{goal}/streaks', [ContactModuleStreakController::class, 'update'])->name('contact.goal.streak.update');
-                    Route::delete('goals/{goal}', [ContactModuleGoalController::class, 'destroy'])->name('contact.goal.destroy');
+                    Route::delete('goals/{goal}', [ContactGoalController::class, 'destroy'])->name('contact.goal.destroy');
 
                     // labels
                     Route::post('labels', [ContactModuleLabelController::class, 'store'])->name('contact.label.store');
@@ -169,6 +224,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('addresses', [ContactModuleAddressController::class, 'store'])->name('contact.address.store');
                     Route::put('addresses/{address}', [ContactModuleAddressController::class, 'update'])->name('contact.address.update');
                     Route::delete('addresses/{address}', [ContactModuleAddressController::class, 'destroy'])->name('contact.address.destroy');
+                    Route::get('addresses/{address}/image/{width}x{height}', [ContactModuleAddressImageController::class, 'show'])
+                        ->where('width', '.*')
+                        ->where('height', '.*')
+                        ->name('contact.address.image.show');
+
+                    // contact information
+                    Route::post('contactInformation', [ContactInformationController::class, 'store'])->name('contact.contact_information.store');
+                    Route::put('contactInformation/{info}', [ContactInformationController::class, 'update'])->name('contact.contact_information.update');
+                    Route::delete('contactInformation/{info}', [ContactInformationController::class, 'destroy'])->name('contact.contact_information.destroy');
 
                     // loans
                     Route::post('loans', [ContactModuleLoanController::class, 'store'])->name('contact.loan.store');
@@ -180,6 +244,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('companies/list', [ContactModuleJobInformationController::class, 'index'])->name('contact.companies.list.index');
                     Route::put('jobInformation', [ContactModuleJobInformationController::class, 'update'])->name('contact.job_information.update');
 
+                    // religion
+                    Route::put('religion', [ContactModuleReligionController::class, 'update'])->name('contact.religion.update');
+
                     // relationships
                     Route::get('relationships/create', [ContactRelationshipsController::class, 'create'])->name('contact.relationships.create');
                     Route::post('relationships', [ContactRelationshipsController::class, 'store'])->name('contact.relationships.store');
@@ -189,6 +256,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('pets', [ContactModulePetController::class, 'store'])->name('contact.pet.store');
                     Route::put('pets/{pet}', [ContactModulePetController::class, 'update'])->name('contact.pet.update');
                     Route::delete('pets/{pet}', [ContactModulePetController::class, 'destroy'])->name('contact.pet.destroy');
+
+                    // documents
+                    Route::post('documents', [ContactModuleDocumentController::class, 'store'])->name('contact.document.store');
+                    Route::delete('documents/{document}', [ContactModuleDocumentController::class, 'destroy'])->name('contact.document.destroy');
+
+                    // photos
+                    Route::get('photos', [ContactPhotoController::class, 'index'])->name('contact.photo.index');
+                    Route::get('photos/{photo}', [ContactPhotoController::class, 'show'])->name('contact.photo.show');
+                    Route::post('photos', [ContactModulePhotoController::class, 'store'])->name('contact.photo.store');
+                    Route::delete('photos/{photo}', [ContactModulePhotoController::class, 'destroy'])->name('contact.photo.destroy');
 
                     // tasks
                     Route::get('tasks/completed', [ContactModuleTaskController::class, 'index'])->name('contact.task.index');
@@ -209,6 +286,51 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
             });
 
+            // group page
+            Route::get('groups', [GroupController::class, 'index'])->name('group.index');
+            Route::prefix('groups')->middleware(['group'])->group(function () {
+                Route::get('{group}', [GroupController::class, 'show'])->name('group.show');
+            });
+
+            // journal page
+            Route::prefix('journals')->group(function () {
+                Route::get('', [JournalController::class, 'index'])->name('journal.index');
+
+                // create a journal
+                Route::middleware(['atLeastVaultEditor'])->get('/create', [JournalController::class, 'create'])->name('journal.create');
+                Route::middleware(['atLeastVaultEditor'])->post('', [JournalController::class, 'store'])->name('journal.store');
+
+                Route::prefix('{journal}')->middleware(['journal'])->group(function () {
+                    Route::get('', [JournalController::class, 'show'])->name('journal.show');
+                    Route::get('years/{year}', [JournalController::class, 'year'])->name('journal.year');
+
+                    // posts
+                    Route::get('posts/create', [PostController::class, 'create'])->name('post.create');
+                    Route::get('posts/template/{template}', [PostController::class, 'store'])->name('post.store');
+
+                    // details of a post
+                    Route::prefix('posts/{post}')->middleware(['post'])->group(function () {
+                        Route::get('', [PostController::class, 'show'])->name('post.show');
+                        Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
+                        Route::put('update', [PostController::class, 'update'])->name('post.update');
+                        Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
+
+                        // tags
+                        Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
+                        Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
+                        Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
+                    });
+                });
+            });
+
+            // vault files
+            Route::prefix('files')->name('vault.files.')->group(function () {
+                Route::get('', [VaultFileController::class, 'index'])->name('index');
+                Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
+                Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
+                Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
+            });
+
             // vault settings
             Route::middleware(['atLeastVaultManager'])->group(function () {
                 Route::get('settings', [VaultSettingsController::class, 'index'])->name('vault.settings.index');
@@ -224,6 +346,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('settings/labels', [VaultSettingsLabelController::class, 'store'])->name('vault.settings.label.store');
                 Route::put('settings/labels/{label}', [VaultSettingsLabelController::class, 'update'])->name('vault.settings.label.update');
                 Route::delete('settings/labels/{label}', [VaultSettingsLabelController::class, 'destroy'])->name('vault.settings.label.destroy');
+
+                // tags
+                Route::get('settings/tags', [VaultSettingsTagController::class, 'index'])->name('vault.settings.tag.index');
+                Route::post('settings/tags', [VaultSettingsTagController::class, 'store'])->name('vault.settings.tag.store');
+                Route::put('settings/tags/{tag}', [VaultSettingsTagController::class, 'update'])->name('vault.settings.tag.update');
+                Route::delete('settings/tags/{tag}', [VaultSettingsTagController::class, 'destroy'])->name('vault.settings.tag.destroy');
 
                 // contact important date types
                 Route::post('settings/contactImportantDateTypes', [VaultSettingsContactImportantDateTypeController::class, 'store'])->name('vault.settings.important_date_type.store');
@@ -254,6 +382,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
             Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
+            Route::post('help', [PreferencesHelpController::class, 'store'])->name('help.store');
         });
 
         // notifications
@@ -345,6 +474,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('giftStates/{giftState}', [PersonalizeGiftStateController::class, 'destroy'])->name('gift_states.destroy');
                 Route::post('giftStates/{giftState}/position', [PersonalizeGiftStatesPositionController::class, 'update'])->name('gift_states.order.update');
 
+                // post templates
+                Route::get('postTemplates', [PersonalizePostTemplateController::class, 'index'])->name('post_templates.index');
+                Route::post('postTemplates', [PersonalizePostTemplateController::class, 'store'])->name('post_templates.store');
+                Route::put('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'update'])->name('post_templates.update');
+                Route::delete('postTemplates/{postTemplate}', [PersonalizePostTemplateController::class, 'destroy'])->name('post_templates.destroy');
+                Route::post('postTemplates/{postTemplate}/position', [PersonalizePostTemplatePositionController::class, 'update'])->name('post_templates.order.update');
+
+                // post template sections
+                Route::post('postTemplates/{postTemplate}/sections', [PersonalizePostTemplateSectionController::class, 'store'])->name('post_templates.section.store');
+                Route::put('postTemplates/{postTemplate}/sections/{section}', [PersonalizePostTemplateSectionController::class, 'update'])->name('post_templates.section.update');
+                Route::delete('postTemplates/{postTemplate}/sections/{section}', [PersonalizePostTemplateSectionController::class, 'destroy'])->name('post_templates.section.destroy');
+                Route::post('postTemplates/{postTemplate}/sections/{section}/position', [PersonalizePostTemplateSectionPositionController::class, 'update'])->name('post_templates.section.order.update');
+
                 // group types
                 Route::get('groupTypes', [PersonalizeGroupTypeController::class, 'index'])->name('group_types.index');
                 Route::post('groupTypes', [PersonalizeGroupTypeController::class, 'store'])->name('group_types.store');
@@ -420,7 +562,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::put('currencies/{currency}', [PersonalizeCurrencyController::class, 'update'])->name('currency.update');
                 Route::post('currencies', [PersonalizeCurrencyController::class, 'store'])->name('currency.store');
                 Route::delete('currencies', [PersonalizeCurrencyController::class, 'destroy'])->name('currency.destroy');
+
+                // religions
+                Route::get('religions', [PersonalizeReligionController::class, 'index'])->name('religions.index');
+                Route::post('religions', [PersonalizeReligionController::class, 'store'])->name('religions.store');
+                Route::put('religions/{religion}', [PersonalizeReligionController::class, 'update'])->name('religions.update');
+                Route::delete('religions/{religion}', [PersonalizeReligionController::class, 'destroy'])->name('religions.destroy');
+                Route::post('religions/{religion}/position', [PersonalizeReligionsPositionController::class, 'update'])->name('religions.order.update');
             });
+
+            // storage
+            Route::get('storage', [AccountStorageController::class, 'index'])->name('storage.index');
 
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');
@@ -430,4 +582,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // General stuff called by everyone/everywhere
     Route::get('currencies', [CurrencyController::class, 'index'])->name('currencies.index');
+
+    // User & Profile...
+    Route::delete('auth/{driver}', [UserTokenController::class, 'destroy'])->name('provider.delete');
 });

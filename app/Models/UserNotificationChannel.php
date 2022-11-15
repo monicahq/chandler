@@ -18,12 +18,13 @@ class UserNotificationChannel extends Model
      * Possible type.
      */
     public const TYPE_EMAIL = 'email';
+
     public const TYPE_TELEGRAM = 'telegram';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'user_id',
@@ -39,7 +40,7 @@ class UserNotificationChannel extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'active' => 'boolean',
@@ -83,6 +84,8 @@ class UserNotificationChannel extends Model
      */
     public function contactReminders(): BelongsToMany
     {
-        return $this->belongsToMany(ContactReminder::class, 'contact_reminder_scheduled')->withTimestamps()->withPivot('scheduled_at', 'triggered');
+        return $this->belongsToMany(ContactReminder::class, 'contact_reminder_scheduled')
+            ->withPivot('scheduled_at', 'triggered_at')
+            ->withTimestamps();
     }
 }

@@ -1,19 +1,13 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  top: -2px;
-}
-</style>
-
 <template>
   <div class="mb-4 grid grid-cols-2 gap-4">
     <!-- gender -->
     <div>
-      <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
+      <div class="mb-3 items-center justify-between border-b border-gray-200 dark:border-gray-700 sm:flex">
         <div class="mb-2 text-xs sm:mb-0">Gender</div>
         <inertia-link :href="data.url.edit" class="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600"
+            class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600 dark:text-gray-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -29,17 +23,17 @@
       <p v-if="data.gender" class="text-sm">
         {{ data.gender }}
       </p>
-      <p v-else class="text-sm text-gray-600">Not set</p>
+      <p v-else class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
     </div>
 
     <!-- pronoun -->
     <div>
-      <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
+      <div class="mb-3 items-center justify-between border-b border-gray-200 dark:border-gray-700 sm:flex">
         <div class="mb-2 text-xs sm:mb-0">Pronoun</div>
         <inertia-link :href="data.url.edit" class="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600"
+            class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600 dark:text-gray-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -55,7 +49,7 @@
       <p v-if="data.pronoun" class="text-sm">
         {{ data.pronoun }}
       </p>
-      <p v-else class="text-sm text-gray-600">Not set</p>
+      <p v-else class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
     </div>
   </div>
 </template>
@@ -70,3 +64,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  top: -2px;
+}
+</style>

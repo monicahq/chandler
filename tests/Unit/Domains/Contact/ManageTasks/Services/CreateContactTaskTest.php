@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageTasks\Services;
 
-use App\Contact\ManageTasks\Services\CreateContactTask;
+use App\Domains\Contact\ManageTasks\Services\CreateContactTask;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
@@ -90,6 +90,7 @@ class CreateContactTaskTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'label' => 'birthdate',
+            'due_at' => '1990-01-01',
         ];
 
         $contactTask = (new CreateContactTask())->execute($request);
@@ -98,6 +99,7 @@ class CreateContactTaskTest extends TestCase
             'id' => $contactTask->id,
             'contact_id' => $contact->id,
             'label' => 'birthdate',
+            'due_at' => '1990-01-01 00:00:00',
         ]);
     }
 }

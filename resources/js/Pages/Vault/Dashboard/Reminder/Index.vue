@@ -1,34 +1,13 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:mt-20 sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.dashboard" class="text-blue-500 hover:underline">
                 {{ $t('app.breadcrumb_dashboard_index') }}
@@ -44,7 +23,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_dashboard_reminders') }}</li>
+            <li class="inline">
+              {{ $t('app.breadcrumb_dashboard_reminders') }}
+            </li>
           </ul>
         </div>
       </div>
@@ -53,7 +34,7 @@
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title -->
-        <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+        <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
           <div class="mb-2 sm:mb-0">
             <span class="relative mr-1">
               <svg
@@ -81,36 +62,50 @@
               </svg>
             </span>
 
-            <span class="font-semibold">{{ $t('vault.reminders_title') }}</span>
+            <span class="font-semibold">
+              {{ $t('vault.reminders_title') }}
+            </span>
           </div>
         </div>
 
         <!-- reminders -->
         <div v-for="month in data" :key="month.id" class="mb-6">
           <!-- month name -->
-          <p class="mb-2 font-semibold">{{ month.month }}</p>
+          <p class="mb-2 font-semibold">
+            {{ month.month }}
+          </p>
 
           <!-- reminders -->
-          <ul v-if="month.reminders.length > 0" class="rounded-lg border border-gray-200 bg-white">
+          <ul
+            v-if="month.reminders.length > 0"
+            class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <li
               v-for="reminder in month.reminders"
               :key="reminder.id"
-              class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50">
+              class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <div class="items-center sm:flex">
-                <p class="mr-3 text-gray-400">{{ reminder.scheduled_at }}</p>
+                <p class="mr-3 text-gray-400">
+                  {{ reminder.scheduled_at }}
+                </p>
                 <div class="mr-2 flex items-center">
-                  <div v-html="reminder.contact.avatar" class="mr-2 h-4 w-4"></div>
+                  <avatar
+                    :data="reminder.contact.avatar"
+                    :classes="'h-4 w-4 mr-2 rounded-full ring-2 ring-white dark:ring-gray-900'" />
 
-                  <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">{{
-                    reminder.contact.name
-                  }}</inertia-link>
+                  <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">
+                    {{ reminder.contact.name }}
+                  </inertia-link>
                 </div>
-                <p class="">{{ reminder.label }}</p>
+                <p class="">
+                  {{ reminder.label }}
+                </p>
               </div>
             </li>
           </ul>
 
-          <p v-else class="text-sm text-gray-500">{{ $t('vault.reminders_blank') }}</p>
+          <p v-else class="text-sm text-gray-500">
+            {{ $t('vault.reminders_blank') }}
+          </p>
         </div>
       </div>
     </main>
@@ -118,11 +113,13 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
+import Layout from '@/Shared/Layout.vue';
+import Avatar from '@/Shared/Avatar.vue';
 
 export default {
   components: {
     Layout,
+    Avatar,
   },
 
   props: {
@@ -145,3 +142,26 @@ export default {
   methods: {},
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

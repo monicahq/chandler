@@ -1,33 +1,17 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings')
-              }}</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -40,9 +24,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings_personalize')
-              }}</inertia-link>
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings_personalize') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -54,7 +38,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_settings_personalize_templates') }}</li>
+            <li class="inline">
+              {{ $t('app.breadcrumb_settings_personalize_templates') }}
+            </li>
           </ul>
         </div>
       </div>
@@ -64,7 +50,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📐 </span> {{ $t('settings.personalize_templates_title') }}</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 📐 </span>
+            {{ $t('settings.personalize_templates_title') }}
+          </h3>
           <pretty-button
             v-if="!createTemplateModalShown"
             :text="$t('settings.personalize_templates_cta')"
@@ -73,7 +62,7 @@
         </div>
 
         <!-- help text -->
-        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 grow pr-2"
@@ -100,9 +89,9 @@
         <!-- modal to create a new template -->
         <form
           v-if="createTemplateModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-input
@@ -125,11 +114,13 @@
         </form>
 
         <!-- list of templates -->
-        <ul v-if="localTemplates.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <ul
+          v-if="localTemplates.length > 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li
             v-for="template in localTemplates"
             :key="template.id"
-            class="item-list border-b border-gray-200 hover:bg-slate-50">
+            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- detail of the template -->
             <div v-if="renameTemplateModalShownId != template.id" class="flex items-center justify-between px-5 py-2">
               <inertia-link :href="template.url.show" class="text-blue-500 hover:underline">
@@ -152,9 +143,9 @@
             <!-- rename a template modal -->
             <form
               v-if="renameTemplateModalShownId == template.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="update(template)">
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
@@ -182,8 +173,12 @@
         </ul>
 
         <!-- blank state -->
-        <div v-if="localTemplates.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-          <p class="p-5 text-center">{{ $t('settings.personalize_templates_blank') }}</p>
+        <div
+          v-if="localTemplates.length == 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <p class="p-5 text-center">
+            {{ $t('settings.personalize_templates_blank') }}
+          </p>
         </div>
       </div>
     </main>
@@ -191,11 +186,11 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import Layout from '@/Shared/Layout.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -291,7 +286,7 @@ export default {
       if (confirm(this.$t('settings.personalize_templates_destroy_confirmation'))) {
         axios
           .delete(template.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('settings.personalize_templates_destroy_success'), 'success');
             var id = this.localTemplates.findIndex((x) => x.id === template.id);
             this.localTemplates.splice(id, 1);
@@ -305,3 +300,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

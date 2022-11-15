@@ -4,6 +4,9 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckAdministratorPrivilege;
 use App\Http\Middleware\CheckContactAccess;
+use App\Http\Middleware\CheckGroupAccess;
+use App\Http\Middleware\CheckJournalAccess;
+use App\Http\Middleware\CheckPostAccess;
 use App\Http\Middleware\CheckVaultAccess;
 use App\Http\Middleware\CheckVaultPermissionAtLeastEditor;
 use App\Http\Middleware\CheckVaultPermissionAtLeastManager;
@@ -47,7 +50,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -61,6 +64,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+        'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -72,6 +77,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'vault' => CheckVaultAccess::class,
         'contact' => CheckContactAccess::class,
+        'group' => CheckGroupAccess::class,
+        'journal' => CheckJournalAccess::class,
+        'post' => CheckPostAccess::class,
         'administrator' => CheckAdministratorPrivilege::class,
         'atLeastVaultEditor' => CheckVaultPermissionAtLeastEditor::class,
         'atLeastVaultManager' => CheckVaultPermissionAtLeastManager::class,

@@ -2,27 +2,38 @@
 
 namespace App\Console\Commands;
 
-use App\Contact\ManageContact\Services\CreateContact;
-use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
-use App\Contact\ManageGoals\Services\CreateGoal;
-use App\Contact\ManageGoals\Services\ToggleStreak;
-use App\Contact\ManageNotes\Services\CreateNote;
-use App\Contact\ManageTasks\Services\CreateContactTask;
+use App\Domains\Contact\ManageContact\Services\CreateContact;
+use App\Domains\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
+use App\Domains\Contact\ManageGoals\Services\CreateGoal;
+use App\Domains\Contact\ManageGoals\Services\ToggleStreak;
+use App\Domains\Contact\ManageNotes\Services\CreateNote;
+use App\Domains\Contact\ManageTasks\Services\CreateContactTask;
+use App\Domains\Settings\CreateAccount\Services\CreateAccount;
+use App\Domains\Vault\ManageJournals\Services\CreateJournal;
+use App\Domains\Vault\ManageJournals\Services\CreatePost;
+use App\Domains\Vault\ManageVault\Services\CreateVault;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
+use App\Models\PostTemplate;
 use App\Models\User;
 use App\Models\Vault;
-use App\Settings\CreateAccount\Services\CreateAccount;
-use App\Vault\ManageVault\Services\CreateVault;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
+/**
+ * @codeCoverageIgnore
+ */
 class SetupDummyAccount extends Command
 {
+    use ConfirmableTrait;
+
     protected ?\Faker\Generator $faker;
+
     protected User $firstUser;
+
     protected User $secondUser;
 
     /**
@@ -30,7 +41,9 @@ class SetupDummyAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'monica:dummy';
+    protected $signature = 'monica:dummy
+                            {--migrate : Use migrate command instead of migrate:fresh.}
+                            {--force : Force the operation to run.}';
 
     /**
      * The console command description.
@@ -38,16 +51,6 @@ class SetupDummyAccount extends Command
      * @var string
      */
     protected $description = 'Prepare an account with fake data so users can play with it';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -64,12 +67,13 @@ class SetupDummyAccount extends Command
         $this->createNotes();
         $this->createTasks();
         $this->createGoals();
+        $this->createJournals();
         $this->stop();
     }
 
     private function start(): void
     {
-        if (! $this->confirm('Are you sure you want to proceed? This will delete ALL data in your environment.')) {
+        if (! $this->confirmToProceed('Are you sure you want to proceed? This will delete ALL data in your environment.', true)) {
             exit;
         }
 
@@ -79,12 +83,12 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/notes"');
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/contacts"');
-        shell_exec('curl -X DELETE "'.config('scout.meilisearch.host').'/indexes/groups"');
-        $this->artisan('☐ Reset search engine', 'monica:setup');
-        $this->artisan('☐ Migration of the database', 'migrate:fresh');
-        $this->artisan('☐ Symlink the storage folder', 'storage:link');
+        if ($this->hasOption('migrate') && $this->option('migrate')) {
+            $this->artisan('☐ Migration of the database', 'migrate', ['--force' => true]);
+        } else {
+            $this->artisan('☐ Migration of the database', 'migrate:fresh', ['--force' => true]);
+        }
+        $this->artisan('☐ Reset search engine', 'scout:setup', ['--force' => true]);
     }
 
     private function stop(): void
@@ -122,7 +126,6 @@ class SetupDummyAccount extends Command
         ]);
         $this->firstUser->email_verified_at = Carbon::now();
         $this->firstUser->save();
-        sleep(5);
     }
 
     private function createVaults(): void
@@ -251,6 +254,43 @@ class SetupDummyAccount extends Command
                             continue;
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private function createJournals(): void
+    {
+        $this->info('☐ Create journals');
+
+        $journals = collect([
+            'Road trip',
+            'My private diary',
+            'Journal of 2022',
+            'Incredible stories',
+        ]);
+
+        foreach (Vault::all() as $vault) {
+            foreach ($journals->take(rand(1, 4)) as $journal) {
+                $journal = (new CreateJournal())->execute([
+                    'account_id' => $this->firstUser->account_id,
+                    'author_id' => $this->firstUser->id,
+                    'vault_id' => $vault->id,
+                    'name' => $journal,
+                    'description' => rand(1, 2) == 1 ? $this->faker->sentence() : null,
+                ]);
+
+                for ($j = 0; $j < rand(1, 20); $j++) {
+                    (new CreatePost())->execute([
+                        'account_id' => $this->firstUser->account_id,
+                        'author_id' => $this->firstUser->id,
+                        'vault_id' => $vault->id,
+                        'journal_id' => $journal->id,
+                        'post_template_id' => PostTemplate::where('account_id', $this->firstUser->account_id)->inRandomOrder()->first()->id,
+                        'title' => $this->faker->sentence(),
+                        'published' => false,
+                        'written_at' => $this->faker->dateTimeThisYear()->format('Y-m-d'),
+                    ]);
                 }
             }
         }

@@ -1,38 +1,17 @@
-<style lang="scss" scoped>
-.grid-skeleton {
-  grid-template-columns: 1fr 2fr;
-}
-
-@media (max-width: 480px) {
-  .grid-skeleton {
-    grid-template-columns: 1fr;
-  }
-}
-
-.module-list {
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings')
-              }}</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -45,9 +24,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings_personalize')
-              }}</inertia-link>
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings_personalize') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -73,7 +52,7 @@
         </div>
 
         <!-- help text -->
-        <div class="mb-10 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+        <div class="mb-10 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 pr-2"
@@ -108,7 +87,7 @@
             <div>
               <!-- search a module -->
               <div
-                class="module-list rounded-t-md border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50">
+                class="module-list rounded-t-md border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <text-input
                   v-model="form.search"
                   :type="'text'"
@@ -121,11 +100,12 @@
               </div>
 
               <!-- list of modules -->
-              <ul class="h-80 overflow-auto rounded-b border border-gray-200 bg-white">
+              <ul
+                class="h-80 overflow-auto rounded-b border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                 <li
                   v-for="module in data.modules"
                   :key="module.id"
-                  class="module-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+                  class="module-list border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <span class="">{{ module.name }}</span>
                 </li>
               </ul>
@@ -133,13 +113,13 @@
           </div>
 
           <!-- middle -->
-          <div class="rounded-lg border border-gray-200">
-            <h3 class="border-b border-gray-200 px-5 py-2">Module details</h3>
+          <div class="rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">Module details</h3>
 
             <errors :errors="form.errors" />
 
             <!-- module details -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <text-input
                 v-model="form.search"
                 :type="'text'"
@@ -152,15 +132,17 @@
             </div>
 
             <!-- content of the module -->
-            <div class="border-b border-gray-200 bg-gray-100 p-5">
-              <div @click="addRow()" class="mb-2 rounded border border-gray-300 bg-white px-5 py-3 text-center">
+            <div class="border-b border-gray-200 bg-gray-100 p-5 dark:border-gray-700">
+              <div
+                class="mb-2 rounded border border-gray-300 bg-white px-5 py-3 text-center dark:bg-gray-900"
+                @click="addRow()">
                 + Add row
               </div>
 
               <div v-for="row in form.rows" :key="row.realId" class="mb-2">
-                <div class="rounded border border-gray-300 bg-white">
+                <div class="rounded border border-gray-300 bg-white dark:bg-gray-900">
                   <!-- row options -->
-                  <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs">
+                  <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                     <div>
                       <div class="relative mr-3 inline cursor-pointer">
                         <svg
@@ -180,7 +162,7 @@
                         <span>Add a field to the left</span>
                       </div>
 
-                      <div @click="addFieldToRight(row)" class="relative mr-2 inline cursor-pointer">
+                      <div class="relative mr-2 inline cursor-pointer" @click="addFieldToRight(row)">
                         <svg
                           class="mr-1 inline h-3 w-3"
                           viewBox="0 0 24 24"
@@ -199,7 +181,7 @@
                       </div>
                     </div>
 
-                    <div @click="destroyRow(row)" class="inline cursor-pointer text-red-500 hover:text-red-900">
+                    <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
                       <svg
                         class="mr-1 inline h-3 w-3"
                         viewBox="0 0 24 24"
@@ -220,9 +202,12 @@
 
                   <!-- row fields -->
                   <div class="grid auto-cols-fr grid-flow-col">
-                    <div v-for="field in row.fields" :key="field.id" class="border-r border-gray-200 last:border-r-0">
+                    <div
+                      v-for="field in row.fields"
+                      :key="field.id"
+                      class="border-r border-gray-200 last:border-r-0 dark:border-gray-700">
                       <!-- row options -->
-                      <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs">
+                      <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                         <div>
                           <div class="relative mr-3 inline cursor-pointer">
                             <svg
@@ -243,7 +228,7 @@
                           </div>
                         </div>
 
-                        <div @click="destroyRow(row)" class="inline cursor-pointer text-red-500 hover:text-red-900">
+                        <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
                           <svg
                             class="mr-1 inline h-3 w-3"
                             viewBox="0 0 24 24"
@@ -301,10 +286,10 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import PrettyLink from '@/Shared/Form/PrettyLink';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import TextInput from '@/Shared/Form/TextInput';
+import Layout from '@/Shared/Layout.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
 
 export default {
   components: {
@@ -320,8 +305,8 @@ export default {
       default: null,
     },
     data: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: null,
     },
   },
 
@@ -374,3 +359,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.grid-skeleton {
+  grid-template-columns: 1fr 2fr;
+}
+
+@media (max-width: 480px) {
+  .grid-skeleton {
+    grid-template-columns: 1fr;
+  }
+}
+
+.module-list {
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

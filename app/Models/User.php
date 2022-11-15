@@ -10,32 +10,38 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use LaravelWebauthn\WebauthnAuthenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasFactory;
     use HasApiTokens;
+    use TwoFactorAuthenticatable;
+    use WebauthnAuthenticatable;
 
     /**
      * Possible number format types.
      */
     public const NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL = '1,234.56';
+
     public const NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL = '1 234,56';
+
     public const NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL = '1234.56';
 
     /**
      * Possible maps site.
      */
     public const MAPS_SITE_GOOGLE_MAPS = 'google_maps';
+
     public const MAPS_SITE_OPEN_STREET_MAPS = 'open_street_maps';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'account_id',
@@ -53,26 +59,31 @@ class User extends Authenticatable implements MustVerifyEmail
         'timezone',
         'default_map_site',
         'locale',
+        'help_shown',
     ];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'invitation_accepted_at' => 'datetime',
         'is_account_administrator' => 'boolean',
+        'help_shown' => 'boolean',
     ];
 
     /**
@@ -92,7 +103,21 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function vaults(): BelongsToMany
     {
-        return $this->belongsToMany(Vault::class)->withTimestamps()->withPivot('permission');
+        return $this->belongsToMany(Vault::class)
+            ->withPivot('permission', 'contact_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the contact records associated with the user.
+     *
+     * @return BelongsToMany
+     */
+    public function contacts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class, 'contact_vault_user')
+            ->withPivot('is_favorite')
+            ->withTimestamps();
     }
 
     /**
@@ -149,20 +174,28 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getContactInVault(Vault $vault): ?Contact
     {
-        $contact = DB::table('user_vault')->where('vault_id', $vault->id)
-            ->where('user_id', $this->id)
-            ->first();
+        $entry = $this->vaults()
+                ->wherePivot('vault_id', $vault->id)
+                ->first();
 
-        if (! $contact) {
+        if ($entry === null) {
             return null;
         }
 
         try {
-            $contact = Contact::findOrFail($contact->contact_id);
+            return Contact::findOrFail($entry->pivot->contact_id);
         } catch (ModelNotFoundException) {
             return null;
         }
+    }
 
-        return $contact;
+    /**
+     * Get the user tokens for external login providers.
+     *
+     * @return HasMany
+     */
+    public function userTokens()
+    {
+        return $this->hasMany(UserToken::class);
     }
 }

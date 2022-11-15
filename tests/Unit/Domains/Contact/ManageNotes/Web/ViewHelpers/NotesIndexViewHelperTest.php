@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Domains\Contact\ManageNotes\Web\ViewHelpers;
 
-use App\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
-use App\Contact\ManageNotes\Web\ViewHelpers\NotesIndexViewHelper;
+use App\Domains\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
+use App\Domains\Contact\ManageNotes\Web\ViewHelpers\NotesIndexViewHelper;
 use App\Models\Contact;
 use App\Models\Emotion;
 use App\Models\Note;
 use App\Models\User;
 use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class NotesIndexViewHelperTest extends TestCase
 {

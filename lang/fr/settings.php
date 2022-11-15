@@ -6,12 +6,16 @@ return [
     'notification_channels' => 'Canaux de notifications',
     'account_settings' => 'Paramètres du compte',
     'manage_users' => 'Gestion des utilisateurs',
+    'manage_storage' => 'Gestion du stockage',
     'personalize_your_contacts_data' => 'Personnalisation des données de contacts',
     'cancel_your_account' => 'Annulation du compte',
 
     /***************************************************************
      * USER PREFERENCES
      **************************************************************/
+
+    'user_preferences_help_title' => 'Aide',
+    'user_preferences_help_current_language' => 'Afficher les liens d’aide dans l’interface pour vous aider (anglais seulement)',
 
     'user_preferences_locale_title' => 'Langue de l’application',
     'user_preferences_locale_current_language' => 'Langue courante :',
@@ -191,4 +195,31 @@ return [
     'personalize_relationship_types_update_success' => 'Le type de relation a été mis à jour',
     'personalize_relationship_types_destroy_confirm' => 'Êtes-vous sûr ? Cela va supprimer toutes les relations de ce type pour tous les contacts qui l’utilisaient.',
     'personalize_relationship_types_destroy_success' => 'Le type de relation a été supprimé',
+
+    /***************************************************************
+     * PERSONNALIZE CONTACT TYPE INFORMATION
+     **************************************************************/
+
+    'personalize_contact_information_types_title' => 'Tous les types d’information de contact',
+    'personalize_contact_information_types_cta' => 'Ajouter un type',
+    'personalize_contact_information_types_new_name' => 'Nom',
+    'personalize_contact_information_types_new_protocol' => 'Protocole',
+    'personalize_contact_information_types_new_protocol_help' => 'Une information de contact peut être cliquable. Par exemple, un numéro de téléphone peut être cliquable et ouvrir l’application par défaut sur votre ordinateur. Si vous ne connaissez pas le protocole pour le type que vous ajoutez, vous pouvez simplement omettre ce champ.',
+    'personalize_contact_information_types_protocol' => 'Protocole : :name',
+    'personalize_contact_information_types_blank' => 'Les types d’information de contact vous permettent de définir les moyens de communication avec vos contacts (téléphone, courriel, …).',
+    'personalize_contact_information_types_new_success' => 'Le type d’information de contact a été crée',
+    'personalize_contact_information_types_edit_success' => 'Le type d’information de contact a été mis à jour',
+    'personalize_contact_information_types_delete_success' => 'Le type d’information de contact a été supprimé',
+    'personalize_contact_information_types_blank' => 'Êtes-vous sûr ? Cela va supprimer toutes les informations de contact de ce type pour tous les contacts qui l’utilisaient, sans supprimer les contacts eux mêmes.',
+
+    /***************************************************************
+     * STORAGE
+     **************************************************************/
+
+    'storage_title' => 'Stockage',
+    'storage_account_limit' => 'La limite de votre compte',
+    'storage_account_current_usage' => 'Votre utilisation courante',
+    'storage_type_document' => 'Documents',
+    'storage_type_avatar' => 'Avatars',
+    'storage_type_photo' => 'Photos',
 ];

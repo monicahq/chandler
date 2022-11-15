@@ -1,23 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -34,7 +18,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Loans</span>
+        <span class="font-semibold"> Loans </span>
       </div>
       <pretty-button :text="'Record a loan'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateLoanModal" />
     </div>
@@ -43,11 +27,11 @@
       <!-- add a loan modal -->
       <form
         v-if="createLoanModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200"
+        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="submit()">
-        <div class="border-b border-gray-200">
+        <div class="border-b border-gray-200 dark:border-gray-700">
           <!-- loan options -->
-          <div class="border-b border-gray-200 px-5 pt-5 pb-3">
+          <div class="border-b border-gray-200 px-5 pt-5 pb-3 dark:border-gray-700">
             <ul class="">
               <li class="mr-5 inline-block">
                 <div class="flex items-center">
@@ -57,8 +41,10 @@
                     value="object"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="object"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     The loan is an object
                   </label>
                 </div>
@@ -72,8 +58,10 @@
                     value="monetary"
                     name="name-order"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="monetary"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     The loan is monetary
                   </label>
                 </div>
@@ -82,7 +70,7 @@
           </div>
 
           <!-- name -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'name'"
               v-model="form.name"
@@ -97,7 +85,7 @@
           </div>
 
           <!-- amount + currency -->
-          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
+          <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'label'"
               v-model="form.amount_lent"
@@ -123,37 +111,40 @@
           </div>
 
           <!-- loaned at -->
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <p class="mb-2 block text-sm">When was the loan made?</p>
 
-            <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+            <v-date-picker v-model="form.loaned_at" class="inline-block h-full" :model-config="modelConfig">
+              <template #default="{ inputValue, inputEvents }">
+                <input
+                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  :value="inputValue"
+                  v-on="inputEvents" />
               </template>
             </v-date-picker>
           </div>
 
           <!-- loaned by or to -->
-          <div class="flex items-center items-stretch border-b border-gray-200">
+          <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-700">
             <contact-selector
-              :search-url="this.layoutData.vault.url.search_contacts_only"
-              :most-consulted-contacts-url="this.layoutData.vault.url.get_most_consulted_contacts"
+              v-model="form.loaners"
+              :search-url="layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
               :display-most-consulted-contacts="false"
               :label="'Who makes the loan?'"
               :add-multiple-contacts="true"
               :required="true"
-              :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
-              v-model="form.loaners" />
+              :div-outer-class="'p-5 flex-1 border-r border-gray-200 dark:border-gray-700'" />
 
             <contact-selector
+              v-model="form.loanees"
               :search-url="layoutData.vault.url.search_contacts_only"
               :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
               :display-most-consulted-contacts="true"
               :label="'Who the loan is for?'"
               :add-multiple-contacts="true"
               :required="true"
-              :div-outer-class="'p-5 flex-1'"
-              v-model="form.loanees" />
+              :div-outer-class="'p-5 flex-1'" />
           </div>
 
           <!-- description -->
@@ -183,10 +174,7 @@
         <div v-if="editedLoanId != loan.id" class="mr-3 flex items-center">
           <div class="flex -space-x-2 overflow-hidden">
             <div v-for="loaner in loan.loaners" :key="loaner.id">
-              <small-contact
-                :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
-                :show-name="false"
-                :preview-contact-size="30" />
+              <contact-card :contact="loaner" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
             </div>
           </div>
 
@@ -201,17 +189,14 @@
           </svg>
 
           <div v-for="loanee in loan.loanees" :key="loanee.id">
-            <small-contact
-              :div-outer-class="'inline-block rounded-full ring-2 ring-white'"
-              :show-name="false"
-              :preview-contact-size="30" />
+            <contact-card :contact="loanee" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
           </div>
         </div>
 
         <div
           v-if="editedLoanId != loan.id"
-          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50">
-          <div class="border-b border-gray-200 px-3 py-2">
+          class="item-list w-full rounded-lg border border-gray-200 bg-white hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
+          <div class="border-b border-gray-200 px-3 py-2 dark:border-gray-700">
             <div class="flex items-center justify-between">
               <div>
                 <span class="mr-2 block">
@@ -220,11 +205,13 @@
                       {{ loan.currency_name }}
                     </span>
                     {{ loan.amount_lent }}
-                    <span class="ml-2">•</span>
+                    <span class="ml-2"> • </span>
                   </span>
                   {{ loan.name }}
                 </span>
-                <span v-if="loan.description">{{ loan.description }}</span>
+                <span v-if="loan.description">
+                  {{ loan.description }}
+                </span>
               </div>
               <span v-if="loan.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
                 loan.loaned_at_human_format
@@ -234,26 +221,25 @@
 
           <!-- actions -->
           <div class="flex items-center justify-between px-3 py-2">
-            <!-- <small-contact /> -->
             <ul class="text-sm">
               <!-- settle -->
               <li
                 v-if="!loan.settled"
-                @click="toggle(loan)"
-                class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+                class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+                @click="toggle(loan)">
                 Settle
               </li>
-              <li v-else @click="toggle(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+              <li v-else class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="toggle(loan)">
                 Revert
               </li>
 
               <!-- edit -->
-              <li @click="showEditLoanModal(loan)" class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+              <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(loan)">
                 Edit
               </li>
 
               <!-- delete -->
-              <li @click="destroy(loan)" class="inline cursor-pointer text-red-500 hover:text-red-900">
+              <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(loan)">
                 {{ $t('app.delete') }}
               </li>
             </ul>
@@ -263,11 +249,11 @@
         <!-- edit loan modal -->
         <form
           v-if="editedLoanId === loan.id"
-          class="bg-form mb-6 w-full rounded-lg border border-gray-200"
+          class="bg-form mb-6 w-full rounded-lg border border-gray-200 dark:border-gray-700"
           @submit.prevent="update(loan)">
-          <div class="border-b border-gray-200">
+          <div class="border-b border-gray-200 dark:border-gray-700">
             <!-- loan options -->
-            <div class="border-b border-gray-200 px-5 pt-5 pb-3">
+            <div class="border-b border-gray-200 px-5 pt-5 pb-3 dark:border-gray-700">
               <ul class="">
                 <li class="mr-5 inline-block">
                   <div class="flex items-center">
@@ -277,8 +263,10 @@
                       value="object"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="object" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="object"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       The loan is an object
                     </label>
                   </div>
@@ -292,8 +280,10 @@
                       value="monetary"
                       name="name-order"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="monetary" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="monetary"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       The loan is monetary
                     </label>
                   </div>
@@ -302,7 +292,7 @@
             </div>
 
             <!-- name -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <text-input
                 :ref="'name'"
                 v-model="form.name"
@@ -317,7 +307,7 @@
             </div>
 
             <!-- amount + currency -->
-            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5">
+            <div v-if="form.type === 'monetary'" class="flex border-b border-gray-200 p-5 dark:border-gray-700">
               <text-input
                 :ref="'label'"
                 v-model="form.amount_lent"
@@ -343,37 +333,40 @@
             </div>
 
             <!-- loaned at -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <p class="mb-2 block text-sm">When was the loan made?</p>
 
-              <v-date-picker class="inline-block h-full" v-model="form.loaned_at" :model-config="modelConfig">
-                <template v-slot="{ inputValue, inputEvents }">
-                  <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+              <v-date-picker v-model="form.loaned_at" class="inline-block h-full" :model-config="modelConfig">
+                <template #default="{ inputValue, inputEvents }">
+                  <input
+                    class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                    :value="inputValue"
+                    v-on="inputEvents" />
                 </template>
               </v-date-picker>
             </div>
 
             <!-- loaned by or to -->
-            <div class="flex items-center items-stretch border-b border-gray-200">
+            <div class="flex items-center items-stretch border-b border-gray-200 dark:border-gray-700">
               <contact-selector
+                v-model="form.loaners"
                 :search-url="layoutData.vault.url.search_contacts_only"
                 :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
                 :display-most-consulted-contacts="false"
                 :label="'Who makes the loan?'"
                 :add-multiple-contacts="true"
                 :required="true"
-                :div-outer-class="'p-5 flex-1 border-r border-gray-200'"
-                v-model="form.loaners" />
+                :div-outer-class="'p-5 flex-1 border-r border-gray-200 dark:border-gray-700'" />
 
               <contact-selector
+                v-model="form.loanees"
                 :search-url="layoutData.vault.url.search_contacts_only"
                 :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
                 :display-most-consulted-contacts="true"
                 :label="'Who the loan is for?'"
                 :add-multiple-contacts="true"
                 :required="true"
-                :div-outer-class="'p-5 flex-1'"
-                v-model="form.loanees" />
+                :div-outer-class="'p-5 flex-1'" />
             </div>
 
             <!-- description -->
@@ -401,21 +394,24 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="localLoans.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no loans yet.</p>
+    <div
+      v-if="localLoans.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_loan.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no loans yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
-import SmallContact from '@/Shared/SmallContact';
-import ContactSelector from '@/Shared/Form/ContactSelector';
-import Dropdown from '@/Shared/Form/Dropdown';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import TextArea from '@/Shared/Form/TextArea.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import ContactSelector from '@/Shared/Form/ContactSelector.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
+import ContactCard from '@/Shared/ContactCard.vue';
 
 export default {
   components: {
@@ -424,9 +420,9 @@ export default {
     TextInput,
     TextArea,
     Errors,
-    SmallContact,
     Dropdown,
     ContactSelector,
+    ContactCard,
   },
 
   props: {
@@ -504,12 +500,9 @@ export default {
 
     getCurrencies() {
       if (this.localCurrencies.length == 0) {
-        axios
-          .get(this.data.url.currencies, this.form)
-          .then((response) => {
-            this.localCurrencies = response.data.data;
-          })
-          .catch((error) => {});
+        axios.get(this.data.url.currencies, this.form).then((response) => {
+          this.localCurrencies = response.data.data;
+        });
       }
     },
 
@@ -556,7 +549,7 @@ export default {
       if (confirm('Are you sure? This will delete the loan permanently.')) {
         axios
           .delete(loan.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The loan has been deleted', 'success');
             var id = this.localLoans.findIndex((x) => x.id === loan.id);
             this.localLoans.splice(id, 1);
@@ -582,3 +575,19 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

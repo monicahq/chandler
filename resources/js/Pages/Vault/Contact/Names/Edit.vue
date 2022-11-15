@@ -1,18 +1,13 @@
-<style lang="scss" scoped>
-.section-head {
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:mt-20 sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 Contacts
@@ -51,11 +46,13 @@
 
     <main class="relative sm:mt-16">
       <div class="mx-auto max-w-lg px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <form class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-          <div class="section-head border-b border-gray-200 bg-blue-50 p-5">
+        <form
+          class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+          @submit.prevent="submit()">
+          <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">Edit a contact</h1>
           </div>
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <!-- first name -->
@@ -145,12 +142,12 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import PrettyLink from '@/Shared/Form/PrettyLink';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import TextInput from '@/Shared/Form/TextInput';
-import Dropdown from '@/Shared/Form/Dropdown';
-import Errors from '@/Shared/Form/Errors';
+import Layout from '@/Shared/Layout.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -217,3 +214,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.section-head {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+</style>

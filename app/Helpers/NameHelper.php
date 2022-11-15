@@ -2,9 +2,9 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Str;
 use App\Models\Contact;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class NameHelper
 {
@@ -34,7 +34,7 @@ class NameHelper
                 $variableName = $variableName.$char;
             } elseif ($char !== '%' && $variableFound) {
                 $variableName = $variableName.$char;
-            } elseif ($char === '%' && $variableFound) {
+            } elseif ($char === '%') {
                 // the variable has ended
                 // get rid of the first %
                 $variableName = substr($variableName, 1);
@@ -54,6 +54,10 @@ class NameHelper
         // from being displayed
         $completeName = str_replace('()', '', $completeName);
         $completeName = Str::of($completeName)->rtrim();
+
+        if (trim($completeName) === '') {
+            $completeName = trans('app.unknown_name');
+        }
 
         return $completeName;
     }

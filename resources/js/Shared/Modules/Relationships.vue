@@ -1,30 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -41,7 +18,7 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Relationships</span>
+        <span class="font-semibold"> Relationships </span>
       </div>
       <pretty-link :text="'Add a relationship'" :icon="'plus'" :href="data.url.create" :classes="'sm:w-fit w-full'" />
     </div>
@@ -57,14 +34,14 @@
         <!-- list of relationship types in this group -->
         <ul
           v-if="relationshipGroupType.relationship_types.length > 0"
-          class="mb-4 rounded-lg border border-gray-200 last:mb-0">
+          class="mb-4 rounded-lg border border-gray-200 last:mb-0 dark:border-gray-700">
           <li
             v-for="relationshipType in relationshipGroupType.relationship_types"
             :key="relationshipType.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+            class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <div class="flex">
               <div class="mr-2 flex items-center">
-                <div v-html="relationshipType.contact.avatar" class="mr-2 h-5 w-5"></div>
+                <avatar :data="relationshipType.contact.avatar" :classes="'mr-2 h-5 w-5'" />
 
                 <!-- name -->
                 <inertia-link
@@ -97,28 +74,23 @@
     </div>
 
     <!-- blank state -->
-    <div v-if="data.number_of_defined_relations == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no relationships yet.</p>
+    <div
+      v-if="data.number_of_defined_relations == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_relationship.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no relationships yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import PrettyLink from '@/Shared/Form/PrettyLink';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import Avatar from '@/Shared/Avatar.vue';
 
 export default {
   components: {
-    PrettyButton,
-    PrettySpan,
     PrettyLink,
-    TextInput,
-    TextArea,
-    Errors,
+    Avatar,
   },
 
   props: {
@@ -155,3 +127,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

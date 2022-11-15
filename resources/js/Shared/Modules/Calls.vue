@@ -1,30 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -41,31 +18,37 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Calls</span>
+        <span class="font-semibold"> Calls </span>
       </div>
-      <pretty-button @click="showCreateCallModal()" :text="'Log a call'" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+      <pretty-button :text="'Log a call'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateCallModal()" />
     </div>
 
     <!-- add a call modal -->
-    <form v-if="createCallModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
+    <form
+      v-if="createCallModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      @submit.prevent="submit()">
       <div>
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
         <!-- date -->
-        <div class="flex border-b border-gray-200">
+        <div class="flex border-b border-gray-200 dark:border-gray-700">
           <div class="p-5">
             <p class="mb-2 block text-sm">When did the call happened?</p>
-            <v-date-picker class="inline-block h-full" v-model="form.called_at" :model-config="modelConfig">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+            <v-date-picker v-model="form.called_at" class="inline-block h-full" :model-config="modelConfig">
+              <template #default="{ inputValue, inputEvents }">
+                <input
+                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  :value="inputValue"
+                  v-on="inputEvents" />
               </template>
             </v-date-picker>
           </div>
 
           <!-- audio or video -->
-          <div class="border-l border-gray-200 p-5">
+          <div class="border-l border-gray-200 p-5 dark:border-gray-700">
             <p class="mb-2 block text-sm">Nature of the call</p>
 
             <div class="flex">
@@ -76,8 +59,10 @@
                   value="audio"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                <label
+                  for="audio"
+                  class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   This was an audio-only call
                 </label>
               </div>
@@ -89,8 +74,10 @@
                   value="video"
                   name="type"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                <label
+                  for="video"
+                  class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   This was a video call
                 </label>
               </div>
@@ -99,7 +86,7 @@
         </div>
 
         <!-- who called -->
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <p class="mb-2 block text-sm">Who called?</p>
 
           <div class="mb-4 flex">
@@ -110,8 +97,10 @@
                 value="me"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700"> I called </label>
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                I called
+              </label>
             </div>
 
             <div class="flex items-center">
@@ -121,8 +110,10 @@
                 value="me_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="me_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              <label
+                for="me_not_answered"
+                class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 I called, but {{ data.contact_name }} didn't answer
               </label>
             </div>
@@ -136,8 +127,10 @@
                 value="contact"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="contact" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              <label
+                for="contact"
+                class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ data.contact_name }} called
               </label>
             </div>
@@ -149,8 +142,10 @@
                 value="contact_not_answered"
                 name="who_initiated"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="contact_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              <label
+                for="contact_not_answered"
+                class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ data.contact_name }} called, but I didn't answer
               </label>
             </div>
@@ -158,7 +153,7 @@
         </div>
 
         <!-- description field -->
-        <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5">
+        <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <text-area
             v-model="form.description"
             :label="'Description'"
@@ -169,13 +164,13 @@
         </div>
 
         <!-- reason field -->
-        <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5">
+        <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <p class="mb-2 block text-sm">Was there a reason for the call?</p>
           <select
+            id="types"
             v-model="form.call_reason_id"
             name="types"
-            id="types"
-            class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
+            class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm">
             <optgroup
               v-for="callReasonType in data.call_reason_types"
               :key="callReasonType.id"
@@ -188,24 +183,24 @@
         </div>
 
         <!-- emotion -->
-        <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5">
+        <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
           <p class="mb-2">How did you feel?</p>
           <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
             <input
-              :value="emotion.id"
-              v-model="form.emotion_id"
               :id="emotion.type"
+              v-model="form.emotion_id"
+              :value="emotion.id"
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-            <label :for="emotion.type" class="ml-2 block cursor-pointer font-medium text-gray-700">
+            <label :for="emotion.type" class="ml-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
               {{ emotion.name }}
             </label>
           </div>
         </div>
 
         <!-- options -->
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- cta to add a description -->
           <span
             v-if="!descriptionFieldShown"
@@ -239,8 +234,13 @@
     </form>
 
     <!-- calls -->
-    <ul v-if="localCalls.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
-      <li v-for="call in localCalls" :key="call.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+    <ul
+      v-if="localCalls.length > 0"
+      class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <li
+        v-for="call in localCalls"
+        :key="call.id"
+        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <div v-if="editedCallId !== call.id" class="flex items-center justify-between p-3">
           <div class="flex items-center">
             <div>
@@ -293,7 +293,7 @@
             <span v-if="call.reason">{{ call.reason.label }}</span>
 
             <!-- emotion -->
-            <div v-if="call.emotion" class="text-xs text-gray-600">
+            <div v-if="call.emotion" class="text-xs text-gray-600 dark:text-gray-400">
               {{ call.emotion.name }}
             </div>
           </div>
@@ -305,20 +305,23 @@
         <form v-if="editedCallId === call.id" class="bg-form" @submit.prevent="update(call)">
           <errors :errors="form.errors" />
 
-          <div class="border-b border-gray-200">
+          <div class="border-b border-gray-200 dark:border-gray-700">
             <!-- date -->
-            <div class="flex border-b border-gray-200">
+            <div class="flex border-b border-gray-200 dark:border-gray-700">
               <div class="p-5">
                 <p class="mb-2 block text-sm">When did the call happened?</p>
-                <v-date-picker class="inline-block h-full" v-model="form.called_at" :model-config="modelConfig">
-                  <template v-slot="{ inputValue, inputEvents }">
-                    <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                <v-date-picker v-model="form.called_at" class="inline-block h-full" :model-config="modelConfig">
+                  <template #default="{ inputValue, inputEvents }">
+                    <input
+                      class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                      :value="inputValue"
+                      v-on="inputEvents" />
                   </template>
                 </v-date-picker>
               </div>
 
               <!-- audio or video -->
-              <div class="border-l border-gray-200 p-5">
+              <div class="border-l border-gray-200 p-5 dark:border-gray-700">
                 <p class="mb-2 block text-sm">Nature of the call</p>
 
                 <div class="flex">
@@ -329,8 +332,10 @@
                       value="audio"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="audio" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="audio"
+                      class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       This was an audio-only call
                     </label>
                   </div>
@@ -342,8 +347,10 @@
                       value="video"
                       name="type"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="video" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="video"
+                      class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       This was a video call
                     </label>
                   </div>
@@ -352,7 +359,7 @@
             </div>
 
             <!-- who called -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <p class="mb-2 block text-sm">Who called?</p>
 
               <div class="mb-4 flex">
@@ -363,8 +370,12 @@
                     value="me"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="me" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700"> I called </label>
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="me"
+                    class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    I called
+                  </label>
                 </div>
 
                 <div class="flex items-center">
@@ -374,8 +385,10 @@
                     value="me_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="me_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="me_not_answered"
+                    class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     I called, but {{ data.contact_name }} didn't answer
                   </label>
                 </div>
@@ -389,8 +402,10 @@
                     value="contact"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="contact" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="contact"
+                    class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ data.contact_name }} called
                   </label>
                 </div>
@@ -402,8 +417,10 @@
                     value="contact_not_answered"
                     name="who_initiated"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="contact_not_answered" class="ml-2 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="contact_not_answered"
+                    class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ data.contact_name }} called, but I didn't answer
                   </label>
                 </div>
@@ -411,7 +428,7 @@
             </div>
 
             <!-- description field -->
-            <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5">
+            <div v-if="descriptionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
               <text-area
                 v-model="form.description"
                 :label="'Description'"
@@ -422,13 +439,13 @@
             </div>
 
             <!-- reason field -->
-            <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5">
+            <div v-if="reasonFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
               <p class="mb-2 block text-sm">Was there a reason for the call?</p>
               <select
+                id="types"
                 v-model="form.call_reason_id"
                 name="types"
-                id="types"
-                class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm">
+                class="w-full rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm">
                 <optgroup
                   v-for="callReasonType in data.call_reason_types"
                   :key="callReasonType.id"
@@ -441,24 +458,26 @@
             </div>
 
             <!-- emotion -->
-            <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5">
+            <div v-if="emotionFieldShown" class="border-b border-gray-200 p-5 dark:border-gray-700">
               <p class="mb-2">How did you feel?</p>
               <div v-for="emotion in data.emotions" :key="emotion.id" class="mb-2 flex items-center">
                 <input
-                  :value="emotion.id"
-                  v-model="form.emotion_id"
                   :id="emotion.type"
+                  v-model="form.emotion_id"
+                  :value="emotion.id"
                   name="emotion"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label :for="emotion.type" class="ml-2 block cursor-pointer font-medium text-gray-700">
+                <label
+                  :for="emotion.type"
+                  class="ml-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
                   {{ emotion.name }}
                 </label>
               </div>
             </div>
 
             <!-- options -->
-            <div class="border-b border-gray-200 p-5">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <!-- cta to add a description -->
               <span
                 v-if="!descriptionFieldShown"
@@ -494,26 +513,27 @@
     </ul>
 
     <!-- blank state -->
-    <div v-if="localCalls.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no calls logged yet.</p>
+    <div
+      v-if="localCalls.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_call.svg" class="mx-auto mt-4 h-20 w-20" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no calls logged yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import HoverMenu from '@/Shared/HoverMenu';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
+import HoverMenu from '@/Shared/HoverMenu.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextArea from '@/Shared/Form/TextArea.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
     HoverMenu,
     PrettyButton,
     PrettySpan,
-    TextInput,
     TextArea,
     Errors,
   },
@@ -655,7 +675,7 @@ export default {
       if (confirm('Are you sure?')) {
         axios
           .delete(call.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The call has been deleted', 'success');
             var id = this.localCalls.findIndex((x) => x.id === call.id);
             this.localCalls.splice(id, 1);
@@ -668,3 +688,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

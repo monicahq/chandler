@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Domains\Settings\CreateAccount\Services;
 
-use App\Jobs\CreateAuditLog;
-use App\Jobs\SetupAccount;
+use App\Domains\Settings\CreateAccount\Jobs\SetupAccount;
+use App\Domains\Settings\CreateAccount\Services\CreateAccount;
 use App\Models\User;
-use App\Settings\CreateAccount\Services\CreateAccount;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
@@ -35,6 +34,7 @@ class CreateAccountTest extends TestCase
     private function executeService(): void
     {
         Queue::fake();
+        config(['monica.default_storage_limit_in_mb' => 120]);
 
         $request = [
             'first_name' => 'john',
@@ -47,6 +47,7 @@ class CreateAccountTest extends TestCase
 
         $this->assertDatabaseHas('accounts', [
             'id' => $user->account->id,
+            'storage_limit_in_mb' => 120,
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -64,12 +65,7 @@ class CreateAccountTest extends TestCase
             $user
         );
 
-        Queue::assertPushed(SetupAccount::class, function ($job) use ($user) {
-            return $job->user === $user && $job->onQueue('high');
-        });
-
-        Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'account_created';
-        });
+        Queue::assertPushed(SetupAccount::class, fn ($job) => $job->data['author_id'] === $user->id);
+        Queue::assertPushedOn('high', SetupAccount::class);
     }
 }

@@ -15,7 +15,7 @@ class ContactTask extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contact_id',
@@ -25,12 +25,13 @@ class ContactTask extends Model
         'description',
         'completed',
         'completed_at',
+        'due_at',
     ];
 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'completed' => 'boolean',
@@ -43,6 +44,7 @@ class ContactTask extends Model
      */
     protected $dates = [
         'completed_at',
+        'due_at',
     ];
 
     /**

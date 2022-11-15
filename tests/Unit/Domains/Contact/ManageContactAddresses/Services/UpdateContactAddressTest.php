@@ -2,13 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
 
-use App\Contact\ManageContactAddresses\Services\UpdateContactAddress;
+use App\Domains\Contact\ManageContactAddresses\Jobs\FetchAddressGeocoding;
+use App\Domains\Contact\ManageContactAddresses\Services\UpdateContactAddress;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
 use App\Models\Account;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Contact;
+use App\Models\ContactFeedItem;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -175,8 +176,13 @@ class UpdateContactAddressTest extends TestCase
             $address
         );
 
-        Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_address_updated';
+        Queue::assertPushed(FetchAddressGeocoding::class, function ($job) use ($address) {
+            return $job->address->id === $address->id;
         });
+
+        $this->assertDatabaseHas('contact_feed_items', [
+            'contact_id' => $contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_ADDRESS_UPDATED,
+        ]);
     }
 }

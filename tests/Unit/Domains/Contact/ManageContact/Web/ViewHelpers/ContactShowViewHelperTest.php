@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContact\Web\ViewHelpers;
 
-use App\Contact\ManageContact\Web\ViewHelpers\ContactShowViewHelper;
+use App\Domains\Contact\ManageContact\Web\ViewHelpers\ContactShowViewHelper;
 use App\Models\Contact;
 use App\Models\Module;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Models\User;
 use App\Models\Vault;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ContactShowViewHelperTest extends TestCase
 {
@@ -48,7 +48,7 @@ class ContactShowViewHelperTest extends TestCase
         $array = ContactShowViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            8,
+            9,
             count($array)
         );
 
@@ -59,6 +59,7 @@ class ContactShowViewHelperTest extends TestCase
         $this->assertArrayHasKey('group_summary_information', $array);
         $this->assertArrayHasKey('modules', $array);
         $this->assertArrayHasKey('options', $array);
+        $this->assertArrayHasKey('avatar', $array);
         $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
@@ -83,6 +84,8 @@ class ContactShowViewHelperTest extends TestCase
                 'toggle_archive' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/toggle',
                 'update_template' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/update-template',
                 'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id,
+                'update_avatar' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/avatar',
+                'destroy_avatar' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/avatar',
             ],
             $array['url']
         );

@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Web\ViewHelpers;
 
-use App\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
+use App\Domains\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
 use App\Models\Address;
 use App\Models\AddressType;
 use App\Models\Contact;
 use App\Models\User;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleContactAddressesViewHelperTest extends TestCase
 {
@@ -103,11 +103,11 @@ class ModuleContactAddressesViewHelperTest extends TestCase
             [
                 'id' => $activeAddress->id,
                 'is_past_address' => false,
-                'street' => $activeAddress->street,
-                'city' => $activeAddress->city,
-                'province' => $activeAddress->province,
-                'postal_code' => $activeAddress->postal_code,
-                'country' => $activeAddress->country,
+                'street' => '123 main st',
+                'city' => 'montreal',
+                'province' => 'quebec',
+                'postal_code' => 'h1k 12k',
+                'country' => 'Canada',
                 'type' => [
                     'id' => $addressType->id,
                     'name' => 'super type',

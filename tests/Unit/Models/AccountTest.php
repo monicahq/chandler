@@ -15,10 +15,13 @@ use App\Models\GiftState;
 use App\Models\GroupType;
 use App\Models\Module;
 use App\Models\PetCategory;
+use App\Models\PostTemplate;
 use App\Models\Pronoun;
 use App\Models\RelationshipGroupType;
+use App\Models\Religion;
 use App\Models\Template;
 use App\Models\User;
+use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -200,5 +203,38 @@ class AccountTest extends TestCase
         ]);
 
         $this->assertTrue($account->giftStates()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_vaults()
+    {
+        $account = Account::factory()->create();
+        Vault::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->vaults()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_post_templates()
+    {
+        $account = Account::factory()->create();
+        PostTemplate::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->postTemplates()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_religions()
+    {
+        $account = Account::factory()->create();
+        Religion::factory(2)->create([
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertTrue($account->religions()->exists());
     }
 }

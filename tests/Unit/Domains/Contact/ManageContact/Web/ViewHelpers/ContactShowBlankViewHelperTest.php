@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContact\Web\ViewHelpers;
 
-use App\Contact\ManageContact\Web\ViewHelpers\ContactShowBlankViewHelper;
+use App\Domains\Contact\ManageContact\Web\ViewHelpers\ContactShowBlankViewHelper;
 use App\Models\Contact;
 use App\Models\Template;
 use App\Models\User;
 use App\Models\Vault;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ContactShowBlankViewHelperTest extends TestCase
 {

@@ -1,31 +1,17 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📐 </span> {{ $t('vault.settings_default_template_title') }}</h3>
+      <h3 class="mb-4 sm:mb-0">
+        <span class="mr-1"> 📐 </span>
+        {{ $t('vault.settings_default_template_title') }}
+      </h3>
     </div>
 
     <!-- help text -->
     <div class="mb-6 rounded border text-sm">
-      <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2">
+      <div
+        class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900 dark:bg-slate-900">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 grow pr-2"
@@ -47,17 +33,19 @@
       </div>
 
       <!-- list of templates -->
-      <ul v-if="localTemplates.length > 0" class="rounded-b bg-white">
+      <ul v-if="localTemplates.length > 0" class="rounded-b bg-white dark:bg-gray-900">
         <li
           v-for="template in localTemplates"
           :key="template.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div class="flex items-center justify-between px-5 py-2">
             <span>{{ template.name }}</span>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li v-if="template.is_default">{{ $t('vault.settings_default_template_current_default_status') }}</li>
+              <li v-if="template.is_default">
+                {{ $t('vault.settings_default_template_current_default_status') }}
+              </li>
               <li v-else class="inline cursor-pointer text-blue-500 hover:underline" @click="update(template)">
                 {{ $t('vault.settings_default_template_cta') }}
               </li>
@@ -68,7 +56,9 @@
 
       <!-- blank state -->
       <div v-if="localTemplates.length == 0">
-        <p class="p-5 text-center">{{ $t('vault.settings_default_template_blank') }}</p>
+        <p class="p-5 text-center">
+          {{ $t('vault.settings_default_template_blank') }}
+        </p>
       </div>
     </div>
   </div>
@@ -103,7 +93,7 @@ export default {
 
       axios
         .put(this.data.url.template_update, this.form)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('vault.settings_default_template_success'), 'success');
 
           // mark the previous default template as not default
@@ -123,3 +113,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

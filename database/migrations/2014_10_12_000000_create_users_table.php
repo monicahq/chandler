@@ -5,16 +5,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');
@@ -29,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('default_map_site')->default(User::MAPS_SITE_OPEN_STREET_MAPS);
             $table->string('password')->nullable();
             $table->boolean('is_account_administrator')->default(false);
+            $table->boolean('help_shown')->default(true);
             $table->string('invitation_code')->nullable();
             $table->dateTime('invitation_accepted_at')->nullable();
             $table->string('locale')->default('en');
@@ -58,4 +56,4 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('vaults');
     }
-}
+};

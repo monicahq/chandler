@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageCalls\Web\ViewHelpers;
 
-use App\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
+use App\Domains\Contact\ManageCalls\Web\ViewHelpers\ModuleCallsViewHelper;
 use App\Models\Call;
 use App\Models\Contact;
 use App\Models\Emotion;
 use App\Models\User;
 use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleCallsViewHelperTest extends TestCase
 {

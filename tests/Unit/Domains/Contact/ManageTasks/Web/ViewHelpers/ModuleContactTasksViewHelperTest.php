@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageTasks\Web\ViewHelpers;
 
-use App\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
+use App\Domains\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
 use App\Models\Contact;
 use App\Models\ContactTask;
 use App\Models\User;
 use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleContactTasksViewHelperTest extends TestCase
 {
@@ -62,6 +62,7 @@ class ModuleContactTasksViewHelperTest extends TestCase
         $user = User::factory()->create();
         $task = ContactTask::factory()->create([
             'contact_id' => $contact->id,
+            'due_at' => '2018-01-01',
         ]);
 
         $collection = ModuleContactTasksViewHelper::dtoTask($contact, $task, $user);
@@ -73,6 +74,8 @@ class ModuleContactTasksViewHelperTest extends TestCase
                 'description' => $task->description,
                 'completed' => false,
                 'completed_at' => null,
+                'due_at' => 'Jan 01, 2018',
+                'due_at_late' => false,
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id,
                     'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/tasks/'.$task->id.'/toggle',

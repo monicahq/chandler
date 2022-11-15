@@ -17,14 +17,17 @@ class ContactReminder extends Model
      * Possible type.
      */
     public const TYPE_ONE_TIME = 'one_time';
+
     public const TYPE_RECURRING_DAY = 'recurring_day';
+
     public const TYPE_RECURRING_MONTH = 'recurring_month';
+
     public const TYPE_RECURRING_YEAR = 'recurring_year';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contact_id',
@@ -64,6 +67,8 @@ class ContactReminder extends Model
      */
     public function userNotificationChannels(): BelongsToMany
     {
-        return $this->belongsToMany(UserNotificationChannel::class, 'contact_reminder_scheduled')->withTimestamps()->withPivot('scheduled_at', 'triggered');
+        return $this->belongsToMany(UserNotificationChannel::class, 'contact_reminder_scheduled')
+            ->withPivot('scheduled_at', 'triggered_at')
+            ->withTimestamps();
     }
 }

@@ -12,7 +12,7 @@ class ContactTaskFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
     protected $model = ContactTask::class;
 
@@ -29,6 +29,7 @@ class ContactTaskFactory extends Factory
             'author_name' => $this->faker->name,
             'label' => $this->faker->sentence(),
             'completed' => false,
+            'due_at' => $this->faker->dateTimeThisCentury(),
         ];
     }
 }

@@ -2,12 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactInformation\Services;
 
-use App\Contact\ManageContactInformation\Services\DestroyContactInformation;
+use App\Domains\Contact\ManageContactInformation\Services\DestroyContactInformation;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\ContactFeedItem;
 use App\Models\ContactInformation;
 use App\Models\ContactInformationType;
 use App\Models\User;
@@ -146,7 +145,6 @@ class DestroyContactInformationTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'contact_id' => $contact->id,
-            'contact_information_type_id' => $type->id,
             'contact_information_id' => $information->id,
         ];
 
@@ -156,12 +154,9 @@ class DestroyContactInformationTest extends TestCase
             'id' => $information->id,
         ]);
 
-        Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'contact_information_destroyed';
-        });
-
-        Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'contact_information_destroyed';
-        });
+        $this->assertDatabaseHas('contact_feed_items', [
+            'contact_id' => $contact->id,
+            'action' => ContactFeedItem::ACTION_CONTACT_INFORMATION_DESTROYED,
+        ]);
     }
 }

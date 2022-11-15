@@ -7,7 +7,9 @@ use App\Models\Contact;
 use App\Models\ContactImportantDateType;
 use App\Models\Gift;
 use App\Models\Group;
+use App\Models\Journal;
 use App\Models\Label;
+use App\Models\Tag;
 use App\Models\Template;
 use App\Models\User;
 use App\Models\Vault;
@@ -116,5 +118,27 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->gifts()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_journals(): void
+    {
+        $vault = Vault::factory()->create();
+        Journal::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->journals()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_tags(): void
+    {
+        $vault = Vault::factory()->create();
+        Tag::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->tags()->exists());
     }
 }

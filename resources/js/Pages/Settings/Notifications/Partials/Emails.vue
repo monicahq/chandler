@@ -1,31 +1,9 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div class="mb-8">
     <div class="mb-3 flex items-center justify-between">
-      <span class="dark:text-gray-200">{{ $t('settings.notification_channels_email_title') }}</span>
+      <span class="dark:text-gray-200">
+        {{ $t('settings.notification_channels_email_title') }}
+      </span>
 
       <pretty-button
         v-if="!addEmailModalShown"
@@ -37,9 +15,9 @@ select {
     <!-- add modal -->
     <form
       v-if="addEmailModalShown"
-      class="item-list bg-form mb-6 rounded-lg border border-b border-gray-200 hover:bg-slate-50"
+      class="item-list bg-form mb-6 rounded-lg border border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <!-- content -->
@@ -70,64 +48,39 @@ select {
           @esc-key-pressed="addEmailModalShown = false" />
 
         <!-- preferred time -->
-        <p class="mb-2 block text-sm">{{ $t('settings.notification_channels_email_at') }}</p>
-        <div class="flex items-center text-sm font-medium text-gray-700">
-          <span class="mr-2">{{ $t('settings.notification_channels_email_at_word') }}</span>
+        <p class="mb-2 block text-sm">
+          {{ $t('settings.notification_channels_email_at') }}
+        </p>
+        <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+          <span class="mr-2">
+            {{ $t('settings.notification_channels_email_at_word') }}
+          </span>
 
           <select
             v-model="form.hours"
-            class="mr-1 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+            class="mr-1 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
             :required="required">
-            <option value="00">00</option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-            <option value="08">08</option>
-            <option value="09">09</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="23">23</option>
+            <option v-for="n in 24" :key="n" :value="n - 1">
+              {{ String(n - 1).padStart(2, '0') }}
+            </option>
           </select>
 
-          <span class="mr-2">h:</span>
+          <span class="mr-2"> h: </span>
 
           <select
             v-model="form.minutes"
-            class="mr-1 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+            class="mr-1 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
             :required="required">
-            <option value="00">00</option>
-            <option value="05">05</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-            <option value="35">35</option>
-            <option value="40">40</option>
-            <option value="45">45</option>
-            <option value="50">50</option>
-            <option value="55">55</option>
+            <option v-for="n in 12" :key="n" :value="(n - 1) * 5">
+              {{ String((n - 1) * 5).padStart(2, '0') }}
+            </option>
           </select>
 
           <span>m</span>
         </div>
       </div>
 
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <p class="flex"><span class="mr-2">⚠️</span> {{ $t('settings.notification_channels_email_help') }}</p>
       </div>
 
@@ -138,11 +91,13 @@ select {
     </form>
 
     <!-- list of emails -->
-    <ul v-if="localEmails.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+    <ul
+      v-if="localEmails.length > 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <li
         v-for="email in localEmails"
         :key="email.id"
-        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+        class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
         <div class="flex items-center">
           <a-tooltip v-if="email.verified_at" placement="topLeft" title="Verified" arrow-point-at-center>
             <svg
@@ -163,7 +118,9 @@ select {
           <div>
             <span class="mb-0 block">{{ email.content }}</span>
             <ul class="bulleted-list mr-2 text-sm text-gray-500">
-              <li v-if="email.label" class="mr-1 inline">{{ email.label }}</li>
+              <li v-if="email.label" class="mr-1 inline">
+                {{ email.label }}
+              </li>
               <li class="inline">
                 {{ $t('settings.notification_channels_email_sent_at', { time: email.preferred_time }) }}
               </li>
@@ -202,9 +159,9 @@ select {
 
           <!-- view log -->
           <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
-            <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">{{
-              $t('settings.notification_channels_email_log')
-            }}</inertia-link>
+            <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">
+              {{ $t('settings.notification_channels_email_log') }}
+            </inertia-link>
           </li>
 
           <!-- delete email -->
@@ -215,7 +172,9 @@ select {
 
         <!-- actions when the email has NOT been verified -->
         <ul v-else class="text-sm">
-          <li class="mr-4 inline">{{ $t('settings.notification_channels_verif_email_sent') }}</li>
+          <li class="mr-4 inline">
+            {{ $t('settings.notification_channels_verif_email_sent') }}
+          </li>
 
           <!-- delete email -->
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(email)">
@@ -226,17 +185,19 @@ select {
     </ul>
 
     <!-- blank state -->
-    <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('settings.notification_channels_blank') }}</p>
+    <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <p class="p-5 text-center">
+        {{ $t('settings.notification_channels_blank') }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -289,7 +250,7 @@ export default {
     sendTest(channel) {
       axios
         .post(channel.url.send_test)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('settings.notification_channels_success_email'), 'success');
           this.testEmailSentId = channel.id;
         })
@@ -331,7 +292,7 @@ export default {
       if (confirm(this.$t('settings.notification_channels_email_destroy_confirm'))) {
         axios
           .delete(channel.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('settings.notification_channels_email_destroy_success'), 'success');
             var id = this.localEmails.findIndex((x) => x.id === channel.id);
             this.localEmails.splice(id, 1);
@@ -345,3 +306,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

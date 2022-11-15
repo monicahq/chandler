@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,9 +13,6 @@ return new class () extends Migration {
      */
     public function up()
     {
-        // necessary for SQLlite
-        Schema::enableForeignKeyConstraints();
-
         Schema::create('group_types', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('account_id');
@@ -39,8 +37,13 @@ return new class () extends Migration {
             $table->unsignedBigInteger('group_type_id');
             $table->string('name');
             $table->timestamps();
+
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
+
+            if (config('scout.driver') === 'database' && in_array(DB::connection()->getDriverName(), ['mysql', 'pgsql'])) {
+                $table->fullText('name');
+            }
         });
 
         Schema::create('contact_group', function (Blueprint $table) {

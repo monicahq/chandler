@@ -62,6 +62,9 @@ return [
     'dashboard_last_updated_contacts_title' => 'Récemment mis à jour',
     'dashboard_reminders_title' => 'Rappels dans les 30 prochains jours',
     'dashboard_reminders_blank' => 'Aucun rappel planifié.',
+    'dashboard_favorites_title' => 'Favoris',
+    'dashboard_due_tasks_title' => 'Tâches échues ou à venir',
+    'dashboard_due_tasks_blank' => 'Aucune tâche.',
 
     /***************************************************************
      * VAULT DASHBOARD REMINDERS
@@ -69,6 +72,25 @@ return [
 
     'reminders_title' => 'Rappels planifiés dans les 12 prochains mois',
     'reminders_blank' => 'Pas de rappels pour ce mois',
+
+    /***************************************************************
+     * VAULT DASHBOARD TASKS
+     **************************************************************/
+
+    'tasks_title' => 'Tâches à compléter',
+    'tasks_blank' => 'Pas de tâches',
+
+    /***************************************************************
+     * VAULT FILES
+     **************************************************************/
+
+    'files_filter_title' => 'Tous les fichiers',
+    'files_filter_all' => 'Tous les fichiers',
+    'files_filter_or' => 'Ou filtrer par type',
+    'files_filter_documents' => 'Documents',
+    'files_filter_photos' => 'Photos',
+    'files_filter_avatars' => 'Avatars',
+    'files_filter_blank' => 'Il n’y a pas encore de fichiers.',
 
     /***************************************************************
      * VAULT SETTINGS

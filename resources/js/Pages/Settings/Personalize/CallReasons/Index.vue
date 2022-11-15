@@ -1,33 +1,17 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings')
-              }}</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -40,9 +24,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings_personalize')
-              }}</inertia-link>
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings_personalize') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -64,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 📲 </span> All the call reasons</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 📲 </span>
+            All the call reasons
+          </h3>
           <pretty-button
             v-if="!createCallReasonTypeModalShown"
             :text="'add a call reason type'"
@@ -73,7 +60,7 @@
         </div>
 
         <!-- help text -->
-        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm">
+        <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 pr-2"
@@ -95,9 +82,9 @@
         <!-- modal to create a call reason type -->
         <form
           v-if="createCallReasonTypeModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submitCallReasonType()">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-input
@@ -120,12 +107,14 @@
         </form>
 
         <!-- list of call reasons -->
-        <ul v-if="localCallReasonTypes.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <ul
+          v-if="localCallReasonTypes.length > 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li v-for="callReasonType in localCallReasonTypes" :key="callReasonType.id">
             <!-- detail of the call reason type -->
             <div
               v-if="renameCallReasonTypeModalShownId != callReasonType.id"
-              class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+              class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span class="text-base font-semibold">{{ callReasonType.label }}</span>
 
               <!-- actions -->
@@ -146,9 +135,9 @@
             <!-- rename a call reason type modal -->
             <form
               v-if="renameCallReasonTypeModalShownId == callReasonType.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="updateCallReasonType(callReasonType)">
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
@@ -177,7 +166,7 @@
             <div
               v-for="reason in callReasonType.reasons"
               :key="reason.id"
-              class="border-b border-gray-200 hover:bg-slate-50">
+              class="border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <!-- detail of the relationship type -->
               <div v-if="renameReasonModalId != reason.id" class="flex items-center justify-between px-5 py-2 pl-6">
                 <span>{{ reason.label }}</span>
@@ -198,9 +187,9 @@
               <!-- rename the reason modal -->
               <form
                 v-if="renameReasonModalId == reason.id"
-                class="item-list border-b border-gray-200 hover:bg-slate-50"
+                class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
                 @submit.prevent="updateReason(callReasonType, reason)">
-                <div class="border-b border-gray-200 p-5">
+                <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                   <errors :errors="form.errors" />
 
                   <text-input
@@ -228,7 +217,7 @@
             <!-- create a new reason -->
             <div
               v-if="createReasonModalId != callReasonType.id"
-              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50">
+              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showReasonModal(callReasonType)"
@@ -239,9 +228,9 @@
             <!-- create a new resaon -->
             <form
               v-if="createReasonModalId == callReasonType.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="storeReason(callReasonType)">
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
@@ -267,7 +256,9 @@
         </ul>
 
         <!-- blank state -->
-        <div v-if="localCallReasonTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <div
+          v-if="localCallReasonTypes.length == 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">Call reasons let you indicate the reason of calls you make to your contacts.</p>
         </div>
       </div>
@@ -276,11 +267,11 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import Layout from '@/Shared/Layout.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -402,7 +393,7 @@ export default {
       ) {
         axios
           .delete(callReasonType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The call reason type has been deleted', 'success');
             var id = this.localCallReasonTypes.findIndex((x) => x.id === callReasonType.id);
             this.localCallReasonTypes.splice(id, 1);
@@ -459,7 +450,7 @@ export default {
       ) {
         axios
           .delete(reason.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The call reason has been deleted', 'success');
             var callReasonTypeId = this.localCallReasonTypes.findIndex((x) => x.id === callReasonType.id);
             var typeId = this.localCallReasonTypes[callReasonTypeId].reasons.findIndex((x) => x.id === reason.id);
@@ -474,3 +465,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

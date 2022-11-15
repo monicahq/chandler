@@ -1,26 +1,11 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🏷 </span> {{ $t('vault.settings_labels_title') }}</h3>
+      <h3 class="mb-4 sm:mb-0">
+        <span class="mr-1"> 🏷 </span>
+        {{ $t('vault.settings_labels_title') }}
+      </h3>
       <pretty-button
         v-if="!createlabelModalShown"
         :text="$t('vault.settings_labels_cta')"
@@ -31,9 +16,9 @@
     <!-- modal to create a new label -->
     <form
       v-if="createlabelModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <text-input
@@ -49,7 +34,9 @@
           :div-outer-class="'mb-4'"
           @esc-key-pressed="createlabelModalShown = false" />
 
-        <p class="mb-2 block text-sm">{{ $t('vault.settings_labels_create_color') }}</p>
+        <p class="mb-2 block text-sm">
+          {{ $t('vault.settings_labels_create_color') }}
+        </p>
         <div class="grid grid-cols-8 gap-4">
           <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
             <input
@@ -58,10 +45,12 @@
               :value="color.bg_color"
               name="name-order"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500"
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700"
               @click="form.text_color = color.text_color" />
-            <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-              <div class="rounded p-4" :class="color.bg_color"></div>
+            <label
+              :for="color.bg_color"
+              class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              <div class="rounded p-4" :class="color.bg_color" />
             </label>
           </div>
         </div>
@@ -78,12 +67,17 @@
     </form>
 
     <!-- list of label -->
-    <ul v-if="localLabels.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <li v-for="label in localLabels" :key="label.id" class="item-list border-b border-gray-200 hover:bg-slate-50">
+    <ul
+      v-if="localLabels.length > 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <li
+        v-for="label in localLabels"
+        :key="label.id"
+        class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 hover:dark:bg-slate-900">
         <!-- detail of the label -->
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
-            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color"></div>
+            <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color" />
             <span class="mr-2">{{ label.name }}</span>
             <span v-if="label.count > 0" class="text-xs text-gray-500"
               >({{ $t('vault.settings_labels_count', { count: label.count }) }})</span
@@ -95,7 +89,9 @@
             <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="updateLabelModal(label)">
               {{ $t('app.edit') }}
             </li>
-            <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(label)">
+            <li
+              class="inline cursor-pointer text-red-500 hover:text-red-900 hover:dark:text-red-100"
+              @click="destroy(label)">
               {{ $t('app.delete') }}
             </li>
           </ul>
@@ -104,9 +100,9 @@
         <!-- edit a label modal -->
         <form
           v-if="editLabelModalShownId == label.id"
-          class="item-list bg-form border-b border-gray-200 hover:bg-slate-50"
+          class="item-list bg-form border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 hover:dark:bg-slate-900"
           @submit.prevent="update(label)">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-input
@@ -122,7 +118,9 @@
               :div-outer-class="'mb-4'"
               @esc-key-pressed="editLabelModalShownId = 0" />
 
-            <p class="mb-2 block text-sm">{{ $t('vault.settings_labels_create_color') }}</p>
+            <p class="mb-2 block text-sm">
+              {{ $t('vault.settings_labels_create_color') }}
+            </p>
             <div class="grid grid-cols-8 gap-4">
               <div v-for="color in data.label_colors" :key="color.bg_color" class="flex items-center">
                 <input
@@ -131,10 +129,12 @@
                   :value="color.bg_color"
                   name="name-order"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500"
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700"
                   @click="form.text_color = color.text_color" />
-                <label :for="color.bg_color" class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700">
-                  <div class="rounded p-4" :class="color.bg_color"></div>
+                <label
+                  :for="color.bg_color"
+                  class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <div class="rounded p-4" :class="color.bg_color" />
                 </label>
               </div>
             </div>
@@ -149,17 +149,21 @@
     </ul>
 
     <!-- blank state -->
-    <div v-if="localLabels.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">{{ $t('vault.settings_labels_blank') }}</p>
+    <div
+      v-if="localLabels.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <p class="p-5 text-center">
+        {{ $t('vault.settings_labels_blank') }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -257,7 +261,7 @@ export default {
       if (confirm(this.$t('vault.settings_labels_destroy_confirmation'))) {
         axios
           .delete(label.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash(this.$t('vault.settings_labels_destroy_success'), 'success');
             var id = this.localLabels.findIndex((x) => x.id === label.id);
             this.localLabels.splice(id, 1);
@@ -271,3 +275,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

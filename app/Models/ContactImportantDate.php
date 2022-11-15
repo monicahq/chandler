@@ -14,22 +14,25 @@ class ContactImportantDate extends Model
     protected $table = 'contact_important_dates';
 
     /**
-     * Possible type.
+     * Possible types.
      */
     public const TYPE_BIRTHDATE = 'birthdate';
+
     public const TYPE_DECEASED_DATE = 'deceased_date';
 
     /**
      * Possible type of dates.
      */
     public const TYPE_FULL_DATE = 'full_date';
+
     public const TYPE_MONTH_DAY = 'month_day';
+
     public const TYPE_YEAR = 'year';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contact_id',

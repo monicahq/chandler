@@ -2,11 +2,14 @@
 
 namespace Tests\Unit\Domains\Settings\CancelAccount\Services;
 
+use App\Domains\Settings\CancelAccount\Services\CancelAccount;
 use App\Models\Account;
+use App\Models\Contact;
+use App\Models\File;
 use App\Models\User;
-use App\Settings\CancelAccount\Services\CancelAccount;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -19,7 +22,30 @@ class CancelAccountTest extends TestCase
     public function it_destroys_an_account(): void
     {
         $user = $this->createAdministrator();
-        $this->executeService($user->account, $user);
+        $vault = $this->createVault($user->account);
+        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
+        $file = File::factory()->create([
+            'contact_id' => $contact->id,
+        ]);
+
+        $this->executeService($user->account, $user, $file);
+    }
+
+    /** @test */
+    public function it_queues_destroying_an_account(): void
+    {
+        Queue::fake();
+
+        $user = $this->createAdministrator();
+
+        $request = [
+            'account_id' => $user->account->id,
+            'author_id' => $user->id,
+        ];
+
+        CancelAccount::dispatch($request);
+
+        Queue::assertPushed(CancelAccount::class, fn ($job) => $job->data === $request);
     }
 
     /** @test */
@@ -50,22 +76,26 @@ class CancelAccountTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CancelAccount())->execute($request);
+        CancelAccount::dispatch($request);
     }
 
-    private function executeService(Account $account, User $user): void
+    private function executeService(Account $account, User $user, File $file = null): void
     {
-        Queue::fake();
+        Event::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $user->id,
         ];
 
-        (new CancelAccount())->execute($request);
+        CancelAccount::dispatchSync($request);
 
         $this->assertDatabaseMissing('accounts', [
             'id' => $account->id,
+        ]);
+
+        $this->assertDatabaseMissing('files', [
+            'id' => $file->id,
         ]);
     }
 }

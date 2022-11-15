@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domains\Settings\ManageSettings\Web\ViewHelpers;
 
+use App\Domains\Settings\ManageSettings\Web\ViewHelpers\SettingsIndexViewHelper;
 use App\Models\User;
-use App\Settings\ManageSettings\Web\ViewHelpers\SettingsIndexViewHelper;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class SettingsIndexViewHelperTest extends TestCase
 {
@@ -34,6 +34,9 @@ class SettingsIndexViewHelperTest extends TestCase
                     ],
                     'personalize' => [
                         'index' => env('APP_URL').'/settings/personalize',
+                    ],
+                    'storage' => [
+                        'index' => env('APP_URL').'/settings/storage',
                     ],
                     'cancel' => [
                         'index' => env('APP_URL').'/settings/cancel',

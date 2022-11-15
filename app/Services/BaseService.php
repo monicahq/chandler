@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Exceptions\NotEnoughPermissionException;
-use App\Models\Account;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
@@ -54,7 +53,7 @@ abstract class BaseService
      */
     public function validateRules(array $data): bool
     {
-        $validator = Validator::make($data, $this->rules())->validate();
+        Validator::make($data, $this->rules())->validate();
 
         if (in_array('author_must_belong_to_account', $this->permissions())) {
             $this->validateAuthorBelongsToAccount($data);
@@ -125,9 +124,9 @@ abstract class BaseService
      * Validate that the user has the right to do what he's supposed to do in
      * the given vault.
      *
-     * @param  string  $permission
+     * @param  int  $permission
      */
-    public function validateUserPermissionInVault(string $permission): void
+    public function validateUserPermissionInVault(int $permission): void
     {
         $exists = $this->author->vaults()
             ->where('vaults.id', $this->vault->id)

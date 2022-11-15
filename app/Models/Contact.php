@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Helpers\AvatarHelper;
+use App\Helpers\ContactImportantDateHelper;
 use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
+use App\Helpers\ScoutHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 
 class Contact extends Model
@@ -20,9 +24,16 @@ class Contact extends Model
     use Searchable;
 
     /**
+     * Possible avatar types.
+     */
+    public const AVATAR_TYPE_SVG = 'svg';
+
+    public const AVATAR_TYPE_URL = 'url';
+
+    /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'vault_id',
@@ -39,13 +50,14 @@ class Contact extends Model
         'company_id',
         'job_position',
         'listed',
-        'avatar_id',
+        'file_id',
+        'religion_id',
     ];
 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'can_be_deleted' => 'boolean',
@@ -57,7 +69,10 @@ class Contact extends Model
      * Get the indexable data array for the model.
      *
      * @return array
+     * @codeCoverageIgnore
      */
+    #[SearchUsingPrefix(['id', 'vault_id'])]
+    #[SearchUsingFullText(['first_name', 'last_name', 'middle_name', 'nickname', 'maiden_name'])]
     public function toSearchableArray(): array
     {
         return [
@@ -68,10 +83,6 @@ class Contact extends Model
             'middle_name' => $this->middle_name,
             'nickname' => $this->nickname,
             'maiden_name' => $this->maiden_name,
-            'url' => route('contact.show', [
-                'vault' => $this->vault_id,
-                'contact' => $this->id,
-            ]),
         ];
     }
 
@@ -97,6 +108,16 @@ class Contact extends Model
         static::deleting(function ($model) {
             Note::where('contact_id', $model->id)->unsearchable();
         });
+    }
+
+    /**
+     * When updating a model, this method determines if we should update the search index.
+     *
+     * @return bool
+     */
+    public function searchIndexShouldBeUpdated()
+    {
+        return ScoutHelper::activated();
     }
 
     /**
@@ -137,16 +158,6 @@ class Contact extends Model
     public function template(): BelongsTo
     {
         return $this->belongsTo(Template::class);
-    }
-
-    /**
-     * Get the contact log records associated with the contact.
-     *
-     * @return HasMany
-     */
-    public function contactLogs(): HasMany
-    {
-        return $this->hasMany(ContactLog::class)->orderBy('created_at', 'desc');
     }
 
     /**
@@ -204,7 +215,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function dates(): HasMany
+    public function importantDates(): HasMany
     {
         return $this->hasMany(ContactImportantDate::class);
     }
@@ -254,26 +265,6 @@ class Contact extends Model
     }
 
     /**
-     * Get the current avatar associated with the contact.
-     *
-     * @return BelongsTo
-     */
-    public function currentAvatar(): BelongsTo
-    {
-        return $this->belongsTo(Avatar::class, 'avatar_id');
-    }
-
-    /**
-     * Get the avatars associated with the contact.
-     *
-     * @return HasMany
-     */
-    public function avatars(): HasMany
-    {
-        return $this->hasMany(Avatar::class);
-    }
-
-    /**
      * Get the tasks associated with the contact.
      *
      * @return HasMany
@@ -314,6 +305,27 @@ class Contact extends Model
     }
 
     /**
+     * Get the files associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+    /**
+     * Get the file associated with the contact.
+     * If it exists, it's the avatar.
+     *
+     * @return BelongsTo
+     */
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(File::class);
+    }
+
+    /**
      * Get the groups associated with the contact.
      *
      * @return BelongsToMany
@@ -321,6 +333,16 @@ class Contact extends Model
     public function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class, 'contact_group');
+    }
+
+    /**
+     * Get the religion associated with the contact.
+     *
+     * @return BelongsTo
+     */
+    public function religion(): BelongsTo
+    {
+        return $this->belongsTo(Religion::class);
     }
 
     /**
@@ -352,15 +374,13 @@ class Contact extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                $type = ContactImportantDateType::where('vault_id', $this->vault_id)
-                    ->where('internal_type', ContactImportantDate::TYPE_BIRTHDATE)
-                    ->first();
+                $type = ContactImportantDateHelper::getImportantDateType(ContactImportantDate::TYPE_BIRTHDATE, $this->vault_id);
 
                 if (! $type) {
                     return null;
                 }
 
-                $birthdate = $this->dates()
+                $birthdate = $this->importantDates
                     ->where('contact_important_date_type_id', $type->id)
                     ->first();
 
@@ -382,7 +402,18 @@ class Contact extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                return AvatarHelper::getSVG($this);
+                $type = self::AVATAR_TYPE_SVG;
+                $content = AvatarHelper::generateRandomAvatar($this);
+
+                if ($this->file) {
+                    $type = self::AVATAR_TYPE_URL;
+                    $content = 'https://ucarecdn.com/'.$this->file->uuid.'/-/scale_crop/300x300/smart/-/format/auto/-/quality/smart_retina/';
+                }
+
+                return [
+                    'type' => $type,
+                    'content' => $content,
+                ];
             }
         );
     }

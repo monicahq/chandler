@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\Domains\Settings\ManageTemplates\Web\ViewHelpers;
 
+use App\Domains\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
 use App\Models\Module;
 use App\Models\Template;
 use App\Models\TemplatePage;
-use App\Settings\ManageTemplates\Web\ViewHelpers\PersonalizeTemplatePageShowViewHelper;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class PersonalizeTemplatePageShowViewHelperTest extends TestCase
 {

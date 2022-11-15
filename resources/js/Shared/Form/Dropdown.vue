@@ -1,29 +1,3 @@
-<style lang="scss" scoped>
-.optional-badge {
-  border-radius: 4px;
-  color: #283e59;
-  background-color: #edf2f9;
-  padding: 1px 3px;
-}
-
-.length {
-  top: 10px;
-  right: 10px;
-  background-color: #e5eeff;
-  padding: 3px 4px;
-}
-
-.counter {
-  padding-right: 64px;
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div :class="divOuterClass">
     <label v-if="label" class="mb-2 block text-sm" :for="id">
@@ -60,10 +34,8 @@ export default {
       default: 'dropdown-',
     },
     data: {
-      type: Array,
-      default() {
-        return [];
-      },
+      type: Object,
+      default: null,
     },
     dropdownClass: {
       type: String,
@@ -105,23 +77,18 @@ export default {
       type: String,
       default: '',
     },
-    ref: {
-      type: String,
-      default: 'input',
+  },
+  emits: ['esc-key-pressed', 'update:modelValue'],
+
+  computed: {
+    localDropdownClasses() {
+      return [
+        'py-2 px-3 rounded-md shadow-sm sm:text-sm',
+        'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700',
+        'focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 focus:outline-none',
+        this.dropdownClass,
+      ];
     },
-  },
-  emits: ['update:modelValue'],
-
-  data() {
-    return {
-      localDropdownClasses: '',
-    };
-  },
-
-  created() {
-    this.localDropdownClasses =
-      'py-2 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white rounded-md shadow-sm focus:outline-none sm:text-sm ' +
-      this.dropdownClass;
   },
 
   methods: {
@@ -139,3 +106,29 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.optional-badge {
+  border-radius: 4px;
+  color: #283e59;
+  background-color: #edf2f9;
+  padding: 1px 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .optional-badge {
+    color: #d4d8dd;
+    background-color: #2f3031;
+  }
+}
+
+.counter {
+  padding-right: 64px;
+}
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

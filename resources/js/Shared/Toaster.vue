@@ -1,31 +1,13 @@
-<style lang="scss" scoped>
-.flash.notification {
-  z-index: 99999999999;
-  bottom: 30px;
-  right: 0px;
-  transform: translate(100%);
-  transition: all 0.8s ease-in-out;
-  background-color: #fff;
-  border: 1px solid #e7e7e7;
-  border-radius: 6px;
-  box-shadow: 1px 1px 2px rgba(122, 122, 122, 0.17);
-  padding: 10px 20px;
-
-  &.is-visible {
-    transform: translate(0);
-    opacity: 1;
-    right: 30px;
-  }
-}
-</style>
-
 <template>
-  <div class="flash notification fixed" :class="[levelClass, isOpen ? isVisibleClass : '']">
-    <span class="mr-1"> 👋 </span> {{ messageText }}
+  <div class="flash notification fixed" :class="[levelClass, { 'is-visible': isOpen }]">
+    <span class="mr-1"> 👋 </span>
+    {{ messageText }}
   </div>
 </template>
 
 <script>
+import mitt from 'mitt';
+
 export default {
   props: {
     level: {
@@ -49,6 +31,8 @@ export default {
   },
 
   created() {
+    const emitter = mitt();
+
     if (this.level) {
       this.levelClass = 'is-' + this.level;
     }
@@ -60,7 +44,7 @@ export default {
 
     const self = this;
 
-    this.$on('flash', (data) => self.show(data));
+    emitter.on('flash', (data) => self.show(data));
   },
 
   methods: {
@@ -88,3 +72,24 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.flash.notification {
+  z-index: 99999999999;
+  bottom: 30px;
+  right: 0px;
+  transform: translate(100%);
+  transition: all 0.8s ease-in-out;
+  background-color: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 6px;
+  box-shadow: 1px 1px 2px rgba(122, 122, 122, 0.17);
+  padding: 10px 20px;
+
+  &.is-visible {
+    transform: translate(0);
+    opacity: 1;
+    right: 30px;
+  }
+}
+</style>

@@ -10,6 +10,13 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var class-string<\Illuminate\Database\Eloquent\Model>
+     */
+    protected $model = User::class;
+
+    /**
      * Define the model's default state.
      *
      * @return array
@@ -28,6 +35,7 @@ class UserFactory extends Factory
             'name_order' => '%first_name% %last_name%',
             'date_format' => 'MMM DD, YYYY',
             'default_map_site' => User::MAPS_SITE_GOOGLE_MAPS,
+            'help_shown' => true,
         ];
     }
 
@@ -41,6 +49,20 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+            ];
+        });
+    }
+
+    /**
+     * Create an admin user.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function administrator()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_account_administrator' => true,
             ];
         });
     }

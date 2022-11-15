@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domains\Settings\ManagePetCategories\Web\ViewHelpers;
 
+use App\Domains\Settings\ManagePetCategories\Web\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
 use App\Models\PetCategory;
-use App\Settings\ManagePetCategories\Web\ViewHelpers\PersonalizePetCategoriesIndexViewHelper;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class PersonalizePetCategoriesIndexViewHelperTest extends TestCase
 {

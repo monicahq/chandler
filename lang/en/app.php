@@ -7,8 +7,12 @@ return [
     'layout_menu_dashboard' => 'Dashboard',
     'layout_menu_reports' => 'Reports',
     'layout_menu_contacts' => 'Contacts',
-    'layout_menu_gift_center' => 'Gift center',
-    'layout_menu_loans' => 'Loans & debts center',
+    'layout_menu_groups' => 'Groups',
+    'layout_menu_tasks' => 'Tasks',
+    'layout_menu_gift_center' => 'Gifts',
+    'layout_menu_loans' => 'Loans & debts',
+    'layout_menu_files' => 'Files',
+    'layout_menu_journals' => 'Journals',
     'layout_menu_vault_settings' => 'Vault settings',
     'layout_footer_monica' => 'Monica, since 2017.',
     'layout_footer_version' => 'Current version: :version',
@@ -19,10 +23,17 @@ return [
     'breadcrumb_vault_create' => 'Add a vault',
     'breadcrumb_dashboard_index' => 'Dashboard',
     'breadcrumb_dashboard_reminders' => 'All the planned reminders',
+    'breadcrumb_group_index' => 'Groups',
     'breadcrumb_contact_index' => 'Contacts',
     'breadcrumb_contact_show' => 'Profile of :name',
     'breadcrumb_contact_create' => 'Create a contact',
     'breadcrumb_contact_note_index' => 'All the notes',
+    'breadcrumb_contact_photo' => 'All the photos',
+    'breadcrumb_contact_goal' => 'Detail of a goal',
+    'breadcrumb_journal_index' => 'Journals',
+    'breadcrumb_journal_create' => 'Create a journal',
+    'breadcrumb_post_edit' => 'Edit a post',
+    'breadcrumb_post_create_template' => 'Choose a template',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
     'breadcrumb_settings_notification_channels' => 'Notification channels',
@@ -32,6 +43,10 @@ return [
     'breadcrumb_settings_personalize' => 'Personalize your account',
     'breadcrumb_settings_personalize_templates' => 'Templates',
     'breadcrumb_settings_personalize_relationship_types' => 'Relationship types',
+    'breadcrumb_settings_personalize_contact_information_types' => 'Contact information types',
+    'breadcrumb_settings_personalize_post_templates' => 'Post templates',
+    'breadcrumb_settings_storage' => 'Storage',
+    'breadcrumb_settings_religions' => 'Religions',
 
     'notification_flash_changes_saved' => 'Changes saved',
 
@@ -39,6 +54,7 @@ return [
     'save' => 'Save',
     'add' => 'Add',
     'cancel' => 'Cancel',
+    'close' => 'Close',
     'delete_confirm' => 'Sure?',
     'delete' => 'Delete',
     'edit' => 'Edit',
@@ -57,14 +73,18 @@ return [
     'view_all' => 'View all',
     'previous' => 'Previous',
     'next' => 'Next',
-    'view_all' => 'View all',
+    'view_map' => 'View on map',
+    'view_older' => 'Load previous entries',
+    'download' => 'Download',
+    'undefined' => 'Undefined',
+
+    'unknown_name' => 'Unknown name',
 
     'error_title' => '👇 Oops. An error occured.',
 
     'no_results' => 'No results',
 
-    'show_help' => 'Show help',
-    'hide_help' => 'Hide help',
+    'help_open_new_page' => 'This link will open in a new tab',
 
     'default_template_name' => 'Default template',
     'default_template_page_contact_information' => 'Contact information',
@@ -72,6 +92,7 @@ return [
     'default_template_page_feed' => 'Feed',
     'default_template_page_information' => 'Information',
     'default_template_page_life_events' => 'Life events & goals',
+    'default_template_page_contact' => 'Ways to connect',
 
     'module_names' => 'Contact name',
     'module_avatar' => 'Avatar',
@@ -91,6 +112,10 @@ return [
     'module_goals' => 'Goals',
     'module_addresses' => 'Addresses',
     'module_groups' => 'Groups',
+    'module_contact_information' => 'Contact information',
+    'module_documents' => 'Documents',
+    'module_photos' => 'Photos',
+    'module_religions' => 'Religions',
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 
@@ -99,4 +124,7 @@ return [
     'emotion_negative' => '😡 Negative',
 
     'notification_channel_email' => 'My email',
+
+    'min_read' => '{count} min read',
+    'word_count' => '{count} words',
 ];

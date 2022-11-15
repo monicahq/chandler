@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Domains\Settings\ManageCurrencies\Web\ViewHelpers;
 
+use App\Domains\Settings\ManageCurrencies\Web\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
 use App\Models\Account;
 use App\Models\Currency;
-use App\Settings\ManageCurrencies\Web\ViewHelpers\PersonalizeCurrencyIndexViewHelper;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class PersonalizeCurrencyIndexViewHelperTest extends TestCase
 {

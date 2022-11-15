@@ -1,33 +1,17 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings')
-              }}</inertia-link>
+              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -40,9 +24,9 @@
               </svg>
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">{{
-                $t('app.breadcrumb_settings_personalize')
-              }}</inertia-link>
+              <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
+                {{ $t('app.breadcrumb_settings_personalize') }}
+              </inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -64,7 +48,10 @@
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
-          <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🚲 </span> All the activity types</h3>
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 🚲 </span>
+            All the activity types
+          </h3>
           <pretty-button
             v-if="!createActivityTypeModalShown"
             :text="'add a activity type'"
@@ -75,9 +62,9 @@
         <!-- modal to create an activity type -->
         <form
           v-if="createActivityTypeModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submitActivityType()">
-          <div class="border-b border-gray-200 p-5">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
             <text-input
@@ -100,12 +87,14 @@
         </form>
 
         <!-- list of activity types -->
-        <ul v-if="localActivityTypes.length > 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <ul
+          v-if="localActivityTypes.length > 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li v-for="activityType in localActivityTypes" :key="activityType.id">
             <!-- detail of the activity type -->
             <div
               v-if="renameActivityTypeModalShownId != activityType.id"
-              class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50">
+              class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span class="text-base font-semibold">{{ activityType.label }}</span>
 
               <!-- actions -->
@@ -126,9 +115,9 @@
             <!-- rename an activity type modal -->
             <form
               v-if="renameActivityTypeModalShownId == activityType.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="updateActivityType(activityType)">
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
@@ -157,7 +146,7 @@
             <div
               v-for="activity in activityType.activities"
               :key="activity.id"
-              class="border-b border-gray-200 hover:bg-slate-50">
+              class="border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <div v-if="renameActivityModalId != activity.id" class="flex items-center justify-between px-5 py-2 pl-6">
                 <span>{{ activity.label }}</span>
 
@@ -179,9 +168,9 @@
               <!-- rename the activity modal -->
               <form
                 v-if="renameActivityModalId == activity.id"
-                class="item-list border-b border-gray-200 hover:bg-slate-50"
+                class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
                 @submit.prevent="updateActivity(activityType, activity)">
-                <div class="border-b border-gray-200 p-5">
+                <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                   <errors :errors="form.errors" />
 
                   <text-input
@@ -209,7 +198,7 @@
             <!-- create a new activity -->
             <div
               v-if="createActivityModalId != activityType.id"
-              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50">
+              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showActivityModal(activityType)"
@@ -220,9 +209,9 @@
             <!-- create an activity -->
             <form
               v-if="createActivityModalId == activityType.id"
-              class="item-list border-b border-gray-200 hover:bg-slate-50"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="storeActivity(activityType)">
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
@@ -248,7 +237,9 @@
         </ul>
 
         <!-- blank state -->
-        <div v-if="localActivityTypes.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
+        <div
+          v-if="localActivityTypes.length == 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">Activity types let you indicate what you've done with your contacts.</p>
         </div>
       </div>
@@ -257,11 +248,11 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Errors from '@/Shared/Form/Errors';
+import Layout from '@/Shared/Layout.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -383,7 +374,7 @@ export default {
       ) {
         axios
           .delete(activityType.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The activity type has been deleted', 'success');
             var id = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
             this.localActivityTypes.splice(id, 1);
@@ -440,7 +431,7 @@ export default {
       ) {
         axios
           .delete(activity.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The activity has been deleted', 'success');
             var activityTypeId = this.localActivityTypes.findIndex((x) => x.id === activityType.id);
             var typeId = this.localActivityTypes[activityTypeId].activities.findIndex((x) => x.id === activity.id);
@@ -455,3 +446,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

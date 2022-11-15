@@ -1,36 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -49,7 +20,7 @@ select {
           </svg>
         </span>
 
-        <span class="font-semibold">Reminders</span>
+        <span class="font-semibold"> Reminders </span>
       </div>
       <pretty-button
         :text="'Add a reminder'"
@@ -61,15 +32,15 @@ select {
     <!-- add a reminder modal -->
     <form
       v-if="addReminderModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200">
+      <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
 
         <!-- name -->
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <text-input
             :ref="'label'"
             v-model="form.label"
@@ -83,7 +54,7 @@ select {
             @esc-key-pressed="addReminderModalShown = false" />
         </div>
 
-        <div class="border-b border-gray-200 p-5">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <!-- case: I know the exact date -->
           <div class="mb-2 flex items-center">
             <input
@@ -92,15 +63,20 @@ select {
               value="full_date"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="full_date" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            <label
+              for="full_date"
+              class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               I know the exact date, including the year
             </label>
           </div>
           <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
-            <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
-              <template v-slot="{ inputValue, inputEvents }">
-                <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+            <v-date-picker v-model="form.date" class="inline-block h-full" :model-config="modelConfig">
+              <template #default="{ inputValue, inputEvents }">
+                <input
+                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  :value="inputValue"
+                  v-on="inputEvents" />
               </template>
             </v-date-picker>
           </div>
@@ -113,8 +89,10 @@ select {
               value="month_day"
               name="date"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            <label
+              for="month_day"
+              class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               I only know the day and month, not the year
             </label>
           </div>
@@ -142,7 +120,7 @@ select {
         <!-- reminder options -->
         <div class="p-5">
           <p class="mb-1">How often should we remind you about this date?</p>
-          <p class="mb-1 text-sm text-gray-600">
+          <p class="mb-1 text-sm text-gray-600 dark:text-gray-400">
             If the date is in the past, the next occurence of the date will be next year.
           </p>
 
@@ -154,8 +132,10 @@ select {
                 value="one_time"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
-              <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              <label
+                for="one_time"
+                class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 Only once, when the next occurence of the date occurs.
               </label>
             </div>
@@ -167,34 +147,27 @@ select {
                 value="recurring"
                 name="reminder-frequency"
                 type="radio"
-                class="h-4 w-4 border-gray-300 text-sky-500" />
+                class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="recurring"
-                class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
-                <span class="mr-2">Every</span>
+                class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                <span class="mr-2"> Every </span>
 
                 <select
                   :id="id"
                   v-model="form.frequencyNumber"
-                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
                   :required="required"
                   @change="change">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+                  <option v-for="n in 10" :key="n" :value="n">
+                    {{ n }}
+                  </option>
                 </select>
 
                 <select
                   :id="id"
                   v-model="form.frequencyType"
-                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                  class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
                   :required="required"
                   @change="change">
                   <option value="recurring_day">day</option>
@@ -217,11 +190,11 @@ select {
 
     <!-- reminders -->
     <div v-if="localReminders.length > 0">
-      <ul class="mb-4 rounded-lg border border-gray-200 bg-white">
+      <ul class="mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <li
           v-for="reminder in localReminders"
           :key="reminder.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <!-- reminder -->
           <div class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
@@ -260,13 +233,13 @@ select {
 
           <!-- edit reminder modal -->
           <form v-if="editedReminderId == reminder.id" class="bg-form" @submit.prevent="update(reminder)">
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
               <!-- name -->
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'label' + reminder.id"
                   v-model="form.label"
@@ -280,7 +253,7 @@ select {
                   @esc-key-pressed="addReminderModalShown = false" />
               </div>
 
-              <div class="border-b border-gray-200 p-5">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <!-- case: I know the exact date -->
                 <div class="mb-2 flex items-center">
                   <input
@@ -289,15 +262,20 @@ select {
                     value="full_date"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="full_date" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="full_date"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     I know the exact date, including the year
                   </label>
                 </div>
                 <div v-if="form.choice == 'full_date'" class="ml-6 mb-4">
-                  <v-date-picker class="inline-block h-full" v-model="form.date" :model-config="modelConfig">
-                    <template v-slot="{ inputValue, inputEvents }">
-                      <input class="rounded border bg-white px-2 py-1" :value="inputValue" v-on="inputEvents" />
+                  <v-date-picker v-model="form.date" class="inline-block h-full" :model-config="modelConfig">
+                    <template #default="{ inputValue, inputEvents }">
+                      <input
+                        class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                        :value="inputValue"
+                        v-on="inputEvents" />
                     </template>
                   </v-date-picker>
                 </div>
@@ -310,8 +288,10 @@ select {
                     value="month_day"
                     name="date"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-sky-500" />
-                  <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                  <label
+                    for="month_day"
+                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     I only know the day and month, not the year
                   </label>
                 </div>
@@ -338,7 +318,7 @@ select {
               <!-- reminder options -->
               <div class="p-5">
                 <p class="mb-1">How often should we remind you about this date?</p>
-                <p class="mb-1 text-sm text-gray-600">
+                <p class="mb-1 text-sm text-gray-600 dark:text-gray-400">
                   If the date is in the past, the next occurence of the date will be next year.
                 </p>
 
@@ -350,8 +330,10 @@ select {
                       value="one_time"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
-                    <label for="one_time" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+                    <label
+                      for="one_time"
+                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       Only once, when the next occurence of the date occurs.
                     </label>
                   </div>
@@ -363,34 +345,27 @@ select {
                       value="recurring"
                       name="reminder-frequency"
                       type="radio"
-                      class="h-4 w-4 border-gray-300 text-sky-500" />
+                      class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="recurring"
-                      class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700">
+                      class="ml-3 block flex cursor-pointer items-center text-sm font-medium text-gray-700 dark:text-gray-300">
                       <span class="mr-2">Every</span>
 
                       <select
                         :id="id"
                         v-model="form.frequencyNumber"
-                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
                         :required="required"
                         @change="change">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
+                        <option v-for="n in 10" :key="n" :value="n">
+                          {{ n }}
+                        </option>
                       </select>
 
                       <select
                         :id="id"
                         v-model="form.frequencyType"
-                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 sm:text-sm"
+                        class="mr-2 rounded-md border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
                         :required="required"
                         @change="change">
                         <option value="recurring_day">day</option>
@@ -415,18 +390,21 @@ select {
     </div>
 
     <!-- blank state -->
-    <div v-if="localReminders.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no reminders yet.</p>
+    <div
+      v-if="localReminders.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/dashboard_blank_reminders.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no reminders yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import Dropdown from '@/Shared/Form/Dropdown';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -539,7 +517,7 @@ export default {
       if (confirm('Are you sure? This will delete the reminder permanently.')) {
         axios
           .delete(reminder.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The reminder has been deleted', 'success');
             var id = this.localReminders.findIndex((x) => x.id === reminder.id);
             this.localReminders.splice(id, 1);
@@ -553,3 +531,32 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+select {
+  padding-left: 8px;
+  padding-right: 20px;
+  background-position: right 3px center;
+}
+</style>

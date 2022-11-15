@@ -24,16 +24,66 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
-
     'telegram-bot-api' => [
         'token' => env('TELEGRAM_BOT_TOKEN', null),
         'bot_url' => env('TELEGRAM_BOT_URL'),
         'webhook' => env('TELEGRAM_BOT_WEBHOOK_URL'),
+    ],
+
+    'uploadcare' => [
+        'public_key' => env('UPLOADCARE_PUBLIC_KEY', null),
+        'private_key' => env('UPLOADCARE_PRIVATE_KEY', null),
+    ],
+
+    /*
+     * Socialite providers
+     */
+
+    'azure' => [
+        'client_id' => env('AZURE_CLIENT_ID'),
+        'client_secret' => env('AZURE_CLIENT_SECRET'),
+        'redirect' => env('AZURE_REDIRECT_URI', '/auth/azure/callback'),
+    ],
+
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URI', '/auth/facebook/callback'),
+        'logo' => '/img/auth/facebook.png',
+    ],
+
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI', '/auth/github/callback'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', '/auth/google/callback'),
+    ],
+
+    'linkedin' => [
+        'client_id' => env('LINKEDIN_CLIENT_ID'),
+        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+        'redirect' => env('LINKEDIN_REDIRECT_URI', '/auth/linkedin/callback'),
+    ],
+
+    'saml2' => [
+        'name' => env('SAML2_NAME'),
+        'metadata' => env('SAML2_METADATA'),
+        'acs' => env('SAML2_ACS'),
+        'entityid' => env('SAML2_ENTITY_ID'),
+        'certificate' => env('SAML2_CERTIFICATE'),
+        'sp_acs' => env('SAML2_REDIRECT_URI', '/auth/saml2/callback'),
+        'logo' => env('SAML2_LOGO', '/img/auth/saml2.svg'),
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT_URI', '/auth/twitter/callback'),
     ],
 
 ];

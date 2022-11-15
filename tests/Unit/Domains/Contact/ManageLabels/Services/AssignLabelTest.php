@@ -2,18 +2,16 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLabels\Services;
 
-use App\Contact\ManageLabels\Services\AssignLabel;
+use App\Domains\Contact\ManageLabels\Services\AssignLabel;
 use App\Exceptions\NotEnoughPermissionException;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\ContactFeedItem;
 use App\Models\Label;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -103,8 +101,6 @@ class AssignLabelTest extends TestCase
 
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Label $label): void
     {
-        Queue::fake();
-
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
@@ -120,12 +116,9 @@ class AssignLabelTest extends TestCase
             'label_id' => $label->id,
         ]);
 
-        Queue::assertPushed(CreateAuditLog::class, function ($job) {
-            return $job->auditLog['action_name'] === 'label_assigned';
-        });
-
-        Queue::assertPushed(CreateContactLog::class, function ($job) {
-            return $job->contactLog['action_name'] === 'label_assigned';
-        });
+        $this->assertDatabaseHas('contact_feed_items', [
+            'contact_id' => $contact->id,
+            'action' => ContactFeedItem::ACTION_LABEL_ASSIGNED,
+        ]);
     }
 }

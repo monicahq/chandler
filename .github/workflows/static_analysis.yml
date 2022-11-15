@@ -5,11 +5,17 @@ on:
     types: [opened, synchronize, reopened]
 
   workflow_run:
-    workflows: [Compress images]
+    workflows: [PHP linting (Pint), Javascript linting]
     types: [completed]
+    branches-ignore: [main]
 
 env:
   php-version: '8.1'
+
+concurrency:
+  group: Static ${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   psalm:
@@ -17,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP ${{ env.php-version }}
         uses: shivammathur/setup-php@v2
@@ -25,11 +31,12 @@ jobs:
           php-version: ${{ env.php-version }}
           coverage: none
 
+      # Composer
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ env.php-version }}-${{ hashFiles('**/composer.lock') }}
@@ -49,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP ${{ env.php-version }}
         uses: shivammathur/setup-php@v2
@@ -57,11 +64,12 @@ jobs:
           php-version: ${{ env.php-version }}
           coverage: none
 
+      # Composer
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ env.php-version }}-${{ hashFiles('**/composer.lock') }}

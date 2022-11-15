@@ -1,34 +1,16 @@
-<style lang="scss" scoped>
-.optional-badge {
-  border-radius: 4px;
-  color: #283e59;
-  background-color: #edf2f9;
-  padding: 1px 3px;
-}
-
-.length {
-  top: 10px;
-  right: 10px;
-  background-color: #e5eeff;
-  padding: 3px 4px;
-}
-
-.counter {
-  padding-right: 64px;
-}
-</style>
-
 <template>
   <div :class="divOuterClass">
-    <label v-if="label" class="mb-2 block text-sm" :for="id">
+    <label v-if="label" class="mb-2 block text-sm dark:text-gray-100" :for="id">
       {{ label }}
-      <span v-if="!required" class="optional-badge text-xs"> {{ $t('app.optional') }} </span>
+      <span v-if="!required" class="optional-badge text-xs">
+        {{ $t('app.optional') }}
+      </span>
     </label>
 
     <div class="relative">
       <input
         :id="id"
-        :ref="ref"
+        ref="input"
         :class="localInputClasses"
         :value="modelValue"
         :type="type"
@@ -44,9 +26,9 @@
         :placeholder="placeholder"
         @input="$emit('update:modelValue', $event.target.value)"
         @keydown.esc="sendEscKey"
-        @focus="showMaxLength"
+        @focus="displayMaxLength = true"
         @blur="displayMaxLength = false" />
-      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs">
+      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs dark:text-gray-100">
         {{ charactersLeft }}
       </span>
     </div>
@@ -124,20 +106,15 @@ export default {
       type: Number,
       default: null,
     },
-    ref: {
-      type: String,
-      default: 'input',
-    },
     step: {
       type: String,
       default: 'any',
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['esc-key-pressed', 'update:modelValue'],
 
   data() {
     return {
-      localInputClasses: '',
       displayMaxLength: false,
     };
   },
@@ -151,21 +128,22 @@ export default {
 
       return `${this.maxlength - char} / ${this.maxlength}`;
     },
-  },
 
-  created() {
-    this.localInputClasses =
-      'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-slate-50 ' +
-      this.inputClass;
+    localInputClasses() {
+      return [
+        'rounded-md shadow-sm',
+        'bg-white dark:bg-slate-900 dark:text-gray-100 border-gray-300 dark:border-gray-700',
+        'placeholder:text-gray-600 placeholder:dark:text-gray-400',
+        'focus:border-indigo-300 focus:dark:border-indigo-700 focus:ring focus:ring-indigo-200 focus:dark:ring-indigo-800 focus:ring-opacity-50 focus:dark:ring-opacity-900',
+        'disabled:bg-slate-50 disabled:dark:bg-slate-900',
+        this.inputClass,
+      ];
+    },
   },
 
   methods: {
     focus() {
       this.$refs.input.focus();
-    },
-
-    showMaxLength() {
-      this.displayMaxLength = true;
     },
 
     sendEscKey() {
@@ -174,3 +152,33 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.optional-badge {
+  border-radius: 4px;
+  color: #283e59;
+  background-color: #edf2f9;
+  padding: 1px 3px;
+}
+
+.length {
+  top: 10px;
+  right: 10px;
+  background-color: #e5eeff;
+  padding: 3px 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .optional-badge {
+    color: #d4d8dd;
+    background-color: #2f3031;
+  }
+  .length {
+    background-color: #2d2f33;
+  }
+}
+
+.counter {
+  padding-right: 64px;
+}
+</style>

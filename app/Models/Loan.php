@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ScoutHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,12 +19,13 @@ class Loan extends Model
      * Possible types.
      */
     public const TYPE_DEBT = 'debt';
+
     public const TYPE_LOAN = 'loan';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'vault_id',
@@ -50,11 +52,21 @@ class Loan extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'settled' => 'boolean',
     ];
+
+    /**
+     * When updating a model, this method determines if we should update the search index.
+     *
+     * @return bool
+     */
+    public function searchIndexShouldBeUpdated()
+    {
+        return ScoutHelper::activated();
+    }
 
     /**
      * Get the vault associated with the loan.

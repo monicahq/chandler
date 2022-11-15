@@ -1,27 +1,13 @@
-<style lang="scss" scoped>
-.special-grid {
-  grid-template-columns: 300px 1fr;
-}
-
-@media (max-width: 480px) {
-  .special-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.group-list-item:not(:last-child):after {
-  content: ',';
-}
-</style>
-
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
-    <nav class="bg-white sm:mt-20 sm:border-b">
+    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-slate-200">{{ $t('app.breadcrumb_location') }}</li>
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('app.breadcrumb_location') }}
+            </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 {{ $t('app.breadcrumb_contact_index') }}
@@ -37,7 +23,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_contact_show', { name: data.contact_name.name }) }}</li>
+            <li class="inline">
+              {{ $t('app.breadcrumb_contact_show', { name: data.contact_name.name }) }}
+            </li>
           </ul>
         </div>
       </div>
@@ -48,7 +36,9 @@
         <!-- banner if contact is archived -->
         <!-- this is based on the `listed` boolean on the contact object -->
         <div v-if="!data.listed" class="mb-8 rounded-lg border border-gray-300 px-3 py-2 text-center">
-          <span class="mr-4">🕸️</span> {{ $t('contact.contact_archived') }} <span class="ml-4">🕷️</span>
+          <span class="mr-4"> 🕸️ </span>
+          {{ $t('contact.contact_archived') }}
+          <span class="ml-4"> 🕷️ </span>
         </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -56,7 +46,7 @@
           <div class="p-3 sm:p-3">
             <div v-if="data.contact_information.length > 0" class="mb-8">
               <div v-for="module in data.contact_information" :key="module.id">
-                <avatar v-if="module.type == 'avatar'" :data="avatar" />
+                <contact-avatar v-if="module.type == 'avatar'" :data="avatar" />
 
                 <contact-name v-if="module.type == 'contact_names'" :data="contactName" />
 
@@ -69,25 +59,50 @@
                 <labels v-if="module.type == 'labels'" :data="labels" />
 
                 <job-information v-if="module.type == 'company'" :data="jobInformation" />
+
+                <religion v-if="module.type == 'religions'" :data="religions" />
               </div>
             </div>
 
             <ul class="text-xs">
+              <!-- remove avatar -->
+              <li v-if="data.avatar.hasFile" class="mb-2">
+                <span @click.prevent="destroyAvatar()" class="cursor-pointer text-blue-500 hover:underline"
+                  >Remove avatar</span
+                >
+              </li>
+              <!-- upload new avatar -->
+              <li v-if="!data.avatar.hasFile" class="mb-2">
+                <uploadcare
+                  v-if="data.avatar.uploadcarePublicKey && data.avatar.canUploadFile"
+                  :public-key="data.avatar.uploadcarePublicKey"
+                  :tabs="'file'"
+                  :multiple="false"
+                  :preview-step="false"
+                  @success="onSuccess"
+                  @error="onError">
+                  <span class="cursor-pointer text-blue-500 hover:underline">Upload photo as avatar</span>
+                </uploadcare>
+              </li>
+              <!-- archive contact -->
               <li v-if="data.listed && data.options.can_be_archived" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
-                  $t('contact.contact_archive_cta')
-                }}</inertia-link>
+                <inertia-link class="cursor-pointer text-blue-500 hover:underline" @click.prevent="toggleArchive()">
+                  {{ $t('contact.contact_archive_cta') }}
+                </inertia-link>
               </li>
+              <!-- unarchive contact -->
               <li v-if="!data.listed" class="mb-2">
-                <inertia-link @click.prevent="toggleArchive()" class="cursor-pointer text-blue-500 hover:underline">{{
-                  $t('contact.contact_unarchive_cta')
-                }}</inertia-link>
+                <inertia-link class="cursor-pointer text-blue-500 hover:underline" @click.prevent="toggleArchive()">
+                  {{ $t('contact.contact_unarchive_cta') }}
+                </inertia-link>
               </li>
+              <!-- change template -->
               <li class="mb-2">
-                <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline">{{
-                  $t('contact.contact_change_template_cta')
-                }}</inertia-link>
+                <inertia-link :href="data.url.update_template" class="cursor-pointer text-blue-500 hover:underline">
+                  {{ $t('contact.contact_change_template_cta') }}
+                </inertia-link>
               </li>
+              <!-- delete contact -->
               <li v-if="data.options.can_be_deleted">
                 <span class="cursor-pointer text-blue-500 hover:underline" @click="destroy">{{
                   $t('contact.contact_delete_cta')
@@ -100,7 +115,7 @@
           <div class="p-3 sm:px-3 sm:py-0">
             <!-- family summary -->
             <div v-if="data.group_summary_information.length > 0">
-              <div class="mb-6 flex rounded border border-gray-200 p-3">
+              <div class="mb-6 flex rounded border border-gray-200 p-3 dark:border-gray-700">
                 <img src="/img/group.svg" class="mr-2 h-6 w-6" />
                 <ul>
                   <li class="mr-2 inline">Part of</li>
@@ -108,24 +123,28 @@
                     v-for="group in data.group_summary_information"
                     :key="group.id"
                     class="group-list-item mr-2 inline">
-                    <inertia-link class="text-blue-500 hover:underline">{{ group.name }}</inertia-link>
+                    <inertia-link :href="group.url.show" class="text-blue-500 hover:underline">
+                      {{ group.name }}
+                    </inertia-link>
                   </li>
                 </ul>
               </div>
             </div>
 
             <!-- all the pages -->
-            <div class="mb-8 border-b border-gray-200">
-              <ul>
-                <li v-for="page in data.template_pages" :key="page.id" class="mr-2 inline">
+            <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-700">
+              <div class="flex overflow-x-auto">
+                <div v-for="page in data.template_pages" :key="page.id" class="mr-2 flex-none">
                   <inertia-link
                     :href="page.url.show"
                     :class="{ 'border-orange-500 hover:border-orange-500': page.selected }"
-                    class="inline-block border-b-2 border-transparent px-4 pb-2 hover:border-gray-200">
-                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100">{{ page.name }}</span>
+                    class="inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
+                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900">{{
+                      page.name
+                    }}</span>
                   </inertia-link>
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
 
             <!-- all the modules -->
@@ -135,7 +154,7 @@
 
                 <reminders v-if="module.type == 'reminders'" :data="reminders" />
 
-                <feed v-if="module.type == 'feed'" :data="feed" />
+                <feed v-if="module.type == 'feed'" :url="feed" />
 
                 <loans v-if="module.type == 'loans'" :data="loans" :layout-data="layoutData" />
 
@@ -152,6 +171,12 @@
                 <addresses v-if="module.type == 'addresses'" :data="addresses" />
 
                 <groups v-if="module.type == 'groups'" :data="groups" />
+
+                <contact-information v-if="module.type == 'contact_information'" :data="contactInformation" />
+
+                <documents v-if="module.type == 'documents'" :data="documents" />
+
+                <photos v-if="module.type == 'photos'" :data="photos" />
               </div>
             </div>
           </div>
@@ -162,32 +187,37 @@
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import ContactName from '@/Shared/Modules/ContactName';
-import GenderPronoun from '@/Shared/Modules/GenderPronoun';
-import Avatar from '@/Shared/Modules/Avatar';
-import FamilySummary from '@/Shared/Modules/FamilySummary';
-import Notes from '@/Shared/Modules/Notes';
-import ImportantDates from '@/Shared/Modules/ImportantDates';
-import Labels from '@/Shared/Modules/Labels';
-import Reminders from '@/Shared/Modules/Reminders';
-import Feed from '@/Shared/Modules/Feed';
-import Loans from '@/Shared/Modules/Loans';
-import JobInformation from '@/Shared/Modules/JobInformation';
-import Relationships from '@/Shared/Modules/Relationships';
-import Tasks from '@/Shared/Modules/Tasks';
-import Calls from '@/Shared/Modules/Calls';
-import Pets from '@/Shared/Modules/Pets';
-import Goals from '@/Shared/Modules/Goals';
-import Addresses from '@/Shared/Modules/Addresses';
-import Groups from '@/Shared/Modules/Groups';
+import Layout from '@/Shared/Layout.vue';
+import ContactName from '@/Shared/Modules/ContactName.vue';
+import ContactAvatar from '@/Shared/Modules/ContactAvatar.vue';
+import GenderPronoun from '@/Shared/Modules/GenderPronoun.vue';
+import FamilySummary from '@/Shared/Modules/FamilySummary.vue';
+import Notes from '@/Shared/Modules/Notes.vue';
+import ImportantDates from '@/Shared/Modules/ImportantDates.vue';
+import Labels from '@/Shared/Modules/Labels.vue';
+import Reminders from '@/Shared/Modules/Reminders.vue';
+import Feed from '@/Shared/Modules/Feed.vue';
+import Loans from '@/Shared/Modules/Loans.vue';
+import JobInformation from '@/Shared/Modules/JobInformation.vue';
+import Relationships from '@/Shared/Modules/Relationships.vue';
+import Tasks from '@/Shared/Modules/Tasks.vue';
+import Calls from '@/Shared/Modules/Calls.vue';
+import Pets from '@/Shared/Modules/Pets.vue';
+import Goals from '@/Shared/Modules/Goals.vue';
+import Addresses from '@/Shared/Modules/Addresses.vue';
+import Groups from '@/Shared/Modules/Groups.vue';
+import ContactInformation from '@/Shared/Modules/ContactInformation.vue';
+import Documents from '@/Shared/Modules/Documents.vue';
+import Photos from '@/Shared/Modules/Photos.vue';
+import Religion from '@/Shared/Modules/Religion.vue';
+import Uploadcare from '@/Components/Uploadcare.vue';
 
 export default {
   components: {
     Layout,
     ContactName,
+    ContactAvatar,
     GenderPronoun,
-    Avatar,
     FamilySummary,
     Notes,
     ImportantDates,
@@ -203,6 +233,11 @@ export default {
     Goals,
     Addresses,
     Groups,
+    ContactInformation,
+    Documents,
+    Photos,
+    Religion,
+    Uploadcare,
   },
 
   props: {
@@ -236,6 +271,20 @@ export default {
       goals: [],
       addresses: [],
       groups: [],
+      contactInformation: [],
+      documents: [],
+      photos: [],
+      religions: [],
+      form: {
+        searchTerm: null,
+        uuid: null,
+        name: null,
+        original_url: null,
+        cdn_url: null,
+        mime_type: null,
+        size: null,
+        errors: [],
+      },
     };
   },
 
@@ -280,6 +329,11 @@ export default {
           this.data.contact_information[
             this.data.contact_information.findIndex((x) => x.type == 'family_summary')
           ].data;
+      }
+
+      if (this.data.contact_information.findIndex((x) => x.type == 'religions') > -1) {
+        this.religions =
+          this.data.contact_information[this.data.contact_information.findIndex((x) => x.type == 'religions')].data;
       }
     }
 
@@ -328,6 +382,19 @@ export default {
       if (this.data.modules.findIndex((x) => x.type == 'groups') > -1) {
         this.groups = this.data.modules[this.data.modules.findIndex((x) => x.type == 'groups')].data;
       }
+
+      if (this.data.modules.findIndex((x) => x.type == 'contact_information') > -1) {
+        this.contactInformation =
+          this.data.modules[this.data.modules.findIndex((x) => x.type == 'contact_information')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'documents') > -1) {
+        this.documents = this.data.modules[this.data.modules.findIndex((x) => x.type == 'documents')].data;
+      }
+
+      if (this.data.modules.findIndex((x) => x.type == 'photos') > -1) {
+        this.photos = this.data.modules[this.data.modules.findIndex((x) => x.type == 'photos')].data;
+      }
     }
   },
 
@@ -359,6 +426,57 @@ export default {
           });
       }
     },
+
+    onSuccess(file) {
+      this.form.uuid = file.uuid;
+      this.form.name = file.name;
+      this.form.original_url = file.originalUrl;
+      this.form.cdn_url = file.cdnUrl;
+      this.form.mime_type = file.mimeType;
+      this.form.size = file.size;
+
+      this.upload();
+    },
+
+    upload() {
+      axios
+        .put(this.data.url.update_avatar, this.form)
+        .then((response) => {
+          this.$inertia.visit(response.data.data);
+          this.flash(this.$t('contact.photos_new_success'), 'success');
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
+
+    destroyAvatar() {
+      axios
+        .delete(this.data.url.destroy_avatar)
+        .then((response) => {
+          this.$inertia.visit(response.data.data);
+          localStorage.success = this.$t('app.notification_flash_changes_saved');
+        })
+        .catch((error) => {
+          this.form.errors = error.response.data;
+        });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.special-grid {
+  grid-template-columns: 300px 1fr;
+}
+
+@media (max-width: 480px) {
+  .special-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.group-list-item:not(:last-child):after {
+  content: ',';
+}
+</style>

@@ -1,14 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -25,14 +18,17 @@
           </svg>
         </span>
 
-        <span class="font-semibold">Goals</span>
+        <span class="font-semibold"> Goals </span>
       </div>
       <pretty-button :text="'Add a goal'" :icon="'plus'" :classes="'sm:w-fit w-full'" @click="showCreateGoalModal" />
     </div>
 
     <!-- add a note modal -->
-    <form v-if="createGoalModalShown" class="bg-form mb-6 rounded-lg border border-gray-200" @submit.prevent="submit()">
-      <div class="border-b border-gray-200 p-5">
+    <form
+      v-if="createGoalModalShown"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
         <!-- name -->
         <text-input
@@ -55,15 +51,20 @@
 
     <!-- goals -->
     <div v-if="localGoals.length > 0">
-      <div v-for="goal in localGoals" :key="goal.id" class="mb-4 rounded border border-gray-200 last:mb-0">
+      <div
+        v-for="goal in localGoals"
+        :key="goal.id"
+        class="mb-4 rounded border border-gray-200 last:mb-0 dark:border-gray-700">
         <div v-if="editedGoalId !== goal.id">
-          <div class="flex items-center justify-between border-b border-gray-200 p-3">
-            <div class="font-semibold text-gray-600">
+          <div class="flex items-center justify-between border-b border-gray-200 p-3 dark:border-gray-700">
+            <div class="font-semibold text-gray-600 dark:text-gray-400">
               {{ goal.name }}
             </div>
 
             <div>
-              <inertia-link class="text-sm text-blue-500 hover:underline">View details</inertia-link>
+              <inertia-link :href="goal.url.show" class="text-sm text-blue-500 hover:underline">
+                View details
+              </inertia-link>
             </div>
           </div>
 
@@ -73,27 +74,32 @@
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="mr-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center sm:mr-7 sm:mb-0 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
+                class="mr-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center dark:border-gray-700 sm:mr-7 sm:mb-0 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
                 :class="{ 'text-gray-500': !streak.active }">
                 <div>
-                  <span class="mb-0 mr-2 block text-xs font-semibold sm:mr-0">{{ streak.day }}</span>
-                  <span class="mr-2 sm:mr-0">{{ streak.day_number }}</span>
+                  <span class="mb-0 mr-2 block text-xs font-semibold sm:mr-0">
+                    {{ streak.day }}
+                  </span>
+                  <span class="mr-2 sm:mr-0">
+                    {{ streak.day_number }}
+                  </span>
                 </div>
 
                 <!-- active streak -->
                 <span
-                  @click="toggleStreak(goal, streak)"
                   v-if="streak.active"
                   class="mr-2 cursor-pointer text-2xl sm:mr-0"
+                  @click="toggleStreak(goal, streak)"
                   >👍</span
                 >
 
                 <!-- inactive streak -->
                 <span
-                  @click="toggleStreak(goal, streak)"
                   v-else
-                  class="mr-2 cursor-pointer text-center text-2xl sm:mr-0">
-                  <div class="rounded-md border border-gray-200 bg-slate-100 py-1 px-2">
+                  class="mr-2 cursor-pointer text-center text-2xl sm:mr-0"
+                  @click="toggleStreak(goal, streak)">
+                  <div
+                    class="rounded-md border border-gray-200 bg-slate-100 py-1 px-2 dark:border-gray-700 dark:bg-slate-900">
                     <svg
                       class="z-50"
                       width="18"
@@ -123,62 +129,43 @@
             <div class="flex justify-between p-3">
               <div class="mr-6 flex items-center">
                 <div class="mr-3 w-14 text-right text-sm text-gray-500">Current streak</div>
-                <div class="text-4xl">{{ goal.streaks_statistics.current_streak }}</div>
+                <div class="text-4xl">
+                  {{ goal.streaks_statistics.current_streak }}
+                </div>
               </div>
               <div class="flex items-center">
                 <div class="mr-3 w-14 text-right text-sm text-gray-500">Longest streak</div>
-                <div class="text-4xl">{{ goal.streaks_statistics.max_streak }}</div>
+                <div class="text-4xl">
+                  {{ goal.streaks_statistics.max_streak }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- edit modal form -->
-        <form v-if="editedGoalId === goal.id" class="bg-form" @submit.prevent="update(note)">
-          <div class="border-b border-gray-200 p-5">
-            <errors :errors="form.errors" />
-
-            <!-- name -->
-            <text-input
-              :ref="'newName'"
-              v-model="form.name"
-              :label="'Name'"
-              :type="'text'"
-              :input-class="'block w-full'"
-              :required="false"
-              :autocomplete="false"
-              :maxlength="255"
-              @esc-key-pressed="editedGoalId = 0" />
-          </div>
-
-          <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedGoalId = 0" />
-            <pretty-button :text="'Update'" :state="loadingState" :icon="'check'" :classes="'save'" />
-          </div>
-        </form>
       </div>
     </div>
 
     <!-- blank state -->
-    <div v-if="localGoals.length == 0" class="mb-6 rounded-lg border border-gray-200 bg-white">
-      <p class="p-5 text-center">There are no goals yet.</p>
+    <div
+      v-if="localGoals.length == 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/contact_blank_goal.svg" class="mx-auto mt-4 h-14 w-14" />
+      <p class="px-5 pb-5 pt-2 text-center">There are no goals yet.</p>
     </div>
   </div>
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
     PrettyButton,
     PrettySpan,
     TextInput,
-    TextArea,
     Errors,
   },
 
@@ -235,19 +222,6 @@ export default {
         });
     },
 
-    update(goal) {
-      axios
-        .put(goal.url.update, this.form)
-        .then((response) => {
-          this.flash('The goal has been edited', 'success');
-          this.localGoals[this.localGoals.findIndex((x) => x.id === goal.id)] = response.data.data;
-          this.editedGoalId = 0;
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
-    },
-
     toggleStreak(goal, streak) {
       this.form.happened_at = streak.happened_at;
 
@@ -267,7 +241,7 @@ export default {
       if (confirm('Are you sure? This will delete the goal permanently.')) {
         axios
           .delete(goal.url.destroy)
-          .then((response) => {
+          .then(() => {
             this.flash('The goal has been deleted', 'success');
             var id = this.localGoals.findIndex((x) => x.id === goal.id);
             this.localGoals.splice(id, 1);
@@ -281,3 +255,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+</style>

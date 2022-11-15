@@ -1,33 +1,11 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  top: -2px;
-}
-
-.label-list {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-
-  li:last-child {
-    border-bottom: 0;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-
-  li:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-4">
-    <div class="mb-3 items-center justify-between border-b border-gray-200 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 dark:border-gray-700 sm:flex">
       <div class="mb-2 text-xs sm:mb-0">Job information</div>
-      <span v-if="!editJobInformation" @click="showEditModal" class="relative cursor-pointer">
+      <span v-if="!editJobInformation" class="relative cursor-pointer" @click="showEditModal">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600"
+          class="icon-sidebar relative inline h-3 w-3 text-gray-300 hover:text-gray-600 dark:text-gray-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">
@@ -40,15 +18,20 @@
       </span>
 
       <!-- close button -->
-      <span v-if="editJobInformation" @click="editJobInformation = false" class="cursor-pointer text-xs text-gray-600">
+      <span
+        v-if="editJobInformation"
+        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
+        @click="editJobInformation = false">
         Close
       </span>
     </div>
 
     <!-- edit job information -->
-    <div v-if="editJobInformation" class="bg-form mb-6 rounded-lg border border-gray-200">
+    <div
+      v-if="editJobInformation"
+      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
       <form @submit.prevent="update">
-        <div class="border-b border-gray-200 p-2">
+        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
           <errors :errors="form.errors" />
 
           <!-- companies -->
@@ -63,9 +46,9 @@
             :label="'Existing company'" />
 
           <p
-            @click="showCreateCompany()"
             v-if="showCreateCompanyLink"
-            class="cursor-pointer text-sm text-blue-500 hover:underline">
+            class="cursor-pointer text-sm text-blue-500 hover:underline"
+            @click="showCreateCompany()">
             Or create a new one
           </p>
 
@@ -83,7 +66,7 @@
             :maxlength="255" />
         </div>
 
-        <div class="border-b border-gray-200 p-2">
+        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
           <!-- job position -->
           <text-input
             v-model="form.job_position"
@@ -97,7 +80,7 @@
         </div>
 
         <div class="flex justify-between p-2">
-          <pretty-span @click="editJobInformation = false" :text="$t('app.cancel')" :classes="'mr-3'" />
+          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editJobInformation = false" />
           <pretty-button
             :href="'data.url.vault.create'"
             :text="$t('app.save')"
@@ -109,12 +92,12 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="!form.job_position && !company_name" class="text-sm text-gray-600">Not set</p>
+    <p v-if="!form.job_position && !company_name" class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
 
     <p v-else>
       <span v-if="form.job_position">
         {{ form.job_position }}
-        <span v-if="company_name" class="text-sm text-gray-600">at </span>
+        <span v-if="company_name" class="text-sm text-gray-600 dark:text-gray-400">at </span>
       </span>
       <span v-if="company_name">{{ company_name }}</span>
     </p>
@@ -122,11 +105,11 @@
 </template>
 
 <script>
-import TextInput from '@/Shared/Form/TextInput';
-import Dropdown from '@/Shared/Form/Dropdown';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import Errors from '@/Shared/Form/Errors';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -229,3 +212,25 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  top: -2px;
+}
+
+.label-list {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  li:last-child {
+    border-bottom: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  li:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

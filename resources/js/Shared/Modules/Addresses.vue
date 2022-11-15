@@ -1,30 +1,7 @@
-<style lang="scss" scoped>
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
-
 <template>
   <div class="mb-10">
     <!-- title + cta -->
-    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 sm:flex">
+    <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
         <span class="relative mr-1">
           <svg
@@ -37,14 +14,17 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </span>
 
-        <span class="font-semibold">Addresses</span>
+        <span class="font-semibold">
+          {{ $t('contact.addresses_title') }}
+        </span>
       </div>
       <pretty-button
-        :text="'Add an address'"
+        :text="$t('contact.addresses_cta')"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
         @click="showCreateAddressModal" />
@@ -54,29 +34,29 @@
       <!-- add an address modal -->
       <form
         v-if="createAddressModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200"
+        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="submit()">
-        <div class="border-b border-gray-200">
+        <div class="border-b border-gray-200 dark:border-gray-700">
           <div v-if="form.errors.length > 0" class="p-5">
             <errors :errors="form.errors" />
           </div>
 
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <dropdown
               v-model="form.address_type_id"
               :data="data.address_types"
               :required="false"
               :placeholder="$t('app.choose_value')"
               :dropdown-class="'block w-full'"
-              :label="'Address type'" />
+              :label="$t('contact.addresses_address_type')" />
           </div>
 
           <!-- street + city -->
-          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'street'"
               v-model="form.street"
-              :label="'Street'"
+              :label="$t('contact.addresses_street')"
               :type="'text'"
               :autofocus="true"
               :input-class="'w-full mr-2'"
@@ -87,7 +67,7 @@
 
             <text-input
               v-model="form.city"
-              :label="'City'"
+              :label="$t('contact.addresses_city')"
               :type="'text'"
               :autofocus="true"
               :input-class="'w-full'"
@@ -98,10 +78,10 @@
           </div>
 
           <!-- province + postal code + country -->
-          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+          <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               v-model="form.province"
-              :label="'Province'"
+              :label="$t('contact.addresses_province')"
               :type="'text'"
               :autofocus="true"
               :input-class="'w-full mr-2'"
@@ -112,7 +92,7 @@
 
             <text-input
               v-model="form.postal_code"
-              :label="'Postal code'"
+              :label="$t('contact.addresses_postal_code')"
               :type="'text'"
               :autofocus="true"
               :input-class="'w-full'"
@@ -123,7 +103,7 @@
 
             <text-input
               v-model="form.country"
-              :label="'Country'"
+              :label="$t('contact.addresses_country')"
               :type="'text'"
               :autofocus="true"
               :input-class="'w-full'"
@@ -137,12 +117,12 @@
           <div class="p-5">
             <input
               :id="form.is_past_address"
-              :name="form.is_past_address"
               v-model="form.is_past_address"
+              :name="form.is_past_address"
               type="checkbox"
-              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-            <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
-              This address is not active anymore
+              class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+            <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900 dark:text-gray-100">
+              {{ $t('contact.addresses_inactive') }}
             </label>
           </div>
         </div>
@@ -154,61 +134,69 @@
       </form>
 
       <!-- list of addresses -->
-      <div v-if="localActiveAddresses.length > 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
+      <div
+        v-if="localActiveAddresses.length > 0"
+        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div
           v-for="address in localActiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
-              <p v-if="address.type" class="mb-2 text-sm font-semibold">{{ address.type.name }}</p>
+              <p v-if="address.type" class="mb-2 text-sm font-semibold">
+                {{ address.type.name }}
+              </p>
               <div>
-                <p v-if="address.street">{{ address.street }}</p>
+                <p v-if="address.street">
+                  {{ address.street }}
+                </p>
                 <p v-if="address.postal_code || address.city">{{ address.postal_code }} {{ address.city }}</p>
-                <p v-if="address.country">{{ address.country }}</p>
+                <p v-if="address.country">
+                  {{ address.country }}
+                </p>
               </div>
             </div>
 
             <!-- actions -->
             <ul class="text-sm">
               <li class="mr-2 inline">
-                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline"
-                  >View on map</a
-                >
+                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline">{{
+                  $t('app.view_map')
+                }}</a>
               </li>
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
-                Edit
+                {{ $t('app.edit') }}
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
-                Delete
+                {{ $t('app.delete') }}
               </li>
             </ul>
           </div>
 
           <!-- edit address -->
           <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <dropdown
                   v-model="form.address_type_id"
                   :data="data.address_types"
                   :required="false"
                   :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
-                  :label="'Address type'" />
+                  :label="$t('contact.addresses_address_type')" />
               </div>
 
               <!-- street + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'street'"
                   v-model="form.street"
-                  :label="'Street'"
+                  :label="$t('contact.addresses_street')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full mr-2'"
@@ -219,7 +207,7 @@
 
                 <text-input
                   v-model="form.city"
-                  :label="'City'"
+                  :label="$t('contact.addresses_city')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -230,10 +218,10 @@
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   v-model="form.province"
-                  :label="'Province'"
+                  :label="$t('contact.addresses_province')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full mr-2'"
@@ -244,7 +232,7 @@
 
                 <text-input
                   v-model="form.postal_code"
-                  :label="'Postal code'"
+                  :label="$t('contact.addresses_postal_code')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -255,7 +243,7 @@
 
                 <text-input
                   v-model="form.country"
-                  :label="'Country'"
+                  :label="$t('contact.addresses_country')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -269,12 +257,12 @@
               <div class="p-5">
                 <input
                   :id="form.is_past_address"
-                  :name="form.is_past_address"
                   v-model="form.is_past_address"
+                  :name="form.is_past_address"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-                <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900">
-                  This address is not active anymore
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+                <label :for="form.is_past_address" class="ml-2 cursor-pointer text-gray-900 dark:text-gray-100">
+                  {{ $t('contact.addresses_inactive') }}
                 </label>
               </div>
             </div>
@@ -288,76 +276,87 @@
       </div>
 
       <!-- blank state -->
-      <div v-if="localActiveAddresses.length == 0" class="mb-2 rounded-lg border border-gray-200 bg-white">
-        <p class="p-5 text-center">There are no active addresses yet.</p>
+      <div
+        v-if="localActiveAddresses.length == 0"
+        class="mb-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <img src="/img/contact_blank_address.svg" class="mx-auto mt-4 h-14 w-14" />
+        <p class="px-5 pb-5 pt-2 text-center">
+          {{ $t('contact.addresses_blank') }}
+        </p>
       </div>
 
       <!-- view past addresses link -->
       <p
         v-if="localInactiveAddresses.length > 0"
-        @click="toggleInactiveAdresses"
-        class="mx-4 mb-2 cursor-pointer text-xs text-blue-500 hover:underline">
-        Previous addresses ({{ localInactiveAddresses.length }})
+        class="mx-4 mb-2 cursor-pointer text-xs text-blue-500 hover:underline"
+        @click="toggleInactiveAdresses">
+        {{ $t('contact.addresses_previous') }} ({{ localInactiveAddresses.length }})
       </p>
 
       <!-- list of previous addresses -->
       <div
         v-if="localInactiveAddresses.length > 0 && inactiveAddressesShown"
-        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white">
+        class="mx-4 mb-4 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <div
           v-for="address in localInactiveAddresses"
           :key="address.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="address.id != editedAddressId" class="flex items-center justify-between p-3">
             <!-- address detail -->
             <div>
-              <p v-if="address.type" class="mb-2 text-sm font-semibold">{{ address.type.name }}</p>
+              <p v-if="address.type" class="mb-2 text-sm font-semibold">
+                {{ address.type.name }}
+              </p>
               <div>
-                <p v-if="address.street">{{ address.street }}</p>
+                <p v-if="address.street">
+                  {{ address.street }}
+                </p>
                 <p v-if="address.postal_code || address.city">{{ address.postal_code }} {{ address.city }}</p>
-                <p v-if="address.country">{{ address.country }}</p>
+                <p v-if="address.country">
+                  {{ address.country }}
+                </p>
               </div>
             </div>
 
             <!-- actions -->
             <ul class="text-sm">
               <li class="mr-2 inline">
-                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline"
-                  >View on map</a
-                >
+                <a :href="address.url.show" target="_blank" class="mr-2 text-sm text-blue-500 hover:underline">{{
+                  $t('app.view_map')
+                }}</a>
               </li>
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
-                Edit
+                {{ $t('app.edit') }}
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
-                Delete
+                {{ $t('app.delete') }}
               </li>
             </ul>
           </div>
 
           <!-- edit address -->
           <form v-if="address.id === editedAddressId" class="bg-form" @submit.prevent="update(address)">
-            <div class="border-b border-gray-200">
+            <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <dropdown
                   v-model="form.address_type_id"
                   :data="data.address_types"
                   :required="false"
                   :placeholder="$t('app.choose_value')"
                   :dropdown-class="'block w-full'"
-                  :label="'Address type'" />
+                  :label="$t('contact.addresses_address_type')" />
               </div>
 
               <!-- street + city -->
-              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-2 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   :ref="'street'"
                   v-model="form.street"
-                  :label="'Street'"
+                  :label="$t('contact.addresses_street')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full mr-2'"
@@ -368,7 +367,7 @@
 
                 <text-input
                   v-model="form.city"
-                  :label="'City'"
+                  :label="$t('contact.addresses_city')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -379,10 +378,10 @@
               </div>
 
               <!-- province + postal code + country -->
-              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5">
+              <div class="grid grid-cols-3 gap-4 border-b border-gray-200 p-5 dark:border-gray-700">
                 <text-input
                   v-model="form.province"
-                  :label="'Province'"
+                  :label="$t('contact.addresses_province')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full mr-2'"
@@ -393,7 +392,7 @@
 
                 <text-input
                   v-model="form.postal_code"
-                  :label="'Postal code'"
+                  :label="$t('contact.addresses_postal_code')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -404,7 +403,7 @@
 
                 <text-input
                   v-model="form.country"
-                  :label="'Country'"
+                  :label="$t('contact.addresses_country')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'w-full'"
@@ -418,12 +417,12 @@
               <div class="p-5">
                 <input
                   id="is_past_address"
-                  name="is_past_address"
                   v-model="form.is_past_address"
+                  name="is_past_address"
                   type="checkbox"
-                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-                <label for="is_past_address" class="ml-2 cursor-pointer text-gray-900">
-                  This address is not active anymore
+                  class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
+                <label for="is_past_address" class="ml-2 cursor-pointer text-gray-900 dark:text-gray-100">
+                  {{ $t('contact.addresses_inactive') }}
                 </label>
               </div>
             </div>
@@ -440,19 +439,17 @@
 </template>
 
 <script>
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import TextInput from '@/Shared/Form/TextInput';
-import TextArea from '@/Shared/Form/TextArea';
-import Errors from '@/Shared/Form/Errors';
-import Dropdown from '@/Shared/Form/Dropdown';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
 
 export default {
   components: {
     PrettyButton,
     PrettySpan,
     TextInput,
-    TextArea,
     Errors,
     Dropdown,
   },
@@ -536,7 +533,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The address has been created', 'success');
+          this.flash(this.$t('contact.addresses_new_success'), 'success');
 
           if (this.form.is_past_address) {
             this.localInactiveAddresses.unshift(response.data.data);
@@ -560,7 +557,7 @@ export default {
         .put(address.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash('The address has been edited', 'success');
+          this.flash(this.$t('contact.addresses_edit_success'), 'success');
 
           if (this.form.is_past_address) {
             this.localInactiveAddresses[this.localInactiveAddresses.findIndex((x) => x.id === address.id)] =
@@ -578,19 +575,18 @@ export default {
     },
 
     destroy(address) {
-      if (confirm('Are you sure? This will delete the address permanently.')) {
+      if (confirm(this.$t('contact.addresses_delete_confirm'))) {
         axios
           .delete(address.url.destroy)
-          .then((response) => {
-            this.flash('The address has been deleted', 'success');
-            var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+          .then(() => {
+            this.flash(this.$t('contact.addresses_delete_success'), 'success');
 
             if (address.is_past_address) {
-              var id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
+              const id = this.localInactiveAddresses.findIndex((x) => x.id === address.id);
               this.localInactiveAddresses.splice(id, 1);
             } else {
-              var id = this.localActiveAddresses.findIndex((x) => x.id === address.id);
-              this.localActiveAddresses.splice(id, 1);
+              const id2 = this.localActiveAddresses.findIndex((x) => x.id === address.id);
+              this.localActiveAddresses.splice(id2, 1);
             }
           })
           .catch((error) => {
@@ -602,3 +598,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-sidebar {
+  color: #737e8d;
+  top: -2px;
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

@@ -1,31 +1,11 @@
-<style lang="scss" scoped>
-.item-list {
-  &:hover:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-.dropdown-list {
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-</style>
-
 <template>
   <div class="mb-12">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
-      <h3 class="mb-4 sm:mb-0"><span class="mr-1"> 🐱 </span> {{ $t('vault.settings_users_title') }}</h3>
+      <h3 class="mb-4 sm:mb-0">
+        <span class="mr-1"> 🐱 </span>
+        {{ $t('vault.settings_users_title') }}
+      </h3>
       <pretty-span
         v-if="!addUserModalShown"
         :text="$t('vault.settings_users_cta')"
@@ -40,13 +20,15 @@
     <!-- modal to add a user -->
     <form
       v-if="addUserModalShown && localUsersInAccount.length > 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="store()">
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />
 
         <!-- list of potential new users -->
-        <p class="mb-2">{{ $t('vault.settings_users_invite_name') }}</p>
+        <p class="mb-2">
+          {{ $t('vault.settings_users_invite_name') }}
+        </p>
 
         <div v-for="user in localUsersInAccount" :key="user.id" class="dropdown-list mb-2 flex items-center">
           <input
@@ -55,18 +37,22 @@
             :value="user.id"
             name="user"
             type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500" />
-          <label :for="'user' + user.id" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+          <label
+            :for="'user' + user.id"
+            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ user.name }}
           </label>
         </div>
       </div>
 
       <!-- permissions -->
-      <div class="border-b border-gray-200 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <!-- role types -->
         <div>
-          <p class="mb-2">{{ $t('vault.settings_users_invite_permission') }}</p>
+          <p class="mb-2">
+            {{ $t('vault.settings_users_invite_permission') }}
+          </p>
 
           <!-- view -->
           <div class="mb-2 flex items-center">
@@ -76,8 +62,8 @@
               value="300"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="viewer" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+            <label for="viewer" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('vault.settings_users_invite_permission_viewer') }}
               <span class="ml-4 font-normal text-gray-500">
                 {{ $t('vault.settings_users_invite_permission_viewer_description') }}
@@ -93,8 +79,8 @@
               value="200"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="editor" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+            <label for="editor" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('vault.settings_users_invite_permission_editor') }}
               <span class="ml-4 font-normal text-gray-500">
                 {{ $t('vault.settings_users_invite_permission_editor_description') }}
@@ -110,8 +96,8 @@
               value="100"
               name="permission"
               type="radio"
-              class="h-4 w-4 border-gray-300 text-sky-500" />
-            <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+              class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+            <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('vault.settings_users_invite_permission_manager') }}
               <span class="ml-4 font-normal text-gray-500">
                 {{ $t('vault.settings_users_invite_permission_manager_description') }}
@@ -130,17 +116,17 @@
     <!-- blank state -->
     <div
       v-if="addUserModalShown && localUsersInAccount.length == 0"
-      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center">
+      class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
       <p>{{ $t('vault.settings_users_invite_blank') }}</p>
     </div>
 
     <!-- list of existing users -->
     <div class="mb-6 rounded border text-sm">
-      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-white">
+      <ul v-if="localUsersInVault.length > 0" class="rounded-b rounded-t bg-white dark:bg-gray-900">
         <li
           v-for="user in localUsersInVault"
           :key="user.id"
-          class="item-list border-b border-gray-200 hover:bg-slate-50">
+          class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="editedUser.id != user.id" class="flex items-center justify-between px-5 py-2">
             <span>{{ user.name }}</span>
 
@@ -158,11 +144,13 @@
           </div>
 
           <!-- change permission modal -->
-          <form v-if="editedUser.id == user.id" class="bg-white" @submit.prevent="update(user)">
-            <div class="border-b border-gray-200 p-5">
+          <form v-if="editedUser.id == user.id" class="bg-white dark:bg-gray-900" @submit.prevent="update(user)">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
               <errors :errors="form.errors" />
 
-              <p class="mb-2">{{ $t('vault.settings_users_edit_permission', { name: user.name }) }}</p>
+              <p class="mb-2">
+                {{ $t('vault.settings_users_edit_permission', { name: user.name }) }}
+              </p>
 
               <!-- view -->
               <div class="mb-2 flex items-center">
@@ -172,7 +160,7 @@
                   value="300"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
                 {{ $t('vault.settings_users_invite_permission_viewer') }}
                 <span class="ml-4 font-normal text-gray-500">
                   {{ $t('vault.settings_users_invite_permission_viewer_description') }}
@@ -187,8 +175,10 @@
                   value="200"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="editor" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+                <label
+                  for="editor"
+                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ $t('vault.settings_users_invite_permission_editor') }}
                   <span class="ml-4 font-normal text-gray-500">
                     {{ $t('vault.settings_users_invite_permission_editor_description') }}
@@ -204,8 +194,10 @@
                   value="100"
                   name="permission"
                   type="radio"
-                  class="h-4 w-4 border-gray-300 text-sky-500" />
-                <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700">
+                  class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700 dark:border-gray-700" />
+                <label
+                  for="manager"
+                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ $t('vault.settings_users_invite_permission_manager') }}
                   <span class="ml-4 font-normal text-gray-500">
                     {{ $t('vault.settings_users_invite_permission_manager_description') }}
@@ -228,16 +220,18 @@
 
       <!-- blank state -->
       <div v-if="localUsersInVault.length == 0">
-        <p class="p-5 text-center">{{ $t('vault.settings_users_edit_permission_blank') }}</p>
+        <p class="p-5 text-center">
+          {{ $t('vault.settings_users_edit_permission_blank') }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import PrettySpan from '@/Shared/Form/PrettySpan';
-import PrettyButton from '@/Shared/Form/PrettyButton';
-import Errors from '@/Shared/Form/Errors';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
@@ -336,7 +330,7 @@ export default {
     destroy(user) {
       axios
         .delete(user.url.destroy)
-        .then((response) => {
+        .then(() => {
           this.flash(this.$t('vault.settings_users_destroy_success'), 'success');
 
           // remove the user from the list of users in the vault
@@ -353,3 +347,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+.dropdown-list {
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>

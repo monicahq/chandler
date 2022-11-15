@@ -2,13 +2,12 @@
 
 namespace Tests\Unit\Domains\Settings\ManageTemplates\Services;
 
+use App\Domains\Settings\ManageTemplates\Services\RemoveModuleFromTemplatePage;
 use App\Models\Account;
 use App\Models\Module;
 use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Models\User;
-use App\Settings\ManageTemplates\Services\RemoveInformationFromTemplate;
-use App\Settings\ManageTemplates\Services\RemoveModuleFromTemplatePage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
@@ -20,7 +19,9 @@ class RemoveModuleFromTemplatePageTest extends TestCase
     use DatabaseTransactions;
 
     private Template $template;
+
     private TemplatePage $templatePage;
+
     private Module $module;
 
     /** @test */
@@ -39,7 +40,7 @@ class RemoveModuleFromTemplatePageTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new RemoveInformationFromTemplate())->execute($request);
+        (new RemoveModuleFromTemplatePage())->execute($request);
     }
 
     /** @test */

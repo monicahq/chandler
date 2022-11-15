@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+    <link rel="shortcut icon" href="/img/favicon.svg">
 
-  <!-- Scripts -->
-  @routes
-  <script src="{{ mix('js/app.js') }}" defer></script>
-</head>
+    <!-- Scripts -->
+    @if (app()->bound('sentry') && config('sentry.dsn') !== null)
+    <script type="text/javascript">
+      const SentryConfig = {!! \json_encode([
+        'dsn' => config('sentry.dsn'),
+        'environment' => config('sentry.environment'),
+        'sendDefaultPii' => config('sentry.send_default_pii'),
+        'tracesSampleRate' => config('sentry.traces_sample_rate'),
+      ]); !!}
+    </script>
+    @endif
 
-<body class="font-sans antialiased bg-white dark:bg-gray-800 dark:text-gray-300">
-  @inertia
+    <script type="text/javascript">
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
 
-  @env ('local')
-  <script src="http://localhost:8080/js/bundle.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/underground-works/clockwork-browser@1/dist/toolbar.js"></script>
-  @endenv
-</body>
+    @routes
+    @vite('resources/js/app.js')
+    @inertiaHead
+  </head>
+
+  <body class="font-sans antialiased bg-white dark:bg-gray-800 dark:text-gray-300">
+    @inertia
+  </body>
 
 </html>

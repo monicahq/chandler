@@ -1,25 +1,3 @@
-<style lang="scss" scoped>
-.grid {
-  grid-template-columns: 200px 1fr 300px;
-}
-
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.icon-sidebar {
-  color: #737e8d;
-  top: -2px;
-}
-
-input[type='checkbox'] {
-  top: 3px;
-  width: 12px;
-}
-</style>
-
 <template>
   <layout title="Dashboard" :inside-vault="true" :layout-data="layoutData">
     <main class="relative sm:mt-24">
@@ -28,23 +6,7 @@ input[type='checkbox'] {
           <!-- left -->
           <div class="p-3 sm:p-0">
             <!-- favorites -->
-            <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">
-              <span class="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                </svg>
-              </span>
-              Favorites
-            </h3>
+            <favorites v-if="favorites.length > 0" :data="favorites" />
 
             <!-- last updated contacts -->
             <last-updated :data="lastUpdatedContacts" />
@@ -52,83 +14,29 @@ input[type='checkbox'] {
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
-            <!-- actions -->
-            <div style="background-color: #fcfeff" class="mb-6 rounded-lg border border-gray-200 bg-white">
-              <div v-if="!addMode" class="p-3">
-                <p class="mb-5 text-center"><span class="mr-2">👋</span> Good evening, Regis.</p>
-
-                <div class="mb-2 justify-center sm:flex">
-                  <pretty-button
-                    :text="'life event'"
-                    :icon="'plus'"
-                    :classes="'mr-3'"
-                    @click="showAddModal('lifeEvent')" />
-                  <pretty-button :text="'activity'" :icon="'plus'" :classes="'mr-3'" />
-                  <pretty-button :text="'entry'" :icon="'plus'" :classes="'mr-3'" />
-                  <pretty-button :text="'mood'" :icon="'plus'" :classes="'mr-3'" />
-                  <pretty-button :text="'communication'" :icon="'plus'" :classes="'mr-3'" />
-                  <pretty-button :text="'goal'" :icon="'plus'" />
-                </div>
-              </div>
-
-              <div v-if="addMode" class="p-5">
-                <create-life-event @cancelled="addMode = false" />
-              </div>
-            </div>
-
-            <!-- filters -->
-            <div class="mb-3 text-right">
-              <button
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <h3 class="mb-3 flex items-center border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
+              <span class="relative mr-2">
                 <svg
+                  class="icon-sidebar relative inline h-4 w-4 text-gray-500 dark:text-gray-300 hover:dark:text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
+                  stroke-width="1.5"
                   stroke="currentColor">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                    d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                 </svg>
-                Filters
-              </button>
-            </div>
+              </span>
 
-            <!-- feed -->
-            <div class="mb-10 overflow-auto">
-              <h3 class="mb-5 font-bold">Janvier 2010</h3>
+              <span class="mr-2 inline">
+                {{ $t('vault.dashboard_feed_title') }}
+              </span>
 
-              <!-- journal entry -->
-              <entry />
-
-              <feed-item />
-
-              <feed-item />
-
-              <!-- activity -->
-              <activity />
-
-              <!-- goal -->
-              <goal />
-            </div>
-
-            <!-- archives -->
-            <div>
-              <p class="text-xs">Browse past entries</p>
-              <ul>
-                <li class="mr-2 inline text-sm">
-                  <a class="underline" href="">2021</a> <span class="text-xs text-gray-500">(3)</span>
-                </li>
-                <li class="mr-2 inline text-sm">
-                  <a class="underline" href="">2020</a> <span class="text-xs text-gray-500">(139)</span>
-                </li>
-                <li class="mr-2 inline text-sm">
-                  <a class="underline" href="">2019</a> <span class="text-xs text-gray-500">(23)</span>
-                </li>
-              </ul>
-            </div>
+              <help :url="$page.props.help_links.last_updated_contacts" :top="'4px'" />
+            </h3>
+            <feed :url="loadFeedUrl" :contact-view-mode="false" />
           </div>
 
           <!-- right -->
@@ -136,41 +44,8 @@ input[type='checkbox'] {
             <!-- upcoming reminders -->
             <upcoming-reminders :data="upcomingReminders" />
 
-            <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium">
-              <span class="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                </svg>
-              </span>
-              Tasks
-            </h3>
-            <div class="relative mb-3 flex items-start">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900">
-                Remember mea sdfasdf asdf asdf asdf sdf
-              </label>
-            </div>
-            <div class="flex items-start">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600" />
-              <label for="remember-me" class="ml-2 block cursor-pointer text-sm text-gray-900"> Remember me </label>
-            </div>
+            <!-- tasks -->
+            <due-tasks :data="dueTasks" />
           </div>
         </div>
       </div>
@@ -179,29 +54,21 @@ input[type='checkbox'] {
 </template>
 
 <script>
-import Layout from '@/Shared/Layout';
-import SmallContact from '@/Shared/SmallContact';
-import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated';
-import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders';
-import Activity from '@/Pages/Vault/Dashboard/Partials/Feed/Activity';
-import Entry from '@/Pages/Vault/Dashboard/Partials/Feed/Entry';
-import Goal from '@/Pages/Vault/Dashboard/Partials/Feed/Goal';
-import FeedItem from '@/Pages/Vault/Dashboard/Partials/Feed/FeedItem';
-import CreateLifeEvent from '@/Pages/Vault/Dashboard/Partials/Feed/CreateLifeEvent';
-import PrettyButton from '@/Shared/Form/PrettyButton';
+import Layout from '@/Shared/Layout.vue';
+import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated.vue';
+import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders.vue';
+import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites.vue';
+import DueTasks from '@/Pages/Vault/Dashboard/Partials/DueTasks.vue';
+import Feed from '@/Shared/Modules/Feed.vue';
 
 export default {
   components: {
     Layout,
     LastUpdated,
     UpcomingReminders,
-    PrettyButton,
-    SmallContact,
-    Entry,
-    Activity,
-    Goal,
-    FeedItem,
-    CreateLifeEvent,
+    Favorites,
+    DueTasks,
+    Feed,
   },
 
   props: {
@@ -217,20 +84,30 @@ export default {
       type: Object,
       default: null,
     },
-  },
-
-  data() {
-    return {
-      addMode: false,
-    };
-  },
-
-  methods: {
-    showAddModal(type) {
-      if (type == 'lifeEvent') {
-        this.addMode = true;
-      }
+    favorites: {
+      type: Object,
+      default: null,
+    },
+    loadFeedUrl: {
+      type: String,
+      default: null,
+    },
+    dueTasks: {
+      type: Object,
+      default: null,
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.grid {
+  grid-template-columns: 200px 1fr 400px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

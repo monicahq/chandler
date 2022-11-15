@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLoans\Web\ViewHelpers;
 
-use App\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
+use App\Domains\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Models\Contact;
 use App\Models\Currency;
 use App\Models\Loan;
 use App\Models\User;
 use Carbon\Carbon;
+use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function env;
 
 class ModuleLoanViewHelperTest extends TestCase
 {
@@ -123,21 +123,11 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['currency_name']
         );
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => $contact->id,
-                    'name' => $contact->name,
-                ],
-            ],
-            $array['loaners']->toArray()
+            1,
+            count($array['loaners']->toArray())
         );
-        $this->assertEquals(
-            [
-                0 => [
-                    'id' => $otherContact->id,
-                    'name' => $otherContact->name,
-                ],
-            ],
+        $this->assertCount(
+            1,
             $array['loanees']->toArray()
         );
         $this->assertEquals(
