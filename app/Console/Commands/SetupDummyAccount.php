@@ -59,6 +59,7 @@ class SetupDummyAccount extends Command
      */
     public function handle(): void
     {
+        config(['queue.default' => 'sync']);
         $this->start();
         $this->wipeAndMigrateDB();
         $this->createFirstUsers();

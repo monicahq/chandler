@@ -8,11 +8,13 @@ use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
 use App\Helpers\ScoutHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
@@ -20,8 +22,9 @@ use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * Possible avatar types.
@@ -52,6 +55,8 @@ class Contact extends Model
         'listed',
         'file_id',
         'religion_id',
+        'vcard',
+        'distant_etag',
     ];
 
     /**
@@ -64,6 +69,16 @@ class Contact extends Model
         'listed' => 'boolean',
         'last_updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array
+     */
+    public function uniqueIds()
+    {
+        return ['uuid'];
+    }
 
     /**
      * Get the indexable data array for the model.
@@ -94,6 +109,17 @@ class Contact extends Model
     public function shouldBeSearchable()
     {
         return $this->listed;
+    }
+
+    /**
+     * Scope a query to only include contacts who are active.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('listed', 1);
     }
 
     /**
