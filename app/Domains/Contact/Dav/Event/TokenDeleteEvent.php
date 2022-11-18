@@ -2,20 +2,13 @@
 
 namespace App\Domains\Contact\Dav\Event;
 
-use App\Models\User\SyncToken;
+use App\Models\SyncToken;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class TokenDeleteEvent
 {
     use Dispatchable, SerializesModels;
-
-    /**
-     * The deleted token.
-     *
-     * @var SyncToken
-     */
-    public $token;
 
     /**
      * Create a new event instance.
@@ -25,8 +18,7 @@ class TokenDeleteEvent
      *
      * @codeCoverageIgnore
      */
-    public function __construct($token)
+    public function __construct(public SyncToken $token)
     {
-        $this->token = $token;
     }
 }

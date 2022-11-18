@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\DAV\Jobs;
 
-use App\Domains\Contact\Dav\Jobs\SyncTokenClean;
+use App\Domains\Contact\Dav\Jobs\CleanSyncToken;
 use App\Models\Account;
 use App\Models\SyncToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class TokenCleanTest extends TestCase
+class CleanSyncTokenTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -27,7 +27,7 @@ class TokenCleanTest extends TestCase
             'name' => 'contacts',
             'timestamp' => now(),
         ]);
-        app(SyncTokenClean::class)->execute([]);
+        (new CleanSyncToken)->execute([]);
 
         $this->assertDatabaseHas('synctoken', [
             'account_id' => $account->id,
@@ -68,7 +68,7 @@ class TokenCleanTest extends TestCase
             'name' => 'contacts',
             'timestamp' => now()->addDays(-1),
         ]);
-        app(SyncTokenClean::class)->execute([]);
+        (new CleanSyncToken)->execute([]);
 
         $this->assertDatabaseHas('synctoken', [
             'id' => $s1->id,

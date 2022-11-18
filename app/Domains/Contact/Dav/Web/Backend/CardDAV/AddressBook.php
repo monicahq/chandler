@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV;
+namespace App\Domains\Contact\Dav\Web\Backend\CardDAV;
 
 use Sabre\CardDAV\AddressBook as BaseAddressBook;
 
@@ -56,7 +56,7 @@ class AddressBook extends BaseAddressBook
      *
      * @return array
      */
-    public function getChildACL()
+    public function getChildACL(): array
     {
         return $this->getACL();
     }

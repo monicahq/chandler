@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers;
+namespace App\Domains\Contact\Dav\Web;
 
 use Sabre\DAV\Server;
 use Sabre\DAV\ServerPlugin;
@@ -12,7 +12,7 @@ use Sabre\HTTP\ResponseInterface;
  */
 class DAVRedirect extends ServerPlugin
 {
-    public function initialize(Server $server)
+    public function initialize(Server $server): void
     {
         $server->on('method:GET', [$this, 'httpGet'], 500);
     }
@@ -24,7 +24,7 @@ class DAVRedirect extends ServerPlugin
      * @param  ResponseInterface  $response
      * @return bool
      */
-    public function httpGet(RequestInterface $request, ResponseInterface $response)
+    public function httpGet(RequestInterface $request, ResponseInterface $response): bool
     {
         $response->setStatus(302);
         $response->setHeader('Location', route('home') /* route('settings.dav') */);

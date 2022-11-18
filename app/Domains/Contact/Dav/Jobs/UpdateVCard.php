@@ -4,7 +4,7 @@ namespace App\Domains\Contact\Dav\Jobs;
 
 use App\Domains\Contact\Dav\Services\GetEtag;
 use App\Domains\Contact\Dav\Services\ImportVCard;
-use App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV\CardDAVBackend;
+use App\Domains\Contact\Dav\Web\Backend\CardDAV\CardDAVBackend;
 use App\Interfaces\ServiceInterface;
 use App\Services\QueuableService;
 use Illuminate\Bus\Batchable;
@@ -92,7 +92,7 @@ class UpdateVCard extends QueuableService implements ServiceInterface
 
         $contactId = null;
         if ($cardUri) {
-            $contactObject = $backend->getObject($this->vault->id, $cardUri);
+            $contactObject = $backend->getObject($this->vault->uuid, $cardUri);
 
             if ($contactObject) {
                 $contactId = $contactObject->id;

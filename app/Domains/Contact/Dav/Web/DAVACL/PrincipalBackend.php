@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\DAVACL;
+namespace App\Domains\Contact\Dav\Web\DAVACL;
 
+use App\Models\User;
 use App\Traits\WithUser;
 use Illuminate\Support\Str;
 use Sabre\DAV;
@@ -22,14 +23,15 @@ class PrincipalBackend extends AbstractBackend
     /**
      * Get the principal for user.
      *
+     * @param  User  $user
      * @return string
      */
-    public static function getPrincipalUser($user): string
+    public static function getPrincipalUser(User $user): string
     {
         return static::PRINCIPAL_PREFIX.$user->email;
     }
 
-    protected function getPrincipals()
+    protected function getPrincipals(): array
     {
         return [
             [
@@ -56,7 +58,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  string  $prefixPath
      * @return array
      */
-    public function getPrincipalsByPrefix($prefixPath)
+    public function getPrincipalsByPrefix($prefixPath): array
     {
         $prefixPath = Str::finish($prefixPath, '/');
 
@@ -72,7 +74,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  string  $path
      * @return array
      */
-    public function getPrincipalByPath($path)
+    public function getPrincipalByPath($path): array
     {
         foreach ($this->getPrincipalsByPrefix(static::PRINCIPAL_PREFIX) as $principal) {
             if ($principal['uri'] === $path) {
@@ -99,7 +101,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  \Sabre\DAV\PropPatch  $propPatch
      * @return void
      */
-    public function updatePrincipal($path, DAV\PropPatch $propPatch)
+    public function updatePrincipal($path, DAV\PropPatch $propPatch): void
     {
     }
 
@@ -132,7 +134,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  string  $test
      * @return array
      */
-    public function searchPrincipals($prefixPath, array $searchProperties, $test = 'allof')
+    public function searchPrincipals($prefixPath, $searchProperties, $test = 'allof'): array
     {
         $result = [];
         $principals = $this->getPrincipalsByPrefix($prefixPath);
@@ -164,7 +166,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  string  $principal
      * @return array
      */
-    public function getGroupMemberSet($principal)
+    public function getGroupMemberSet($principal): array
     {
         $principal = $this->getPrincipalByPath($principal);
         if (! $principal) {
@@ -182,7 +184,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  string  $principal
      * @return array
      */
-    public function getGroupMembership($principal)
+    public function getGroupMembership($principal): array
     {
         return $this->getGroupMemberSet($principal);
     }
@@ -196,7 +198,7 @@ class PrincipalBackend extends AbstractBackend
      * @param  array  $members
      * @return void
      */
-    public function setGroupMemberSet($principal, array $members)
+    public function setGroupMemberSet($principal, array $members): void
     {
     }
 }

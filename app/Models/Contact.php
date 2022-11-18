@@ -7,6 +7,7 @@ use App\Helpers\ContactImportantDateHelper;
 use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
 use App\Helpers\ScoutHelper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -117,7 +118,7 @@ class Contact extends Model
      * @param  Builder  $query
      * @return Builder
      */
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('listed', 1);
     }

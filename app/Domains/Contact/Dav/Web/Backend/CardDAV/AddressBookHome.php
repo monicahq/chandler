@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV;
+namespace App\Domains\Contact\Dav\Web\Backend\CardDAV;
 
 use Sabre\CardDAV\AddressBookHome as BaseAddressBookHome;
 
@@ -18,7 +18,7 @@ class AddressBookHome extends BaseAddressBookHome
      *
      * @return array
      */
-    public function getACL()
+    public function getACL(): array
     {
         return [
             [
@@ -34,7 +34,7 @@ class AddressBookHome extends BaseAddressBookHome
      *
      * @return array
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return collect($this->carddavBackend->getAddressBooksForUser($this->principalUri))
             ->map(fn ($addressBookInfo) => new AddressBook($this->carddavBackend, $addressBookInfo))

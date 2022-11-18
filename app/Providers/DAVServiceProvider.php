@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Domains\Contact\Dav\Web\Controllers\Auth\AuthBackend;
-use App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV\AddressBookRoot;
-use App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV\CardDAVBackend;
-use App\Domains\Contact\Dav\Web\Controllers\DAVACL\PrincipalBackend;
-use App\Domains\Contact\Dav\Web\Controllers\DAVRedirect;
+use App\Domains\Contact\Dav\Web\Auth\AuthBackend;
+use App\Domains\Contact\Dav\Web\Backend\CardDAV\AddressBookRoot;
+use App\Domains\Contact\Dav\Web\Backend\CardDAV\CardDAVBackend;
+use App\Domains\Contact\Dav\Web\DAVACL\PrincipalBackend;
+use App\Domains\Contact\Dav\Web\DAVRedirect;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

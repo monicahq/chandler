@@ -10,11 +10,10 @@ use App\Models\Gender;
 use App\Services\BaseService;
 use App\Traits\DAVFormat;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Ramsey\Uuid\Uuid;
+use ReturnTypeWillChange;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
 use Sabre\VObject\Reader;
@@ -28,7 +27,7 @@ class ImportVCard extends BaseService implements ServiceInterface
     public const BEHAVIOUR_REPLACE = 'behaviour_replace';
 
     /** @var array<string,string> */
-    protected $errorResults = [
+    protected array $errorResults = [
         'ERROR_PARSER' => 'import_vcard_parse_error',
         'ERROR_CONTACT_EXIST' => 'import_vcard_contact_exist',
         'ERROR_CONTACT_DOESNT_HAVE_FIRSTNAME' => 'import_vcard_contact_no_firstname',
@@ -39,7 +38,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      *
      * @var array
      */
-    public static $behaviourTypes = [
+    public static array $behaviourTypes = [
         self::BEHAVIOUR_ADD, self::BEHAVIOUR_REPLACE,
     ];
 
@@ -48,21 +47,14 @@ class ImportVCard extends BaseService implements ServiceInterface
      *
      * @var int
      */
-    public $accountId;
-
-    // /**
-    //  * The contact fields ids.
-    //  *
-    //  * @var array
-    //  */
-    // protected array $contactFields;
+    public int $accountId;
 
     /**
      * The genders that will be associated with imported contacts.
      *
      * @var array<Gender>
      */
-    protected $genders;
+    protected array $genders;
 
     /**
      * Get the validation rules that apply to the service.
@@ -125,7 +117,6 @@ class ImportVCard extends BaseService implements ServiceInterface
 
     private function clear()
     {
-        // $this->contactFields = [];
         $this->genders = [];
         $this->accountId = 0;
     }
@@ -225,7 +216,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  array  $data
      * @return array
      */
-    private function getEntry($data): array
+    private function getEntry(array $data): array
     {
         $entry = $vcard = $data['entry'];
 
@@ -257,7 +248,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  string  $genderCode
      * @return Gender
      */
-    private function getGender($genderCode): Gender
+    private function getGender(string $genderCode): Gender
     {
         if (! Arr::has($this->genders, $genderCode)) {
             $gender = $this->getGenderByType($genderCode);
@@ -295,7 +286,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  string  $name
      * @return Gender|null
      */
-    private function getGenderByName($name)
+    private function getGenderByName(string $name): ?Gender
     {
         return Gender::where([
             'account_id' => $this->accountId,
@@ -309,7 +300,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  string  $type
      * @return Gender|null
      */
-    private function getGenderByType($type)
+    private function getGenderByType(string $type): ?Gender
     {
         return Gender::where([
             'account_id' => $this->accountId,
@@ -406,23 +397,6 @@ class ImportVCard extends BaseService implements ServiceInterface
             return null;
         }
 
-        // if ($this->isValidEmail((string) $entry->EMAIL)) {
-        //     $contactField = ContactField::where([
-        //         'account_id' => $this->accountId,
-        //         'contact_field_type_id' => $this->getContactFieldTypeId(ContactFieldType::EMAIL),
-        //     ])->whereIn('data', iterator_to_array($entry->EMAIL))->first();
-
-        //     // filter contact field
-        //     //  - if no address book selected
-        //     //  - if the address book match the contact's contact field address book
-        //     if ($contactField && (
-        //             ! $this->addressBook
-        //             || $contactField->contact->address_book_id === $this->addressBook->id
-        //         )) {
-        //         return $contactField->contact;
-        //     }
-        // }
-
         return null;
     }
 
@@ -432,7 +406,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  VCard  $entry
      * @return Contact|null
      */
-    private function existingContactWithName(VCard $entry)
+    private function existingContactWithName(VCard $entry): ?Contact
     {
         $contact = [];
         $this->importNames($contact, $entry);
@@ -509,7 +483,7 @@ class ImportVCard extends BaseService implements ServiceInterface
         $contactData = $this->importUid($contactData, $entry);
         $contactData = $this->importNames($contactData, $entry);
         $contactData = $this->importGender($contactData, $entry);
-        // $contactData = $this->importBirthday($contactData, $entry);
+        $contactData = $this->importBirthday($contactData, $entry);
 
         if ($contact !== null && $contactData !== $original) {
             $contact = app(UpdateContact::class)->execute($contactData);
@@ -543,27 +517,6 @@ class ImportVCard extends BaseService implements ServiceInterface
         if ($contact) {
             $result['contact_id'] = $contact->id;
         }
-
-        // if ($result['is_birthdate_known']) {
-        //     if ($result['birthdate_is_age_based'] = $contact->birthdate->is_age_based) {
-        //         $result['birthdate_age'] = now()->diffInYears($contact->birthdate->date, true);
-        //     } else {
-        //         $result['birthdate_day'] = $contact->birthdate->date->day;
-        //         $result['birthdate_month'] = $contact->birthdate->date->month;
-        //         if (! $contact->birthdate->is_year_unknown) {
-        //             $result['birthdate_year'] = $contact->birthdate->date->year;
-        //         }
-        //     }
-        // }
-
-        // if ($result['is_deceased_date_known'] &&
-        //     ! ($result['birthdate_is_age_based'] = $contact->deceasedDate->is_age_based)) {
-        //     $result['deceased_date_day'] = $contact->deceasedDate->date->day;
-        //     $result['deceased_date_month'] = $contact->deceasedDate->date->month;
-        //     if (! $contact->deceasedDate->is_year_unknown) {
-        //         $result['deceased_date_year'] = $contact->deceasedDate->date->year;
-        //     }
-        // }
 
         return $result;
     }
@@ -601,6 +554,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  VCard  $entry
      * @return array|string|null|\Illuminate\Contracts\Translation\Translator
      */
+    #[ReturnTypeWillChange]
     private function name($entry)
     {
         if ($this->hasFirstnameInN($entry)) {
@@ -735,50 +689,8 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function importPhoto(Contact $contact, VCard $entry): void
     {
-        // if ($entry->PHOTO) {
-        //     if (Str::startsWith((string) $entry->PHOTO, 'https://secure.gravatar.com') || Str::startsWith((string) $entry->PHOTO, 'https://www.gravatar.com')) {
-        //         // Gravatar
-        //         $contact->avatar_gravatar_url = (string) $entry->PHOTO;
-        //     } elseif (! Str::startsWith((string) $entry->PHOTO, 'https://')
-        //         && ! Str::startsWith((string) $entry->PHOTO, 'http://')
-        //         && ($contact->avatar_source != 'photo' || empty($contact->avatar_photo_id))) {
-        //         // Import photo image
-        //         // Skipping in case a photo avatar is already set
-
-        //         $array = [
-        //             'account_id' => $contact->account_id,
-        //             'contact_id' => $contact->id,
-        //             'data' => (string) $entry->PHOTO,
-        //         ];
-        //         if (! is_null($entry->PHOTO['TYPE'])) {
-        //             /** @var \Sabre\VObject\Parameter */
-        //             $type = $entry->PHOTO['TYPE'];
-        //             $array['extension'] = $type->getValue();
-        //         }
-
-        //         try {
-        //             $photo = app(UploadPhoto::class)
-        //                 ->execute($array);
-        //             if (! $photo) {
-        //                 return;
-        //             }
-
-        //             app(UpdateAvatar::class)->execute([
-        //                 'account_id' => $contact->account_id,
-        //                 'contact_id' => $contact->id,
-        //                 'source' => 'photo',
-        //                 'photo_id' => $photo->id,
-        //             ]);
-        //         } catch (ValidationException $e) {
-        //             // wrong data
-        //             Log::error(__CLASS__.' '.__FUNCTION__.': ERROR when UploadPhoto: '.implode(', ', $e->validator->errors()->all()).', PHOTO='.$array['data'], [
-        //                 'data' => $array,
-        //                 'contact_id' => $contact->id,
-        //                 $e,
-        //             ]);
-        //         }
-        //     }
-        // }
+        if ($entry->PHOTO) {
+        }
     }
 
     /**
@@ -788,30 +700,14 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function importWorkInformation(Contact $contact, VCard $entry): void
     {
-        // $request = [
-        //     'account_id' => $contact->account_id,
-        //     'contact_id' => $contact->id,
-        //     'author_id' => $this->author->id,
-        // ];
+        if ($entry->ORG) {
+        }
 
-        // if ($entry->ORG) {
-        //     $parts = $entry->ORG->getParts();
-        //     if ($company = Arr::get($parts, '0')) {
-        //         $request['company'] = $this->formatValue($company);
-        //     }
-        // }
+        if ($entry->ROLE) {
+        }
 
-        // if ($entry->ROLE) {
-        //     $request['job'] = $this->formatValue($entry->ROLE);
-        // }
-
-        // if ($entry->TITLE) {
-        //     $request['job'] = $this->formatValue($entry->TITLE);
-        // }
-
-        // if (array_key_exists('job', $request) || array_key_exists('company', $request)) {
-        //     app(UpdateWorkInformation::class)->execute($request);
-        // }
+        if ($entry->TITLE) {
+        }
     }
 
     /**
@@ -821,32 +717,8 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function importBirthday(array $contactData, VCard $entry): array
     {
-        // if ($entry->BDAY && ! empty((string) $entry->BDAY)) {
-        //     $bday = (string) $entry->BDAY;
-        //     $is_year_unknown = false;
-
-        //     if (Str::startsWith($bday, '--')) {
-        //         $bday = '0'.substr($bday, 1);
-        //         $is_year_unknown = true;
-        //     }
-
-        //     $birthdate = null;
-        //     try {
-        //         $birthdate = DateHelper::parseDate($bday);
-        //     } catch (\Exception $e) {
-        //         // catch any date parse exception
-        //     }
-
-        //     if (! is_null($birthdate)) {
-        //         $contactData['is_birthdate_known'] = true;
-        //         $contactData['birthdate_is_age_based'] = false;
-        //         $contactData['birthdate_day'] = $birthdate->day;
-        //         $contactData['birthdate_month'] = $birthdate->month;
-        //         $contactData['birthdate_year'] = $is_year_unknown ? null : $birthdate->year;
-        //         $contactData['birthdate_add_reminder'] = true;
-        //         $contactData['is_deceased'] = false;
-        //     }
-        // }
+        if ($entry->BDAY && ! empty((string) $entry->BDAY)) {
+        }
 
         return $contactData;
     }
@@ -862,47 +734,8 @@ class ImportVCard extends BaseService implements ServiceInterface
             return;
         }
 
-        // $addresses = $contact->addresses()
-        //                         ->get()
-        //                         ->sortBy('id');
-
-        // foreach ($entry->ADR as $adr) {
-        //     $parts = $adr->getParts();
-        //     $addressContent = [
-        //         'account_id' => $contact->account_id,
-        //         'contact_id' => $contact->id,
-        //         'street' => $this->formatValue(Arr::get($parts, '2')),
-        //         'city' => $this->formatValue(Arr::get($parts, '3')),
-        //         'province' => $this->formatValue(Arr::get($parts, '4')),
-        //         'postal_code' => $this->formatValue(Arr::get($parts, '5')),
-        //         'country' => CountriesHelper::find(Arr::get($parts, '6')),
-        //         'labels' => preg_split('/,/', (string) $adr['TYPE']),
-        //     ];
-
-        //     // We assume addresses are in the same order
-        //     $address = $addresses->shift();
-
-        //     if (is_null($address)) {
-        //         // Address does not exist
-        //         app(CreateAddress::class)->execute($addressContent);
-        //     } else {
-        //         // Address has to be updated
-        //         $address = app(UpdateAddress::class)->execute([
-        //             'address_id' => $address->id,
-        //             'name' => $address->name,
-        //         ] +
-        //             $addressContent
-        //         );
-        //     }
-        // }
-
-        // foreach ($addresses as $address) {
-        //     // Remaining addresses have to be removed
-        //     app(DestroyAddress::class)->execute([
-        //         'account_id' => $contact->account_id,
-        //         'address_id' => $address->id,
-        //     ]);
-        // }
+        foreach ($entry->ADR as $adr) {
+        }
     }
 
     /**
@@ -916,49 +749,8 @@ class ImportVCard extends BaseService implements ServiceInterface
             return;
         }
 
-        // $contactFieldTypeId = $this->getContactFieldTypeId(ContactFieldType::EMAIL);
-        // if (! $contactFieldTypeId) {
-        //     // Case of contact field type email does not exist
-        //     return;
-        // }
-
-        // $emails = $contact->contactFields()
-        //                     ->email()
-        //                     ->get()
-        //                     ->sortBy('id');
-
-        // foreach ($entry->EMAIL as $email) {
-        //     $contactFieldContent = [
-        //         'account_id' => $contact->account_id,
-        //         'contact_id' => $contact->id,
-        //         'contact_field_type_id' => $contactFieldTypeId,
-        //         'data' => $this->formatValue((string) $email),
-        //         'labels' => preg_split('/,/', (string) $email['TYPE']),
-        //     ];
-
-        //     // We assume contact fields are in the same order
-        //     $contactField = $emails->shift();
-
-        //     if (is_null($contactField)) {
-        //         // Address does not exist
-        //         app(CreateContactField::class)->execute($contactFieldContent);
-        //     } else {
-        //         // Address has to be updated
-        //         app(UpdateContactField::class)->execute([
-        //             'contact_field_id' => $contactField->id,
-        //         ] +
-        //             $contactFieldContent
-        //         );
-        //     }
-        // }
-
-        // foreach ($emails as $email) {
-        //     // Remaining emails have to be removed
-        //     app(DestroyContactField::class)->execute([
-        //         'account_id' => $contact->account_id,
-        //         'contact_field_id' => $email->id,
-        //     ]);
-        // }
+        foreach ($entry->EMAIL as $email) {
+        }
     }
 
     /**
@@ -971,12 +763,6 @@ class ImportVCard extends BaseService implements ServiceInterface
         if (is_null($entry->NOTE)) {
             return;
         }
-
-        // $note = Note::create([
-        //     'contact_id' => $contact->id,
-        //     'account_id' => $contact->account_id,
-        //     'body' => $entry->NOTE,
-        // ]);
     }
 
     /**
@@ -990,54 +776,8 @@ class ImportVCard extends BaseService implements ServiceInterface
             return;
         }
 
-        // $contactFieldTypeId = $this->getContactFieldTypeId(ContactFieldType::PHONE);
-        // if (! $contactFieldTypeId) {
-        //     // Case of contact field type phone does not exist
-        //     return;
-        // }
-
-        // $phones = $contact->contactFields()
-        //                     ->phone()
-        //                     ->get()
-        //                     ->sortBy('id');
-
-        // $countryISO = VCardHelper::getCountryISOFromSabreVCard($entry);
-
-        // foreach ($entry->TEL as $tel) {
-        //     $data = (string) $tel;
-        //     $data = LocaleHelper::formatTelephoneNumberByISO($data, $countryISO, Str::startsWith($data, '+') ? \libphonenumber\PhoneNumberFormat::INTERNATIONAL : \libphonenumber\PhoneNumberFormat::NATIONAL);
-
-        //     $contactFieldContent = [
-        //         'account_id' => $contact->account_id,
-        //         'contact_id' => $contact->id,
-        //         'contact_field_type_id' => $contactFieldTypeId,
-        //         'data' => $this->formatValue($data),
-        //         'labels' => preg_split('/,/', (string) $tel['TYPE']),
-        //     ];
-
-        //     // We assume contact fields are in the same order
-        //     $phone = $phones->shift();
-
-        //     if (is_null($phone)) {
-        //         // Address does not exist
-        //         app(CreateContactField::class)->execute($contactFieldContent);
-        //     } else {
-        //         // Address has to be updated
-        //         app(UpdateContactField::class)->execute([
-        //             'contact_field_id' => $phone->id,
-        //         ] +
-        //             $contactFieldContent
-        //         );
-        //     }
-        // }
-
-        // foreach ($phones as $phone) {
-        //     // Remaining phones have to be removed
-        //     app(DestroyContactField::class)->execute([
-        //         'account_id' => $contact->account_id,
-        //         'contact_field_id' => $phone->id,
-        //     ]);
-        // }
+        foreach ($entry->TEL as $tel) {
+        }
     }
 
     /**
@@ -1051,73 +791,9 @@ class ImportVCard extends BaseService implements ServiceInterface
             return;
         }
 
-        // foreach ($entry->socialProfile as $socialProfile) {
-        //     $type = $socialProfile['type'];
-        //     $contactFieldTypeId = null;
-        //     $data = null;
-        //     switch ((string) $type) {
-        //         case 'facebook':
-        //             $contactFieldTypeId = $this->getContactFieldTypeId('Facebook');
-        //             $data = str_replace('https://www.facebook.com/', '', $this->formatValue((string) $socialProfile));
-        //             break;
-        //         case 'twitter':
-        //             $contactFieldTypeId = $this->getContactFieldTypeId('Twitter');
-        //             $data = str_replace('https://twitter.com/', '', $this->formatValue((string) $socialProfile));
-        //             break;
-        //         case 'whatsapp':
-        //             $contactFieldTypeId = $this->getContactFieldTypeId('Whatsapp');
-        //             $data = str_replace('https://wa.me/', '', $this->formatValue((string) $socialProfile));
-        //             break;
-        //         case 'telegram':
-        //             $contactFieldTypeId = $this->getContactFieldTypeId('Telegram');
-        //             $data = str_replace('http://t.me/', '', $this->formatValue((string) $socialProfile));
-        //             break;
-        //         case 'linkedin':
-        //             $contactFieldTypeId = $this->getContactFieldTypeId('LinkedIn');
-        //             $data = str_replace('http://www.linkedin.com/in/', '', $this->formatValue((string) $socialProfile));
-        //             break;
-        //         default:
-        //             // Not supported
-        //             break;
-        //     }
-
-        //     if (! is_null($contactFieldTypeId) && ! is_null($data)) {
-        //         ContactField::firstOrCreate([
-        //             'account_id' => $contact->account_id,
-        //             'contact_id' => $contact->id,
-        //             'data' => $data,
-        //             'contact_field_type_id' => $contactFieldTypeId,
-        //         ]);
-        //     }
-        // }
+        foreach ($entry->socialProfile as $socialProfile) {
+        }
     }
-
-    /**
-     * Get the contact field type id for the $type.
-     *
-     * @param  string  $type  The type of the ContactFieldType, or the name
-     * @return int|null
-     */
-    // private function getContactFieldTypeId(string $type)
-    // {
-    //     if (! Arr::has($this->contactFields, $type)) {
-    //         $contactFieldType = ContactFieldType::where([
-    //             'account_id' => $this->accountId,
-    //             'type' => $type,
-    //         ])->first();
-
-    //         if (is_null($contactFieldType)) {
-    //             $contactFieldType = ContactFieldType::where([
-    //                 'account_id' => $this->accountId,
-    //                 'name' => $type,
-    //             ])->first();
-    //         }
-
-    //         Arr::set($this->contactFields, $type, $contactFieldType != null ? $contactFieldType->id : null);
-    //     }
-
-    //     return Arr::get($this->contactFields, $type);
-    // }
 
     /**
      * Import the categories as tags.
@@ -1126,36 +802,9 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  VCard  $entry
      * @return void
      */
-    private function importCategories(Contact $contact, VCard $entry)
+    private function importCategories(Contact $contact, VCard $entry): void
     {
-        // $tags = [];
-        // foreach ($contact->tags as $tag) {
-        //     $tags[$tag->name] = $tag->id;
-        // }
-
-        // if (! is_null($entry->CATEGORIES)) {
-        //     $categories = preg_split('/,/', $entry->CATEGORIES);
-
-        //     foreach ($categories as $category) {
-        //         $name = (string) $category;
-        //         if (isset($tags[$name])) {
-        //             unset($tags[$name]);
-        //         } else {
-        //             app(AssociateTag::class)->execute([
-        //                 'account_id' => $contact->account_id,
-        //                 'contact_id' => $contact->id,
-        //                 'name' => $name,
-        //             ]);
-        //         }
-        //     }
-        // }
-
-        // foreach ($tags as $tag) {
-        //     app(DetachTag::class)->execute([
-        //         'account_id' => $contact->account_id,
-        //         'contact_id' => $contact->id,
-        //         'tag_id' => $tag,
-        //     ]);
-        // }
+        if (! is_null($entry->CATEGORIES)) {
+        }
     }
 }

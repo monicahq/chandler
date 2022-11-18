@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\Auth;
+namespace App\Domains\Contact\Dav\Web\Auth;
 
-use App\Domains\Contact\Dav\Web\Controllers\DAVACL\PrincipalBackend;
+use App\Domains\Contact\Dav\Web\DAVACL\PrincipalBackend;
 use Illuminate\Support\Facades\Auth;
 use Sabre\DAV\Auth\Backend\BackendInterface;
 use Sabre\HTTP\RequestInterface;
@@ -18,7 +18,7 @@ class AuthBackend implements BackendInterface
      *
      * @var string
      */
-    protected $realm = 'sabre/dav';
+    protected string $realm = 'sabre/dav';
 
     /**
      * Sets the authentication realm for this backend.
@@ -26,7 +26,7 @@ class AuthBackend implements BackendInterface
      * @param  string  $realm
      * @return void
      */
-    public function setRealm($realm)
+    public function setRealm($realm): void
     {
         $this->realm = $realm;
     }
@@ -38,7 +38,7 @@ class AuthBackend implements BackendInterface
      * @param  ResponseInterface  $response
      * @return array
      */
-    public function check(RequestInterface $request, ResponseInterface $response)
+    public function check(RequestInterface $request, ResponseInterface $response): array
     {
         if (! Auth::check()) {
             return [false, 'User is not authenticated'];
@@ -68,7 +68,7 @@ class AuthBackend implements BackendInterface
      * @param  ResponseInterface  $response
      * @return void
      */
-    public function challenge(RequestInterface $request, ResponseInterface $response)
+    public function challenge(RequestInterface $request, ResponseInterface $response): void
     {
         $auth = new \Sabre\HTTP\Auth\Bearer(
             $this->realm,

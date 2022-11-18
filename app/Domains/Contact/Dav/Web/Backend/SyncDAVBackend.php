@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\Backend;
+namespace App\Domains\Contact\Dav\Web\Backend;
 
 use App\Models\SyncToken;
 use App\Traits\WithUser;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 trait SyncDAVBackend
 {
@@ -19,7 +20,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return SyncToken|null
      */
-    public function getCurrentSyncToken($collectionId): ?SyncToken
+    public function getCurrentSyncToken(?string $collectionId): ?SyncToken
     {
         $tokens = SyncToken::where([
             'account_id' => $this->user->account_id,
@@ -38,7 +39,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return SyncToken
      */
-    public function refreshSyncToken($collectionId): SyncToken
+    public function refreshSyncToken(?string $collectionId): SyncToken
     {
         $token = $this->getCurrentSyncToken($collectionId);
 
@@ -56,7 +57,7 @@ trait SyncDAVBackend
      * @param  string  $syncToken
      * @return SyncToken|null
      */
-    protected function getSyncToken($collectionId, $syncToken): ?SyncToken
+    protected function getSyncToken(?string $collectionId, string $syncToken): ?SyncToken
     {
         /** @var SyncToken|null */
         return SyncToken::where([
@@ -73,7 +74,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return SyncToken
      */
-    private function createSyncTokenNow($collectionId): SyncToken
+    private function createSyncTokenNow(?string $collectionId): SyncToken
     {
         return SyncToken::create([
             'account_id' => $this->user->account_id,
@@ -89,7 +90,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return \Carbon\Carbon|null
      */
-    public function getLastModified($collectionId): ?Carbon
+    public function getLastModified(?string $collectionId): ?Carbon
     {
         return $this->getObjects($collectionId)
                     ->map(fn ($object) => $object->updated_at)
@@ -150,7 +151,7 @@ trait SyncDAVBackend
      * @param  string  $syncToken
      * @return array|null
      */
-    public function getChanges($calendarId, $syncToken): ?array
+    public function getChanges(string $calendarId, string $syncToken): ?array
     {
         $token = null;
         $timestamp = null;
@@ -200,7 +201,7 @@ trait SyncDAVBackend
         return urlencode($obj->uuid.$this->getExtension());
     }
 
-    private function decodeUri($uri): string
+    private function decodeUri(string $uri): string
     {
         return pathinfo(urldecode($uri), PATHINFO_FILENAME);
     }
@@ -223,7 +224,7 @@ trait SyncDAVBackend
      * @param  string  $uri
      * @return mixed
      */
-    public function getObject($collectionId, $uri)
+    public function getObject(?string $collectionId, string $uri)
     {
         try {
             return $this->getObjectUuid($collectionId, $this->getUuid($uri));
@@ -239,7 +240,7 @@ trait SyncDAVBackend
      * @param  string  $uuid
      * @return mixed
      */
-    abstract public function getObjectUuid($collectionId, $uuid);
+    abstract public function getObjectUuid(?string $collectionId, string $uuid);
 
     /**
      * Returns the collection of objects.
@@ -247,7 +248,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return \Illuminate\Support\Collection
      */
-    abstract public function getObjects($collectionId);
+    abstract public function getObjects(?string $collectionId): Collection;
 
     /**
      * Returns the collection of objects.
@@ -255,7 +256,7 @@ trait SyncDAVBackend
      * @param  string|null  $collectionId
      * @return \Illuminate\Support\Collection
      */
-    abstract public function getDeletedObjects($collectionId);
+    abstract public function getDeletedObjects(?string $collectionId): Collection;
 
     abstract public function getExtension();
 

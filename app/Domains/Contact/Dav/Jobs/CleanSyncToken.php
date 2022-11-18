@@ -9,12 +9,12 @@ use App\Services\QueuableService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class SyncTokenClean extends QueuableService implements ServiceInterface
+class CleanSyncToken extends QueuableService implements ServiceInterface
 {
     /**
      * @var Carbon
      */
-    private $timefix;
+    private Carbon $timefix;
 
     /**
      * Clean token list.
@@ -43,7 +43,7 @@ class SyncTokenClean extends QueuableService implements ServiceInterface
      * @param  string  $tokenName
      * @param  string  $timestamp
      */
-    private function handleUserToken(int $userId, string $tokenName, string $timestamp)
+    private function handleUserToken(int $userId, string $tokenName, string $timestamp): void
     {
         $tokens = SyncToken::where([
             ['user_id', $userId],

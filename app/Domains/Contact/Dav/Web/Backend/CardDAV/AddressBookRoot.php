@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Domains\Contact\Dav\Web\Controllers\Backend\CardDAV;
+namespace App\Domains\Contact\Dav\Web\Backend\CardDAV;
 
 use Sabre\CardDAV\AddressBookRoot as BaseAddressBookRoot;
+use Sabre\DAV\INode;
 use Sabre\DAVACL\ACLTrait;
 use Sabre\DAVACL\IACL;
 
@@ -22,7 +23,7 @@ class AddressBookRoot extends BaseAddressBookRoot implements IACL
      *
      * @return array
      */
-    public function getACL()
+    public function getACL(): array
     {
         return [
             [
@@ -44,7 +45,7 @@ class AddressBookRoot extends BaseAddressBookRoot implements IACL
      * @return \Sabre\DAV\INode
      * @psalm-suppress ParamNameMismatch
      */
-    public function getChildForPrincipal(array $principal)
+    public function getChildForPrincipal(array $principal): INode
     {
         return new AddressBookHome($this->carddavBackend, $principal['uri']);
     }

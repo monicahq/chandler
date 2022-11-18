@@ -6,14 +6,9 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\Gender;
 use App\Services\BaseService;
-// use App\Models\Contact\Tag;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
-// use App\Interfaces\LabelInterface;
 use Sabre\VObject\Reader;
-
-// use App\Models\Contact\ContactFieldType;
-// use App\Models\Contact\ContactFieldLabel;
 
 class ExportVCard extends BaseService implements ServiceInterface
 {
@@ -118,7 +113,7 @@ class ExportVCard extends BaseService implements ServiceInterface
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportNames(Contact $contact, VCard $vcard)
+    private function exportNames(Contact $contact, VCard $vcard): void
     {
         $vcard->remove('FN');
         $vcard->remove('N');
@@ -141,7 +136,7 @@ class ExportVCard extends BaseService implements ServiceInterface
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportGender(Contact $contact, VCard $vcard)
+    private function exportGender(Contact $contact, VCard $vcard): void
     {
         $vcard->remove('GENDER');
 
@@ -170,39 +165,19 @@ class ExportVCard extends BaseService implements ServiceInterface
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportPhoto(Contact $contact, VCard $vcard)
+    private function exportPhoto(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('PHOTO');
-
-        // if ($contact->avatar_source == 'photo') {
-        //     $photo = $contact->avatarPhoto;
-
-        //     $vcard->add('PHOTO', $photo->dataUrl());
-        // } else {
-        //     $picture = $contact->getAvatarURL();
-
-        //     if (! empty($picture)) {
-        //         $vcard->add('PHOTO', $picture);
-        //     }
-        // }
+        $vcard->remove('PHOTO');
     }
 
     /**
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportWorkInformation(Contact $contact, VCard $vcard)
+    private function exportWorkInformation(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('ORG');
-        // $vcard->remove('TITLE');
-
-        // if (! empty($contact->company)) {
-        //     $vcard->add('ORG', $this->escape($contact->company));
-        // }
-
-        // if (! empty($contact->job)) {
-        //     $vcard->add('TITLE', $this->escape($contact->job));
-        // }
+        $vcard->remove('ORG');
+        $vcard->remove('TITLE');
     }
 
     /**
@@ -211,18 +186,9 @@ class ExportVCard extends BaseService implements ServiceInterface
      *
      * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5
      */
-    private function exportBirthday(Contact $contact, VCard $vcard)
+    private function exportBirthday(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('BDAY');
-
-        // if (! is_null($contact->birthdate)) {
-        //     if ($contact->birthdate->is_year_unknown) {
-        //         $date = $contact->birthdate->date->format('--md');
-        //     } else {
-        //         $date = $contact->birthdate->date->format('Ymd');
-        //     }
-        //     $vcard->add('BDAY', $date);
-        // }
+        $vcard->remove('BDAY');
     }
 
     /**
@@ -231,104 +197,28 @@ class ExportVCard extends BaseService implements ServiceInterface
      *
      * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.3.1
      */
-    private function exportAddress(Contact $contact, VCard $vcard)
+    private function exportAddress(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('ADR');
-
-        // foreach ($contact->addresses as $address) {
-        //     $type = $this->getContactFieldLabel($address);
-        //     $arguments = [];
-        //     if ($type != '') {
-        //         $arguments['TYPE'] = $type;
-        //     }
-        //     $vcard->add('ADR', [
-        //         '',
-        //         '',
-        //         $address->place->street,
-        //         $address->place->city,
-        //         $address->place->province,
-        //         $address->place->postal_code,
-        //         $address->place->country,
-        //     ],
-        //         $arguments
-        //     );
-        // }
+        $vcard->remove('ADR');
     }
 
     /**
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportContactFields(Contact $contact, VCard $vcard)
+    private function exportContactFields(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('TEL');
-        // $vcard->remove('EMAIL');
-        // $vcard->remove('socialProfile');
-        // $vcard->remove('URL');
-
-        // foreach ($contact->contactFields as $contactField) {
-        //     $type = $this->getContactFieldLabel($contactField);
-        //     switch ($contactField->contactFieldType->type) {
-        //         case ContactFieldType::PHONE:
-        //             $vcard->add('TEL', $this->escape($contactField->data), $type);
-        //             break;
-        //         case ContactFieldType::EMAIL:
-        //             $vcard->add('EMAIL', $this->escape($contactField->data), $type);
-        //             break;
-        //         default:
-        //             switch ($contactField->contactFieldType->name) {
-        //                 // See https://tools.ietf.org/id/draft-george-vcarddav-vcard-extension-02.html
-        //                 case 'Facebook':
-        //                     $vcard->add('socialProfile', $this->escape('https://www.facebook.com/'.$contactField->data), ['type' => 'facebook']);
-        //                     break;
-        //                 case 'Twitter':
-        //                     $vcard->add('socialProfile', $this->escape('https://twitter.com/'.$contactField->data), ['type' => 'twitter']);
-        //                     break;
-        //                 case 'Whatsapp':
-        //                     $vcard->add('socialProfile', $this->escape('https://wa.me/'.$contactField->data), ['type' => 'whatsapp']);
-        //                     break;
-        //                 case 'Telegram':
-        //                     $vcard->add('socialProfile', $this->escape('http://t.me/'.$contactField->data), ['type' => 'telegram']);
-        //                     break;
-        //                 case 'LinkedIn':
-        //                     $vcard->add('socialProfile', $this->escape('http://www.linkedin.com/in/'.$contactField->data), ['type' => 'linkedin']);
-        //                     break;
-        //                 default:
-        //                     // If field isn't a supported social profile, but still has a protocol, then export it as a url.
-        //                     if (! empty($contactField->contactFieldType->protocol)) {
-        //                         $vcard->add('URL', $this->escape($contactField->contactFieldType->protocol.$contactField->data));
-        //                     }
-        //                     break;
-        //             }
-        //             break;
-        //     }
-        // }
+        $vcard->remove('TEL');
+        $vcard->remove('EMAIL');
+        $vcard->remove('socialProfile');
+        $vcard->remove('URL');
     }
-
-    // /**
-    //  * @param  LabelInterface  $labelProvider
-    //  * @return array|null
-    //  */
-    // private function getContactFieldLabel(LabelInterface $labelProvider): ?array
-    // {
-    //     $type = null;
-    //     /** @var \Illuminate\Support\Collection<array-key, \App\Models\Contact\ContactFieldLabel> */
-    //     $labels = $labelProvider->labels()->get();
-    //     if ($labels->count() > 0) {
-    //         $type = [];
-    //         $type['type'] = $labels->map(function (ContactFieldLabel $label): string {
-    //             return mb_strtoupper($label->label_i18n) ?: $label->label;
-    //         })->join(',');
-    //     }
-
-    //     return $type;
-    // }
 
     /**
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportTimestamp(Contact $contact, VCard $vcard)
+    private function exportTimestamp(Contact $contact, VCard $vcard): void
     {
         $vcard->remove('REV');
         $vcard->REV = $contact->updated_at->format('Ymd\\THis\\Z');
@@ -338,14 +228,8 @@ class ExportVCard extends BaseService implements ServiceInterface
      * @param  Contact  $contact
      * @param  VCard  $vcard
      */
-    private function exportTags(Contact $contact, VCard $vcard)
+    private function exportTags(Contact $contact, VCard $vcard): void
     {
-        // $vcard->remove('CATEGORIES');
-
-        // if ($contact->tags->count() > 0) {
-        //     $vcard->CATEGORIES = $contact->tags->map(function (Tag $tag): string {
-        //         return $tag->name;
-        //     })->toArray();
-        // }
+        $vcard->remove('CATEGORIES');
     }
 }
