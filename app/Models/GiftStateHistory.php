@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Laravel\Scout\Searchable;
 
-class Gift extends Model
+class GiftStateHistory extends Model
 {
     use HasFactory;
-    use Searchable;
 
     /**
      * The attributes that are mass assignable.

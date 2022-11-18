@@ -7,7 +7,6 @@ use App\Models\Currency;
 use App\Models\Gift;
 use App\Models\GiftOccasion;
 use App\Models\GiftState;
-use App\Models\GiftUrl;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -80,16 +79,5 @@ class GiftTest extends TestCase
         $gift->recipients()->sync($monica->id);
 
         $this->assertTrue($gift->recipients()->exists());
-    }
-
-    /** @test */
-    public function it_has_many_gift_urls(): void
-    {
-        $gift = Gift::factory()->create();
-        GiftUrl::factory()->create([
-            'gift_id' => $gift->id,
-        ]);
-
-        $this->assertTrue($gift->giftUrls()->exists());
     }
 }

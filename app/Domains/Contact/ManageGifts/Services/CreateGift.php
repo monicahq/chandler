@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contact\ManageGifts\Services;
+namespace App\Domains\Contact\ManageGifts\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;

@@ -40,15 +40,21 @@ return new class() extends Migration
             $table->text('description')->nullable();
             $table->integer('budget')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->datetime('received_at')->nullable();
-            $table->datetime('given_at')->nullable();
-            $table->datetime('bought_at')->nullable();
             $table->uuid('shareable_link');
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('gift_occasion_id')->references('id')->on('gift_occasions')->onDelete('set null');
             $table->foreign('gift_state_id')->references('id')->on('gift_states')->onDelete('set null');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
+        });
+
+        Schema::create('gift_state_history', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('gift_id');
+            $table->unsignedBigInteger('gift_state_id');
+            $table->timestamps();
+            $table->foreign('gift_id')->references('id')->on('gifts')->onDelete('cascade');
+            $table->foreign('gift_state_id')->references('id')->on('gift_states')->onDelete('cascade');
         });
 
         Schema::create('gift_donators', function (Blueprint $table) {
