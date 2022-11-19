@@ -41,7 +41,7 @@ class UserController extends ApiController
         try {
             $user = User::where('account_id', Auth::user()->account_id)
                 ->findOrFail($userId);
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             return $this->respondNotFound();
         }
 
