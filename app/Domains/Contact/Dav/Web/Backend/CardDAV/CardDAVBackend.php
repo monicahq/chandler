@@ -10,6 +10,7 @@ use App\Domains\Contact\Dav\Web\Backend\SyncDAVBackend;
 use App\Domains\Contact\Dav\Web\DAVACL\PrincipalBackend;
 use App\Domains\Contact\ManageContact\Services\DestroyContact;
 use App\Models\Contact;
+use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
@@ -26,6 +27,10 @@ use Sabre\DAV\Sync\Plugin as DAVSyncPlugin;
 class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 {
     use SyncDAVBackend;
+
+    public function __construct(private User $user)
+    {
+    }
 
     /**
      * Returns the uri for this backend.

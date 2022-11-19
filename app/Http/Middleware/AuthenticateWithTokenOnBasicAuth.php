@@ -18,23 +18,13 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 class AuthenticateWithTokenOnBasicAuth
 {
     /**
-     * The guard factory instance.
-     *
-     * @var AuthManager
-     *
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected $auth;
-
-    /**
      * Create a new middleware instance.
      *
      * @param  AuthManager  $auth
      * @return void
      */
-    public function __construct(AuthManager $auth)
+    public function __construct(private AuthManager $auth)
     {
-        $this->auth = $auth;
     }
 
     /**

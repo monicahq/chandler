@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\Dav\Web\DAVACL;
 
 use App\Models\User;
-use App\Traits\WithUser;
 use Illuminate\Support\Str;
 use Sabre\DAV;
 use Sabre\DAV\Server as SabreServer;
@@ -11,7 +10,9 @@ use Sabre\DAVACL\PrincipalBackend\AbstractBackend;
 
 class PrincipalBackend extends AbstractBackend
 {
-    use WithUser;
+    public function __construct(private User $user)
+    {
+    }
 
     /**
      * This is the prefix that will be used to generate principal urls.

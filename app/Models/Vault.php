@@ -49,7 +49,7 @@ class Vault extends Model
      *
      * @return array
      */
-    public function uniqueIds()
+    public function uniqueIds(): array
     {
         return ['uuid'];
     }

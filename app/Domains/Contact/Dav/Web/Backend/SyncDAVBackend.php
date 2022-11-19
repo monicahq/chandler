@@ -3,14 +3,11 @@
 namespace App\Domains\Contact\Dav\Web\Backend;
 
 use App\Models\SyncToken;
-use App\Traits\WithUser;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 trait SyncDAVBackend
 {
-    use WithUser;
-
     /**
      * This method returns a sync-token for this collection.
      *

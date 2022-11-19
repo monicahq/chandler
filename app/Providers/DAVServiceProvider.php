@@ -8,7 +8,6 @@ use App\Domains\Contact\Dav\Web\Backend\CardDAV\CardDAVBackend;
 use App\Domains\Contact\Dav\Web\DAVACL\PrincipalBackend;
 use App\Domains\Contact\Dav\Web\DAVRedirect;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use LaravelSabre\LaravelSabre;
 use Sabre\CalDAV\CalendarRoot;
@@ -40,11 +39,9 @@ class DAVServiceProvider extends ServiceProvider
      */
     private function nodes(): array
     {
-        $user = Auth::user();
-
         // Initiate custom backends for link between Sabre and Monica
-        $principalBackend = app(PrincipalBackend::class)->init($user);   // User rights
-        $carddavBackend = app(CardDAVBackend::class)->init($user);       // Contacts
+        $principalBackend = app(PrincipalBackend::class);
+        $carddavBackend = app(CardDAVBackend::class);
         // $caldavBackend = app(CalDAVBackend::class)->init($user);         // Calendar
 
         return [
