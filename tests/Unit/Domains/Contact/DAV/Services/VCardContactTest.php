@@ -49,6 +49,8 @@ class VCardContactTest extends TestCase
             "BEGIN:VCARD\nVERSION:4.0\nFN:John Doe\nN:Doe;John;;;\nEND:VCARD"
         );
 
+        $response->dump();
+
         $response->assertStatus(201);
         $response->assertHeader('X-Sabre-Version');
         $response->assertHeaderMissing('ETag');

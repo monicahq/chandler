@@ -32,7 +32,7 @@ class ContactFactory extends Factory
             'company_id' => Company::factory(),
             'gender_id' => fn (array $properties) => Gender::factory()->create([
                 'account_id' => Vault::find($properties['vault_id'])->account_id,
-            ])->id,
+            ])->getKey(),
         ];
     }
 
