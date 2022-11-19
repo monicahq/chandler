@@ -50,7 +50,7 @@ class UserControllerTest extends ApiTestCase
         ]);
 
         $response = $this->get('/api/users/12345678');
-        $response->assertStatus(404);
+        $this->expectNotFound($response);
     }
 
     /** @test */
