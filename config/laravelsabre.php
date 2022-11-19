@@ -52,7 +52,7 @@ return [
     'middleware' => [
         'api',
         'auth.tokenonbasic',
-        'abilities:*',
+        'abilities:read,delete,update,create',
     ],
 
 ];

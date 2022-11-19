@@ -145,14 +145,14 @@ trait SyncDAVBackend
      * The limit is 'suggestive'. You are free to ignore it.
      *
      * @param  string  $calendarId
-     * @param  string  $syncToken
+     * @param  string|null  $syncToken
      * @return array|null
      */
-    public function getChanges(string $calendarId, string $syncToken): ?array
+    public function getChanges(string $calendarId, ?string $syncToken): ?array
     {
         $token = null;
         $timestamp = null;
-        if (! empty($syncToken)) {
+        if ($syncToken !== null && $syncToken !== '') {
             $token = $this->getSyncToken($calendarId, $syncToken);
 
             if ($token === null) {

@@ -63,8 +63,7 @@ class PrincipalBackend extends AbstractBackend
     {
         $prefixPath = Str::finish($prefixPath, '/');
 
-        return array_filter($this->getPrincipals(), fn ($principal) => ! $prefixPath || strpos($principal['uri'], $prefixPath) == 0
-        );
+        return array_filter($this->getPrincipals(), fn ($principal) => ! $prefixPath || strpos($principal['uri'], $prefixPath) === 0);
     }
 
     /**

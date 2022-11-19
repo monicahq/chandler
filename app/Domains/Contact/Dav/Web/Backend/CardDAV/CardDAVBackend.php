@@ -24,6 +24,10 @@ use Sabre\DAV;
 use Sabre\DAV\Server as SabreServer;
 use Sabre\DAV\Sync\Plugin as DAVSyncPlugin;
 
+/**
+ * @template TValue of ?Contact
+ * @implements IDAVBackend<TValue>
+ */
 class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 {
     use SyncDAVBackend;
@@ -77,7 +81,7 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
             'uri' => $vault->name,
             'principaluri' => PrincipalBackend::getPrincipalUser($this->user),
             '{DAV:}displayname' => __('Contacts'),
-            '{'.CardDAVPlugin::NS_CARDDAV.'}addressbook-description' => $vault ? $vault->description : __(':name’s contacts', ['name' => $this->user->name]),
+            '{'.CardDAVPlugin::NS_CARDDAV.'}addressbook-description' => $vault->name,
         ];
         if ($token) {
             $des += [
@@ -222,7 +226,7 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
     /**
      * Returns the contact for the specific uuid.
      *
-     * @param  mixed|null  $collectionId
+     * @param  string|null  $collectionId
      * @param  string  $uuid
      * @return Contact|null
      */

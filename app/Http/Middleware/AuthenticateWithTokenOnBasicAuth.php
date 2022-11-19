@@ -6,14 +6,17 @@ use App\Models\User;
 use Closure;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Pipeline;
+use Illuminate\Support\Facades\App;
+use Laravel\Sanctum\Sanctum;
+use Laravel\Sanctum\TransientToken;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
- * Authenticate user with Basic Authentication, with Passport token on password field.
+ * Authenticate user with Basic Authentication, with Sanctum token on password field.
  *
  * Examples:
  *   curl -u "email@example.com:$TOKEN" -X PROPFIND https://localhost/dav/
- *   curl -u ":$TOKEN" -X PROPFIND https://localhost/dav/
  */
 class AuthenticateWithTokenOnBasicAuth
 {
@@ -36,26 +39,34 @@ class AuthenticateWithTokenOnBasicAuth
      */
     public function handle($request, Closure $next)
     {
-        $this->authenticate($request);
+        return (new Pipeline(app()))->send($request)->through($this->auth->guard()->check() ? [
+            function ($request, $next) {
+                if (App::environment('local')) {
+                    $this->auth->guard('sanctum')->setUser($request->user()->withAccessToken(new TransientToken));
+                }
 
-        return $next($request);
-    }
+                return $next($request);
+            },
+        ] : [
+            function ($request, $next) {
+                Sanctum::getAccessTokenFromRequestUsing(fn ($request) => $request->bearerToken() ?? $request->getPassword()
+                );
 
-    /**
-     * Handle authentication.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
-    private function authenticate($request)
-    {
-        if ($this->auth->guard()->check()) {
-            return;
-        }
+                return $next($request);
+            },
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            function ($request) use ($next) {
+                if (! $this->basicAuth($request)) {
+                    $this->failedBasicResponse();
+                }
 
-        if (! $this->basicAuth($request)) {
-            $this->failedBasicResponse();
-        }
+                return $next($request);
+            },
+        ])
+        ->then(fn ($request) => $next($request));
     }
 
     /**
@@ -65,14 +76,7 @@ class AuthenticateWithTokenOnBasicAuth
      */
     private function basicAuth(Request $request)
     {
-        if (! $this->assertToken($request)) {
-            return false;
-        }
-
-        $user = $this->authUser($request);
-
-        // match User header if present
-        if ($user && (! $request->getUser() || $request->getUser() === $user->email)) {
+        if (($user = $this->sanctumUser($request)) !== null) {
             $this->auth->guard()->setUser($user);
 
             return true;
@@ -87,42 +91,22 @@ class AuthenticateWithTokenOnBasicAuth
      * @param  \Illuminate\Http\Request  $request
      * @return User|null
      */
-    private function authUser(Request $request): ?User
+    private function sanctumUser(Request $request): ?User
     {
-        $headerUser = $request->getUser();
-        $user = null;
-        try {
-            // Remove User from header request as Laravel auth will not authenticate using Bearer token
-            $request->headers->set('PHP_AUTH_USER', '');
+        /** @var \Illuminate\Auth\RequestGuard */
+        $guard = $this->auth->guard('sanctum');
 
-            /** @var \Illuminate\Auth\RequestGuard */
-            $guard = $this->auth->guard('sanctum');
+        /** @var ?User */
+        $user = $guard->setRequest($request)->user();
 
-            /** @var ?User */
-            $user = $guard->setRequest($request)
-                ->user();
-        } finally {
-            $request->headers->set('PHP_AUTH_USER', $headerUser);
+        // if there is no bearer token PHP_AUTH_USER header must match user email
+        if ($user->currentAccessToken() !== null
+            && $request->bearerToken() !== null
+            && $request->getUser() !== $user->email) {
+            return null;
         }
 
         return $user;
-    }
-
-    /**
-     * Assert Bearer token is present.
-     * If not using 'password' field on basic auth as Bearer token.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    private function assertToken(Request $request): bool
-    {
-        if (! $request->bearerToken()) {
-            $password = $request->getPassword();
-            $request->headers->set('Authorization', 'Bearer '.$password);
-        }
-
-        return true;
     }
 
     /**

@@ -5,8 +5,8 @@ namespace Database\Factories;
 use App\Models\Account;
 use App\Models\SyncToken;
 use App\Models\User;
-use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class SyncTokenFactory extends Factory
 {
@@ -27,7 +27,7 @@ class SyncTokenFactory extends Factory
         return [
             'account_id' => Account::factory(),
             'user_id' => User::factory(),
-            'name' => Vault::factory()->create()->uuid,
+            'name' => Str::orderedUuid(),
             'timestamp' => $this->faker->dateTimeThisCentury,
         ];
     }

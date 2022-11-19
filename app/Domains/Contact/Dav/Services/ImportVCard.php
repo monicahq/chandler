@@ -47,14 +47,14 @@ class ImportVCard extends BaseService implements ServiceInterface
      *
      * @var int
      */
-    public int $accountId;
+    public int $accountId = 0;
 
     /**
      * The genders that will be associated with imported contacts.
      *
      * @var array<Gender>
      */
-    protected array $genders;
+    protected array $genders = [];
 
     /**
      * Get the validation rules that apply to the service.
@@ -351,16 +351,6 @@ class ImportVCard extends BaseService implements ServiceInterface
     }
 
     /**
-     * Check whether the email is valid.
-     *
-     * @param  string  $email
-     */
-    private function isValidEmail(string $email): bool
-    {
-        return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    /**
      * Check whether the contact already exists in the database.
      *
      * @param  VCard  $entry
@@ -389,9 +379,9 @@ class ImportVCard extends BaseService implements ServiceInterface
      * Search with email field.
      *
      * @param  VCard  $entry
-     * @return Contact|null
+     * @return null
      */
-    private function existingContactWithEmail(VCard $entry): ?Contact
+    private function existingContactWithEmail(VCard $entry)
     {
         if (empty($entry->EMAIL)) {
             return null;
@@ -458,10 +448,8 @@ class ImportVCard extends BaseService implements ServiceInterface
         $this->importNote($contact, $entry);
 
         // Save vcard content
-        if ($contact->address_book_id) {
-            $contact->vcard = $vcard;
-            $contact->distant_etag = $etag;
-        }
+        $contact->vcard = $vcard;
+        $contact->distant_etag = $etag;
 
         $contact->save();
 
