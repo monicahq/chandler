@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
+use ReturnTypeWillChange;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -68,10 +69,7 @@ abstract class TestCase extends BaseTestCase
     {
         return tap(Vault::factory()->create([
             'account_id' => $user->account_id,
-        ]), function (Vault $vault) use ($user, $permission) {
-            $this->setPermissionInVault($user, $permission, $vault);
-            $vault->users()->sync([$user->id => ['permission' => $permission]]);
-        });
+        ]), fn (Vault $vault) => $this->setPermissionInVault($user, $permission, $vault));
     }
 
     /**
@@ -84,7 +82,10 @@ abstract class TestCase extends BaseTestCase
         $contact = Contact::factory()->create([
             'vault_id' => $vault->id,
         ]);
-        $vault->users()->sync([$user->id => ['permission' => $permission, 'contact_id' => $contact->id]]);
+        $vault->users()->save($user, [
+            'permission' => $permission,
+            'contact_id' => $contact->id,
+        ]);
 
         return $vault;
     }
@@ -97,7 +98,8 @@ abstract class TestCase extends BaseTestCase
      * @param  array  $parameters
      * @return mixed
      */
-    public function invokePrivateMethod(&$object, $methodName, array $parameters = [])
+    #[ReturnTypeWillChange]
+    public function invokePrivateMethod(object &$object, string $methodName, array $parameters = []): mixed
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
@@ -114,7 +116,7 @@ abstract class TestCase extends BaseTestCase
      * @param  mixed  $value
      * @return void
      */
-    public function setPrivateValue(&$object, string $propertyName, $value)
+    public function setPrivateValue(object &$object, string $propertyName, mixed $value): void
     {
         $reflection = new \ReflectionClass(get_class($object));
         $property = $reflection->getProperty($propertyName);

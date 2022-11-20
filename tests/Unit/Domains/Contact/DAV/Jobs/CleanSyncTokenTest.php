@@ -29,7 +29,7 @@ class CleanSyncTokenTest extends TestCase
         ]);
         (new CleanSyncToken)->execute([]);
 
-        $this->assertDatabaseHas('synctoken', [
+        $this->assertDatabaseHas('synctokens', [
             'account_id' => $account->id,
             'user_id' => $user->id,
             'name' => 'contacts',
@@ -70,16 +70,16 @@ class CleanSyncTokenTest extends TestCase
         ]);
         (new CleanSyncToken)->execute([]);
 
-        $this->assertDatabaseHas('synctoken', [
+        $this->assertDatabaseHas('synctokens', [
             'id' => $s1->id,
         ]);
-        $this->assertDatabaseMissing('synctoken', [
+        $this->assertDatabaseMissing('synctokens', [
             'id' => $s2->id,
         ]);
-        $this->assertDatabaseMissing('synctoken', [
+        $this->assertDatabaseMissing('synctokens', [
             'id' => $s3->id,
         ]);
-        $this->assertDatabaseHas('synctoken', [
+        $this->assertDatabaseHas('synctokens', [
             'id' => $s4->id,
         ]);
     }

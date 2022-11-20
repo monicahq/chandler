@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('synctoken', function (Blueprint $table) {
+        Schema::create('synctokens', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('user_id');
@@ -26,5 +26,15 @@ return new class extends Migration
 
             $table->index(['account_id', 'user_id', 'name']);
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('synctokens');
     }
 };

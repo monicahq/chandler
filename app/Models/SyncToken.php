@@ -9,7 +9,7 @@ class SyncToken extends Model
 {
     use HasFactory;
 
-    protected $table = 'synctoken';
+    protected $table = 'synctokens';
 
     /**
      * The attributes that aren't mass assignable.

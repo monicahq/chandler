@@ -163,7 +163,7 @@ class CardDAVTest extends TestCase
         $response->assertStatus(207);
         $response->assertHeader('X-Sabre-Version');
 
-        $this->assertDatabaseHas('synctoken', [
+        $this->assertDatabaseHas('synctokens', [
             'account_id' => $user->account_id,
             'user_id' => $user->id,
             'name' => "contacts-{$vault->uuid}",

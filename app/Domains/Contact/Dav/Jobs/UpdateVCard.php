@@ -55,7 +55,7 @@ class UpdateVCard extends QueuableService implements ServiceInterface
     }
 
     /**
-     * Update the Last Consulted At field for the given contact.
+     * Update or create a contact using the VCard data.
      *
      * @return void
      */
