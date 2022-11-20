@@ -163,33 +163,36 @@ trait SyncDAVBackend
             $timestamp = $token->timestamp;
         }
 
+        /** @var \Illuminate\Support\Collection<array-key, Contact> */
         $objs = $this->getObjects($calendarId);
 
-        $modified = $objs->filter(fn ($obj) => $timestamp !== null &&
+        $modified = $objs->filter(fn ($obj): bool => $timestamp !== null &&
                 $obj->updated_at > $timestamp &&
                 $obj->created_at < $timestamp
         );
-        $added = $objs->filter(fn ($obj) => $timestamp === null ||
+        $added = $objs->filter(fn ($obj): bool => $timestamp === null ||
                 $obj->created_at >= $timestamp
         );
         $deleted = $this->getDeletedObjects($calendarId)
-            ->filter(fn ($obj) => $timestamp === null ||
-                    $obj->deleted_at >= $timestamp
+            ->filter(fn ($obj): bool => $timestamp === null ||
+                $obj->deleted_at >= $timestamp
             );
 
         return [
             'syncToken' => $this->refreshSyncToken($calendarId)->id,
-            'added' => $added->map(function ($obj) {
-                return $this->encodeUri($obj);
-            })->values()->toArray(),
-            'modified' => $modified->map(function ($obj) {
+            'added' => $added->map(fn ($obj): string => $this->encodeUri($obj))
+                ->values()
+                ->toArray(),
+            'modified' => $modified->map(function ($obj): string {
                 $this->refreshObject($obj);
 
                 return $this->encodeUri($obj);
-            })->values()->toArray(),
-            'deleted' => $deleted->map(function ($obj) {
-                return $this->encodeUri($obj);
-            })->values()->toArray(),
+            })
+                ->values()
+                ->toArray(),
+            'deleted' => $deleted->map(fn ($obj): string => $this->encodeUri($obj))
+                ->values()
+                ->toArray(),
         ];
     }
 

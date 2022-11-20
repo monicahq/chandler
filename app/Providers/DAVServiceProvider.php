@@ -34,6 +34,8 @@ class DAVServiceProvider extends ServiceProvider
 
     /**
      * List of nodes for DAV Collection.
+     *
+     * @return array
      */
     private function nodes(): array
     {
@@ -53,6 +55,8 @@ class DAVServiceProvider extends ServiceProvider
 
     /**
      * List of Sabre plugins.
+     *
+     * @return \Generator<\Sabre\DAV\ServerPlugin>
      */
     private function plugins()
     {

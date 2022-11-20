@@ -2,13 +2,19 @@
 
 namespace App\Domains\Contact\Dav\Services;
 
+use App\Domains\Contact\Dav\ExportVCardResource;
+use App\Domains\Contact\Dav\Order;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
-use App\Models\Gender;
 use App\Services\BaseService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Str;
+use ReflectionAttribute;
+use ReflectionClass;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
 use Sabre\VObject\Reader;
+use Symfony\Component\Finder\Finder;
 
 class ExportVCard extends BaseService implements ServiceInterface
 {
@@ -42,6 +48,10 @@ class ExportVCard extends BaseService implements ServiceInterface
         ];
     }
 
+    public function __construct(private Application $app)
+    {
+    }
+
     /**
      * Export one VCard.
      *
@@ -59,11 +69,6 @@ class ExportVCard extends BaseService implements ServiceInterface
         $this->contact->save();
 
         return $vcard;
-    }
-
-    private function escape($value): string
-    {
-        return ! empty((string) $value) ? trim((string) $value) : (string) null;
     }
 
     /**
@@ -96,140 +101,41 @@ class ExportVCard extends BaseService implements ServiceInterface
             ]);
         }
 
-        $this->exportNames($contact, $vcard);
-        $this->exportGender($contact, $vcard);
-        $this->exportPhoto($contact, $vcard);
-        $this->exportWorkInformation($contact, $vcard);
-        $this->exportBirthday($contact, $vcard);
-        $this->exportAddress($contact, $vcard);
-        $this->exportContactFields($contact, $vcard);
-        $this->exportTimestamp($contact, $vcard);
-        $this->exportTags($contact, $vcard);
+        $exporters = collect($this->exporters());
+        foreach ($exporters->sortBy('order')->pluck('exporter') as $exporter) {
+            /** @var ExportVCardResource */
+            $exporter = $exporter->newInstance();
+            $exporter->export($contact, $vcard);
+        }
 
         return $vcard;
     }
 
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportNames(Contact $contact, VCard $vcard): void
+    private function exporters()
     {
-        $vcard->remove('FN');
-        $vcard->remove('N');
-        $vcard->remove('NICKNAME');
+        $namespace = $this->app->getNamespace();
+        $appPath = app_path();
 
-        $vcard->add('FN', $this->escape($contact->name));
+        foreach ((new Finder)->files()->in($appPath)->name('*.php') as $file) {
+            $file = $namespace.str_replace(
+                ['/', '.php'],
+                ['\\', ''],
+                Str::after($file->getRealPath(), realpath($appPath).DIRECTORY_SEPARATOR)
+            );
 
-        $vcard->add('N', [
-            $this->escape($contact->last_name),
-            $this->escape($contact->first_name),
-            $this->escape($contact->middle_name),
-        ]);
+            $class = new ReflectionClass($file);
+            if ($class->isSubclassOf(ExportVCardResource::class) && ! $class->isAbstract()) {
+                $attributes = $class->getAttributes(Order::class, ReflectionAttribute::IS_INSTANCEOF);
 
-        if (! empty($contact->nickname)) {
-            $vcard->add('NICKNAME', $this->escape($contact->nickname));
-        }
-    }
+                $order = count($attributes) > 0
+                    ? $attributes[0]->newInstance()->order
+                    : 0;
 
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportGender(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('GENDER');
-
-        if (is_null($contact->gender)) {
-            return;
-        }
-
-        $gender = $contact->gender->type;
-        if (empty($gender)) {
-            switch ($contact->gender->name) {
-                case trans('account.gender_male'):
-                    $gender = Gender::MALE;
-                    break;
-                case trans('account.gender_female'):
-                    $gender = Gender::FEMALE;
-                    break;
-                default:
-                    $gender = Gender::OTHER;
-                    break;
+                yield [
+                    'order' => $order,
+                    'exporter' => $class,
+                ];
             }
         }
-        $vcard->add('GENDER', $gender);
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportPhoto(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('PHOTO');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportWorkInformation(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('ORG');
-        $vcard->remove('TITLE');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     *
-     * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5
-     */
-    private function exportBirthday(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('BDAY');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     *
-     * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.3.1
-     */
-    private function exportAddress(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('ADR');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportContactFields(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('TEL');
-        $vcard->remove('EMAIL');
-        $vcard->remove('socialProfile');
-        $vcard->remove('URL');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportTimestamp(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('REV');
-        $vcard->REV = $contact->updated_at->format('Ymd\\THis\\Z');
-    }
-
-    /**
-     * @param  Contact  $contact
-     * @param  VCard  $vcard
-     */
-    private function exportTags(Contact $contact, VCard $vcard): void
-    {
-        $vcard->remove('CATEGORIES');
     }
 }
