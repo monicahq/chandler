@@ -8,8 +8,8 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Services\BaseService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ReflectionAttribute;
 use ReflectionClass;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
@@ -101,10 +101,14 @@ class ExportVCard extends BaseService implements ServiceInterface
             ]);
         }
 
-        $exporters = collect($this->exporters());
-        foreach ($exporters->sortBy('order')->pluck('exporter') as $exporter) {
-            /** @var ExportVCardResource */
-            $exporter = $exporter->newInstance();
+        /**
+         * @var Collection<int, ExportVCardResource>
+         */
+        $exporters = collect($this->exporters())
+            ->sortBy(fn (ReflectionClass $exporter) => Order::get($exporter))
+            ->map(fn (ReflectionClass $exporter): ExportVCardResource => $exporter->newInstance());
+
+        foreach ($exporters as $exporter) {
             $exporter->export($contact, $vcard);
         }
 
@@ -125,16 +129,7 @@ class ExportVCard extends BaseService implements ServiceInterface
 
             $class = new ReflectionClass($file);
             if ($class->isSubclassOf(ExportVCardResource::class) && ! $class->isAbstract()) {
-                $attributes = $class->getAttributes(Order::class, ReflectionAttribute::IS_INSTANCEOF);
-
-                $order = count($attributes) > 0
-                    ? $attributes[0]->newInstance()->order
-                    : 0;
-
-                yield [
-                    'order' => $order,
-                    'exporter' => $class,
-                ];
+                yield $class;
             }
         }
     }

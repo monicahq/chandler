@@ -163,7 +163,6 @@ trait SyncDAVBackend
             $timestamp = $token->timestamp;
         }
 
-        /** @var \Illuminate\Support\Collection<array-key, Contact> */
         $objs = $this->getObjects($calendarId);
 
         $modified = $objs->filter(fn ($obj): bool => $timestamp !== null &&

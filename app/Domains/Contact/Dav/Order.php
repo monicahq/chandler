@@ -3,6 +3,8 @@
 namespace App\Domains\Contact\Dav;
 
 use Attribute;
+use ReflectionAttribute;
+use ReflectionClass;
 
 #[Attribute]
 class Order
@@ -10,5 +12,20 @@ class Order
     public function __construct(
         public int $order,
     ) {
+    }
+
+    /**
+     * Get order value from a reflection class.
+     *
+     * @param  ReflectionClass  $class
+     * @return int
+     */
+    public static function get(ReflectionClass $class): int
+    {
+        $attributes = $class->getAttributes(Order::class, ReflectionAttribute::IS_INSTANCEOF);
+
+        return count($attributes) > 0
+            ? $attributes[0]->newInstance()->order
+            : 0;
     }
 }
