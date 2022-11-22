@@ -64,7 +64,7 @@ class UserController extends ApiController
             $users = Auth::user()->account->users()
                 ->orderBy($this->sort, $this->sortDirection)
                 ->paginate($this->getLimitPerPage());
-        } catch (QueryException $e) {
+        } catch (QueryException) {
             return $this->respondInvalidQuery();
         }
 
