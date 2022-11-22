@@ -43,12 +43,10 @@ class ContactFactory extends Factory
      */
     public function random()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
-            ];
-        });
+        return $this->state(fn () => [
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+        ]);
     }
 
     /**
@@ -58,11 +56,9 @@ class ContactFactory extends Factory
      */
     public function middle()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'middle_name' => $this->faker->firstName,
-            ];
-        });
+        return $this->state(fn () => [
+            'middle_name' => $this->faker->firstName,
+        ]);
     }
 
     /**
@@ -72,11 +68,9 @@ class ContactFactory extends Factory
      */
     public function maiden()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'maiden_name' => $this->faker->unique()->name,
-            ];
-        });
+        return $this->state(fn () => [
+            'maiden_name' => $this->faker->unique()->name,
+        ]);
     }
 
     /**
@@ -86,10 +80,8 @@ class ContactFactory extends Factory
      */
     public function nickname()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'nickname' => $this->faker->unique()->firstName,
-            ];
-        });
+        return $this->state(fn () => [
+            'nickname' => $this->faker->unique()->firstName,
+        ]);
     }
 }

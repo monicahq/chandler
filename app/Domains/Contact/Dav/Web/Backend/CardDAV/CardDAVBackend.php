@@ -9,6 +9,7 @@ use App\Domains\Contact\Dav\Web\Backend\IDAVBackend;
 use App\Domains\Contact\Dav\Web\Backend\SyncDAVBackend;
 use App\Domains\Contact\Dav\Web\DAVACL\PrincipalBackend;
 use App\Domains\Contact\ManageContact\Services\DestroyContact;
+use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
@@ -238,7 +239,7 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
             ->first();
 
         if (! $vault) {
-            return null;
+            throw new NotEnoughPermissionException();
         }
 
         return Contact::where([
@@ -338,11 +339,9 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
     {
         $contact = $this->getObject($addressBookId, $cardUri);
 
-        if ($contact) {
-            return $this->prepareCard($contact);
-        }
-
-        return false;
+        return $contact === null
+            ? false
+            : $this->prepareCard($contact);
     }
 
     /**

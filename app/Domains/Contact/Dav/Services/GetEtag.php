@@ -47,6 +47,6 @@ class GetEtag extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        return $this->contact->distant_etag ?? '"'.sha1($this->contact->vcard).'"';
+        return $this->contact->distant_etag ?? '"'.hash('sha256', $this->contact->vcard).'"';
     }
 }

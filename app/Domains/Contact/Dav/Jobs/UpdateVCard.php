@@ -7,6 +7,7 @@ use App\Domains\Contact\Dav\Services\ImportVCard;
 use App\Domains\Contact\Dav\Web\Backend\CardDAV\CardDAVBackend;
 use App\Interfaces\ServiceInterface;
 use App\Services\QueuableService;
+use Closure;
 use Illuminate\Bus\Batchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -31,7 +32,7 @@ class UpdateVCard extends QueuableService implements ServiceInterface
             'etag' => 'nullable|string',
             'card' => [
                 'required',
-                function ($attribute, $value, $fail) {
+                function (string $attribute, mixed $value, Closure $fail) {
                     if (! is_string($value) && ! is_resource($value)) {
                         $fail($attribute.' must be a string or a resource.');
                     }

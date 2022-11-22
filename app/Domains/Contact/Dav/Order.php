@@ -24,8 +24,8 @@ class Order
     {
         $attributes = $class->getAttributes(Order::class, ReflectionAttribute::IS_INSTANCEOF);
 
-        return count($attributes) > 0
-            ? $attributes[0]->newInstance()->order
-            : 0;
+        return empty($attributes)
+            ? 0
+            : $attributes[0]->newInstance()->order;
     }
 }

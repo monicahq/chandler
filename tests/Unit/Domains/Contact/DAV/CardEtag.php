@@ -13,7 +13,7 @@ trait CardEtag
             $data = $this->getCard($obj, true);
         }
 
-        $etag = sha1($data);
+        $etag = hash('sha256', $data);
         if ($quotes) {
             $etag = '"'.$etag.'"';
         }

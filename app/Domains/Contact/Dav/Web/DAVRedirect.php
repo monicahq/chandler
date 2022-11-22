@@ -27,7 +27,7 @@ class DAVRedirect extends ServerPlugin
     public function httpGet(RequestInterface $request, ResponseInterface $response): bool
     {
         $response->setStatus(302);
-        $response->setHeader('Location', route('home') /* route('settings.dav') */);
+        $response->setHeader('Location', route('home'));
 
         return false;
     }

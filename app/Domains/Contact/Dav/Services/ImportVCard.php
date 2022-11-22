@@ -4,18 +4,17 @@ namespace App\Domains\Contact\Dav\Services;
 
 use App\Domains\Contact\Dav\ImportVCardResource;
 use App\Domains\Contact\Dav\Order;
-use App\Domains\Contact\ManageContact\Dav\ImportContact;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Services\BaseService;
 use App\Traits\DAVFormat;
+use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Ramsey\Uuid\Uuid;
 use ReflectionClass;
-use ReturnTypeWillChange;
 use Sabre\VObject\Component\VCard;
 use Sabre\VObject\ParseException;
 use Sabre\VObject\Reader;
@@ -67,7 +66,7 @@ class ImportVCard extends BaseService implements ServiceInterface
             'contact_id' => 'nullable|integer|exists:contacts,id',
             'entry' => [
                 'required',
-                function ($attribute, $value, $fail) {
+                function (string $attribute, mixed $value, Closure $fail) {
                     if (! is_string($value) && ! is_resource($value) && ! $value instanceof VCard) {
                         $fail($attribute.' must be a string, a resource, or a VCard object.');
                     }
@@ -92,6 +91,7 @@ class ImportVCard extends BaseService implements ServiceInterface
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_in_vault',
+            'author_must_be_vault_editor',
         ];
     }
 
@@ -111,6 +111,8 @@ class ImportVCard extends BaseService implements ServiceInterface
 
         if (Arr::get($data, 'contact_id') !== null) {
             $this->validateContactBelongsToVault($data);
+        } else {
+            $this->contact = null;
         }
 
         return $this->process($data);
@@ -169,11 +171,11 @@ class ImportVCard extends BaseService implements ServiceInterface
             ];
         }
 
-        $contact = Arr::get($data, 'contact_id') === null
-            ? $this->getExistingContact($entry)
-            : $this->contact;
+        if ($this->contact === null) {
+            $this->contact = $this->getExistingContact($entry);
+        }
 
-        return $this->processEntryContact($data, $entry, $vcard, $contact);
+        return $this->processEntryContact($data, $entry, $vcard, $this->contact);
     }
 
     /**
@@ -223,36 +225,14 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @psalm-suppress InvalidReturnType
      *
      * @param  VCard  $entry
-     * @return array|string|null|\Illuminate\Contracts\Translation\Translator
+     * @return string
      */
-    #[ReturnTypeWillChange]
-    private function name($entry)
+    private function name($entry): string
     {
-        if ($this->hasFirstnameInN($entry)) {
-            $parts = $entry->N->getParts();
-
-            $name = '';
-            if (! empty(Arr::get($parts, '1'))) {
-                $name .= $this->formatValue($parts[1]);
-            }
-            if (! empty(Arr::get($parts, '2'))) {
-                $name .= ' '.$this->formatValue($parts[2]);
-            }
-            if (! empty(Arr::get($parts, '0'))) {
-                $name .= ' '.$this->formatValue($parts[0]);
-            }
-            $name .= ' '.$this->formatValue($entry->EMAIL);
-        } elseif ($this->hasNickname($entry)) {
-            $name = $this->formatValue($entry->NICKNAME);
-            $name .= ' '.$this->formatValue($entry->EMAIL);
-        } elseif ($this->hasFN($entry)) {
-            $name = $this->formatValue($entry->FN);
-            $name .= ' '.$this->formatValue($entry->EMAIL);
-        } else {
-            $name = trans('settings.import_vcard_unknown_entry');
-        }
-
-        return $name;
+        return (string) $entry->N ||
+            (string) $entry->EMAIL ||
+            (string) $entry->NICKNAME ||
+            (string) __('Unknown contact name');
     }
 
     /**
@@ -336,53 +316,11 @@ class ImportVCard extends BaseService implements ServiceInterface
     {
         $contact = $this->existingUuid($entry);
 
-        // if (! $contact) {
-        //     $contact = $this->existingContactWithEmail($entry);
-        // }
-
-        if (! $contact) {
-            $contact = $this->existingContactWithName($entry);
-        }
-
         if ($contact) {
             $contact->timestamps = false;
         }
 
         return $contact;
-    }
-
-    // /**
-    //  * Search with email field.
-    //  *
-    //  * @param  VCard  $entry
-    //  * @return null
-    //  */
-    // private function existingContactWithEmail(VCard $entry)
-    // {
-    //     if (empty($entry->EMAIL)) {
-    //         return null;
-    //     }
-
-    //     return null;
-    // }
-
-    /**
-     * Search with names fields.
-     *
-     * @param  VCard  $entry
-     * @return Contact|null
-     */
-    private function existingContactWithName(VCard $entry): ?Contact
-    {
-        $contact = [];
-        app(ImportContact::class)->importNames($contact, $entry);
-
-        return Contact::where([
-            'vault_id' => $this->vault->id,
-            'first_name' => Arr::get($contact, 'first_name'),
-            'middle_name' => Arr::get($contact, 'middle_name'),
-            'last_name' => Arr::get($contact, 'last_name'),
-        ])->first();
     }
 
     /**
