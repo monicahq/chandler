@@ -152,7 +152,7 @@ class ContactController extends Controller
             'contact_id' => $contactId,
         ];
 
-        DestroyContact::dispatch($data);
+        DestroyContact::dispatchSync($data);
 
         return response()->json([
             'data' => route('contact.index', [

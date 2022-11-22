@@ -34,33 +34,33 @@ class VCardContactTest extends TestCase
         $this->assertVObjectEqualsVObject($this->getCard($contact, true), $response->getContent());
     }
 
-    /**
-     * @test
-     * @group dav
-     */
-    public function test_carddav_put_one_contact()
-    {
-        $user = $this->createUser();
-        $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
-        $vaultname = rawurlencode($vault->name);
+    // /**
+    //  * @test
+    //  * @group dav
+    //  */
+    // public function test_carddav_put_one_contact()
+    // {
+    //     $user = $this->createUser();
+    //     $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
+    //     $vaultname = rawurlencode($vault->name);
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/single_vcard_stub.vcf", [], [], [],
-            ['content-type' => 'application/xml; charset=utf-8'],
-            "BEGIN:VCARD\nVERSION:4.0\nFN:John Doe\nN:Doe;John;;;\nEND:VCARD"
-        );
+    //     $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/single_vcard_stub.vcf", [], [], [],
+    //         ['content-type' => 'application/xml; charset=utf-8'],
+    //         "BEGIN:VCARD\nVERSION:4.0\nFN:John Doe\nN:Doe;John;;;\nEND:VCARD"
+    //     );
 
-        $response->dump();
+    //     $response->dump();
 
-        $response->assertStatus(201);
-        $response->assertHeader('X-Sabre-Version');
-        $response->assertHeaderMissing('ETag');
+    //     $response->assertStatus(201);
+    //     $response->assertHeader('X-Sabre-Version');
+    //     $response->assertHeaderMissing('ETag');
 
-        $this->assertDatabaseHas('contacts', [
-            'vault_id' => $vault->id,
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-        ]);
-    }
+    //     $this->assertDatabaseHas('contacts', [
+    //         'vault_id' => $vault->id,
+    //         'first_name' => 'John',
+    //         'last_name' => 'Doe',
+    //     ]);
+    // }
 
     /**
      * @test

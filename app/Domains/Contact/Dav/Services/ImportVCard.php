@@ -42,7 +42,8 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @var array
      */
     public static array $behaviourTypes = [
-        self::BEHAVIOUR_ADD, self::BEHAVIOUR_REPLACE,
+        self::BEHAVIOUR_ADD,
+        self::BEHAVIOUR_REPLACE,
     ];
 
     /**
@@ -241,7 +242,7 @@ class ImportVCard extends BaseService implements ServiceInterface
                 $name .= ' '.$this->formatValue($parts[0]);
             }
             $name .= ' '.$this->formatValue($entry->EMAIL);
-        } elseif ($this->hasNICKNAME($entry)) {
+        } elseif ($this->hasNickname($entry)) {
             $name = $this->formatValue($entry->NICKNAME);
             $name .= ' '.$this->formatValue($entry->EMAIL);
         } elseif ($this->hasFN($entry)) {
@@ -311,7 +312,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  VCard  $entry
      * @return bool
      */
-    private function hasNICKNAME(VCard $entry): bool
+    private function hasNickname(VCard $entry): bool
     {
         return ! empty((string) $entry->NICKNAME);
     }
@@ -335,9 +336,9 @@ class ImportVCard extends BaseService implements ServiceInterface
     {
         $contact = $this->existingUuid($entry);
 
-        if (! $contact) {
-            $contact = $this->existingContactWithEmail($entry);
-        }
+        // if (! $contact) {
+        //     $contact = $this->existingContactWithEmail($entry);
+        // }
 
         if (! $contact) {
             $contact = $this->existingContactWithName($entry);
@@ -350,20 +351,20 @@ class ImportVCard extends BaseService implements ServiceInterface
         return $contact;
     }
 
-    /**
-     * Search with email field.
-     *
-     * @param  VCard  $entry
-     * @return null
-     */
-    private function existingContactWithEmail(VCard $entry)
-    {
-        if (empty($entry->EMAIL)) {
-            return null;
-        }
+    // /**
+    //  * Search with email field.
+    //  *
+    //  * @param  VCard  $entry
+    //  * @return null
+    //  */
+    // private function existingContactWithEmail(VCard $entry)
+    // {
+    //     if (empty($entry->EMAIL)) {
+    //         return null;
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     /**
      * Search with names fields.

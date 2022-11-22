@@ -16,26 +16,24 @@ class ExportVCardTest extends TestCase
         PHPUnitAssertions,
         CardEtag;
 
-    /** @var int */
-    const defaultPropsCount = 3;
+    /**
+     * @group dav
+     * @test
+     */
+    public function it_exports_a_contact()
+    {
+        $user = $this->createUser();
+        $vault = $this->createVaultUser($user);
+        $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
 
-    /** @test */
-    // public function vcard_add_names()
-    // {
-    //     $user = $this->createUser();
-    //     $vault = $this->createVaultUser($user);
-    //     $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
+        $vCard = (new ExportVCard($this->app))->execute([
+            'account_id' => $user->account_id,
+            'author_id' => $user->id,
+            'vault_id' => $vault->id,
+            'contact_id' => $contact->id,
+        ]);
 
-    //     $vCard = new VCard();
-
-    //     $exportVCard = app(ExportVCard::class);
-    //     $this->invokePrivateMethod($exportVCard, 'exportNames', [$contact, $vCard]);
-
-    //     $this->assertCount(
-    //         self::defaultPropsCount + 2,
-    //         $vCard->children()
-    //     );
-    //     $this->assertStringContainsString("FN:{$contact->name}", $vCard->serialize());
-    //     $this->assertStringContainsString("N:{$contact->last_name};{$contact->first_name};;;", $vCard->serialize());
-    // }
+        $this->assertInstanceOf(VCard::class, $vCard);
+        $this->assertVObjectEqualsVObject($this->getCard($contact), $vCard->serialize());
+    }
 }
