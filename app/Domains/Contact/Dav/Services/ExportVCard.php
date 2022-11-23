@@ -114,7 +114,7 @@ class ExportVCard extends BaseService implements ServiceInterface
     }
 
     /**
-     * @return Generator<ReflectionClass>
+     * @return \Generator<ReflectionClass>
      */
     private function exporters()
     {

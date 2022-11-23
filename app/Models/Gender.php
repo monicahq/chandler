@@ -55,6 +55,7 @@ class Gender extends Model
     protected $fillable = [
         'account_id',
         'name',
+        'type',
     ];
 
     /**
