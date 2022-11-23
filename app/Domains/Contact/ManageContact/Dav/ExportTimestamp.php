@@ -2,14 +2,13 @@
 
 namespace App\Domains\Contact\ManageContact\Dav;
 
-use App\Domains\Contact\Dav\Exporter;
 use App\Domains\Contact\Dav\ExportVCardResource;
 use App\Domains\Contact\Dav\Order;
 use App\Models\Contact;
 use Sabre\VObject\Component\VCard;
 
 #[Order(1000)]
-class ExportTimestamp extends Exporter implements ExportVCardResource
+class ExportTimestamp implements ExportVCardResource
 {
     /**
      * @param  Contact  $contact

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Settings\ManageGenders\Dav;
 
-use App\Domains\Contact\Dav\Exporter;
 use App\Domains\Contact\Dav\ExportVCardResource;
 use App\Domains\Contact\Dav\Order;
 use App\Models\Contact;
@@ -10,7 +9,7 @@ use App\Models\Gender;
 use Sabre\VObject\Component\VCard;
 
 #[Order(10)]
-class ExportGender extends Exporter implements ExportVCardResource
+class ExportGender implements ExportVCardResource
 {
     /**
      * @param  Contact  $contact

@@ -22,7 +22,7 @@ class Order
      */
     public static function get(ReflectionClass $class): int
     {
-        $attributes = $class->getAttributes(Order::class, ReflectionAttribute::IS_INSTANCEOF);
+        $attributes = $class->getAttributes(static::class, ReflectionAttribute::IS_INSTANCEOF);
 
         return empty($attributes)
             ? 0

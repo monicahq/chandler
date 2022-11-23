@@ -111,11 +111,11 @@ class ImportVCard extends BaseService implements ServiceInterface
 
         if (Arr::get($data, 'contact_id') !== null) {
             $this->validateContactBelongsToVault($data);
-        } else {
-            $this->contact = null;
-        }
 
-        return $this->process($data);
+            return $this->process($data, $this->contact);
+        } else {
+            return $this->process($data, null);
+        }
     }
 
     private function clear()
@@ -127,9 +127,10 @@ class ImportVCard extends BaseService implements ServiceInterface
      * Process data importation.
      *
      * @param  array  $data
+     * @param  Contact|null  $contact
      * @return array
      */
-    private function process(array $data): array
+    private function process(array $data, ?Contact $contact): array
     {
         if ($this->accountId !== $data['account_id']) {
             $this->clear();
@@ -150,18 +151,42 @@ class ImportVCard extends BaseService implements ServiceInterface
             ];
         }
 
-        return $this->processEntry($data, $entry, $vcard);
+        return $this->processEntry($data, $contact, $entry, $vcard);
+    }
+
+    /**
+     * @param  array  $data
+     * @return array
+     */
+    private function getEntry(array $data): array
+    {
+        $entry = $vcard = $data['entry'];
+
+        if (! $entry instanceof VCard) {
+            try {
+                $entry = Reader::read($entry, Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
+            } catch (ParseException $e) {
+                return [null, $vcard];
+            }
+        }
+
+        if ($vcard instanceof VCard) {
+            $vcard = $entry->serialize();
+        }
+
+        return [$entry, $vcard];
     }
 
     /**
      * Process entry importation.
      *
      * @param  array  $data
+     * @param  Contact|null  $contact
      * @param  VCard  $entry
      * @param  string  $vcard
      * @return array
      */
-    private function processEntry(array $data, VCard $entry, string $vcard): array
+    private function processEntry(array $data, ?Contact $contact, VCard $entry, string $vcard): array
     {
         if (! $this->canImportCurrentEntry($entry)) {
             return [
@@ -171,25 +196,25 @@ class ImportVCard extends BaseService implements ServiceInterface
             ];
         }
 
-        if ($this->contact === null) {
-            $this->contact = $this->getExistingContact($entry);
+        if ($contact === null) {
+            $contact = $this->getExistingContact($entry);
         }
 
-        return $this->processEntryContact($data, $entry, $vcard, $this->contact);
+        return $this->processEntryContact($data, $contact, $entry, $vcard);
     }
 
     /**
      * Process entry importation.
      *
      * @param  array  $data
+     * @param  Contact|null  $contact
      * @param  VCard  $entry
      * @param  string  $vcard
-     * @param  Contact|null  $contact
      * @return array
      */
-    private function processEntryContact(array $data, VCard $entry, string $vcard, ?Contact $contact): array
+    private function processEntryContact(array $data, ?Contact $contact, VCard $entry, string $vcard): array
     {
-        $behaviour = $data['behaviour'] ?: self::BEHAVIOUR_ADD;
+        $behaviour = $data['behaviour'] ?? self::BEHAVIOUR_ADD;
         if ($contact && $behaviour === self::BEHAVIOUR_ADD) {
             return [
                 'contact_id' => $contact->id,
@@ -199,7 +224,7 @@ class ImportVCard extends BaseService implements ServiceInterface
             ];
         }
 
-        if ($contact) {
+        if ($contact !== null) {
             $timestamps = $contact->timestamps;
             $contact->timestamps = false;
         }
@@ -217,51 +242,20 @@ class ImportVCard extends BaseService implements ServiceInterface
     }
 
     /**
-     * Return the name and email address of the current entry.
-     * John Doe Johnny john@doe.com.
+     * Return the name of current entry.
      * Only used for report display.
-     *
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress InvalidReturnType
      *
      * @param  VCard  $entry
      * @return string
      */
     private function name($entry): string
     {
-        return (string) $entry->N ||
-            (string) $entry->EMAIL ||
-            (string) $entry->NICKNAME ||
-            (string) __('Unknown contact name');
-    }
-
-    /**
-     * @param  array  $data
-     * @return array
-     */
-    private function getEntry(array $data): array
-    {
-        $entry = $vcard = $data['entry'];
-
-        if (! $entry instanceof VCard) {
-            try {
-                $entry = Reader::read($entry, Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
-            } catch (ParseException $e) {
-                return [
-                    'entry' => null,
-                    'vcard' => $vcard,
-                ];
-            }
-        }
-
-        if ($vcard instanceof VCard) {
-            $vcard = $entry->serialize();
-        }
-
-        return [
-            $entry,
-            $vcard,
-        ];
+        return $entry->N !== null ? trim(implode(' ', $entry->N->getParts())) : (
+            $entry->FN !== null ? (string) $entry->FN : (
+                $entry->EMAIL !== null ? (string) $entry->EMAIL : (
+                    $entry->NICKNAME !== null ? (string) $entry->NICKNAME :
+                        (string) __('Unknown contact name')
+                )));
     }
 
     /**
@@ -275,7 +269,7 @@ class ImportVCard extends BaseService implements ServiceInterface
     {
         return
             $this->hasFirstnameInN($entry) ||
-            $this->hasNickname($entry) ||
+            $this->hasNICKNAME($entry) ||
             $this->hasFN($entry);
     }
 
@@ -292,7 +286,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  VCard  $entry
      * @return bool
      */
-    private function hasNickname(VCard $entry): bool
+    private function hasNICKNAME(VCard $entry): bool
     {
         return ! empty((string) $entry->NICKNAME);
     }
@@ -350,13 +344,10 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function importEntry(?Contact $contact, VCard $entry, string $vcard, ?string $etag): Contact
     {
-        /**
-         * @var \Illuminate\Support\Collection<int, ImportVCardResource> $importers
-         */
+        /** @var Collection<int, ImportVCardResource> */
         $importers = collect($this->importers())
-            ->sortBy(fn (ReflectionClass $importer) => Order::get($importer))
-            ->map(fn (ReflectionClass $importer): ImportVCardResource => $importer->newInstance()->setContext($this)
-            );
+            ->sortBy(fn (ReflectionClass $importer): int => Order::get($importer))
+            ->map(fn (ReflectionClass $importer): ImportVCardResource => $importer->newInstance()->setContext($this));
 
         foreach ($importers as $importer) {
             $contact = $importer->import($contact, $entry);
@@ -371,6 +362,9 @@ class ImportVCard extends BaseService implements ServiceInterface
         return $contact;
     }
 
+    /**
+     * @return Generator<ReflectionClass>
+     */
     private function importers()
     {
         $namespace = $this->app->getNamespace();

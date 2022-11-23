@@ -141,7 +141,7 @@ END:VCARD', Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
         ]);
 
         $this->assertEquals(
-            trans('settings.import_vcard_unknown_entry'),
+            'john@',
             $this->invokePrivateMethod($importVCard, 'name', [$vcard])
         );
     }
@@ -156,7 +156,7 @@ END:VCARD', Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
             'EMAIL' => 'john@doe.com',
         ]);
 
-        $this->assertEquals('Doe John john@doe.com', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
+        $this->assertEquals('John Doe', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
     }
 
     /** @test */
@@ -169,7 +169,7 @@ END:VCARD', Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
             'EMAIL' => 'john@doe.com',
         ]);
 
-        $this->assertEquals('Doe John john@doe.com', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
+        $this->assertEquals('John Doe', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
     }
 
     /** @test */
@@ -182,7 +182,7 @@ END:VCARD', Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
             'EMAIL' => 'john@doe.com',
         ]);
 
-        $this->assertEquals('John john@doe.com', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
+        $this->assertEquals('john@doe.com', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
     }
 
     /** @test */
@@ -195,7 +195,7 @@ END:VCARD', Reader::OPTION_FORGIVING + Reader::OPTION_IGNORE_INVALID_LINES);
             'EMAIL' => 'john@doe.com',
         ]);
 
-        $this->assertEquals('John Doe john@doe.com', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
+        $this->assertEquals('John Doe', $this->invokePrivateMethod($importVCard, 'name', [$vcard]));
     }
 
     /** @test */

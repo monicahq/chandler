@@ -4,8 +4,14 @@ namespace App\Domains\Contact\Dav;
 
 abstract class Exporter
 {
-    protected function escape($value): string
+    /**
+     * @param  mixed  $value
+     * @return string|null
+     */
+    protected function escape(mixed $value): ?string
     {
-        return ! empty((string) $value) ? trim((string) $value) : (string) null;
+        $value = (string) $value;
+
+        return ! empty($value) ? trim($value) : null;
     }
 }

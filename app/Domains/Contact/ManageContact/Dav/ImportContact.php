@@ -86,11 +86,11 @@ class ImportContact extends Importer implements ImportVCardResource
     public function importNames(array $contactData, VCard $entry): array
     {
         if ($this->hasFirstnameInN($entry)) {
-            $contactData = $this->importFromN($contactData, $entry);
+            $contactData = $this->importNameFromN($contactData, $entry);
         } elseif ($this->hasFN($entry)) {
-            $contactData = $this->importFromFN($contactData, $entry);
+            $contactData = $this->importNameFromFN($contactData, $entry);
         } elseif ($this->hasNICKNAME($entry)) {
-            $contactData = $this->importFromNICKNAME($contactData, $entry);
+            $contactData = $this->importNameFromNICKNAME($contactData, $entry);
         } else {
             throw new \LogicException('Check if you can import entry!');
         }
@@ -130,7 +130,7 @@ class ImportContact extends Importer implements ImportVCardResource
      * @param  VCard  $entry
      * @return array
      */
-    private function importFromN(array $contactData, VCard $entry): array
+    private function importNameFromN(array $contactData, VCard $entry): array
     {
         $parts = $entry->N->getParts();
 
@@ -152,7 +152,7 @@ class ImportContact extends Importer implements ImportVCardResource
      * @param  VCard  $entry
      * @return array
      */
-    private function importFromNICKNAME(array $contactData, VCard $entry): array
+    private function importNameFromNICKNAME(array $contactData, VCard $entry): array
     {
         $contactData['first_name'] = $this->formatValue($entry->NICKNAME);
 
@@ -164,7 +164,7 @@ class ImportContact extends Importer implements ImportVCardResource
      * @param  VCard  $entry
      * @return array
      */
-    private function importFromFN(array $contactData, VCard $entry): array
+    private function importNameFromFN(array $contactData, VCard $entry): array
     {
         $fullnameParts = preg_split('/\s+/', $entry->FN, 2);
 

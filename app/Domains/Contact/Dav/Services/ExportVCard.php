@@ -101,9 +101,7 @@ class ExportVCard extends BaseService implements ServiceInterface
             ]);
         }
 
-        /**
-         * @var Collection<int, ExportVCardResource>
-         */
+        /** @var Collection<int, ExportVCardResource> */
         $exporters = collect($this->exporters())
             ->sortBy(fn (ReflectionClass $exporter) => Order::get($exporter))
             ->map(fn (ReflectionClass $exporter): ExportVCardResource => $exporter->newInstance());
@@ -115,6 +113,9 @@ class ExportVCard extends BaseService implements ServiceInterface
         return $vcard;
     }
 
+    /**
+     * @return Generator<ReflectionClass>
+     */
     private function exporters()
     {
         $namespace = $this->app->getNamespace();
