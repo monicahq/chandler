@@ -22,7 +22,7 @@ class UserController extends ApiController
      * @apiResourceModel \App\Models\User
      * @response status=404 scenario="user not found" {"message": "User not found"}
      */
-    public function __invoke(Request $request)
+    public function user(Request $request)
     {
         return new UserResource($request->user());
     }
@@ -62,7 +62,6 @@ class UserController extends ApiController
     {
         try {
             $users = Auth::user()->account->users()
-                ->orderBy($this->sort, $this->sortDirection)
                 ->paginate($this->getLimitPerPage());
         } catch (QueryException $e) {
             return $this->respondInvalidQuery();
