@@ -62,44 +62,6 @@ class ApiControllerTest extends ApiTestCase
     }
 
     /** @test */
-    public function it_gets_the_sort_criteria()
-    {
-        $apiController = new ApiController;
-
-        $this->assertEquals(
-            'created_at',
-            $apiController->getSortCriteria()
-        );
-
-        $apiController->setSortCriteria('created_at');
-
-        $this->assertEquals(
-            'created_at',
-            $apiController->getSortCriteria()
-        );
-    }
-
-    /** @test */
-    public function it_only_accepts_some_sorting_parameters()
-    {
-        $apiController = new ApiController;
-
-        $apiController->setSortCriteria('created_at');
-
-        $this->assertEquals(
-            'created_at',
-            $apiController->getSortCriteria()
-        );
-
-        $apiController->setSortCriteria('anything');
-
-        $this->assertEquals(
-            '',
-            $apiController->getSortCriteria()
-        );
-    }
-
-    /** @test */
     public function calling_api_with_insane_limit_number_raises_an_error()
     {
         $user = $this->createUser();
@@ -114,24 +76,6 @@ class ApiControllerTest extends ApiTestCase
         $response->assertJsonFragment([
             'message' => 'The limit parameter is too big',
             'error_code' => 30,
-        ]);
-    }
-
-    /** @test */
-    public function calling_api_with_a_wrong_sort_parameter_raises_an_error()
-    {
-        $user = $this->createUser();
-        Sanctum::actingAs($user, ['read']);
-
-        $criteria = 'anything';
-
-        $response = $this->json('GET', "/api/users?sort={$criteria}");
-
-        $response->assertStatus(400);
-
-        $response->assertJsonFragment([
-            'message' => 'The sorting criteria is invalid',
-            'error_code' => 39,
         ]);
     }
 }
