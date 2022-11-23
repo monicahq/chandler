@@ -30,30 +30,6 @@ class UserControllerTest extends ApiTestCase
     }
 
     /** @test */
-    public function it_gets_a_specific_user(): void
-    {
-        Carbon::setTestNow(Carbon::create(2018, 1, 1));
-        $user = $this->createUser();
-        Sanctum::actingAs($user, ['read']);
-
-        $response = $this->get('/api/users/'.$user->id);
-
-        $response->assertStatus(200);
-        $response->assertExactJson([
-            'data' => [
-                'id' => $user->id,
-                'name' => $user->first_name.' '.$user->last_name,
-                'email' => $user->email,
-                'created_at' => '2018-01-01T00:00:00Z',
-                'updated_at' => '2018-01-01T00:00:00Z',
-            ],
-        ]);
-
-        $response = $this->get('/api/users/12345678');
-        $this->expectNotFound($response);
-    }
-
-    /** @test */
     public function it_gets_a_list_of_users(): void
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
