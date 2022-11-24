@@ -344,7 +344,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function importEntry(?Contact $contact, VCard $entry, string $vcard, ?string $etag): Contact
     {
-        /** @var Collection<int, ImportVCardResource> */
+        /** @var \Illuminate\Support\Collection<int, ImportVCardResource> */
         $importers = collect($this->importers())
             ->sortBy(fn (ReflectionClass $importer): int => Order::get($importer))
             ->map(fn (ReflectionClass $importer): ImportVCardResource => $importer->newInstance()->setContext($this));
