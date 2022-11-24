@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Settings\ManageUsers\Api\Controllers\UserController;
+use App\Domains\Vault\ManageVault\Api\Controllers\VaultController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {

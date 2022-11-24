@@ -3,6 +3,8 @@
 namespace App\Domains\Vault\ManageVault\Api\Controllers;
 
 use App\Domains\Vault\ManageVault\Services\CreateVault;
+use App\Domains\Vault\ManageVault\Services\DestroyVault;
+use App\Domains\Vault\ManageVault\Services\UpdateVault;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\VaultResource;
 use App\Models\Vault;
@@ -27,7 +29,6 @@ class VaultController extends ApiController
     {
         try {
             $vaults = Auth::user()->account->vaults()
-                ->orderBy($this->sort, $this->sortDirection)
                 ->paginate($this->getLimitPerPage());
         } catch (QueryException) {
             return $this->respondInvalidQuery();
@@ -51,7 +52,7 @@ class VaultController extends ApiController
     {
         $data = [
             'account_id' => Auth::user()->account_id,
-            'author_id' => Auth::id(),
+            'author_id' => Auth::user()->id,
             'type' => Vault::TYPE_PERSONAL,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -81,5 +82,56 @@ class VaultController extends ApiController
         }
 
         return new VaultResource($vault);
+    }
+
+    /**
+     * Update a vault
+     *
+     * Updates a vault object.
+     *
+     * @group Vault management
+     * @subgroup Vaults
+     * @apiResourceModel \App\Models\Vault
+     * @urlParam id int required The vault's ID.
+     * @bodyParam name string required The name of the vault. Max 255 characters.
+     * @bodyParam description string The description of the vault. Max 65535 characters.
+     */
+    public function update(Request $request, int $vaultId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+
+        $vault = (new UpdateVault())->execute($data);
+
+        return new VaultResource($vault);
+    }
+
+    /**
+     * Delete a vault
+     *
+     * Destroys a vault object.
+     * Warning: everything in the vault will be immediately deleted.
+     *
+     * @group Vault management
+     * @subgroup Vaults
+     * @apiResourceModel \App\Models\Vault
+     * @urlParam id int required The vault's ID.
+     */
+    public function destroy(Request $request, int $vaultId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::user()->id,
+            'vault_id' => $vaultId,
+        ];
+
+        (new DestroyVault())->execute($data);
+
+        return $this->respondObjectDeleted($vaultId);
     }
 }
