@@ -250,12 +250,20 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function name($entry): string
     {
-        return $entry->N !== null ? trim(implode(' ', $entry->N->getParts())) : (
-            $entry->FN !== null ? (string) $entry->FN : (
-                $entry->EMAIL !== null ? (string) $entry->EMAIL : (
-                    $entry->NICKNAME !== null ? (string) $entry->NICKNAME :
-                        (string) __('Unknown contact name')
-                )));
+        if ($entry->N !== null) {
+            return trim(implode(' ', $entry->N->getParts()));
+        }
+        if ($entry->FN !== null) {
+            return (string) $entry->FN;
+        }
+        if ($entry->EMAIL !== null) {
+            return (string) $entry->EMAIL;
+        }
+        if ($entry->NICKNAME !== null) {
+            return (string) $entry->NICKNAME;
+        }
+
+        return (string) __('Unknown contact name');
     }
 
     /**
