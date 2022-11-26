@@ -5,6 +5,7 @@ namespace Tests\Unit\Domains\Contact\DAV\Services;
 use App\Models\Contact;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Sabre\VObject\PHPUnitAssertions;
 use Tests\TestCase;
 use Tests\Unit\Domains\Contact\DAV\CardEtag;
@@ -43,19 +44,19 @@ class VCardContactTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
         $vaultname = rawurlencode($vault->name);
+        $uuid = (string) Str::orderedUuid();
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/single_vcard_stub.vcf", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$uuid.vcf", [], [], [],
             ['content-type' => 'application/xml; charset=utf-8'],
-            "BEGIN:VCARD\nVERSION:4.0\nFN:John Doe\nN:Doe;John;;;\nEND:VCARD"
+            "BEGIN:VCARD\nVERSION:4.0\nUID:$uuid\nFN:John Doe\nN:Doe;John;;;\nEND:VCARD"
         );
-
-        $response->dump();
 
         $response->assertStatus(201);
         $response->assertHeader('X-Sabre-Version');
         $response->assertHeaderMissing('ETag');
 
         $this->assertDatabaseHas('contacts', [
+            'uuid' => $uuid,
             'vault_id' => $vault->id,
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -66,7 +67,7 @@ class VCardContactTest extends TestCase
      * @test
      * @group dav
      */
-    public function test_carddav_update_existing_contact()
+    public function test_carddav_update_existing_contact_base()
     {
         $user = $this->createUser();
         $vault = $this->createVaultUser($user, Vault::PERMISSION_EDIT);
@@ -101,7 +102,7 @@ class VCardContactTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $filename = urlencode($contact->uuid.'.vcf');
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/{$filename}", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$filename", [], [], [],
             [
                 'HTTP_If-Modified-Since' => $contact->updated_at->addDays(-1)->toRfc7231String(),
                 'content-type' => 'application/xml; charset=utf-8',
@@ -132,7 +133,7 @@ class VCardContactTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $filename = urlencode($contact->uuid.'.vcf');
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/{$filename}", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$filename", [], [], [],
             [
                 'HTTP_If-Modified-Since' => $contact->updated_at->addDays(1)->toRfc7231String(),
                 'content-type' => 'application/xml; charset=utf-8',
@@ -163,7 +164,7 @@ class VCardContactTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $filename = urlencode($contact->uuid.'.vcf');
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/{$filename}", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$filename", [], [], [],
             [
                 'HTTP_If-Unmodified-Since' => $contact->updated_at->addDays(1)->toRfc7231String(),
                 'content-type' => 'application/xml; charset=utf-8',
@@ -194,7 +195,7 @@ class VCardContactTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $filename = urlencode($contact->uuid.'.vcf');
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/{$filename}", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$filename", [], [], [],
             [
                 'HTTP_If-Unmodified-Since' => $contact->updated_at->addDays(-1)->toRfc7231String(),
                 'content-type' => 'application/xml; charset=utf-8',
@@ -226,10 +227,10 @@ class VCardContactTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $filename = urlencode($contact->uuid.'.vcf');
 
-        $response = $this->get("/dav/addressbooks/{$user->email}/$vaultname/{$filename}");
+        $response = $this->get("/dav/addressbooks/{$user->email}/$vaultname/$filename");
         $data = $response->getContent();
 
-        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/{$filename}", [], [], [],
+        $response = $this->call('PUT', "/dav/addressbooks/{$user->email}/$vaultname/$filename", [], [], [],
             ['content-type' => 'application/xml; charset=utf-8'],
             $data
         );

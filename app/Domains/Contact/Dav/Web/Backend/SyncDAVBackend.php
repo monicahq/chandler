@@ -19,15 +19,13 @@ trait SyncDAVBackend
      */
     public function getCurrentSyncToken(?string $collectionId): ?SyncToken
     {
-        $tokens = SyncToken::where([
+        return SyncToken::where([
             'account_id' => $this->user->account_id,
             'user_id' => $this->user->id,
             'name' => "{$this->backendUri()}-$collectionId",
         ])
-            ->orderBy('created_at')
-            ->get();
-
-        return $tokens->count() > 0 ? $tokens->last() : null;
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 
     /**
