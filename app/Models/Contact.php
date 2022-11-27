@@ -353,13 +353,7 @@ class Contact extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            get: function ($value, $attributes) {
-                if (Auth::check()) {
-                    return NameHelper::formatContactName(Auth::user(), $this);
-                }
-
-                return $attributes['first_name'].' '.$attributes['last_name'];
-            }
+            get: fn () => NameHelper::formatContactName(Auth::user(), $this)
         );
     }
 
