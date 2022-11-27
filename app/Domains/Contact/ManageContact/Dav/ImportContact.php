@@ -59,7 +59,7 @@ class ImportContact extends Importer implements ImportVCardResource
     private function getContactData(?Contact $contact): array
     {
         $result = [
-            'account_id' => $this->context->vault->account_id,
+            'account_id' => $this->account()->id,
             'vault_id' => $this->context->vault->id,
             'author_id' => $this->context->author->id,
             'first_name' => $contact ? $contact->first_name : null,
@@ -247,11 +247,11 @@ class ImportContact extends Importer implements ImportVCardResource
             }
 
             if (! $gender) {
-                $gender = new Gender;
-                $gender->account_id = $this->context->vault->account_id;
-                $gender->name = config('dav.default_gender');
-                // $gender->type = Gender::UNKNOWN;
-                $gender->save();
+                $gender = Gender::create([
+                    'account_id' => $this->account()->id,
+                    'name' => config('dav.default_gender'),
+                    'type' => Gender::UNKNOWN,
+                ]);
             }
 
             Arr::set($this->genders, $genderCode, $gender);
@@ -268,10 +268,9 @@ class ImportContact extends Importer implements ImportVCardResource
      */
     private function getGenderByName(string $name): ?Gender
     {
-        return Gender::where([
-            'account_id' => $this->context->vault->account_id,
-            'name' => $name,
-        ])->first();
+        return $this->account()->genders
+            ->where('name', $name)
+            ->first();
     }
 
     /**
@@ -282,9 +281,8 @@ class ImportContact extends Importer implements ImportVCardResource
      */
     private function getGenderByType(string $type): ?Gender
     {
-        return Gender::where([
-            'account_id' => $this->context->vault->account_id,
-            'type' => $type,
-        ])->first();
+        return $this->account()->genders
+            ->where('type', $type)
+            ->first();
     }
 }

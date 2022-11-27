@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\Dav;
 
 use App\Domains\Contact\Dav\Services\ImportVCard;
+use App\Models\Account;
 
 abstract class Importer implements ImportVCardResource
 {
@@ -19,6 +20,16 @@ abstract class Importer implements ImportVCardResource
         $this->context = $context;
 
         return $this;
+    }
+
+    /**
+     * Get the account.
+     *
+     * @return Account
+     */
+    protected function account(): Account
+    {
+        return $this->context->vault->account;
     }
 
     /**
