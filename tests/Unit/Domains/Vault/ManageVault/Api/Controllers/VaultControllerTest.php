@@ -33,6 +33,9 @@ class VaultControllerTest extends ApiTestCase
                     'description' => 'this is a description',
                     'created_at' => '2018-01-01T00:00:00Z',
                     'updated_at' => '2018-01-01T00:00:00Z',
+                    'links' => [
+                        'self' => env('APP_URL').'/api/vaults/'.$vault->id,
+                    ],
                 ],
             ],
             'links' => $this->links('/api/vaults'),
@@ -45,7 +48,7 @@ class VaultControllerTest extends ApiTestCase
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $user = $this->createUser();
-        Sanctum::actingAs($user, ['read']);
+        Sanctum::actingAs($user, ['create']);
 
         $form = [
             'name' => 'this is a name',
@@ -62,6 +65,9 @@ class VaultControllerTest extends ApiTestCase
                 'description' => 'this is a description',
                 'created_at' => '2018-01-01T00:00:00Z',
                 'updated_at' => '2018-01-01T00:00:00Z',
+                'links' => [
+                    'self' => env('APP_URL').'/api/vaults/'.$vault->id,
+                ],
             ],
         ]);
     }
@@ -89,6 +95,9 @@ class VaultControllerTest extends ApiTestCase
                 'description' => 'this is a description',
                 'created_at' => '2018-01-01T00:00:00Z',
                 'updated_at' => '2018-01-01T00:00:00Z',
+                'links' => [
+                    'self' => env('APP_URL').'/api/vaults/'.$vault->id,
+                ],
             ],
         ]);
     }
@@ -98,7 +107,7 @@ class VaultControllerTest extends ApiTestCase
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $user = $this->createUser();
-        Sanctum::actingAs($user, ['read']);
+        Sanctum::actingAs($user, ['update']);
         $vault = Vault::factory()->create([
             'account_id' => $user->account_id,
             'name' => 'This is a vault',
@@ -114,6 +123,8 @@ class VaultControllerTest extends ApiTestCase
             'description' => 'this is a cool description',
         ];
 
+        Carbon::setTestNow(Carbon::create(2020, 1, 1));
+
         $response = $this->put('/api/vaults/'.$vault->id, $form);
         $response->assertStatus(200);
 
@@ -123,7 +134,10 @@ class VaultControllerTest extends ApiTestCase
                 'name' => 'this is a name',
                 'description' => 'this is a cool description',
                 'created_at' => '2018-01-01T00:00:00Z',
-                'updated_at' => '2018-01-01T00:00:00Z',
+                'updated_at' => '2020-01-01T00:00:00Z',
+                'links' => [
+                    'self' => env('APP_URL').'/api/vaults/'.$vault->id,
+                ],
             ],
         ]);
     }
@@ -133,7 +147,7 @@ class VaultControllerTest extends ApiTestCase
     {
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $user = $this->createUser();
-        Sanctum::actingAs($user, ['read']);
+        Sanctum::actingAs($user, ['delete']);
         $vault = Vault::factory()->create([
             'account_id' => $user->account_id,
         ]);
