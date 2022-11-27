@@ -19,7 +19,7 @@ class UserController extends ApiController
      *
      * @group Account management
      * @subgroup Users
-     * @apiResourceModel \App\Models\User
+     * @apiResourceModel App\Models\User
      * @response status=404 scenario="user not found" {"message": "User not found"}
      */
     public function user(Request $request)
@@ -34,7 +34,7 @@ class UserController extends ApiController
      *
      * @group Account management
      * @subgroup Users
-     * @apiResourceModel \App\Models\User
+     * @apiResourceModel App\Models\User
      */
     public function show(Request $request, int $userId)
     {
@@ -56,7 +56,7 @@ class UserController extends ApiController
      * @group Account management
      * @subgroup Users
      * @queryParam limit int A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10. Example: 10
-     * @apiResourceModel \App\Models\User
+     * @apiResourceModel App\Models\User
      */
     public function index(Request $request)
     {

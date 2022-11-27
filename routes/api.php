@@ -15,7 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // vaults
     Route::prefix('vaults')->group(function () {
         Route::get('', [VaultController::class, 'index'])->name('vaults.index')->middleware('abilities:read');
-        Route::post('', [VaultController::class, 'store'])->name('vaults.store')->middleware('abilities:read');
+        Route::post('', [VaultController::class, 'store'])->name('vaults.store')->middleware('abilities:update');
 
         Route::prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vaults.show');

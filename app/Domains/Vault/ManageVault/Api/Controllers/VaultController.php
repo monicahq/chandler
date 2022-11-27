@@ -23,7 +23,7 @@ class VaultController extends ApiController
      * @group Vault management
      * @subgroup Vaults
      * @queryParam limit int A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10. Example: 10
-     * @apiResourceModel \App\Models\Vault
+     * @apiResourceModel App\Models\Vault
      */
     public function index(Request $request)
     {
@@ -44,9 +44,9 @@ class VaultController extends ApiController
      *
      * @group Vault management
      * @subgroup Vaults
-     * @apiResourceModel \App\Models\Vault
      * @bodyParam name string required The name of the vault. Max 255 characters.
      * @bodyParam description string The description of the vault. Max 65535 characters.
+     * @apiResourceModel App\Models\Vault
      */
     public function store(Request $request)
     {
@@ -70,7 +70,7 @@ class VaultController extends ApiController
      *
      * @group Vault management
      * @subgroup Vaults
-     * @apiResourceModel \App\Models\Vault
+     * @apiResourceModel App\Models\Vault
      */
     public function show(Request $request, int $vaultId)
     {
@@ -89,12 +89,15 @@ class VaultController extends ApiController
      *
      * Updates a vault object.
      *
+     * If the call succeeds, the response is the same as the one for the
+     * Retrieve a vault endpoint.
+     *
      * @group Vault management
      * @subgroup Vaults
-     * @apiResourceModel \App\Models\Vault
      * @urlParam id int required The vault's ID.
      * @bodyParam name string required The name of the vault. Max 255 characters.
      * @bodyParam description string The description of the vault. Max 65535 characters.
+     * @apiResourceModel App\Models\Vault
      */
     public function update(Request $request, int $vaultId)
     {
@@ -119,7 +122,7 @@ class VaultController extends ApiController
      *
      * @group Vault management
      * @subgroup Vaults
-     * @apiResourceModel \App\Models\Vault
+     * @response status=200 {"deleted": "true", "id": 1}
      * @urlParam id int required The vault's ID.
      */
     public function destroy(Request $request, int $vaultId)
