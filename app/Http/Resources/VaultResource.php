@@ -21,6 +21,9 @@ class VaultResource extends JsonResource
             'description' => $this->description,
             'created_at' => DateHelper::getTimestamp($this->created_at),
             'updated_at' => DateHelper::getTimestamp($this->updated_at),
+            'links' => [
+                'self' => route('api.vaults.show', $this),
+            ],
         ];
     }
 }

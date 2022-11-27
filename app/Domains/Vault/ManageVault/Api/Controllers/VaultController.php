@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 
 class VaultController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('abilities:read')->only(['index', 'show']);
+        $this->middleware('abilities:create')->only(['store']);
+        $this->middleware('abilities:update')->only(['update']);
+        $this->middleware('abilities:destroy')->only(['destroy']);
+
+        parent::__construct();
+    }
+
     /**
      * List all vaults
      *
