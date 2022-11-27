@@ -142,16 +142,16 @@ trait SyncDAVBackend
      *
      * The limit is 'suggestive'. You are free to ignore it.
      *
-     * @param  string  $calendarId
+     * @param  string  $collectionId
      * @param  string|null  $syncToken
      * @return array|null
      */
-    public function getChanges(string $calendarId, ?string $syncToken): ?array
+    public function getChanges(string $collectionId, ?string $syncToken): ?array
     {
         $token = null;
         $timestamp = null;
         if ($syncToken !== null && $syncToken !== '') {
-            $token = $this->getSyncToken($calendarId, $syncToken);
+            $token = $this->getSyncToken($collectionId, $syncToken);
 
             if ($token === null) {
                 // syncToken is not recognized
@@ -161,36 +161,71 @@ trait SyncDAVBackend
             $timestamp = $token->timestamp;
         }
 
-        $objs = $this->getObjects($calendarId);
-
-        $modified = $objs->filter(fn ($obj): bool => $timestamp !== null &&
-                $obj->updated_at > $timestamp &&
-                $obj->created_at < $timestamp
-        );
-        $added = $objs->filter(fn ($obj): bool => $timestamp === null ||
-                $obj->created_at >= $timestamp
-        );
-        $deleted = $this->getDeletedObjects($calendarId)
-            ->filter(fn ($obj): bool => $timestamp === null ||
-                $obj->deleted_at >= $timestamp
-            );
+        $objs = $this->getObjects($collectionId);
 
         return [
-            'syncToken' => $this->refreshSyncToken($calendarId)->id,
-            'added' => $added->map(fn ($obj): string => $this->encodeUri($obj))
-                ->values()
-                ->toArray(),
-            'modified' => $modified->map(function ($obj): string {
+            'syncToken' => $this->refreshSyncToken($collectionId)->id,
+            'added' => $this->getAdded($objs, $timestamp),
+            'modified' => $this->getModified($objs, $timestamp),
+            'deleted' => $this->getDeleted($collectionId, $timestamp),
+        ];
+    }
+
+    /**
+     * Get the added objects.
+     *
+     * @param  \Illuminate\Support\Collection  $objs
+     * @param  \Carbon\Carbon|null  $timestamp
+     * @return array
+     */
+    private function getAdded(Collection $objs, ?Carbon $timestamp): array
+    {
+        return $objs->filter(fn ($obj): bool => $timestamp === null ||
+            $obj->created_at >= $timestamp
+        )
+            ->map(fn ($obj): string => $this->encodeUri($obj))
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Get the modified objects.
+     *
+     * @param  \Illuminate\Support\Collection  $objs
+     * @param  \Carbon\Carbon|null  $timestamp
+     * @return array
+     */
+    private function getModified(Collection $objs, ?Carbon $timestamp): array
+    {
+        return $objs->filter(fn ($obj): bool => $timestamp !== null &&
+            $obj->updated_at > $timestamp &&
+            $obj->created_at < $timestamp
+        )
+            ->map(function ($obj): string {
                 $this->refreshObject($obj);
 
                 return $this->encodeUri($obj);
             })
-                ->values()
-                ->toArray(),
-            'deleted' => $deleted->map(fn ($obj): string => $this->encodeUri($obj))
-                ->values()
-                ->toArray(),
-        ];
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Get the deleted objects.
+     *
+     * @param  string  $collectionId
+     * @param  \Carbon\Carbon|null  $timestamp
+     * @return array
+     */
+    private function getDeleted(string $collectionId, ?Carbon $timestamp): array
+    {
+        return $this->getDeletedObjects($collectionId)
+            ->filter(fn ($obj): bool => $timestamp === null ||
+                $obj->deleted_at >= $timestamp
+            )
+            ->map(fn ($obj): string => $this->encodeUri($obj))
+            ->values()
+            ->toArray();
     }
 
     protected function encodeUri($obj): string
@@ -209,7 +244,7 @@ trait SyncDAVBackend
      * @param  string  $uri
      * @return string
      */
-    public function getUuid($uri): string
+    public function getUuid(string $uri): string
     {
         return $this->decodeUri($uri);
     }

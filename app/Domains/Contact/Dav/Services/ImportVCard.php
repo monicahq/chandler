@@ -24,11 +24,13 @@ class ImportVCard extends BaseService implements ServiceInterface
 {
     use DAVFormat;
 
+    /** @var string */
     public const BEHAVIOUR_ADD = 'behaviour_add';
 
+    /** @var string */
     public const BEHAVIOUR_REPLACE = 'behaviour_replace';
 
-    /** @var array<string,string> */
+    /** @var array */
     protected array $errorResults = [
         'ERROR_PARSER' => 'import_vcard_parse_error',
         'ERROR_CONTACT_EXIST' => 'import_vcard_contact_exist',
@@ -38,7 +40,7 @@ class ImportVCard extends BaseService implements ServiceInterface
     /**
      * Valids value for frequency type.
      *
-     * @var array
+     * @var array<string>
      */
     public static array $behaviourTypes = [
         self::BEHAVIOUR_ADD,
@@ -95,8 +97,9 @@ class ImportVCard extends BaseService implements ServiceInterface
         ];
     }
 
-    public function __construct(private Application $app)
-    {
+    public function __construct(
+        private Application $app
+    ) {
     }
 
     /**
@@ -118,7 +121,12 @@ class ImportVCard extends BaseService implements ServiceInterface
         }
     }
 
-    private function clear()
+    /**
+     * Clear data.
+     *
+     * @return void
+     */
+    private function clear(): void
     {
         $this->accountId = 0;
     }
@@ -128,7 +136,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      *
      * @param  array  $data
      * @param  Contact|null  $contact
-     * @return array
+     * @return array<string,mixed>
      */
     private function process(array $data, ?Contact $contact): array
     {
@@ -155,6 +163,8 @@ class ImportVCard extends BaseService implements ServiceInterface
     }
 
     /**
+     * Read the entry and return a VCard object.
+     *
      * @param  array  $data
      * @return array
      */
@@ -184,7 +194,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  Contact|null  $contact
      * @param  VCard  $entry
      * @param  string  $vcard
-     * @return array
+     * @return array<string,mixed>
      */
     private function processEntry(array $data, ?Contact $contact, VCard $entry, string $vcard): array
     {
@@ -210,7 +220,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      * @param  Contact|null  $contact
      * @param  VCard  $entry
      * @param  string  $vcard
-     * @return array
+     * @return array<string,mixed>
      */
     private function processEntryContact(array $data, ?Contact $contact, VCard $entry, string $vcard): array
     {
@@ -371,6 +381,8 @@ class ImportVCard extends BaseService implements ServiceInterface
     }
 
     /**
+     * Get importers.
+     *
      * @return \Generator<ReflectionClass>
      */
     private function importers()

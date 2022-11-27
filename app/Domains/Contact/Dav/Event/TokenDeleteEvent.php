@@ -18,7 +18,8 @@ class TokenDeleteEvent
      *
      * @codeCoverageIgnore
      */
-    public function __construct(public SyncToken $token)
-    {
+    public function __construct(
+        public SyncToken $token
+    ) {
     }
 }

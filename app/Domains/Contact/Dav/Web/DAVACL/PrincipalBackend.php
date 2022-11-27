@@ -10,8 +10,9 @@ use Sabre\DAVACL\PrincipalBackend\AbstractBackend;
 
 class PrincipalBackend extends AbstractBackend
 {
-    public function __construct(private User $user)
-    {
+    public function __construct(
+        private User $user
+    ) {
     }
 
     /**

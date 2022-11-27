@@ -20,6 +20,7 @@ class CleanSyncToken extends QueuableService implements ServiceInterface
      * Clean token list.
      *
      * @param  array  $data
+     * @return void
      */
     public function execute(array $data): void
     {
@@ -42,6 +43,7 @@ class CleanSyncToken extends QueuableService implements ServiceInterface
      * @param  int  $userId
      * @param  string  $tokenName
      * @param  string  $timestamp
+     * @return void
      */
     private function handleUserToken(int $userId, string $tokenName, string $timestamp): void
     {
@@ -56,6 +58,7 @@ class CleanSyncToken extends QueuableService implements ServiceInterface
 
         foreach ($tokens as $token) {
             TokenDeleteEvent::dispatch($token);
+
             $token->delete();
         }
     }

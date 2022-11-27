@@ -48,8 +48,9 @@ class ExportVCard extends BaseService implements ServiceInterface
         ];
     }
 
-    public function __construct(private Application $app)
-    {
+    public function __construct(
+        private Application $app
+    ) {
     }
 
     /**
@@ -72,6 +73,8 @@ class ExportVCard extends BaseService implements ServiceInterface
     }
 
     /**
+     * Export the contact.
+     *
      * @param  Contact  $contact
      * @return VCard
      */
@@ -114,6 +117,8 @@ class ExportVCard extends BaseService implements ServiceInterface
     }
 
     /**
+     * Get exporters.
+     *
      * @return \Generator<ReflectionClass>
      */
     private function exporters()

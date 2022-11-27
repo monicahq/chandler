@@ -26,8 +26,9 @@ class AuthenticateWithTokenOnBasicAuth
      * @param  AuthManager  $auth
      * @return void
      */
-    public function __construct(private AuthManager $auth)
-    {
+    public function __construct(
+        private AuthManager $auth
+    ) {
     }
 
     /**

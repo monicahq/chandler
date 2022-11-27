@@ -26,7 +26,7 @@ class AuthBackend implements BackendInterface
      * @param  string  $realm
      * @return void
      */
-    public function setRealm($realm): void
+    public function setRealm(string $realm): void
     {
         $this->realm = $realm;
     }

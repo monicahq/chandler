@@ -58,6 +58,7 @@ class UpdateVCard extends QueuableService implements ServiceInterface
     /**
      * Update or create a contact using the VCard data.
      *
+     * @param  array  $data
      * @return void
      */
     public function execute(array $data): void
