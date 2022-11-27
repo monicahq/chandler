@@ -51,8 +51,8 @@ return [
 
     'middleware' => [
         'api',
-        'auth.tokenonbasic',
-        'abilities:read,delete,update,create',
+        \App\Http\Middleware\EnsureDavRequestsAreStateful::class,
+        'abilities:create,read,update,delete',
     ],
 
 ];
