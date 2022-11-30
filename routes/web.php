@@ -111,12 +111,18 @@ use App\Http\Controllers\Auth\SocialiteCallbackController;
 use App\Http\Controllers\Profile\UserTokenController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return Auth::check()
-        ? redirect()->intended(RouteServiceProvider::HOME)
-        : redirect()->route('login');
+    if (! Auth::check()) {
+        return Redirect::route('login');
+    }
+    if (($vaults = Auth::user()->vaults)->count() === 1) {
+        return Redirect::route('vault.show', $vaults->first());
+    }
+
+    return Redirect::intended(RouteServiceProvider::HOME);
 })->name('home');
 
 // Redirect .well-known urls (https://en.wikipedia.org/wiki/List_of_/.well-known/_services_offered_by_webservers)

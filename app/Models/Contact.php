@@ -23,7 +23,7 @@ use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, SoftDeletes, HasUuids;
     use Searchable;
     use SoftDeletes;
 
