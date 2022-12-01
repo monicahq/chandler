@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use App\Helpers\DateHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Vault
+ */
 class VaultResource extends JsonResource
 {
     /**
