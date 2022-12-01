@@ -11,7 +11,6 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     level: 5
     ignoreErrors:
-        # psalm/plugin-laravel doesn't support \Illuminate\Database\Eloquent\Casts\Attribute yet
         - '#Access to an undefined property App\\Models\\Post::\$excerpt\.#'
         - '#Access to an undefined property App\\Models\\Post::\$year\.#'
         - '#Access to an undefined property App\\Models\\Label::\$contacts_count\.#'
