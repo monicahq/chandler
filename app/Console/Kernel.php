@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Scheduling\CronEvent;
+use App\Domains\Contact\Dav\Jobs\CleanSyncToken;
 use App\Domains\Contact\ManageReminders\Jobs\ProcessScheduledContactReminders;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,11 +27,16 @@ class Kernel extends ConsoleKernel
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
+     *
+     * @codeCoverageIgnore
      */
     protected function schedule(Schedule $schedule)
     {
+        $this->scheduleCommand($schedule, 'model:prune', 'daily');
+        $this->scheduleCommand($schedule, 'queue:prune-batches', 'daily');
         $this->scheduleCommand($schedule, 'telescope:prune', 'daily');
         $this->scheduleJob($schedule, ProcessScheduledContactReminders::class, 'minutes', 1);
+        $this->scheduleJob($schedule, CleanSyncToken::class, 'daily');
     }
 
     /**

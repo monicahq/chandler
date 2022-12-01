@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,7 +16,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use LaravelWebauthn\WebauthnAuthenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
     use Notifiable;
     use HasFactory;
@@ -86,6 +87,22 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_account_administrator' => 'boolean',
         'help_shown' => 'boolean',
     ];
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        if (config('mail.default') !== 'smtp' || (
+            config('mail.mailers.smtp.username') !== null && config('mail.mailers.smtp.password') !== null
+        )) {
+            parent::sendEmailVerificationNotification();
+        } else {
+            $this->markEmailAsVerified();
+        }
+    }
 
     /**
      * Get the account record associated with the user.
@@ -197,5 +214,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userTokens()
     {
         return $this->hasMany(UserToken::class);
+    }
+
+    /**
+     * Get the preferred locale of the entity.
+     *
+     * @return string|null
+     */
+    public function preferredLocale()
+    {
+        return $this->locale;
     }
 }
