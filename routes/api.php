@@ -2,6 +2,7 @@
 
 use App\Domains\Settings\ManageUsers\Api\Controllers\UserController;
 use App\Domains\Vault\ManageVault\Api\Controllers\VaultController;
+use App\Domains\Vault\ManageVault\Api\Controllers\VaultFeedController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->name('api.')->group(function () {
@@ -11,4 +12,5 @@ Route::middleware('auth:sanctum')->name('api.')->group(function () {
 
     // vaults
     Route::apiResource('vaults', VaultController::class);
+    Route::get('vault/{vault}/feed', [VaultFeedController::class, 'index']);
 });
