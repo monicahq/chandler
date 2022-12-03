@@ -53,8 +53,7 @@ class CreateTemplatePage extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         $this->account()->templates()
-            ->where('id', $data['template_id'])
-            ->firstOrFail();
+            ->findOrFail($data['template_id']);
 
         // determine the new position of the template page
         $newPosition = TemplatePage::where('template_id', $data['template_id'])

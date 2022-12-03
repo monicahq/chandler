@@ -51,8 +51,7 @@ class CreatePostTemplateSection extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         $this->account()->postTemplates()
-            ->where('id', $data['post_template_id'])
-            ->firstOrFail();
+            ->findOrFail($data['post_template_id']);
 
         // determine the new position of the template page
         $newPosition = PostTemplateSection::where('post_template_id', $data['post_template_id'])

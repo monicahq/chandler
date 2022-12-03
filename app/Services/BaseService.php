@@ -105,6 +105,7 @@ abstract class BaseService
     private function validateAuthorBelongsToAccount(array $data): void
     {
         $this->author = User::where('account_id', $data['account_id'])
+            // ->with('account')
             ->findOrFail($data['author_id']);
     }
 
