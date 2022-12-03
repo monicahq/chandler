@@ -59,7 +59,7 @@ class AddContactToPost extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->post->contacts()->syncWithoutDetaching($this->contact->id);
+        $this->post->contacts()->syncWithoutDetaching($this->contact);
 
         $this->createFeedItem();
         $this->updateLastEditedDate();
