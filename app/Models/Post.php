@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -118,21 +119,15 @@ class Post extends Model
         );
     }
 
+    /**
+     * Get the post's body excerpt.
+     *
+     * @return Attribute<string,never>
+     */
     protected function excerpt(): Attribute
     {
         return Attribute::make(
-            get: function ($value) {
-                $section = $this->postSections()
-                    ->orderBy('position')
-                    ->whereNotNull('content')
-                    ->first();
-
-                if (! $section) {
-                    return null;
-                }
-
-                return $section->content;
-            }
+            get: fn () => Str::limit(optional($this->postSections()->first())->content, 200)
         );
     }
 }
