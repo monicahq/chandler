@@ -72,7 +72,7 @@ class UpdateContactImportantDate extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->date = ContactImportantDate::where('contact_id', $this->contact->id)
+        $this->date = $this->contact->importantDates()
             ->findOrFail($this->data['contact_important_date_id']);
 
         // make sure the vault matches

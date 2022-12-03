@@ -54,7 +54,7 @@ class DestroyContactImportantDate extends BaseService implements ServiceInterfac
     {
         $this->validateRules($data);
 
-        $this->date = ContactImportantDate::where('contact_id', $this->contact->id)
+        $this->date = $this->contact->importantDates()
             ->findOrFail($data['contact_important_date_id']);
 
         $this->date->delete();

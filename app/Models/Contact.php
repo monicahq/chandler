@@ -212,7 +212,7 @@ class Contact extends Model
      *
      * @return HasMany
      */
-    public function contactInformation(): HasMany
+    public function contactInformations(): HasMany
     {
         return $this->hasMany(ContactInformation::class);
     }

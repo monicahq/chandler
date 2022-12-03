@@ -82,7 +82,7 @@ class UpdateContactAddress extends BaseService implements ServiceInterface
                 ->findOrFail($this->data['address_type_id']);
         }
 
-        $this->address = Address::where('contact_id', $this->contact->id)
+        $this->address = $this->contact->addresses()
             ->findOrFail($this->data['address_id']);
     }
 

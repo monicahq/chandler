@@ -66,7 +66,7 @@ class DestroyContactInformation extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contactInformation = ContactInformation::where('contact_id', $this->contact->id)
+        $this->contactInformation = $this->contact->contactInformations()
             ->findOrFail($this->data['contact_information_id']);
 
         $this->account()->contactInformationTypes()
