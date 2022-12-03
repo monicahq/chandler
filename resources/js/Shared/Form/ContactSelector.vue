@@ -206,7 +206,6 @@ export default {
       searchResults: [],
       form: {
         searchTerm: '',
-        contactIds: [],
         errors: [],
       },
     };
@@ -272,10 +271,9 @@ export default {
 
       if (id == -1) {
         this.localContacts.push(contact);
-        this.form.contactIds.push(contact);
         this.form.searchTerm = '';
         this.addContactMode = false;
-        this.$emit('update:modelValue', this.form.contactIds);
+        this.$emit('update:modelValue', this.localContacts);
       }
     },
 
@@ -283,10 +281,7 @@ export default {
       const id = this.localContacts.findIndex((existingContact) => existingContact.id === contact.id);
       this.localContacts.splice(id, 1);
 
-      const id2 = this.form.contactIds.findIndex((existingContact) => existingContact === contact.id);
-      this.form.contactIds.splice(id2, 1);
-
-      this.$emit('update:modelValue', this.form.contactIds);
+      this.$emit('update:modelValue', this.localContacts);
     },
 
     search: _.debounce(function () {

@@ -126,6 +126,8 @@ class PostController extends Controller
             'written_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
+        $post->contacts()->detach();
+
         if ($request->input('contacts')) {
             if (count($request->input('contacts')) > 0) {
                 foreach ($request->input('contacts') as $contact) {
