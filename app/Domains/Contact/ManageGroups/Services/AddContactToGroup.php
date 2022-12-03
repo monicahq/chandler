@@ -79,7 +79,7 @@ class AddContactToGroup extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->group = Group::where('vault_id', $this->data['vault_id'])
+        $this->group = $this->vault->groups()
             ->findOrFail($this->data['group_id']);
 
         if ($this->data['group_type_role_id'] != 0) {
