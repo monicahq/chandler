@@ -564,15 +564,15 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
         // Posts
         $module = (new CreateModule())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'name' => trans('app.module_posts'),
             'type' => Module::TYPE_POSTS,
             'can_be_deleted' => false,
         ]);
         (new AssociateModuleToTemplatePage())->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
             'template_id' => $this->template->id,
             'template_page_id' => $templatePageInformation->id,
             'module_id' => $module->id,

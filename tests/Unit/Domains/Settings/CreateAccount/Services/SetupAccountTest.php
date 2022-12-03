@@ -126,7 +126,7 @@ class SetupAccountTest extends TestCase
             'name' => trans('app.module_groups'),
         ]);
         $this->assertDatabaseHas('modules', [
-            'account_id' => $regis->account_id,
+            'account_id' => $user->account_id,
             'name' => trans('app.module_posts'),
         ]);
 
