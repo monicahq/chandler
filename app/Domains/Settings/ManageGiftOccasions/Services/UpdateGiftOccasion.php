@@ -59,7 +59,7 @@ class UpdateGiftOccasion extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
-        $this->giftOccasion = GiftOccasion::where('account_id', $this->data['account_id'])
+        $this->giftOccasion = $this->account()->giftOccasions()
             ->findOrFail($this->data['gift_occasion_id']);
     }
 

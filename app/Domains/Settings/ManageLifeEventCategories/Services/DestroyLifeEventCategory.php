@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageLifeEventCategories\Services;
 
 use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Models\LifeEventCategory;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -46,7 +45,7 @@ class DestroyLifeEventCategory extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $category = LifeEventCategory::where('account_id', $data['account_id'])
+        $category = $this->account()->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
         if (! $category->can_be_deleted) {

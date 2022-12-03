@@ -74,7 +74,7 @@ class CreatePost extends BaseService implements ServiceInterface
         Journal::where('vault_id', $this->data['vault_id'])
             ->findOrfail($this->data['journal_id']);
 
-        $this->postTemplate = PostTemplate::where('account_id', $this->data['account_id'])
+        $this->postTemplate = $this->account()->postTemplates()
             ->findOrFail($this->data['post_template_id']);
     }
 

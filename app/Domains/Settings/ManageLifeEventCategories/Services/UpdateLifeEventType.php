@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageLifeEventCategories\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\User;
 use App\Services\BaseService;
@@ -51,7 +50,7 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        LifeEventCategory::where('account_id', $data['account_id'])
+        $this->account()->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
         $type = LifeEventType::where('life_event_category_id', $data['life_event_category_id'])

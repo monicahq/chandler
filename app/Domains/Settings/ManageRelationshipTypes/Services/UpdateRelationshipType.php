@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageRelationshipTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 use App\Models\User;
 use App\Services\BaseService;
@@ -50,10 +49,10 @@ class UpdateRelationshipType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $group = RelationshipGroupType::where('account_id', $data['account_id'])
+        $group = $this->account()->relationshipGroupTypes()
             ->findOrFail($data['relationship_group_type_id']);
 
-        $type = RelationshipType::where('relationship_group_type_id', $data['relationship_group_type_id'])
+        $type = $group->types()
             ->findOrFail($data['relationship_type_id']);
 
         $type->name = $data['name'];

@@ -62,7 +62,7 @@ class UpdateGiftOccasionPosition extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->giftOccasion = GiftOccasion::where('account_id', $this->data['account_id'])
+        $this->giftOccasion = $this->account()->giftOccasions()
             ->findOrFail($this->data['gift_occasion_id']);
 
         $this->pastPosition = DB::table('gift_occasions')

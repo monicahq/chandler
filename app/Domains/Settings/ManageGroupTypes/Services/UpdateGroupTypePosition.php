@@ -62,7 +62,7 @@ class UpdateGroupTypePosition extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->groupType = GroupType::where('account_id', $this->data['account_id'])
+        $this->groupType = $this->account()->groupTypes()
             ->findOrFail($this->data['group_type_id']);
 
         $this->pastPosition = DB::table('group_types')

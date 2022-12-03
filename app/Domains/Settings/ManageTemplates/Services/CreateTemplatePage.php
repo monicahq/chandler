@@ -52,7 +52,7 @@ class CreateTemplatePage extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        Template::where('account_id', $data['account_id'])
+        $this->account()->templates()
             ->where('id', $data['template_id'])
             ->firstOrFail();
 

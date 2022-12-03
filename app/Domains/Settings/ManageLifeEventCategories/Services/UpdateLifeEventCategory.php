@@ -49,7 +49,7 @@ class UpdateLifeEventCategory extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $category = LifeEventCategory::where('account_id', $data['account_id'])
+        $category = $this->account()->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
         $category->label = $data['label'];

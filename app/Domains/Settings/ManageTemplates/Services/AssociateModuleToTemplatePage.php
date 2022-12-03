@@ -69,10 +69,10 @@ class AssociateModuleToTemplatePage extends BaseService implements ServiceInterf
     {
         $this->validateRules($this->data);
 
-        $this->module = Module::where('account_id', $this->data['account_id'])
+        $this->module = $this->account()->modules()
             ->findOrFail($this->data['module_id']);
 
-        Template::where('account_id', $this->data['account_id'])
+        $this->account()->templates()
             ->findOrFail($this->data['template_id']);
 
         $this->templatePage = TemplatePage::where('template_id', $this->data['template_id'])

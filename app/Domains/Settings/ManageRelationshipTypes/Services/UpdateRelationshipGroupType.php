@@ -47,7 +47,7 @@ class UpdateRelationshipGroupType extends BaseService implements ServiceInterfac
     {
         $this->validateRules($data);
 
-        $type = RelationshipGroupType::where('account_id', $data['account_id'])
+        $type = $this->account()->relationshipGroupTypes()
             ->findOrFail($data['relationship_group_type_id']);
 
         $type->name = $data['name'];

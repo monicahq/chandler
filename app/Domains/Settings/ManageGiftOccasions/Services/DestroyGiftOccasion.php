@@ -48,7 +48,7 @@ class DestroyGiftOccasion extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->giftOccasion = GiftOccasion::where('account_id', $data['account_id'])
+        $this->giftOccasion = $this->account()->giftOccasions()
             ->findOrFail($data['gift_occasion_id']);
 
         $this->giftOccasion->delete();

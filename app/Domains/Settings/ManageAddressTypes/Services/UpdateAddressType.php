@@ -47,7 +47,7 @@ class UpdateAddressType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = AddressType::where('account_id', $data['account_id'])
+        $type = $this->account()->addressTypes()
             ->findOrFail($data['address_type_id']);
 
         $type->name = $data['name'];

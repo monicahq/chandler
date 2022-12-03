@@ -47,7 +47,7 @@ class DestroyLabel extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $label = Label::where('vault_id', $data['vault_id'])
+        $label = $this->vault->labels()
             ->findOrFail($data['label_id']);
 
         $label->delete();

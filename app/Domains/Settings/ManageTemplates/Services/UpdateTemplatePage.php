@@ -51,7 +51,7 @@ class UpdateTemplatePage extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        Template::where('account_id', $data['account_id'])
+        $this->account()->templates()
             ->findOrFail($data['template_id']);
 
         $this->templatePage = TemplatePage::where('template_id', $data['template_id'])

@@ -66,7 +66,7 @@ class UpdatePostTemplateSectionPosition extends BaseService implements ServiceIn
     {
         $this->validateRules($this->data);
 
-        $this->postTemplate = PostTemplate::where('account_id', $this->data['account_id'])
+        $this->postTemplate = $this->account()->postTemplates()
             ->findOrFail($this->data['post_template_id']);
 
         $this->postTemplateSection = PostTemplateSection::where('post_template_id', $this->data['post_template_id'])

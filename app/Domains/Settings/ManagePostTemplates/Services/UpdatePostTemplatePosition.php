@@ -62,7 +62,7 @@ class UpdatePostTemplatePosition extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->postTemplate = PostTemplate::where('account_id', $this->data['account_id'])
+        $this->postTemplate = $this->account()->postTemplates()
             ->findOrFail($this->data['post_template_id']);
 
         $this->pastPosition = $this->postTemplate->position;

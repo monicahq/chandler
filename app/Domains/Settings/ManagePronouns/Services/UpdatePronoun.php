@@ -47,7 +47,7 @@ class UpdatePronoun extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $pronoun = Pronoun::where('account_id', $data['account_id'])
+        $pronoun = $this->account()->pronouns()
             ->findOrFail($data['pronoun_id']);
 
         $pronoun->name = $data['name'];

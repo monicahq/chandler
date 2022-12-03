@@ -48,7 +48,7 @@ class DestroyReligion extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->religion = Religion::where('account_id', $data['account_id'])
+        $this->religion = $this->account()->religions()
             ->findOrFail($data['religion_id']);
 
         $this->religion->delete();

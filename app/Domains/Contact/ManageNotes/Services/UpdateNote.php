@@ -4,7 +4,6 @@ namespace App\Domains\Contact\ManageNotes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactFeedItem;
-use App\Models\Emotion;
 use App\Models\Note;
 use App\Services\BaseService;
 use Carbon\Carbon;
@@ -58,11 +57,11 @@ class UpdateNote extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->note = Note::where('contact_id', $data['contact_id'])
+        $this->note = $this->contact->notes()
             ->findOrFail($data['note_id']);
 
         if ($this->valueOrNull($data, 'emotion_id')) {
-            Emotion::where('account_id', $data['account_id'])
+            $this->account()->emotions()
             ->where('id', $data['emotion_id'])
             ->firstOrFail();
         }

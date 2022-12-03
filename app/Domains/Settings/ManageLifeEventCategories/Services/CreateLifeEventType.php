@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageLifeEventCategories\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\User;
 use App\Services\BaseService;
@@ -49,7 +48,7 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $category = LifeEventCategory::where('account_id', $data['account_id'])
+        $category = $this->account()->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
         // determine the new position of the template page

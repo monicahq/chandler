@@ -44,7 +44,7 @@ class DestroyModule extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $module = Module::where('account_id', $data['account_id'])
+        $module = $this->account()->modules()
             ->findOrFail($data['module_id']);
 
         if (! $module->can_be_deleted) {

@@ -64,7 +64,7 @@ class CreateGiftState extends BaseService implements ServiceInterface
     private function create(): void
     {
         // determine the new position of the template page
-        $newPosition = GiftState::where('account_id', $this->data['account_id'])
+        $newPosition = $this->account()->giftStates()
             ->max('position');
         $newPosition++;
 

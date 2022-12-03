@@ -48,7 +48,7 @@ class DestroyGiftState extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->giftState = GiftState::where('account_id', $data['account_id'])
+        $this->giftState = $this->account()->giftStates()
             ->findOrFail($data['gift_state_id']);
 
         $this->giftState->delete();

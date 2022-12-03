@@ -48,7 +48,7 @@ class DestroyGroupType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->groupType = GroupType::where('account_id', $data['account_id'])
+        $this->groupType = $this->account()->groupTypes()
             ->findOrFail($data['group_type_id']);
 
         $this->groupType->delete();

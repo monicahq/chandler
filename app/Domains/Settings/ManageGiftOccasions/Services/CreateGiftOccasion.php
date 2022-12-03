@@ -64,7 +64,7 @@ class CreateGiftOccasion extends BaseService implements ServiceInterface
     private function create(): void
     {
         // determine the new position of the template page
-        $newPosition = GiftOccasion::where('account_id', $this->data['account_id'])
+        $newPosition = $this->account()->giftOccasions()
             ->max('position');
         $newPosition++;
 

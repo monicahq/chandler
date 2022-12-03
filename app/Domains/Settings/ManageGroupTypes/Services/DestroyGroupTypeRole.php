@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use App\Models\User;
 use App\Services\BaseService;
@@ -50,7 +49,7 @@ class DestroyGroupTypeRole extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        GroupType::where('account_id', $data['account_id'])
+        $this->account()->groupTypes()
             ->findOrFail($data['group_type_id']);
 
         $this->groupTypeRole = GroupTypeRole::where('group_type_id', $data['group_type_id'])

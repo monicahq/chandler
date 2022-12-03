@@ -59,7 +59,7 @@ class UpdateReligion extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
-        $this->religion = Religion::where('account_id', $this->data['account_id'])
+        $this->religion = $this->account()->religions()
             ->findOrFail($this->data['religion_id']);
     }
 

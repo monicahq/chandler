@@ -50,7 +50,7 @@ class CreatePostTemplate extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         // determine the new position of the template page
-        $newPosition = PostTemplate::where('account_id', $data['account_id'])
+        $newPosition = $this->account()->postTemplates()
             ->max('position');
         $newPosition++;
 

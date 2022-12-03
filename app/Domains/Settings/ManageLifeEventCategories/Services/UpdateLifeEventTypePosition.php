@@ -66,7 +66,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
     {
         $this->validateRules($this->data);
 
-        $this->lifeEventCategory = LifeEventCategory::where('account_id', $this->data['account_id'])
+        $this->lifeEventCategory = $this->account()->lifeEventCategories()
             ->findOrFail($this->data['life_event_category_id']);
 
         $this->lifeEventType = LifeEventType::where('life_event_category_id', $this->data['life_event_category_id'])

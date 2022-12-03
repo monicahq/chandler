@@ -59,7 +59,7 @@ class UpdateGiftState extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
-        $this->giftState = GiftState::where('account_id', $this->data['account_id'])
+        $this->giftState = $this->account()->giftStates()
             ->findOrFail($this->data['gift_state_id']);
     }
 

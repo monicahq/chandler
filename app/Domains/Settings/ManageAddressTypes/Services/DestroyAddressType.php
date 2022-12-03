@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageAddressTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\AddressType;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -45,7 +44,7 @@ class DestroyAddressType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = AddressType::where('account_id', $data['account_id'])
+        $type = $this->account()->addressTypes()
             ->findOrFail($data['address_type_id']);
 
         $type->delete();

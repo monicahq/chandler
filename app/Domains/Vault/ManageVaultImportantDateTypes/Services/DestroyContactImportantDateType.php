@@ -4,7 +4,6 @@ namespace App\Domains\Vault\ManageVaultImportantDateTypes\Services;
 
 use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactImportantDateType;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -48,7 +47,7 @@ class DestroyContactImportantDateType extends BaseService implements ServiceInte
     {
         $this->validateRules($data);
 
-        $type = ContactImportantDateType::where('vault_id', $data['vault_id'])
+        $type = $this->vault->contactImportantDateTypes()
             ->findOrFail($data['contact_important_date_type_id']);
 
         if (! $type->can_be_deleted) {

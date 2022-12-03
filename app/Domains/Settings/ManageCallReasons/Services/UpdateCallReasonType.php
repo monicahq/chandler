@@ -47,7 +47,7 @@ class UpdateCallReasonType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = CallReasonType::where('account_id', $data['account_id'])
+        $type = $this->account()->callReasonTypes()
             ->findOrFail($data['call_reason_type_id']);
 
         $type->label = $data['label'];

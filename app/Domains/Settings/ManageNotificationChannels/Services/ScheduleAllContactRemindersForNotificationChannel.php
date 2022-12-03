@@ -6,7 +6,6 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
-use App\Models\Vault;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +70,7 @@ class ScheduleAllContactRemindersForNotificationChannel extends BaseService impl
 
     private function schedule(): void
     {
-        $vaults = Vault::where('account_id', $this->data['account_id'])
+        $vaults = $this->account()->vaults()
             ->pluck('id')->toArray();
 
         $contactReminders = DB::table('contact_reminders')

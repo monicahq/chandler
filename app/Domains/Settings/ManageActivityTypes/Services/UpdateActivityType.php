@@ -48,7 +48,7 @@ class UpdateActivityType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = ActivityType::where('account_id', $data['account_id'])
+        $type = $this->account()->activityTypes()
             ->findOrFail($data['activity_type_id']);
 
         $type->label = $data['label'];

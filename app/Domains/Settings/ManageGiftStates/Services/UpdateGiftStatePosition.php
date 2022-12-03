@@ -62,7 +62,7 @@ class UpdateGiftStatePosition extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->giftState = GiftState::where('account_id', $this->data['account_id'])
+        $this->giftState = $this->account()->giftStates()
             ->findOrFail($this->data['gift_state_id']);
 
         $this->pastPosition = DB::table('gift_states')

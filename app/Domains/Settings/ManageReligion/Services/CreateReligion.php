@@ -64,7 +64,7 @@ class CreateReligion extends BaseService implements ServiceInterface
     private function create(): void
     {
         // determine the new position of the religion
-        $newPosition = Religion::where('account_id', $this->data['account_id'])
+        $newPosition = $this->account()->religions()
             ->max('position');
         $newPosition++;
 

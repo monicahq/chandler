@@ -62,7 +62,7 @@ class UpdateReligionPosition extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->religion = Religion::where('account_id', $this->data['account_id'])
+        $this->religion = $this->account()->religions()
             ->findOrFail($this->data['religion_id']);
 
         $this->pastPosition = DB::table('religions')

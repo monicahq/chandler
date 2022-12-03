@@ -4,7 +4,6 @@ namespace App\Domains\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactLifeEvent;
-use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
@@ -77,7 +76,7 @@ class UpdateContactLifeEvent extends BaseService implements ServiceInterface
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
-        LifeEventCategory::where('account_id', $this->data['account_id'])
+        $this->account()->lifeEventCategories()
             ->findOrFail($lifeEventType->lifeEventCategory->id);
     }
 

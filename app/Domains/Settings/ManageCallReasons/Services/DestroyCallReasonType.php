@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageCallReasons\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\CallReasonType;
 use App\Models\User;
 use App\Services\BaseService;
 
@@ -45,7 +44,7 @@ class DestroyCallReasonType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $type = CallReasonType::where('account_id', $data['account_id'])
+        $type = $this->account()->callReasonTypes()
             ->findOrFail($data['call_reason_type_id']);
 
         $type->delete();
