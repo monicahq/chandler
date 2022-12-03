@@ -53,6 +53,7 @@ class UpdateLabel extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         $label = $this->vault->labels()
+            ->withCount('contacts')
             ->findOrFail($data['label_id']);
 
         $label->name = $data['name'];
