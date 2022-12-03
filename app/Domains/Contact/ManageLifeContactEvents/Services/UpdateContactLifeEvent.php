@@ -29,8 +29,8 @@ class UpdateContactLifeEvent extends BaseService implements ServiceInterface
             'contact_id' => 'required|integer|exists:contacts,id',
             'contact_life_event_id' => 'required|integer|exists:contact_life_events,id',
             'summary' => 'required|string|max:255',
-            'started_at' => 'date|format:Y-m-d',
-            'ended_at' => 'date|format:Y-m-d',
+            'started_at' => 'date|date_format:Y-m-d',
+            'ended_at' => 'date|date_format:Y-m-d',
         ];
     }
 
@@ -71,7 +71,7 @@ class UpdateContactLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contactLifeEvent = $this->contact->ContactLifeEvents()
+        $this->contactLifeEvent = $this->contact->contactLifeEvents()
             ->findOrFail($this->data['contact_life_event_id']);
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);

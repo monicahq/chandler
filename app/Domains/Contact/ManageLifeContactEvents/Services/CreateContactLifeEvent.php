@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageLifeContactEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
 use App\Models\ContactLifeEvent;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
@@ -29,8 +28,8 @@ class CreateContactLifeEvent extends BaseService implements ServiceInterface
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'contact_id' => 'required|integer|exists:contacts,id',
             'summary' => 'required|string|max:255',
-            'started_at' => 'date|format:Y-m-d',
-            'ended_at' => 'date|format:Y-m-d',
+            'started_at' => 'date|date_format:Y-m-d',
+            'ended_at' => 'date|date_format:Y-m-d',
         ];
     }
 

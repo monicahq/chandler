@@ -373,6 +373,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the religion associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function contactLifeEvents(): HasMany
+    {
+        return $this->hasMany(ContactLifeEvent::class);
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute<string,never>

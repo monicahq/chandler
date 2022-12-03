@@ -64,7 +64,7 @@ class DestroyContactLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contactLifeEvent = $this->contact->ContactLifeEvents()
+        $this->contactLifeEvent = $this->contact->contactLifeEvents()
             ->findOrFail($this->data['contact_event_id']);
     }
 }
