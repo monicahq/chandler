@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Vault\ManageJournals\Web\ViewHelpers;
+namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\Post;
