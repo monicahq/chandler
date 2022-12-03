@@ -243,6 +243,12 @@ export default {
     }
   },
 
+  watch: {
+    modelValue: function (value) {
+      this.localContacts = value;
+    },
+  },
+
   methods: {
     showAddContactMode() {
       this.addContactMode = true;
