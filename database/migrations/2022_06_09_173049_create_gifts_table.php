@@ -73,7 +73,7 @@ return new class() extends Migration
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
-        Schema::create('gift_choices', function (Blueprint $table) {
+        Schema::create('gift_ideas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('gift_id');
             $table->string('name');
@@ -99,6 +99,5 @@ return new class() extends Migration
         Schema::dropIfExists('gifts');
         Schema::dropIfExists('gift_donators');
         Schema::dropIfExists('gift_recipients');
-        Schema::dropIfExists('gift_urls');
     }
 };
