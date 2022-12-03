@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -78,6 +79,11 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    /**
+     * Get the post's title.
+     *
+     * @return Attribute<string,string>
+     */
     protected function title(): Attribute
     {
         return Attribute::make(
@@ -89,6 +95,18 @@ class Post extends Model
                 return trans('app.undefined');
             },
             set: fn ($value) => $value,
+        );
+    }
+
+    /**
+     * Get the post's body excerpt.
+     *
+     * @return Attribute<string,never>
+     */
+    protected function excerpt(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Str::limit(optional($this->postSections()->first())->content, 200)
         );
     }
 }

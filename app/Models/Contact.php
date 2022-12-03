@@ -7,12 +7,15 @@ use App\Helpers\ContactImportantDateHelper;
 use App\Helpers\ImportantDateHelper;
 use App\Helpers\NameHelper;
 use App\Helpers\ScoutHelper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
@@ -20,8 +23,9 @@ use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasUuids;
     use Searchable;
+    use SoftDeletes;
 
     /**
      * Possible avatar types.
@@ -52,6 +56,8 @@ class Contact extends Model
         'listed',
         'file_id',
         'religion_id',
+        'vcard',
+        'distant_etag',
     ];
 
     /**
@@ -64,6 +70,16 @@ class Contact extends Model
         'listed' => 'boolean',
         'last_updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     /**
      * Get the indexable data array for the model.
@@ -97,6 +113,17 @@ class Contact extends Model
     }
 
     /**
+     * Scope a query to only include contacts who are active.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('listed', 1);
+    }
+
+    /**
      * Used to delete related objects from Meilisearch/Algolia instance.
      *
      * @return void
@@ -105,8 +132,8 @@ class Contact extends Model
     {
         parent::boot();
 
-        static::deleting(function ($model) {
-            Note::where('contact_id', $model->id)->unsearchable();
+        static::deleting(function (self $model) {
+            $model->notes()->unsearchable();
         });
     }
 
@@ -348,7 +375,7 @@ class Contact extends Model
     /**
      * Get the name of the contact, according to the user preference.
      *
-     * @return Attribute
+     * @return Attribute<string,never>
      */
     protected function name(): Attribute
     {
@@ -368,7 +395,7 @@ class Contact extends Model
      * The birthdate is stored in a ContactImportantDate object, of the
      * TYPE_BIRTHDATE type. So we need to find if a date of this type exists.
      *
-     * @return Attribute
+     * @return Attribute<?int,never>
      */
     protected function age(): Attribute
     {
@@ -396,7 +423,7 @@ class Contact extends Model
     /**
      * Get the avatar of the contact.
      *
-     * @return Attribute
+     * @return Attribute<array,never>
      */
     protected function avatar(): Attribute
     {

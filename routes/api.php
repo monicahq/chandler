@@ -1,17 +1,14 @@
 <?php
 
-use App\Domains\Settings\ManageUsers\Api\UserController;
+use App\Domains\Settings\ManageUsers\Api\Controllers\UserController;
+use App\Domains\Vault\ManageVault\Api\Controllers\VaultController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::middleware('auth:sanctum')->name('api.')->group(function () {
+    // users
+    Route::get('user', [UserController::class, 'user']);
+    Route::apiResource('users', UserController::class)->only(['index', 'show']);
 
-Route::middleware(['auth:sanctum', 'abilities:read'])->get('/user', UserController::class);
+    // vaults
+    Route::apiResource('vaults', VaultController::class);
+});
