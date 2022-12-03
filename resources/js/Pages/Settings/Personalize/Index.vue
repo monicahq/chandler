@@ -44,12 +44,12 @@
                 {{ $t('settings.personalize_title_manage_template') }}
               </inertia-link>
             </li>
-            <li class="mb-2 flex">
+            <!-- <li class="mb-2 flex">
               <span class="mr-2">🥪</span>
               <inertia-link :href="data.url.manage_modules" class="text-blue-500 hover:underline">
                 {{ $t('settings.personalize_title_manage_module') }}
               </inertia-link>
-            </li>
+            </li> -->
             <li class="mb-2 flex">
               <span class="mr-2">🥸</span>
               <inertia-link :href="data.url.manage_relationships" class="text-blue-500 hover:underline">
@@ -128,10 +128,16 @@
                 {{ $t('settings.personalize_title_post_templates') }}
               </inertia-link>
             </li>
-            <li class="flex">
+            <li class="mb-2 flex">
               <span class="mr-2">💵</span>
               <inertia-link :href="data.url.manage_currencies" class="text-blue-500 hover:underline">
                 {{ $t('settings.personalize_title_manage_currencies') }}
+              </inertia-link>
+            </li>
+            <li class="flex">
+              <span class="mr-2">⛪</span>
+              <inertia-link :href="data.url.manage_religions" class="text-blue-500 hover:underline">
+                {{ $t('settings.personalize_title_manage_religions') }}
               </inertia-link>
             </li>
           </ul>

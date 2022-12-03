@@ -22,6 +22,7 @@ use App\Models\Pet;
 use App\Models\Post;
 use App\Models\Pronoun;
 use App\Models\RelationshipType;
+use App\Models\Religion;
 use App\Models\Template;
 use App\Models\User;
 use Carbon\Carbon;
@@ -268,6 +269,17 @@ class ContactTest extends TestCase
         $contact->posts()->sync([$post->id]);
 
         $this->assertTrue($contact->posts()->exists());
+    }
+
+    /** @test */
+    public function it_has_one_religion(): void
+    {
+        $contact = Contact::factory()->create();
+        $religion = Religion::factory()->create();
+        $contact->religion_id = $religion->id;
+        $contact->save();
+
+        $this->assertTrue($contact->religion()->exists());
     }
 
     /** @test */

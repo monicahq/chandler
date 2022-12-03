@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vault extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Possible vault permissions.
@@ -42,6 +43,16 @@ class Vault extends Model
         'description',
         'default_template_id',
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     /**
      * Used to delete related objects from Meilisearch/Algolia instance.
@@ -152,5 +163,15 @@ class Vault extends Model
     public function journals()
     {
         return $this->hasMany(Journal::class);
+    }
+
+    /**
+     * Get the tags associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
     }
 }

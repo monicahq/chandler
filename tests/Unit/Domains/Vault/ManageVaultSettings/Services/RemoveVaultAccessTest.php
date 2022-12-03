@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
+use App\Domains\Vault\ManageVaultSettings\Services\RemoveVaultAccess;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
@@ -9,7 +10,6 @@ use App\Models\ContactReminder;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\Vault;
-use App\Vault\ManageVaultSettings\Services\RemoveVaultAccess;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -123,6 +123,8 @@ class RemoveVaultAccessTest extends TestCase
             'scheduled_at' => Carbon::now(),
         ]]);
 
+        Carbon::setTestNow(Carbon::create(2018, 1, 1, 0, 0, 0));
+
         $request = [
             'account_id' => $account->id,
             'author_id' => $regis->id,
@@ -138,8 +140,9 @@ class RemoveVaultAccessTest extends TestCase
             'permission' => Vault::PERMISSION_VIEW,
         ]);
 
-        $this->assertDatabaseMissing('contacts', [
+        $this->assertDatabaseHas('contacts', [
             'id' => $contact->id,
+            'deleted_at' => now(),
         ]);
 
         $this->assertDatabaseMissing('contact_reminder_scheduled', [

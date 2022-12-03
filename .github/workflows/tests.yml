@@ -11,10 +11,16 @@ on:
   workflow_run:
     workflows: [PHP linting (Pint), Javascript linting]
     types: [completed]
+    branches-ignore: [main]
 
 env:
   default-php-version: '8.1'
-  coverage-with: 'sqlite'
+  coverage-with: sqlite
+
+concurrency:
+  group: Build ${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   #############
@@ -23,17 +29,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     name: Testsuite ${{ matrix.testsuite }} with PHP ${{ matrix.php-version }} + ${{ matrix.connection }}
-
-    services:
-      pgsql:
-        image: postgres:13.0
-        env:
-          POSTGRES_DB: monica
-          POSTGRES_USER: monica
-          POSTGRES_PASSWORD: root
-        ports:
-          - 5432:5432
-        options: --name=postgres --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
       fail-fast: false
@@ -47,12 +42,19 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Setup PHP ${{ matrix.php-version }}
+      - name: Setup PHP ${{ matrix.php-version }} without coverage
+        if: matrix.connection != env.coverage-with || matrix.php-version != env.default-php-version || ! matrix.coverage
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, dom, fileinfo, ${{ matrix.connection }}
           coverage: none
+      - name: Setup PHP ${{ matrix.php-version }}
+        if: matrix.connection == env.coverage-with && matrix.php-version == env.default-php-version && matrix.coverage
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, dom, fileinfo, ${{ matrix.connection }}
       - name: Check PHP Version
         run: php -v
       - name: Check Composer Version
@@ -66,7 +68,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache composer files
         uses: actions/cache@v3
         with:
@@ -103,6 +105,13 @@ jobs:
         run: |
           sudo systemctl start mysql.service
           mysql --protocol=tcp -u root -proot -e "CREATE DATABASE IF NOT EXISTS monica CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+      - name: Create pgsql database
+        if: matrix.connection == 'pgsql'
+        run: |
+          sudo systemctl start postgresql.service
+          sudo -u postgres psql --command="CREATE USER monica PASSWORD 'secret'" --command="\du"
+          sudo -u postgres createdb --owner=monica monica
+          PGPASSWORD=secret psql --username=monica --host=localhost --list monica
 
       - name: Generate key
         run: php artisan key:generate
@@ -115,7 +124,7 @@ jobs:
       # Test
       - name: Run tests suite with coverage
         if: matrix.connection == env.coverage-with && matrix.php-version == env.default-php-version && matrix.coverage
-        run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --testsuite ${{ matrix.testsuite }} --log-junit ./results/${{ matrix.connection }}/junit/results${{ matrix.testsuite }}.xml --coverage-clover ./results/${{ matrix.connection }}/coverage/coverage${{ matrix.testsuite }}.xml
+        run: php -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~" vendor/bin/phpunit -c phpunit.xml --testsuite ${{ matrix.testsuite }} --log-junit ./results/${{ matrix.connection }}/junit/results${{ matrix.testsuite }}.xml --coverage-clover ./results/${{ matrix.connection }}/coverage/coverage${{ matrix.testsuite }}.xml
         env:
           DB_CONNECTION: ${{ matrix.connection }}
       - name: Run tests
@@ -166,17 +175,17 @@ jobs:
         run: |
           version=$(git tag --points-at HEAD)
           test -z "$version" && version="main"
-          echo "::set-output name=value::$version"
+          echo "value=$version" >> $GITHUB_OUTPUT
 
       - name: Set coverage list
         id: coverage
         run: |
           SONAR_COVERAGE=$(ls -m --format=comma results/${{ env.coverage-with }}/coverage/coverage*.xml | sed -e ':a;N;$!ba;s/\n//g; s/ //g;')
-          echo "::set-output name=list::$SONAR_COVERAGE"
+          echo "list=$SONAR_COVERAGE" >> $GITHUB_OUTPUT
 
       - name: SonarCloud Scan
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarcloud-github-action@v1.7
+        uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -184,7 +193,7 @@ jobs:
           args: |
             -Dsonar.projectKey=monicahq_chandler
             -Dsonar.organization=monicahq
-            -Dsonar.sources=app,bootstrap,config,database,domains,public,resources,routes
+            -Dsonar.sources=app,bootstrap,config,database,public,resources,routes
             -Dsonar.exclusions=bootstrap/cache/*,public/vendor/**,resources/lang/**
             -Dsonar.tests=tests
             -Dsonar.coverage.exclusions=routes/*.php,config/**/*.php,bootstrap/**,resources/**/*.php,database/**/*.php,public/*.php,resources/**/*.vue,resources/**/*.js

@@ -1,9 +1,9 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
+import Tags from '@/Pages/Vault/Journal/Post/Partials/Tags.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
@@ -20,7 +20,6 @@ const form = useForm({
   contacts: [],
 });
 
-const loadingState = ref('');
 const saveInProgress = ref(false);
 const statistics = ref([]);
 
@@ -124,8 +123,23 @@ const destroy = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">
-              {{ $t('app.breadcrumb_post_create_template') }}
+            <li class="mr-2 inline">
+              <inertia-link :href="data.url.show" class="text-blue-500 hover:underline">
+                {{ data.title }}
+              </inertia-link>
+            </li>
+            <li class="relative mr-2 inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-breadcrumb relative inline h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+            <li class="relative inline">
+              {{ $t('app.breadcrumb_post_edit') }}
             </li>
           </ul>
         </div>
@@ -168,17 +182,8 @@ const destroy = () => {
           <div class="">
             <!-- Publish action -->
             <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
-              <div class="border-b border-gray-200 p-2 text-sm dark:border-gray-700">Post status: draft</div>
-
               <div class="bg-form rounded-b-lg p-5">
-                <pretty-link :href="data.url.show" :classes="'mr-8'" :text="'Close'" :icon="'exit'" />
-
-                <pretty-button
-                  @click="update()"
-                  :text="'Publish'"
-                  :state="loadingState"
-                  :icon="'check'"
-                  :classes="'save'" />
+                <pretty-link :href="data.url.show" :text="'Close'" :icon="'exit'" />
               </div>
             </div>
 
@@ -226,10 +231,7 @@ const destroy = () => {
               :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700 mb-6'" />
 
             <!-- categories -->
-            <p class="mb-2 flex items-center font-bold">
-              <span>Categories</span>
-            </p>
-            <div class="mb-6">Jeux videos</div>
+            <tags :data="data" />
 
             <!-- stats -->
             <p class="mb-2 font-bold">Statistics</p>
@@ -281,7 +283,7 @@ const destroy = () => {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
 
-                <span>Read 21 times</span>
+                <span>Read {{ statistics.view_count }} times</span>
               </li>
             </ul>
 

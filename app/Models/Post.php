@@ -24,6 +24,7 @@ class Post extends Model
     protected $fillable = [
         'journal_id',
         'title',
+        'view_count',
         'published',
         'written_at',
         'updated_at',
@@ -88,6 +89,21 @@ class Post extends Model
         return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 
+    /**
+     * Get the tags associated with the post.
+     *
+     * @return BelongsToMany
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Get the post's title.
+     *
+     * @return Attribute<string,string>
+     */
     protected function title(): Attribute
     {
         return Attribute::make(

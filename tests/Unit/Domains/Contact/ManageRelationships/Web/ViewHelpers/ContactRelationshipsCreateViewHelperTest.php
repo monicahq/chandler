@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Contact\ManageRelationships\Web\ViewHelpers;
 
-use App\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
+use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ContactRelationshipsCreateViewHelper;
 use App\Models\Contact;
 use App\Models\Gender;
 use App\Models\Pronoun;
@@ -39,6 +39,7 @@ class ContactRelationshipsCreateViewHelperTest extends TestCase
         ]);
         $contact = Contact::factory()->create([
             'vault_id' => $vault->id,
+            'gender_id' => $gender->id,
         ]);
 
         $array = ContactRelationshipsCreateViewHelper::data($vault, $contact, $user);

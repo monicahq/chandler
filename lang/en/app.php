@@ -32,6 +32,7 @@ return [
     'breadcrumb_contact_goal' => 'Detail of a goal',
     'breadcrumb_journal_index' => 'Journals',
     'breadcrumb_journal_create' => 'Create a journal',
+    'breadcrumb_post_edit' => 'Edit a post',
     'breadcrumb_post_create_template' => 'Choose a template',
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_settings_preferences' => 'User preferences',
@@ -45,6 +46,7 @@ return [
     'breadcrumb_settings_personalize_contact_information_types' => 'Contact information types',
     'breadcrumb_settings_personalize_post_templates' => 'Post templates',
     'breadcrumb_settings_storage' => 'Storage',
+    'breadcrumb_settings_religions' => 'Religions',
 
     'notification_flash_changes_saved' => 'Changes saved',
 
@@ -52,6 +54,7 @@ return [
     'save' => 'Save',
     'add' => 'Add',
     'cancel' => 'Cancel',
+    'close' => 'Close',
     'delete_confirm' => 'Sure?',
     'delete' => 'Delete',
     'edit' => 'Edit',
@@ -113,6 +116,7 @@ return [
     'module_documents' => 'Documents',
     'module_photos' => 'Photos',
     'module_posts' => 'Posts about the contact',
+    'module_religions' => 'Religions',
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 

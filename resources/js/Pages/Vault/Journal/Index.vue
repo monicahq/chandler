@@ -32,10 +32,32 @@ defineProps({
             <li
               v-for="journal in data.journals"
               :key="journal.id"
-              class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-              <inertia-link :href="journal.url.show" class="text-blue-500 hover:underline">{{
-                journal.name
-              }}</inertia-link>
+              class="border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 sm:flex">
+              <!-- name and date -->
+              <div class="sm:mr-8">
+                <inertia-link :href="journal.url.show" class="mb-1 block font-semibold text-blue-500 hover:underline">{{
+                  journal.name
+                }}</inertia-link>
+
+                <div v-if="journal.last_updated" class="mb-2 flex items-center text-sm sm:mb-0">
+                  <span class="mr-1">
+                    <svg
+                      class="h-4 w-4 text-gray-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+
+                  {{ $t('vault.journal_index_last_updated', { date: journal.last_updated }) }}
+                </div>
+              </div>
 
               <p v-if="journal.description">{{ journal.description }}</p>
             </li>
@@ -46,7 +68,8 @@ defineProps({
         <div
           v-if="data.journals.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">
+          <img src="/img/journal_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-44 w-44" />
+          <p class="px-5 pb-5 pt-2 text-center">
             {{ $t('vault.journal_index_blank') }}
           </p>
         </div>

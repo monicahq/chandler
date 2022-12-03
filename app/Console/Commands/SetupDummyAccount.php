@@ -2,24 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\Contact\ManageContact\Services\CreateContact;
-use App\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
-use App\Contact\ManageGoals\Services\CreateGoal;
-use App\Contact\ManageGoals\Services\ToggleStreak;
-use App\Contact\ManageNotes\Services\CreateNote;
-use App\Contact\ManageTasks\Services\CreateContactTask;
+use App\Domains\Contact\ManageContact\Services\CreateContact;
+use App\Domains\Contact\ManageContactImportantDates\Services\CreateContactImportantDate;
+use App\Domains\Contact\ManageGoals\Services\CreateGoal;
+use App\Domains\Contact\ManageGoals\Services\ToggleStreak;
+use App\Domains\Contact\ManageNotes\Services\CreateNote;
+use App\Domains\Contact\ManageTasks\Services\CreateContactTask;
+use App\Domains\Settings\CreateAccount\Services\CreateAccount;
+use App\Domains\Vault\ManageJournals\Services\CreateJournal;
+use App\Domains\Vault\ManageJournals\Services\CreatePost;
+use App\Domains\Vault\ManageVault\Services\CreateVault;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
-use App\Models\Group;
-use App\Models\Note;
 use App\Models\PostTemplate;
 use App\Models\User;
 use App\Models\Vault;
-use App\Settings\CreateAccount\Services\CreateAccount;
-use App\Vault\ManageJournals\Services\CreateJournal;
-use App\Vault\ManageJournals\Services\CreatePost;
-use App\Vault\ManageVault\Services\CreateVault;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Console\Command;
@@ -44,6 +42,7 @@ class SetupDummyAccount extends Command
      * @var string
      */
     protected $signature = 'monica:dummy
+                            {--migrate : Use migrate command instead of migrate:fresh.}
                             {--force : Force the operation to run.}';
 
     /**
@@ -60,6 +59,9 @@ class SetupDummyAccount extends Command
      */
     public function handle(): void
     {
+        // remove queue
+        config(['queue.default' => 'sync']);
+
         $this->start();
         $this->wipeAndMigrateDB();
         $this->createFirstUsers();
@@ -84,13 +86,12 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Note::class]);
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Contact::class]);
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Group::class]);
-
-        $this->artisan('☐ Reset search engine', 'monica:setup');
-        $this->artisan('☐ Migration of the database', 'migrate:fresh');
-        $this->artisan('☐ Symlink the storage folder', 'storage:link');
+        if ($this->hasOption('migrate') && $this->option('migrate')) {
+            $this->artisan('☐ Migration of the database', 'migrate', ['--force' => true]);
+        } else {
+            $this->artisan('☐ Migration of the database', 'migrate:fresh', ['--force' => true]);
+        }
+        $this->artisan('☐ Reset search engine', 'scout:setup', ['--force' => true]);
     }
 
     private function stop(): void

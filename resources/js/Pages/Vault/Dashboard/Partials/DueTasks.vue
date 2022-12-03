@@ -20,7 +20,7 @@
     </h3>
 
     <!-- list of tasks -->
-    <div v-if="data.tasks">
+    <div v-if="data.tasks.length > 0">
       <ul class="mb-4 rounded-lg border border-gray-200 dark:border-gray-800 dark:bg-gray-900">
         <li
           v-for="task in data.tasks"
@@ -80,9 +80,10 @@
 
     <!-- blank state -->
     <div
-      v-if="!data.tasks"
-      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-      <p class="p-5 text-center">
+      v-if="data.tasks.length == 0"
+      class="mb-6 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
+      <img src="/img/dashboard_blank_tasks.svg" :alt="$t('Tasks')" class="mr-2 h-14 w-14" />
+      <p class="px-5 text-center">
         {{ $t('vault.dashboard_due_tasks_blank') }}
       </p>
     </div>

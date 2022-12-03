@@ -137,6 +137,17 @@ class DateHelperTest extends TestCase
     }
 
     /** @test */
+    public function it_gets_a_long_month_and_year(): void
+    {
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', '1978-10-01 17:56:03');
+
+        $this->assertEquals(
+            'October 1978',
+            DateHelper::formatLongMonthAndYear($date)
+        );
+    }
+
+    /** @test */
     public function it_gets_the_complete_date(): void
     {
         $date = Carbon::createFromFormat('Y-m-d H:i:s', '1978-10-01 17:56:03');
@@ -144,6 +155,17 @@ class DateHelperTest extends TestCase
         $this->assertEquals(
             'Sunday, Oct 1st 1978',
             DateHelper::formatFullDate($date)
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_day_as_number(): void
+    {
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', '1978-10-01 17:56:03');
+
+        $this->assertEquals(
+            '01',
+            DateHelper::formatDayNumber($date)
         );
     }
 
@@ -339,6 +361,24 @@ class DateHelperTest extends TestCase
                 ],
             ],
             $collection->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_date_as_a_timestamp()
+    {
+        $testDate = Carbon::now();
+
+        $testDate->year = 2019;
+        $testDate->month = 1;
+        $testDate->day = 20;
+        $testDate->hour = 23;
+        $testDate->minute = 21;
+        $testDate->second = 44;
+
+        $this->assertEquals(
+            '2019-01-20T23:21:44Z',
+            DateHelper::getTimestamp($testDate)
         );
     }
 }

@@ -2,13 +2,14 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Domains\Vault\ManageJournals\Web\ViewHelpers\PostShowViewHelper;
 use App\Models\Contact;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\PostSection;
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vault;
-use App\Vault\ManageJournals\Web\ViewHelpers\PostShowViewHelper;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -35,10 +36,14 @@ class PostShowViewHelperTest extends TestCase
             'label' => 'super',
             'content' => 'this is a content',
         ]);
+        $tag = Tag::factory()->create([
+            'name' => 'super',
+        ]);
+        $post->tags()->attach($tag->id);
 
         $array = PostShowViewHelper::data($post, $user);
 
-        $this->assertCount(8, $array);
+        $this->assertCount(9, $array);
         $this->assertEquals(
             $post->id,
             $array['id']
@@ -59,6 +64,15 @@ class PostShowViewHelperTest extends TestCase
                 ],
             ],
             $array['sections']->toArray()
+        );
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => $tag->id,
+                    'name' => 'super',
+                ],
+            ],
+            $array['tags']->toArray()
         );
         $this->assertEquals(
             [

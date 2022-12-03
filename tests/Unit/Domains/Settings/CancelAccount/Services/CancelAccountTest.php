@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domains\Settings\CancelAccount\Services;
 
+use App\Domains\Settings\CancelAccount\Services\CancelAccount;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\File;
 use App\Models\User;
-use App\Settings\CancelAccount\Services\CancelAccount;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
@@ -29,6 +29,23 @@ class CancelAccountTest extends TestCase
         ]);
 
         $this->executeService($user->account, $user, $file);
+    }
+
+    /** @test */
+    public function it_queues_destroying_an_account(): void
+    {
+        Queue::fake();
+
+        $user = $this->createAdministrator();
+
+        $request = [
+            'account_id' => $user->account->id,
+            'author_id' => $user->id,
+        ];
+
+        CancelAccount::dispatch($request);
+
+        Queue::assertPushed(CancelAccount::class, fn ($job) => $job->data === $request);
     }
 
     /** @test */
@@ -59,12 +76,11 @@ class CancelAccountTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CancelAccount())->execute($request);
+        CancelAccount::dispatch($request);
     }
 
     private function executeService(Account $account, User $user, File $file = null): void
     {
-        Queue::fake();
         Event::fake();
 
         $request = [
@@ -72,7 +88,7 @@ class CancelAccountTest extends TestCase
             'author_id' => $user->id,
         ];
 
-        (new CancelAccount())->execute($request);
+        CancelAccount::dispatchSync($request);
 
         $this->assertDatabaseMissing('accounts', [
             'id' => $account->id,
