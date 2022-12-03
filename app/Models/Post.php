@@ -127,7 +127,7 @@ class Post extends Model
     protected function excerpt(): Attribute
     {
         return Attribute::make(
-            get: fn () => Str::limit(optional($this->postSections()->first())->content, 200)
+            get: fn () => Str::limit(optional($this->postSections()->whereNotNull('content')->first())->content, 200)
         );
     }
 }
