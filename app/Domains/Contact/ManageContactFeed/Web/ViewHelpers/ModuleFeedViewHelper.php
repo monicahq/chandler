@@ -41,7 +41,7 @@ class ModuleFeedViewHelper
     {
         $author = $item->author;
         if (! $author) {
-            // the author is not existing anymore, so we have to display a random
+            // the author does not exist anymore, so we have to display a random
             // avatar and an unknown name
             $monicaSvg = '<svg viewBox="0 0 390 353" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M198.147 353C289.425 353 390.705 294.334 377.899 181.5C365.093 68.6657 289.425 10 198.147 10C106.869 10 31.794 61.4285 12.2144 181.5C-7.36527 301.571 106.869 353 198.147 353Z" fill="#2C2B29"/>
