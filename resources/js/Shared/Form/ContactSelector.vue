@@ -235,7 +235,9 @@ export default {
     if (this.displayMostConsultedContacts) {
       this.lookupMostConsultedContacts();
     }
+  },
 
+  mounted() {
     if (this.modelValue) {
       this.localContacts = this.modelValue;
     }

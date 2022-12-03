@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Models\Contact;
 use App\Models\Post;
@@ -31,6 +32,10 @@ class PostShowViewHelper
                 'name' => $tag->name,
             ]);
 
+        $contacts = $post->contacts()
+            ->get()
+            ->map(fn (Contact $contact) => ContactCardHelper::data($contact, $user));
+
         return [
             'id' => $post->id,
             'title' => $post->title,
@@ -39,6 +44,7 @@ class PostShowViewHelper
             'published' => $post->published,
             'sections' => $sections,
             'tags' => $tags,
+            'contacts' => $contacts,
             'journal' => [
                 'name' => $post->journal->name,
                 'url' => [
@@ -57,21 +63,6 @@ class PostShowViewHelper
                 'back' => route('journal.show', [
                     'vault' => $post->journal->vault_id,
                     'journal' => $post->journal->id,
-                ]),
-            ],
-        ];
-    }
-
-    public static function dtoContact(Contact $contact): array
-    {
-        return [
-            'id' => $contact->id,
-            'name' => $contact->name,
-            'avatar' => $contact->avatar,
-            'url' => [
-                'show' => route('contact.show', [
-                    'vault' => $contact->vault_id,
-                    'contact' => $contact->id,
                 ]),
             ],
         ];

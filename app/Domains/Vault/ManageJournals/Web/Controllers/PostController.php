@@ -126,20 +126,20 @@ class PostController extends Controller
             'written_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
-        $post->contacts()->detach();
+        if ($request->input('contacts')) {
+            if (count($request->input('contacts')) > 0) {
+                foreach ($request->input('contacts') as $contact) {
+                    $data = [
+                        'account_id' => Auth::user()->account_id,
+                        'author_id' => Auth::user()->id,
+                        'vault_id' => $vaultId,
+                        'journal_id' => $journalId,
+                        'post_id' => $postId,
+                        'contact_id' => $contact['id'],
+                    ];
 
-        if (count($request->input('contacts')) > 0) {
-            foreach ($request->input('contacts') as $contact) {
-                $data = [
-                    'account_id' => Auth::user()->account_id,
-                    'author_id' => Auth::user()->id,
-                    'vault_id' => $vaultId,
-                    'journal_id' => $journalId,
-                    'post_id' => $postId,
-                    'contact_id' => $contact['id'],
-                ];
-
-                (new AddContactToPost())->execute($data);
+                    (new AddContactToPost())->execute($data);
+                }
             }
         }
 
