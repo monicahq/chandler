@@ -50,10 +50,10 @@ class AssignTag extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->vault->journals()
+        $journal = $this->vault->journals()
             ->findOrFail($data['journal_id']);
 
-        $post = Post::where('journal_id', $data['journal_id'])
+        $post = $journal->posts()
             ->findOrFail($data['post_id']);
 
         $tag = $this->vault->tags()

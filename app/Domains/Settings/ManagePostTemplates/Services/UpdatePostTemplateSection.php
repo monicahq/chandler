@@ -49,10 +49,10 @@ class UpdatePostTemplateSection extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->account()->postTemplates()
+        $postTemplate = $this->account()->postTemplates()
             ->findOrFail($data['post_template_id']);
 
-        $this->postTemplateSection = PostTemplateSection::where('post_template_id', $data['post_template_id'])
+        $this->postTemplateSection = $postTemplate->postTemplateSections()
             ->findOrFail($data['post_template_section_id']);
 
         $this->postTemplateSection->label = $data['label'];

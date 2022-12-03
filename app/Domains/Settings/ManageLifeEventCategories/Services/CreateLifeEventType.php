@@ -52,7 +52,7 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
             ->findOrFail($data['life_event_category_id']);
 
         // determine the new position of the template page
-        $newPosition = LifeEventType::where('life_event_category_id', $data['life_event_category_id'])
+        $newPosition = $category->lifeEventTypes()
             ->max('position');
         $newPosition++;
 

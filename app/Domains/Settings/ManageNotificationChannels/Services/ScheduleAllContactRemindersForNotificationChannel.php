@@ -64,14 +64,15 @@ class ScheduleAllContactRemindersForNotificationChannel extends BaseService impl
     {
         $this->validateRules($this->data);
 
-        $this->userNotificationChannel = UserNotificationChannel::where('user_id', $this->data['author_id'])
+        $this->userNotificationChannel = $this->author->notificationChannels()
             ->findOrFail($this->data['user_notification_channel_id']);
     }
 
     private function schedule(): void
     {
         $vaults = $this->account()->vaults()
-            ->pluck('id')->toArray();
+            ->pluck('id')
+            ->toArray();
 
         $contactReminders = DB::table('contact_reminders')
             ->join('contacts', 'contacts.id', '=', 'contact_reminders.contact_id')

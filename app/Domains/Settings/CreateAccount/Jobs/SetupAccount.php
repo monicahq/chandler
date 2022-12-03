@@ -144,7 +144,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
     {
         // the contact information page is automatically created when we
         // create the template
-        $templatePageContact = $this->template->page()
+        $templatePageContact = $this->template->pages()
             ->where('type', TemplatePage::TYPE_CONTACT)
             ->first();
 

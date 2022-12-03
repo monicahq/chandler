@@ -64,8 +64,11 @@ class CreateGroupTypeRole extends BaseService implements ServiceInterface
 
     private function create(): void
     {
+        $groupType = $this->account()->groupTypes()
+            ->findOrFail($this->data['group_type_id']);
+
         // determine the new position of the template page
-        $newPosition = GroupTypeRole::where('group_type_id', $this->data['group_type_id'])
+        $newPosition = $groupType->groupTypeRoles()
             ->max('position');
         $newPosition++;
 

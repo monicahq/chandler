@@ -48,10 +48,10 @@ class UpdateActivity extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->account()->activityTypes()
+        $activityType = $this->account()->activityTypes()
             ->findOrFail($data['activity_type_id']);
 
-        $activity = Activity::where('activity_type_id', $data['activity_type_id'])
+        $activity = $activityType->activities()
             ->findOrFail($data['activity_id']);
 
         $activity->label = $data['label'];

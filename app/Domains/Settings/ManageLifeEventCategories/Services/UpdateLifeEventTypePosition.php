@@ -69,14 +69,10 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
         $this->lifeEventCategory = $this->account()->lifeEventCategories()
             ->findOrFail($this->data['life_event_category_id']);
 
-        $this->lifeEventType = LifeEventType::where('life_event_category_id', $this->data['life_event_category_id'])
+        $this->lifeEventType = $this->lifeEventCategory->lifeEventTypes()
             ->findOrFail($this->data['life_event_type_id']);
 
-        $this->pastPosition = DB::table('life_event_types')
-            ->where('life_event_category_id', $this->lifeEventCategory->id)
-            ->where('id', $this->lifeEventType->id)
-            ->select('position')
-            ->first()->position;
+        $this->pastPosition = $this->lifeEventType->position;
     }
 
     private function updatePosition(): void

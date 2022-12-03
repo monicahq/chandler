@@ -69,7 +69,7 @@ class UpdatePostTemplateSectionPosition extends BaseService implements ServiceIn
         $this->postTemplate = $this->account()->postTemplates()
             ->findOrFail($this->data['post_template_id']);
 
-        $this->postTemplateSection = PostTemplateSection::where('post_template_id', $this->data['post_template_id'])
+        $this->postTemplateSection = $this->postTemplate->postTemplateSections()
             ->findOrFail($this->data['post_template_section_id']);
 
         $this->pastPosition = $this->postTemplateSection->position;
