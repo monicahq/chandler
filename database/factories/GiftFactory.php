@@ -31,9 +31,7 @@ class GiftFactory extends Factory
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'budget' => $this->faker->randomNumber(),
-            'received_at' => $this->faker->dateTimeThisCentury(),
-            'given_at' => $this->faker->dateTimeThisCentury(),
-            'bought_at' => $this->faker->dateTimeThisCentury(),
+            'shareable_link' => $this->faker->uuid(),
         ];
     }
 }

@@ -13,6 +13,7 @@ use App\Models\ContactReminder;
 use App\Models\ContactTask;
 use App\Models\File;
 use App\Models\Gender;
+use App\Models\Gift;
 use App\Models\Goal;
 use App\Models\Group;
 use App\Models\Label;
@@ -170,6 +171,28 @@ class ContactTest extends TestCase
         $contact->loansAsLoanee()->sync([$loan->id => ['loaner_id' => $monica->id]]);
 
         $this->assertTrue($contact->loansAsLoanee()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gifts_as_recipient(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $gift = Gift::factory()->create();
+
+        $contact->giftsAsRecipient()->sync([$gift->id]);
+
+        $this->assertTrue($contact->giftsAsRecipient()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_gifts_as_donator(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $gift = Gift::factory()->create();
+
+        $contact->giftsAsDonator()->sync([$gift->id]);
+
+        $this->assertTrue($contact->giftsAsDonator()->exists());
     }
 
     /** @test */

@@ -50,6 +50,7 @@ class VaultIndexViewHelperTest extends TestCase
                     'groups' => env('APP_URL').'/vaults/'.$vault->id.'/groups',
                     'tasks' => env('APP_URL').'/vaults/'.$vault->id.'/tasks',
                     'files' => env('APP_URL').'/vaults/'.$vault->id.'/files',
+                    'gifts' => env('APP_URL').'/vaults/'.$vault->id.'/gifts',
                     'settings' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
                     'search' => env('APP_URL').'/vaults/'.$vault->id.'/search',
                     'get_most_consulted_contacts' => env('APP_URL').'/vaults/'.$vault->id.'/search/user/contact/mostConsulted',

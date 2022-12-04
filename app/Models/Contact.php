@@ -282,6 +282,28 @@ class Contact extends Model
     }
 
     /**
+     * Get the gifts associated with the contact as the person who receives the
+     * gift.
+     *
+     * @return BelongsToMany
+     */
+    public function giftsAsRecipient()
+    {
+        return $this->belongsToMany(Gift::class, 'gift_recipients', 'contact_id');
+    }
+
+    /**
+     * Get the gifts associated with the contact as the person who gives the
+     * gift.
+     *
+     * @return BelongsToMany
+     */
+    public function giftsAsDonator()
+    {
+        return $this->belongsToMany(Gift::class, 'gift_recipients', 'contact_id');
+    }
+
+    /**
      * Get the company associated with the contact.
      *
      * @return BelongsTo

@@ -50,6 +50,9 @@ class VaultIndexViewHelper
                     'files' => route('vault.files.index', [
                         'vault' => $vault->id,
                     ]),
+                    'gifts' => route('vault.gifts.index', [
+                        'vault' => $vault->id,
+                    ]),
                     'settings' => route('vault.settings.index', [
                         'vault' => $vault->id,
                     ]),

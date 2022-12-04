@@ -97,7 +97,9 @@ return new class() extends Migration
         Schema::dropIfExists('gift_occasions');
         Schema::dropIfExists('gift_states');
         Schema::dropIfExists('gifts');
+        Schema::dropIfExists('gift_state_history');
         Schema::dropIfExists('gift_donators');
         Schema::dropIfExists('gift_recipients');
+        Schema::dropIfExists('gift_ideas');
     }
 };

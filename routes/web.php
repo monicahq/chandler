@@ -90,6 +90,7 @@ use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumber
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
+use App\Domains\Vault\ManageGifts\Web\Controllers\GiftController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
@@ -332,6 +333,11 @@ Route::middleware([
                         Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
                     });
                 });
+            });
+
+            // gift center page
+            Route::prefix('gifts')->group(function () {
+                Route::get('', [GiftController::class, 'index'])->name('vault.gifts.index');
             });
 
             // vault files

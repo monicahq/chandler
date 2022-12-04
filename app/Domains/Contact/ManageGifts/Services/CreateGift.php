@@ -8,6 +8,7 @@ use App\Models\Gift;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class CreateGift extends BaseService implements ServiceInterface
 {
@@ -35,12 +36,9 @@ class CreateGift extends BaseService implements ServiceInterface
             'currency_id' => 'nullable|integer|exists:currencies,id',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
+            'budget' => 'nullable|integer',
             'donators_ids' => 'required',
             'recipients_ids' => 'required',
-            'budget' => 'nullable|integer',
-            'received_at' => 'nullable|date_format:Y-m-d',
-            'given_at' => 'nullable|date_format:Y-m-d',
-            'bought_at' => 'nullable|date_format:Y-m-d',
         ];
     }
 
@@ -101,12 +99,13 @@ class CreateGift extends BaseService implements ServiceInterface
     {
         $this->gift = Gift::create([
             'vault_id' => $this->data['vault_id'],
-            'type' => $this->data['type'],
+            'gift_occasion_id' => $this->valueOrNull($this->data, 'gift_occasion_id'),
+            'gift_state_id' => $this->valueOrNull($this->data, 'gift_state_id'),
             'name' => $this->data['name'],
             'description' => $this->valueOrNull($this->data, 'description'),
-            'amount_lent' => $this->valueOrNull($this->data, 'amount_lent'),
+            'budget' => $this->valueOrNull($this->data, 'budget'),
             'currency_id' => $this->valueOrNull($this->data, 'currency_id'),
-            'loaned_at' => $this->valueOrNull($this->data, 'loaned_at'),
+            'uuid' => (string) Str::uuid(),
         ]);
 
         foreach ($this->donatorsCollection as $donator) {
