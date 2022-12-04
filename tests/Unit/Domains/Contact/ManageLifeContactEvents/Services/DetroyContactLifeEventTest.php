@@ -12,11 +12,14 @@ use App\Models\LifeEventType;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class DetroyContactLifeEventTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @test */
     public function it_destroys_a_contact_life_event(): void
     {
