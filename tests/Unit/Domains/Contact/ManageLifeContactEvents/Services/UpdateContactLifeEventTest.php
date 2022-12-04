@@ -2,10 +2,11 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLifeContactEvents\Services;
 
-use App\Domains\Contact\ManageLifeContactEvents\Services\CreateContactLifeEvent;
+use App\Domains\Contact\ManageLifeContactEvents\Services\UpdateContactLifeEvent;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\ContactLifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\User;
@@ -14,10 +15,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateContactLifeEventTest extends TestCase
+class UpdateContactLifeEventTest extends TestCase
 {
     /** @test */
-    public function it_creates_a_contact_life_event(): void
+    public function it_updates_a_contact_life_event(): void
     {
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
@@ -26,7 +27,12 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
     /** @test */
@@ -37,7 +43,7 @@ class CreateContactLifeEventTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateContactLifeEvent())->execute($request);
+        (new UpdateContactLifeEvent())->execute($request);
     }
 
     /** @test */
@@ -53,7 +59,12 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
     /** @test */
@@ -69,7 +80,12 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
     /** @test */
@@ -84,7 +100,12 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
     /** @test */
@@ -99,7 +120,12 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
     /** @test */
@@ -115,10 +141,15 @@ class CreateContactLifeEventTest extends TestCase
         $lifeEventCategory = LifeEventCategory::factory()->create();
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, 'test');
+        $contactLifeEvent = ContactLifeEvent::factory()->create([
+            'contact_id' => $contact->id,
+            'life_event_type_id' => $lifeEventType->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $contact, $lifeEventType, $contactLifeEvent, 'test');
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, LifeEventType $life_event_type, string $summary): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, LifeEventType $life_event_type, ContactLifeEvent $life_event, string $summary): void
     {
         $request = [
             'account_id' => $account->id,
@@ -126,12 +157,13 @@ class CreateContactLifeEventTest extends TestCase
             'author_id' => $author->id,
             'contact_id' => $contact->id,
             'life_event_type_id' => $life_event_type->id,
+            'contact_life_event_id' => $life_event->id,
             'summary' => $summary,
             'started_at' => '2022-01-01',
             'ended_at' => '2022-12-31',
         ];
 
-        $lifeEvent = (new CreateContactLifeEvent())->execute($request);
+        $lifeEvent = (new UpdateContactLifeEvent())->execute($request);
 
         $this->assertDatabaseHas('contact_life_events', [
             'id' => $lifeEvent->id,
