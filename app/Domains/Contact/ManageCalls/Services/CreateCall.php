@@ -32,6 +32,7 @@ class CreateCall extends BaseService implements ServiceInterface
             'type' => 'required|string',
             'answered' => 'nullable|boolean',
             'who_initiated' => 'required|string',
+            'emotion_id' => 'nullable|integer|exists:emotions,id',
         ];
     }
 

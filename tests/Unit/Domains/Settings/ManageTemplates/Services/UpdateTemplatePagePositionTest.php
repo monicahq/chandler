@@ -133,6 +133,31 @@ class UpdateTemplatePagePositionTest extends TestCase
             'position' => 3,
         ]);
 
+        $request['new_position'] = 2;
+
+        $templatePage = (new UpdateTemplatePagePosition())->execute($request);
+
+        $this->assertDatabaseHas('template_pages', [
+            'id' => $templatePage1->id,
+            'template_id' => $template->id,
+            'position' => 1,
+        ]);
+        $this->assertDatabaseHas('template_pages', [
+            'id' => $templatePage3->id,
+            'template_id' => $template->id,
+            'position' => 3,
+        ]);
+        $this->assertDatabaseHas('template_pages', [
+            'id' => $templatePage4->id,
+            'template_id' => $template->id,
+            'position' => 4,
+        ]);
+        $this->assertDatabaseHas('template_pages', [
+            'id' => $templatePage->id,
+            'template_id' => $template->id,
+            'position' => 2,
+        ]);
+
         $this->assertInstanceOf(
             TemplatePage::class,
             $templatePage

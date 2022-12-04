@@ -164,6 +164,31 @@ class UpdateModulePositionTest extends TestCase
             'position' => 3,
         ]);
 
+        $request['new_position'] = 2;
+
+        $module = (new UpdateModulePosition())->execute($request);
+
+        $this->assertDatabaseHas('module_template_page', [
+            'module_id' => $module1->id,
+            'template_page_id' => $templatePage->id,
+            'position' => 1,
+        ]);
+        $this->assertDatabaseHas('module_template_page', [
+            'module_id' => $module3->id,
+            'template_page_id' => $templatePage->id,
+            'position' => 3,
+        ]);
+        $this->assertDatabaseHas('module_template_page', [
+            'module_id' => $module4->id,
+            'template_page_id' => $templatePage->id,
+            'position' => 4,
+        ]);
+        $this->assertDatabaseHas('module_template_page', [
+            'module_id' => $module->id,
+            'template_page_id' => $templatePage->id,
+            'position' => 2,
+        ]);
+
         $this->assertInstanceOf(
             Module::class,
             $module
