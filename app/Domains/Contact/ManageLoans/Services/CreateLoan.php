@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\ManageLoans\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
 use App\Models\Loan;
 use App\Services\BaseService;
 use Carbon\Carbon;
