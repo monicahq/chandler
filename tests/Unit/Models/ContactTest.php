@@ -20,6 +20,7 @@ use App\Models\Label;
 use App\Models\Loan;
 use App\Models\Note;
 use App\Models\Pet;
+use App\Models\Post;
 use App\Models\Pronoun;
 use App\Models\RelationshipType;
 use App\Models\Religion;
@@ -281,6 +282,16 @@ class ContactTest extends TestCase
         $contact->groups()->sync([$group->id]);
 
         $this->assertTrue($contact->groups()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_posts(): void
+    {
+        $contact = Contact::factory()->create();
+        $post = Post::factory()->create();
+        $contact->posts()->sync([$post->id]);
+
+        $this->assertTrue($contact->posts()->exists());
     }
 
     /** @test */
