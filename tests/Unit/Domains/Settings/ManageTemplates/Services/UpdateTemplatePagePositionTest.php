@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Settings\ManageTemplates\Services;
 
-use App\Domains\Settings\ManageTemplates\Services\UpdateTemplatePage;
 use App\Domains\Settings\ManageTemplates\Services\UpdateTemplatePagePosition;
 use App\Models\Account;
 use App\Models\Template;
@@ -40,7 +39,7 @@ class UpdateTemplatePagePositionTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new UpdateTemplatePage())->execute($request);
+        (new UpdateTemplatePagePosition())->execute($request);
     }
 
     /** @test */
