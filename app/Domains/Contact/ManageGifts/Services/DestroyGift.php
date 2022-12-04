@@ -3,15 +3,12 @@
 namespace App\Domains\Contact\ManageGifts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Loan;
+use App\Models\Gift;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class DestroyGift extends BaseService implements ServiceInterface
 {
-    private Loan $loan;
+    private Gift $gift;
 
     /**
      * Get the validation rules that apply to the service.
@@ -24,8 +21,7 @@ class DestroyGift extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'loan_id' => 'required|integer|exists:loans,id',
+            'gift_id' => 'required|integer|exists:gifts,id',
         ];
     }
 
@@ -39,13 +35,12 @@ class DestroyGift extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Destroy a loan.
+     * Destroy a gift.
      *
      * @param  array  $data
      */
@@ -53,35 +48,8 @@ class DestroyGift extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $this->loan = Loan::where('vault_id', $data['vault_id'])->findOrFail($data['loan_id']);
+        $this->gift = $this->vault->gifts()->findOrFail($data['gift_id']);
 
-        $this->loan->delete();
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
-
-        $this->log();
-    }
-
-    private function log(): void
-    {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'loan_destroyed',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-            ]),
-        ])->onQueue('low');
-
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'loan_destroyed',
-            'objects' => json_encode([]),
-        ])->onQueue('low');
+        $this->gift->delete();
     }
 }

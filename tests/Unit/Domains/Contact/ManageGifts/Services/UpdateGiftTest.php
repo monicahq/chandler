@@ -2,11 +2,12 @@
 
 namespace Tests\Unit\Domains\Contact\ManageGifts\Services;
 
-use App\Domains\Contact\ManageGifts\Services\CreateGift;
+use App\Domains\Contact\ManageGifts\Services\UpdateGift;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Currency;
+use App\Models\Gift;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,20 +15,23 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateGiftTest extends TestCase
+class UpdateGiftTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_gift(): void
+    public function it_updates_a_gift(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $donator = Contact::factory()->create(['vault_id' => $vault->id]);
         $recipient = Contact::factory()->create(['vault_id' => $vault->id]);
+        $gift = Gift::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $donator, $recipient);
+        $this->executeService($regis, $regis->account, $vault, $donator, $recipient, $gift);
     }
 
     /** @test */
@@ -38,7 +42,7 @@ class CreateGiftTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateGift())->execute($request);
+        (new UpdateGift())->execute($request);
     }
 
     /** @test */
@@ -52,8 +56,26 @@ class CreateGiftTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $donator = Contact::factory()->create(['vault_id' => $vault->id]);
         $recipient = Contact::factory()->create(['vault_id' => $vault->id]);
+        $gift = Gift::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $account, $vault, $donator, $recipient);
+        $this->executeService($regis, $account, $vault, $donator, $recipient, $gift);
+    }
+
+    /** @test */
+    public function it_fails_if_gift_doesnt_belong_to_vault(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $donator = Contact::factory()->create(['vault_id' => $vault->id]);
+        $recipient = Contact::factory()->create(['vault_id' => $vault->id]);
+        $gift = Gift::factory()->create();
+
+        $this->executeService($regis, $regis->account, $vault, $donator, $recipient, $gift);
     }
 
     /** @test */
@@ -66,8 +88,11 @@ class CreateGiftTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $donator = Contact::factory()->create();
         $recipient = Contact::factory()->create(['vault_id' => $vault->id]);
+        $gift = Gift::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $donator, $recipient);
+        $this->executeService($regis, $regis->account, $vault, $donator, $recipient, $gift);
     }
 
     /** @test */
@@ -80,8 +105,11 @@ class CreateGiftTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $donator = Contact::factory()->create(['vault_id' => $vault->id]);
         $recipient = Contact::factory()->create();
+        $gift = Gift::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $donator, $recipient);
+        $this->executeService($regis, $regis->account, $vault, $donator, $recipient, $gift);
     }
 
     /** @test */
@@ -94,11 +122,14 @@ class CreateGiftTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $donator = Contact::factory()->create(['vault_id' => $vault->id]);
         $recipient = Contact::factory()->create(['vault_id' => $vault->id]);
+        $gift = Gift::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $donator, $recipient);
+        $this->executeService($regis, $regis->account, $vault, $donator, $recipient, $gift);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $donator, Contact $recipient): void
+    private function executeService(User $author, Account $account, Vault $vault, Contact $donator, Contact $recipient, Gift $gift): void
     {
         $currency = Currency::factory()->create();
 
@@ -107,6 +138,7 @@ class CreateGiftTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'currency_id' => $currency->id,
+            'gift_id' => $gift->id,
             'name' => 'gift name',
             'description' => 'This is incredible',
             'budget' => 123,
@@ -114,7 +146,7 @@ class CreateGiftTest extends TestCase
             'recipients_ids' => [$recipient->id],
         ];
 
-        $gift = (new CreateGift())->execute($request);
+        $gift = (new UpdateGift())->execute($request);
 
         $this->assertDatabaseHas('gifts', [
             'id' => $gift->id,

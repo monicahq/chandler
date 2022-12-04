@@ -3,10 +3,7 @@
 namespace App\Domains\Contact\ManageGifts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Jobs\CreateAuditLog;
-use App\Jobs\CreateContactLog;
-use App\Models\Contact;
-use App\Models\Loan;
+use App\Models\Gift;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -14,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateGift extends BaseService implements ServiceInterface
 {
-    private Loan $loan;
+    private Gift $gift;
 
-    private Collection $loanersCollection;
+    private Collection $donatorsCollection;
 
-    private Collection $loaneesCollection;
+    private Collection $recipientsCollection;
 
     private array $data;
 
@@ -33,16 +30,15 @@ class UpdateGift extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'loan_id' => 'required|integer|exists:loans,id',
+            'gift_id' => 'required|integer|exists:gifts,id',
+            'gift_occasion_id' => 'nullable|integer|exists:gift_occasions,id',
+            'gift_state_id' => 'nullable|integer|exists:gift_states,id',
             'currency_id' => 'nullable|integer|exists:currencies,id',
-            'type' => 'required|string|max:255',
             'name' => 'required|string|max:65535',
             'description' => 'nullable|string|max:65535',
-            'loaner_ids' => 'required',
-            'loanee_ids' => 'required',
-            'amount_lent' => 'nullable|integer',
-            'loaned_at' => 'nullable|date_format:Y-m-d',
+            'budget' => 'nullable|integer',
+            'donators_ids' => 'required',
+            'recipients_ids' => 'required',
         ];
     }
 
@@ -56,102 +52,77 @@ class UpdateGift extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Update a loan.
+     * Update a gift.
      *
      * @param  array  $data
-     * @return Loan
+     * @return Gift
      */
-    public function execute(array $data): Loan
+    public function execute(array $data): Gift
     {
         $this->data = $data;
         $this->validate();
         $this->update();
-        $this->log();
 
-        return $this->loan;
+        return $this->gift;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->loan = Loan::where('vault_id', $this->data['vault_id'])
-            ->findOrFail($this->data['loan_id']);
+        $this->gift = $this->vault->gifts()->findOrFail($this->data['gift_id']);
 
-        $this->loanersCollection = collect();
-        foreach ($this->data['loaner_ids'] as $loanerId) {
-            $this->loanersCollection->push(
-                Contact::where('vault_id', $this->data['vault_id'])
-                ->findOrFail($loanerId)
+        $this->donatorsCollection = collect();
+        foreach ($this->data['donators_ids'] as $donatorId) {
+            $this->donatorsCollection->push(
+                $this->vault->contacts()->findOrFail($donatorId)
             );
         }
 
-        $this->loaneesCollection = collect();
-        foreach ($this->data['loanee_ids'] as $loaneeId) {
-            $this->loaneesCollection->push(
-                Contact::where('vault_id', $this->data['vault_id'])
-                ->findOrFail($loaneeId)
+        $this->recipientsCollection = collect();
+        foreach ($this->data['recipients_ids'] as $recipientId) {
+            $this->recipientsCollection->push(
+                $this->vault->contacts()->findOrFail($recipientId)
             );
+        }
+
+        if ($this->valueOrNull($this->data, 'gift_occasion_id')) {
+            $this->account()->giftOccasions()->findOrFail($this->data['gift_occasion_id']);
+        }
+
+        if ($this->valueOrNull($this->data, 'gift_state_id')) {
+            $this->account()->giftStates()->findOrFail($this->data['gift_state_id']);
         }
     }
 
     private function update(): void
     {
-        $this->loan->type = $this->data['type'];
-        $this->loan->name = $this->data['name'];
-        $this->loan->description = $this->valueOrNull($this->data, 'description');
-        $this->loan->amount_lent = $this->valueOrNull($this->data, 'amount_lent');
-        $this->loan->loaned_at = $this->valueOrNull($this->data, 'loaned_at');
-        $this->loan->currency_id = $this->valueOrNull($this->data, 'currency_id');
-        $this->loan->save();
+        $this->gift->name = $this->data['name'];
+        $this->gift->description = $this->valueOrNull($this->data, 'description');
+        $this->gift->budget = $this->valueOrNull($this->data, 'budget');
+        $this->gift->currency_id = $this->valueOrNull($this->data, 'currency_id');
+        $this->gift->gift_occasion_id = $this->valueOrNull($this->data, 'gift_occasion_id');
+        $this->gift->gift_state_id = $this->valueOrNull($this->data, 'gift_state_id');
+        $this->gift->save();
 
-        // remove all the current loaners and loanees
-        DB::table('contact_loan')->where('loan_id', $this->loan->id)->delete();
+        DB::table('gift_donators')->where('gift_id', $this->gift->id)->delete();
+        DB::table('gift_recipients')->where('gift_id', $this->gift->id)->delete();
 
-        foreach ($this->loanersCollection as $loaner) {
-            foreach ($this->loaneesCollection as $loanee) {
-                $loaner->loansAsLoaner()->syncWithoutDetaching([$this->loan->id => ['loanee_id' => $loanee->id]]);
-            }
+        foreach ($this->donatorsCollection as $donator) {
+            $donator->giftsAsDonator()->syncWithoutDetaching([$this->gift->id]);
+            $donator->last_updated_at = Carbon::now();
+            $donator->save();
         }
 
-        foreach ($this->loaneesCollection as $loanee) {
-            foreach ($this->loanersCollection as $loaner) {
-                $loanee->loansAsLoanee()->syncWithoutDetaching([$this->loan->id => ['loaner_id' => $loaner->id]]);
-            }
+        foreach ($this->recipientsCollection as $recipient) {
+            $recipient->giftsAsRecipient()->syncWithoutDetaching([$this->gift->id]);
+            $recipient->last_updated_at = Carbon::now();
+            $recipient->save();
         }
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
-    }
-
-    private function log(): void
-    {
-        CreateAuditLog::dispatch([
-            'account_id' => $this->author->account_id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'loan_updated',
-            'objects' => json_encode([
-                'contact_id' => $this->contact->id,
-                'contact_name' => $this->contact->name,
-                'loan_name' => $this->loan->name,
-            ]),
-        ])->onQueue('low');
-
-        CreateContactLog::dispatch([
-            'contact_id' => $this->contact->id,
-            'author_id' => $this->author->id,
-            'author_name' => $this->author->name,
-            'action_name' => 'loan_updated',
-            'objects' => json_encode([
-                'loan_name' => $this->loan->name,
-            ]),
-        ])->onQueue('low');
     }
 }

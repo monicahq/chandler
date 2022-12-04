@@ -63,8 +63,8 @@ class UpdateNote extends BaseService implements ServiceInterface
 
         if ($this->valueOrNull($data, 'emotion_id')) {
             Emotion::where('account_id', $data['account_id'])
-            ->where('id', $data['emotion_id'])
-            ->firstOrFail();
+                ->where('id', $data['emotion_id'])
+                ->firstOrFail();
         }
 
         $this->note->body = $data['body'];

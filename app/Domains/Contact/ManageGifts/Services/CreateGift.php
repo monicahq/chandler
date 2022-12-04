@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageGifts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
 use App\Models\Gift;
 use App\Services\BaseService;
 use Carbon\Carbon;
@@ -78,17 +77,23 @@ class CreateGift extends BaseService implements ServiceInterface
         $this->donatorsCollection = collect();
         foreach ($this->data['donators_ids'] as $donatorId) {
             $this->donatorsCollection->push(
-                Contact::where('vault_id', $this->data['vault_id'])
-                    ->findOrFail($donatorId)
+                $this->vault->contacts()->findOrFail($donatorId)
             );
         }
 
         $this->recipientsCollection = collect();
         foreach ($this->data['recipients_ids'] as $recipientId) {
             $this->recipientsCollection->push(
-                Contact::where('vault_id', $this->data['vault_id'])
-                    ->findOrFail($recipientId)
+                $this->vault->contacts()->findOrFail($recipientId)
             );
+        }
+
+        if ($this->valueOrNull($this->data, 'gift_occasion_id')) {
+            $this->account()->giftOccasions()->findOrFail($this->data['gift_occasion_id']);
+        }
+
+        if ($this->valueOrNull($this->data, 'gift_state_id')) {
+            $this->account()->giftStates()->findOrFail($this->data['gift_state_id']);
         }
     }
 
