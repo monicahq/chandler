@@ -3,13 +3,14 @@
 namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GroupType;
 use App\Models\GroupTypeRole;
-use App\Models\User;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 
 class DestroyGroupTypeRole extends BaseService implements ServiceInterface
 {
+    private GroupType $groupType;
+
     private GroupTypeRole $groupTypeRole;
 
     /**
@@ -49,10 +50,10 @@ class DestroyGroupTypeRole extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $groupType = $this->account()->groupTypes()
+        $this->groupType = $this->account()->groupTypes()
             ->findOrFail($data['group_type_id']);
 
-        $this->groupTypeRole = $groupType->groupTypeRoles()
+        $this->groupTypeRole = $this->groupType->groupTypeRoles()
             ->findOrFail($data['group_type_role_id']);
 
         $this->groupTypeRole->delete();
@@ -62,6 +63,8 @@ class DestroyGroupTypeRole extends BaseService implements ServiceInterface
 
     private function repositionEverything(): void
     {
-        DB::table('group_type_roles')->where('position', '>', $this->groupTypeRole->position)->decrement('position');
+        $this->groupType->groupTypeRoles()
+            ->where('position', '>', $this->groupTypeRole->position)
+            ->decrement('position');
     }
 }

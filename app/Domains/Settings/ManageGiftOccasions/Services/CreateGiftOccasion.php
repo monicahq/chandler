@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageGiftOccasions\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GiftOccasion;
-use App\Models\User;
 use App\Services\BaseService;
 
 class CreateGiftOccasion extends BaseService implements ServiceInterface

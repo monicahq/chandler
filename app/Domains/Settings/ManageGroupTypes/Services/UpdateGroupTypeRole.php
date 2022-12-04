@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GroupTypeRole;
-use App\Models\User;
 use App\Services\BaseService;
 
 class UpdateGroupTypeRole extends BaseService implements ServiceInterface

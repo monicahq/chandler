@@ -4,7 +4,6 @@ namespace App\Domains\Contact\ManageContactImportantDates\Services;
 
 use App\Helpers\ImportantDateHelper;
 use App\Interfaces\ServiceInterface;
-use App\Models\Address;
 use App\Models\ContactFeedItem;
 use App\Models\ContactImportantDate;
 use App\Services\BaseService;

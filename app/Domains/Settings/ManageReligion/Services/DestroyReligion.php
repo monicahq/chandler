@@ -4,9 +4,7 @@ namespace App\Domains\Settings\ManageReligion\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Religion;
-use App\Models\User;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 
 class DestroyReligion extends BaseService implements ServiceInterface
 {
@@ -58,6 +56,8 @@ class DestroyReligion extends BaseService implements ServiceInterface
 
     private function repositionEverything(): void
     {
-        DB::table('religions')->where('position', '>', $this->religion->position)->decrement('position');
+        $this->account()->religions()
+            ->where('position', '>', $this->religion->position)
+            ->decrement('position');
     }
 }

@@ -8,7 +8,6 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\User;
-use App\Models\Vault;
 use App\Services\BaseService;
 
 class GrantVaultAccessToUser extends BaseService implements ServiceInterface

@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageAddressTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyAddressType extends BaseService implements ServiceInterface

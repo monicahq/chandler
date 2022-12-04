@@ -4,9 +4,7 @@ namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GroupType;
-use App\Models\User;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 
 class DestroyGroupType extends BaseService implements ServiceInterface
 {
@@ -58,6 +56,8 @@ class DestroyGroupType extends BaseService implements ServiceInterface
 
     private function repositionEverything(): void
     {
-        DB::table('group_types')->where('position', '>', $this->groupType->position)->decrement('position');
+        $this->account()->groupTypes()
+            ->where('position', '>', $this->groupType->position)
+            ->decrement('position');
     }
 }

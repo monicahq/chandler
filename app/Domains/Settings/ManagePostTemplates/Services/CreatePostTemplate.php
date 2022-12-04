@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManagePostTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\PostTemplate;
-use App\Models\Template;
 use App\Services\BaseService;
 
 class CreatePostTemplate extends BaseService implements ServiceInterface

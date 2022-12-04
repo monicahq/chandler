@@ -3,9 +3,7 @@
 namespace App\Domains\Settings\ManageActivityTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Activity;
 use App\Models\ActivityType;
-use App\Models\User;
 use App\Services\BaseService;
 
 class UpdateActivityType extends BaseService implements ServiceInterface

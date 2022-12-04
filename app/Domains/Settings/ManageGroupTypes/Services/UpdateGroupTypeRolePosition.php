@@ -3,12 +3,14 @@
 namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\GroupType;
 use App\Models\GroupTypeRole;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\DB;
 
 class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterface
 {
+    private GroupType $groupType;
+
     private GroupTypeRole $groupTypeRole;
 
     private int $pastPosition;
@@ -63,16 +65,13 @@ class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterfac
     {
         $this->validateRules($this->data);
 
-        $groupType = $this->account()->groupTypes()
+        $this->groupType = $this->account()->groupTypes()
             ->findOrFail($this->data['group_type_id']);
 
-        $this->groupTypeRole = $groupType->groupTypeRoles()
+        $this->groupTypeRole = $this->groupType->groupTypeRoles()
             ->findOrFail($this->data['group_type_role_id']);
 
-        $this->pastPosition = DB::table('group_type_roles')
-            ->where('id', $this->groupTypeRole->id)
-            ->select('position')
-            ->first()->position;
+        $this->pastPosition = $this->groupTypeRole->position;
     }
 
     private function updatePosition(): void
@@ -83,8 +82,7 @@ class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterfac
             $this->updateDescendingPosition();
         }
 
-        DB::table('group_type_roles')
-            ->where('id', $this->groupTypeRole->id)
+        $this->groupTypeRole
             ->update([
                 'position' => $this->data['new_position'],
             ]);
@@ -92,7 +90,7 @@ class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterfac
 
     private function updateAscendingPosition(): void
     {
-        DB::table('group_type_roles')
+        $this->groupType->groupTypeRoles()
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -100,7 +98,7 @@ class UpdateGroupTypeRolePosition extends BaseService implements ServiceInterfac
 
     private function updateDescendingPosition(): void
     {
-        DB::table('group_type_roles')
+        $this->groupType->groupTypeRoles()
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');

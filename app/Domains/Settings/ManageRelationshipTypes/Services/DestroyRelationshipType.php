@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageRelationshipTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyRelationshipType extends BaseService implements ServiceInterface

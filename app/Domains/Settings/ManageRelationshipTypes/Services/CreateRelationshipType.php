@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageRelationshipTypes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\RelationshipType;
-use App\Models\User;
 use App\Services\BaseService;
 
 class CreateRelationshipType extends BaseService implements ServiceInterface

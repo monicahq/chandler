@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageNotificationChannels\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Services\BaseService;
 use Carbon\Carbon;

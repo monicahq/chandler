@@ -3,8 +3,6 @@
 namespace App\Domains\Settings\ManagePronouns\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Pronoun;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyPronoun extends BaseService implements ServiceInterface

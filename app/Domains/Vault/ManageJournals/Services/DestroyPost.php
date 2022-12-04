@@ -3,7 +3,6 @@
 namespace App\Domains\Vault\ManageJournals\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Journal;
 use App\Models\Post;
 use App\Services\BaseService;
 

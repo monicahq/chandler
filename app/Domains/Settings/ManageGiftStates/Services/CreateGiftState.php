@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageGiftStates\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GiftState;
-use App\Models\User;
 use App\Services\BaseService;
 
 class CreateGiftState extends BaseService implements ServiceInterface

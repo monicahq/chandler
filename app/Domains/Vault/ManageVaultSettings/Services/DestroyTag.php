@@ -3,8 +3,6 @@
 namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Tag;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyTag extends BaseService implements ServiceInterface

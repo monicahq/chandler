@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageTemplates\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
 use App\Models\TemplatePage;
 use App\Services\BaseService;
 

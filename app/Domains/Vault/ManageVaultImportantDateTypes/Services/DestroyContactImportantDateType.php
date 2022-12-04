@@ -4,7 +4,6 @@ namespace App\Domains\Vault\ManageVaultImportantDateTypes\Services;
 
 use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyContactImportantDateType extends BaseService implements ServiceInterface

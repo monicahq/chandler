@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageGroups\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Models\Group;
 use App\Models\GroupTypeRole;

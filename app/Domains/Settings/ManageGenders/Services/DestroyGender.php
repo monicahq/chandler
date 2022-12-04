@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageGenders\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Gender;
 use App\Services\BaseService;
 
 class DestroyGender extends BaseService implements ServiceInterface

@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageActivityTypes\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyActivityType extends BaseService implements ServiceInterface

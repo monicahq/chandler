@@ -3,7 +3,6 @@
 namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Template;
 use App\Models\Vault;
 use App\Services\BaseService;
 

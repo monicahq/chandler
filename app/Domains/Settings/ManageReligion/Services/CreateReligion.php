@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageReligion\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Religion;
-use App\Models\User;
 use App\Services\BaseService;
 
 class CreateReligion extends BaseService implements ServiceInterface

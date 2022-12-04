@@ -5,7 +5,6 @@ namespace App\Domains\Contact\ManageContact\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Models\Template;
 use App\Services\BaseService;
 use Carbon\Carbon;
 

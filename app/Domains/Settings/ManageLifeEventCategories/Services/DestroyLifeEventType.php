@@ -4,8 +4,6 @@ namespace App\Domains\Settings\ManageLifeEventCategories\Services;
 
 use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Models\Activity;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyLifeEventType extends BaseService implements ServiceInterface

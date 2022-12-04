@@ -4,7 +4,6 @@ namespace App\Domains\Settings\ManageGroupTypes\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\GroupType;
-use App\Models\User;
 use App\Services\BaseService;
 
 class CreateGroupType extends BaseService implements ServiceInterface

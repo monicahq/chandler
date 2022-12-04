@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageCallReasons\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyCallReason extends BaseService implements ServiceInterface

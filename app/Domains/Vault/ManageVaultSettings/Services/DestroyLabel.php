@@ -3,8 +3,6 @@
 namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Label;
-use App\Models\User;
 use App\Services\BaseService;
 
 class DestroyLabel extends BaseService implements ServiceInterface
