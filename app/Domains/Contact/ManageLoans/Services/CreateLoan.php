@@ -12,8 +12,10 @@ class CreateLoan extends BaseService implements ServiceInterface
 {
     private Loan $loan;
 
+    /** @var Collection<int,Contact> */
     private Collection $loanersCollection;
 
+    /** @var Collection<int,Contact> */
     private Collection $loaneesCollection;
 
     private array $data;
@@ -78,21 +80,15 @@ class CreateLoan extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->loanersCollection = collect();
-        foreach ($this->data['loaner_ids'] as $loanerId) {
-            $this->loanersCollection->push(
-                $this->vault->contacts()
-                    ->findOrFail($loanerId)
+        $this->loanersCollection = collect($this->data['loaner_ids'])
+            ->map(fn ($id) => $this->vault->contacts()
+                ->findOrFail($id)
             );
-        }
 
-        $this->loaneesCollection = collect();
-        foreach ($this->data['loanee_ids'] as $loaneeId) {
-            $this->loaneesCollection->push(
-                $this->vault->contacts()
-                    ->findOrFail($loaneeId)
+        $this->loaneesCollection = collect($this->data['loanee_ids'])
+            ->map(fn ($id) => $this->vault->contacts()
+                ->findOrFail($id)
             );
-        }
     }
 
     private function create(): void
