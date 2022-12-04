@@ -300,7 +300,7 @@ class Contact extends Model
      */
     public function giftsAsDonator()
     {
-        return $this->belongsToMany(Gift::class, 'gift_recipients', 'contact_id');
+        return $this->belongsToMany(Gift::class, 'gift_donators', 'contact_id');
     }
 
     /**

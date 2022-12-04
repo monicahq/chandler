@@ -68,9 +68,6 @@ class CreateGift extends BaseService implements ServiceInterface
         $this->validate();
         $this->create();
 
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
-
         return $this->gift;
     }
 
@@ -105,19 +102,19 @@ class CreateGift extends BaseService implements ServiceInterface
             'description' => $this->valueOrNull($this->data, 'description'),
             'budget' => $this->valueOrNull($this->data, 'budget'),
             'currency_id' => $this->valueOrNull($this->data, 'currency_id'),
-            'uuid' => (string) Str::uuid(),
+            'shareable_link' => (string) Str::uuid(),
         ]);
 
         foreach ($this->donatorsCollection as $donator) {
-            foreach ($this->recipientsCollection as $loanee) {
-                $donator->loansAsLoaner()->syncWithoutDetaching([$this->gift->id => ['loanee_id' => $loanee->id]]);
-            }
+            $donator->giftsAsDonator()->syncWithoutDetaching([$this->gift->id]);
+            $donator->last_updated_at = Carbon::now();
+            $donator->save();
         }
 
-        foreach ($this->recipientsCollection as $loanee) {
-            foreach ($this->donatorsCollection as $loaner) {
-                $loanee->loansAsLoanee()->syncWithoutDetaching([$this->gift->id => ['loaner_id' => $loaner->id]]);
-            }
+        foreach ($this->recipientsCollection as $recipient) {
+            $recipient->giftsAsRecipient()->syncWithoutDetaching([$this->gift->id]);
+            $recipient->last_updated_at = Carbon::now();
+            $recipient->save();
         }
     }
 }
