@@ -151,7 +151,7 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     name: Sonarcloud
-    if: ${{ ! startsWith(github.ref, 'dependabot/') }}
+    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) }}
 
     steps:
       - name: Checkout repository
@@ -204,7 +204,7 @@ jobs:
             -Dsonar.php.coverage.reportPaths=${{ steps.coverage.outputs.list }}
 
   ###########################
-  # Report tests results
+  # JUnit Test Report
   ###########################
   reporting:
     needs: tests
