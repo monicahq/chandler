@@ -147,7 +147,7 @@ jobs:
   ###########################
   # Reporting to sonarcloud
   ###########################
-  reporting:
+  sonarcloud:
     needs: tests
     runs-on: ubuntu-latest
     name: Sonarcloud
@@ -202,3 +202,29 @@ jobs:
             -Dsonar.projectVersion=${{ steps.version.outputs.value }}
             -Dsonar.php.tests.reportPath=./results/results.xml
             -Dsonar.php.coverage.reportPaths=${{ steps.coverage.outputs.list }}
+
+  ###########################
+  # Report tests results
+  ###########################
+  reporting:
+    needs: tests
+    runs-on: ubuntu-latest
+    name: reporting
+    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) && env.SONAR_TOKEN != '' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download results
+        uses: actions/download-artifact@v3
+        with:
+          name: results
+          path: results
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        with:
+          name: Tests report
+          path: results/${{ env.coverage-with }}/junit/*.xml
+          reporter: jest-junit
