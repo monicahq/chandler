@@ -210,7 +210,7 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     name: reporting
-    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) && env.SONAR_TOKEN != '' }}
+    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) }}
 
     steps:
       - name: Checkout repository
