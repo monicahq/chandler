@@ -136,9 +136,10 @@ jobs:
       - name: Fix results files
         run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" **/*.xml
         working-directory: results/${{ matrix.connection }}
+        if: success() || failure()
 
       - name: Store results
-        if: matrix.php-version == env.default-php-version
+        if: matrix.php-version == env.default-php-version && (success() || failure())
         uses: actions/upload-artifact@v3
         with:
           name: results
@@ -147,11 +148,11 @@ jobs:
   ###########################
   # Reporting to sonarcloud
   ###########################
-  reporting:
+  sonarcloud:
     needs: tests
     runs-on: ubuntu-latest
     name: Sonarcloud
-    if: ${{ ! startsWith(github.ref, 'dependabot/') }}
+    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) }}
 
     steps:
       - name: Checkout repository
@@ -202,3 +203,24 @@ jobs:
             -Dsonar.projectVersion=${{ steps.version.outputs.value }}
             -Dsonar.php.tests.reportPath=./results/results.xml
             -Dsonar.php.coverage.reportPaths=${{ steps.coverage.outputs.list }}
+
+  ###########################
+  # JUnit Test Report
+  ###########################
+  reporting:
+    needs: tests
+    runs-on: ubuntu-latest
+    name: Reporting
+    if: success() || failure()
+
+    steps:
+      - name: Download results
+        uses: actions/download-artifact@v3
+        with:
+          name: results
+          path: results
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: results/${{ env.coverage-with }}/junit/*.xml
