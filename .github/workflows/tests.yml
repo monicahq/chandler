@@ -136,9 +136,10 @@ jobs:
       - name: Fix results files
         run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" **/*.xml
         working-directory: results/${{ matrix.connection }}
+        if: success() || failure()
 
       - name: Store results
-        if: matrix.php-version == env.default-php-version
+        if: matrix.php-version == env.default-php-version && (success() || failure())
         uses: actions/upload-artifact@v3
         with:
           name: results
@@ -210,7 +211,7 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     name: reporting
-    if: ${{ ! startsWith(github.ref, 'dependabot/') && (success() || failure()) }}
+    if: success() || failure())
 
     steps:
       - name: Checkout repository
