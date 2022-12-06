@@ -156,7 +156,7 @@ abstract class BaseService
      */
     public function validateContactBelongsToVault(array $data): void
     {
-        $this->contact = Contact::where('vault_id', $data['vault_id'])
+        $this->contact = $this->vault->contacts()
             ->findOrFail($data['contact_id']);
     }
 
