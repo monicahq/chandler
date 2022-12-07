@@ -6,7 +6,6 @@ use App\Domains\Vault\ManageVaultImportantDateTypes\Services\CreateContactImport
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
-use App\Models\Template;
 use App\Models\Vault;
 use App\Services\BaseService;
 
@@ -67,7 +66,7 @@ class CreateVault extends BaseService implements ServiceInterface
     {
         // the vault default's template should be the first template in the
         // account, if it exists
-        $template = $this->author->account->templates()->first();
+        $template = $this->account()->templates()->first();
 
         $this->vault = Vault::create([
             'account_id' => $this->data['account_id'],

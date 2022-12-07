@@ -5,9 +5,6 @@ namespace App\Domains\Contact\ManageContact\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
-use App\Models\Gender;
-use App\Models\Pronoun;
-use App\Models\Template;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
@@ -24,6 +21,7 @@ class CreateContact extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
+            'uuid' => 'nullable|string',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'first_name' => 'nullable|string|max:255',
@@ -75,17 +73,17 @@ class CreateContact extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         if ($this->valueOrNull($this->data, 'gender_id')) {
-            Gender::where('account_id', $this->data['account_id'])
+            $this->account()->genders()
                 ->findOrFail($this->data['gender_id']);
         }
 
         if ($this->valueOrNull($this->data, 'pronoun_id')) {
-            Pronoun::where('account_id', $this->data['account_id'])
+            $this->account()->pronouns()
                 ->findOrFail($this->data['pronoun_id']);
         }
 
         if ($this->valueOrNull($this->data, 'template_id')) {
-            Template::where('account_id', $this->data['account_id'])
+            $this->account()->templates()
                 ->findOrFail($this->data['template_id']);
         }
     }
@@ -112,6 +110,9 @@ class CreateContact extends BaseService implements ServiceInterface
             'last_updated_at' => Carbon::now(),
             'listed' => $this->valueOrTrue($this->data, 'listed'),
         ]);
+        if (($uuid = $this->valueOrNull($this->data, 'uuid')) !== null) {
+            $this->contact->uuid = $uuid;
+        }
     }
 
     private function updateLastEditedDate(): void

@@ -59,6 +59,8 @@ class Module extends Model
 
     public const TYPE_PHOTOS = 'photos';
 
+    public const TYPE_POSTS = 'posts';
+
     public const TYPE_RELIGIONS = 'religions';
 
     /**
