@@ -2,13 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContact\Web\ViewHelpers;
 
+use App\Domains\Contact\ManageContact\Web\ViewHelpers\ContactShowMoveViewHelper;
 use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class ContactShowMoveViewHelper extends TestCase
+class ContactShowMoveViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -21,8 +22,13 @@ class ContactShowMoveViewHelper extends TestCase
             'permission' => Vault::PERMISSION_EDIT,
             'contact_id' => Contact::factory()->create()->id,
         ]);
+        $otherVault = Vault::factory()->create();
+        $user->vaults()->attach($otherVault->id, [
+            'permission' => Vault::PERMISSION_EDIT,
+            'contact_id' => Contact::factory()->create()->id,
+        ]);
         $contact = Contact::factory()->create([
-            'vault_id' => $vault->id,
+            'vault_id' => $otherVault->id,
         ]);
 
         $this->be($user);
@@ -37,9 +43,9 @@ class ContactShowMoveViewHelper extends TestCase
         );
         $this->assertEquals(
             [
-                'name' => $contact->name,
+                'move' => env('APP_URL').'/vaults/'.$otherVault->id.'/contacts/'.$contact->id.'/move',
             ],
-            $array['contact']
+            $array['url']
         );
     }
 }
