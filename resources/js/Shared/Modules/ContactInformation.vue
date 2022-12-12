@@ -48,7 +48,7 @@
             :type="'text'"
             :autofocus="true"
             :input-class="'block w-full'"
-            :required="false"
+            :required="true"
             :autocomplete="false"
             :maxlength="255"
             @esc-key-pressed="addContactInformationModalShown = false" />
@@ -81,7 +81,10 @@
           class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <!-- contact information -->
           <div v-if="editedContactInformationId != info.id" class="flex items-center justify-between px-3 py-2">
-            <a :href="info.data" class="text-blue-500 hover:underline">{{ info.label }} </a>
+            <div>
+              <a :href="info.data_with_protocol" class="text-blue-500 hover:underline">{{ info.data }}</a>
+              <span class="ml-2 text-xs text-gray-500">({{ info.label }})</span>
+            </div>
 
             <!-- actions -->
             <ul class="text-sm">
