@@ -200,7 +200,7 @@ export default {
       this.addContactInformationModalShown = true;
       this.form.errors = [];
       this.form.data = '';
-      this.form.contact_information_type_id = 0;
+      this.form.contact_information_type_id = this.data.contact_information_types[0].id;
 
       this.$nextTick(() => {
         this.$refs.newData.focus();
