@@ -341,6 +341,12 @@ Route::middleware([
                 Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
             });
 
+            // companies
+            Route::prefix('companies')->name('vault.companies.')->group(function () {
+                Route::get('', [VaultCompanyController::class, 'index'])->name('index');
+                Route::get('{company}', [VaultCompanyController::class, 'show'])->name('show');
+            });
+
             // vault settings
             Route::middleware(['atLeastVaultManager'])->group(function () {
                 Route::get('settings', [VaultSettingsController::class, 'index'])->name('vault.settings.index');
