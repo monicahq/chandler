@@ -15,10 +15,10 @@ class VaultSettingsTabVisibilityController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'show_group_tab' => $request->input('show_group_tab'),
-            'show_tasks_tab' => $request->input('show_tasks_tab'),
-            'show_files_tab' => $request->input('show_files_tab'),
-            'show_journal_tab' => $request->input('show_journal_tab'),
+            'show_group_tab' => $request->boolean('show_group_tab'),
+            'show_tasks_tab' => $request->boolean('show_tasks_tab'),
+            'show_files_tab' => $request->boolean('show_files_tab'),
+            'show_journal_tab' => $request->boolean('show_journal_tab'),
         ];
 
         (new UpdateVaultTabVisibility())->execute($data);
