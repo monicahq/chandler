@@ -21,7 +21,7 @@ onMounted(() => {
 });
 
 const update = () => {
-  axios.put(props.data.url.update_tab_visibility, form);
+  form.put(props.data.url.update_tab_visibility);
 };
 </script>
 
