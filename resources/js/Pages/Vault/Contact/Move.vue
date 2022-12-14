@@ -1,3 +1,23 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+
+const props = defineProps({
+  layoutData: Object,
+  data: Object,
+});
+
+const form = useForm({
+  other_vault_id: 0,
+});
+
+const move = (vault) => {
+  form.other_vault_id = vault.id;
+
+  form.post(props.data.url.move);
+};
+</script>
+
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <!-- breadcrumb -->
@@ -33,11 +53,11 @@
 
     <main class="relative sm:mt-24">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <h2 class="mb-6 text-center text-lg">Profile page of {{ data.contact.name }}</h2>
+        <h2 class="mb-6 text-center text-lg">Move {{ data.contact.name }} to another vault</h2>
         <div class="mb-6 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <!-- help -->
           <div
-            class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
+            class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900 dark:bg-slate-900">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 grow pr-2"
@@ -51,29 +71,23 @@
                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
 
-            <div>
-              <p v-if="data.templates.length > 0" class="mb-2">
-                Please choose one template below to tell Monica how this contact should be displayed. Templates let you
-                define which data should be diplayed on the contact page.
-              </p>
-              <p v-else>
-                It seems that there are no templates in the account yet. Please add at least template to your account
-                first, then associate this template with this contact.
-              </p>
-            </div>
+            <p>
+              You can move contacts between vaults. This change is immediate. You can only move contacts to vaults you
+              are part of. All the contacts data will move with it.
+            </p>
           </div>
 
-          <ul v-if="data.templates.length > 0" class="rounded-b bg-white dark:bg-gray-900">
+          <ul v-if="data.vaults" class="rounded-b bg-white dark:bg-gray-900">
             <li
-              v-for="template in data.templates"
-              :key="template.id"
+              v-for="vault in data.vaults"
+              :key="vault.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <div class="flex items-center justify-between px-5 py-2">
-                <span>{{ template.name }}</span>
+                <span>{{ vault.name }}</span>
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li class="inline cursor-pointer text-blue-500 hover:underline" @click="submit(template)">Use</li>
+                  <li class="inline cursor-pointer text-blue-500 hover:underline" @click="move(vault)">Choose</li>
                 </ul>
               </div>
             </li>
@@ -83,52 +97,6 @@
     </main>
   </layout>
 </template>
-
-<script>
-import Layout from '@/Shared/Layout.vue';
-
-export default {
-  components: {
-    Layout,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {
-      form: {
-        templateId: '',
-        errors: [],
-      },
-    };
-  },
-
-  methods: {
-    submit(template) {
-      this.form.templateId = template.id;
-
-      axios
-        .put(this.data.url.update, this.form)
-        .then((response) => {
-          localStorage.success = 'The template has been set';
-          this.$inertia.visit(response.data.data);
-        })
-        .catch((error) => {
-          this.form.errors = error.response.data;
-        });
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .item-list {
