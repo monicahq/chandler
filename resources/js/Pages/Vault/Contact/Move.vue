@@ -14,9 +14,7 @@ const form = useForm({
 const move = (vault) => {
   form.other_vault_id = vault.id;
 
-  form.post(props.data.url.move, {
-    onFinish: () => {},
-  });
+  form.post(props.data.url.move);
 };
 </script>
 
