@@ -261,6 +261,7 @@ Route::middleware([
                     // job information
                     Route::get('companies/list', [ContactModuleJobInformationController::class, 'index'])->name('contact.companies.list.index');
                     Route::put('jobInformation', [ContactModuleJobInformationController::class, 'update'])->name('contact.job_information.update');
+                    Route::delete('jobInformation', [ContactModuleJobInformationController::class, 'destroy'])->name('contact.job_information.destroy');
 
                     // religion
                     Route::put('religion', [ContactModuleReligionController::class, 'update'])->name('contact.religion.update');

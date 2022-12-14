@@ -23,9 +23,7 @@ defineProps({
               v-for="company in data.companies"
               :key="company.id"
               class="border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-              <inertia-link :href="company.url.show" class="mb-2 block text-blue-500 hover:underline">{{
-                company.name
-              }}</inertia-link>
+              <p>{{ company.name }}</p>
 
               <div v-if="company.contacts" class="relative flex -space-x-2 overflow-hidden py-1">
                 <div v-for="contact in company.contacts" :key="contact.id" class="inline-block">
