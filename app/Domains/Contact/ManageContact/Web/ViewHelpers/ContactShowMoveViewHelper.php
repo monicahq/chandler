@@ -14,9 +14,7 @@ class ContactShowMoveViewHelper
             ->withCount('contacts')
             ->orderBy('name', 'asc')
             ->get()
-            ->filter(function (Vault $vault) use ($contact) {
-                return $vault->id !== $contact->vault_id;
-            })
+            ->filter(fn (Vault $vault) => $vault->id !== $contact->vault_id)
             ->map(fn (Vault $vault) => [
                 'id' => $vault->id,
                 'name' => $vault->name,
