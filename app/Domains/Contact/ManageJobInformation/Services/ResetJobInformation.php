@@ -50,11 +50,6 @@ class ResetJobInformation extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        if (! is_null($this->valueOrNull($data, 'company_id'))) {
-            $this->company = $this->vault->companies()
-                ->findOrFail($data['company_id']);
-        }
-
         $this->contact->company_id = null;
         $this->contact->job_position = null;
         $this->contact->save();
