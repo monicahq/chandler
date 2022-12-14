@@ -51,15 +51,13 @@ class CompanyIndexViewHelperTest extends TestCase
             $array['name']
         );
         $this->assertEquals(
-            $company->type,
-            $array['type']
-        );
-        $this->assertEquals(
             [
                 0 => [
                     'id' => $contact->id,
                     'avatar' => $contact->avatar,
-                    'url' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id,
+                    'url' => [
+                        'show' => env('APP_URL').'/vaults/'.$contact->vault_id.'/contacts/'.$contact->id,
+                    ],
                 ],
             ],
             $array['contacts']->toArray()

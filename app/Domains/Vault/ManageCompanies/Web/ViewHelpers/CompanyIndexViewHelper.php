@@ -27,16 +27,17 @@ class CompanyIndexViewHelper
         return [
             'id' => $company->id,
             'name' => $company->name,
-            'type' => $company->type,
             'contacts' => $company->contacts()
                 ->get()
                 ->map(fn (Contact $contact) => [
                     'id' => $contact->id,
                     'avatar' => $contact->avatar,
-                    'url' => route('contact.show', [
-                        'vault' => $contact->vault_id,
-                        'contact' => $contact->id,
-                    ]),
+                    'url' => [
+                        'show' => route('contact.show', [
+                            'vault' => $contact->vault_id,
+                            'contact' => $contact->id,
+                        ]),
+                    ],
                 ]),
             'url' => [
                 'show' => route('vault.companies.show', [
