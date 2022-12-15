@@ -336,6 +336,9 @@ Route::middleware([
                         Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
                         Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
                     });
+
+                    // slices of life
+                    Route::get('slices', [SliceOfLifeController::class, 'index'])->name('slices.index');
                 });
             });
 
