@@ -31,6 +31,10 @@ class JournalShowViewHelper
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                 ]),
+                'slice_index' => route('slices.index', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
             ],
         ];
     }
