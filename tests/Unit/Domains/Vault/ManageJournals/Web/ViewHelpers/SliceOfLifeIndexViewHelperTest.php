@@ -31,7 +31,7 @@ class SliceOfLifeIndexViewHelperTest extends TestCase
         $this->assertCount(3, $array);
         $this->assertEquals(
             [
-                'id' => $slice->id,
+                'id' => $journal->id,
                 'name' => 'name',
                 'url' => [
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
