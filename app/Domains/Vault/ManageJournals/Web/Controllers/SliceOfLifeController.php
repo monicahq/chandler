@@ -27,7 +27,7 @@ class SliceOfLifeController extends Controller
     public function store(Request $request, int $vaultId, int $journalId)
     {
         $vault = Vault::findOrFail($vaultId);
-        $journal = $vault->journals()->findOrFail($journalId);
+        $vault->journals()->findOrFail($journalId);
 
         $data = [
             'account_id' => Auth::user()->account_id,

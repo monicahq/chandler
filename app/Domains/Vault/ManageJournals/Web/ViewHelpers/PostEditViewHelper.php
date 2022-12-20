@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Journal;
 use App\Models\Post;
 use App\Models\PostSection;
+use App\Models\SliceOfLife;
 use App\Models\Tag;
 
 class PostEditViewHelper
@@ -42,11 +43,18 @@ class PostEditViewHelper
             ->get()
             ->map(fn (Contact $contact) => self::dtoContact($contact));
 
+        $slices = $journal->slicesOfLife()->get()->map(fn (SliceOfLife $slice) => [
+            'id' => $slice->id,
+            'name' => $slice->name,
+        ]);
+
         return [
             'id' => $post->id,
             'title' => $post->title,
             'sections' => $sectionsCollection,
             'contacts' => $contacts,
+            'slice' => $post->sliceOfLife ? self::dtoSlice($journal, $post->sliceOfLife) : null,
+            'slices' => $slices,
             'statistics' => PostHelper::statistics($post),
             'tags_in_post' => $tagsAssociatedWithPostCollection,
             'tags_in_vault' => $tagsInVaultCollection,
@@ -65,6 +73,16 @@ class PostEditViewHelper
                     'post' => $post->id,
                 ]),
                 'tag_store' => route('post.tag.store', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                    'post' => $post->id,
+                ]),
+                'slice_store' => route('post.slices.update', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                    'post' => $post->id,
+                ]),
+                'slice_reset' => route('post.slices.destroy', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                     'post' => $post->id,
@@ -115,6 +133,21 @@ class PostEditViewHelper
                 'show' => route('contact.show', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoSlice(Journal $journal, SliceOfLife $slice): array
+    {
+        return [
+            'id' => $slice->id,
+            'name' => $slice->name,
+            'url' => [
+                'show' => route('slices.show', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                    'slice' => $slice->id,
                 ]),
             ],
         ];

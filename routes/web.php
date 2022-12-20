@@ -93,6 +93,7 @@ use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
@@ -336,6 +337,10 @@ Route::middleware([
                         Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
                         Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
                         Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
+
+                        // slices of life
+                        Route::put('slices', [PostSliceOfLifeController::class, 'update'])->name('post.slices.update');
+                        Route::delete('slices', [PostSliceOfLifeController::class, 'destroy'])->name('post.slices.destroy');
                     });
 
                     // slices of life

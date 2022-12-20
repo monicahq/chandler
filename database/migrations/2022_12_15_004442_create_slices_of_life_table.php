@@ -20,6 +20,11 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
         });
+
+        Schema::table('posts', function (Blueprint $table) {
+            $table->unsignedBigInteger('slice_of_life_id')->nullable()->after('journal_id');
+            $table->foreign('slice_of_life_id')->references('id')->on('slices_of_life')->onDelete('set null');
+        });
     }
 
     /**
@@ -30,5 +35,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('slices_of_life');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('slice_of_life_id');
+        });
     }
 };
