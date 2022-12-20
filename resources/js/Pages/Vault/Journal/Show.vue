@@ -163,6 +163,10 @@ defineProps({
                 <p class="text-sm text-gray-600">Jun 21 - Aug 12</p>
               </div>
             </div>
+
+            <div>
+              <inertia-link :href="data.url.slice_index" class="text-blue-500 hover:underline">View all</inertia-link>
+            </div>
           </div>
         </div>
       </div>

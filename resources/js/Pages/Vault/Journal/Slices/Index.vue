@@ -139,8 +139,9 @@ const submit = () => {
             <li
               v-for="slice in localSlices"
               :key="slice.id"
-              class="border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 sm:flex">
+              class="border-b border-gray-200 px-5 py-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <inertia-link :href="slice.url.show" class="text-blue-500 hover:underline">{{ slice.name }}</inertia-link>
+              <span v-if="slice.date_range" class="mt-1 block text-xs">{{ slice.date_range }}</span>
             </li>
           </ul>
         </div>

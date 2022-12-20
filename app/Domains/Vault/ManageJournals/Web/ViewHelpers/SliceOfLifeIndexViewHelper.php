@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\SliceOfLifeHelper;
 use App\Models\Journal;
 use App\Models\SliceOfLife;
 
@@ -40,6 +41,7 @@ class SliceOfLifeIndexViewHelper
         return [
             'id' => $slice->id,
             'name' => $slice->name,
+            'date_range' => SliceOfLifeHelper::getDateRange($slice),
             'url' => [
                 'show' => route('slices.show', [
                     'vault' => $slice->journal->vault_id,
