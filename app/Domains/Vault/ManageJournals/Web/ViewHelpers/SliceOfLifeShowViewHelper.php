@@ -2,12 +2,32 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\DateHelper;
+use App\Helpers\SliceOfLifeHelper;
+use App\Models\Post;
 use App\Models\SliceOfLife;
+use Illuminate\Support\Str;
 
 class SliceOfLifeShowViewHelper
 {
     public static function data(SliceOfLife $slice): array
     {
+        $posts = $slice->posts()->orderBy('written_at', 'desc')->get()->map(fn (Post $post) => [
+            'id' => $post->id,
+            'title' => $post->title,
+            'excerpt' => $post->excerpt,
+            'written_at_day' => Str::upper(DateHelper::formatShortDay($post->written_at)),
+            'written_at_day_number' => DateHelper::formatDayNumber($post->written_at),
+            'written_at' => DateHelper::formatDate($post->written_at),
+            'url' => [
+                'show' => route('post.show', [
+                    'vault' => $post->journal->vault_id,
+                    'journal' => $post->journal_id,
+                    'post' => $post->id,
+                ]),
+            ],
+        ]);
+
         return [
             'journal' => [
                 'id' => $slice->journal->id,
@@ -19,17 +39,8 @@ class SliceOfLifeShowViewHelper
                     ]),
                 ],
             ],
-            'slice' => [
-                'id' => $slice->id,
-                'name' => $slice->name,
-                'url' => [
-                    'show' => route('slices.show', [
-                        'vault' => $slice->journal->vault_id,
-                        'journal' => $slice->journal_id,
-                        'slice' => $slice->id,
-                    ]),
-                ],
-            ],
+            'slice' => self::dtoSlice($slice),
+            'posts' => $posts,
         ];
     }
 
@@ -38,6 +49,7 @@ class SliceOfLifeShowViewHelper
         return [
             'id' => $slice->id,
             'name' => $slice->name,
+            'date_range' => SliceOfLifeHelper::getDateRange($slice),
             'url' => [
                 'show' => route('slices.show', [
                     'vault' => $slice->journal->vault_id,

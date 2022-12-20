@@ -4,6 +4,7 @@ namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
 use App\Domains\Vault\ManageJournals\Services\CreateSliceOfLife;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeIndexViewHelper;
+use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
@@ -42,5 +43,17 @@ class SliceOfLifeController extends Controller
         return response()->json([
             'data' => SliceOfLifeIndexViewHelper::dtoSlice($slice),
         ], 201);
+    }
+
+    public function show(Request $request, int $vaultId, int $journalId, int $sliceOfLifeId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $journal = $vault->journals()->findOrFail($journalId);
+        $slice = $journal->slicesOfLife()->findOrFail($sliceOfLifeId);
+
+        return Inertia::render('Vault/Journal/Slices/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => SliceOfLifeShowViewHelper::data($slice),
+        ]);
     }
 }

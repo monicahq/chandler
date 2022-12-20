@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeIndexViewHelper;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Models\Journal;
 use App\Models\SliceOfLife;
@@ -40,16 +39,6 @@ class SliceOfLifeShowViewHelperTest extends TestCase
             ],
             $array['journal']
         );
-        $this->assertEquals(
-            [
-                'id' => $slice->id,
-                'name' => 'this is a title',
-                'url' => [
-                    'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
-                ],
-            ],
-            $array['slice']
-        );
     }
 
     /** @test */
@@ -69,11 +58,12 @@ class SliceOfLifeShowViewHelperTest extends TestCase
             [
                 'id' => $slice->id,
                 'name' => 'this is a title',
+                'date_range' => null,
                 'url' => [
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                 ],
             ],
-            SliceOfLifeIndexViewHelper::dtoSlice($slice)
+            SliceOfLifeShowViewHelper::dtoSlice($slice)
         );
     }
 }

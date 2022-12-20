@@ -58,7 +58,7 @@ class JournalShowViewHelperTest extends TestCase
             'name' => 'My Journal',
             'description' => 'My Journal Description',
         ]);
-        $post = Post::factory()->create([
+        Post::factory()->create([
             'journal_id' => $journal->id,
             'title' => 'My Post',
             'written_at' => '2020-01-01',
