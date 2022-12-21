@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\File;
 use App\Models\Post;
 use App\Models\SliceOfLife;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -29,18 +28,5 @@ class SliceOfLifeTest extends TestCase
         ]);
 
         $this->assertTrue($slice->posts()->exists());
-    }
-
-    /** @test */
-    public function it_has_one_file(): void
-    {
-        $slice = SliceOfLife::factory()->create([]);
-        $file = File::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
-        $contact->file_id = $file->id;
-        $contact->save();
-
-        $this->assertTrue($contact->file()->exists());
     }
 }
