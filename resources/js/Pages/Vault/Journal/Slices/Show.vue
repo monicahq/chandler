@@ -1,5 +1,6 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
+import ContactCard from '@/Shared/ContactCard.vue';
 
 defineProps({
   layoutData: Object,
@@ -47,6 +48,21 @@ defineProps({
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
+            <li class="relative mr-2 inline">
+              <inertia-link :href="data.url.slices_index" class="text-blue-500 hover:underline"
+                >Slices of life</inertia-link
+              >
+            </li>
+            <li class="relative mr-2 inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-breadcrumb relative inline h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
             <li class="inline">
               {{ data.slice.name }}
             </li>
@@ -80,7 +96,7 @@ defineProps({
               <span>{{ data.posts.length }} posts</span>
             </p>
 
-            <p class="flex items-center text-sm">
+            <p v-if="data.slice.date_range" class="mb-6 flex items-center text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -96,6 +112,15 @@ defineProps({
 
               {{ data.slice.date_range }}
             </p>
+
+            <div v-if="data.contacts.length > 0">
+              <p class="mb-2">Contacts in this slice</p>
+              <ul>
+                <li v-for="contact in data.contacts" :key="contact.id">
+                  <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- middle -->

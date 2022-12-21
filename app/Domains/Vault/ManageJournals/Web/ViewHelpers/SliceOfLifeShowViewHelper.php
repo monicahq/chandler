@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Helpers\SliceOfLifeHelper;
 use App\Models\Post;
@@ -12,7 +13,10 @@ class SliceOfLifeShowViewHelper
 {
     public static function data(SliceOfLife $slice): array
     {
-        $posts = $slice->posts()->orderBy('written_at', 'desc')->get()->map(fn (Post $post) => [
+        $posts = $slice->posts()->with('contacts')->orderBy('written_at', 'desc')->get();
+
+        // get the details of the posts
+        $postsCollection = $posts->map(fn (Post $post) => [
             'id' => $post->id,
             'title' => $post->title,
             'excerpt' => $post->excerpt,
@@ -28,6 +32,17 @@ class SliceOfLifeShowViewHelper
             ],
         ]);
 
+        // get the contacts in the posts
+        $contactsCollection = collect();
+        foreach ($posts as $post) {
+            $contacts = $post->contacts;
+
+            foreach ($contacts as $contact) {
+                $contactsCollection->push(ContactCardHelper::data($contact));
+            }
+        }
+        $contactsCollection = $contactsCollection->unique('id');
+
         return [
             'journal' => [
                 'id' => $slice->journal->id,
@@ -40,7 +55,14 @@ class SliceOfLifeShowViewHelper
                 ],
             ],
             'slice' => self::dtoSlice($slice),
-            'posts' => $posts,
+            'posts' => $postsCollection,
+            'contacts' => $contactsCollection,
+            'url' => [
+                'slices_index' => route('slices.index', [
+                    'vault' => $slice->journal->vault_id,
+                    'journal' => $slice->journal_id,
+                ]),
+            ],
         ];
     }
 

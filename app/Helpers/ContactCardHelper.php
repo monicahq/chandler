@@ -16,7 +16,7 @@ class ContactCardHelper
      * @param  User  $user
      * @return array
      */
-    public static function data(Contact $contact, User $user): array
+    public static function data(Contact $contact): array
     {
         return [
             'id' => $contact->id,

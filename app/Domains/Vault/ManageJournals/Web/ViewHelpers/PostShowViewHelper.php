@@ -34,7 +34,7 @@ class PostShowViewHelper
 
         $contacts = $post->contacts()
             ->get()
-            ->map(fn (Contact $contact) => ContactCardHelper::data($contact, $user));
+            ->map(fn (Contact $contact) => ContactCardHelper::data($contact));
 
         return [
             'id' => $post->id,
