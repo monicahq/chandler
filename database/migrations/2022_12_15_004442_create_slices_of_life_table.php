@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('slices_of_life', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('journal_id');
+            $table->unsignedBigInteger('file_id')->nullable();
             $table->string('name')->nullable();
             $table->timestamps();
             $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
         });
 
         Schema::table('posts', function (Blueprint $table) {

@@ -20,6 +20,7 @@ class SliceOfLife extends Model
      */
     protected $fillable = [
         'journal_id',
+        'file_id',
         'name',
     ];
 
@@ -41,5 +42,16 @@ class SliceOfLife extends Model
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the file associated with the slice of life.
+     * If it exists, it's the header image.
+     *
+     * @return BelongsTo
+     */
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(File::class);
     }
 }
