@@ -3,9 +3,11 @@
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
+use App\Helpers\SliceOfLifeHelper;
 use App\Helpers\SQLHelper;
 use App\Models\Journal;
 use App\Models\Post;
+use App\Models\SliceOfLife;
 use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
@@ -26,6 +28,7 @@ class JournalShowViewHelper
             'months' => $monthsCollection,
             'years' => self::yearsOfContentInJournal($journal),
             'tags' => self::tags($journal),
+            'slices' => self::slices($journal),
             'url' => [
                 'create' => route('post.create', [
                     'vault' => $journal->vault_id,
@@ -174,5 +177,26 @@ class JournalShowViewHelper
         }
 
         return $tagsCollection;
+    }
+
+    public static function slices(Journal $journal): Collection
+    {
+        $slicesCollection = $journal
+            ->slicesOfLife()
+            ->get()
+            ->map(fn (SliceOfLife $slice) => [
+                'id' => $slice->id,
+                'name' => $slice->name,
+                'date_range' => SliceOfLifeHelper::getDateRange($slice),
+                'url' => [
+                    'show' => route('slices.show', [
+                        'vault' => $journal->vault_id,
+                        'journal' => $journal->id,
+                        'slice' => $slice->id,
+                    ]),
+                ],
+            ]);
+
+        return $slicesCollection;
     }
 }

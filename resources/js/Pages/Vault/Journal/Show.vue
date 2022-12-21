@@ -140,27 +140,15 @@ defineProps({
 
             <!-- slices of life -->
             <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
-            <div class="mb-6">
+            <div v-for="slice in data.slices" :key="slice.id" class="mb-6">
               <img
                 class="h-32 w-full rounded-t"
                 src="https://images.unsplash.com/photo-1665328236871-4932f62b72de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
                 alt="" />
               <div
-                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                <p class="font-semibold">Trip to Venice</p>
-                <p class="text-sm text-gray-600">Jan 23 - Mar 20</p>
-              </div>
-            </div>
-
-            <div class="mb-6">
-              <img
-                class="h-32 w-full rounded-t"
-                src="https://images.unsplash.com/photo-1665324031594-382930e876df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80"
-                alt="" />
-              <div
-                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                <p class="font-semibold">Holiday 2022</p>
-                <p class="text-sm text-gray-600">Jun 21 - Aug 12</p>
+                class="rounded-b border-b border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                <inertia-link :href="slice.url.show" class="font-semibold">{{ slice.name }}</inertia-link>
+                <p class="text-xs text-gray-600">{{ slice.date_range }}</p>
               </div>
             </div>
 

@@ -44,6 +44,7 @@ class SliceOfLifeIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => $slice->id,
                     'name' => 'this is a title',
+                    'date_range' => null,
                     'url' => [
                         'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                     ],
@@ -70,6 +71,7 @@ class SliceOfLifeIndexViewHelperTest extends TestCase
             [
                 'id' => $slice->id,
                 'name' => 'this is a title',
+                'date_range' => null,
                 'url' => [
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                 ],

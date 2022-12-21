@@ -28,7 +28,7 @@ class SliceOfLifeShowViewHelperTest extends TestCase
 
         $array = SliceOfLifeShowViewHelper::data($slice);
 
-        $this->assertCount(2, $array);
+        $this->assertCount(5, $array);
         $this->assertEquals(
             [
                 'id' => $journal->id,

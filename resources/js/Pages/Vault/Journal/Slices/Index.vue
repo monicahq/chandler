@@ -96,7 +96,7 @@ const submit = () => {
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
           <h3>
-            <span class="mr-1"> ✍️ </span>
+            <span class="mr-1"> 🍕 </span>
             All the slices of life in {{ data.journal.name }}
           </h3>
 

@@ -154,7 +154,8 @@ defineProps({
             <!-- blank state -->
             <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <p class="p-5 text-center">
-                {{ $t('vault.journal_show_blank') }}
+                A slice of life lets you group posts by something meaningful to you. Add a slice of life in a post to
+                see it here.
               </p>
             </div>
           </div>
