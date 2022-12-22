@@ -6,7 +6,6 @@ use App\Domains\Vault\ManageFiles\Web\ViewHelpers\VaultFileIndexViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Contact;
 use App\Models\File;
 use App\Models\Vault;
 use Illuminate\Http\Request;
@@ -19,10 +18,7 @@ class VaultFileController extends Controller
     {
         $vault = Vault::findOrFail($vaultId);
 
-        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->toArray();
-
-        $files = File::whereIn('contact_id', $contactIds)
-            ->with('contact')
+        $files = File::where('vault_id', $vaultId)
             ->orderBy('created_at', 'desc')
             ->paginate(25);
 
@@ -38,11 +34,8 @@ class VaultFileController extends Controller
     {
         $vault = Vault::findOrFail($vaultId);
 
-        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->toArray();
-
-        $files = File::whereIn('contact_id', $contactIds)
+        $files = File::where('vault_id', $vaultId)
             ->where('type', File::TYPE_PHOTO)
-            ->with('contact')
             ->orderBy('created_at', 'desc')
             ->paginate(25);
 
@@ -58,11 +51,8 @@ class VaultFileController extends Controller
     {
         $vault = Vault::findOrFail($vaultId);
 
-        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->toArray();
-
-        $files = File::whereIn('contact_id', $contactIds)
+        $files = File::where('vault_id', $vaultId)
             ->where('type', File::TYPE_DOCUMENT)
-            ->with('contact')
             ->orderBy('created_at', 'desc')
             ->paginate(25);
 
@@ -78,11 +68,8 @@ class VaultFileController extends Controller
     {
         $vault = Vault::findOrFail($vaultId);
 
-        $contactIds = Contact::where('vault_id', $vault->id)->select('id')->get()->toArray();
-
-        $files = File::whereIn('contact_id', $contactIds)
+        $files = File::where('vault_id', $vaultId)
             ->where('type', File::TYPE_AVATAR)
-            ->with('contact')
             ->orderBy('created_at', 'desc')
             ->paginate(25);
 
