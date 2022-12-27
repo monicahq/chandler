@@ -49,6 +49,8 @@ class JournalShowViewHelper
      * @param  int  $year
      * @param  User  $user
      * @return Collection
+     *
+     * @psalm-suppress NoValue
      */
     public static function postsInYear(Journal $journal, int $year, User $user): Collection
     {
