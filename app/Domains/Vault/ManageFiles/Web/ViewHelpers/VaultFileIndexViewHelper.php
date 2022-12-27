@@ -24,6 +24,10 @@ class VaultFileIndexViewHelper
                 'object' => self::getObjectDetails($file),
                 'url' => [
                     'download' => $file->cdn_url,
+                    'destroy' => route('vault.files.destroy', [
+                        'vault' => $file->vault_id,
+                        'file' => $file->id,
+                    ]),
                 ],
             ]);
         }
@@ -83,10 +87,6 @@ class VaultFileIndexViewHelper
                 'url' => [
                     'show' => route('contact.show', [
                         'vault' => $file->fileable->vault_id,
-                        'contact' => $file->fileable->id,
-                    ]),
-                    'destroy' => route('contact.avatar.destroy', [
-                        'vault' => $file->vault_id,
                         'contact' => $file->fileable->id,
                     ]),
                 ],

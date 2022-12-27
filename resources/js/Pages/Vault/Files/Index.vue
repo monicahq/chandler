@@ -61,7 +61,7 @@
                 :key="file.id"
                 class="items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 sm:flex">
                 <!-- left part -->
-                <div class="mb-4 block sm:mb-0 sm:flex">
+                <div class="mb-4 block items-center sm:mb-0 sm:flex">
                   <!-- created at -->
                   <p class="mr-2 text-sm text-gray-400">
                     {{ file.created_at }}
@@ -162,7 +162,7 @@ export default {
     destroy(file) {
       if (confirm(this.$t('contact.documents_delete_confirm'))) {
         axios
-          .delete(file.object.url.destroy)
+          .delete(file.url.destroy)
           .then(() => {
             this.flash(this.$t('contact.documents_delete_success'), 'success');
             var id = this.localFiles.findIndex((x) => x.id === file.id);

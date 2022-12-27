@@ -243,9 +243,7 @@ class ContactTest extends TestCase
     public function it_has_one_file(): void
     {
         $contact = Contact::factory()->create();
-        $file = File::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $file = File::factory()->create();
         $contact->file_id = $file->id;
         $contact->save();
 

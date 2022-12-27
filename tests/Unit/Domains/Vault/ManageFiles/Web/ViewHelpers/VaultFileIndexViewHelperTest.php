@@ -61,11 +61,11 @@ class VaultFileIndexViewHelperTest extends TestCase
                         ],
                         'url' => [
                             'show' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id,
-                            'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/avatar',
                         ],
                     ],
                     'url' => [
                         'download' => $file->cdn_url,
+                        'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/files/'.$file->id,
                     ],
                 ],
             ],

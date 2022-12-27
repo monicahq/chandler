@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageFiles\Web\Controllers;
 
+use App\Domains\Contact\ManageDocuments\Services\DestroyFile;
 use App\Domains\Vault\ManageFiles\Web\ViewHelpers\VaultFileIndexViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Helpers\PaginatorHelper;
@@ -79,5 +80,21 @@ class VaultFileController extends Controller
             'paginator' => PaginatorHelper::getData($files),
             'tab' => 'avatars',
         ]);
+    }
+
+    public function destroy(Request $request, int $vaultId, int $fileId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::id(),
+            'vault_id' => $vaultId,
+            'file_id' => $fileId,
+        ];
+
+        (new DestroyFile())->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 200);
     }
 }
