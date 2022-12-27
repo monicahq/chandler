@@ -13,11 +13,6 @@ use Illuminate\Support\Str;
  */
 class SyncTokenFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = SyncToken::class;
 
     /**
