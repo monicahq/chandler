@@ -8,6 +8,9 @@ use App\Models\Gender;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contact>
+ */
 class ContactFactory extends Factory
 {
     /**

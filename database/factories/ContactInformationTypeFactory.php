@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\ContactInformationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactInformationType>
+ */
 class ContactInformationTypeFactory extends Factory
 {
     /**

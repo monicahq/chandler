@@ -6,6 +6,9 @@ use App\Models\RelationshipGroupType;
 use App\Models\RelationshipType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RelationshipType>
+ */
 class RelationshipTypeFactory extends Factory
 {
     /**

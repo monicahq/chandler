@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\PostTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostTemplate>
+ */
 class PostTemplateFactory extends Factory
 {
     /**

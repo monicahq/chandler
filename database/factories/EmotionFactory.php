@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\Emotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Emotion>
+ */
 class EmotionFactory extends Factory
 {
     /**

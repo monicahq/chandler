@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Gender>
+ */
 class GenderFactory extends Factory
 {
     /**

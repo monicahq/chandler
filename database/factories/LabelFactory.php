@@ -6,6 +6,9 @@ use App\Models\Label;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Label>
+ */
 class LabelFactory extends Factory
 {
     /**

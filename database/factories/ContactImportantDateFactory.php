@@ -7,6 +7,9 @@ use App\Models\ContactImportantDate;
 use App\Models\ContactImportantDateType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactImportantDate>
+ */
 class ContactImportantDateFactory extends Factory
 {
     /**

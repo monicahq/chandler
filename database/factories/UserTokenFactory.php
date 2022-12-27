@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\UserToken;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserToken>
+ */
 class UserTokenFactory extends Factory
 {
     /**

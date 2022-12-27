@@ -6,6 +6,9 @@ use App\Models\Post;
 use App\Models\PostSection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostSection>
+ */
 class PostSectionFactory extends Factory
 {
     /**

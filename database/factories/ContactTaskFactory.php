@@ -7,6 +7,9 @@ use App\Models\ContactTask;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactTask>
+ */
 class ContactTaskFactory extends Factory
 {
     /**

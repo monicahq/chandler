@@ -6,6 +6,9 @@ use App\Models\PostTemplate;
 use App\Models\PostTemplateSection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostTemplateSection>
+ */
 class PostTemplateSectionFactory extends Factory
 {
     /**

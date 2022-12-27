@@ -6,6 +6,9 @@ use App\Models\Template;
 use App\Models\TemplatePage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TemplatePage>
+ */
 class TemplatePageFactory extends Factory
 {
     /**

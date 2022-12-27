@@ -6,6 +6,9 @@ use App\Models\UserNotificationChannel;
 use App\Models\UserNotificationSent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserNotificationChannel>
+ */
 class UserNotificationSentFactory extends Factory
 {
     /**

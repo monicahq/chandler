@@ -7,6 +7,9 @@ use App\Models\ContactLifeEvent;
 use App\Models\LifeEventType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactLifeEvent>
+ */
 class ContactLifeEventFactory extends Factory
 {
     /**

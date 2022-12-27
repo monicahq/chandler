@@ -6,6 +6,9 @@ use App\Models\Module;
 use App\Models\ModuleRow;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ModuleRow>
+ */
 class ModuleRowFactory extends Factory
 {
     /**

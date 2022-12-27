@@ -7,6 +7,9 @@ use App\Models\ContactInformation;
 use App\Models\ContactInformationType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContactInformation>
+ */
 class ContactInformationFactory extends Factory
 {
     /**

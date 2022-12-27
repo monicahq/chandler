@@ -6,6 +6,9 @@ use App\Models\Account;
 use App\Models\Module;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Module>
+ */
 class ModuleFactory extends Factory
 {
     /**
