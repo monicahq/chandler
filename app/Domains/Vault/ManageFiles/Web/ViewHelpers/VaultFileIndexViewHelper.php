@@ -85,6 +85,10 @@ class VaultFileIndexViewHelper
                         'vault' => $file->fileable->vault_id,
                         'contact' => $file->fileable->id,
                     ]),
+                    'destroy' => route('contact.avatar.destroy', [
+                        'vault' => $file->vault_id,
+                        'contact' => $file->fileable->id,
+                    ]),
                 ],
             ],
             default => [],

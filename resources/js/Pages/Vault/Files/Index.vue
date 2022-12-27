@@ -162,7 +162,7 @@ export default {
     destroy(file) {
       if (confirm(this.$t('contact.documents_delete_confirm'))) {
         axios
-          .delete(file.url.destroy)
+          .delete(file.object.url.destroy)
           .then(() => {
             this.flash(this.$t('contact.documents_delete_success'), 'success');
             var id = this.localFiles.findIndex((x) => x.id === file.id);
