@@ -2,8 +2,8 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
+use App\Domains\Vault\ManageJournals\Services\AddPostToSliceOfLife;
 use App\Domains\Vault\ManageJournals\Services\RemovePostFromSliceOfLife;
-use App\Domains\Vault\ManageJournals\Services\SetSliceOfLifeCoverImage;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
@@ -27,7 +27,7 @@ class PostSliceOfLifeController extends Controller
             'slice_of_life_id' => $request->input('slice_of_life_id'),
         ];
 
-        $slice = (new SetSliceOfLifeCoverImage())->execute($data);
+        $slice = (new AddPostToSliceOfLife())->execute($data);
 
         return response()->json([
             'data' => SliceOfLifeShowViewHelper::dtoSlice($slice),
