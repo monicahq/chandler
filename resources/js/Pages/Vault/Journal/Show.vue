@@ -141,16 +141,19 @@ defineProps({
             <!-- slices of life -->
             <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
             <div v-for="slice in data.slices" :key="slice.id" class="mb-6 last:mb-0">
-              <img class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
+              <img v-if="slice.cover_image" class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
               <div
-                class="rounded-b border-b border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                class="rounded-b border-b border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                :class="slice.cover_image ? '' : 'border-t'">
                 <inertia-link :href="slice.url.show" class="font-semibold">{{ slice.name }}</inertia-link>
                 <p class="text-xs text-gray-600">{{ slice.date_range }}</p>
               </div>
             </div>
 
             <div>
-              <inertia-link :href="data.url.slice_index" class="text-blue-500 hover:underline">View all</inertia-link>
+              <inertia-link :href="data.url.slice_index" class="text-sm text-blue-500 hover:underline"
+                >View all slices</inertia-link
+              >
             </div>
           </div>
         </div>

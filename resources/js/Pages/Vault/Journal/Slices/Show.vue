@@ -44,6 +44,12 @@ const onSuccess = (file) => {
 
   upload();
 };
+
+const destroyCoverImage = () => {
+  axios.delete(props.data.slice.url.destroy_cover_image).then((response) => {
+    localSlice.value = response.data.data;
+  });
+};
 </script>
 
 <template>
@@ -201,6 +207,7 @@ const onSuccess = (file) => {
               {{ localSlice.date_range }}
             </p>
 
+            <!-- contacts -->
             <div v-if="data.contacts.length > 0">
               <p class="mb-2">Contacts in this slice</p>
               <ul>
@@ -209,6 +216,15 @@ const onSuccess = (file) => {
                 </li>
               </ul>
             </div>
+
+            <ul class="text-xs">
+              <!-- remove cover image -->
+              <li v-if="localSlice.cover_image" class="mb-2">
+                <span @click.prevent="destroyCoverImage()" class="cursor-pointer text-blue-500 hover:underline">
+                  Remove cover image
+                </span>
+              </li>
+            </ul>
           </div>
 
           <!-- middle -->
