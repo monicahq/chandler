@@ -352,6 +352,7 @@ Route::middleware([
                         Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
                         Route::put('cover', [SliceOfLifeCoverImageController::class, 'update'])->name('slices.cover.update');
                         Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
+                        Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');
                     });
                 });
             });

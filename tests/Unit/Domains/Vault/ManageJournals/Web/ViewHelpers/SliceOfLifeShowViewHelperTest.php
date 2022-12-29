@@ -78,6 +78,7 @@ class SliceOfLifeShowViewHelperTest extends TestCase
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                     'update_cover_image' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/cover',
                     'destroy_cover_image' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/cover',
+                    'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                 ],
             ],
             SliceOfLifeShowViewHelper::dtoSlice($slice)

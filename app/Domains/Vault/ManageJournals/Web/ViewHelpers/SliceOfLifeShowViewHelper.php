@@ -92,6 +92,11 @@ class SliceOfLifeShowViewHelper
                     'journal' => $slice->journal_id,
                     'slice' => $slice->id,
                 ]),
+                'destroy' => route('slices.destroy', [
+                    'vault' => $slice->journal->vault_id,
+                    'journal' => $slice->journal_id,
+                    'slice' => $slice->id,
+                ]),
             ],
         ];
     }

@@ -50,6 +50,12 @@ const destroyCoverImage = () => {
     localSlice.value = response.data.data;
   });
 };
+
+const destroy = () => {
+  if (confirm('Are you sure?')) {
+    form.delete(props.data.slice.url.destroy);
+  }
+};
 </script>
 
 <template>
@@ -209,8 +215,8 @@ const destroyCoverImage = () => {
 
             <!-- contacts -->
             <div v-if="data.contacts.length > 0">
-              <p class="mb-2">Contacts in this slice</p>
-              <ul>
+              <p class="mb-2 text-sm font-bold">Contacts in this slice</p>
+              <ul class="mb-6">
                 <li v-for="contact in data.contacts" :key="contact.id">
                   <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
                 </li>
@@ -222,6 +228,12 @@ const destroyCoverImage = () => {
               <li v-if="localSlice.cover_image" class="mb-2">
                 <span @click.prevent="destroyCoverImage()" class="cursor-pointer text-blue-500 hover:underline">
                   Remove cover image
+                </span>
+              </li>
+              <!-- destroy slice -->
+              <li class="mb-2">
+                <span @click.prevent="destroy()" class="cursor-pointer text-blue-500 hover:underline">
+                  Delete the slice
                 </span>
               </li>
             </ul>

@@ -84,7 +84,7 @@ defineProps({
 
             <!-- list of posts -->
             <ul
-              v-if="data.months.length > 0"
+              v-if="data.months.length > 0 && data.years.length > 0"
               class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <!-- loop on months -->
               <li v-for="month in data.months" :key="month.id">
