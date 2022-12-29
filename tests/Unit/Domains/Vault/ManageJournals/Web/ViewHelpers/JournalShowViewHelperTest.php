@@ -132,6 +132,7 @@ class JournalShowViewHelperTest extends TestCase
                     'id' => $slice->id,
                     'name' => 'name of the slice of life',
                     'date_range' => null,
+                    'cover_image' => null,
                     'url' => [
                         'show' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
                     ],

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Services;
 
-use App\Domains\Vault\ManageJournals\Services\SetSliceOfLifeCoverImage;
+use App\Domains\Vault\ManageJournals\Services\AddPostToSliceOfLife;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Journal;
@@ -42,7 +42,7 @@ class AddPostToSliceOfLifeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new SetSliceOfLifeCoverImage())->execute($request);
+        (new AddPostToSliceOfLife())->execute($request);
     }
 
     /** @test */
@@ -140,7 +140,7 @@ class AddPostToSliceOfLifeTest extends TestCase
             'slice_of_life_id' => $slice->id,
         ];
 
-        (new SetSliceOfLifeCoverImage())->execute($request);
+        (new AddPostToSliceOfLife())->execute($request);
 
         $this->assertDatabaseHas('posts', [
             'id' => $post->id,

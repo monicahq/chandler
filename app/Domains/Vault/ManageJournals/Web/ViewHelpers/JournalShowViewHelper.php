@@ -190,6 +190,7 @@ class JournalShowViewHelper
                 'id' => $slice->id,
                 'name' => $slice->name,
                 'date_range' => SliceOfLifeHelper::getDateRange($slice),
+                'cover_image' => $slice->file ? 'https://ucarecdn.com/'.$slice->file->uuid.'/-/scale_crop/200x100/smart/-/format/auto/-/quality/smart_retina/' : null,
                 'url' => [
                     'show' => route('slices.show', [
                         'vault' => $journal->vault_id,
