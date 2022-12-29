@@ -4,14 +4,11 @@ namespace App\Domains\Vault\ManageJournals\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Post;
-use App\Models\SliceOfLife;
 use App\Services\BaseService;
 
 class RemovePostFromSliceOfLife extends BaseService implements ServiceInterface
 {
     private Post $post;
-
-    private SliceOfLife $slice;
 
     private array $data;
 

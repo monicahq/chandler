@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Domains\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
 use App\Models\Contact;
-use App\Models\User;
 
 class ContactCardHelper
 {
@@ -13,7 +12,6 @@ class ContactCardHelper
      * component.
      *
      * @param  Contact  $contact
-     * @param  User  $user
      * @return array
      */
     public static function data(Contact $contact): array
