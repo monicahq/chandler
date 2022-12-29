@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use App\Helpers\DateHelper;
 use App\Helpers\PostHelper;
 use App\Models\Contact;
 use App\Models\Journal;
@@ -9,10 +10,11 @@ use App\Models\Post;
 use App\Models\PostSection;
 use App\Models\SliceOfLife;
 use App\Models\Tag;
+use App\Models\User;
 
 class PostEditViewHelper
 {
-    public static function data(Journal $journal, Post $post): array
+    public static function data(Journal $journal, Post $post, User $user): array
     {
         $sectionsCollection = $post->postSections()
             ->orderBy('position')
@@ -51,6 +53,8 @@ class PostEditViewHelper
         return [
             'id' => $post->id,
             'title' => $post->title,
+            'date' => DateHelper::format($post->written_at, $user),
+            'editable_date' => $post->written_at->format('Y-m-d'),
             'sections' => $sectionsCollection,
             'contacts' => $contacts,
             'slice' => $post->sliceOfLife ? self::dtoSlice($journal, $post->sliceOfLife) : null,
