@@ -134,7 +134,7 @@ const destroy = () => {
             @success="onSuccess"
             @error="onError">
             <div
-              class="mb-10 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
+              class="mb-6 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -176,10 +176,14 @@ const destroy = () => {
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="p-3 sm:p-0">
-            <!-- years -->
-            <h1 class="mb-8 text-2xl">{{ localSlice.name }}</h1>
+            <!-- slice name -->
+            <h1 class="text-2xl">{{ localSlice.name }}</h1>
 
-            <p class="mb-2 flex items-center text-sm">
+            <!-- slice description -->
+            <p v-if="localSlice.description" class="mt-2 mb-8">{{ localSlice.description }}</p>
+
+            <!-- number of posts -->
+            <p class="mt-8 mb-6 flex items-center text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -196,6 +200,7 @@ const destroy = () => {
               <span>{{ data.posts.length }} posts</span>
             </p>
 
+            <!-- date range -->
             <p v-if="localSlice.date_range" class="mb-6 flex items-center text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -224,6 +229,12 @@ const destroy = () => {
             </div>
 
             <ul class="text-xs">
+              <!-- destroy slice -->
+              <li class="mb-2">
+                <inertia-link :href="data.slice.url.edit" class="cursor-pointer text-blue-500 hover:underline"
+                  >Edit</inertia-link
+                >
+              </li>
               <!-- remove cover image -->
               <li v-if="localSlice.cover_image" class="mb-2">
                 <span @click.prevent="destroyCoverImage()" class="cursor-pointer text-blue-500 hover:underline">

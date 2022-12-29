@@ -4,6 +4,8 @@ namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
 use App\Domains\Vault\ManageJournals\Services\CreateSliceOfLife;
 use App\Domains\Vault\ManageJournals\Services\DestroySliceOfLife;
+use App\Domains\Vault\ManageJournals\Services\UpdateSliceOfLife;
+use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeEditViewHelper;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeIndexViewHelper;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
@@ -56,6 +58,42 @@ class SliceOfLifeController extends Controller
         return Inertia::render('Vault/Journal/Slices/Show', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'data' => SliceOfLifeShowViewHelper::data($slice),
+        ]);
+    }
+
+    public function edit(Request $request, int $vaultId, int $journalId, int $sliceOfLifeId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $journal = $vault->journals()->findOrFail($journalId);
+        $slice = $journal->slicesOfLife()->findOrFail($sliceOfLifeId);
+
+        return Inertia::render('Vault/Journal/Slices/Edit', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => SliceOfLifeEditViewHelper::data($slice),
+        ]);
+    }
+
+    public function update(Request $request, int $vaultId, int $journalId, int $sliceOfLifeId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+        $vault->journals()->findOrFail($journalId);
+
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::id(),
+            'vault_id' => $vaultId,
+            'journal_id' => $journalId,
+            'slice_of_life_id' => $sliceOfLifeId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+
+        $slice = (new UpdateSliceOfLife())->execute($data);
+
+        return Redirect::route('slices.show', [
+            'vault' => $vaultId,
+            'journal' => $journalId,
+            'slice' => $slice->id,
         ]);
     }
 

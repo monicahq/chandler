@@ -350,6 +350,8 @@ Route::middleware([
 
                     Route::prefix('slices/{slice}')->middleware(['slice'])->group(function () {
                         Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
+                        Route::get('edit', [SliceOfLifeController::class, 'edit'])->name('slices.edit');
+                        Route::put('', [SliceOfLifeController::class, 'update'])->name('slices.update');
                         Route::put('cover', [SliceOfLifeCoverImageController::class, 'update'])->name('slices.cover.update');
                         Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
                         Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');

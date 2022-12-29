@@ -22,6 +22,7 @@ class SliceOfLife extends Model
         'journal_id',
         'file_cover_image_id',
         'name',
+        'description',
     ];
 
     /**

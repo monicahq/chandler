@@ -95,15 +95,30 @@ defineProps({
           <div class="">
             <!-- contacts -->
             <div v-if="data.contacts.length > 0" class="mb-4">
-              <p class="mb-2 font-semibold">{{ $t('vault.journal_show_contacts') }}</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_contacts') }}</p>
 
               <div v-for="contact in data.contacts" :key="contact.id" class="mb-2 block">
                 <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
               </div>
             </div>
 
+            <!-- slice of life -->
+            <div v-if="data.sliceOfLife" class="mb-4">
+              <p class="mb-2 text-sm font-semibold">Slice of life</p>
+              <div class="mb-6 last:mb-0">
+                <div
+                  class="rounded border-b border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
+                  <inertia-link :href="data.sliceOfLife.url.show" class="font-semibold">{{
+                    data.sliceOfLife.name
+                  }}</inertia-link>
+                  <p class="text-xs text-gray-600">{{ data.sliceOfLife.date_range }}</p>
+                </div>
+              </div>
+            </div>
+
             <!-- options -->
-            <p class="mb-2 font-semibold">{{ $t('vault.journal_show_options') }}</p>
+            <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_options') }}</p>
             <ul class="mb-6 text-sm">
               <li class="flex items-center">
                 <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">Edit post</inertia-link>

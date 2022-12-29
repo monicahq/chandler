@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('journal_id');
             $table->unsignedBigInteger('file_cover_image_id')->nullable();
-            $table->string('name')->nullable();
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
             $table->foreign('file_cover_image_id')->references('id')->on('files')->onDelete('set null');

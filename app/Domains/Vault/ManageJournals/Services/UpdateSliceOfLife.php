@@ -25,7 +25,8 @@ class UpdateSliceOfLife extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'slice_of_life_id' => 'required|integer|exists:slices_of_life,id',
-            'name' => 'nullable|string|max:255',
+            'name' => 'string|max:255',
+            'description' => 'nullable|string|max:255',
         ];
     }
 
@@ -73,6 +74,7 @@ class UpdateSliceOfLife extends BaseService implements ServiceInterface
     private function update(): void
     {
         $this->sliceOfLife->name = $this->data['name'];
+        $this->sliceOfLife->description = $this->valueOrNull($this->data, 'description');
         $this->sliceOfLife->save();
     }
 }

@@ -72,10 +72,12 @@ class SliceOfLifeShowViewHelperTest extends TestCase
             [
                 'id' => $slice->id,
                 'name' => 'this is a title',
+                'description' => null,
                 'date_range' => null,
                 'cover_image' => 'https://ucarecdn.com/123/-/scale_crop/800x100/smart/-/format/auto/-/quality/smart_retina/',
                 'url' => [
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
+                    'edit' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/edit',
                     'update_cover_image' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/cover',
                     'destroy_cover_image' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/cover',
                     'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,

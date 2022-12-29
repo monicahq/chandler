@@ -123,6 +123,7 @@ class UpdateSliceOfLifeTest extends TestCase
             'journal_id' => $journal->id,
             'slice_of_life_id' => $sliceOfLife->id,
             'name' => 'name',
+            'description' => null,
         ];
 
         $sliceOfLife = (new UpdateSliceOfLife())->execute($request);
