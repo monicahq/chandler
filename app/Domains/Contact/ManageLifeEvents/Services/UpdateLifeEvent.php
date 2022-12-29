@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Domains\Contact\ManageLifeContactEvents\Services;
+namespace App\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\ContactLifeEvent;
+use App\Models\LifeEvent;
+use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
 
-class DestroyContactLifeEvent extends BaseService implements ServiceInterface
+class UpdateLifeEvent extends BaseService implements ServiceInterface
 {
-    private ContactLifeEvent $contactLifeEvent;
+    private LifeEvent $lifeEvent;
 
     private array $data;
 
@@ -25,7 +26,11 @@ class DestroyContactLifeEvent extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'contact_id' => 'required|integer|exists:contacts,id',
+            'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'contact_life_event_id' => 'required|integer|exists:contact_life_events,id',
+            'summary' => 'required|string|max:255',
+            'started_at' => 'date|date_format:Y-m-d',
+            'ended_at' => 'date|date_format:Y-m-d',
         ];
     }
 
@@ -45,26 +50,41 @@ class DestroyContactLifeEvent extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a contact activity.
+     * Update a contact event.
      *
      * @param  array  $data
+     * @return LifeEvent
      */
-    public function execute(array $data): void
+    public function execute(array $data): LifeEvent
     {
         $this->data = $data;
         $this->validate();
-
-        $this->contactLifeEvent->delete();
+        $this->update();
 
         $this->contact->last_updated_at = Carbon::now();
         $this->contact->save();
+
+        return $this->lifeEvent;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->contactLifeEvent = $this->contact->contactLifeEvents()
+        $this->lifeEvent = $this->contact->contactLifeEvents()
             ->findOrFail($this->data['contact_life_event_id']);
+
+        $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
+
+        $this->account()->lifeEventCategories()
+            ->findOrFail($lifeEventType->lifeEventCategory->id);
+    }
+
+    private function update(): void
+    {
+        $this->lifeEvent->summary = $this->data['summary'];
+        $this->lifeEvent->started_at = $this->data['started_at'];
+        $this->lifeEvent->ended_at = $this->data['ended_at'];
+        $this->lifeEvent->save();
     }
 }

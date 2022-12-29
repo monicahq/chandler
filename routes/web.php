@@ -35,8 +35,6 @@ use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionCont
 use App\Domains\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Domains\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Domains\Settings\CancelAccount\Web\Controllers\CancelAccountController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivityTypesController;
 use App\Domains\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
@@ -485,17 +483,6 @@ Route::middleware([
                 Route::post('callReasonTypes/{callReasonType}/reasons', [PersonalizeCallReasonsController::class, 'store'])->name('call_reasons.store');
                 Route::put('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'update'])->name('call_reasons.update');
                 Route::delete('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'destroy'])->name('call_reasons.destroy');
-
-                // activity types
-                Route::get('activityTypes', [PersonalizeActivityTypesController::class, 'index'])->name('activity.index');
-                Route::post('activityTypes', [PersonalizeActivityTypesController::class, 'store'])->name('activity.type.store');
-                Route::put('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'update'])->name('activity.type.update');
-                Route::delete('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'destroy'])->name('activity.type.destroy');
-
-                // activities
-                Route::post('activityTypes/{activityType}/activities', [PersonalizeActivitiesController::class, 'store'])->name('activity.store');
-                Route::put('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'update'])->name('activity.update');
-                Route::delete('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'destroy'])->name('activity.destroy');
 
                 // life event categories
                 Route::get('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'index'])->name('life_event_categories.index');

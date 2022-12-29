@@ -210,4 +210,14 @@ class Vault extends Model
     {
         return $this->hasMany(File::class);
     }
+
+    /**
+     * Get the life events associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function lifeEvents(): HasMany
+    {
+        return $this->hasMany(LifeEvent::class);
+    }
 }

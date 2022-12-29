@@ -138,7 +138,7 @@ class LifeEventType extends Model
      */
     public function lifeEvents(): HasMany
     {
-        return $this->hasMany(ContactLifeEvent::class);
+        return $this->hasMany(LifeEvent::class);
     }
 
     /**
