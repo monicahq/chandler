@@ -3,6 +3,7 @@
 namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
+use App\Models\File;
 use App\Models\Journal;
 use App\Models\SliceOfLife;
 use App\Models\Vault;
@@ -16,6 +17,7 @@ class SliceOfLifeShowViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
+        config(['services.uploadcare.public_key' => '123']);
         $vault = Vault::factory()->create();
         $journal = Journal::factory()->create([
             'vault_id' => $vault->id,
@@ -28,7 +30,7 @@ class SliceOfLifeShowViewHelperTest extends TestCase
 
         $array = SliceOfLifeShowViewHelper::data($slice);
 
-        $this->assertCount(5, $array);
+        $this->assertCount(7, $array);
         $this->assertEquals(
             [
                 'id' => $journal->id,
@@ -38,6 +40,13 @@ class SliceOfLifeShowViewHelperTest extends TestCase
                 ],
             ],
             $array['journal']
+        );
+        $this->assertEquals(
+            '123',
+            $array['uploadcarePublicKey']
+        );
+        $this->assertTrue(
+            $array['canUploadFile']
         );
     }
 
@@ -53,14 +62,21 @@ class SliceOfLifeShowViewHelperTest extends TestCase
             'journal_id' => $journal->id,
             'name' => 'this is a title',
         ]);
+        $file = File::factory()->create([
+            'uuid' => '123',
+        ]);
+        $slice->file_cover_image_id = $file->id;
+        $slice->save();
 
         $this->assertEquals(
             [
                 'id' => $slice->id,
                 'name' => 'this is a title',
                 'date_range' => null,
+                'cover_image' => 'https://ucarecdn.com/123/-/scale_crop/800x100/smart/-/format/auto/-/quality/smart_retina/',
                 'url' => [
                     'show' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id,
+                    'update_cover_image' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/slices/'.$slice->id.'/cover',
                 ],
             ],
             SliceOfLifeShowViewHelper::dtoSlice($slice)

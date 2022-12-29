@@ -1,11 +1,49 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
+import Uploadcare from '@/Components/Uploadcare.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { onMounted, ref } from 'vue';
 
-defineProps({
+const props = defineProps({
   layoutData: Object,
   data: Object,
 });
+
+const localSlice = ref([]);
+
+const form = useForm({
+  uuid: null,
+  name: null,
+  original_url: null,
+  cdn_url: null,
+  mime_type: null,
+  size: null,
+});
+
+onMounted(() => {
+  localSlice.value = props.data.slice;
+});
+
+const upload = () => {
+  axios
+    .put(props.data.slice.url.update_cover_image, form)
+    .then((response) => {
+      localSlice.value = response.data.data;
+    })
+    .catch(() => {});
+};
+
+const onSuccess = (file) => {
+  form.uuid = file.uuid;
+  form.name = file.name;
+  form.original_url = file.originalUrl;
+  form.cdn_url = file.cdnUrl;
+  form.mime_type = file.mimeType;
+  form.size = file.size;
+
+  upload();
+};
 </script>
 
 <template>
@@ -64,7 +102,7 @@ defineProps({
               </svg>
             </li>
             <li class="inline">
-              {{ data.slice.name }}
+              {{ localSlice.name }}
             </li>
           </ul>
         </div>
@@ -73,30 +111,61 @@ defineProps({
 
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-4xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <!-- header image -->
-        <div
-          class="mb-10 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="mb-2 h-8 w-8 text-gray-500">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-          </svg>
+        <div>
+          <!-- header image -->
+          <uploadcare
+            v-if="data.uploadcarePublicKey && data.canUploadFile && !localSlice.cover_image"
+            :public-key="data.uploadcarePublicKey"
+            :tabs="'file'"
+            :multiple="false"
+            :preview-step="false"
+            @success="onSuccess"
+            @error="onError">
+            <div
+              class="mb-10 flex cursor-pointer flex-col items-center rounded-lg border border-gray-200 bg-white p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mb-2 h-8 w-8 text-gray-500">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
 
-          <p class="text-sm text-gray-500">Add a header image</p>
+              <p class="text-sm text-gray-500">Add a header image</p>
+            </div>
+          </uploadcare>
+
+          <!-- uploadcare api key not set -->
+          <div
+            v-if="!data.uploadcarePublicKey"
+            class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <p class="p-5 text-center">
+              {{ $t('contact.photos_key_missing') }}
+            </p>
+          </div>
+
+          <!-- not enough storage -->
+          <div
+            v-if="!data.canUploadFile"
+            class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+            <p class="bg-gray-100 p-3 text-center">
+              <span class="mr-1">⚠️</span> {{ $t('contact.photos_not_enough_storage') }}
+            </p>
+          </div>
+
+          <img :src="localSlice.cover_image" :alt="localSlice.uuid" class="mb-8 w-full rounded-lg" />
         </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="p-3 sm:p-0">
             <!-- years -->
-            <h1 class="mb-8 text-2xl">{{ data.slice.name }}</h1>
+            <h1 class="mb-8 text-2xl">{{ localSlice.name }}</h1>
 
             <p class="mb-2 flex items-center text-sm">
               <svg
@@ -115,7 +184,7 @@ defineProps({
               <span>{{ data.posts.length }} posts</span>
             </p>
 
-            <p v-if="data.slice.date_range" class="mb-6 flex items-center text-sm">
+            <p v-if="localSlice.date_range" class="mb-6 flex items-center text-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -129,7 +198,7 @@ defineProps({
                   d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
               </svg>
 
-              {{ data.slice.date_range }}
+              {{ localSlice.date_range }}
             </p>
 
             <div v-if="data.contacts.length > 0">

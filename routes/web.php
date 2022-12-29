@@ -96,6 +96,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -349,6 +350,7 @@ Route::middleware([
 
                     Route::prefix('slices/{slice}')->middleware(['slice'])->group(function () {
                         Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
+                        Route::put('cover', [SliceOfLifeCoverImageController::class, 'update'])->name('slices.cover.update');
                     });
                 });
             });

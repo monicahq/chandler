@@ -5,8 +5,8 @@ namespace Tests\Unit\Domains\Vault\ManageJournals\Services;
 use App\Domains\Vault\ManageJournals\Services\SetSliceOfLifeCoverImage;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
+use App\Models\File;
 use App\Models\Journal;
-use App\Models\Post;
 use App\Models\SliceOfLife;
 use App\Models\User;
 use App\Models\Vault;
@@ -15,23 +15,23 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class AddPostToSliceOfLifeTest extends TestCase
+class SetSliceOfLifeCoverImageTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_adds_a_post_to_a_slice_of_life(): void
+    public function it_adds_a_cover_image(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create(['vault_id' => $vault->id]);
         $slice = SliceOfLife::factory()->create(['journal_id' => $journal->id]);
-        $post = Post::factory()->create([
-            'journal_id' => $journal->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $regis->account, $vault, $journal, $file, $slice);
     }
 
     /** @test */
@@ -56,11 +56,11 @@ class AddPostToSliceOfLifeTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create(['vault_id' => $vault->id]);
         $slice = SliceOfLife::factory()->create(['journal_id' => $journal->id]);
-        $post = Post::factory()->create([
-            'journal_id' => $journal->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $account, $vault, $journal, $file, $slice);
     }
 
     /** @test */
@@ -73,11 +73,11 @@ class AddPostToSliceOfLifeTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create();
         $slice = SliceOfLife::factory()->create(['journal_id' => $journal->id]);
-        $post = Post::factory()->create([
-            'journal_id' => $journal->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $regis->account, $vault, $journal, $file, $slice);
     }
 
     /** @test */
@@ -90,15 +90,15 @@ class AddPostToSliceOfLifeTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create(['vault_id' => $vault->id]);
         $slice = SliceOfLife::factory()->create();
-        $post = Post::factory()->create([
-            'journal_id' => $journal->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $regis->account, $vault, $journal, $file, $slice);
     }
 
     /** @test */
-    public function it_fails_if_post_doesnt_belong_to_journal(): void
+    public function it_fails_if_file_doesnt_belong_to_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
@@ -107,9 +107,9 @@ class AddPostToSliceOfLifeTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create(['vault_id' => $vault->id]);
         $slice = SliceOfLife::factory()->create(['journal_id' => $journal->id]);
-        $post = Post::factory()->create();
+        $file = File::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $regis->account, $vault, $journal, $file, $slice);
     }
 
     /** @test */
@@ -122,29 +122,35 @@ class AddPostToSliceOfLifeTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
         $journal = Journal::factory()->create(['vault_id' => $vault->id]);
         $slice = SliceOfLife::factory()->create(['journal_id' => $journal->id]);
-        $post = Post::factory()->create([
-            'journal_id' => $journal->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal, $post, $slice);
+        $this->executeService($regis, $regis->account, $vault, $journal, $file, $slice);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Journal $journal, Post $post, SliceOfLife $slice): void
+    private function executeService(User $author, Account $account, Vault $vault, Journal $journal, File $file, SliceOfLife $slice): void
     {
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
             'vault_id' => $vault->id,
             'journal_id' => $journal->id,
-            'post_id' => $post->id,
             'slice_of_life_id' => $slice->id,
+            'file_id' => $file->id,
         ];
 
         (new SetSliceOfLifeCoverImage())->execute($request);
 
-        $this->assertDatabaseHas('posts', [
-            'id' => $post->id,
-            'slice_of_life_id' => $slice->id,
+        $this->assertDatabaseHas('slices_of_life', [
+            'id' => $slice->id,
+            'file_cover_image_id' => $file->id,
+        ]);
+
+        $this->assertDatabaseHas('files', [
+            'id' => $file->id,
+            'fileable_id' => $slice->id,
+            'fileable_type' => SliceOfLife::class,
         ]);
     }
 }

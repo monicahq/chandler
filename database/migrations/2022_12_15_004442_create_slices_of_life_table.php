@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('slices_of_life', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('journal_id');
-            $table->unsignedBigInteger('file_vault_id')->nullable();
+            $table->unsignedBigInteger('file_cover_image_id')->nullable();
             $table->string('name')->nullable();
             $table->timestamps();
             $table->foreign('journal_id')->references('id')->on('journals')->onDelete('cascade');
-            $table->foreign('file_vault_id')->references('id')->on('file_vaults')->onDelete('set null');
+            $table->foreign('file_cover_image_id')->references('id')->on('files')->onDelete('set null');
         });
 
         Schema::table('posts', function (Blueprint $table) {
@@ -36,7 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_vaults');
         Schema::dropIfExists('slices_of_life');
         Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('slice_of_life_id');

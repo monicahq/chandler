@@ -5,6 +5,7 @@ namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Helpers\SliceOfLifeHelper;
+use App\Helpers\StorageHelper;
 use App\Models\Post;
 use App\Models\SliceOfLife;
 use Illuminate\Support\Str;
@@ -57,6 +58,8 @@ class SliceOfLifeShowViewHelper
             'slice' => self::dtoSlice($slice),
             'posts' => $postsCollection,
             'contacts' => $contactsCollection,
+            'uploadcarePublicKey' => config('services.uploadcare.public_key'),
+            'canUploadFile' => StorageHelper::canUploadFile($slice->journal->vault->account),
             'url' => [
                 'slices_index' => route('slices.index', [
                     'vault' => $slice->journal->vault_id,
@@ -72,8 +75,14 @@ class SliceOfLifeShowViewHelper
             'id' => $slice->id,
             'name' => $slice->name,
             'date_range' => SliceOfLifeHelper::getDateRange($slice),
+            'cover_image' => $slice->file ? 'https://ucarecdn.com/'.$slice->file->uuid.'/-/scale_crop/800x100/smart/-/format/auto/-/quality/smart_retina/' : null,
             'url' => [
                 'show' => route('slices.show', [
+                    'vault' => $slice->journal->vault_id,
+                    'journal' => $slice->journal_id,
+                    'slice' => $slice->id,
+                ]),
+                'update_cover_image' => route('slices.cover.update', [
                     'vault' => $slice->journal->vault_id,
                     'journal' => $slice->journal_id,
                     'slice' => $slice->id,

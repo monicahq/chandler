@@ -20,7 +20,7 @@ class SliceOfLife extends Model
      */
     protected $fillable = [
         'journal_id',
-        'file_id',
+        'file_cover_image_id',
         'name',
     ];
 
@@ -52,6 +52,6 @@ class SliceOfLife extends Model
      */
     public function file(): BelongsTo
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'file_cover_image_id');
     }
 }
