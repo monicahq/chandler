@@ -44,7 +44,7 @@ class PostEditViewHelperTest extends TestCase
 
         $array = PostEditViewHelper::data($journal, $post, $user);
 
-        $this->assertCount(11, $array);
+        $this->assertCount(13, $array);
         $this->assertEquals(
             $post->id,
             $array['id']
