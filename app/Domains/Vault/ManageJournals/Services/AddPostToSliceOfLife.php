@@ -57,6 +57,7 @@ class AddPostToSliceOfLife extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
+        /** @phpstan-ignore-next-line */
         $this->post->slice_of_life_id = $this->slice ? $this->slice->id : null;
         $this->post->save();
 
