@@ -77,7 +77,7 @@ class Vault extends Model
      *
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -199,5 +199,15 @@ class Vault extends Model
     public function loans(): HasMany
     {
         return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the files associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
     }
 }

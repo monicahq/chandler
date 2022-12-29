@@ -2,17 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
 use App\Models\File;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\File>
+ */
 class FileFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = File::class;
 
     /**
@@ -23,7 +21,7 @@ class FileFactory extends Factory
     public function definition()
     {
         return [
-            'contact_id' => Contact::factory(),
+            'vault_id' => Vault::factory(),
             'uuid' => $this->faker->uuid,
             'original_url' => $this->faker->url,
             'cdn_url' => $this->faker->url,
