@@ -6,13 +6,11 @@ use App\Models\Journal;
 use App\Models\SliceOfLife;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Religion>
+ */
 class SliceOfLifeFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = SliceOfLife::class;
 
     /**
