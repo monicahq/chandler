@@ -5,7 +5,6 @@ namespace App\Domains\Contact\ManageLifeEvents\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEvent;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class DestroyLifeEvent extends BaseService implements ServiceInterface
 {
@@ -24,8 +23,7 @@ class DestroyLifeEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'contact_life_event_id' => 'required|integer|exists:contact_life_events,id',
+            'life_event_id' => 'required|integer|exists:life_events,id',
         ];
     }
 
@@ -39,13 +37,12 @@ class DestroyLifeEvent extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Destroy a contact activity.
+     * Destroy a life event.
      *
      * @param  array  $data
      */
@@ -55,16 +52,13 @@ class DestroyLifeEvent extends BaseService implements ServiceInterface
         $this->validate();
 
         $this->lifeEvent->delete();
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->lifeEvent = $this->contact->contactLifeEvents()
-            ->findOrFail($this->data['contact_life_event_id']);
+        $this->lifeEvent = $this->vault->lifeEvents()
+            ->findOrFail($this->data['life_event_id']);
     }
 }

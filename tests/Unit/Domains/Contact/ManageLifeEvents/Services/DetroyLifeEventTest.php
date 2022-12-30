@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Contact\ManageLifeEvents\Services;
 use App\Domains\Contact\ManageLifeEvents\Services\DestroyLifeEvent;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
@@ -26,16 +25,15 @@ class DetroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'life_event_type_id' => $lifeEventType->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent);
     }
 
     /** @test */
@@ -58,16 +56,15 @@ class DetroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'life_event_type_id' => $lifeEventType->id,
         ]);
 
-        $this->executeService($user, $account, $vault, $contact, $lifeEvent);
+        $this->executeService($user, $account, $vault, $lifeEvent);
     }
 
     /** @test */
@@ -79,36 +76,15 @@ class DetroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'life_event_type_id' => $lifeEventType->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEvent);
-    }
-
-    /** @test */
-    public function it_fails_if_contact_doesnt_belong_to_vault(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $user = $this->createUser();
-        $vault = $this->createVault($user->account);
-        $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create();
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
-
-        $lifeEvent = LifeEvent::factory()->create([
-            'contact_id' => $contact->id,
-            'life_event_type_id' => $lifeEventType->id,
-        ]);
-
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent);
     }
 
     /** @test */
@@ -119,27 +95,25 @@ class DetroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_VIEW, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'life_event_type_id' => $lifeEventType->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent);
     }
 
     /** @test */
-    public function it_fails_if_life_event_does_not_belong_to_contact(): void
+    public function it_fails_if_life_event_does_not_belong_to_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
@@ -147,22 +121,21 @@ class DetroyLifeEventTest extends TestCase
             'life_event_type_id' => $lifeEventType->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $contact, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent);
     }
 
-    private function executeService(User $user, Account $account, Vault $vault, Contact $contact, LifeEvent $lifeEvent): void
+    private function executeService(User $user, Account $account, Vault $vault, LifeEvent $lifeEvent): void
     {
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $user->id,
-            'contact_id' => $contact->id,
-            'contact_life_event_id' => $lifeEvent->id,
+            'life_event_id' => $lifeEvent->id,
         ];
 
         (new DestroyLifeEvent)->execute($request);
 
-        $this->assertDatabaseMissing('contact_life_events', [
+        $this->assertDatabaseMissing('life_events', [
             'id' => $lifeEvent->id,
         ]);
     }

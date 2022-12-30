@@ -7,10 +7,13 @@ use App\Models\LifeEvent;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class UpdateLifeEvent extends BaseService implements ServiceInterface
 {
     private LifeEvent $lifeEvent;
+
+    private Collection $partipantsCollection;
 
     private array $data;
 
@@ -25,12 +28,20 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
-            'contact_life_event_id' => 'required|integer|exists:contact_life_events,id',
-            'summary' => 'required|string|max:255',
-            'started_at' => 'date|date_format:Y-m-d',
-            'ended_at' => 'date|date_format:Y-m-d',
+            'life_event_id' => 'required|integer|exists:life_events,id',
+            'summary' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:65535',
+            'happened_at' => 'date|date_format:Y-m-d',
+            'costs' => 'nullable|integer',
+            'currency_id' => 'nullable|integer|exists:currencies,id',
+            'paid_by_contact_id' => 'nullable|integer|exists:contacts,id',
+            'duration_in_minutes' => 'nullable|integer',
+            'distance_in_km' => 'nullable|integer',
+            'from_place' => 'nullable|string|max:255',
+            'to_place' => 'nullable|string|max:255',
+            'place' => 'nullable|string|max:255',
+            'participant_ids' => 'required|array',
         ];
     }
 
@@ -44,13 +55,12 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Update a contact event.
+     * Update a life event.
      *
      * @param  array  $data
      * @return LifeEvent
@@ -60,9 +70,8 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
         $this->update();
-
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
+        $this->associateParticipants();
+        $this->updateLastEditedDate();
 
         return $this->lifeEvent;
     }
@@ -71,20 +80,61 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->lifeEvent = $this->contact->contactLifeEvents()
-            ->findOrFail($this->data['contact_life_event_id']);
+        $this->lifeEvent = $this->vault->lifeEvents()
+            ->findOrFail($this->data['life_event_id']);
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
         $this->account()->lifeEventCategories()
             ->findOrFail($lifeEventType->lifeEventCategory->id);
+
+        if (! is_null($this->data['paid_by_contact_id'])) {
+            $this->vault->contacts()
+                ->findOrFail($this->data['paid_by_contact_id']);
+        }
+
+        if (! is_null($this->data['currency_id'])) {
+            $this->account->currencies()
+                ->findOrFail($this->data['currency_id']);
+        }
+
+        $this->partipantsCollection = collect();
+        foreach ($this->data['participant_ids'] as $participantId) {
+            $this->partipantsCollection->push(
+                $this->vault->contacts()->findOrFail($participantId)
+            );
+        }
     }
 
     private function update(): void
     {
-        $this->lifeEvent->summary = $this->data['summary'];
-        $this->lifeEvent->started_at = $this->data['started_at'];
-        $this->lifeEvent->ended_at = $this->data['ended_at'];
+        $this->lifeEvent->life_event_type_id = $this->data['life_event_type_id'];
+        $this->lifeEvent->summary = $this->valueOrNull($this->data, 'summary');
+        $this->lifeEvent->description = $this->valueOrNull($this->data, 'description');
+        $this->lifeEvent->happened_at = $this->data['happened_at'];
+        $this->lifeEvent->costs = $this->valueOrNull($this->data, 'costs');
+        $this->lifeEvent->currency_id = $this->valueOrNull($this->data, 'currency_id');
+        $this->lifeEvent->paid_by_contact_id = $this->valueOrNull($this->data, 'paid_by_contact_id');
+        $this->lifeEvent->duration_in_minutes = $this->valueOrNull($this->data, 'duration_in_minutes');
+        $this->lifeEvent->distance_in_km = $this->valueOrNull($this->data, 'distance_in_km');
+        $this->lifeEvent->from_place = $this->valueOrNull($this->data, 'from_place');
+        $this->lifeEvent->to_place = $this->valueOrNull($this->data, 'to_place');
+        $this->lifeEvent->place = $this->valueOrNull($this->data, 'place');
         $this->lifeEvent->save();
+    }
+
+    private function updateLastEditedDate(): void
+    {
+        foreach ($this->partipantsCollection as $participant) {
+            $participant->last_updated_at = Carbon::now();
+            $participant->save();
+        }
+    }
+
+    private function associateParticipants(): void
+    {
+        foreach ($this->partipantsCollection as $participant) {
+            $participant->lifeEvents()->attach($this->lifeEvent->id);
+        }
     }
 }
