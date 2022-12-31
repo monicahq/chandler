@@ -17,6 +17,16 @@ class LifeEventType extends Model
     /**
      * Possible types.
      */
+    public const TYPE_TRANSPORTATION_CAR = 'transportation_car';
+
+    public const TYPE_TRANSPORTATION_METRO = 'transportation_metro';
+
+    public const TYPE_TRANSPORTATION_BUS = 'transportation_bus';
+
+    public const TYPE_TRANSPORTATION_PLANE = 'transportation_plane';
+
+    public const TYPE_TRANSPORTATION_WALK = 'transportation_walk';
+
     public const TYPE_ACTIVITIES = 'activities';
 
     public const TYPE_NEW_JOB = 'new_job';

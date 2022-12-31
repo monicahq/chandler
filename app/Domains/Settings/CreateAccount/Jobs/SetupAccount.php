@@ -1055,6 +1055,53 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     private function addLifeEventCategories(): void
     {
+        // transportation
+        $categoryId = DB::table('life_event_categories')->insertGetId([
+            'account_id' => $this->author->account_id,
+            'label_translation_key' => 'account.default_life_event_category_transportation',
+            'can_be_deleted' => false,
+        ]);
+
+        DB::table('life_event_types')->insert([
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_transportation_walk',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRANSPORTATION_WALK,
+                'position' => 1,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_transportation_car',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRANSPORTATION_CAR,
+                'position' => 2,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_transportation_plane',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRANSPORTATION_PLANE,
+                'position' => 3,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_transportation_metro',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRANSPORTATION_METRO,
+                'position' => 4,
+            ],
+            [
+                'life_event_category_id' => $categoryId,
+                'label_translation_key' => 'account.default_life_event_type_transportation_bus',
+                'can_be_deleted' => false,
+                'type' => LifeEventType::TYPE_TRANSPORTATION_BUS,
+                'position' => 5,
+            ],
+        ]);
+
+        // dsafdsfsd
+
         $categoryId = DB::table('life_event_categories')->insertGetId([
             'account_id' => $this->author->account_id,
             'label_translation_key' => 'account.default_life_event_category_travel_experiences',

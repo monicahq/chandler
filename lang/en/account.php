@@ -136,6 +136,14 @@ return [
     'default_life_event_category_home_living' => 'Home & living',
     'default_life_event_category_health_wellness' => 'Health & wellness',
     'default_life_event_category_travel_experiences' => 'Activities, travel & experiences',
+    'default_life_event_category_transportation' => 'Transportation',
+
+    // transportation
+    'default_life_event_type_transportation_car' => 'Drove',
+    'default_life_event_type_transportation_metro' => 'Took the metro',
+    'default_life_event_type_transportation_bus' => 'Took a bus',
+    'default_life_event_type_transportation_plane' => 'Took a plane',
+    'default_life_event_type_transportation_walk' => 'Walked',
 
     // work & education
     'default_life_event_type_new_job' => 'Started a new job',
