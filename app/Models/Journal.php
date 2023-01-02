@@ -43,4 +43,14 @@ class Journal extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the slices of life associated with the journal.
+     *
+     * @return HasMany
+     */
+    public function slicesOfLife(): HasMany
+    {
+        return $this->hasMany(SliceOfLife::class);
+    }
 }
