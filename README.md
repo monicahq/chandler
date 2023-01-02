@@ -1,12 +1,18 @@
-## Run locally
+## Local development
 
-1. `composer install`
-1. `cp .env.example .env` and configure `.env` file
-1. `yarn install`
-1. `yarn run dev`
-1. Optional: make the search work:
+1. Install [Valet](https://laravel.com/docs/9.x/valet)
+2. Install [sqlite](https://formulae.brew.sh/formula/sqlite)
+3. `composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader`
+4. `yarn install --frozen-lockfile`
+5. `cp .env.example .env` and configure `.env` file
+   1. `php artisan key:generate --no-interaction` (generates APP_KEY)
+   2. `touch monica.db` and add path to DB_DATABASE
+6. `php artisan monica:setup --force -vvv`
+7. `yarn build`
+8. `yarn start`
+9. Optional: make the search work:
    1. Install and run [meilisearch](https://www.meilisearch.com/) locally
-   1. Configure and run a queue (`php artisan queue:listen --queue=high,low,default`)
+   2. Configure and run a queue (`php artisan queue:listen --queue=high,low,default`)
 
 ## Configuring search
 

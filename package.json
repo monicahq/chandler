@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite --https",
     "build": "vite build",
+    "start": "vite --https & php artisan serve && fg",
     "lint": "eslint --ext .js,.vue *.js resources",
     "format": "prettier --write '**/*.{js,vue,css,scss}'",
     "pretest": "DB_CONNECTION=testing php artisan migrate:fresh && DB_CONNECTION=testing php artisan db:seed",
