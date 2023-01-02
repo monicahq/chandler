@@ -14,7 +14,7 @@
    1. Install and run [meilisearch](https://www.meilisearch.com/) locally
    2. Configure and run a queue (`php artisan queue:listen --queue=high,low,default`)
 9. `yarn build`
-10. `yarn start`
+10. `yarn dev`
 
 ## Configuring search
 
