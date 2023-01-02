@@ -1664,7 +1664,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => 'account.religion_shintoism',
+                'translation_key' => 'account.religion_shinto',
                 'position' => 5,
             ],
             [
