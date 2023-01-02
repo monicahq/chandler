@@ -8,11 +8,13 @@
    1. `php artisan key:generate --no-interaction` (generates APP_KEY)
    2. `touch monica.db` and add path to DB_DATABASE
 6. `php artisan monica:setup --force -vvv`
-7. `yarn build`
-8. `yarn start`
-9. Optional: make the search work:
+7. Optional: generate dummy data
+   1. `php artisan monica:dummy --force -vvv`
+8. Optional: make the search work:
    1. Install and run [meilisearch](https://www.meilisearch.com/) locally
    2. Configure and run a queue (`php artisan queue:listen --queue=high,low,default`)
+9. `yarn build`
+10. `yarn start`
 
 ## Configuring search
 
