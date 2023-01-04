@@ -24,6 +24,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('life_event_type_id');
+            $table->unsignedBigInteger('emotion_id')->nullable();
             $table->string('summary')->nullable();
             $table->text('description')->nullable();
             $table->date('happened_at');
@@ -40,6 +41,7 @@ return new class extends Migration
             $table->foreign('life_event_type_id')->references('id')->on('life_event_types')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
             $table->foreign('paid_by_contact_id')->references('id')->on('contacts')->onDelete('set null');
+            $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('set null');
         });
 
         Schema::create('life_event_participants', function (Blueprint $table) {
