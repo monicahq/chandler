@@ -404,6 +404,17 @@ Route::middleware([
 
                 // tab visibility
                 Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
+
+                // life event categories
+                Route::post('settings/lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('vault.settings.life_event_categories.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('vault.settings.life_event_categories.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('vault.settings.life_event_categories.destroy');
+
+                // life event types
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('vault.settings.life_event_types.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
             });
 
             // global search in the vault
@@ -483,18 +494,6 @@ Route::middleware([
                 Route::post('callReasonTypes/{callReasonType}/reasons', [PersonalizeCallReasonsController::class, 'store'])->name('call_reasons.store');
                 Route::put('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'update'])->name('call_reasons.update');
                 Route::delete('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'destroy'])->name('call_reasons.destroy');
-
-                // life event categories
-                Route::get('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'index'])->name('life_event_categories.index');
-                Route::post('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('life_event_categories.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('life_event_categories.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('life_event_categories.destroy');
-
-                // life event types
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('life_event_types.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('life_event_types.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('life_event_types.destroy');
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('life_event_types.order.update');
 
                 // gift occasions
                 Route::get('giftOccasions', [PersonalizeGiftOccasionController::class, 'index'])->name('gift_occasions.index');
