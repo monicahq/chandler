@@ -67,7 +67,7 @@ const submit = () => {
   loadingState.value = 'loading';
 
   axios
-    .post(props.data.url.store, form)
+    .post(props.data.url.life_event_category_store, form)
     .then((response) => {
       localLifeEventCategories.value.push(response.data.data);
       loadingState.value = null;
