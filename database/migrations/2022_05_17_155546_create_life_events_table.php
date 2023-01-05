@@ -13,13 +13,13 @@ return new class() extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('life_event_categories');
-        Schema::dropIfExists('life_event_types');
-        Schema::dropIfExists('contact_life_events');
-        Schema::dropIfExists('activity_types');
-        Schema::dropIfExists('activities');
-        Schema::dropIfExists('contact_life_event_activities');
         Schema::dropIfExists('contact_activity_participants');
+        Schema::dropIfExists('contact_life_event_activities');
+        Schema::dropIfExists('activities');
+        Schema::dropIfExists('activity_types');
+        Schema::dropIfExists('contact_life_events');
+        Schema::dropIfExists('life_event_types');
+        Schema::dropIfExists('life_event_categories');
 
         Schema::create('life_event_categories', function (Blueprint $table) {
             $table->id();
