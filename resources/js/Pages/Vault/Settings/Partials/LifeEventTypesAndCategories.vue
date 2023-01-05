@@ -101,7 +101,7 @@ const destroy = (lifeEventCategory) => {
     axios
       .delete(lifeEventCategory.url.destroy)
       .then(() => {
-        var id = this.localLifeEventCategories.findIndex((x) => x.id === lifeEventCategory.id);
+        var id = localLifeEventCategories.value.findIndex((x) => x.id === lifeEventCategory.id);
         localLifeEventCategories.value.splice(id, 1);
       })
       .catch((error) => {

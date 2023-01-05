@@ -37,7 +37,7 @@ class VaultSettingsLifeEventCategoriesController extends Controller
             'author_id' => Auth::id(),
             'life_event_category_id' => $lifeEventCategoryId,
             'label' => $request->input('label'),
-            'can_be_deleted' => $request->input('canBeDeleted'),
+            'can_be_deleted' => true,
         ];
 
         $lifeEventCategory = (new UpdateLifeEventCategory())->execute($data);
