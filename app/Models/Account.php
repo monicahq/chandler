@@ -153,16 +153,6 @@ class Account extends Model
     }
 
     /**
-     * Get the activity types associated with the account.
-     *
-     * @return HasMany
-     */
-    public function activityTypes(): HasMany
-    {
-        return $this->hasMany(ActivityType::class);
-    }
-
-    /**
      * Get the gift occasions associated with the account.
      *
      * @return HasMany
