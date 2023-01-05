@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domains\Settings\ManageLifeEventCategories\Services;
+namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
 
-class UpdateLifeEventType extends BaseService implements ServiceInterface
+class CreateLifeEventType extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -17,12 +17,11 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
+            'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
-            'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'label' => 'required|string|max:255',
             'can_be_deleted' => 'required|boolean',
-            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -35,12 +34,13 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'author_must_be_account_administrator',
+            'vault_must_belong_to_account',
+            'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Update a life event type.
+     * Create a life event type.
      *
      * @param  array  $data
      * @return LifeEventType
@@ -49,16 +49,20 @@ class UpdateLifeEventType extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $category = $this->account()->lifeEventCategories()
+        $category = $this->vault->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
-        $type = $category->lifeEventTypes()
-            ->findOrFail($data['life_event_type_id']);
+        // determine the new position of the template page
+        $newPosition = $category->lifeEventTypes()
+            ->max('position');
+        $newPosition++;
 
-        $type->label = $data['label'];
-        $type->can_be_deleted = $data['can_be_deleted'];
-        $type->type = $this->valueOrNull($data, 'type');
-        $type->save();
+        $type = LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'label' => $data['label'],
+            'can_be_deleted' => $data['can_be_deleted'],
+            'position' => $newPosition,
+        ]);
 
         return $type;
     }

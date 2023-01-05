@@ -2,8 +2,8 @@
 
 namespace App\Domains\Settings\ManageLifeEventCategories\Web\Controllers;
 
-use App\Domains\Settings\ManageLifeEventCategories\Services\UpdateLifeEventTypePosition;
 use App\Domains\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
+use App\Domains\Vault\ManageVaultSettings\Services\UpdateLifeEventTypePosition;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

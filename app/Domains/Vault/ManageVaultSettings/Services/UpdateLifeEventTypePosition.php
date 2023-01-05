@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Vault\ManageLifeEventCategories\Services;
+namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEventCategory;
@@ -26,7 +26,6 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
@@ -43,8 +42,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
     {
         return [
             'author_must_belong_to_account',
-            'vault_must_belong_to_account',
-            'author_must_be_vault_editor',
+            'author_must_be_account_administrator',
         ];
     }
 
@@ -67,7 +65,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
     {
         $this->validateRules($this->data);
 
-        $this->lifeEventCategory = $this->vault->lifeEventCategories()
+        $this->lifeEventCategory = $this->account()->lifeEventCategories()
             ->findOrFail($this->data['life_event_category_id']);
 
         $this->lifeEventType = $this->lifeEventCategory->lifeEventTypes()

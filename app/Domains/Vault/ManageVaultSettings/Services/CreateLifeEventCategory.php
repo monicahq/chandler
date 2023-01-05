@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Settings\ManageLifeEventCategories\Services;
+namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEventCategory;
@@ -17,10 +17,10 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
+            'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'label' => 'required|string|max:255',
             'can_be_deleted' => 'required|boolean',
-            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -33,7 +33,8 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'author_must_be_account_administrator',
+            'vault_must_belong_to_account',
+            'author_must_be_vault_editor',
         ];
     }
 
@@ -48,10 +49,9 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
         $this->validateRules($data);
 
         return LifeEventCategory::create([
-            'account_id' => $data['account_id'],
+            'vault_id' => $data['vault_id'],
             'label' => $data['label'],
             'can_be_deleted' => $data['can_be_deleted'],
-            'type' => $this->valueOrNull($data, 'type'),
         ]);
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Unit\Domains\Settings\ManageLifeEventCategories\Services;
+namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
-use App\Domains\Settings\ManageLifeEventCategories\Services\CreateLifeEventType;
+use App\Domains\Vault\ManageVaultSettings\Services\CreateLifeEventType;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\User;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
@@ -18,13 +19,15 @@ class CreateLifeEventTypeTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_an_activity(): void
+    public function it_creates_a_life_event_type(): void
     {
         $ross = $this->createAdministrator();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_EDIT, $vault);
         $category = LifeEventCategory::factory()->create([
-            'account_id' => $ross->account_id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $ross->account, $category);
+        $this->executeService($ross, $ross->account, $vault, $category);
     }
 
     /** @test */
@@ -45,10 +48,12 @@ class CreateLifeEventTypeTest extends TestCase
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_EDIT, $vault);
         $category = LifeEventCategory::factory()->create([
-            'account_id' => $ross->account_id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $account, $category);
+        $this->executeService($ross, $account, $vault, $category);
     }
 
     /** @test */
@@ -57,27 +62,32 @@ class CreateLifeEventTypeTest extends TestCase
         $this->expectException(NotEnoughPermissionException::class);
 
         $ross = $this->createUser();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_VIEW, $vault);
         $category = LifeEventCategory::factory()->create([
-            'account_id' => $ross->account_id,
+            'vault_id' => $vault->id,
         ]);
-        $this->executeService($ross, $ross->account, $category);
+        $this->executeService($ross, $ross->account, $vault, $category);
     }
 
     /** @test */
-    public function it_fails_if_category_doesnt_belong_to_account(): void
+    public function it_fails_if_category_doesnt_belong_to_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $ross = $this->createAdministrator();
         $account = $this->createAccount();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_EDIT, $vault);
         $category = LifeEventCategory::factory()->create();
-        $this->executeService($ross, $account, $category);
+        $this->executeService($ross, $account, $vault, $category);
     }
 
-    private function executeService(User $author, Account $account, LifeEventCategory $category): void
+    private function executeService(User $author, Account $account, Vault $vault, LifeEventCategory $category): void
     {
         $request = [
             'account_id' => $account->id,
+            'vault_id' => $vault->id,
             'author_id' => $author->id,
             'life_event_category_id' => $category->id,
             'label' => 'type name',

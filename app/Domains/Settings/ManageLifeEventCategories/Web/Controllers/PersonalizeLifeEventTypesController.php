@@ -2,10 +2,10 @@
 
 namespace App\Domains\Settings\ManageLifeEventCategories\Web\Controllers;
 
-use App\Domains\Settings\ManageLifeEventCategories\Services\CreateLifeEventType;
-use App\Domains\Settings\ManageLifeEventCategories\Services\DestroyLifeEventType;
-use App\Domains\Settings\ManageLifeEventCategories\Services\UpdateLifeEventType;
 use App\Domains\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
+use App\Domains\Vault\ManageVaultSettings\Services\CreateLifeEventType;
+use App\Domains\Vault\ManageVaultSettings\Services\DestroyLifeEventType;
+use App\Domains\Vault\ManageVaultSettings\Services\UpdateLifeEventType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

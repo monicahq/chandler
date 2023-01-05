@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domains\Settings\ManageLifeEventCategories\Services;
+namespace App\Domains\Vault\ManageVaultSettings\Services;
 
+use App\Exceptions\CantBeDeletedException;
 use App\Interfaces\ServiceInterface;
-use App\Models\LifeEventCategory;
 use App\Services\BaseService;
 
-class UpdateLifeEventCategory extends BaseService implements ServiceInterface
+class DestroyLifeEventCategory extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -17,11 +17,9 @@ class UpdateLifeEventCategory extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|integer|exists:accounts,id',
+            'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
-            'label' => 'required|string|max:255',
-            'can_be_deleted' => 'required|boolean',
-            'type' => 'nullable|string|max:255',
         ];
     }
 
@@ -34,28 +32,27 @@ class UpdateLifeEventCategory extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'author_must_be_account_administrator',
+            'vault_must_belong_to_account',
+            'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Update a life event category.
+     * Destroy a life event category.
      *
      * @param  array  $data
-     * @return LifeEventCategory
      */
-    public function execute(array $data): LifeEventCategory
+    public function execute(array $data): void
     {
         $this->validateRules($data);
 
-        $category = $this->account()->lifeEventCategories()
+        $category = $this->vault->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
-        $category->label = $data['label'];
-        $category->can_be_deleted = $data['can_be_deleted'];
-        $category->type = $this->valueOrNull($data, 'type');
-        $category->save();
+        if (! $category->can_be_deleted) {
+            throw new CantBeDeletedException();
+        }
 
-        return $category;
+        $category->delete();
     }
 }

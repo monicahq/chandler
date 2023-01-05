@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Domains\Settings\ManageLifeEventCategories\Services;
+namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
-use App\Domains\Settings\ManageLifeEventCategories\Services\UpdateLifeEventTypePosition;
+use App\Domains\Vault\ManageVaultSettings\Services\UpdateLifeEventTypePosition;
 use App\Models\Account;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
