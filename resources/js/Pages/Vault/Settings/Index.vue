@@ -2,6 +2,8 @@
   <layout :layout-data="layoutData" :inside-vault="true">
     <main class="relative sm:mt-28">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+        <life-event-types-and-categories :data="data" />
+
         <users :layout-data="layoutData" :data="data" />
 
         <tab-visibility :layout-data="layoutData" :data="data" />
@@ -29,6 +31,7 @@ import Tags from '@/Pages/Vault/Settings/Partials/Tags.vue';
 import Users from '@/Pages/Vault/Settings/Partials/Users.vue';
 import TabVisibility from '@/Pages/Vault/Settings/Partials/TabVisibility.vue';
 import ContactImportantDateTypes from '@/Pages/Vault/Settings/Partials/ContactImportantDateTypes.vue';
+import LifeEventTypesAndCategories from '@/Pages/Vault/Settings/Partials/LifeEventTypesAndCategories.vue';
 
 export default {
   components: {
@@ -40,6 +43,7 @@ export default {
     Users,
     TabVisibility,
     ContactImportantDateTypes,
+    LifeEventTypesAndCategories,
   },
 
   props: {

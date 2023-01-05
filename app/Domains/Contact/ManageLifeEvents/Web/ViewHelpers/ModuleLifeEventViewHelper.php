@@ -7,6 +7,7 @@ use App\Helpers\DateHelper;
 use App\Helpers\MonetaryNumberHelper;
 use App\Models\Contact;
 use App\Models\LifeEvent;
+use App\Models\LifeEventCategory;
 use App\Models\User;
 
 class ModuleLifeEventViewHelper
@@ -15,10 +16,20 @@ class ModuleLifeEventViewHelper
     {
         $lifeEventsCollection = $contact->lifeEvents()
             ->get()
-            ->map(fn ($lifeEvent) => ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, $user));
+            ->map(fn (LifeEvent $lifeEvent) => ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, $user));
+
+        $lifeEventCategoriesCollection = $user->account
+            ->lifeEventCategories()
+            ->orderBy('label')
+            ->get()
+            ->map(fn (LifeEventCategory $category) => [
+                'id' => $category->id,
+                'label' => $category->label,
+            ]);
 
         return [
             'lifeEvents' => $lifeEventsCollection,
+
             'url' => [
                 'currencies' => route('currencies.index'),
                 'store' => route('contact.loan.store', [
@@ -40,6 +51,7 @@ class ModuleLifeEventViewHelper
                 'id' => $lifeEvent->lifeEventType->id,
                 'label' => $lifeEvent->lifeEventType->label,
             ],
+            'collapsed' => $lifeEvent->collapsed,
             'summary' => $lifeEvent->summary,
             'description' => $lifeEvent->description,
             'happened_at' => DateHelper::format($lifeEvent->happened_at, $user),
@@ -57,8 +69,7 @@ class ModuleLifeEventViewHelper
             'to_place' => $lifeEvent->to_place,
             'place' => $lifeEvent->place,
             'participants' => $participantsCollection,
-            'url' => [
-            ],
+            'url' => [],
         ];
     }
 }
