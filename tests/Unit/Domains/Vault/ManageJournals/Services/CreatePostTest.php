@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Domains\Vault\ManageJournals\Services;
 
-use App\Domains\Vault\ManageJournals\Services\CreateSliceOfLife;
+use App\Domains\Vault\ManageJournals\Services\CreatePost;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Journal;
+use App\Models\PostTemplate;
+use App\Models\PostTemplateSection;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,12 +16,12 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateSliceOfLifeTest extends TestCase
+class CreatePostTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_slice_of_life(): void
+    public function it_creates_a_post(): void
     {
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
@@ -27,8 +29,21 @@ class CreateSliceOfLifeTest extends TestCase
         $journal = Journal::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $postTemplate = PostTemplate::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 2,
+            'label' => 'Section 2',
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal);
+        $this->executeService($regis, $regis->account, $vault, $journal, $postTemplate);
     }
 
     /** @test */
@@ -39,7 +54,7 @@ class CreateSliceOfLifeTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateSliceOfLife())->execute($request);
+        (new CreatePost())->execute($request);
     }
 
     /** @test */
@@ -54,8 +69,21 @@ class CreateSliceOfLifeTest extends TestCase
         $journal = Journal::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $postTemplate = PostTemplate::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 2,
+            'label' => 'Section 2',
+        ]);
 
-        $this->executeService($regis, $account, $vault, $journal);
+        $this->executeService($regis, $account, $vault, $journal, $postTemplate);
     }
 
     /** @test */
@@ -69,8 +97,21 @@ class CreateSliceOfLifeTest extends TestCase
         $journal = Journal::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $postTemplate = PostTemplate::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 2,
+            'label' => 'Section 2',
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal);
+        $this->executeService($regis, $regis->account, $vault, $journal, $postTemplate);
     }
 
     /** @test */
@@ -82,11 +123,50 @@ class CreateSliceOfLifeTest extends TestCase
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $journal = Journal::factory()->create();
+        $postTemplate = PostTemplate::factory()->create([
+            'account_id' => $regis->account_id,
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 2,
+            'label' => 'Section 2',
+        ]);
 
-        $this->executeService($regis, $regis->account, $vault, $journal);
+        $this->executeService($regis, $regis->account, $vault, $journal, $postTemplate);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Journal $journal): void
+    /** @test */
+    public function it_fails_if_template_is_not_in_the_account(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $regis = $this->createUser();
+        $vault = $this->createVault($regis->account);
+        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
+        $journal = Journal::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $postTemplate = PostTemplate::factory()->create([]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        PostTemplateSection::factory()->create([
+            'post_template_id' => $postTemplate->id,
+            'position' => 2,
+            'label' => 'Section 2',
+        ]);
+
+        $this->executeService($regis, $regis->account, $vault, $journal, $postTemplate);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, Journal $journal, PostTemplate $postTemplate): void
     {
         Queue::fake();
 
@@ -95,15 +175,30 @@ class CreateSliceOfLifeTest extends TestCase
             'vault_id' => $vault->id,
             'author_id' => $author->id,
             'journal_id' => $journal->id,
-            'name' => 'this is a title',
+            'post_template_id' => $postTemplate->id,
+            'title' => 'this is a title',
+            'published' => true,
+            'written_at' => '2020-01-01',
         ];
 
-        $sliceOfLife = (new CreateSliceOfLife())->execute($request);
+        $post = (new CreatePost())->execute($request);
 
-        $this->assertDatabaseHas('slices_of_life', [
-            'id' => $sliceOfLife->id,
+        $this->assertDatabaseHas('posts', [
+            'id' => $post->id,
             'journal_id' => $journal->id,
-            'name' => 'this is a title',
+            'title' => 'this is a title',
+            'written_at' => '2020-01-01 00:00:00',
+        ]);
+
+        $this->assertDatabaseHas('post_sections', [
+            'post_id' => $post->id,
+            'position' => 1,
+            'label' => 'Section 1',
+        ]);
+        $this->assertDatabaseHas('post_sections', [
+            'post_id' => $post->id,
+            'position' => 2,
+            'label' => 'Section 2',
         ]);
     }
 }
