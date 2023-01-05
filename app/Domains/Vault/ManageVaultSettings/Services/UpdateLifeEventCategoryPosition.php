@@ -4,14 +4,11 @@ namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\LifeEventCategory;
-use App\Models\LifeEventType;
 use App\Services\BaseService;
 
-class UpdateLifeEventTypePosition extends BaseService implements ServiceInterface
+class UpdateLifeEventCategoryPosition extends BaseService implements ServiceInterface
 {
     private LifeEventCategory $lifeEventCategory;
-
-    private LifeEventType $lifeEventType;
 
     private int $pastPosition;
 
@@ -28,7 +25,6 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'life_event_category_id' => 'required|integer|exists:life_event_categories,id',
-            'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'new_position' => 'required|integer',
         ];
     }
@@ -51,15 +47,15 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
      * Update the life event type's position.
      *
      * @param  array  $data
-     * @return LifeEventType
+     * @return LifeEventCategory
      */
-    public function execute(array $data): LifeEventType
+    public function execute(array $data): LifeEventCategory
     {
         $this->data = $data;
         $this->validate();
         $this->updatePosition();
 
-        return $this->lifeEventType;
+        return $this->lifeEventCategory;
     }
 
     private function validate(): void
@@ -69,10 +65,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
         $this->lifeEventCategory = $this->vault->lifeEventCategories()
             ->findOrFail($this->data['life_event_category_id']);
 
-        $this->lifeEventType = $this->lifeEventCategory->lifeEventTypes()
-            ->findOrFail($this->data['life_event_type_id']);
-
-        $this->pastPosition = $this->lifeEventType->position;
+        $this->pastPosition = $this->lifeEventCategory->position;
     }
 
     private function updatePosition(): void
@@ -83,7 +76,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
             $this->updateDescendingPosition();
         }
 
-        $this->lifeEventType
+        $this->lifeEventCategory
             ->update([
                 'position' => $this->data['new_position'],
             ]);
@@ -91,7 +84,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
 
     private function updateAscendingPosition(): void
     {
-        $this->lifeEventCategory->lifeEventTypes()
+        $this->vault->lifeEventCategories()
             ->where('position', '>', $this->pastPosition)
             ->where('position', '<=', $this->data['new_position'])
             ->decrement('position');
@@ -99,7 +92,7 @@ class UpdateLifeEventTypePosition extends BaseService implements ServiceInterfac
 
     private function updateDescendingPosition(): void
     {
-        $this->lifeEventCategory->lifeEventTypes()
+        $this->vault->lifeEventCategories()
             ->where('position', '>=', $this->data['new_position'])
             ->where('position', '<', $this->pastPosition)
             ->increment('position');
