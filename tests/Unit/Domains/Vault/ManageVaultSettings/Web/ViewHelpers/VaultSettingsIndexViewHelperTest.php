@@ -184,6 +184,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'store' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes',
+                'position' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/order',
                 'update' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id,
                 'destroy' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id,
             ],

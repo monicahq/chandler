@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Domains\Settings\ManageLifeEventCategories\Web\Controllers;
+namespace App\Domains\Vault\ManageVaultSettings\Web\Controllers;
 
-use App\Domains\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
 use App\Domains\Vault\ManageVaultSettings\Services\UpdateLifeEventTypePosition;
+use App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PersonalizeLifeEventTypesPositionController extends Controller
+class VaultSettingsLifeEventTypesPositionController extends Controller
 {
-    public function update(Request $request, int $lifeEventCategoryId, int $lifeEventTypeId)
+    public function update(Request $request, int $vaultId, int $lifeEventCategoryId, int $lifeEventTypeId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
             'author_id' => Auth::id(),
             'life_event_category_id' => $lifeEventCategoryId,
             'life_event_type_id' => $lifeEventTypeId,
@@ -23,7 +24,7 @@ class PersonalizeLifeEventTypesPositionController extends Controller
         $lifeEventType = (new UpdateLifeEventTypePosition())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeLifeEventCategoriesViewHelper::dtoType($lifeEventType->lifeEventCategory, $lifeEventType),
+            'data' => VaultSettingsIndexViewHelper::dtoType($lifeEventType->lifeEventCategory, $lifeEventType),
         ], 200);
     }
 }

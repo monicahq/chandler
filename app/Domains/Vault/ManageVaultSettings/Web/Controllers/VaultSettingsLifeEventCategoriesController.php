@@ -1,66 +1,57 @@
 <?php
 
-namespace App\Domains\Settings\ManageLifeEventCategories\Web\Controllers;
+namespace App\Domains\Vault\ManageVaultSettings\Web\Controllers;
 
-use App\Domains\Settings\ManageLifeEventCategories\Web\ViewHelpers\PersonalizeLifeEventCategoriesViewHelper;
-use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Domains\Vault\ManageVaultSettings\Services\CreateLifeEventCategory;
 use App\Domains\Vault\ManageVaultSettings\Services\DestroyLifeEventCategory;
 use App\Domains\Vault\ManageVaultSettings\Services\UpdateLifeEventCategory;
+use App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
-class PersonalizeLifeEventCategoriesController extends Controller
+class VaultSettingsLifeEventCategoriesController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Settings/Personalize/LifeEventCategories/Index', [
-            'layoutData' => VaultIndexViewHelper::layoutData(),
-            'data' => PersonalizeLifeEventCategoriesViewHelper::data(Auth::user()->account),
-        ]);
-    }
-
-    public function store(Request $request)
+    public function store(Request $request, int $vaultId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
             'author_id' => Auth::id(),
-            'label' => $request->input('lifeEventCategoryName'),
+            'label' => $request->input('label'),
             'can_be_deleted' => true,
-            'type' => null,
         ];
 
         $lifeEventCategory = (new CreateLifeEventCategory())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeLifeEventCategoriesViewHelper::dtoLifeEventCategory($lifeEventCategory),
+            'data' => VaultSettingsIndexViewHelper::dtoLifeEventCategory($lifeEventCategory),
         ], 201);
     }
 
-    public function update(Request $request, int $lifeEventCategoryId)
+    public function update(Request $request, int $vaultId, int $lifeEventCategoryId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
             'author_id' => Auth::id(),
             'life_event_category_id' => $lifeEventCategoryId,
-            'label' => $request->input('lifeEventCategoryName'),
+            'label' => $request->input('label'),
             'can_be_deleted' => $request->input('canBeDeleted'),
-            'type' => $request->input('type'),
         ];
 
         $lifeEventCategory = (new UpdateLifeEventCategory())->execute($data);
 
         return response()->json([
-            'data' => PersonalizeLifeEventCategoriesViewHelper::dtoLifeEventCategory($lifeEventCategory),
+            'data' => VaultSettingsIndexViewHelper::dtoLifeEventCategory($lifeEventCategory),
         ], 200);
     }
 
-    public function destroy(Request $request, int $lifeEventCategoryId)
+    public function destroy(Request $request, int $vaultId, int $lifeEventCategoryId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
             'author_id' => Auth::id(),
             'life_event_category_id' => $lifeEventCategoryId,
         ];

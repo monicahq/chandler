@@ -85,7 +85,7 @@ class VaultSettingsIndexViewHelper
             ->with('lifeEventTypes')
             ->orderBy('label', 'asc')
             ->get()
-            ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($category));
+            ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($lifeEventCategory));
 
         return [
             'templates' => $templatesCollection,
@@ -208,6 +208,10 @@ class VaultSettingsIndexViewHelper
             'life_event_types' => $lifeEventTypesCollection->map(fn (LifeEventType $type) => self::dtoType($category, $type)),
             'url' => [
                 'store' => route('vault.settings.life_event_types.store', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                ]),
+                'position' => route('vault.settings.life_event_categories.order.update', [
                     'vault' => $category->vault_id,
                     'lifeEventCategory' => $category->id,
                 ]),

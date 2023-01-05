@@ -50,9 +50,6 @@ use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeCo
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRolePositionController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
 use App\Domains\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
@@ -103,6 +100,10 @@ use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -406,15 +407,16 @@ Route::middleware([
                 Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
 
                 // life event categories
-                Route::post('settings/lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('vault.settings.life_event_categories.store');
-                Route::put('settings/lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('vault.settings.life_event_categories.update');
-                Route::delete('settings/lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('vault.settings.life_event_categories.destroy');
+                Route::post('settings/lifeEventCategories', [VaultSettingsLifeEventCategoriesController::class, 'store'])->name('vault.settings.life_event_categories.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'update'])->name('vault.settings.life_event_categories.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'destroy'])->name('vault.settings.life_event_categories.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/order', [VaultSettingsLifeEventCategoriesPositionController::class, 'update'])->name('vault.settings.life_event_categories.order.update');
 
                 // life event types
-                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('vault.settings.life_event_types.store');
-                Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
-                Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
-                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [VaultSettingsLifeEventTypesController::class, 'store'])->name('vault.settings.life_event_types.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [VaultSettingsLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
             });
 
             // global search in the vault
