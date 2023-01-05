@@ -202,7 +202,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
 
         $array = VaultSettingsIndexViewHelper::dtoType($lifeEventCategory, $lifeEventType);
         $this->assertEquals(
-            5,
+            6,
             count($array)
         );
         $this->assertEquals(
@@ -210,6 +210,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'id' => $lifeEventType->id,
                 'label' => $lifeEventType->label,
                 'can_be_deleted' => $lifeEventType->can_be_deleted,
+                'life_event_category_id' => $lifeEventCategory->id,
                 'position' => 1,
                 'url' => [
                     'position' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id.'/order',

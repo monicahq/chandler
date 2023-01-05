@@ -52,7 +52,7 @@ class CreateLifeEventType extends BaseService implements ServiceInterface
         $category = $this->vault->lifeEventCategories()
             ->findOrFail($data['life_event_category_id']);
 
-        // determine the new position of the template page
+        // determine the new position of the life event type
         $newPosition = $category->lifeEventTypes()
             ->max('position');
         $newPosition++;

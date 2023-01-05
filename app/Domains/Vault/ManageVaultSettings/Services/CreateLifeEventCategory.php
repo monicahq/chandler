@@ -48,10 +48,16 @@ class CreateLifeEventCategory extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
+        // determine the new position of the life event type
+        $newPosition = $this->vault->lifeEventCategories()
+            ->max('position');
+        $newPosition++;
+
         return LifeEventCategory::create([
             'vault_id' => $data['vault_id'],
             'label' => $data['label'],
             'can_be_deleted' => $data['can_be_deleted'],
+            'position' => $newPosition,
         ]);
     }
 }

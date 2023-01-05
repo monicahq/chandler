@@ -39,7 +39,7 @@ class VaultSettingsLifeEventTypesController extends Controller
             'life_event_category_id' => $lifeEventCategoryId,
             'life_event_type_id' => $lifeEventTypeId,
             'label' => $request->input('label'),
-            'can_be_deleted' => $request->input('canBeDeleted'),
+            'can_be_deleted' => true,
         ];
 
         $lifeEventType = (new UpdateLifeEventType())->execute($data);

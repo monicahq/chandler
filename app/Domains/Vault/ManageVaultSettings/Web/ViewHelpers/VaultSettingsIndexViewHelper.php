@@ -83,7 +83,7 @@ class VaultSettingsIndexViewHelper
         // life event categories
         $lifeEventCategories = $vault->lifeEventCategories()
             ->with('lifeEventTypes')
-            ->orderBy('label', 'asc')
+            ->orderBy('position', 'asc')
             ->get()
             ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($lifeEventCategory));
 
@@ -233,6 +233,7 @@ class VaultSettingsIndexViewHelper
             'id' => $type->id,
             'label' => $type->label,
             'can_be_deleted' => $type->can_be_deleted,
+            'life_event_category_id' => $category->id,
             'position' => $type->position,
             'url' => [
                 'position' => route('vault.settings.life_event_types.order.update', [

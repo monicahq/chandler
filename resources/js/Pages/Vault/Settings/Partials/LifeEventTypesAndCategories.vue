@@ -55,12 +55,20 @@ const showCreateLifeEventTypeModal = (lifeEventCategory) => {
 const renameLifeEventCategoryModal = (lifeEventCategory) => {
   form.label = lifeEventCategory.label;
   editLifeEventCategoryId.value = lifeEventCategory.id;
+
+  nextTick(() => {
+    newLifeEventCategory.value.focus();
+  });
 };
 
 const renameLifeEventTypeModal = (lifeEventCategory, lifeEventType) => {
   form.label = lifeEventType.label;
   editLifeEventCategoryId.value = lifeEventCategory;
   editLifeEventTypeId.value = lifeEventType.id;
+
+  nextTick(() => {
+    newLifeEventType.value.focus();
+  });
 };
 
 const submit = () => {
@@ -85,7 +93,7 @@ const update = (lifeEventCategory) => {
   axios
     .put(lifeEventCategory.url.update, form)
     .then((response) => {
-      localLifeEventCategories[localLifeEventCategories.value.findIndex((x) => x.id === lifeEventCategory.id)] =
+      localLifeEventCategories.value[localLifeEventCategories.value.findIndex((x) => x.id === lifeEventCategory.id)] =
         response.data.data;
       loadingState.value = null;
       editLifeEventCategoryId.value = 0;
@@ -131,7 +139,8 @@ const submitLifeEventType = (lifeEventCategory) => {
     .post(lifeEventCategory.url.store, form)
     .then((response) => {
       var id = localLifeEventCategories.value.findIndex((x) => x.id === lifeEventCategory.id);
-      localLifeEventCategories[id].life_event_types.push(response.data.data);
+      localLifeEventCategories.value[id].life_event_types.push(response.data.data);
+
       loadingState.value = null;
       lifeEventCategoryId.value = 0;
       createLifeEventTypeModalShown.value = false;
@@ -148,13 +157,11 @@ const updateLifeEventType = (lifeEventType) => {
   axios
     .put(lifeEventType.url.update, form)
     .then((response) => {
-      var lifeEventCategoryId = localLifeEventCategories.value.findIndex(
-        (x) => x.id === lifeEventType.post_template_id,
+      var categoryId = localLifeEventCategories.value.findIndex((x) => x.id === lifeEventType.life_event_category_id);
+      var typeId = localLifeEventCategories.value[categoryId].life_event_types.findIndex(
+        (x) => x.id === lifeEventType.id,
       );
-      var lifeEventTypeId = localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
-        (x) => x.id === section.id,
-      );
-      localLifeEventCategories[lifeEventCategoryId].life_event_types[lifeEventTypeId] = response.data.data;
+      localLifeEventCategories.value[categoryId].life_event_types[typeId] = response.data.data;
 
       loadingState.value = null;
       lifeEventCategoryId.value = 0;
@@ -172,12 +179,12 @@ const destroyLifeEventType = (lifeEventType) => {
       .delete(lifeEventType.url.destroy)
       .then(() => {
         var lifeEventCategoryId = localLifeEventCategories.value.findIndex(
-          (x) => x.id === lifeEventType.post_template_id,
+          (x) => x.id === lifeEventType.life_event_category_id,
         );
-        var lifeEventTypeId = localLifeEventCategories[lifeEventCategoryId].life_event_types.findIndex(
-          (x) => x.id === section.id,
+        var lifeEventTypeId = localLifeEventCategories.value[lifeEventCategoryId].life_event_types.findIndex(
+          (x) => x.id === lifeEventType.id,
         );
-        localLifeEventCategories[lifeEventCategoryId].life_event_types.splice(lifeEventTypeId, 1);
+        localLifeEventCategories.value[lifeEventCategoryId].life_event_types.splice(lifeEventTypeId, 1);
       })
       .catch((error) => {
         loadingState.value = null;
@@ -197,7 +204,7 @@ const destroyLifeEventType = (lifeEventType) => {
       </h3>
       <pretty-button
         v-if="!createLifeEventCategoryModalShown"
-        :text="$t('settings.personalize_post_templates_cta')"
+        :text="'Add a life event category'"
         :icon="'plus'"
         @click="showCreateLifeEventCategoryModal" />
     </div>
@@ -272,10 +279,7 @@ const destroyLifeEventType = (lifeEventType) => {
                     @click="renameLifeEventCategoryModal(element)">
                     {{ $t('app.rename') }}
                   </li>
-                  <li
-                    v-if="element.can_be_deleted"
-                    class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
-                    @click="destroy(element)">
+                  <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                     {{ $t('app.delete') }}
                   </li>
                 </ul>
@@ -327,7 +331,6 @@ const destroyLifeEventType = (lifeEventType) => {
                               {{ $t('app.rename') }}
                             </li>
                             <li
-                              v-if="element.can_be_deleted"
                               class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                               @click="destroyLifeEventType(element)">
                               {{ $t('app.delete') }}
@@ -337,7 +340,7 @@ const destroyLifeEventType = (lifeEventType) => {
                       </div>
                     </div>
 
-                    <!-- edit a section form -->
+                    <!-- edit a life event type form -->
                     <form
                       v-else
                       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
@@ -370,7 +373,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   </template>
                 </draggable>
 
-                <!-- add a section -->
+                <!-- add a life event type -->
                 <span
                   v-if="
                     element.life_event_types.length != 0 &&
@@ -379,10 +382,10 @@ const destroyLifeEventType = (lifeEventType) => {
                   "
                   class="inline cursor-pointer text-sm text-blue-500 hover:underline"
                   @click="showCreateLifeEventTypeModal(element)"
-                  >add a section</span
+                  >add a life event type</span
                 >
 
-                <!-- form: create new section -->
+                <!-- form: create new life event type -->
                 <form
                   v-if="createLifeEventTypeModalShown && lifeEventCategoryId == element.id"
                   class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
@@ -391,7 +394,7 @@ const destroyLifeEventType = (lifeEventType) => {
                     <errors :errors="form.errors" />
 
                     <text-input
-                      :ref="'newSection'"
+                      :ref="'newLifeEventType'"
                       v-model="form.label"
                       :label="'Name'"
                       :type="'text'"
@@ -421,11 +424,11 @@ const destroyLifeEventType = (lifeEventType) => {
                   "
                   class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                   <p class="p-5 text-center">
-                    No roles yet.
+                    No life event types yet.
                     <span
                       class="block cursor-pointer text-sm text-blue-500 hover:underline"
                       @click="showCreateLifeEventTypeModal(element)"
-                      >add a section</span
+                      >add a life event type</span
                     >
                   </p>
                 </div>
@@ -441,7 +444,7 @@ const destroyLifeEventType = (lifeEventType) => {
               <errors :errors="form.errors" />
 
               <text-input
-                :ref="'rename' + element.id"
+                ref="newLifeEventCategory"
                 v-model="form.label"
                 :label="'Name'"
                 :type="'text'"
