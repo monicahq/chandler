@@ -37,6 +37,7 @@ class SetupScout extends Command
     {
         if ($this->confirmToProceed()) {
             $this->scoutConfigure();
+            $this->scoutFlush();
             $this->scoutImport();
         }
     }
