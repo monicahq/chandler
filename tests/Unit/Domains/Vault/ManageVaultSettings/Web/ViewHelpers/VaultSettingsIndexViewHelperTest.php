@@ -174,12 +174,12 @@ class VaultSettingsIndexViewHelperTest extends TestCase
             $array['label']
         );
         $this->assertEquals(
-            $lifeEventCategory->can_be_deleted,
+            true,
             $array['can_be_deleted']
         );
         $this->assertEquals(
-            null,
-            $array['type']
+            1,
+            $array['position']
         );
         $this->assertEquals(
             [
@@ -201,7 +201,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
 
         $array = VaultSettingsIndexViewHelper::dtoType($lifeEventCategory, $lifeEventType);
         $this->assertEquals(
-            6,
+            5,
             count($array)
         );
         $this->assertEquals(
@@ -209,7 +209,6 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'id' => $lifeEventType->id,
                 'label' => $lifeEventType->label,
                 'can_be_deleted' => $lifeEventType->can_be_deleted,
-                'type' => null,
                 'position' => 1,
                 'url' => [
                     'position' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id.'/order',

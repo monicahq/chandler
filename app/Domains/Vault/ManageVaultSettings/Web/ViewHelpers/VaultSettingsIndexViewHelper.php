@@ -203,8 +203,8 @@ class VaultSettingsIndexViewHelper
         return [
             'id' => $category->id,
             'label' => $category->label,
+            'position' => $category->position,
             'can_be_deleted' => $category->can_be_deleted,
-            'type' => $category->type,
             'life_event_types' => $lifeEventTypesCollection->map(fn (LifeEventType $type) => self::dtoType($category, $type)),
             'url' => [
                 'store' => route('vault.settings.life_event_types.store', [
@@ -229,7 +229,6 @@ class VaultSettingsIndexViewHelper
             'id' => $type->id,
             'label' => $type->label,
             'can_be_deleted' => $type->can_be_deleted,
-            'type' => $type->type,
             'position' => $type->position,
             'url' => [
                 'position' => route('vault.settings.life_event_types.order.update', [
