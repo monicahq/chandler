@@ -24,7 +24,7 @@ class LifeEventCategory extends Model
         'label',
         'label_translation_key',
         'can_be_deleted',
-        'type',
+        'position',
     ];
 
     /**
