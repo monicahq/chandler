@@ -57,12 +57,6 @@
               </inertia-link>
             </li>
             <li class="mb-2 flex">
-              <span class="mr-2">👩‍🍼</span>
-              <inertia-link :href="data.url.manage_life_event_categories" class="text-blue-500 hover:underline">
-                {{ $t('settings.personalize_title_manage_life_event_categories') }}
-              </inertia-link>
-            </li>
-            <li class="mb-2 flex">
               <span class="mr-2">👥</span>
               <inertia-link :href="data.url.manage_group_types" class="text-blue-500 hover:underline">
                 {{ $t('settings.personalize_title_manage_group_types') }}
