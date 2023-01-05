@@ -27,7 +27,7 @@ class UpdateLifeEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -59,7 +59,7 @@ class UpdateLifeEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -80,7 +80,7 @@ class UpdateLifeEventTest extends TestCase
         $vault = $this->createVault($account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -100,7 +100,7 @@ class UpdateLifeEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_VIEW, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -120,7 +120,7 @@ class UpdateLifeEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([

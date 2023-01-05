@@ -81,7 +81,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
-        $this->account()->lifeEventCategories()
+        $this->vault->lifeEventCategories()
             ->findOrFail($lifeEventType->lifeEventCategory->id);
 
         if (! is_null($this->data['paid_by_contact_id'])) {
@@ -90,7 +90,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
         }
 
         if (! is_null($this->data['currency_id'])) {
-            $this->account->currencies()
+            $this->account()->currencies()
                 ->findOrFail($this->data['currency_id']);
         }
 

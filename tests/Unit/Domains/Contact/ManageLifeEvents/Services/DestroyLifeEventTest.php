@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class DetroyLifeEventTest extends TestCase
+class DestroyLifeEventTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -25,7 +25,7 @@ class DetroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -56,7 +56,7 @@ class DetroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -76,7 +76,7 @@ class DetroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -95,7 +95,7 @@ class DetroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_VIEW, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
@@ -114,7 +114,7 @@ class DetroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['account_id' => $user->account_id]);
+        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
         $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
