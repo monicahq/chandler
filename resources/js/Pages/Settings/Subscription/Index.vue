@@ -9,7 +9,7 @@
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
+              <inertia-link :href="data.url.back" class="text-blue-500 hover:underline">
                 {{ $t('app.breadcrumb_settings') }}
               </inertia-link>
             </li>
@@ -41,16 +41,16 @@
             <p class="mb-2">The current limitations are:</p>
             <ul class="mb-2 list-disc pl-6">
               <li>5 maximum contacts,</li>
-              <li>1 vault.</li>
+              <li>10 Mb of storage.</li>
             </ul>
             <p class="mb-2">Once subscribed, your account gets:</p>
             <ul class="mb-2 list-disc pl-6">
               <li>unlimited contacts,</li>
-              <li>unlimited vaults.</li>
+              <li>10 Mb storage.</li>
             </ul>
             <p class="mb-4">Licence keys are obtained and managed on the customer portal.</p>
             <p class="mb-2 text-center">
-              <pretty-link :href="data.url.customer_portal" :text="'Purchase a licence key'" :classes="'mr-3'" />
+              <external-link :href="data.url.customer_portal" :text="'Purchase a licence key'" />
             </p>
           </div>
 
@@ -87,6 +87,7 @@
 <script>
 import Layout from '@/Shared/Layout.vue';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import ExternalLink from '@/Shared/Form/ExternalLink.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
@@ -95,6 +96,7 @@ export default {
   components: {
     Layout,
     PrettyLink,
+    ExternalLink,
     PrettyButton,
     TextInput,
     Errors,
