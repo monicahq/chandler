@@ -36,6 +36,7 @@
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           @submit.prevent="submit()">
+          <!-- title -->
           <div
             class="section-head border-b border-gray-200 bg-blue-50 p-3 dark:border-gray-700 dark:bg-blue-900 sm:p-5">
             <h1 class="mb-1 flex justify-center text-2xl font-medium">
@@ -47,6 +48,8 @@
               {{ $t('vault.create_description') }}
             </p>
           </div>
+
+          <!-- content -->
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <text-input
               :ref="'name'"

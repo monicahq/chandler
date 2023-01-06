@@ -252,4 +252,14 @@ return [
     'religion_update_success' => 'The religion has been updated',
     'religion_delete_success' => 'The religion has been deleted',
     'religion_delete_warning' => 'Are you sure? This can not be undone.',
+
+    /***************************************************************
+     * PERSONNALIZE MODULES
+     **************************************************************/
+
+    'personalize_modules_title' => 'All the custom modules in the account',
+    'personalize_modules_cta' => 'Add a module',
+    'personalize_modules_help' => 'Modules contain your contact’s data.',
+    'personalize_modules_help_2' => 'Monica comes with a set of predefined modules that can’t be edited or deleted – because we need them for Monica to function properly. However, you can create your own modules to record the data you want in your account.',
+    'personalize_modules_blank' => 'Create modules to record data that matter to you.',
 ];

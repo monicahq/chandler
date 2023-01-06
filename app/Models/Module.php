@@ -15,6 +15,8 @@ class Module extends Model
     /**
      * Possible module types.
      */
+    public const TYPE_CUSTOM = 'custom';
+
     public const TYPE_NOTES = 'notes';
 
     public const TYPE_CONTACT_NAMES = 'contact_names';

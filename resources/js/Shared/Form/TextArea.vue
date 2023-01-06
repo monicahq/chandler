@@ -27,7 +27,7 @@
       </span>
     </div>
 
-    <p v-if="help" class="f7 mb3 lh-title">
+    <p v-if="help" class="mb-3 mt-1 text-xs">
       {{ help }}
     </p>
   </div>

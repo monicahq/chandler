@@ -49,6 +49,7 @@ return [
     'breadcrumb_settings_personalize_post_templates' => 'Post templates',
     'breadcrumb_settings_storage' => 'Storage',
     'breadcrumb_settings_religions' => 'Religions',
+    'breadcrumb_settings_modules' => 'Modules',
 
     'notification_flash_changes_saved' => 'Changes saved',
 

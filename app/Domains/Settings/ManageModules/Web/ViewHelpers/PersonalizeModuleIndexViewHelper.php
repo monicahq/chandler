@@ -10,6 +10,7 @@ class PersonalizeModuleIndexViewHelper
     public static function data(Account $account): array
     {
         $modules = $account->modules()
+            ->where('can_be_deleted', true)
             ->orderBy('name', 'asc')
             ->get();
 
@@ -23,7 +24,7 @@ class PersonalizeModuleIndexViewHelper
             'url' => [
                 'settings' => route('settings.index'),
                 'personalize' => route('settings.personalize.index'),
-                'module_store' => route('settings.personalize.module.store'),
+                'create' => route('settings.personalize.module.create'),
             ],
         ];
     }
@@ -37,7 +38,7 @@ class PersonalizeModuleIndexViewHelper
             'reserved_to_contact_information' => $module->reserved_to_contact_information,
             'can_be_deleted' => $module->can_be_deleted,
             'url' => [
-                'update' => route('settings.personalize.module.update', [
+                'show' => route('settings.personalize.module.show', [
                     'module' => $module->id,
                 ]),
                 'destroy' => route('settings.personalize.module.destroy', [

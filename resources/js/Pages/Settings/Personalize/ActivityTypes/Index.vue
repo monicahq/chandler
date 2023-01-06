@@ -155,12 +155,12 @@
                   <li
                     class="inline cursor-pointer text-blue-500 hover:underline"
                     @click="renameActivityModal(activity)">
-                    Rename
+                    {{ $t('app.rename') }}
                   </li>
                   <li
                     class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                     @click="destroyActivity(activityType, activity)">
-                    Delete
+                    {{ $t('app.delete') }}
                   </li>
                 </ul>
               </div>
