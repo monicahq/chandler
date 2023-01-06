@@ -6,6 +6,7 @@ use App\Domains\Contact\ManageContact\Web\Controllers\ContactArchiveController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactFavoriteController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactLabelController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactMoveController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactTemplateController;
@@ -89,10 +90,14 @@ use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOr
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -100,6 +105,7 @@ use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
@@ -188,6 +194,10 @@ Route::middleware([
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
                     Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
 
+                    // move contact to another vault
+                    Route::get('/move', [ContactMoveController::class, 'show'])->name('contact.move.show');
+                    Route::post('/move', [ContactMoveController::class, 'store'])->name('contact.move.store');
+
                     // template
                     Route::get('update-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
                     Route::put('template', [ContactTemplateController::class, 'update'])->name('contact.template.update');
@@ -254,6 +264,7 @@ Route::middleware([
                     // job information
                     Route::get('companies/list', [ContactModuleJobInformationController::class, 'index'])->name('contact.companies.list.index');
                     Route::put('jobInformation', [ContactModuleJobInformationController::class, 'update'])->name('contact.job_information.update');
+                    Route::delete('jobInformation', [ContactModuleJobInformationController::class, 'destroy'])->name('contact.job_information.destroy');
 
                     // religion
                     Route::put('religion', [ContactModuleReligionController::class, 'update'])->name('contact.religion.update');
@@ -329,6 +340,23 @@ Route::middleware([
                         Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
                         Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
                         Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
+
+                        // slices of life
+                        Route::put('slices', [PostSliceOfLifeController::class, 'update'])->name('post.slices.update');
+                        Route::delete('slices', [PostSliceOfLifeController::class, 'destroy'])->name('post.slices.destroy');
+                    });
+
+                    // slices of life
+                    Route::get('slices', [SliceOfLifeController::class, 'index'])->name('slices.index');
+                    Route::post('slices', [SliceOfLifeController::class, 'store'])->name('slices.store');
+
+                    Route::prefix('slices/{slice}')->middleware(['slice'])->group(function () {
+                        Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
+                        Route::get('edit', [SliceOfLifeController::class, 'edit'])->name('slices.edit');
+                        Route::put('', [SliceOfLifeController::class, 'update'])->name('slices.update');
+                        Route::put('cover', [SliceOfLifeCoverImageController::class, 'update'])->name('slices.cover.update');
+                        Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
+                        Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');
                     });
                 });
             });
@@ -339,6 +367,14 @@ Route::middleware([
                 Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
                 Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
                 Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
+
+                Route::delete('{file}', [VaultFileController::class, 'destroy'])->name('destroy');
+            });
+
+            // companies
+            Route::prefix('companies')->name('vault.companies.')->group(function () {
+                Route::get('', [VaultCompanyController::class, 'index'])->name('index');
+                Route::get('{company}', [VaultCompanyController::class, 'show'])->name('show');
             });
 
             // vault settings
@@ -367,6 +403,9 @@ Route::middleware([
                 Route::post('settings/contactImportantDateTypes', [VaultSettingsContactImportantDateTypeController::class, 'store'])->name('vault.settings.important_date_type.store');
                 Route::put('settings/contactImportantDateTypes/{type}', [VaultSettingsContactImportantDateTypeController::class, 'update'])->name('vault.settings.important_date_type.update');
                 Route::delete('settings/contactImportantDateTypes/{type}', [VaultSettingsContactImportantDateTypeController::class, 'destroy'])->name('vault.settings.important_date_type.destroy');
+
+                // tab visibility
+                Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
             });
 
             // global search in the vault

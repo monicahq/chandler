@@ -8,13 +8,11 @@ use App\Models\Gender;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contact>
+ */
 class ContactFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = Contact::class;
 
     /**
@@ -29,6 +27,8 @@ class ContactFactory extends Factory
             'first_name' => 'Regis',
             'last_name' => 'Troyat',
             'can_be_deleted' => true,
+            'prefix' => 'Dr.',
+            'suffix' => 'III',
             'company_id' => Company::factory(),
             'gender_id' => fn (array $properties) => Gender::factory()->create([
                 'account_id' => Vault::find($properties['vault_id'])->account_id,

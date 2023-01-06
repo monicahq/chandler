@@ -42,6 +42,24 @@ class Vault extends Model
         'name',
         'description',
         'default_template_id',
+        'show_group_tab',
+        'show_tasks_tab',
+        'show_files_tab',
+        'show_journal_tab',
+        'show_companies_tab',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'show_group_tab' => 'boolean',
+        'show_tasks_tab' => 'boolean',
+        'show_files_tab' => 'boolean',
+        'show_journal_tab' => 'boolean',
+        'show_companies_tab' => 'boolean',
     ];
 
     /**
@@ -59,7 +77,7 @@ class Vault extends Model
      *
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -181,5 +199,15 @@ class Vault extends Model
     public function loans(): HasMany
     {
         return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the files associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
     }
 }

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Domains\Contact\ManageDocuments\Services;
+namespace App\Domains\Vault\ManageJournals\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\File;
+use App\Models\Post;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
-class DestroyDocument extends BaseService implements ServiceInterface
+class RemovePostFromSliceOfLife extends BaseService implements ServiceInterface
 {
-    private File $file;
+    private Post $post;
 
     private array $data;
 
@@ -24,8 +23,8 @@ class DestroyDocument extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'file_id' => 'required|integer|exists:files,id',
+            'journal_id' => 'required|integer|exists:journals,id',
+            'post_id' => 'required|integer|exists:posts,id',
         ];
     }
 
@@ -39,38 +38,33 @@ class DestroyDocument extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Destroy a file of the document type.
+     * Remove the post from a slice of life.
      *
      * @param  array  $data
+     * @return void
      */
     public function execute(array $data): void
     {
         $this->data = $data;
         $this->validate();
 
-        $this->file->delete();
-
-        $this->updateLastEditedDate();
+        $this->post->slice_of_life_id = null;
+        $this->post->save();
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->file = $this->contact->files()
-            ->where('type', File::TYPE_DOCUMENT)
-            ->findOrFail($this->data['file_id']);
-    }
+        $journal = $this->vault->journals()
+            ->findOrFail($this->data['journal_id']);
 
-    private function updateLastEditedDate(): void
-    {
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
+        $this->post = $journal->posts()
+            ->findOrFail($this->data['post_id']);
     }
 }

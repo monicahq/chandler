@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Domains\Contact\ManagePhotos\Services;
+namespace App\Domains\Vault\ManageJournals\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\File;
+use App\Models\SliceOfLife;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
-class DestroyPhoto extends BaseService implements ServiceInterface
+class CreateSliceOfLife extends BaseService implements ServiceInterface
 {
-    private File $file;
-
     private array $data;
+
+    private SliceOfLife $sliceOfLife;
 
     /**
      * Get the validation rules that apply to the service.
@@ -24,8 +23,8 @@ class DestroyPhoto extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'file_id' => 'required|integer|exists:files,id',
+            'journal_id' => 'required|integer|exists:journals,id',
+            'name' => 'nullable|string|max:255',
         ];
     }
 
@@ -39,38 +38,39 @@ class DestroyPhoto extends BaseService implements ServiceInterface
         return [
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
-            'contact_must_belong_to_vault',
             'author_must_be_vault_editor',
         ];
     }
 
     /**
-     * Destroy a file of the photo type.
+     * Create a slice of life.
      *
      * @param  array  $data
+     * @return SliceOfLife
      */
-    public function execute(array $data): void
+    public function execute(array $data): SliceOfLife
     {
         $this->data = $data;
+
         $this->validate();
+        $this->create();
 
-        $this->file->delete();
-
-        $this->updateLastEditedDate();
+        return $this->sliceOfLife;
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
 
-        $this->file = $this->contact->files()
-            ->where('type', File::TYPE_PHOTO)
-            ->findOrFail($this->data['file_id']);
+        $this->vault->journals()
+            ->findOrfail($this->data['journal_id']);
     }
 
-    private function updateLastEditedDate(): void
+    private function create(): void
     {
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
+        $this->sliceOfLife = SliceOfLife::create([
+            'journal_id' => $this->data['journal_id'],
+            'name' => $this->data['name'],
+        ]);
     }
 }

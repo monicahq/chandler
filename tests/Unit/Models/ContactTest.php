@@ -232,7 +232,8 @@ class ContactTest extends TestCase
     {
         $contact = Contact::factory()->create();
         File::factory()->count(2)->create([
-            'contact_id' => $contact->id,
+            'fileable_id' => $contact->id,
+            'fileable_type' => Contact::class,
         ]);
 
         $this->assertTrue($contact->files()->exists());
@@ -242,9 +243,7 @@ class ContactTest extends TestCase
     public function it_has_one_file(): void
     {
         $contact = Contact::factory()->create();
-        $file = File::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $file = File::factory()->create();
         $contact->file_id = $file->id;
         $contact->save();
 
@@ -298,31 +297,31 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'James',
+            'Dr. James III',
             $contact->name
         );
 
         $user->update(['name_order' => '%last_name%']);
         $this->assertEquals(
-            'Bond',
+            'Dr. Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%first_name% %last_name%']);
         $this->assertEquals(
-            'James Bond',
+            'Dr. James Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%first_name% (%maiden_name%) %last_name%']);
         $this->assertEquals(
-            'James (Muller) Bond',
+            'Dr. James (Muller) Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%last_name% (%maiden_name%)  || (%nickname%) || %first_name%']);
         $this->assertEquals(
-            'Bond (Muller)  || (007) || James',
+            'Dr. Bond (Muller)  || (007) || James III',
             $contact->name
         );
     }
