@@ -110,6 +110,20 @@ const upload = () => {
     });
 };
 
+const destroyPhoto = (file) => {
+  if (confirm('Are you sure? The photo will be deleted immediately.')) {
+    axios
+      .delete(file.url.destroy)
+      .then(() => {
+        var id = localPhotos.value.findIndex((x) => x.id === file.id);
+        localPhotos.value.splice(id, 1);
+      })
+      .catch((error) => {
+        form.errors = error.response.data;
+      });
+  }
+};
+
 const update = () => {
   saveInProgress.value = true;
 
@@ -210,7 +224,7 @@ const destroy = () => {
                   :key="photo.id"
                   class="item-list flex items-center justify-between border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <div class="flex">
-                    <img :src="photo.url.show" class="mr-4" />
+                    <img :src="photo.url.show" class="mr-4" width="75" height="75" />
 
                     <ul>
                       <li class="mb-2 text-sm">{{ photo.name }}</li>
@@ -218,7 +232,7 @@ const destroy = () => {
                     </ul>
                   </div>
 
-                  <span class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy">
+                  <span class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyPhoto(photo)">
                     {{ $t('app.delete') }}
                   </span>
                 </li>
