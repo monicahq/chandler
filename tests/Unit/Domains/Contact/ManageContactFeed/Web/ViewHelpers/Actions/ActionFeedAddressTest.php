@@ -70,7 +70,7 @@ class ActionFeedAddressTest extends TestCase
                         ],
                         'image' => env('APP_URL')."/vaults/{$contact->vault_id}/contacts/{$contact->id}/addresses/{$activeAddress->id}/image/300x100",
                         'url' => [
-                            'show' => 'https://www.google.com/maps/place/123+main+st+montreal+quebec+h1k+12k+Canada',
+                            'show' => 'https://www.google.com/maps/place/123+main+st+Apartment+4+montreal+quebec+h1k+12k+Canada',
                         ],
                     ],
                     'description' => 'test',
