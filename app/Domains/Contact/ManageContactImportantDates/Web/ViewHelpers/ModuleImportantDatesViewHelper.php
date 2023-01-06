@@ -18,6 +18,7 @@ class ModuleImportantDatesViewHelper
                 'label' => $date->label,
                 'date' => ImportantDateHelper::formatDate($date, $user),
                 'type' => $date->contactImportantDateType ? $date->contactImportantDateType->label : null,
+                'age' => ImportantDateHelper::getAge($date),
             ];
         });
 

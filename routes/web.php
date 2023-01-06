@@ -176,6 +176,7 @@ Route::middleware([
 
             // reports
             Route::prefix('reports')->group(function () {
+                Route::get('', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.index');
                 Route::get('importantDates', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.important_dates.index');
             });
 
