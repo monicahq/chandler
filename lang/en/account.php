@@ -108,7 +108,7 @@ return [
     'religion_islam' => 'Muslim',
     'religion_hinduism' => 'Hinduist',
     'religion_buddhism' => 'Buddhist',
-    'religion_shinto' => 'Shinto',
+    'religion_shintoism' => 'Shintoist',
     'religion_taoism' => 'Taoist',
     'religion_sikhism' => 'Sikh',
     'religion_judaism' => 'Jew',
