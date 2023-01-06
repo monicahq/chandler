@@ -21,6 +21,8 @@ class PostEditViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_view(): void
     {
+        config(['services.uploadcare.public_key' => '123']);
+
         $user = User::factory()->create();
         $vault = Vault::factory()->create();
         $journal = Journal::factory()->create([
@@ -44,7 +46,7 @@ class PostEditViewHelperTest extends TestCase
 
         $array = PostEditViewHelper::data($journal, $post, $user);
 
-        $this->assertCount(13, $array);
+        $this->assertCount(15, $array);
         $this->assertEquals(
             $post->id,
             $array['id']
@@ -68,6 +70,13 @@ class PostEditViewHelperTest extends TestCase
                 'name' => $journal->name,
             ],
             $array['journal']
+        );
+        $this->assertEquals(
+            '123',
+            $array['uploadcarePublicKey']
+        );
+        $this->assertTrue(
+            $array['canUploadFile']
         );
         $this->assertEquals(
             [
