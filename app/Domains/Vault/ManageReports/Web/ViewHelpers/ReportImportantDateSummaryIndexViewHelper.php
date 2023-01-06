@@ -24,9 +24,6 @@ class ReportImportantDateSummaryIndexViewHelper
      */
     public static function data(Vault $vault, User $user): Collection
     {
-        // We get all the important dates in the vault.
-        // Dates will be sorted by date (without the year), starting from the
-        // start date to the next 12 months.
         $contactsInVault = $vault->contacts->pluck('id')->toArray();
         $importantDates = ContactImportantDate::whereIn('contact_id', $contactsInVault)
             ->with('contact')
