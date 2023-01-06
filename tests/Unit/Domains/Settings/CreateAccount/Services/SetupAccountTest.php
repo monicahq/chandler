@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domains\Settings\CreateAccount\Services;
 
-use App\Domains\Settings\CreateAccount\Services\SetupAccount;
+use App\Domains\Settings\CreateAccount\Jobs\SetupAccount;
 use App\Models\Currency;
 use App\Models\RelationshipGroupType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -95,6 +95,10 @@ class SetupAccountTest extends TestCase
         ]);
         $this->assertDatabaseHas('modules', [
             'account_id' => $user->account_id,
+            'name' => trans('app.module_religions'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $user->account_id,
             'name' => trans('app.module_tasks'),
         ]);
         $this->assertDatabaseHas('modules', [
@@ -120,6 +124,10 @@ class SetupAccountTest extends TestCase
         $this->assertDatabaseHas('modules', [
             'account_id' => $user->account_id,
             'name' => trans('app.module_groups'),
+        ]);
+        $this->assertDatabaseHas('modules', [
+            'account_id' => $user->account_id,
+            'name' => trans('app.module_posts'),
         ]);
 
         $this->assertDatabaseHas('relationship_group_types', [
@@ -591,7 +599,7 @@ class SetupAccountTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('religions', [
-            'translation_key' => 'account.religion_christian',
+            'translation_key' => 'account.religion_christianity',
             'position' => 1,
         ]);
         $this->assertDatabaseHas('religions', [

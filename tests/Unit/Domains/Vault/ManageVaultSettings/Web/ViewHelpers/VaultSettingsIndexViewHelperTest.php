@@ -35,7 +35,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $vault->refresh();
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertCount(
-            8,
+            9,
             $array
         );
         $this->assertArrayHasKey('templates', $array);
@@ -54,6 +54,16 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 ],
             ],
             $array['templates']->toArray()
+        );
+        $this->assertEquals(
+            [
+                'show_group_tab' => true,
+                'show_tasks_tab' => true,
+                'show_files_tab' => true,
+                'show_journal_tab' => true,
+                'show_companies_tab' => true,
+            ],
+            $array['visibility']
         );
         $this->assertEquals(
             [
@@ -91,6 +101,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'tag_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/tags',
                 'contact_date_important_date_type_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes',
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
+                'update_tab_visibility' => env('APP_URL').'/vaults/'.$vault->id.'/settings/visibility',
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id,
             ],
             $array['url']
@@ -100,9 +111,11 @@ class VaultSettingsIndexViewHelperTest extends TestCase
     /** @test */
     public function it_gets_the_data_needed_for_the_data_transfer_object(): void
     {
-        $label = Label::factory()->create();
         $vault = Vault::factory()->create();
-        $array = VaultSettingsIndexViewHelper::dtoLabel($vault, $label);
+        $label = Label::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $array = VaultSettingsIndexViewHelper::dtoLabel($label);
         $this->assertEquals(
             [
                 'id' => $label->id,
@@ -126,7 +139,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $tag = Tag::factory()->create([
             'vault_id' => $vault->id,
         ]);
-        $array = VaultSettingsIndexViewHelper::dtoTag($vault, $tag);
+        $array = VaultSettingsIndexViewHelper::dtoTag($tag);
         $this->assertEquals(
             [
                 'id' => $tag->id,

@@ -37,6 +37,8 @@ class UpdateContact extends BaseService implements ServiceInterface
             'maiden_name' => 'nullable|string|max:255',
             'gender_id' => 'nullable|integer|exists:genders,id',
             'pronoun_id' => 'nullable|integer|exists:pronouns,id',
+            'suffix' => 'nullable|string|max:255',
+            'prefix' => 'nullable|string|max:255',
         ];
     }
 
@@ -71,6 +73,8 @@ class UpdateContact extends BaseService implements ServiceInterface
         $this->contact->middle_name = $this->valueOrNull($data, 'middle_name');
         $this->contact->maiden_name = $this->valueOrNull($data, 'maiden_name');
         $this->contact->nickname = $this->valueOrNull($data, 'nickname');
+        $this->contact->suffix = $this->valueOrNull($data, 'suffix');
+        $this->contact->prefix = $this->valueOrNull($data, 'prefix');
         if ($this->valueOrNull($this->data, 'gender_id')) {
             $this->contact->gender_id = $this->gender->id;
         } else {
@@ -95,12 +99,12 @@ class UpdateContact extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         if ($this->valueOrNull($this->data, 'gender_id')) {
-            $this->gender = Gender::where('account_id', $this->data['account_id'])
+            $this->gender = $this->account()->genders()
                 ->findOrFail($this->data['gender_id']);
         }
 
         if ($this->valueOrNull($this->data, 'pronoun_id')) {
-            $this->pronoun = Pronoun::where('account_id', $this->data['account_id'])
+            $this->pronoun = $this->account()->pronouns()
                 ->findOrFail($this->data['pronoun_id']);
         }
     }

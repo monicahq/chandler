@@ -21,8 +21,10 @@ use App\Domains\Contact\ManagePhotos\Web\ViewHelpers\ModulePhotosViewHelper;
 use App\Domains\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
 use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ModuleFamilySummaryViewHelper;
 use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
+use App\Domains\Contact\ManageReligion\Web\ViewHelpers\ModuleReligionViewHelper;
 use App\Domains\Contact\ManageReminders\Web\ViewHelpers\ModuleRemindersViewHelper;
 use App\Domains\Contact\ManageTasks\Web\ViewHelpers\ModuleContactTasksViewHelper;
+use App\Domains\Vault\ManageJournals\Web\ViewHelpers\ModulePostsViewHelper;
 use App\Helpers\StorageHelper;
 use App\Models\Contact;
 use App\Models\Module;
@@ -81,6 +83,10 @@ class ContactShowViewHelper
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
+                'move_contact' => route('contact.move.show', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
                 'destroy' => route('contact.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
@@ -123,6 +129,10 @@ class ContactShowViewHelper
                     'contact' => $contact->id,
                 ]),
                 'update_template' => route('contact.blank', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                ]),
+                'move_contact' => route('contact.move.show', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -197,6 +207,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_FAMILY_SUMMARY) {
                 $data = ModuleFamilySummaryViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_RELIGIONS) {
+                $data = ModuleReligionViewHelper::data($contact);
             }
 
             $modulesCollection->push([
@@ -278,6 +292,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_PHOTOS) {
                 $data = ModulePhotosViewHelper::data($contact);
+            }
+
+            if ($module->type == Module::TYPE_POSTS) {
+                $data = ModulePostsViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

@@ -1,13 +1,14 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
 import Tags from '@/Pages/Vault/Journal/Post/Partials/Tags.vue';
+import SlicesOfLife from '@/Pages/Vault/Journal/Post/Partials/SlicesOfLife.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
+import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -16,16 +17,23 @@ const props = defineProps({
 
 const form = useForm({
   title: '',
+  date: '',
   sections: [],
+  contacts: [],
 });
 
-const loadingState = ref('');
 const saveInProgress = ref(false);
 const statistics = ref([]);
+const modelConfig = ref({
+  type: 'string',
+  mask: 'YYYY-MM-DD',
+});
 
 onMounted(() => {
   form.title = props.data.title;
   statistics.value = props.data.statistics;
+  form.contacts = props.data.contacts;
+  form.date = props.data.editable_date;
 
   props.data.sections.forEach((section) => {
     form.sections.push({
@@ -47,6 +55,20 @@ watch(
   () => form.title,
   () => {
     debouncedWatch(form.title);
+  },
+);
+
+watch(
+  () => form.date,
+  () => {
+    debouncedWatch(form.date);
+  },
+);
+
+watch(
+  () => _.cloneDeep(form.contacts),
+  () => {
+    debouncedWatch(form.contacts);
   },
 );
 
@@ -174,17 +196,8 @@ const destroy = () => {
           <div class="">
             <!-- Publish action -->
             <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
-              <div class="border-b border-gray-200 p-2 text-sm dark:border-gray-700">Post status: draft</div>
-
               <div class="bg-form rounded-b-lg p-5">
-                <pretty-link :href="data.url.show" :classes="'mr-8'" :text="'Close'" :icon="'exit'" />
-
-                <pretty-button
-                  @click="update()"
-                  :text="'Publish'"
-                  :state="loadingState"
-                  :icon="'check'"
-                  :classes="'save'" />
+                <pretty-link :href="data.url.show" :text="'Close'" :icon="'exit'" />
               </div>
             </div>
 
@@ -218,15 +231,36 @@ const destroy = () => {
               </div>
             </div>
 
+            <!-- written at -->
+            <p class="mb-2 flex items-center font-bold">
+              <span>Written on</span>
+            </p>
+            <v-date-picker v-model="form.date" :model-config="modelConfig" class="mb-6 inline-block">
+              <template v-slot="{ inputValue, inputEvents }">
+                <input
+                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  :value="inputValue"
+                  v-on="inputEvents" />
+              </template>
+            </v-date-picker>
+
             <!-- contacts -->
             <p class="mb-2 flex items-center font-bold">
               <span>Contacts in this post</span>
             </p>
-            <div class="bg-form mb-6 rounded-lg border border-gray-200 p-5 dark:border-gray-700 dark:bg-gray-900">
-              This post is about
-            </div>
+            <contact-selector
+              v-model="form.contacts"
+              :search-url="layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
+              :display-most-consulted-contacts="true"
+              :add-multiple-contacts="true"
+              :required="true"
+              :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700 mb-6'" />
 
-            <!-- categories -->
+            <!-- slices of life -->
+            <slices-of-life :data="data" />
+
+            <!-- tags -->
             <tags :data="data" />
 
             <!-- stats -->
@@ -348,5 +382,23 @@ const destroy = () => {
   100% {
     transform: translateX(-466%) rotate(45deg) scale(0);
   }
+}
+
+.ant-calendar-picker {
+  -tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  padding-top: 0.5rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-width: 1px;
+  appearance: none;
+  background-color: #fff;
 }
 </style>

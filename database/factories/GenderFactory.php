@@ -6,13 +6,11 @@ use App\Models\Account;
 use App\Models\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Gender>
+ */
 class GenderFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = Gender::class;
 
     /**
@@ -25,6 +23,7 @@ class GenderFactory extends Factory
         return [
             'account_id' => Account::factory(),
             'name' => $this->faker->name(),
+            'type' => Gender::LIST[rand(0, 4)],
         ];
     }
 }

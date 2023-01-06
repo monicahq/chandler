@@ -1,5 +1,6 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
+import ContactCard from '@/Shared/ContactCard.vue';
 
 defineProps({
   layoutData: Object,
@@ -60,13 +61,22 @@ defineProps({
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="mr-8">
-            <div class="post prose relative rounded bg-white">
-              <p class="text-sm text-gray-400">{{ data.written_at }}</p>
+            <div class="post relative rounded bg-white">
+              <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
+
+              <ul v-if="data.tags" class="p0 list mb-3">
+                <li
+                  v-for="tag in data.tags"
+                  :key="tag.id"
+                  class="mr-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-500 last:mr-0">
+                  {{ tag.name }}
+                </li>
+              </ul>
 
               <h1 v-if="data.title_exists" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
 
               <!-- sections -->
-              <div v-if="data.sections.length > 0">
+              <div v-if="data.sections.length > 0" class="prose">
                 <div v-for="section in data.sections" :key="section.id" class="mb-4">
                   <div class="mb-1 italic text-gray-400">
                     {{ section.label }}
@@ -83,41 +93,35 @@ defineProps({
 
           <!-- right -->
           <div class="">
-            <p class="mb-2 font-bold">Options</p>
+            <!-- contacts -->
+            <div v-if="data.contacts.length > 0" class="mb-4">
+              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_contacts') }}</p>
+
+              <div v-for="contact in data.contacts" :key="contact.id" class="mb-2 block">
+                <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
+              </div>
+            </div>
+
+            <!-- slice of life -->
+            <div v-if="data.sliceOfLife" class="mb-4">
+              <p class="mb-2 text-sm font-semibold">Slice of life</p>
+              <div class="mb-6 last:mb-0">
+                <div
+                  class="rounded border-b border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
+                  <inertia-link :href="data.sliceOfLife.url.show" class="font-semibold">{{
+                    data.sliceOfLife.name
+                  }}</inertia-link>
+                  <p class="text-xs text-gray-600">{{ data.sliceOfLife.date_range }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- options -->
+            <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_options') }}</p>
             <ul class="mb-6 text-sm">
-              <li class="mb-2 flex items-center">
-                <svg
-                  class="mr-2 h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
-                </svg>
-
-                <span>Draft</span>
-              </li>
               <li class="flex items-center">
-                <svg
-                  class="mr-2 h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
-                </svg>
-
-                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">{{
-                  $t('app.edit')
-                }}</inertia-link>
+                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">Edit post</inertia-link>
               </li>
             </ul>
           </div>

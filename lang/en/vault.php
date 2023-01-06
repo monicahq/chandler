@@ -53,12 +53,16 @@ return [
     'create_contact_maiden_name' => 'Maiden name',
     'create_contact_gender' => 'Gender',
     'create_contact_pronoun' => 'Pronoun',
+    'create_contact_prefix' => 'Prefix',
+    'create_contact_suffix' => 'Suffix',
     'create_contact_template' => 'Use the following template for this contact',
     'create_contact_add_middle_name' => '+ middle name',
     'create_contact_add_nickname' => '+ nickname',
     'create_contact_add_maiden_name' => '+ maiden name',
     'create_contact_add_gender' => '+ gender',
     'create_contact_add_pronoun' => '+ pronoun',
+    'create_contact_add_suffix' => '+ suffix',
+    'create_contact_add_prefix' => '+ prefix',
     'create_contact_add_change_template' => '+ change template',
     'create_contact_success' => 'The contact has been added',
 
@@ -72,6 +76,7 @@ return [
     'dashboard_favorites_title' => 'Favorites',
     'dashboard_due_tasks_title' => 'Due and upcoming tasks',
     'dashboard_due_tasks_blank' => 'No tasks.',
+    'dashboard_feed_title' => 'Activity feed',
 
     /***************************************************************
      * VAULT DASHBOARD REMINDERS
@@ -113,6 +118,8 @@ return [
     'journal_show_cta' => 'Create a post',
     'journal_show_years' => 'Years',
     'journal_show_tags' => 'All tags',
+    'journal_show_contacts' => 'Contacts in this post',
+    'journal_show_options' => 'Options',
     'journal_show_blank' => 'The journal lets you document your life with your own words.',
     'journal_post_edit_tags' => 'Tags',
 
@@ -151,7 +158,7 @@ return [
     'settings_labels_create_name' => 'Name',
     'settings_labels_create_color' => 'Choose a color',
     'settings_labels_create_cta' => 'Create label',
-    'settings_labels_count' => ':count contacts',
+    'settings_labels_count' => ':count contact|:count contacts',
     'settings_labels_blank' => 'Labels let you classify contacts using a system that matters to you.',
     'settings_labels_create_success' => 'The label has been created',
     'settings_labels_update_success' => 'The label has been updated',

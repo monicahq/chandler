@@ -43,6 +43,12 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        'docs' => [
+            'driver' => 'sqlite',
+            'database' => env('DB_DOC_DATABASE', database_path('database-doc.sqlite')),
+            'foreign_key_constraints' => true,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -98,8 +104,8 @@ return [
             'database' => env('DB_TEST_DATABASE'),
             'username' => env('DB_TEST_USERNAME'),
             'password' => env('DB_TEST_PASSWORD'),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => env('DB_TEST_DRIVER') === 'pgsql' ? 'utf8' : 'utf8mb4',
+            'collation' => env('DB_TEST_DRIVER') === 'pgsql' ? '' : 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => true,
         ],

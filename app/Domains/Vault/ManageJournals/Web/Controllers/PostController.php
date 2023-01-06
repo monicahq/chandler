@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
+use App\Domains\Vault\ManageJournals\Services\AddContactToPost;
 use App\Domains\Vault\ManageJournals\Services\CreatePost;
 use App\Domains\Vault\ManageJournals\Services\DestroyPost;
 use App\Domains\Vault\ManageJournals\Services\IncrementPostReadCounter;
@@ -106,7 +107,7 @@ class PostController extends Controller
 
         return Inertia::render('Vault/Journal/Post/Edit', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => PostEditViewHelper::data($journal, $post),
+            'data' => PostEditViewHelper::data($journal, $post, Auth::user()),
         ]);
     }
 
@@ -122,8 +123,27 @@ class PostController extends Controller
             'post_id' => $postId,
             'title' => $request->input('title'),
             'sections' => $request->input('sections'),
-            'written_at' => Carbon::now()->format('Y-m-d'),
+            'written_at' => Carbon::parse($request->input('date'))->format('Y-m-d'),
         ]);
+
+        $post->contacts()->detach();
+
+        if ($request->input('contacts')) {
+            if (count($request->input('contacts')) > 0) {
+                foreach ($request->input('contacts') as $contact) {
+                    $data = [
+                        'account_id' => Auth::user()->account_id,
+                        'author_id' => Auth::user()->id,
+                        'vault_id' => $vaultId,
+                        'journal_id' => $journalId,
+                        'post_id' => $postId,
+                        'contact_id' => $contact['id'],
+                    ];
+
+                    (new AddContactToPost())->execute($data);
+                }
+            }
+        }
 
         return response()->json([
             'data' => PostHelper::statistics($post),

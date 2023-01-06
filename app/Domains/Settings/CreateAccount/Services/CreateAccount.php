@@ -3,6 +3,7 @@
 namespace App\Domains\Settings\CreateAccount\Services;
 
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Domains\Settings\CreateAccount\Jobs\SetupAccount;
 use App\Interfaces\ServiceInterface;
 use App\Models\Account;
 use App\Models\User;
@@ -59,7 +60,7 @@ class CreateAccount extends BaseService implements ServiceInterface
             'first_name' => $this->data['first_name'],
             'last_name' => $this->data['last_name'],
             'email' => $this->data['email'],
-            'password' => Hash::make($this->data['password']),
+            'password' => isset($this->data['password']) ? Hash::make($this->data['password']) : null,
             'is_account_administrator' => true,
             'timezone' => 'UTC',
         ]);

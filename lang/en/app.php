@@ -8,6 +8,7 @@ return [
     'layout_menu_reports' => 'Reports',
     'layout_menu_contacts' => 'Contacts',
     'layout_menu_groups' => 'Groups',
+    'layout_menu_companies' => 'Companies',
     'layout_menu_tasks' => 'Tasks',
     'layout_menu_gift_center' => 'Gifts',
     'layout_menu_loans' => 'Loans & debts',
@@ -24,6 +25,7 @@ return [
     'breadcrumb_dashboard_index' => 'Dashboard',
     'breadcrumb_dashboard_reminders' => 'All the planned reminders',
     'breadcrumb_group_index' => 'Groups',
+    'breadcrumb_companies_index' => 'Companies',
     'breadcrumb_contact_index' => 'Contacts',
     'breadcrumb_contact_show' => 'Profile of :name',
     'breadcrumb_contact_create' => 'Create a contact',
@@ -115,6 +117,8 @@ return [
     'module_contact_information' => 'Contact information',
     'module_documents' => 'Documents',
     'module_photos' => 'Photos',
+    'module_posts' => 'Posts about the contact',
+    'module_religions' => 'Religions',
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 

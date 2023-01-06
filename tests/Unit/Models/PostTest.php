@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Contact;
 use App\Models\Post;
 use App\Models\PostSection;
+use App\Models\SliceOfLife;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -21,6 +23,16 @@ class PostTest extends TestCase
     }
 
     /** @test */
+    public function it_has_one_slice_of_life()
+    {
+        $post = Post::factory()->create([
+            'slice_of_life_id' => SliceOfLife::factory()->create()->id,
+        ]);
+
+        $this->assertTrue($post->sliceOfLife()->exists());
+    }
+
+    /** @test */
     public function it_has_many_post_sections()
     {
         $post = Post::factory()->create();
@@ -29,6 +41,17 @@ class PostTest extends TestCase
         ]);
 
         $this->assertTrue($post->postSections()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_contacts(): void
+    {
+        $ross = Contact::factory()->create([]);
+        $post = Post::factory()->create();
+
+        $post->contacts()->sync([$ross->id]);
+
+        $this->assertTrue($post->contacts()->exists());
     }
 
     /** @test */
@@ -61,6 +84,33 @@ class PostTest extends TestCase
         $this->assertEquals(
             'Awesome post',
             $post->title
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_excerpt(): void
+    {
+        $post = Post::factory()->create([
+            'title' => null,
+        ]);
+
+        $this->assertNull(
+            $post->excerpt
+        );
+
+        PostSection::factory()->create([
+            'post_id' => $post->id,
+            'content' => null,
+        ]);
+
+        PostSection::factory()->create([
+            'post_id' => $post->id,
+            'content' => 'this is incredible',
+        ]);
+
+        $this->assertEquals(
+            'this is incredible',
+            $post->excerpt
         );
     }
 }

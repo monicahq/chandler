@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Vault;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
@@ -29,9 +30,10 @@ class DestroyContactTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create(['vault_id' => $vault->id]);
 
-        File::factory()->create([
-            'contact_id' => $contact->id,
+        $file = File::factory()->create([
+            'vault_id' => $vault->id,
         ]);
+        $contact->files()->save($file);
 
         $this->executeService($regis, $regis->account, $vault, $contact);
     }
@@ -44,7 +46,7 @@ class DestroyContactTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyContact())->execute($request);
+        new DestroyContact($request);
     }
 
     /** @test */
@@ -105,6 +107,7 @@ class DestroyContactTest extends TestCase
 
     private function executeService(User $author, Account $account, Vault $vault, Contact $contact): void
     {
+        Carbon::setTestNow(Carbon::create(2018, 1, 1, 0, 0, 0));
         Queue::fake();
         Event::fake();
 
@@ -115,14 +118,15 @@ class DestroyContactTest extends TestCase
             'contact_id' => $contact->id,
         ];
 
-        (new DestroyContact())->execute($request);
+        (new DestroyContact($request))->handle();
 
-        $this->assertDatabaseMissing('contacts', [
+        $this->assertDatabaseHas('contacts', [
             'id' => $contact->id,
+            'deleted_at' => now(),
         ]);
 
         $this->assertDatabaseMissing('files', [
-            'contact_id' => $contact->id,
+            'fileable_id' => $contact->id,
         ]);
     }
 }

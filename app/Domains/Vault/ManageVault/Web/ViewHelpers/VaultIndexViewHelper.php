@@ -31,6 +31,13 @@ class VaultIndexViewHelper
                     'at_least_editor' => VaultHelper::getPermission(Auth::user(), $vault) <= Vault::PERMISSION_EDIT,
                     'at_least_manager' => VaultHelper::getPermission(Auth::user(), $vault) <= Vault::PERMISSION_MANAGE,
                 ],
+                'visibility' => [
+                    'show_group_tab' => $vault->show_group_tab,
+                    'show_tasks_tab' => $vault->show_tasks_tab,
+                    'show_files_tab' => $vault->show_files_tab,
+                    'show_journal_tab' => $vault->show_journal_tab,
+                    'show_companies_tab' => $vault->show_companies_tab,
+                ],
                 'url' => [
                     'dashboard' => route('vault.show', [
                         'vault' => $vault->id,
@@ -42,6 +49,9 @@ class VaultIndexViewHelper
                         'vault' => $vault->id,
                     ]),
                     'groups' => route('group.index', [
+                        'vault' => $vault->id,
+                    ]),
+                    'companies' => route('vault.companies.index', [
                         'vault' => $vault->id,
                     ]),
                     'tasks' => route('vault.tasks.index', [
@@ -114,7 +124,7 @@ class VaultIndexViewHelper
     private static function getContacts(Vault $vault): Collection
     {
         return $vault->contacts
-            ->random(fn ($items) => min(5, count($items)))
+            ->random(fn (Collection $items): int => min(5, count($items)))
             ->map(fn (Contact $contact) => [
                 'id' => $contact->id,
                 'name' => $contact->name,

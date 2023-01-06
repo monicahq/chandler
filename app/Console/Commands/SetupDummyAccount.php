@@ -15,8 +15,6 @@ use App\Domains\Vault\ManageVault\Services\CreateVault;
 use App\Exceptions\EntryAlreadyExistException;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
-use App\Models\Group;
-use App\Models\Note;
 use App\Models\PostTemplate;
 use App\Models\User;
 use App\Models\Vault;
@@ -44,6 +42,7 @@ class SetupDummyAccount extends Command
      * @var string
      */
     protected $signature = 'monica:dummy
+                            {--migrate : Use migrate command instead of migrate:fresh.}
                             {--force : Force the operation to run.}';
 
     /**
@@ -60,6 +59,9 @@ class SetupDummyAccount extends Command
      */
     public function handle(): void
     {
+        // remove queue
+        config(['queue.default' => 'sync']);
+
         $this->start();
         $this->wipeAndMigrateDB();
         $this->createFirstUsers();
@@ -84,13 +86,12 @@ class SetupDummyAccount extends Command
 
     private function wipeAndMigrateDB(): void
     {
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Note::class]);
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Contact::class]);
-        $this->artisan('☐ Flush search engine', 'scout:flush', ['model' => Group::class]);
-
-        $this->artisan('☐ Reset search engine', 'monica:setup');
-        $this->artisan('☐ Migration of the database', 'migrate:fresh');
-        $this->artisan('☐ Symlink the storage folder', 'storage:link');
+        if ($this->hasOption('migrate') && $this->option('migrate')) {
+            $this->artisan('☐ Migration of the database', 'migrate', ['--force' => true]);
+        } else {
+            $this->artisan('☐ Migration of the database', 'migrate:fresh', ['--force' => true]);
+        }
+        $this->artisan('☐ Reset search engine', 'scout:setup', ['--force' => true, '--flush' => true]);
     }
 
     private function stop(): void

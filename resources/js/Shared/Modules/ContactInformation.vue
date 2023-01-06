@@ -48,7 +48,7 @@
             :type="'text'"
             :autofocus="true"
             :input-class="'block w-full'"
-            :required="false"
+            :required="true"
             :autocomplete="false"
             :maxlength="255"
             @esc-key-pressed="addContactInformationModalShown = false" />
@@ -81,7 +81,10 @@
           class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <!-- contact information -->
           <div v-if="editedContactInformationId != info.id" class="flex items-center justify-between px-3 py-2">
-            <a :href="info.data" class="text-blue-500 hover:underline">{{ info.label }} </a>
+            <div>
+              <a :href="info.data_with_protocol" class="text-blue-500 hover:underline">{{ info.data }}</a>
+              <span class="ml-2 text-xs text-gray-500">({{ info.label }})</span>
+            </div>
 
             <!-- actions -->
             <ul class="text-sm">
@@ -143,7 +146,8 @@
     <div
       v-if="localContactInformation.length == 0"
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <p class="p-5 text-center">
+      <img src="/img/contact_blank_contact.svg" :alt="$t('Contact informations')" class="mx-auto mt-4 h-20 w-20" />
+      <p class="px-5 pb-5 pt-2 text-center">
         {{ $t('contact.contact_information_blank') }}
       </p>
     </div>
@@ -196,7 +200,7 @@ export default {
       this.addContactInformationModalShown = true;
       this.form.errors = [];
       this.form.data = '';
-      this.form.contact_information_type_id = 0;
+      this.form.contact_information_type_id = this.data.contact_information_types[0].id;
 
       this.$nextTick(() => {
         this.$refs.newData.focus();

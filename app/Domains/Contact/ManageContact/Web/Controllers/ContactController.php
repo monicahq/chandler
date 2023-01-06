@@ -61,6 +61,8 @@ class ContactController extends Controller
             'gender_id' => $request->input('gender_id'),
             'pronoun_id' => $request->input('pronoun_id'),
             'template_id' => $request->input('template_id'),
+            'prefix' => $request->input('prefix'),
+            'suffix' => $request->input('suffix'),
             'listed' => true,
         ];
 
@@ -131,6 +133,8 @@ class ContactController extends Controller
             'maiden_name' => $request->input('maiden_name'),
             'gender_id' => $request->input('gender_id'),
             'pronoun_id' => $request->input('pronoun_id'),
+            'prefix' => $request->input('prefix'),
+            'suffix' => $request->input('suffix'),
         ];
 
         $contact = (new UpdateContact())->execute($data);
@@ -152,7 +156,7 @@ class ContactController extends Controller
             'contact_id' => $contactId,
         ];
 
-        (new DestroyContact())->execute($data);
+        DestroyContact::dispatchSync($data);
 
         return response()->json([
             'data' => route('contact.index', [

@@ -5,7 +5,6 @@ namespace App\Domains\Settings\ManageNotificationChannels\Services;
 use App\Domains\Settings\ManageNotificationChannels\Jobs\SendVerificationEmailChannel;
 use App\Exceptions\EmailAlreadyExistException;
 use App\Interfaces\ServiceInterface;
-use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Services\BaseService;
 use Illuminate\Support\Str;
@@ -30,7 +29,7 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
             'type' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'verify_email' => 'nullable|boolean',
-            'preferred_time' => 'nullable|date_format:H:i',
+            'preferred_time' => 'nullable',
         ];
     }
 

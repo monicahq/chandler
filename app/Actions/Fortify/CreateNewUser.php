@@ -3,7 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Domains\Settings\CreateAccount\Services\CreateAccount;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
@@ -18,7 +19,7 @@ class CreateNewUser implements CreatesNewUsers
      * @param  array  $input
      * @return \App\Models\User
      */
-    public function create(array $input)
+    public function create(array $input): User
     {
         Validator::make($input, [
             'first_name' => ['required', 'string', 'max:255'],
@@ -32,7 +33,7 @@ class CreateNewUser implements CreatesNewUsers
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'email' => $input['email'],
-            'password' => isset($input['password']) ? Hash::make($input['password']) : null,
+            'password' => Arr::get($input, 'password'),
         ]);
     }
 }

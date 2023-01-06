@@ -1,6 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import { trans } from 'laravel-vue-i18n';
+import useClipboard from 'vue-clipboard3';
 import JetActionMessage from '@/Components/Jetstream/ActionMessage.vue';
 import JetActionSection from '@/Components/Jetstream/ActionSection.vue';
 import JetButton from '@/Components/Button.vue';
@@ -34,6 +36,15 @@ const deleteApiTokenForm = useForm();
 const displayingToken = ref(false);
 const managingPermissionsFor = ref(null);
 const apiTokenBeingDeleted = ref(null);
+
+watch(
+  () => createApiTokenForm.permissions,
+  async (permissions) => {
+    if (permissions.findIndex((p) => p === 'write') >= 0 && permissions.findIndex((p) => p === 'read') <= -1) {
+      createApiTokenForm.permissions.push('read');
+    }
+  },
+);
 
 const createApiToken = () => {
   createApiTokenForm.post(route('api-tokens.store'), {
@@ -69,6 +80,16 @@ const deleteApiToken = () => {
     onSuccess: () => (apiTokenBeingDeleted.value = null),
   });
 };
+
+const copied = ref(false);
+const { toClipboard } = useClipboard();
+const copyToClipboard = (token) => {
+  toClipboard(token).then(() => {
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 2000);
+    flash(trans('Value copied into your clipboard'));
+  });
+};
 </script>
 
 <template>
@@ -86,14 +107,14 @@ const deleteApiToken = () => {
       <template #form>
         <!-- Token Name -->
         <div class="col-span-6 mb-4 sm:col-span-4">
-          <JetLabel for="name" :value="'Token name (for your reference only)'" />
+          <JetLabel for="name" :value="$t('Token name (for your reference only)')" />
           <JetInput id="name" v-model="createApiTokenForm.name" type="text" class="mt-1 block w-full" autofocus />
           <JetInputError :message="createApiTokenForm.errors.name" class="mt-2" />
         </div>
 
         <!-- Token Permissions -->
         <div v-if="availablePermissions.length > 0" class="col-span-6">
-          <JetLabel for="permissions" value="Permissions" />
+          <JetLabel for="permissions" :value="$t('Permissions')" />
 
           <div class="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
             <div v-for="permission in availablePermissions" :key="permission">
@@ -173,10 +194,23 @@ const deleteApiToken = () => {
           {{ $t('Please copy your new API token. For your security, it won’t be shown again.') }}
         </div>
 
-        <div
-          v-if="$page.props.jetstream.flash.token"
-          class="mt-4 rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500">
-          {{ $page.props.jetstream.flash.token }}
+        <div v-if="$page.props.jetstream.flash.token" class="mt-4 flex">
+          <div
+            class="rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500"
+            @click.prevent="copyToClipboard($page.props.jetstream.flash.token)">
+            {{ $page.props.jetstream.flash.token }}
+          </div>
+
+          <JetButton
+            class="ml-3"
+            :title="$t('Copy value into the clipboard')"
+            @click.prevent="copyToClipboard($page.props.jetstream.flash.token)">
+            {{ $t('Copy') }}
+          </JetButton>
+
+          <JetActionMessage :on="copied" class="px-2 py-2">
+            {{ $t('Copied.') }}
+          </JetActionMessage>
         </div>
       </template>
 

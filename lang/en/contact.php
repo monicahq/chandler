@@ -8,6 +8,7 @@ return [
     'contact_archive_cta' => 'Archive contact',
     'contact_unarchive_cta' => 'Unarchive contact',
     'contact_change_template_cta' => 'Change template',
+    'contact_move_contact_cta' => 'Move contact',
     'contact_delete_cta' => 'Delete contact',
     'contact_archived' => 'The contact is archived',
     'contact_toggle_confirm' => 'Are you sure?',
@@ -39,11 +40,14 @@ return [
     'feed_item_note_updated' => 'edited a note',
     'feed_item_note_destroyed' => 'deleted a note',
     'feed_item_job_information_updated' => 'updated the job information',
+    'feed_item_religion_updated' => 'updated the religion',
     'feed_item_goal_created' => 'created a goal',
     'feed_item_goal_updated' => 'updated a goal',
     'feed_item_goal_destroyed' => 'deleted a goal',
     'feed_item_added_to_group' => 'added the contact to a group',
     'feed_item_removed_from_group' => 'removed the contact from a group',
+    'feed_item_added_to_post' => 'added the contact to a post',
+    'feed_item_removed_from_post' => 'removed the contact from a post',
     'feed_item_archived' => 'archived the contact',
     'feed_item_unarchived' => 'unarchived the contact',
     'feed_item_favorited' => 'added the contact to the favorites',
@@ -123,4 +127,12 @@ return [
     'goals_delete_confirm' => 'Are you sure? This will delete the goal and all the streaks permanently.',
     'goals_delete_success' => 'The goal has been deleted',
     'goals_update_success' => 'The goal has been edited',
+
+    /***************************************************************
+     * MODULE: RELIGIONS
+     **************************************************************/
+
+    'religions_title' => 'Religion',
+    'religions_delete_success' => 'The goal has been deleted',
+    'religions_update_success' => 'The goal has been edited',
 ];

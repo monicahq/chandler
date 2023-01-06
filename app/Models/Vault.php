@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vault extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * Possible vault permissions.
@@ -41,24 +42,50 @@ class Vault extends Model
         'name',
         'description',
         'default_template_id',
+        'show_group_tab',
+        'show_tasks_tab',
+        'show_files_tab',
+        'show_journal_tab',
+        'show_companies_tab',
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'show_group_tab' => 'boolean',
+        'show_tasks_tab' => 'boolean',
+        'show_files_tab' => 'boolean',
+        'show_journal_tab' => 'boolean',
+        'show_companies_tab' => 'boolean',
+    ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     /**
      * Used to delete related objects from Meilisearch/Algolia instance.
      *
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::deleting(function ($model) {
-            if ($model->contacts) {
-                foreach ($model->contacts as $contact) {
-                    Note::where('contact_id', $contact->id)->unsearchable();
-                }
-                Contact::where('vault_id', $model->id)->unsearchable();
+        static::deleting(function (self $model) {
+            foreach ($model->contacts as $contact) {
+                $contact->notes()->unsearchable();
             }
+            $model->contacts()->unsearchable();
         });
     }
 
@@ -162,5 +189,25 @@ class Vault extends Model
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
+    }
+
+    /**
+     * Get the loans associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the files associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
     }
 }
