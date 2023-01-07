@@ -181,6 +181,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'hex_color' => '3243',
                 'position' => 2,
                 'url' => [
+                    'position' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id.'/order',
                     'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id,
                     'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id,
                 ],

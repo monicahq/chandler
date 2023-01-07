@@ -106,6 +106,7 @@ use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactIm
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -410,8 +411,9 @@ Route::middleware([
 
                 // mood tracking parameters
                 Route::post('settings/moodTrackingParameters', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.mood_tracking_parameter.store');
-                Route::put('settings/moodTrackingParameters/{tag}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.mood_tracking_parameter.update');
-                Route::delete('settings/moodTrackingParameters/{tag}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.mood_tracking_parameter.destroy');
+                Route::put('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.mood_tracking_parameter.update');
+                Route::put('settings/moodTrackingParameters/{parameter}/order', [VaultSettingsMoodTrackingParameterPositionController::class, 'update'])->name('vault.settings.mood_tracking_parameter.order.update');
+                Route::delete('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.mood_tracking_parameter.destroy');
             });
 
             // global search in the vault

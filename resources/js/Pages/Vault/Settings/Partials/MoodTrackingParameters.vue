@@ -15,7 +15,7 @@ const loadingState = ref('');
 const localMoodTrackingParameters = ref([]);
 const createMoodTrackingParametersModalShown = ref(false);
 const editMoodTrackingParameterId = ref(0);
-const newGiftOccasion = ref(null);
+const newMoodTrackingParameter = ref(null);
 
 const form = useForm({
   label: '',
@@ -34,13 +34,18 @@ const showMoodTrackingParameterModal = () => {
   createMoodTrackingParametersModalShown.value = true;
 
   nextTick(() => {
-    newGiftOccasion.value.focus();
+    newMoodTrackingParameter.value.focus();
   });
 };
 
 const renameMoodTrackingParameterModal = (moodTrackingParameter) => {
   form.label = moodTrackingParameter.label;
+  form.hex_color = moodTrackingParameter.hex_color;
   editMoodTrackingParameterId.value = moodTrackingParameter.id;
+
+  nextTick(() => {
+    newMoodTrackingParameter.value.focus();
+  });
 };
 
 const submit = () => {
@@ -94,9 +99,9 @@ const destroy = (moodTrackingParameter) => {
 
 const updatePosition = (event) => {
   // the event object comes from the draggable component
-  this.form.position = event.moved.newIndex + 1;
+  form.position = event.moved.newIndex + 1;
 
-  axios.post(event.moved.element.url.position, form).catch((error) => {
+  axios.put(event.moved.element.url.position, form).catch((error) => {
     loadingState.value = null;
     form.errors = error.response.data;
   });
@@ -127,7 +132,7 @@ const updatePosition = (event) => {
         <errors :errors="form.errors" />
 
         <text-input
-          ref="newGiftOccasion"
+          ref="newMoodTrackingParameter"
           v-model="form.label"
           :label="'Name'"
           :type="'text'"
@@ -180,7 +185,7 @@ const updatePosition = (event) => {
       </svg>
 
       <div>
-        <p>Customize the bullshit</p>
+        <p>You can customize the criteria that let you track your mood.</p>
       </div>
     </div>
 
@@ -243,16 +248,40 @@ const updatePosition = (event) => {
               <errors :errors="form.errors" />
 
               <text-input
-                :ref="'rename' + element.id"
+                ref="newMoodTrackingParameter"
                 v-model="form.label"
-                :label="'Name of gift occasion'"
+                :label="'Name'"
                 :type="'text'"
                 :autofocus="true"
-                :input-class="'block w-full'"
+                :input-class="'block w-full mb-4'"
                 :required="true"
                 :autocomplete="false"
                 :maxlength="255"
                 @esc-key-pressed="editMoodTrackingParameterId = 0" />
+
+              <p class="mb-2 block text-sm">
+                {{ $t('vault.settings_labels_create_color') }}
+              </p>
+              <div class="grid grid-cols-8 gap-4">
+                <div
+                  v-for="color in data.mood_tracking_parameter_colors"
+                  :key="color.hex_color"
+                  class="flex items-center">
+                  <input
+                    :id="color.hex_color"
+                    v-model="form.hex_color"
+                    :value="color.hex_color"
+                    name="name-order"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
+                    @click="form.hex_color = color.hex_color" />
+                  <label
+                    :for="color.hex_color"
+                    class="ml-2 inline-block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <div class="rounded p-4" :class="color.hex_color" />
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div class="flex justify-between p-5">
@@ -271,7 +300,7 @@ const updatePosition = (event) => {
     <div
       v-if="localMoodTrackingParameters.length == 0"
       class="rounded-lg bg-white dark:border-gray-700 dark:bg-gray-900">
-      <p class="p-5 text-center">Gift occasions let you categorize all your gifts.</p>
+      <p class="p-5 text-center">Add at least one parameter to be able to track your mood.</p>
     </div>
   </div>
 </template>

@@ -233,13 +233,17 @@ class VaultSettingsIndexViewHelper
             'hex_color' => $moodTrackingParameter->hex_color,
             'position' => $moodTrackingParameter->position,
             'url' => [
+                'position' => route('vault.settings.mood_tracking_parameter.order.update', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'parameter' => $moodTrackingParameter->id,
+                ]),
                 'update' => route('vault.settings.mood_tracking_parameter.update', [
                     'vault' => $moodTrackingParameter->vault_id,
-                    'tag' => $moodTrackingParameter->id,
+                    'parameter' => $moodTrackingParameter->id,
                 ]),
                 'destroy' => route('vault.settings.mood_tracking_parameter.destroy', [
                     'vault' => $moodTrackingParameter->vault_id,
-                    'tag' => $moodTrackingParameter->id,
+                    'parameter' => $moodTrackingParameter->id,
                 ]),
             ],
         ];
