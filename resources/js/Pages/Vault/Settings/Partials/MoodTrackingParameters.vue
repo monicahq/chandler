@@ -227,10 +227,10 @@ const updatePosition = (event) => {
               <li
                 class="inline cursor-pointer text-blue-500 hover:underline"
                 @click="renameMoodTrackingParameterModal(element)">
-                Rename
+                {{ $t('app.rename') }}
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                Delete
+                {{ $t('app.delete') }}
               </li>
             </ul>
           </div>
