@@ -75,10 +75,22 @@ defineProps({
 
               <h1 v-if="data.title_exists" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
 
+              <!-- photos -->
+              <div v-if="data.photos.length > 0" class="mb-4 flex">
+                <div
+                  v-for="photo in data.photos"
+                  :key="photo.id"
+                  class="rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  <inertia-link :href="photo.url.display"
+                    ><img :src="photo.url.display" :alt="photo.name"
+                  /></inertia-link>
+                </div>
+              </div>
+
               <!-- sections -->
               <div v-if="data.sections.length > 0" class="prose">
                 <div v-for="section in data.sections" :key="section.id" class="mb-4">
-                  <div class="mb-1 italic text-gray-400">
+                  <div v-if="data.sections.length > 1" class="mb-1 italic text-gray-400">
                     {{ section.label }}
                   </div>
 
