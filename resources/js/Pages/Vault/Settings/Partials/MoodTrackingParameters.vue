@@ -49,7 +49,7 @@ const submit = () => {
   axios
     .post(props.data.url.mood_tracking_parameter_store, form)
     .then((response) => {
-      this.localMoodTrackingParameters.unshift(response.data.data);
+      localMoodTrackingParameters.value.push(response.data.data);
       loadingState.value = null;
       createMoodTrackingParametersModalShown.value = false;
     })
@@ -169,110 +169,109 @@ const updatePosition = (event) => {
       </div>
     </form>
 
-    <div class="rounded border text-sm">
-      <!-- help text -->
-      <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+    <!-- help text -->
+    <div class="mb-4 flex rounded border border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
 
-        <div>
-          <p>Customize the bullshit</p>
-        </div>
+      <div>
+        <p>Customize the bullshit</p>
       </div>
+    </div>
 
-      <!-- list of gift occasions -->
-      <div
-        v-if="localMoodTrackingParameters.length > 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <draggable
-          :list="localMoodTrackingParameters"
-          item-key="id"
-          :component-data="{ name: 'fade' }"
-          handle=".handle"
-          @change="updatePosition">
-          <template #item="{ element }">
-            <div
-              v-if="editMoodTrackingParameterId != element.id"
-              class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-              <!-- icon to move position -->
-              <div class="mr-2 flex">
-                <svg
-                  class="handle mr-2 cursor-move"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 7H9V9H7V7Z" fill="currentColor" />
-                  <path d="M11 7H13V9H11V7Z" fill="currentColor" />
-                  <path d="M17 7H15V9H17V7Z" fill="currentColor" />
-                  <path d="M7 11H9V13H7V11Z" fill="currentColor" />
-                  <path d="M13 11H11V13H13V11Z" fill="currentColor" />
-                  <path d="M15 11H17V13H15V11Z" fill="currentColor" />
-                  <path d="M9 15H7V17H9V15Z" fill="currentColor" />
-                  <path d="M11 15H13V17H11V15Z" fill="currentColor" />
-                  <path d="M17 15H15V17H17V15Z" fill="currentColor" />
-                </svg>
+    <!-- list of mood tracking parameters -->
+    <div
+      v-if="localMoodTrackingParameters.length > 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <draggable
+        :list="localMoodTrackingParameters"
+        item-key="id"
+        :component-data="{ name: 'fade' }"
+        handle=".handle"
+        @change="updatePosition">
+        <template #item="{ element }">
+          <div
+            v-if="editMoodTrackingParameterId != element.id"
+            class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            <!-- icon to move position -->
+            <div class="mr-2 flex items-center">
+              <svg
+                class="handle mr-2 cursor-move"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 7H9V9H7V7Z" fill="currentColor" />
+                <path d="M11 7H13V9H11V7Z" fill="currentColor" />
+                <path d="M17 7H15V9H17V7Z" fill="currentColor" />
+                <path d="M7 11H9V13H7V11Z" fill="currentColor" />
+                <path d="M13 11H11V13H13V11Z" fill="currentColor" />
+                <path d="M15 11H17V13H15V11Z" fill="currentColor" />
+                <path d="M9 15H7V17H9V15Z" fill="currentColor" />
+                <path d="M11 15H13V17H11V15Z" fill="currentColor" />
+                <path d="M17 15H15V17H17V15Z" fill="currentColor" />
+              </svg>
 
-                <span>{{ element.label }}</span>
-              </div>
-
-              <!-- actions -->
-              <ul class="text-sm">
-                <li
-                  class="inline cursor-pointer text-blue-500 hover:underline"
-                  @click="renameMoodTrackingParameterModal(element)">
-                  Rename
-                </li>
-                <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                  Delete
-                </li>
-              </ul>
+              <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="element.hex_color" />
+              <span class="mr-2">{{ element.label }}</span>
             </div>
 
-            <form
-              v-else
-              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
-              @submit.prevent="update(element)">
-              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-                <errors :errors="form.errors" />
+            <!-- actions -->
+            <ul class="text-sm">
+              <li
+                class="inline cursor-pointer text-blue-500 hover:underline"
+                @click="renameMoodTrackingParameterModal(element)">
+                Rename
+              </li>
+              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
+                Delete
+              </li>
+            </ul>
+          </div>
 
-                <text-input
-                  :ref="'rename' + element.id"
-                  v-model="form.label"
-                  :label="'Name of gift occasion'"
-                  :type="'text'"
-                  :autofocus="true"
-                  :input-class="'block w-full'"
-                  :required="true"
-                  :autocomplete="false"
-                  :maxlength="255"
-                  @esc-key-pressed="editMoodTrackingParameterId = 0" />
-              </div>
+          <form
+            v-else
+            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+            @submit.prevent="update(element)">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+              <errors :errors="form.errors" />
 
-              <div class="flex justify-between p-5">
-                <pretty-span
-                  :text="$t('app.cancel')"
-                  :classes="'mr-3'"
-                  @click.prevent="editMoodTrackingParameterId = 0" />
-                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
-              </div>
-            </form>
-          </template>
-        </draggable>
-      </div>
+              <text-input
+                :ref="'rename' + element.id"
+                v-model="form.label"
+                :label="'Name of gift occasion'"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="editMoodTrackingParameterId = 0" />
+            </div>
 
-      <!-- blank state -->
-      <div
-        v-if="localMoodTrackingParameters.length == 0"
-        class="rounded-lg bg-white dark:border-gray-700 dark:bg-gray-900">
-        <p class="p-5 text-center">Gift occasions let you categorize all your gifts.</p>
-      </div>
+            <div class="flex justify-between p-5">
+              <pretty-span
+                :text="$t('app.cancel')"
+                :classes="'mr-3'"
+                @click.prevent="editMoodTrackingParameterId = 0" />
+              <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            </div>
+          </form>
+        </template>
+      </draggable>
+    </div>
+
+    <!-- blank state -->
+    <div
+      v-if="localMoodTrackingParameters.length == 0"
+      class="rounded-lg bg-white dark:border-gray-700 dark:bg-gray-900">
+      <p class="p-5 text-center">Gift occasions let you categorize all your gifts.</p>
     </div>
   </div>
 </template>
