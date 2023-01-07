@@ -80,7 +80,7 @@ defineProps({
                 <div
                   v-for="photo in data.photos"
                   :key="photo.id"
-                  class="rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  class="mr-2 rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <inertia-link :href="photo.url.display"
                     ><img :src="photo.url.display" :alt="photo.name"
                   /></inertia-link>
