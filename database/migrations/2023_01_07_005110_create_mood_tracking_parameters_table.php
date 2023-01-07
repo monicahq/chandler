@@ -24,16 +24,6 @@ return new class extends Migration
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
-        Schema::create('mood_tracking', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('mood_tracking_parameter_id');
-            $table->datetime('rated_at');
-            $table->text('note')->nullable();
-            $table->timestamps();
-            $table->foreign('mood_tracking_parameter_id')->references('id')->on('mood_tracking_parameters')->onDelete('cascade');
-        });
-
         Vault::chunk(200, function ($vaults) {
             foreach ($vaults as $vault) {
                 DB::table('mood_tracking_parameters')->insert([
@@ -77,6 +67,5 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('mood_tracking_parameters');
-        Schema::dropIfExists('mood_tracking');
     }
 };
