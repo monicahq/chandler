@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('vault_id');
             $table->string('label');
             $table->string('hex_color');
-            $table->string('position')->nullable();
+            $table->integer('position')->nullable();
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
