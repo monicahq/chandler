@@ -7,7 +7,7 @@ use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Label>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MoodTrackingParameter>
  */
 class MoodTrackingParameterFactory extends Factory
 {
