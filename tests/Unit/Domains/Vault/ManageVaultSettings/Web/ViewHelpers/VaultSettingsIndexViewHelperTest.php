@@ -41,7 +41,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $vault->refresh();
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertCount(
-            10,
+            11,
             $array
         );
         $this->assertArrayHasKey('templates', $array);
@@ -52,6 +52,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('label_colors', $array);
         $this->assertArrayHasKey('tags', $array);
         $this->assertArrayHasKey('mood_tracking_parameters', $array);
+        $this->assertArrayHasKey('mood_tracking_parameter_colors', $array);
         $this->assertEquals(
             [
                 0 => [

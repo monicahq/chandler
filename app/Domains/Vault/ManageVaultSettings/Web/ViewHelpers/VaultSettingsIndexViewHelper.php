@@ -85,6 +85,38 @@ class VaultSettingsIndexViewHelper
             ->get()
             ->map(fn (MoodTrackingParameter $moodTrackingParameter) => self::dtoMoodTrackingParameter($moodTrackingParameter));
 
+        $moodTrackingParameterColorsCollection = collect();
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-lime-500',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-lime-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-cyan-600',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-cyan-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-orange-600',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-orange-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-red-400',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-red-700',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-stone-400',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-stone-700',
+        ]);
+
         return [
             'templates' => $templatesCollection,
             'users_in_vault' => $usersInVaultCollection,
@@ -94,6 +126,7 @@ class VaultSettingsIndexViewHelper
             'tags' => $tagsCollection,
             'contact_important_date_types' => $dateTypesCollection,
             'mood_tracking_parameters' => $moodTrackingParameters,
+            'mood_tracking_parameter_colors' => $moodTrackingParameterColorsCollection,
             'visibility' => [
                 'show_group_tab' => $vault->show_group_tab,
                 'show_tasks_tab' => $vault->show_tasks_tab,
