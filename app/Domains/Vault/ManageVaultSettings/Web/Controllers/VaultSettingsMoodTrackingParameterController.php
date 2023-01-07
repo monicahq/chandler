@@ -2,12 +2,11 @@
 
 namespace App\Domains\Vault\ManageVaultSettings\Web\Controllers;
 
-use App\Domains\Vault\ManageVaultImportantDateTypes\Services\DestroyContactImportantDateType;
-use App\Domains\Vault\ManageVaultImportantDateTypes\Services\UpdateContactImportantDateType;
-use App\Domains\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 use App\Domains\Vault\ManageVaultSettings\Services\CreateMoodTrackingParameter;
+use App\Domains\Vault\ManageVaultSettings\Services\DestroyMoodTrackingParameter;
+use App\Domains\Vault\ManageVaultSettings\Services\UpdateMoodTrackingParameter;
+use App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,44 +22,41 @@ class VaultSettingsMoodTrackingParameterController extends Controller
             'hex_color' => $request->input('hex_color'),
         ];
 
-        $type = (new CreateMoodTrackingParameter())->execute($data);
-        $vault = Vault::findOrFail($vaultId);
+        $parameter = (new CreateMoodTrackingParameter())->execute($data);
 
         return response()->json([
-            'data' => VaultImportantDateTypesViewHelper::dto($type, $vault),
+            'data' => VaultSettingsIndexViewHelper::dtoMoodTrackingParameter($parameter),
         ], 201);
     }
 
-    public function update(Request $request, int $vaultId, int $typeId)
+    public function update(Request $request, int $vaultId, int $moodTrackingParameterId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_important_date_type_id' => $typeId,
+            'mood_tracking_parameter_id' => $moodTrackingParameterId,
             'label' => $request->input('label'),
-            'internal_type' => $request->input('internal_type'),
-            'can_be_deleted' => $request->input('can_be_deleted'),
+            'hex_color' => $request->input('hex_color'),
         ];
 
-        $type = (new UpdateContactImportantDateType())->execute($data);
-        $vault = Vault::findOrFail($vaultId);
+        $parameter = (new UpdateMoodTrackingParameter())->execute($data);
 
         return response()->json([
-            'data' => VaultImportantDateTypesViewHelper::dto($type, $vault),
+            'data' => VaultSettingsIndexViewHelper::dtoMoodTrackingParameter($parameter),
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $typeId)
+    public function destroy(Request $request, int $vaultId, int $moodTrackingParameterId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_important_date_type_id' => $typeId,
+            'mood_tracking_parameter_id' => $moodTrackingParameterId,
         ];
 
-        (new DestroyContactImportantDateType())->execute($data);
+        (new DestroyMoodTrackingParameter())->execute($data);
 
         return response()->json([
             'data' => true,
