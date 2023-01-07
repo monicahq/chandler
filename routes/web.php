@@ -105,6 +105,7 @@ use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -406,6 +407,11 @@ Route::middleware([
 
                 // tab visibility
                 Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
+
+                // mood tracking parameters
+                Route::post('settings/moodTrackingParameters', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.mood_tracking_parameter.store');
+                Route::put('settings/moodTrackingParameters/{tag}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.mood_tracking_parameter.update');
+                Route::delete('settings/moodTrackingParameters/{tag}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.mood_tracking_parameter.destroy');
             });
 
             // global search in the vault

@@ -5,6 +5,7 @@ namespace App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers;
 use App\Domains\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 use App\Helpers\VaultHelper;
 use App\Models\Label;
+use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vault;
@@ -78,6 +79,12 @@ class VaultSettingsIndexViewHelper
 
         $tagsCollection = $tags->map(fn ($tag) => self::dtoTag($tag));
 
+        // mood tracking parameters
+        $moodTrackingParameters = $vault->moodTrackingParameters()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(fn (MoodTrackingParameter $moodTrackingParameter) => self::dtoMoodTrackingParameter($moodTrackingParameter));
+
         return [
             'templates' => $templatesCollection,
             'users_in_vault' => $usersInVaultCollection,
@@ -86,6 +93,7 @@ class VaultSettingsIndexViewHelper
             'label_colors' => $labelColorsCollection,
             'tags' => $tagsCollection,
             'contact_important_date_types' => $dateTypesCollection,
+            'mood_tracking_parameters' => $moodTrackingParameters,
             'visibility' => [
                 'show_group_tab' => $vault->show_group_tab,
                 'show_tasks_tab' => $vault->show_tasks_tab,
@@ -107,6 +115,9 @@ class VaultSettingsIndexViewHelper
                     'vault' => $vault->id,
                 ]),
                 'contact_date_important_date_type_store' => route('vault.settings.important_date_type.store', [
+                    'vault' => $vault->id,
+                ]),
+                'mood_tracking_parameter_store' => route('vault.settings.mood_tracking_parameter.store', [
                     'vault' => $vault->id,
                 ]),
                 'update' => route('vault.settings.update', [
@@ -176,6 +187,26 @@ class VaultSettingsIndexViewHelper
                 'destroy' => route('vault.settings.tag.destroy', [
                     'vault' => $tag->vault_id,
                     'tag' => $tag->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoMoodTrackingParameter(MoodTrackingParameter $moodTrackingParameter): array
+    {
+        return [
+            'id' => $moodTrackingParameter->id,
+            'label' => $moodTrackingParameter->label,
+            'hex_color' => $moodTrackingParameter->hex_color,
+            'position' => $moodTrackingParameter->position,
+            'url' => [
+                'update' => route('vault.settings.mood_tracking_parameter.update', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'tag' => $moodTrackingParameter->id,
+                ]),
+                'destroy' => route('vault.settings.mood_tracking_parameter.destroy', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'tag' => $moodTrackingParameter->id,
                 ]),
             ],
         ];
