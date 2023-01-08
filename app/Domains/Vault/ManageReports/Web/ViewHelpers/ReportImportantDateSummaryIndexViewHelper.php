@@ -32,7 +32,7 @@ class ReportImportantDateSummaryIndexViewHelper
             ->get();
 
         // create a loop looping over the next 12 months
-        $currentDate = Carbon::now()->copy();
+        $currentDate = Carbon::now();
         $monthsCollection = collect();
         for ($month = 0; $month < 12; $month++) {
             $date = $currentDate->copy();
