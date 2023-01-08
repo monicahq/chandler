@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
 use App\Services\BaseService;
@@ -32,7 +33,7 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
             'life_event_id' => 'required|integer|exists:life_events,id',
             'summary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'happened_at' => 'date|date_format:Y-m-d',
+            'happened_at' => 'required|date|date_format:Y-m-d',
             'costs' => 'nullable|integer',
             'currency_id' => 'nullable|integer|exists:currencies,id',
             'paid_by_contact_id' => 'nullable|integer|exists:contacts,id',
@@ -98,12 +99,8 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
                 ->findOrFail($this->data['currency_id']);
         }
 
-        $this->partipantsCollection = collect();
-        foreach ($this->data['participant_ids'] as $participantId) {
-            $this->partipantsCollection->push(
-                $this->vault->contacts()->findOrFail($participantId)
-            );
-        }
+        $this->partipantsCollection = collect($this->data['participant_ids'])
+            ->map(fn (int $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
     }
 
     private function update(): void
