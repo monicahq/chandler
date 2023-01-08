@@ -7,6 +7,8 @@ use App\Domains\Vault\ManageVaultSettings\Services\CreateMoodTrackingParameter;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
 use App\Models\Vault;
 use App\Services\BaseService;
 
@@ -60,6 +62,7 @@ class CreateVault extends BaseService implements ServiceInterface
         $this->createUserContact();
         $this->populateDefaultContactImportantDateTypes();
         $this->populateMoodTrackingParameters();
+        $this->populateDefaultLifeEventCategories();
 
         return $this->vault;
     }
@@ -156,6 +159,54 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'label' => trans('vault.settings_mood_tracking_parameters_awful'),
             'hex_color' => 'bg-red-700',
+        ]);
+    }
+
+    private function populateDefaultLifeEventCategories(): void
+    {
+        // transportation category
+        $category = LifeEventCategory::create([
+            'vault_id' => $this->vault->id,
+            'position' => 1,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_category_transportation',
+            'can_be_deleted' => true,
+        ]);
+
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 1,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_transportation_bike',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 2,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_transportation_car',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 3,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_transportation_walk',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 4,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_transportation_bus',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 5,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_transportation_metro',
+            'can_be_deleted' => true,
         ]);
     }
 }

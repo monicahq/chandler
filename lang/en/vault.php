@@ -196,4 +196,10 @@ return [
     'settings_mood_tracking_parameters_meh' => 'Meh',
     'settings_mood_tracking_parameters_bad' => 'Bad',
     'settings_mood_tracking_parameters_awful' => 'Awful',
+    'settings_life_event_category_transportation' => 'Transportation',
+    'settings_life_event_type_transportation_bike' => 'Rode a bike',
+    'settings_life_event_type_transportation_car' => 'Drove',
+    'settings_life_event_type_transportation_walk' => 'Walked',
+    'settings_life_event_type_transportation_bus' => 'Took the bus',
+    'settings_life_event_type_transportation_metro' => 'Took the metro',
 ];
