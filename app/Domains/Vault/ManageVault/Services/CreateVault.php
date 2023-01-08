@@ -3,12 +3,12 @@
 namespace App\Domains\Vault\ManageVault\Services;
 
 use App\Domains\Vault\ManageVaultImportantDateTypes\Services\CreateContactImportantDateType;
-use App\Domains\Vault\ManageVaultSettings\Services\CreateMoodTrackingParameter;
 use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\ContactImportantDate;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\MoodTrackingParameter;
 use App\Models\Vault;
 use App\Services\BaseService;
 
@@ -121,43 +121,39 @@ class CreateVault extends BaseService implements ServiceInterface
 
     private function populateMoodTrackingParameters(): void
     {
-        (new CreateMoodTrackingParameter())->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->author->id,
+        MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
-            'label' => trans('vault.settings_mood_tracking_parameters_awesome'),
+            'label' => null,
+            'label_translation_key' => 'vault.settings_mood_tracking_parameters_awesome',
+            'position' => 1,
             'hex_color' => 'bg-lime-500',
         ]);
-
-        (new CreateMoodTrackingParameter())->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->author->id,
+        MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
-            'label' => trans('vault.settings_mood_tracking_parameters_good'),
+            'label' => null,
+            'label_translation_key' => 'vault.settings_mood_tracking_parameters_good',
+            'position' => 2,
             'hex_color' => 'bg-lime-300',
         ]);
-
-        (new CreateMoodTrackingParameter())->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->author->id,
+        MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
-            'label' => trans('vault.settings_mood_tracking_parameters_meh'),
+            'label' => null,
+            'label_translation_key' => 'vault.settings_mood_tracking_parameters_meh',
+            'position' => 3,
             'hex_color' => 'bg-cyan-600',
         ]);
-
-        (new CreateMoodTrackingParameter())->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->author->id,
+        MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
-            'label' => trans('vault.settings_mood_tracking_parameters_bad'),
+            'label' => null,
+            'label_translation_key' => 'vault.settings_mood_tracking_parameters_bad',
+            'position' => 4,
             'hex_color' => 'bg-orange-300',
         ]);
-
-        (new CreateMoodTrackingParameter())->execute([
-            'account_id' => $this->data['account_id'],
-            'author_id' => $this->author->id,
+        MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
-            'label' => trans('vault.settings_mood_tracking_parameters_awful'),
+            'label' => null,
+            'label_translation_key' => 'vault.settings_mood_tracking_parameters_awful',
+            'position' => 5,
             'hex_color' => 'bg-red-700',
         ]);
     }
