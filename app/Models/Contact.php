@@ -397,6 +397,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the mood tracking events associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function moodTrackingEvents(): HasMany
+    {
+        return $this->hasMany(MoodTrackingEvent::class);
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute<string,never>
