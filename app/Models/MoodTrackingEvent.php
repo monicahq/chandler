@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class MoodTrackingEvent extends Model
 {
@@ -52,5 +53,15 @@ class MoodTrackingEvent extends Model
     public function moodTrackingParameter(): BelongsTo
     {
         return $this->belongsTo(MoodTrackingParameter::class);
+    }
+
+    /**
+     * Get the mood tracking event's feed item.
+     *
+     * @return MorphOne
+     */
+    public function feedItem(): MorphOne
+    {
+        return $this->morphOne(ContactFeedItem::class, 'feedable');
     }
 }
