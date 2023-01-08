@@ -131,7 +131,7 @@ class PostEditViewHelperTest extends TestCase
                 'slice_store' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/slices',
                 'slice_reset' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/slices',
                 'tag_store' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/tags',
-                'upload_photo' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/photos/upload',
+                'upload_photo' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/photos',
                 'back' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id,
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id,
             ],
