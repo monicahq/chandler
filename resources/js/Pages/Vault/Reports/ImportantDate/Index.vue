@@ -62,7 +62,7 @@ defineProps({
 
           <!-- no date in month -->
           <div
-            v-if="month.important_dates.length === 0"
+            v-else
             class="rounded-lg border border-gray-200 bg-gray-100 p-3 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900">
             No dates in this month
           </div>
