@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostPhotoController extends Controller
 {
-    public function update(Request $request, int $vaultId, int $journalId, int $postId)
+    public function store(Request $request, int $vaultId, int $journalId, int $postId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

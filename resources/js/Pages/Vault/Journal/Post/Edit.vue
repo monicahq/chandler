@@ -10,6 +10,9 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
+import JetConfirmationModal from '@/Components/Jetstream/ConfirmationModal.vue';
+import JetDangerButton from '@/Components/Jetstream/DangerButton.vue';
+import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -31,6 +34,9 @@ const form = useForm({
 
 const saveInProgress = ref(false);
 const statistics = ref([]);
+const deletePhotoModalShown = ref(false);
+const photoToDelete = ref(null);
+const processPhotoDeletion = ref(false);
 const localPhotos = ref([]);
 const modelConfig = ref({
   type: 'string',
@@ -96,11 +102,16 @@ const onSuccess = (file) => {
   upload();
 };
 
+const showDeletePhotoModal = (file) => {
+  photoToDelete.value = file;
+  deletePhotoModalShown.value = true;
+};
+
 const upload = () => {
   saveInProgress.value = true;
 
   axios
-    .put(props.data.url.upload_photo, form)
+    .post(props.data.url.upload_photo, form)
     .then((response) => {
       saveInProgress.value = false;
       localPhotos.value.push(response.data.data);
@@ -110,18 +121,20 @@ const upload = () => {
     });
 };
 
-const destroyPhoto = (file) => {
-  if (confirm('Are you sure? The photo will be deleted immediately.')) {
-    axios
-      .delete(file.url.destroy)
-      .then(() => {
-        var id = localPhotos.value.findIndex((x) => x.id === file.id);
-        localPhotos.value.splice(id, 1);
-      })
-      .catch((error) => {
-        form.errors = error.response.data;
-      });
-  }
+const destroyPhoto = () => {
+  processPhotoDeletion.value = true;
+
+  axios
+    .delete(photoToDelete.value.url.destroy)
+    .then(() => {
+      processPhotoDeletion.value = false;
+      var id = localPhotos.value.findIndex((x) => x.id === photoToDelete.value.id);
+      localPhotos.value.splice(id, 1);
+      deletePhotoModalShown.value = false;
+    })
+    .catch((error) => {
+      form.errors = error.response.data;
+    });
 };
 
 const update = () => {
@@ -232,7 +245,9 @@ const destroy = () => {
                     </ul>
                   </div>
 
-                  <span class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyPhoto(photo)">
+                  <span
+                    class="inline cursor-pointer text-red-500 hover:text-red-900"
+                    @click="showDeletePhotoModal(photo)">
                     {{ $t('app.delete') }}
                   </span>
                 </li>
@@ -295,6 +310,7 @@ const destroy = () => {
               </div>
             </div>
 
+            <!-- post body -->
             <div class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
               <div class="border-gray-200 p-5 dark:border-gray-700">
                 <!-- title -->
@@ -453,6 +469,31 @@ const destroy = () => {
         </div>
       </div>
     </main>
+
+    <!-- delete photo confirmation modal -->
+    <JetConfirmationModal :show="deletePhotoModalShown" @close="deletePhotoModalShown = false">
+      <template #title>
+        {{ $t('Delete the photo') }}
+      </template>
+
+      <template #content>
+        {{ $t('Are you sure? The photo will be deleted immediately.') }}
+      </template>
+
+      <template #footer>
+        <JetSecondaryButton @click="deletePhotoModalShown = false">
+          {{ $t('Cancel') }}
+        </JetSecondaryButton>
+
+        <JetDangerButton
+          class="ml-3"
+          :class="{ 'opacity-25': processPhotoDeletion }"
+          :disabled="processPhotoDeletion"
+          @click="destroyPhoto(file)">
+          {{ $t('Delete') }}
+        </JetDangerButton>
+      </template>
+    </JetConfirmationModal>
   </layout>
 </template>
 

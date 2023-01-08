@@ -335,7 +335,7 @@ Route::middleware([
                         Route::get('', [PostController::class, 'show'])->name('post.show');
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
-                        Route::put('photos/upload', [PostPhotoController::class, 'update'])->name('post.photos.upload');
+                        Route::post('photos', [PostPhotoController::class, 'store'])->name('post.photos.store');
                         Route::delete('photos/{photo}', [PostPhotoController::class, 'destroy'])->name('post.photos.destroy');
                         Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
 
