@@ -155,4 +155,21 @@ class VaultShowViewHelper
             ],
         ];
     }
+
+    public static function howAreYou(Vault $vault, User $user): array
+    {
+        // get available mood tracking parameters
+        $moodTrackingParametersCollection = $vault->moodTrackingParameters()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(fn ($moodTrackingParameter) => [
+                'id' => $moodTrackingParameter->id,
+                'label' => $moodTrackingParameter->label,
+                'hex_color' => $moodTrackingParameter->hex_color,
+            ]);
+
+        return [
+            'mood_tracking_parameters' => $moodTrackingParametersCollection,
+        ];
+    }
 }

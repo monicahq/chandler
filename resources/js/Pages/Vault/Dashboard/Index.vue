@@ -41,6 +41,9 @@
 
           <!-- right -->
           <div class="p-3 sm:p-0">
+            <!-- mood tracking -->
+            <how-are-you :data="howAreYou" />
+
             <!-- upcoming reminders -->
             <upcoming-reminders :data="upcomingReminders" />
 
@@ -59,6 +62,7 @@ import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated.vue';
 import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders.vue';
 import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites.vue';
 import DueTasks from '@/Pages/Vault/Dashboard/Partials/DueTasks.vue';
+import HowAreYou from '@/Pages/Vault/Dashboard/Partials/HowAreYou.vue';
 import Feed from '@/Shared/Modules/Feed.vue';
 
 export default {
@@ -69,6 +73,7 @@ export default {
     Favorites,
     DueTasks,
     Feed,
+    HowAreYou,
   },
 
   props: {
@@ -93,6 +98,10 @@ export default {
       default: null,
     },
     dueTasks: {
+      type: Object,
+      default: null,
+    },
+    howAreYou: {
       type: Object,
       default: null,
     },
