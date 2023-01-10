@@ -277,8 +277,7 @@ class VaultShowViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'store' =>
-                env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $contact->id . '/moodTrackingEvents',
+                'store' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id.'/moodTrackingEvents',
             ],
             $array['url']
         );
