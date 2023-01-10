@@ -2,10 +2,6 @@
 
 namespace App\Domains\Contact\ManageMoodTrackingEvents\Web\Controllers;
 
-use App\Domains\Contact\ManageGroups\Services\AddContactToGroup;
-use App\Domains\Contact\ManageGroups\Services\CreateGroup;
-use App\Domains\Contact\ManageGroups\Services\RemoveContactFromGroup;
-use App\Domains\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Domains\Contact\ManageMoodTrackingEvents\Services\CreateMoodTrackingEvent;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultShowViewHelper;
 use App\Http\Controllers\Controller;
