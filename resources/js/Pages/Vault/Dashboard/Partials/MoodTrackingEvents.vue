@@ -92,7 +92,7 @@ const submit = () => {
       </div>
     </div>
 
-    <!-- add an address modal -->
+    <!-- add an event modal -->
     <form
       v-if="createMoodEventModalShown"
       class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"

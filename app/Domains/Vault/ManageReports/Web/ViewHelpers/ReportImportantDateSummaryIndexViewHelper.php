@@ -20,9 +20,9 @@ class ReportImportantDateSummaryIndexViewHelper
      *
      * @param  Vault  $vault
      * @param  User  $user
-     * @return Collection
+     * @return array
      */
-    public static function data(Vault $vault, User $user): Collection
+    public static function data(Vault $vault, User $user): array
     {
         $contactsInVault = $vault->contacts->pluck('id')->toArray();
         $importantDates = ContactImportantDate::whereIn('contact_id', $contactsInVault)
@@ -58,6 +58,13 @@ class ReportImportantDateSummaryIndexViewHelper
             ]);
         }
 
-        return $monthsCollection;
+        return [
+            'months' => $monthsCollection,
+            'url' => [
+                'reports' => route('vault.reports.index', [
+                    'vault' => $vault->id,
+                ]),
+            ],
+        ];
     }
 }

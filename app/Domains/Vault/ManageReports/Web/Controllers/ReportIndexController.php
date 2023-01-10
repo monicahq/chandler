@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Domains\Vault\ManageReports\Web\Controllers;
+
+use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportImportantDateSummaryIndexViewHelper;
+use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportIndexViewHelper;
+use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
+use App\Http\Controllers\Controller;
+use App\Models\Vault;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+
+class ReportIndexController extends Controller
+{
+    public function index(Request $request, int $vaultId)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        return Inertia::render('Vault/Reports/Index', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => ReportIndexViewHelper::data($vault),
+        ]);
+    }
+}
