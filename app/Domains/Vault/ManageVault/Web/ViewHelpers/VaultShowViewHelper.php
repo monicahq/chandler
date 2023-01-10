@@ -2,7 +2,9 @@
 
 namespace App\Domains\Vault\ManageVault\Web\ViewHelpers;
 
+use App\Helpers\ContactReminderHelper;
 use App\Helpers\DateHelper;
+use App\Models\MoodTrackingEvent;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
@@ -156,7 +158,7 @@ class VaultShowViewHelper
         ];
     }
 
-    public static function howAreYou(Vault $vault, User $user): array
+    public static function moodTrackingEvents(Vault $vault, User $user): array
     {
         // get available mood tracking parameters
         $moodTrackingParametersCollection = $vault->moodTrackingParameters()
@@ -170,6 +172,24 @@ class VaultShowViewHelper
 
         return [
             'mood_tracking_parameters' => $moodTrackingParametersCollection,
+            'current_date' => Carbon::now($user->timezone)->format('Y-m-d'),
+            'url' => [
+                'store' => route('contact.mood_tracking_event.store', [
+                    'vault' => $vault->id,
+                    'contact' => $user->getContactInVault($vault)->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoMoodTrackingEvent(MoodTrackingEvent $event, User $user): array
+    {
+        return [
+            'id' => $event->id,
+            'label' => $event->moodTrackingParameter->label,
+            'rated_at' => DateHelper::format($event->rated_at, $user),
+            'note' => $event->note,
+            'number_of_hours_slept' => $event->number_of_hours_slept,
         ];
     }
 }
