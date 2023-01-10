@@ -2,12 +2,10 @@
 
 namespace Tests\Unit\Domains\Contact\ManageContactFeed\Web\ViewHelpers\Actions;
 
-use App\Domains\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedGoal;
 use App\Domains\Contact\ManageContactFeed\Web\ViewHelpers\Actions\ActionFeedMoodTrackingEvent;
 use App\Models\Contact;
 use App\Models\ContactFeedItem;
 use App\Models\MoodTrackingEvent;
-use App\Models\Pet;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
