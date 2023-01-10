@@ -15,6 +15,7 @@ const createMoodEventModalShown = ref(false);
 const datePickerFieldShown = ref(false);
 const noteFieldShown = ref(false);
 const hoursSleptFieldShown = ref(false);
+const successShown = ref(false);
 
 const form = useForm({
   parameter_id: 0,
@@ -54,7 +55,8 @@ const submit = () => {
   axios
     .post(props.data.url.store, form)
     .then((response) => {
-      //localLifeEventCategories.value.push(response.data.data);
+      createMoodEventModalShown.value = false;
+      successShown.value = true;
       loadingState.value = null;
     })
     .catch((error) => {
@@ -79,7 +81,7 @@ const submit = () => {
 
     <!-- cta -->
     <div
-      v-if="! createMoodEventModalShown"
+      v-if="! createMoodEventModalShown && ! successShown"
       class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
       <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="mr-2 h-14 w-14" />
       <div class="px-5 flex flex-col mb-2">
@@ -186,6 +188,19 @@ const submit = () => {
         <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
+
+    <!-- successShown -->
+    <div
+      v-if="successShown"
+      class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
+      <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="mr-2 h-14 w-14" />
+      <div class="px-5 flex flex-col">
+        <p class="mb-2">
+          <span class="mr-1">🎉</span> Your mood has been recorded!
+        </p>
+        <inertia-link class="text-blue-500 hover:underline text-center">View history</inertia-link>
+      </div>
+    </div>
   </div>
 </template>
 
