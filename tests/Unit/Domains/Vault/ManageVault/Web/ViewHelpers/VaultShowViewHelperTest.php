@@ -6,6 +6,7 @@ use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultShowViewHelper;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\ContactTask;
+use App\Models\MoodTrackingParameter;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
 use App\Models\Vault;
@@ -243,6 +244,43 @@ class VaultShowViewHelperTest extends TestCase
                 ],
             ],
             $array['tasks']->toArray()
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_mood_tracking_parameters(): void
+    {
+        $ross = $this->createAdministrator();
+        $vault = $this->createVault($ross->account);
+        $vault = $this->setPermissionInVault($ross, Vault::PERMISSION_MANAGE, $vault);
+        $moodTrackingParameter = MoodTrackingParameter::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+        $contact = $ross->getContactInVault($vault);
+
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
+        $array = VaultShowViewHelper::moodTrackingEvents($vault, $ross);
+
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => $moodTrackingParameter->id,
+                    'label' => $moodTrackingParameter->label,
+                    'hex_color' => $moodTrackingParameter->hex_color,
+                ],
+            ],
+            $array['mood_tracking_parameters']->toArray()
+        );
+        $this->assertEquals(
+            '2018-01-01',
+            $array['current_date']
+        );
+        $this->assertEquals(
+            [
+                'store' =>
+                env('APP_URL') . '/vaults/' . $vault->id . '/contacts/' . $contact->id . '/moodTrackingEvents',
+            ],
+            $array['url']
         );
     }
 }
