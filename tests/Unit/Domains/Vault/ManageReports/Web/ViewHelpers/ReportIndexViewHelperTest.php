@@ -2,13 +2,8 @@
 
 namespace Tests\Unit\Domains\Vault\ManageReports\Web\ViewHelpers;
 
-use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportImportantDateSummaryIndexViewHelper;
 use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportIndexViewHelper;
-use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use App\Models\User;
 use App\Models\Vault;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -26,8 +21,8 @@ class ReportIndexViewHelperTest extends TestCase
             [
                 'url' => [
                     'mood_tracking_events' => env('APP_URL').'/vaults/'.$vault->id.'/reports/moodTrackingEvents',
-                    'important_date_summary' => env('APP_URL').'/vaults/'.$vault->id. '/reports/importantDates',
-                ]
+                    'important_date_summary' => env('APP_URL').'/vaults/'.$vault->id.'/reports/importantDates',
+                ],
             ],
             $array
         );

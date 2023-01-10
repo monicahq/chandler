@@ -10,7 +10,6 @@ use App\Models\ContactImportantDate;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class ReportImportantDateSummaryIndexViewHelper
 {

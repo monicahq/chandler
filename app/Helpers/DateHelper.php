@@ -151,7 +151,7 @@ class DateHelper
     /**
      * Return the first letter of the month, like "Jan" for January.
      *
-     * @param  $date
+     * @param    $date
      * @return string
      */
     public static function formatMonthNumber($date): string

@@ -2,14 +2,9 @@
 
 namespace App\Domains\Vault\ManageReports\Web\ViewHelpers;
 
-use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
-use App\Helpers\ImportantDateHelper;
-use App\Models\Contact;
-use App\Models\ContactImportantDate;
 use App\Models\User;
 use App\Models\Vault;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
@@ -30,9 +25,9 @@ class ReportMoodTrackingEventIndexViewHelper
     /**
      * Get all the mood tracking events for the given year
      *
-     * @param Vault $vault
-     * @param User $user
-     * @param integer $year
+     * @param  Vault  $vault
+     * @param  User  $user
+     * @param  int  $year
      * @return Collection
      */
     private static function year(Vault $vault, User $user, int $year): Collection
