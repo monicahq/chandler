@@ -2,7 +2,6 @@
 
 namespace App\Domains\Vault\ManageVault\Web\ViewHelpers;
 
-use App\Helpers\ContactReminderHelper;
 use App\Helpers\DateHelper;
 use App\Models\MoodTrackingEvent;
 use App\Models\User;
