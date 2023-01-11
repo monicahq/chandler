@@ -41,6 +41,8 @@ class ReminderTriggered extends Notification
         if ($this->channel->type === UserNotificationChannel::TYPE_TELEGRAM) {
             return ['telegram'];
         }
+
+        return [];
     }
 
     /**
