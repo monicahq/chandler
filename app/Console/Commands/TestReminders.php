@@ -57,6 +57,11 @@ class TestReminders extends Command
                     ->notify(new ReminderTriggered($channel, $contactReminder->label, $contactName));
             }
 
+            if ($channel->type === UserNotificationChannel::TYPE_TELEGRAM) {
+                Notification::route('telegram', $channel->content)
+                    ->notify(new ReminderTriggered($channel, $contactReminder->label, ''));
+            }
+
             try {
                 (new RescheduleContactReminderForChannel([
                     'contact_reminder_id' => $scheduledReminder->contact_reminder_id,

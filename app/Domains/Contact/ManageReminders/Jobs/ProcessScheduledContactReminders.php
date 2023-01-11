@@ -11,6 +11,7 @@ use App\Notifications\ReminderTriggered;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
@@ -39,24 +40,24 @@ class ProcessScheduledContactReminders implements ShouldQueue
             ->get();
 
         foreach ($scheduledContactReminders as $scheduledReminder) {
-            $channel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
+            $userNotificationChannel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
 
-            if ($channel->type === UserNotificationChannel::TYPE_EMAIL) {
-                $contactReminder = ContactReminder::find($scheduledReminder->contact_reminder_id);
+            $contactReminder = ContactReminder::find($scheduledReminder->contact_reminder_id);
+
+            if ($userNotificationChannel->type === UserNotificationChannel::TYPE_EMAIL) {
                 $contact = $contactReminder->contact;
-                $contactName = NameHelper::formatContactName($channel->user, $contact);
+                $contactName = NameHelper::formatContactName($userNotificationChannel->user, $contact);
 
-                Notification::route('mail', $channel->content)
-                    ->notify(new ReminderTriggered($channel, $contactReminder->label, $contactName));
-
-                UserNotificationSent::create([
-                    'user_notification_channel_id' => $channel->id,
-                    'sent_at' => Carbon::now(),
-                    'subject_line' => $contactReminder->label,
-                ]);
+                Notification::route('mail', $userNotificationChannel->content)
+                    ->notify(new ReminderTriggered($userNotificationChannel, $contactReminder->label, $contactName));
             }
 
-            $this->updateScheduledContactReminderTriggeredAt($scheduledReminder->id);
+            if ($userNotificationChannel->type === UserNotificationChannel::TYPE_TELEGRAM) {
+                Notification::route('telegram', $userNotificationChannel->content)
+                    ->notify(new ReminderTriggered($userNotificationChannel, $contactReminder->label, ''));
+            }
+
+            $this->updateScheduledContactReminderTriggeredAt($scheduledReminder);
             $this->updateNumberOfTimesTriggered($scheduledReminder->contact_reminder_id);
 
             $this->appendToChain(
@@ -69,13 +70,13 @@ class ProcessScheduledContactReminders implements ShouldQueue
         }
     }
 
-    private function updateScheduledContactReminderTriggeredAt(int $id): void
+    private function updateScheduledContactReminderTriggeredAt($scheduledReminder): void
     {
-        DB::table('contact_reminder_scheduled')
-            ->where('id', $id)
-            ->update([
-                'triggered_at' => Carbon::now(),
-            ]);
+        (new RescheduleContactReminderForChannel([
+            'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
+            'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
+            'contact_reminder_scheduled_id' => $scheduledReminder->id,
+        ]))->handle();
     }
 
     private function updateNumberOfTimesTriggered(int $id): void
