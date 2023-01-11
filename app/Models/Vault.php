@@ -60,6 +60,7 @@ class Vault extends Model
         'show_files_tab' => 'boolean',
         'show_journal_tab' => 'boolean',
         'show_companies_tab' => 'boolean',
+        'show_reports_tab' => 'boolean',
     ];
 
     /**
@@ -209,5 +210,35 @@ class Vault extends Model
     public function files(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    /**
+     * Get the mood tracking parameters associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function moodTrackingParameters(): HasMany
+    {
+        return $this->hasMany(MoodTrackingParameter::class);
+    }
+
+    /**
+     * Get the life event categories associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function lifeEventCategories(): HasMany
+    {
+        return $this->hasMany(LifeEventCategory::class);
+    }
+
+    /**
+     * Get the life events associated with the vault.
+     *
+     * @return HasMany
+     */
+    public function lifeEvents(): HasMany
+    {
+        return $this->hasMany(LifeEvent::class);
     }
 }

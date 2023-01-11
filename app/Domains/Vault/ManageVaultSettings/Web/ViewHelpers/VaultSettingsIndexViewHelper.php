@@ -5,6 +5,9 @@ namespace App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers;
 use App\Domains\Vault\ManageVaultImportantDateTypes\Web\ViewHelpers\VaultImportantDateTypesViewHelper;
 use App\Helpers\VaultHelper;
 use App\Models\Label;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
+use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vault;
@@ -78,6 +81,51 @@ class VaultSettingsIndexViewHelper
 
         $tagsCollection = $tags->map(fn ($tag) => self::dtoTag($tag));
 
+        // mood tracking parameters
+        $moodTrackingParameters = $vault->moodTrackingParameters()
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(fn (MoodTrackingParameter $moodTrackingParameter) => self::dtoMoodTrackingParameter($moodTrackingParameter));
+
+        $moodTrackingParameterColorsCollection = collect();
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-lime-500',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-lime-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-cyan-600',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-cyan-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-orange-600',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-orange-300',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-red-400',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-red-700',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-stone-400',
+        ]);
+        $moodTrackingParameterColorsCollection->push([
+            'hex_color' => 'bg-stone-700',
+        ]);
+
+        // life event categories
+        $lifeEventCategories = $vault->lifeEventCategories()
+            ->with('lifeEventTypes')
+            ->orderBy('position', 'asc')
+            ->get()
+            ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($lifeEventCategory));
+
         return [
             'templates' => $templatesCollection,
             'users_in_vault' => $usersInVaultCollection,
@@ -86,12 +134,16 @@ class VaultSettingsIndexViewHelper
             'label_colors' => $labelColorsCollection,
             'tags' => $tagsCollection,
             'contact_important_date_types' => $dateTypesCollection,
+            'mood_tracking_parameters' => $moodTrackingParameters,
+            'mood_tracking_parameter_colors' => $moodTrackingParameterColorsCollection,
+            'life_event_categories' => $lifeEventCategories,
             'visibility' => [
                 'show_group_tab' => $vault->show_group_tab,
                 'show_tasks_tab' => $vault->show_tasks_tab,
                 'show_files_tab' => $vault->show_files_tab,
                 'show_journal_tab' => $vault->show_journal_tab,
                 'show_companies_tab' => $vault->show_companies_tab,
+                'show_reports_tab' => $vault->show_reports_tab,
             ],
             'url' => [
                 'template_update' => route('vault.settings.template.update', [
@@ -107,6 +159,12 @@ class VaultSettingsIndexViewHelper
                     'vault' => $vault->id,
                 ]),
                 'contact_date_important_date_type_store' => route('vault.settings.important_date_type.store', [
+                    'vault' => $vault->id,
+                ]),
+                'mood_tracking_parameter_store' => route('vault.settings.mood_tracking_parameter.store', [
+                    'vault' => $vault->id,
+                ]),
+                'life_event_category_store' => route('vault.settings.life_event_categories.store', [
                     'vault' => $vault->id,
                 ]),
                 'update' => route('vault.settings.update', [
@@ -176,6 +234,91 @@ class VaultSettingsIndexViewHelper
                 'destroy' => route('vault.settings.tag.destroy', [
                     'vault' => $tag->vault_id,
                     'tag' => $tag->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoMoodTrackingParameter(MoodTrackingParameter $moodTrackingParameter): array
+    {
+        return [
+            'id' => $moodTrackingParameter->id,
+            'label' => $moodTrackingParameter->label,
+            'hex_color' => $moodTrackingParameter->hex_color,
+            'position' => $moodTrackingParameter->position,
+            'url' => [
+                'position' => route('vault.settings.mood_tracking_parameter.order.update', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'parameter' => $moodTrackingParameter->id,
+                ]),
+                'update' => route('vault.settings.mood_tracking_parameter.update', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'parameter' => $moodTrackingParameter->id,
+                ]),
+                'destroy' => route('vault.settings.mood_tracking_parameter.destroy', [
+                    'vault' => $moodTrackingParameter->vault_id,
+                    'parameter' => $moodTrackingParameter->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoLifeEventCategory(LifeEventCategory $category): array
+    {
+        $lifeEventTypesCollection = $category->lifeEventTypes()
+            ->orderBy('position', 'asc')
+            ->get();
+
+        return [
+            'id' => $category->id,
+            'label' => $category->label,
+            'position' => $category->position,
+            'can_be_deleted' => $category->can_be_deleted,
+            'life_event_types' => $lifeEventTypesCollection->map(fn (LifeEventType $type) => self::dtoType($category, $type)),
+            'url' => [
+                'store' => route('vault.settings.life_event_types.store', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                ]),
+                'position' => route('vault.settings.life_event_categories.order.update', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                ]),
+                'update' => route('vault.settings.life_event_categories.update', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                ]),
+                'destroy' => route('vault.settings.life_event_categories.destroy', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoType(LifeEventCategory $category, LifeEventType $type): array
+    {
+        return [
+            'id' => $type->id,
+            'label' => $type->label,
+            'can_be_deleted' => $type->can_be_deleted,
+            'life_event_category_id' => $category->id,
+            'position' => $type->position,
+            'url' => [
+                'position' => route('vault.settings.life_event_types.order.update', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
+                ]),
+                'update' => route('vault.settings.life_event_types.update', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
+                ]),
+                'destroy' => route('vault.settings.life_event_types.destroy', [
+                    'vault' => $category->vault_id,
+                    'lifeEventCategory' => $category->id,
+                    'lifeEventType' => $type->id,
                 ]),
             ],
         ];

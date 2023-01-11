@@ -35,8 +35,6 @@ use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionCont
 use App\Domains\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Domains\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Domains\Settings\CancelAccount\Web\Controllers\CancelAccountController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivityTypesController;
 use App\Domains\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
@@ -52,9 +50,6 @@ use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeCo
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRolePositionController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
 use App\Domains\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
@@ -95,10 +90,12 @@ use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportImportantDateSummaryController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
@@ -106,6 +103,12 @@ use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -173,6 +176,12 @@ Route::middleware([
 
             // tasks
             Route::get('tasks', [VaultTaskController::class, 'index'])->name('vault.tasks.index');
+
+            // reports
+            Route::prefix('reports')->group(function () {
+                Route::get('', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.index');
+                Route::get('importantDates', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.important_dates.index');
+            });
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -335,6 +344,8 @@ Route::middleware([
                         Route::get('', [PostController::class, 'show'])->name('post.show');
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
+                        Route::post('photos', [PostPhotoController::class, 'store'])->name('post.photos.store');
+                        Route::delete('photos/{photo}', [PostPhotoController::class, 'destroy'])->name('post.photos.destroy');
                         Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
 
                         // tags
@@ -407,6 +418,24 @@ Route::middleware([
 
                 // tab visibility
                 Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
+
+                // mood tracking parameters
+                Route::post('settings/moodTrackingParameters', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.mood_tracking_parameter.store');
+                Route::put('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.mood_tracking_parameter.update');
+                Route::put('settings/moodTrackingParameters/{parameter}/order', [VaultSettingsMoodTrackingParameterPositionController::class, 'update'])->name('vault.settings.mood_tracking_parameter.order.update');
+                Route::delete('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.mood_tracking_parameter.destroy');
+
+                // life event categories
+                Route::post('settings/lifeEventCategories', [VaultSettingsLifeEventCategoriesController::class, 'store'])->name('vault.settings.life_event_categories.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'update'])->name('vault.settings.life_event_categories.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'destroy'])->name('vault.settings.life_event_categories.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/order', [VaultSettingsLifeEventCategoriesPositionController::class, 'update'])->name('vault.settings.life_event_categories.order.update');
+
+                // life event types
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [VaultSettingsLifeEventTypesController::class, 'store'])->name('vault.settings.life_event_types.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [VaultSettingsLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
             });
 
             // global search in the vault
@@ -486,29 +515,6 @@ Route::middleware([
                 Route::post('callReasonTypes/{callReasonType}/reasons', [PersonalizeCallReasonsController::class, 'store'])->name('call_reasons.store');
                 Route::put('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'update'])->name('call_reasons.update');
                 Route::delete('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'destroy'])->name('call_reasons.destroy');
-
-                // activity types
-                Route::get('activityTypes', [PersonalizeActivityTypesController::class, 'index'])->name('activity.index');
-                Route::post('activityTypes', [PersonalizeActivityTypesController::class, 'store'])->name('activity.type.store');
-                Route::put('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'update'])->name('activity.type.update');
-                Route::delete('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'destroy'])->name('activity.type.destroy');
-
-                // activities
-                Route::post('activityTypes/{activityType}/activities', [PersonalizeActivitiesController::class, 'store'])->name('activity.store');
-                Route::put('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'update'])->name('activity.update');
-                Route::delete('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'destroy'])->name('activity.destroy');
-
-                // life event categories
-                Route::get('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'index'])->name('life_event_categories.index');
-                Route::post('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('life_event_categories.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('life_event_categories.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('life_event_categories.destroy');
-
-                // life event types
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('life_event_types.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('life_event_types.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('life_event_types.destroy');
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('life_event_types.order.update');
 
                 // gift occasions
                 Route::get('giftOccasions', [PersonalizeGiftOccasionController::class, 'index'])->name('gift_occasions.index');

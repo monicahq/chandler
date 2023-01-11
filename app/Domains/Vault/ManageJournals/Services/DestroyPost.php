@@ -53,6 +53,7 @@ class DestroyPost extends BaseService implements ServiceInterface
         $this->data = $data;
 
         $this->validate();
+        $this->destroyFiles();
         $this->post->delete();
     }
 
@@ -65,5 +66,13 @@ class DestroyPost extends BaseService implements ServiceInterface
 
         $this->post = $journal->posts()
             ->findOrFail($this->data['post_id']);
+    }
+
+    private function destroyFiles(): void
+    {
+        $files = $this->post->files;
+        foreach ($files as $file) {
+            $file->delete();
+        }
     }
 }
