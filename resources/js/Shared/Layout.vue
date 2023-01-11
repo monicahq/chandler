@@ -322,7 +322,7 @@
       <slot />
     </main>
 
-    <Footer />
+    <FooterLayout />
   </div>
 
   <toaster />
@@ -330,12 +330,12 @@
 
 <script>
 import Toaster from '@/Shared/Toaster.vue';
-import Footer from '@/Layouts/Footer.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 export default {
   components: {
     Toaster,
-    Footer,
+    FooterLayout,
   },
 
   props: {
