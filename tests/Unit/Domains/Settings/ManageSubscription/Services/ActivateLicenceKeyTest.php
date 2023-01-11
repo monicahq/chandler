@@ -4,15 +4,15 @@ namespace Tests\Unit\Domains\Settings\ManageSubscription\Services;
 
 use App\Domains\Settings\ManageSubscription\Services\ActivateLicenceKey;
 use App\Domains\Settings\ManageSubscription\Services\CallCustomerPortal;
-use Tests\TestCase;
-use Mockery\MockInterface;
+use App\Exceptions\LicenceKeyDontExistException;
 use App\Exceptions\LicenceKeyErrorException;
 use App\Exceptions\LicenceKeyInvalidException;
 use App\Exceptions\MissingPrivateKeyException;
-use Illuminate\Validation\ValidationException;
-use App\Exceptions\LicenceKeyDontExistException;
 use App\Models\Account;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Validation\ValidationException;
+use Mockery\MockInterface;
+use Tests\TestCase;
 
 class ActivateLicenceKeyTest extends TestCase
 {

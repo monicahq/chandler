@@ -3,14 +3,13 @@
 namespace Tests\Unit\Domains\Settings\ManageSubscription\Services;
 
 use App\Domains\Settings\ManageSubscription\Services\CallCustomerPortal;
-use Tests\TestCase;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Validation\ValidationException;
-use App\Exceptions\NoCustomerPortalSetException;
 use App\Exceptions\CustomerPortalWrongCredentials;
 use App\Exceptions\NoCustomerPortalSecretsException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
+use Tests\TestCase;
 
 class CallCustomerPortalTest extends TestCase
 {

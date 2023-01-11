@@ -4,11 +4,11 @@ namespace App\Domains\Settings\ManageSubscription\Services;
 
 use App\Exceptions\CustomerPortalWrongCredentials;
 use App\Exceptions\NoCustomerPortalSecretsException;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
 use App\Interfaces\ServiceInterface;
 use App\Services\BaseService;
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class CallCustomerPortal extends BaseService implements ServiceInterface
 {
@@ -62,7 +62,7 @@ class CallCustomerPortal extends BaseService implements ServiceInterface
     private function getAccessToken(): string
     {
         return Cache::remember('customer_portal.access_token', 31449600 /* 364 days */, function () {
-            $url = config('monica.customer_portal_url') . '/oauth/token';
+            $url = config('monica.customer_portal_url').'/oauth/token';
 
             $response = Http::asForm()->post($url, [
                 'grant_type' => 'client_credentials',
@@ -72,7 +72,7 @@ class CallCustomerPortal extends BaseService implements ServiceInterface
             ]);
 
             $json = $response->json();
-            if ($response->failed() || !isset($json['access_token'])) {
+            if ($response->failed() || ! isset($json['access_token'])) {
                 throw new CustomerPortalWrongCredentials();
             }
 
@@ -82,7 +82,7 @@ class CallCustomerPortal extends BaseService implements ServiceInterface
 
     private function makeRequestToCustomerPortal(string $accessToken): Response
     {
-        $url = config('monica.customer_portal_url') . '/api/validate';
+        $url = config('monica.customer_portal_url').'/api/validate';
 
         return Http::withToken($accessToken)
             ->acceptJson()

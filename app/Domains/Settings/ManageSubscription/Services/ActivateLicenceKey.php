@@ -13,8 +13,11 @@ use App\Services\BaseService;
 class ActivateLicenceKey extends BaseService implements ServiceInterface
 {
     private Account $account;
+
     private array $data;
+
     private int $status;
+
     private array $response;
 
     /**
