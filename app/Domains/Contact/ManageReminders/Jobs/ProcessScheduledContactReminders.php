@@ -6,12 +6,10 @@ use App\Domains\Contact\ManageReminders\Services\RescheduleContactReminderForCha
 use App\Helpers\NameHelper;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
-use App\Models\UserNotificationSent;
 use App\Notifications\ReminderTriggered;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
