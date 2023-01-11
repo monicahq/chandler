@@ -18,6 +18,10 @@ class SubscriptionHelper
             return false;
         }
 
+        if (self::hasValidSubscription($account)) {
+            return false;
+        }
+
         if (self::hasReachedContactLimit($account)) {
             return true;
         }
@@ -41,5 +45,18 @@ class SubscriptionHelper
         }
 
         return $contacts >= 5;
+    }
+
+    public static function hasValidSubscription(Account $account): bool
+    {
+        if ($account->licence_key === null) {
+            return false;
+        }
+
+        if ($account->valid_until_at === null || $account->valid_until_at->isPast()) {
+            return false;
+        }
+
+        return true;
     }
 }
