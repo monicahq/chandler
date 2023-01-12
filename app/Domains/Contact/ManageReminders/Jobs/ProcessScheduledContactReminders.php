@@ -70,7 +70,7 @@ class ProcessScheduledContactReminders implements ShouldQueue
     {
         DB::table('contact_reminder_scheduled')
             ->where('id', $scheduledReminder->id)
-            ->increment('triggered_at');
+            ->update(['triggered_at' => Carbon::now()]);
     }
 
     private function updateNumberOfTimesTriggered(int $id): void
