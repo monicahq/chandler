@@ -6,7 +6,6 @@ use App\Interfaces\ServiceInterface;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
 use App\Services\BaseService;
-use App\Services\QueuableService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
