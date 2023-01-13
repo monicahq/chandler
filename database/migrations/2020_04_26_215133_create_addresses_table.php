@@ -14,7 +14,7 @@ return new class() extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('address_type_id')->nullable();
             $table->boolean('is_past_address')->default(false);
             $table->string('street')->nullable();
@@ -27,7 +27,7 @@ return new class() extends Migration
             $table->datetime('lived_from_at')->nullable();
             $table->datetime('lived_until_at')->nullable();
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('address_type_id')->references('id')->on('address_types')->onDelete('set null');
         });
     }
