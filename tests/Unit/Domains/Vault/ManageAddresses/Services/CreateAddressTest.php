@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
+namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
-use App\Domains\Contact\ManageContactAddresses\Jobs\FetchAddressGeocoding;
-use App\Domains\Contact\ManageContactAddresses\Services\CreateContactAddress;
+use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
+use App\Domains\Contact\ManageContactAddress\Services\CreateAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateContactAddressTest extends TestCase
+class CreateAddressTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -28,10 +28,9 @@ class CreateContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type);
+        $this->executeService($regis, $regis->account, $vault, $type);
     }
 
     /** @test */
@@ -42,7 +41,7 @@ class CreateContactAddressTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateContactAddress())->execute($request);
+        (new CreateAddress())->execute($request);
     }
 
     /** @test */
@@ -54,24 +53,9 @@ class CreateContactAddressTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
 
-        $this->executeService($regis, $account, $vault, $contact, $type);
-    }
-
-    /** @test */
-    public function it_fails_if_contact_doesnt_belong_to_vault(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create();
-        $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $type);
+        $this->executeService($regis, $account, $vault, $type);
     }
 
     /** @test */
@@ -82,10 +66,9 @@ class CreateContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = AddressType::factory()->create(['account_id' => $regis->account_id]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type);
+        $this->executeService($regis, $regis->account, $vault, $type);
     }
 
     /** @test */
@@ -96,13 +79,12 @@ class CreateContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $type = AddressType::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $type);
+        $this->executeService($regis, $regis->account, $vault, $type);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, AddressType $type): void
+    private function executeService(User $author, Account $account, Vault $vault, AddressType $type): void
     {
         Queue::fake();
 
@@ -110,7 +92,6 @@ class CreateContactAddressTest extends TestCase
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
-            'contact_id' => $contact->id,
             'address_type_id' => $type->id,
             'line_1' => '25 grand rue',
             'line_2' => 'Apartment 3',
@@ -122,10 +103,10 @@ class CreateContactAddressTest extends TestCase
             'longitude' => 12345,
         ];
 
-        $address = (new CreateContactAddress())->execute($request);
+        $address = (new CreateAddress())->execute($request);
 
         $this->assertDatabaseHas('addresses', [
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
             'address_type_id' => $type->id,
             'line_1' => '25 grand rue',
             'line_2' => 'Apartment 3',
@@ -145,10 +126,5 @@ class CreateContactAddressTest extends TestCase
         Queue::assertPushed(FetchAddressGeocoding::class, function ($job) use ($address) {
             return $job->address->id === $address->id;
         });
-
-        $this->assertDatabaseHas('contact_feed_items', [
-            'contact_id' => $contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_ADDRESS_CREATED,
-        ]);
     }
 }

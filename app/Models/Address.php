@@ -19,7 +19,7 @@ class Address extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'contact_id',
+        'vault_id',
         'address_type_id',
         'line_1',
         'line_2',
@@ -29,28 +29,6 @@ class Address extends Model
         'country',
         'latitude',
         'longitude',
-        'lived_from_at',
-        'lived_until_at',
-        'is_past_address',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'lived_from_at',
-        'lived_until_at',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'is_past_address' => 'boolean',
     ];
 
     /**

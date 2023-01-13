@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contact\ManageContactAddresses\Web\Controllers;
+namespace App\Domains\Vault\ManageAddresses\Web\Controllers;
 
 use App\Domains\Contact\ManageContactAddresses\Services\CreateContactAddress;
 use App\Domains\Contact\ManageContactAddresses\Services\DestroyContactAddress;

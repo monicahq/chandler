@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
+namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
-use App\Domains\Contact\ManageContactAddresses\Services\DestroyContactAddress;
+use App\Domains\Contact\ManageContactAddress\Services\DestroyAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;
@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class DestroyContactAddressTest extends TestCase
+class DestroyAddressTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -25,12 +25,11 @@ class DestroyContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $address = Address::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $address);
+        $this->executeService($regis, $regis->account, $vault, $address);
     }
 
     /** @test */
@@ -41,7 +40,7 @@ class DestroyContactAddressTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new DestroyContactAddress())->execute($request);
+        (new DestroyAddress())->execute($request);
     }
 
     /** @test */
@@ -53,28 +52,11 @@ class DestroyContactAddressTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $address = Address::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $account, $vault, $contact, $address);
-    }
-
-    /** @test */
-    public function it_fails_if_contact_doesnt_belong_to_vault(): void
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $regis = $this->createUser();
-        $vault = $this->createVault($regis->account);
-        $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create();
-        $address = Address::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
-
-        $this->executeService($regis, $regis->account, $vault, $contact, $address);
+        $this->executeService($regis, $account, $vault, $address);
     }
 
     /** @test */
@@ -85,12 +67,11 @@ class DestroyContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_VIEW, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $address = Address::factory()->create([
-            'contact_id' => $contact->id,
+            'vault_id' => $vault->id,
         ]);
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $address);
+        $this->executeService($regis, $regis->account, $vault, $address);
     }
 
     /** @test */
@@ -101,31 +82,24 @@ class DestroyContactAddressTest extends TestCase
         $regis = $this->createUser();
         $vault = $this->createVault($regis->account);
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
-        $contact = Contact::factory()->create(['vault_id' => $vault->id]);
         $address = Address::factory()->create();
 
-        $this->executeService($regis, $regis->account, $vault, $contact, $address);
+        $this->executeService($regis, $regis->account, $vault, $address);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault, Contact $contact, Address $address): void
+    private function executeService(User $author, Account $account, Vault $vault, Address $address): void
     {
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
-            'contact_id' => $contact->id,
             'address_id' => $address->id,
         ];
 
-        (new DestroyContactAddress())->execute($request);
+        (new DestroyAddress())->execute($request);
 
         $this->assertDatabaseMissing('addresses', [
             'id' => $address->id,
-        ]);
-
-        $this->assertDatabaseHas('contact_feed_items', [
-            'contact_id' => $contact->id,
-            'action' => ContactFeedItem::ACTION_CONTACT_ADDRESS_DESTROYED,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Contact\ManageContactAddresses\Web\ViewHelpers;
+namespace App\Domains\Vault\ManageAddresses\Web\ViewHelpers;
 
 use App\Helpers\MapHelper;
 use App\Models\Address;
