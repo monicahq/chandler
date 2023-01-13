@@ -64,15 +64,23 @@ const submit = () => {
       form.errors = error.response.data;
     });
 };
-
 </script>
 
 <template>
   <div class="mb-10">
     <h3 class="mb-3 border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
       <span class="relative">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-400">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
         </svg>
       </span>
 
@@ -81,13 +89,11 @@ const submit = () => {
 
     <!-- cta -->
     <div
-      v-if="! createMoodEventModalShown && ! successShown"
+      v-if="!createMoodEventModalShown && !successShown"
       class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
       <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="mr-2 h-14 w-14" />
-      <div class="px-5 flex flex-col mb-2">
-        <p class="mb-2">
-          How are you?
-        </p>
+      <div class="mb-2 flex flex-col px-5">
+        <p class="mb-2">How are you?</p>
         <pretty-button :text="'Record your mood'" @click="showMoodEventModal" />
       </div>
     </div>
@@ -97,7 +103,7 @@ const submit = () => {
       v-if="createMoodEventModalShown"
       class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
-      <div class="border-b border-gray-200 dark:border-gray-700 p-5">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
           <errors :errors="form.errors" />
         </div>
@@ -107,12 +113,12 @@ const submit = () => {
         <ul class="mb-4">
           <li v-for="parameter in props.data.mood_tracking_parameters" :key="parameter.id" class="flex">
             <input
-            :id="'input' + parameter.id"
-            v-model="form.parameter_id"
-            :value="parameter.id"
-            name="date-format"
-            type="radio"
-            class="relative mr-3 h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+              :id="'input' + parameter.id"
+              v-model="form.parameter_id"
+              :value="parameter.id"
+              name="date-format"
+              type="radio"
+              class="relative mr-3 h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
 
             <label
               :for="'input' + parameter.id"
@@ -126,21 +132,21 @@ const submit = () => {
         <div class="flex">
           <span
             v-if="!datePickerFieldShown"
-            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-white text-sm"
+            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
             @click="showDatePickerField">
             + change date
           </span>
 
           <span
             v-if="!noteFieldShown"
-            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-white text-sm"
+            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
             @click="showNoteField">
             + note
           </span>
 
           <span
             v-if="!hoursSleptFieldShown"
-            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-white text-sm"
+            class="mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:bg-slate-500 dark:text-white"
             @click="showHoursSleptField">
             + number of hours slept
           </span>
@@ -161,11 +167,7 @@ const submit = () => {
 
         <!-- note -->
         <div v-if="noteFieldShown" class="mt-4">
-          <text-area
-            v-model="form.note"
-            :label="'Add a note'"
-            :maxlength="65535"
-            :textarea-class="'block w-full'" />
+          <text-area v-model="form.note" :label="'Add a note'" :maxlength="65535" :textarea-class="'block w-full'" />
         </div>
 
         <!-- hours slept -->
@@ -194,11 +196,11 @@ const submit = () => {
       v-if="successShown"
       class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
       <img src="/img/dashboard_blank_how_are_you.svg" :alt="$t('Reminders')" class="mr-2 h-14 w-14" />
-      <div class="px-5 flex flex-col">
-        <p class="mb-2">
-          <span class="mr-1">🎉</span> Your mood has been recorded!
-        </p>
-        <inertia-link :href="data.url.history" class="text-blue-500 hover:underline text-center">View history</inertia-link>
+      <div class="flex flex-col px-5">
+        <p class="mb-2"><span class="mr-1">🎉</span> Your mood has been recorded!</p>
+        <inertia-link :href="data.url.history" class="text-center text-blue-500 hover:underline"
+          >View history</inertia-link
+        >
       </div>
     </div>
   </div>
