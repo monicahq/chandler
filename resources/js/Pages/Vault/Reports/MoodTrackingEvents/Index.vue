@@ -59,19 +59,19 @@ defineProps({
               </svg>
             </span>
 
-            Your mood in the year
+            Your mood this year
           </div>
         </div>
 
         <!-- iteration over the month -->
-        <div class="flex">
+        <div class="flex justify-center">
           <div v-for="month in data.months" :key="month.id" class="mb-6 flex flex-col text-center">
-            <h2 class="font-bold font-mono text-sm mr-2">{{ month.month_word }}</h2>
+            <h2 class="font-bold font-mono text-sm mr-2 mb-1">{{ month.month_word }}</h2>
 
             <div v-for="day in month.days" :key="day.id">
               <div v-if="day.event" class="mr-2 inline-block h-4 w-4 rounded-full" :class="day.event.hex_color" />
               <div v-else class="mr-2 inline-block h-4 w-4 rounded-full">
-                0
+                <div class="mr-2 inline-block h-4 w-4 rounded-full bg-slate-100" />
               </div>
 
             </div>

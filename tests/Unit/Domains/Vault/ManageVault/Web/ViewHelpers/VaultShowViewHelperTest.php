@@ -6,6 +6,7 @@ use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultShowViewHelper;
 use App\Models\Contact;
 use App\Models\ContactReminder;
 use App\Models\ContactTask;
+use App\Models\MoodTrackingEvent;
 use App\Models\MoodTrackingParameter;
 use App\Models\User;
 use App\Models\UserNotificationChannel;
@@ -277,9 +278,36 @@ class VaultShowViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
+                'history' => env('APP_URL').'/vaults/'.$vault->id. '/reports/moodTrackingEvents',
                 'store' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/'.$contact->id.'/moodTrackingEvents',
             ],
             $array['url']
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_dto_for_mood_tracking_event(): void
+    {
+        $user = User::factory()->create();
+        $moodTrackingParameter = MoodTrackingParameter::factory()->create();
+        $moodTrackingEvent = MoodTrackingEvent::factory()->create([
+            'mood_tracking_parameter_id' => $moodTrackingParameter->id,
+            'rated_at' => '2018-01-01 00:00:00',
+            'note' => 'note',
+            'number_of_hours_slept' => 8,
+        ]);
+
+        $array = VaultShowViewHelper::dtoMoodTrackingEvent($moodTrackingEvent, $user);
+
+        $this->assertEquals(
+            [
+                'id' => $moodTrackingEvent->id,
+                'label' => $moodTrackingEvent->moodTrackingParameter->label,
+                'rated_at' => 'Jan 01, 2018',
+                'note' => 'note',
+                'number_of_hours_slept' => 8,
+            ],
+            $array
         );
     }
 }

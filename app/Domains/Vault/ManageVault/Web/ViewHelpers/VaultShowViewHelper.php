@@ -173,6 +173,9 @@ class VaultShowViewHelper
             'mood_tracking_parameters' => $moodTrackingParametersCollection,
             'current_date' => Carbon::now($user->timezone)->format('Y-m-d'),
             'url' => [
+                'history' => route('vault.reports.mood_tracking_events.index', [
+                    'vault' => $vault->id,
+                ]),
                 'store' => route('contact.mood_tracking_event.store', [
                     'vault' => $vault->id,
                     'contact' => $user->getContactInVault($vault)->id,

@@ -198,7 +198,7 @@ const submit = () => {
         <p class="mb-2">
           <span class="mr-1">🎉</span> Your mood has been recorded!
         </p>
-        <inertia-link class="text-blue-500 hover:underline text-center">View history</inertia-link>
+        <inertia-link :href="data.url.history" class="text-blue-500 hover:underline text-center">View history</inertia-link>
       </div>
     </div>
   </div>
