@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import ContactCard from '@/Shared/ContactCard.vue';
 
 defineProps({
   layoutData: Object,

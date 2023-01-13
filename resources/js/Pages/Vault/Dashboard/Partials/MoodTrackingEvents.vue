@@ -54,7 +54,7 @@ const submit = () => {
 
   axios
     .post(props.data.url.store, form)
-    .then((response) => {
+    .then(() => {
       createMoodEventModalShown.value = false;
       successShown.value = true;
       loadingState.value = null;
