@@ -31,15 +31,13 @@ defineProps({
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">
-              List of all important dates
-            </li>
+            <li class="inline">List of all important dates</li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main class="relative sm:mt-18">
+    <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-3xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <!-- title -->
         <div class="mb-5 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">

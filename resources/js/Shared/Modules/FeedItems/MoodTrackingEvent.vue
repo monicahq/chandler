@@ -20,7 +20,9 @@
       <div v-if="data.mood_tracking_event.object" class="flex items-center">
         <span class="mr-2">{{ data.mood_tracking_event.description }}</span>
         <span class="mr-2"><span class="text-gray-500">for</span> {{ data.mood_tracking_event.object.rated_at }}</span>
-        <span v-if="data.mood_tracking_event.object.number_of_hours_slept">and slept {{ data.mood_tracking_event.object.number_of_hours_slept }} hours</span>
+        <span v-if="data.mood_tracking_event.object.number_of_hours_slept"
+          >and slept {{ data.mood_tracking_event.object.number_of_hours_slept }} hours</span
+        >
       </div>
 
       <!-- the mood tracking event was deleted -->
