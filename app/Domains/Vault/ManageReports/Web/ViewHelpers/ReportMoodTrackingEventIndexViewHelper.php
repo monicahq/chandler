@@ -36,7 +36,7 @@ class ReportMoodTrackingEventIndexViewHelper
 
         $moodTrackingEvents = $contact->moodTrackingEvents()
             ->with('moodTrackingParameter')
-            ->whereYear('rated_at', $year)
+            ->whereYear('rated_at', (string) $year)
             ->orderBy('rated_at', 'asc')
             ->get();
 
