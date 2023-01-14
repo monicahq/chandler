@@ -3,12 +3,9 @@
 namespace App\Domains\Vault\ManageAddresses\Services;
 
 use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
-use App\Helpers\MapHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Address;
-use App\Models\ContactFeedItem;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class UpdateAddress extends BaseService implements ServiceInterface
 {

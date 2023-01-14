@@ -2,7 +2,6 @@
 
 namespace App\Domains\Contact\ManageContactAddresses\Services;
 
-use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
 use App\Helpers\MapHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Address;
@@ -13,6 +12,7 @@ use Carbon\Carbon;
 class AssociateAddressToContact extends BaseService implements ServiceInterface
 {
     private Address $address;
+
     private array $data;
 
     /**

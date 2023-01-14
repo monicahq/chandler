@@ -6,8 +6,6 @@ use App\Domains\Vault\ManageAddresses\Services\DestroyAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;
-use App\Models\Contact;
-use App\Models\ContactFeedItem;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

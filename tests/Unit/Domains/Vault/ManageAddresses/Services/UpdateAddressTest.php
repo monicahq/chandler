@@ -2,14 +2,12 @@
 
 namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
-use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
 use App\Domains\Vault\ManageAddresses\Services\UpdateAddress;
+use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;
 use App\Models\AddressType;
-use App\Models\Contact;
-use App\Models\ContactFeedItem;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
