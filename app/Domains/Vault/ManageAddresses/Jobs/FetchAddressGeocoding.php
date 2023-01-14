@@ -2,7 +2,7 @@
 
 namespace App\Domains\Vault\ManageAddresses\Jobs;
 
-use App\Domains\Contact\ManageContactAddress\Services\GetGPSCoordinate;
+use App\Domains\Vault\ManageAddresses\Services\GetGPSCoordinate;
 use App\Models\Address;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
