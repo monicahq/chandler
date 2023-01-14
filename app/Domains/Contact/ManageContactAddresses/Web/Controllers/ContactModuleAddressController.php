@@ -6,7 +6,6 @@ use App\Domains\Contact\ManageContactAddresses\Services\AssociateAddressToContac
 use App\Domains\Contact\ManageContactAddresses\Services\RemoveAddressFromContact;
 use App\Domains\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
 use App\Domains\Vault\ManageAddresses\Services\CreateAddress;
-use App\Domains\Vault\ManageAddresses\Services\DestroyAddress;
 use App\Domains\Vault\ManageAddresses\Services\UpdateAddress;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
