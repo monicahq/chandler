@@ -13,7 +13,6 @@ return new class() extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->nullable();
             $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('address_type_id')->nullable();
             $table->string('line_1')->nullable();

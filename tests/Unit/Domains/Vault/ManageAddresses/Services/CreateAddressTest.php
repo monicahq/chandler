@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
 use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
-use App\Domains\Contact\ManageContactAddress\Services\AssociateAddressToContact;
+use App\Domains\Vault\ManageAddresses\Services\CreateAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;
@@ -41,7 +41,7 @@ class CreateAddressTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new AssociateAddressToContact())->execute($request);
+        (new CreateAddress())->execute($request);
     }
 
     /** @test */
@@ -103,7 +103,7 @@ class CreateAddressTest extends TestCase
             'longitude' => 12345,
         ];
 
-        $address = (new AssociateAddressToContact())->execute($request);
+        $address = (new CreateAddress())->execute($request);
 
         $this->assertDatabaseHas('addresses', [
             'vault_id' => $vault->id,

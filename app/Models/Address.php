@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Address extends Model
@@ -32,13 +33,13 @@ class Address extends Model
     ];
 
     /**
-     * Get the contact associated with the address.
+     * Get the contacts associated with the address.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function contact(): BelongsTo
+    public function contacts(): BelongsToMany
     {
-        return $this->belongsTo(Contact::class);
+        return $this->belongsToMany(Contact::class, 'contact_address');
     }
 
     /**

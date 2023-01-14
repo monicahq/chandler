@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Domains\Vault\ManageAddresses\Web\Controllers;
+namespace App\Domains\Contact\ManageContactAddresses\Web\Controllers;
 
-use App\Domains\Contact\ManageContactAddresses\Services\CreateContactAddress;
-use App\Domains\Contact\ManageContactAddresses\Services\DestroyContactAddress;
-use App\Domains\Contact\ManageContactAddresses\Services\UpdateContactAddress;
+use App\Domains\Contact\ManageContactAddresses\Services\AssociateAddressToContact;
+use App\Domains\Contact\ManageContactAddresses\Services\RemoveAddressFromContact;
 use App\Domains\Contact\ManageContactAddresses\Web\ViewHelpers\ModuleContactAddressesViewHelper;
+use App\Domains\Vault\ManageAddresses\Services\CreateAddress;
+use App\Domains\Vault\ManageAddresses\Services\DestroyAddress;
+use App\Domains\Vault\ManageAddresses\Services\UpdateAddress;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
@@ -19,7 +21,6 @@ class ContactModuleAddressController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_id' => $contactId,
             'address_type_id' => $request->input('address_type_id') == 0 ? null : $request->input('address_type_id'),
             'line_1' => $request->input('line_1'),
             'line_2' => $request->input('line_2'),
@@ -27,14 +28,21 @@ class ContactModuleAddressController extends Controller
             'province' => $request->input('province'),
             'postal_code' => $request->input('postal_code'),
             'country' => $request->input('country'),
-            'is_past_address' => $request->input('is_past_address'),
             'latitude' => null,
             'longitude' => null,
-            'lived_from_at' => null,
-            'lived_until_at' => null,
         ];
 
-        $address = (new CreateContactAddress())->execute($data);
+        $address = (new CreateAddress())->execute($data);
+
+        (new AssociateAddressToContact())->execute([
+            'account_id' => Auth::user()->account_id,
+            'vault_id' => $vaultId,
+            'author_id' => Auth::id(),
+            'contact_id' => $contactId,
+            'address_id' => $address->id,
+            'is_past_address' => $request->input('is_past_address'),
+        ]);
+
         $contact = Contact::find($contactId);
 
         return response()->json([
@@ -48,7 +56,6 @@ class ContactModuleAddressController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_id' => $contactId,
             'address_id' => $addressId,
             'address_type_id' => $request->input('address_type_id') == 0 ? null : $request->input('address_type_id'),
             'line_1' => $request->input('line_1'),
@@ -57,14 +64,11 @@ class ContactModuleAddressController extends Controller
             'province' => $request->input('province'),
             'postal_code' => $request->input('postal_code'),
             'country' => $request->input('country'),
-            'is_past_address' => $request->input('is_past_address'),
             'latitude' => null,
             'longitude' => null,
-            'lived_from_at' => null,
-            'lived_until_at' => null,
         ];
 
-        $address = (new UpdateContactAddress())->execute($data);
+        $address = (new UpdateAddress())->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([
@@ -82,7 +86,7 @@ class ContactModuleAddressController extends Controller
             'address_id' => $addressId,
         ];
 
-        (new DestroyContactAddress())->execute($data);
+        (new RemoveAddressFromContact())->execute($data);
 
         return response()->json([
             'data' => true,

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
 use App\Domains\Vault\ManageAddresses\Jobs\FetchAddressGeocoding;
-use App\Domains\Contact\ManageContactAddress\Services\UpdateAddress;
+use App\Domains\Vault\ManageAddresses\Services\UpdateAddress;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Address;

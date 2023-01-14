@@ -21,14 +21,10 @@ class ModuleContactAddressesViewHelperTest extends TestCase
         $contact = Contact::factory()->create();
         $user = User::factory()->create();
 
-        Address::factory()->create([
-            'contact_id' => $contact->id,
-            'is_past_address' => false,
-        ]);
-        Address::factory()->create([
-            'contact_id' => $contact->id,
-            'is_past_address' => true,
-        ]);
+        $address = Address::factory()->create();
+        $address->contacts()->attach($contact, ['is_past_address' => true]);
+        $address = Address::factory()->create();
+        $address->contacts()->attach($contact, ['is_past_address' => false]);
 
         $addressType = AddressType::factory()->create([
             'account_id' => $contact->vault->account_id,
@@ -94,7 +90,6 @@ class ModuleContactAddressesViewHelperTest extends TestCase
             'province' => 'quebec',
             'postal_code' => 'h1k 12k',
             'country' => 'Canada',
-            'is_past_address' => false,
             'address_type_id' => $addressType->id,
         ]);
 
