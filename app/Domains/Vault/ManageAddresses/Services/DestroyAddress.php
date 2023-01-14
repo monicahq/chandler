@@ -2,12 +2,9 @@
 
 namespace App\Domains\Vault\ManageAddresses\Services;
 
-use App\Helpers\MapHelper;
 use App\Interfaces\ServiceInterface;
 use App\Models\Address;
-use App\Models\ContactFeedItem;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class DestroyAddress extends BaseService implements ServiceInterface
 {
