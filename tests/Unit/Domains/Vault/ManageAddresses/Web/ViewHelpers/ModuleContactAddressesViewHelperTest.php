@@ -93,11 +93,14 @@ class ModuleContactAddressesViewHelperTest extends TestCase
             'address_type_id' => $addressType->id,
         ]);
 
-        $collection = ModuleContactAddressesViewHelper::dto($contact, $activeAddress, $user);
+        $activeAddress->contacts()->attach($contact, ['is_past_address' => false]);
+        $address = $contact->addresses()->where('address_id', $activeAddress->id)->first();
+
+        $collection = ModuleContactAddressesViewHelper::dto($contact, $address, $user);
 
         $this->assertEquals(
             [
-                'id' => $activeAddress->id,
+                'id' => $address->id,
                 'is_past_address' => false,
                 'line_1' => '123 main st',
                 'line_2' => 'Apartment 4',
