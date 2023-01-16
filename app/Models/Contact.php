@@ -393,7 +393,7 @@ class Contact extends Model
      */
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Address::class, 'contact_address', 'contact_id');
+        return $this->belongsToMany(Address::class, 'contact_address', 'contact_id')->withPivot('is_past_address')->withTimestamps();
     }
 
     /**

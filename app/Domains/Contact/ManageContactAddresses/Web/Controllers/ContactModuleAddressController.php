@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ContactModuleAddressController extends Controller
 {
@@ -67,8 +68,16 @@ class ContactModuleAddressController extends Controller
             'longitude' => null,
         ];
 
-        $address = (new UpdateAddress())->execute($data);
+        (new UpdateAddress())->execute($data);
         $contact = Contact::find($contactId);
+
+        // update pivot table
+        $contact->addresses()->where('address_id', $addressId)->update([
+            'is_past_address' => $request->input('is_past_address'),
+        ]);
+
+        // get the address with pivot information
+        $address = $contact->addresses()->where('address_id', $addressId)->first();
 
         return response()->json([
             'data' => ModuleContactAddressesViewHelper::dto($contact, $address, Auth::user()),
