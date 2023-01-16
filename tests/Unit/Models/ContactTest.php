@@ -288,7 +288,7 @@ class ContactTest extends TestCase
         $contact = Contact::factory()->create([]);
         $address = Address::factory()->create();
 
-        $contact->addresses()->sync([$contact->id => ['is_past_address' => false]]);
+        $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
 
         $this->assertTrue($contact->addresses()->exists());
     }
