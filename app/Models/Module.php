@@ -60,6 +60,7 @@ class Module extends Model
     public const TYPE_POSTS = 'posts';
 
     public const TYPE_RELIGIONS = 'religions';
+
     public const TYPE_LIFE_EVENTS = 'life_events';
 
     /**

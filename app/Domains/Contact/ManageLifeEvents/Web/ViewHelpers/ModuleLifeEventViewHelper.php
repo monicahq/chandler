@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers;
 
 use App\Models\Contact;
-use App\Models\Label;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 
