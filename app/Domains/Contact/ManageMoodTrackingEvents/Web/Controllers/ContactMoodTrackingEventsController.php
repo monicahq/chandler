@@ -25,7 +25,8 @@ class ContactMoodTrackingEventsController extends Controller
             'mood_tracking_parameter_id' => $request->input('parameter_id'),
             'rated_at' => $carbonDate,
             'note' => $request->input('note') ?? null,
-            'number_of_hours_slept' => $request->input('hours') ?? null,        ];
+            'number_of_hours_slept' => $request->input('hours') ?? null,
+        ];
 
         $moodTrackingEvent = (new CreateMoodTrackingEvent())->execute($data);
 
