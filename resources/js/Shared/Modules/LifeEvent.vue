@@ -11,7 +11,10 @@ const props = defineProps({
 });
 
 const form = useForm({
-  religion_id: '',
+  parameter_id: 0,
+  date: null,
+  hours: null,
+  note: null,
 });
 
 const loadingState = ref(false);
@@ -24,6 +27,7 @@ const selectedLifeEventCategory = ref([]);
 onMounted(() => {
   localLifeEvents.value = props.data.religions;
   selectedLifeEventCategory.value = props.data.life_event_categories[0];
+  form.date = props.data.current_date;
 });
 
 const loadTypes = (category) => {
@@ -111,7 +115,7 @@ const showCreateLifeEventModal = () => {
         </div>
         <div class="border-b border-gray-200 dark:border-gray-700 p-3">
           <p class="mb-2 block text-sm dark:text-gray-100">Date of the event</p>
-          <v-date-picker v-model="form.date" class="inline-block h-full" :model-config="modelConfig">
+          <v-date-picker v-model="form.date" :timezone="'UTC'" class="inline-block h-full" :model-config="modelConfig">
             <template #default="{ inputValue, inputEvents }">
               <input
                 class="rounded border bg-white px-2 py-1 dark:bg-gray-900"

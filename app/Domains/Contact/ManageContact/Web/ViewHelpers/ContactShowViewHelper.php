@@ -300,7 +300,7 @@ class ContactShowViewHelper
             }
 
             if ($module->type == Module::TYPE_LIFE_EVENTS) {
-                $data = ModuleLifeEventViewHelper::data($contact);
+                $data = ModuleLifeEventViewHelper::data($contact, $user);
             }
 
             $modulesCollection->push([

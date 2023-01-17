@@ -6,10 +6,12 @@ use App\Models\Contact;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\User;
+use Carbon\Carbon;
 
 class ModuleLifeEventViewHelper
 {
-    public static function data(Contact $contact): array
+    public static function data(Contact $contact, User $user): array
     {
         $lifeEventCategoriesCollection = $contact->vault->lifeEventCategories()
             ->with('lifeEventTypes')
@@ -18,6 +20,7 @@ class ModuleLifeEventViewHelper
             ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($lifeEventCategory));
 
         return [
+            'current_date' => Carbon::now($user->timezone)->format('Y-m-d'),
             'life_event_categories' => $lifeEventCategoriesCollection,
             'url' => [
                 'store' => route('contact.label.store', [
