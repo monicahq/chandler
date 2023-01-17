@@ -120,6 +120,7 @@ return [
     'module_photos' => 'Photos',
     'module_posts' => 'Posts about the contact',
     'module_religions' => 'Religions',
+    'module_life_events' => 'Life events',
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 

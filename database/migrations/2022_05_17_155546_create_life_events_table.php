@@ -48,10 +48,10 @@ return new class() extends Migration
             $table->unsignedBigInteger('vault_id');
             $table->unsignedBigInteger('life_event_type_id');
             $table->unsignedBigInteger('emotion_id')->nullable();
+            $table->date('happened_at');
             $table->boolean('collapsed')->default(false);
             $table->string('summary')->nullable();
             $table->text('description')->nullable();
-            $table->date('happened_at');
             $table->integer('costs')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('paid_by_contact_id')->nullable();

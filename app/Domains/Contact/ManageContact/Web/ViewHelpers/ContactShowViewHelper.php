@@ -14,6 +14,7 @@ use App\Domains\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
 use App\Domains\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Domains\Contact\ManageJobInformation\Web\ViewHelpers\ModuleCompanyViewHelper;
 use App\Domains\Contact\ManageLabels\Web\ViewHelpers\ModuleLabelViewHelper;
+use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Domains\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Domains\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Domains\Contact\ManagePets\Web\ViewHelpers\ModulePetsViewHelper;
@@ -296,6 +297,10 @@ class ContactShowViewHelper
 
             if ($module->type == Module::TYPE_POSTS) {
                 $data = ModulePostsViewHelper::data($contact, $user);
+            }
+
+            if ($module->type == Module::TYPE_LIFE_EVENTS) {
+                $data = ModuleLifeEventViewHelper::data($contact);
             }
 
             $modulesCollection->push([
