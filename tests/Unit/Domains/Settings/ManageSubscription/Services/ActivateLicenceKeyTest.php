@@ -21,7 +21,10 @@ class ActivateLicenceKeyTest extends TestCase
     /** @test */
     public function it_activates_a_licence_key()
     {
-        config(['monica.licence_private_key' => 'base64:CiZYhXuxFaXsYWOTw8o6C82rqiZkphLg+N6fVep2l0M=']);
+        config([
+            'monica.licence_private_key' => 'base64:CiZYhXuxFaXsYWOTw8o6C82rqiZkphLg+N6fVep2l0M=',
+            'monica.customer_portal_url' => 'http://customers.test',
+        ]);
 
         $key = 'eyJpdiI6IjJ5clV4N3hlaThIMGtsckgiLCJ2YWx1ZSI6IkdIUWd4aFM4OWlHL2V3SHF0M1VOazVYTjBaN2c4RGpRUDZtN0VNejhGL0YzZGF6bmFBNnBzK3lUT0VVVXFIaE80SlZ3RmRRK3J4UTRBQU5XU2lUS3JhRHQ0d1paYUIrNGM0VUg2ZzBNU3Y4MjlzQ0d4N2pTZGlPY3E5UWFMRGJCSXdZSnN6a1MwYVg5RFBaQ01jMGtpMzhubnVFbmV5TXB3Zz09IiwibWFjIjoiIiwidGFnIjoiWVZlUjgrQU8yUlBCd1BaTDUxb1JJZz09In0=';
         $account = Account::factory()->create([]);
