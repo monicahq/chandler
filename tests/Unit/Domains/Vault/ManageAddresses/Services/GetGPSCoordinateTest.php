@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageContactAddresses\Services;
+namespace Tests\Unit\Domains\Vault\ManageAddresses\Services;
 
-use App\Domains\Contact\ManageContactAddresses\Services\GetGPSCoordinate;
+use App\Domains\Vault\ManageAddresses\Services\GetGPSCoordinate;
 use App\Exceptions\EnvVariablesNotSetException;
 use App\Models\Address;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -27,7 +27,7 @@ class GetGPSCoordinateTest extends TestCase
             'address_id' => $address->id,
         ];
 
-        (new GetGPSCoordinate)->execute($request);
+        (new GetGPSCoordinate())->execute($request);
     }
 
     /** @test */
@@ -67,7 +67,7 @@ class GetGPSCoordinateTest extends TestCase
         config(['monica.location_iq_api_key' => 'test']);
 
         $address = Address::factory()->create([
-            'street' => '',
+            'line_1' => '',
             'city' => 'sieklopekznqqq',
             'postal_code' => '',
         ]);
@@ -93,7 +93,7 @@ class GetGPSCoordinateTest extends TestCase
         ]);
 
         $address = Address::factory()->create([
-            'street' => '',
+            'line_1' => '',
             'city' => 'sieklopekznqqq',
             'postal_code' => '',
         ]);

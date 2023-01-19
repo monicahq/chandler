@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Address;
 use App\Models\AddressType;
-use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,9 +22,10 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'contact_id' => Contact::factory(),
+            'vault_id' => Vault::factory(),
             'address_type_id' => AddressType::factory(),
-            'street' => $this->faker->streetAddress(),
+            'line_1' => $this->faker->streetAddress(),
+            'line_2' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
             'province' => $this->faker->name(),
             'postal_code' => $this->faker->postcode(),
