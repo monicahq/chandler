@@ -66,6 +66,7 @@ return [
     'search' => 'Search',
     'choose' => 'Choose',
     'remove' => 'Remove',
+    'change' => 'Change',
     'publish' => 'Publish',
     'yes' => 'Yes',
     'no' => 'No',
