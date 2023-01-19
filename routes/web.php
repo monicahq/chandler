@@ -632,6 +632,7 @@ Route::middleware([
 
             // subscription
             Route::get('subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
+            Route::post('subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
 
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');

@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'licence_private_key' => env('LICENCE_PRIVATE_KEY'),
+    'customer_portal_private_key' => env('CUSTOMER_PORTAL_PRIVATE_KEY'),
 
     'licence_cipher' => 'AES-256-GCM',
 

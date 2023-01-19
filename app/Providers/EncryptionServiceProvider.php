@@ -49,7 +49,7 @@ class EncryptionServiceProvider extends ServiceProvider
      */
     protected function key(array $config)
     {
-        return tap($config['licence_private_key'], function ($key) {
+        return tap($config['customer_portal_private_key'], function ($key) {
             if (empty($key)) {
                 throw new MissingPrivateKeyException();
             }

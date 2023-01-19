@@ -1,3 +1,46 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import ExternalLink from '@/Shared/Form/ExternalLink.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { onMounted, ref } from 'vue';
+
+const props = defineProps({
+  data: Object,
+  layoutData: Object,
+});
+
+const form = useForm({
+  licence_key: '',
+  errors: [],
+});
+
+const loadingState = ref(false);
+
+const submit = () => {
+  loadingState.value = 'loading';
+  form.errors = [];
+
+  axios
+    .post(props.data.url.store, form)
+    .then(() => {
+      loadingState.value = '';
+    })
+    .catch((error) => {
+      loadingState.value = '';
+      form.errors = error.response.data;
+    });
+};
+
+const showEditModal = () => {
+  editReligion.value = true;
+};
+</script>
+
+
 <template>
   <layout :layout-data="layoutData">
     <!-- breadcrumb -->
@@ -33,7 +76,7 @@
       <div class="mx-auto max-w-lg px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <form
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
-          @submit.prevent="destroy()">
+          @submit.prevent="submit()">
           <!-- title -->
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="mb-4 text-center text-2xl font-medium">Manage your subscription</h1>
@@ -59,20 +102,17 @@
             <errors :errors="form.errors" />
 
             <text-input
-              v-model="form.password"
+              v-model="form.licence_key"
               :label="'Paste your licence key'"
-              :type="'password'"
               :autofocus="true"
               :input-class="'block w-full'"
               :required="true"
-              :autocomplete="false"
-              :maxlength="255" />
+              :autocomplete="false" />
           </div>
 
           <div class="flex justify-between p-5">
             <pretty-link :href="data.url.back" :text="'Go back'" :classes="'mr-3'" />
             <pretty-button
-              :href="'data.url.vault.create'"
               :text="$t('app.save')"
               :state="loadingState"
               :icon="'arrow'"
@@ -83,63 +123,6 @@
     </main>
   </layout>
 </template>
-
-<script>
-import Layout from '@/Shared/Layout.vue';
-import PrettyLink from '@/Shared/Form/PrettyLink.vue';
-import ExternalLink from '@/Shared/Form/ExternalLink.vue';
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
-import TextInput from '@/Shared/Form/TextInput.vue';
-import Errors from '@/Shared/Form/Errors.vue';
-
-export default {
-  components: {
-    Layout,
-    PrettyLink,
-    ExternalLink,
-    PrettyButton,
-    TextInput,
-    Errors,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {
-      loadingState: '',
-      form: {
-        password: '',
-        errors: [],
-      },
-    };
-  },
-
-  methods: {
-    destroy() {
-      this.loadingState = 'loading';
-
-      axios
-        .put(this.data.url.destroy, this.form)
-        .then((response) => {
-          this.$inertia.visit(response.data.data);
-        })
-        .catch((error) => {
-          this.loadingState = null;
-          this.form.errors = error.response.data;
-        });
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .section-head {

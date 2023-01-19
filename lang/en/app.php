@@ -85,6 +85,9 @@ return [
 
     'error_title' => '👇 Oops. An error occured.',
 
+    'exception_licence_key_dont_exist' => 'This licence key does not exist on the customer portal. Please make sure you have a valid subscription and copy all the characters in the field below.',
+    'exception_licence_key_invalid' => 'This licence key exists but is invalid. Please make sure you have a valid, active subscription.',
+
     'no_results' => 'No results',
 
     'help_open_new_page' => 'This link will open in a new tab',

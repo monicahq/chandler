@@ -27,21 +27,13 @@ class SubscriptionController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            (new ActivateLicenceKey())->execute([
-                'account_id' => auth()->user()->account_id,
-                'licence_key' => $request->input('licence_key'),
-            ]);
-        } catch (ValidationException $e) {
-            return back()
-                ->withInput()
-                ->withErrors($e->validator);
-        } catch (Exception $e) {
-            return back()
-                ->withInput()
-                ->withErrors($e->getMessage());
-        }
+        (new ActivateLicenceKey())->execute([
+            'account_id' => auth()->user()->account_id,
+            'licence_key' => $request->input('licence_key'),
+        ]);
 
-        return view('settings.subscriptions.success');
+        return response()->json([
+            'data' => true,
+        ], 201);
     }
 }

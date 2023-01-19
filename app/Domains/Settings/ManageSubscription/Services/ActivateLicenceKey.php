@@ -9,6 +9,7 @@ use App\Exceptions\MissingPrivateKeyException;
 use App\Interfaces\ServiceInterface;
 use App\Models\Account;
 use App\Services\BaseService;
+use Termwind\Components\Dd;
 
 class ActivateLicenceKey extends BaseService implements ServiceInterface
 {
@@ -54,7 +55,7 @@ class ActivateLicenceKey extends BaseService implements ServiceInterface
 
     private function validateEnvVariables(): void
     {
-        if (config('monica.licence_private_key') === null) {
+        if (config('monica.customer_portal_private_key') === null) {
             throw new MissingPrivateKeyException();
         }
     }
@@ -64,6 +65,7 @@ class ActivateLicenceKey extends BaseService implements ServiceInterface
         $data = (new CallCustomerPortal())->execute([
             'licence_key' => $this->data['licence_key'],
         ]);
+
         $this->status = $data['status'];
         $this->response = $data['data'];
     }

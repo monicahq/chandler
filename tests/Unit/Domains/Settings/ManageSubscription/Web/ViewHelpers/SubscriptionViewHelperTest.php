@@ -19,6 +19,7 @@ class SubscriptionViewHelperTest extends TestCase
             [
                 'url' => [
                     'back' => env('APP_URL').'/settings',
+                    'store' => env('APP_URL').'/settings/subscription',
                     'customer_portal' => 'https://customers.monicahq.com',
                 ],
             ],
