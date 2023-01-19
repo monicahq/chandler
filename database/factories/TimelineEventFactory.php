@@ -2,10 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Contact;
-use App\Models\ContactTimeline;
-use App\Models\LifeEvent;
-use App\Models\LifeEventType;
 use App\Models\TimelineEvent;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;

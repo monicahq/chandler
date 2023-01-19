@@ -3,10 +3,6 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Contact;
-use App\Models\ContactTimeline;
-use App\Models\Currency;
-use App\Models\Emotion;
-use App\Models\LifeEvent;
 use App\Models\TimelineEvent;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
