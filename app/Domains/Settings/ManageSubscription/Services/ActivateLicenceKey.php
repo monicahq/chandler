@@ -9,7 +9,6 @@ use App\Exceptions\MissingPrivateKeyException;
 use App\Interfaces\ServiceInterface;
 use App\Models\Account;
 use App\Services\BaseService;
-use Termwind\Components\Dd;
 
 class ActivateLicenceKey extends BaseService implements ServiceInterface
 {

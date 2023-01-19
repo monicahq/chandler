@@ -6,9 +6,7 @@ use App\Domains\Settings\ManageSubscription\Services\ActivateLicenceKey;
 use App\Domains\Settings\ManageSubscription\Web\ViewHelpers\SubscriptionViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class SubscriptionController extends Controller
