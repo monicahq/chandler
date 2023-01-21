@@ -15,7 +15,7 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
 {
     private TimelineEvent $timelineEvent;
 
-    private Collection $partipantsCollection;
+    private Collection $participantsCollection;
 
     private array $data;
 
@@ -73,20 +73,20 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->partipantsCollection = collect($this->data['participant_ids'])
+        $this->participantsCollection = collect($this->data['participant_ids'])
             ->map(fn (int $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
     }
 
     private function associateParticipants(): void
     {
-        foreach ($this->partipantsCollection as $participant) {
+        foreach ($this->participantsCollection as $participant) {
             $participant->timelineEvents()->attach($this->timelineEvent->id);
         }
     }
 
     private function updateLastEditedDate(): void
     {
-        foreach ($this->partipantsCollection as $participant) {
+        foreach ($this->participantsCollection as $participant) {
             $participant->last_updated_at = Carbon::now();
             $participant->save();
         }
