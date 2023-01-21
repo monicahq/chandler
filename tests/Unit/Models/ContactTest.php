@@ -18,6 +18,7 @@ use App\Models\Group;
 use App\Models\Label;
 use App\Models\LifeEvent;
 use App\Models\Loan;
+use App\Models\MoodTrackingEvent;
 use App\Models\Note;
 use App\Models\Pet;
 use App\Models\Post;
@@ -105,17 +106,6 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($contact->contactInformations()->exists());
-    }
-
-    /** @test */
-    public function it_has_many_addresses(): void
-    {
-        $contact = Contact::factory()->create();
-        Address::factory()->count(2)->create([
-            'contact_id' => $contact->id,
-        ]);
-
-        $this->assertTrue($contact->addresses()->exists());
     }
 
     /** @test */
@@ -303,6 +293,28 @@ class ContactTest extends TestCase
         $contact->timelineEvents()->sync([$timelineEvent->id]);
 
         $this->assertTrue($contact->timelineEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_mood_tracking_events(): void
+    {
+        $contact = Contact::factory()->create();
+        MoodTrackingEvent::factory()->count(2)->create([
+            'contact_id' => $contact->id,
+        ]);
+
+        $this->assertTrue($contact->moodTrackingEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_addresses(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $address = Address::factory()->create();
+
+        $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
+
+        $this->assertTrue($contact->addresses()->exists());
     }
 
     /** @test */

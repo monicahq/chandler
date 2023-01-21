@@ -222,16 +222,6 @@ class Contact extends Model
     }
 
     /**
-     * Get the address records associated with the contact.
-     *
-     * @return HasMany
-     */
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    /**
      * Get the note records associated with the contact.
      *
      * @return HasMany
@@ -404,6 +394,26 @@ class Contact extends Model
     public function timelineEvents(): BelongsToMany
     {
         return $this->belongsToMany(TimelineEvent::class, 'timeline_event_participants', 'contact_id', 'timeline_event_id');
+    }
+
+    /**
+     * Get the mood tracking events associated with the contact.
+     *
+     * @return HasMany
+     */
+    public function moodTrackingEvents(): HasMany
+    {
+        return $this->hasMany(MoodTrackingEvent::class);
+    }
+
+    /**
+     * Get the addresses associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function addresses(): BelongsToMany
+    {
+        return $this->belongsToMany(Address::class, 'contact_address', 'contact_id')->withPivot('is_past_address')->withTimestamps();
     }
 
     /**
