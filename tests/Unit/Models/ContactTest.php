@@ -108,17 +108,6 @@ class ContactTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_addresses(): void
-    {
-        $contact = Contact::factory()->create();
-        Address::factory()->count(2)->create([
-            'contact_id' => $contact->id,
-        ]);
-
-        $this->assertTrue($contact->addresses()->exists());
-    }
-
-    /** @test */
     public function it_has_many_notes(): void
     {
         $contact = Contact::factory()->create();
@@ -303,6 +292,17 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($contact->moodTrackingEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_addresses(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $address = Address::factory()->create();
+
+        $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
+
+        $this->assertTrue($contact->addresses()->exists());
     }
 
     /** @test */
