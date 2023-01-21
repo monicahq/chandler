@@ -397,6 +397,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the timeline events associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function timelineEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(TimelineEvent::class, 'timeline_event_participants', 'contact_id', 'timeline_event_id');
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute<string,never>

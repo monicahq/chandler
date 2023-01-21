@@ -48,7 +48,7 @@ return new class() extends Migration
             $table->unsignedBigInteger('vault_id');
             $table->date('started_at');
             $table->string('label')->nullable();
-            $table->boolean('collapsed')->default(false);
+            $table->boolean('collapsed')->default(true);
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });

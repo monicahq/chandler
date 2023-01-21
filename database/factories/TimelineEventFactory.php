@@ -22,8 +22,8 @@ class TimelineEventFactory extends Factory
     {
         return [
             'vault_id' => Vault::factory(),
-            'label' => $this->faker->sentence(),
             'started_at' => $this->faker->dateTimeThisCentury(),
+            'label' => $this->faker->sentence(),
         ];
     }
 }
