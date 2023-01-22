@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 20230122-prune-action
 
 concurrency:
   group: Docker ${{ github.ref }}
@@ -21,48 +22,53 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+    #   - name: Checkout sources
+    #     uses: actions/checkout@v3
+    #     with:
+    #       fetch-depth: 0
 
-      - name: Docker meta
-        id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v4
-        with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ env.package-name }}
-          tag-sha: true
+    #   - name: Docker meta
+    #     id: docker_meta
+    #     uses: crazy-max/ghaction-docker-meta@v4
+    #     with:
+    #       images: ghcr.io/${{ github.repository_owner }}/${{ env.package-name }}
+    #       tag-sha: true
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    #   - name: Set up Docker Buildx
+    #     uses: docker/setup-buildx-action@v2
 
-      - name: Login to GitHub container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ secrets.CR_USER }}
-          password: ${{ secrets.CR_PAT }}
+    #   - name: Login to GitHub container registry
+    #     uses: docker/login-action@v2
+    #     with:
+    #       registry: ghcr.io
+    #       username: ${{ secrets.CR_USER }}
+    #       password: ${{ secrets.CR_PAT }}
 
-    # Configure
-      - name: Configure variables
-        run: scripts/docker/build.sh --skip-build $GITHUB_SHA
+    # # Configure
+    #   - name: Configure variables
+    #     run: scripts/docker/build.sh --skip-build $GITHUB_SHA
 
-    # Build docker
-      - name: Docker build
-        id: docker_build
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/${{ env.package-name }}:main
-          labels: ${{ steps.docker_meta.outputs.labels }}
-          file: scripts/docker/Dockerfile
-          context: .
+    # # Build docker
+    #   - name: Docker build
+    #     id: docker_build
+    #     uses: docker/build-push-action@v3
+    #     with:
+    #       push: true
+    #       tags: ${{ steps.docker_meta.outputs.tags }}
+    #       cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/${{ env.package-name }}:main
+    #       labels: ${{ steps.docker_meta.outputs.labels }}
+    #       file: scripts/docker/Dockerfile
+    #       context: .
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+    #   - name: Image digest
+    #     run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Prune images
-        run: scripts/docker/prune.py --container ${{ env.package-name }} -o ${{ github.repository_owner }} --prune-age 15 -v
-        env:
-          GHCR_TOKEN: ${{ secrets.CR_PAT }}
+        uses: vlaurin/action-ghcr-prune@v0.5
+        with:
+          token: ${{ secrets.CR_PAT }}
+          organization: ${{ github.repository_owner }}
+          container: ${{ env.package-name }}
+          dry-run: true
+          keep-younger-than: 15
+          prune-untagged: true
