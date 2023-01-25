@@ -3,12 +3,9 @@
 namespace Tests\Unit\Domains\Contact\ManageLoans\Web\ViewHelpers;
 
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
-use App\Domains\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
 use App\Models\Contact;
-use App\Models\Currency;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
-use App\Models\Loan;
 use App\Models\User;
 use Carbon\Carbon;
 use function env;
@@ -50,8 +47,8 @@ class ModuleLifeEventViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'load' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/lifeEvents',
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/lifeEvents',
+                'load' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/lifeEvents',
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/lifeEvents',
             ],
             $array['url']
         );

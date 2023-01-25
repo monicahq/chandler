@@ -104,7 +104,7 @@ class ModuleLifeEventViewHelper
             'from_place' => $lifeEvent->from_place,
             'to_place' => $lifeEvent->to_place,
             'place' => $lifeEvent->place,
-            'participants' => $lifeEvent->participants->map(fn(Contact $contact) => ContactCardHelper::data($contact)),
+            'participants' => $lifeEvent->participants->map(fn (Contact $contact) => ContactCardHelper::data($contact)),
         ];
     }
 }
