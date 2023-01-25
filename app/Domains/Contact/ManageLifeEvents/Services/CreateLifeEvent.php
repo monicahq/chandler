@@ -29,6 +29,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'timeline_event_id' => 'required|integer|exists:timeline_events,id',
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'summary' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:65535',
@@ -82,6 +83,9 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
+        $this->vault->timelineEvents()
+            ->findOrFail($this->data['timeline_event_id']);
+
         $this->vault->lifeEventCategories()
             ->findOrFail($lifeEventType->lifeEventCategory->id);
 
@@ -119,7 +123,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
     private function store(): void
     {
         $this->lifeEvent = LifeEvent::create([
-            'vault_id' => $this->data['vault_id'],
+            'timeline_event_id' => $this->data['timeline_event_id'],
             'life_event_type_id' => $this->data['life_event_type_id'],
             'summary' => $this->valueOrNull($this->data, 'summary'),
             'description' => $this->valueOrNull($this->data, 'description'),

@@ -29,6 +29,7 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'timeline_event_id' => 'required|integer|exists:timeline_events,id',
             'life_event_type_id' => 'required|integer|exists:life_event_types,id',
             'life_event_id' => 'required|integer|exists:life_events,id',
             'summary' => 'nullable|string|max:255',
@@ -81,10 +82,13 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->lifeEvent = $this->vault->lifeEvents()
-            ->findOrFail($this->data['life_event_id']);
+        $timelineEvent = $this->vault->timelineEvents()
+            ->findOrFail($this->data['timeline_event_id']);
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
+
+        $this->lifeEvent = $timelineEvent->lifeEvents()
+            ->findOrFail($this->data['life_event_id']);
 
         $this->vault->lifeEventCategories()
             ->findOrFail($lifeEventType->lifeEventCategory->id);
@@ -105,6 +109,7 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
 
     private function update(): void
     {
+        $this->lifeEvent->timeline_event_id = $this->data['timeline_event_id'];
         $this->lifeEvent->life_event_type_id = $this->data['life_event_type_id'];
         $this->lifeEvent->summary = $this->valueOrNull($this->data, 'summary');
         $this->lifeEvent->description = $this->valueOrNull($this->data, 'description');

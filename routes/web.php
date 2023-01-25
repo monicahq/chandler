@@ -324,7 +324,7 @@ Route::middleware([
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
 
                     // life events
-                    Route::post('lifeEvents', [ContactModuleLifeEventController::class, 'store'])->name('contact.group.store');
+                    Route::post('lifeEvents', [ContactModuleLifeEventController::class, 'store'])->name('contact.life_event.store');
 
                     // mood tracking events
                     Route::post('moodTrackingEvents', [ContactMoodTrackingEventsController::class, 'store'])->name('contact.mood_tracking_event.store');

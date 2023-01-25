@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * A contact's timeline is composed of many timeline events.
@@ -58,5 +59,15 @@ class TimelineEvent extends Model
     public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
+    }
+
+    /**
+     * Get the life events associated with the timeline event.
+     *
+     * @return HasMany
+     */
+    public function lifeEvents(): HasMany
+    {
+        return $this->hasMany(LifeEvent::class);
     }
 }

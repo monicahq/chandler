@@ -14,11 +14,11 @@ class LifeEventTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_has_one_vault()
+    public function it_has_one_timeline_event()
     {
         $lifeEvent = LifeEvent::factory()->create();
 
-        $this->assertTrue($lifeEvent->vault()->exists());
+        $this->assertTrue($lifeEvent->timelineEvent()->exists());
     }
 
     /** @test */

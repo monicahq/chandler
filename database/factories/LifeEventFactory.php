@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
+use App\Models\TimelineEvent;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +24,7 @@ class LifeEventFactory extends Factory
     public function definition()
     {
         return [
-            'vault_id' => Vault::factory(),
+            'timeline_event_id' => TimelineEvent::factory(),
             'life_event_type_id' => LifeEventType::factory(),
             'summary' => $this->faker->sentence(),
             'description' => $this->faker->sentence(),

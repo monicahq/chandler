@@ -19,7 +19,7 @@ class LifeEvent extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'vault_id',
+        'timeline_event_id',
         'life_event_type_id',
         'emotion_id',
         'collapsed',
@@ -55,13 +55,13 @@ class LifeEvent extends Model
     ];
 
     /**
-     * Get the vault associated with the life event.
+     * Get the timeline event associated with the life event.
      *
      * @return BelongsTo
      */
-    public function vault(): BelongsTo
+    public function timelineEvent(): BelongsTo
     {
-        return $this->belongsTo(Vault::class);
+        return $this->belongsTo(TimelineEvent::class);
     }
 
     /**

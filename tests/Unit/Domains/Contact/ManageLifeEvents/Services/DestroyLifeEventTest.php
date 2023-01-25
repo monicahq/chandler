@@ -8,6 +8,7 @@ use App\Models\Account;
 use App\Models\LifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -25,15 +26,13 @@ class DestroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
+        $timelineEvent = TimelineEvent::factory()->create(['vault_id' => $vault->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'vault_id' => $vault->id,
-            'life_event_type_id' => $lifeEventType->id,
+            'timeline_event_id' => $timelineEvent->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent, $timelineEvent);
     }
 
     /** @test */
@@ -56,15 +55,13 @@ class DestroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
+        $timelineEvent = TimelineEvent::factory()->create(['vault_id' => $vault->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'vault_id' => $vault->id,
-            'life_event_type_id' => $lifeEventType->id,
+            'timeline_event_id' => $timelineEvent->id,
         ]);
 
-        $this->executeService($user, $account, $vault, $lifeEvent);
+        $this->executeService($user, $account, $vault, $lifeEvent, $timelineEvent);
     }
 
     /** @test */
@@ -76,15 +73,13 @@ class DestroyLifeEventTest extends TestCase
         $account = Account::factory()->create();
         $vault = $this->createVault($account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
+        $timelineEvent = TimelineEvent::factory()->create(['vault_id' => $vault->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'vault_id' => $vault->id,
-            'life_event_type_id' => $lifeEventType->id,
+            'timeline_event_id' => $timelineEvent->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent, $timelineEvent);
     }
 
     /** @test */
@@ -95,41 +90,54 @@ class DestroyLifeEventTest extends TestCase
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_VIEW, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
+        $timelineEvent = TimelineEvent::factory()->create(['vault_id' => $vault->id]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'vault_id' => $vault->id,
-            'life_event_type_id' => $lifeEventType->id,
+            'timeline_event_id' => $timelineEvent->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent, $timelineEvent);
     }
 
     /** @test */
-    public function it_fails_if_life_event_does_not_belong_to_vault(): void
+    public function it_fails_if_timeline_event_does_not_belong_to_vault(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
-        $lifeEventCategory = LifeEventCategory::factory()->create(['vault_id' => $vault->id]);
-        $lifeEventType = LifeEventType::factory()->create(['life_event_category_id' => $lifeEventCategory->id]);
+        $timelineEvent = TimelineEvent::factory()->create([]);
 
         $lifeEvent = LifeEvent::factory()->create([
-            'life_event_type_id' => $lifeEventType->id,
+            'timeline_event_id' => $timelineEvent->id,
         ]);
 
-        $this->executeService($user, $user->account, $vault, $lifeEvent);
+        $this->executeService($user, $user->account, $vault, $lifeEvent, $timelineEvent);
     }
 
-    private function executeService(User $user, Account $account, Vault $vault, LifeEvent $lifeEvent): void
+    /** @test */
+    public function it_fails_if_life_events_doesn_belong_to_timeline_event(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $user = $this->createUser();
+        $vault = $this->createVault($user->account);
+        $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
+        $timelineEvent = TimelineEvent::factory()->create(['vault_id' => $vault->id]);
+
+        $lifeEvent = LifeEvent::factory()->create([]);
+
+        $this->executeService($user, $user->account, $vault, $lifeEvent, $timelineEvent);
+    }
+
+    private function executeService(User $user, Account $account, Vault $vault, LifeEvent $lifeEvent, TimelineEvent $timelineEvent): void
     {
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $user->id,
+            'timeline_event_id' => $timelineEvent->id,
             'life_event_id' => $lifeEvent->id,
         ];
 
