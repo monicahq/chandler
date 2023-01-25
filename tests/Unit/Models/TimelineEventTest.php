@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\TimelineEvent;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

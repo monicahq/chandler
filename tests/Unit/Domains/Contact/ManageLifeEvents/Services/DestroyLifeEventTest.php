@@ -6,8 +6,6 @@ use App\Domains\Contact\ManageLifeEvents\Services\DestroyLifeEvent;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\LifeEvent;
-use App\Models\LifeEventCategory;
-use App\Models\LifeEventType;
 use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
