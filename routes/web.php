@@ -23,6 +23,7 @@ use App\Domains\Contact\ManageGroups\Web\Controllers\ContactModuleGroupControlle
 use App\Domains\Contact\ManageGroups\Web\Controllers\GroupController;
 use App\Domains\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Domains\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactLifeEventController;
 use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleLifeEventController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
@@ -324,6 +325,7 @@ Route::middleware([
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
 
                     // life events
+                    Route::get('lifeEvents', [ContactLifeEventController::class, 'show'])->name('contact.life_event.show');
                     Route::post('lifeEvents', [ContactModuleLifeEventController::class, 'store'])->name('contact.life_event.store');
 
                     // mood tracking events
