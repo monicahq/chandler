@@ -4,7 +4,6 @@ namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
 use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
 use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
-use App\Domains\Contact\ManageLoans\Services\CreateLoan;
 use App\Domains\Contact\ManageLoans\Services\DestroyLoan;
 use App\Domains\Contact\ManageLoans\Services\UpdateLoan;
 use App\Domains\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
