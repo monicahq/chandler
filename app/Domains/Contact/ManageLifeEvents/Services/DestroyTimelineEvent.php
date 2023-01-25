@@ -3,15 +3,10 @@
 namespace App\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
-use App\Models\LifeEvent;
-use App\Models\LifeEventType;
 use App\Models\TimelineEvent;
 use App\Services\BaseService;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
-class CreateTimelineEvent extends BaseService implements ServiceInterface
+class DestroyTimelineEvent extends BaseService implements ServiceInterface
 {
     private TimelineEvent $timelineEvent;
 
@@ -28,8 +23,7 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'label' => 'nullable|string|max:255',
-            'started_at' => 'required|date|date_format:Y-m-d',
+            'timeline_event_id' => 'required|integer|exists:timeline_events,id',
         ];
     }
 
@@ -48,33 +42,23 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a timeline event.
-     * A timeline event is a part of one or more contacts lives, and is itself
-     * composed of one or more life events.
+     * Destroy a timeline event.
      *
      * @param  array  $data
-     * @return TimelineEvent
      */
-    public function execute(array $data): TimelineEvent
+    public function execute(array $data): void
     {
         $this->data = $data;
         $this->validate();
-        $this->store();
 
-        return $this->timelineEvent;
+        $this->timelineEvent->delete();
     }
 
     private function validate(): void
     {
         $this->validateRules($this->data);
-    }
 
-    private function store(): void
-    {
-        $this->timelineEvent = TimelineEvent::create([
-            'vault_id' => $this->data['vault_id'],
-            'label' => $this->valueOrNull($this->data, 'summary'),
-            'started_at' => $this->data['started_at'],
-        ]);
+        $this->timelineEvent = $this->vault->timelineEvents()
+            ->findOrFail($this->data['timeline_event_id']);
     }
 }

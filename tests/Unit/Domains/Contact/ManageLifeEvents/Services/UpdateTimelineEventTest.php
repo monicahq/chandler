@@ -2,12 +2,14 @@
 
 namespace Tests\Unit\Domains\Contact\ManageLifeEvents\Services;
 
-use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
+use App\Domains\Contact\ManageLifeEvents\Services\UpdateTimelineEvent;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\LifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,18 +17,22 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class CreateTimelineEventTest extends TestCase
+class UpdateTimelineEventTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_creates_a_timeline_event(): void
+    public function it_updates_a_timeline_event(): void
     {
         $user = $this->createUser();
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
 
-        $this->executeService($user, $user->account, $vault);
+        $timelineEvent = TimelineEvent::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $timelineEvent);
     }
 
     /** @test */
@@ -37,7 +43,7 @@ class CreateTimelineEventTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new CreateTimelineEvent())->execute($request);
+        (new UpdateTimelineEvent())->execute($request);
     }
 
     /** @test */
@@ -50,7 +56,11 @@ class CreateTimelineEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
 
-        $this->executeService($user, $account, $vault);
+        $timelineEvent = TimelineEvent::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->executeService($user, $account, $vault, $timelineEvent);
     }
 
     /** @test */
@@ -63,7 +73,11 @@ class CreateTimelineEventTest extends TestCase
         $vault = $this->createVault($account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
 
-        $this->executeService($user, $user->account, $vault);
+        $timelineEvent = TimelineEvent::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $timelineEvent);
     }
 
     /** @test */
@@ -75,20 +89,39 @@ class CreateTimelineEventTest extends TestCase
         $vault = $this->createVault($user->account);
         $vault = $this->setPermissionInVault($user, Vault::PERMISSION_VIEW, $vault);
 
-        $this->executeService($user, $user->account, $vault);
+        $timelineEvent = TimelineEvent::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->executeService($user, $user->account, $vault, $timelineEvent);
     }
 
-    private function executeService(User $author, Account $account, Vault $vault): void
+    /** @test */
+    public function it_fails_if_timeline_event_doesnt_belong_to_vault(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $user = $this->createUser();
+        $vault = $this->createVault($user->account);
+        $vault = $this->setPermissionInVault($user, Vault::PERMISSION_EDIT, $vault);
+
+        $timelineEvent = TimelineEvent::factory()->create();
+
+        $this->executeService($user, $user->account, $vault, $timelineEvent);
+    }
+
+    private function executeService(User $author, Account $account, Vault $vault, TimelineEvent $timelineEvent): void
     {
         $request = [
             'account_id' => $account->id,
             'vault_id' => $vault->id,
             'author_id' => $author->id,
+            'timeline_event_id' => $timelineEvent->id,
             'label' => null,
             'started_at' => '1982-02-04',
         ];
 
-        $timelineEvent = (new CreateTimelineEvent())->execute($request);
+        $timelineEvent = (new UpdateTimelineEvent())->execute($request);
 
         $this->assertDatabaseHas('timeline_events', [
             'id' => $timelineEvent->id,

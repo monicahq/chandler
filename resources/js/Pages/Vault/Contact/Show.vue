@@ -335,7 +335,7 @@ const destroyAvatar = () => {
 
                 <Posts v-else-if="module.type == 'posts'" :data="module.data" />
 
-                <Life-Event v-else-if="module.type == 'life_events'" :data="module.data" />
+                <Life-Event v-else-if="module.type == 'life_events'" :data="module.data" :layout-data="layoutData" />
               </div>
             </div>
           </div>

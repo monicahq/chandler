@@ -3,10 +3,13 @@ import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import Dropdown from '@/Shared/Form/Dropdown.vue';
+import ContactSelector from '@/Shared/Form/ContactSelector.vue';
+import Avatar from '@/Shared/Avatar.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
+  layoutData: Object,
   data: Object,
 });
 
@@ -15,6 +18,7 @@ const form = useForm({
   date: null,
   hours: null,
   note: null,
+  contacts: [],
 });
 
 const loadingState = ref(false);
@@ -24,6 +28,7 @@ const localLifeEvents = ref([]);
 const religion = ref('');
 const selectedLifeEventCategory = ref([]);
 const selectedLifeEventType = ref(null);
+const editDate = ref(false);
 
 onMounted(() => {
   localLifeEvents.value = props.data.religions;
@@ -127,7 +132,7 @@ const showCreateLifeEventModal = () => {
         <!-- type has been selected -->
         <div v-else class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 p-3">
           <div>
-            Chosen type: <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ selectedLifeEventCategory.label }}</span> > <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ selectedLifeEventType.label }}</span>
+            <span class="text-sm">Chosen type:</span> <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ selectedLifeEventCategory.label }}</span> > <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ selectedLifeEventType.label }}</span>
           </div>
 
           <p @click="resetType()" class="text-blue-500 hover:underline cursor-pointer text-sm">{{ $t('app.change') }}</p>
@@ -135,15 +140,50 @@ const showCreateLifeEventModal = () => {
 
         <!-- date of the event -->
         <div v-if="selectedLifeEventType" class="border-b border-gray-200 dark:border-gray-700 p-3">
-          <p class="mb-2 block text-sm dark:text-gray-100">Date of the event</p>
-          <v-date-picker v-model="form.date" :timezone="'UTC'" class="inline-block h-full" :model-config="modelConfig">
-            <template #default="{ inputValue, inputEvents }">
-              <input
-                class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
-                :value="inputValue"
-                v-on="inputEvents" />
-            </template>
-          </v-date-picker>
+
+          <!-- default date -->
+          <div v-if="!editDate" class="flex items-center justify-between">
+            <div>
+              <span class="text-sm">Date of the event:</span> {{ form.date }}
+            </div>
+
+            <p @click="editDate = true" class="text-blue-500 hover:underline cursor-pointer text-sm">{{ $t('app.change') }}</p>
+          </div>
+
+          <!-- customize date -->
+          <div v-if="editDate">
+            <p class="mb-2 block text-sm dark:text-gray-100">Date of the event</p>
+            <v-date-picker v-model="form.date" :timezone="'UTC'" class="inline-block h-full" :model-config="modelConfig">
+              <template #default="{ inputValue, inputEvents }">
+                <input
+                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  :value="inputValue"
+                  v-on="inputEvents" />
+              </template>
+            </v-date-picker>
+          </div>
+        </div>
+
+        <!-- participants -->
+        <div v-if="selectedLifeEventType" class="border-b border-gray-200 dark:border-gray-700 p-3">
+          <p class="mb-2 block text-sm dark:text-gray-100">Participants</p>
+
+          <!-- current contact -->
+          <div class="flex items-center mb-4">
+            <avatar :data="props.data.contact.avatar" :classes="'mr-2 h-5 w-5'" />
+
+            <span>{{ props.data.contact.name }}</span>
+          </div>
+
+          <!-- all other participants -->
+          <contact-selector
+              v-model="form.contacts"
+              :search-url="layoutData.vault.url.search_contacts_only"
+              :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
+              :display-most-consulted-contacts="true"
+              :add-multiple-contacts="true"
+              :required="true"
+              :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700'" />
         </div>
 
         <!-- options -->
@@ -156,7 +196,7 @@ const showCreateLifeEventModal = () => {
         </div>
         <div class="flex justify-between p-5">
             <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGenderModalShown = false" />
-            <pretty-button v-if="selectedLifeEventType" :text="'Create gender'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-button v-if="selectedLifeEventType" :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
       </form>
     </div>

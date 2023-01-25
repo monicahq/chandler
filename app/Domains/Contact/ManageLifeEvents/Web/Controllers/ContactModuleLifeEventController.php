@@ -2,6 +2,8 @@
 
 namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
+use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
+use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
 use App\Domains\Contact\ManageLoans\Services\CreateLoan;
 use App\Domains\Contact\ManageLoans\Services\DestroyLoan;
 use App\Domains\Contact\ManageLoans\Services\UpdateLoan;
@@ -15,26 +17,25 @@ class ContactModuleLifeEventController extends Controller
 {
     public function store(Request $request, int $vaultId, int $contactId)
     {
-        $loaners = collect($request->input('loaners'))->pluck('id');
-        $loanees = collect($request->input('loanees'))->pluck('id');
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::id(),
+            'vault_id' => $vaultId,
+            'label' => $request->input('label'),
+            'started_at' => $request->input('date'),
+        ];
+
+        $timelineEvent = (new CreateTimelineEvent())->execute($data);
 
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_id' => $contactId,
-            'currency_id' => $request->input('currency_id'),
-            'type' => $request->input('type'),
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'loaner_ids' => $loaners,
-            'loanee_ids' => $loanees,
-            'amount_lent' => $request->input('amount_lent') ? $request->input('amount_lent') * 100 : null,
-            'loaned_at' => $request->input('loaned_at'),
+            'label' => $request->input('label'),
+
         ];
 
-        $loan = (new CreateLoan())->execute($data);
-
+        $timelineEvent = (new CreateLifeEvent())->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([

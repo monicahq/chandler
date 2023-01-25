@@ -59,14 +59,4 @@ class TimelineEvent extends Model
     {
         return $this->belongsTo(Vault::class);
     }
-
-    /**
-     * Get the contact records the timeline event is with.
-     *
-     * @return BelongsToMany
-     */
-    public function participants(): BelongsToMany
-    {
-        return $this->belongsToMany(Contact::class, 'timeline_event_participants', 'timeline_event_id', 'contact_id');
-    }
 }

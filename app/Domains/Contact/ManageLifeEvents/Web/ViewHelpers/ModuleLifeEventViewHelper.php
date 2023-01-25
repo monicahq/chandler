@@ -2,6 +2,7 @@
 
 namespace App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers;
 
+use App\Helpers\ContactCardHelper;
 use App\Models\Contact;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
@@ -19,6 +20,7 @@ class ModuleLifeEventViewHelper
             ->map(fn (LifeEventCategory $lifeEventCategory) => self::dtoLifeEventCategory($lifeEventCategory));
 
         return [
+            'contact' => ContactCardHelper::data($contact),
             'current_date' => Carbon::now($user->timezone)->format('Y-m-d'),
             'life_event_categories' => $lifeEventCategoriesCollection,
             'url' => [

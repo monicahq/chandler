@@ -285,17 +285,6 @@ class ContactTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_timeline_events(): void
-    {
-        $contact = Contact::factory()->create();
-        $timelineEvent = TimelineEvent::factory()->create();
-
-        $contact->timelineEvents()->sync([$timelineEvent->id]);
-
-        $this->assertTrue($contact->timelineEvents()->exists());
-    }
-
-    /** @test */
     public function it_has_many_mood_tracking_events(): void
     {
         $contact = Contact::factory()->create();

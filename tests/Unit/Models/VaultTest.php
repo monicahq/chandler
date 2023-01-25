@@ -15,6 +15,7 @@ use App\Models\LifeEventCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -169,14 +170,14 @@ class VaultTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_life_events(): void
+    public function it_has_many_timeline_events(): void
     {
         $vault = Vault::factory()->create();
-        LifeEvent::factory()->count(2)->create([
+        TimelineEvent::factory()->count(2)->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->assertTrue($vault->lifeEvents()->exists());
+        $this->assertTrue($vault->timelineEvents()->exists());
     }
 
     /** @test */

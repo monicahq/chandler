@@ -11,7 +11,7 @@ use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class CreateTimelineEvent extends BaseService implements ServiceInterface
+class UpdateTimelineEvent extends BaseService implements ServiceInterface
 {
     private TimelineEvent $timelineEvent;
 
@@ -28,6 +28,7 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
+            'timeline_event_id' => 'required|integer|exists:timeline_events,id',
             'label' => 'nullable|string|max:255',
             'started_at' => 'required|date|date_format:Y-m-d',
         ];
@@ -48,9 +49,7 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a timeline event.
-     * A timeline event is a part of one or more contacts lives, and is itself
-     * composed of one or more life events.
+     * Update a timeline event.
      *
      * @param  array  $data
      * @return TimelineEvent
@@ -59,7 +58,7 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
     {
         $this->data = $data;
         $this->validate();
-        $this->store();
+        $this->update();
 
         return $this->timelineEvent;
     }
@@ -67,14 +66,15 @@ class CreateTimelineEvent extends BaseService implements ServiceInterface
     private function validate(): void
     {
         $this->validateRules($this->data);
+
+        $this->timelineEvent = $this->vault->timelineEvents()
+            ->findOrFail($this->data['timeline_event_id']);
     }
 
-    private function store(): void
+    private function update(): void
     {
-        $this->timelineEvent = TimelineEvent::create([
-            'vault_id' => $this->data['vault_id'],
-            'label' => $this->valueOrNull($this->data, 'summary'),
-            'started_at' => $this->data['started_at'],
-        ]);
+        $this->timelineEvent->label = $this->valueOrNull($this->data, 'label');
+        $this->timelineEvent->started_at = $this->data['started_at'];
+        $this->timelineEvent->save();
     }
 }

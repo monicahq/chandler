@@ -18,15 +18,4 @@ class TimelineEventTest extends TestCase
 
         $this->assertTrue($timeline->vault()->exists());
     }
-
-    /** @test */
-    public function it_has_many_participants(): void
-    {
-        $contact = Contact::factory()->create();
-        $timeline = TimelineEvent::factory()->create();
-
-        $timeline->participants()->sync([$contact->id]);
-
-        $this->assertTrue($timeline->participants()->exists());
-    }
 }

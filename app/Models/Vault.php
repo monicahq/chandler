@@ -233,13 +233,13 @@ class Vault extends Model
     }
 
     /**
-     * Get the life events associated with the vault.
+     * Get the timeline events associated with the vault.
      *
      * @return HasMany
      */
-    public function lifeEvents(): HasMany
+    public function timelineEvents(): HasMany
     {
-        return $this->hasMany(LifeEvent::class);
+        return $this->hasMany(TimelineEvent::class);
     }
 
     /**
