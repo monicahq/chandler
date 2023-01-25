@@ -21,24 +21,45 @@ class ContactModuleLifeEventController extends Controller
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
             'label' => $request->input('label'),
-            'started_at' => $request->input('date'),
+            'started_at' => $request->input('started_at'),
         ];
 
         $timelineEvent = (new CreateTimelineEvent())->execute($data);
+
+        // we also need to add the current contact to the list of participants
+        // finally, just so we are sure that we don't have the same participant
+        // twice in the list, we need to remove duplicates
+        $participants = collect($request->input('participants'))
+            ->push(['id' => $contactId])
+            ->unique('id')
+            ->pluck('id')
+            ->toArray();
 
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
             'label' => $request->input('label'),
-
+            'timeline_event_id' => $timelineEvent->id,
+            'life_event_type_id' => $request->input('lifeEventTypeId'),
+            'summary' => $request->input('summary'),
+            'description' => $request->input('description'),
+            'happened_at' => $request->input('started_at'),
+            'costs' => $request->input('costs'),
+            'currency_id' => $request->input('currency_id'),
+            'paid_by_contact_id' => $request->input('paid_by_contact_id'),
+            'duration_in_minutes' => $request->input('duration_in_minutes'),
+            'distance_in_km' => $request->input('distance_in_km'),
+            'from_place' => $request->input('from_place'),
+            'to_place' => $request->input('to_place'),
+            'place' => $request->input('place'),
+            'participant_ids' => $participants,
         ];
 
-        $timelineEvent = (new CreateLifeEvent())->execute($data);
-        $contact = Contact::find($contactId);
+        $lifeEvent = (new CreateLifeEvent())->execute($data);
 
         return response()->json([
-            'data' => ModuleLoanViewHelper::dtoLoan($loan, $contact, Auth::user()),
+            'data' => true,
         ], 201);
     }
 

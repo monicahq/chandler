@@ -14,11 +14,10 @@ const props = defineProps({
 });
 
 const form = useForm({
-  parameter_id: 0,
-  date: null,
-  hours: null,
-  note: null,
-  contacts: [],
+  lifeEventTypeId: 0,
+  label: null,
+  started_at: null,
+  participants: [],
 });
 
 const loadingState = ref(false);
@@ -33,7 +32,7 @@ const editDate = ref(false);
 onMounted(() => {
   localLifeEvents.value = props.data.religions;
   selectedLifeEventCategory.value = props.data.life_event_categories[0];
-  form.date = props.data.current_date;
+  form.started_at = props.data.current_date;
 });
 
 const loadTypes = (category) => {
@@ -43,6 +42,7 @@ const loadTypes = (category) => {
 
 const chooseType = (type) => {
   selectedLifeEventType.value = type;
+  form.lifeEventTypeId = type.id;
 };
 
 const resetType = () => {
@@ -50,15 +50,15 @@ const resetType = () => {
   selectedLifeEventType.value = null;
 };
 
-const update = () => {
+const store = () => {
   loadingState.value = 'loading';
 
   axios
-    .put(props.data.url.update, form)
+    .post(props.data.url.store, form)
     .then((response) => {
-      editLifeEvent.value = false;
+      //editLifeEvent.value = false;
       loadingState.value = '';
-      religion.value = response.data.data.religion.name;
+      //religion.value = response.data.data.religion.name;
     })
     .catch(() => {
       loadingState.value = '';
@@ -92,7 +92,7 @@ const showCreateLifeEventModal = () => {
       <!-- add a life event -->
       <form
         class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
-        @submit.prevent="submit()">
+        @submit.prevent="store()">
         <!-- choose life event categories/types -->
         <div v-if="!selectedLifeEventType" class="border-b border-gray-200 dark:border-gray-700">
           <div class="grid grid-skeleton grid-cols-2 gap-2 justify-center p-3">
@@ -144,7 +144,7 @@ const showCreateLifeEventModal = () => {
           <!-- default date -->
           <div v-if="!editDate" class="flex items-center justify-between">
             <div>
-              <span class="text-sm">Date of the event:</span> {{ form.date }}
+              <span class="text-sm">Date of the event:</span> {{ props.data.current_date_human_format }}
             </div>
 
             <p @click="editDate = true" class="text-blue-500 hover:underline cursor-pointer text-sm">{{ $t('app.change') }}</p>
@@ -153,7 +153,7 @@ const showCreateLifeEventModal = () => {
           <!-- customize date -->
           <div v-if="editDate">
             <p class="mb-2 block text-sm dark:text-gray-100">Date of the event</p>
-            <v-date-picker v-model="form.date" :timezone="'UTC'" class="inline-block h-full" :model-config="modelConfig">
+            <v-date-picker v-model="form.started_at" :timezone="'UTC'" class="inline-block h-full" :model-config="modelConfig">
               <template #default="{ inputValue, inputEvents }">
                 <input
                   class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
@@ -177,7 +177,7 @@ const showCreateLifeEventModal = () => {
 
           <!-- all other participants -->
           <contact-selector
-              v-model="form.contacts"
+              v-model="form.participants"
               :search-url="layoutData.vault.url.search_contacts_only"
               :most-consulted-contacts-url="layoutData.vault.url.get_most_consulted_contacts"
               :display-most-consulted-contacts="true"

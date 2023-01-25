@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers;
 
 use App\Helpers\ContactCardHelper;
+use App\Helpers\DateHelper;
 use App\Models\Contact;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
@@ -22,9 +23,10 @@ class ModuleLifeEventViewHelper
         return [
             'contact' => ContactCardHelper::data($contact),
             'current_date' => Carbon::now($user->timezone)->format('Y-m-d'),
+            'current_date_human_format' => DateHelper::format(Carbon::now($user->timezone), $user),
             'life_event_categories' => $lifeEventCategoriesCollection,
             'url' => [
-                'store' => route('contact.label.store', [
+                'store' => route('contact.life_event.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
