@@ -26,7 +26,6 @@ use App\Models\Pronoun;
 use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
-use App\Models\TimelineEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

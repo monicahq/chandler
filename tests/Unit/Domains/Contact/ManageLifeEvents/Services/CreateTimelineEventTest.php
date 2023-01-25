@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Contact\ManageLifeEvents\Services;
 use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Contact;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

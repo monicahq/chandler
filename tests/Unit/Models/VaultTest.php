@@ -10,7 +10,6 @@ use App\Models\File;
 use App\Models\Group;
 use App\Models\Journal;
 use App\Models\Label;
-use App\Models\LifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;

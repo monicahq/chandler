@@ -3,11 +3,8 @@
 namespace App\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
 use App\Models\TimelineEvent;
 use App\Services\BaseService;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class CreateTimelineEvent extends BaseService implements ServiceInterface
 {
