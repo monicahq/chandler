@@ -16,7 +16,7 @@ const props = defineProps({
   openModal: Boolean,
 });
 
-defineEmits(['closeModal']);
+defineEmits(['closeModal', 'timelineEventCreated']);
 
 const form = useForm({
   lifeEventTypeId: 0,
@@ -37,7 +37,6 @@ watch(
     modalShown.value = value;
   },
 );
-
 
 onMounted(() => {
   modalShown.value = props.openModal;
@@ -66,9 +65,9 @@ const store = () => {
   axios
     .post(props.data.url.store, form)
     .then((response) => {
-      //editLifeEvent.value = false;
       loadingState.value = '';
-      //religion.value = response.data.data.religion.name;
+      emit('closeModal');
+      emit('timelineEventCreated', response.data.data);
     })
     .catch(() => {
       loadingState.value = '';

@@ -74,7 +74,7 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
 
     <div>
       <!-- add a life event -->
-      <create-life-event :data="props.data" :layout-data="props.layoutData" :open-modal="createLifeEventModalShown" @closeModal="createLifeEventModalShown = false" />
+      <create-life-event :data="props.data" :layout-data="props.layoutData" :open-modal="createLifeEventModalShown" @closeModal="createLifeEventModalShown = false" @timelineEventCreated="addTimelineEvent" />
 
       <!-- list of timeline events -->
       <div>
