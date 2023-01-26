@@ -8,12 +8,15 @@ import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
   layoutData: Object,
   data: Object,
+  openModal: Boolean,
 });
+
+defineEmits(['closeModal']);
 
 const form = useForm({
   lifeEventTypeId: 0,
@@ -23,13 +26,21 @@ const form = useForm({
 });
 
 const loadingState = ref(false);
-const lifeEventModalShown = ref(false);
-const localLifeEvents = ref([]);
 const selectedLifeEventCategory = ref([]);
 const selectedLifeEventType = ref(null);
 const editDate = ref(false);
+const modalShown = ref(false);
+
+watch(
+  () => props.openModal,
+  (value) => {
+    modalShown.value = value;
+  },
+);
+
 
 onMounted(() => {
+  modalShown.value = props.openModal;
   selectedLifeEventCategory.value = props.data.life_event_categories[0];
   form.started_at = props.data.current_date;
 });
@@ -68,7 +79,7 @@ const store = () => {
 <template>
   <div>
     <form
-      v-if="lifeEventModalShown"
+      v-if="modalShown"
       class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="store()">
       <!-- choose life event categories/types -->
@@ -173,7 +184,7 @@ const store = () => {
         </span>
       </div>
       <div class="flex justify-between p-5">
-          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="lifeEventModalShown = false" />
+          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="$emit('closeModal')" />
           <pretty-button v-if="selectedLifeEventType" :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
         </div>
     </form>

@@ -7,6 +7,7 @@ import Dropdown from '@/Shared/Form/Dropdown.vue';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
+import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
@@ -16,7 +17,7 @@ const props = defineProps({
 });
 
 const editLifeEvent = ref(false);
-const lifeEventModalShown = ref(false);
+const createLifeEventModalShown = ref(false);
 const localLifeEvents = ref([]);
 const selectedLifeEventCategory = ref([]);
 const selectedLifeEventType = ref(null);
@@ -27,25 +28,7 @@ const timeline = ref([]);
 
 onMounted(() => {
   initialLoad();
-  localLifeEvents.value = props.data.religions;
-  selectedLifeEventCategory.value = props.data.life_event_categories[0];
-  form.started_at = props.data.current_date;
 });
-
-const loadTypes = (category) => {
-  var id = props.data.life_event_categories.findIndex((x) => x.id === category.id);
-  selectedLifeEventCategory.value = props.data.life_event_categories[id];
-};
-
-const chooseType = (type) => {
-  selectedLifeEventType.value = type;
-  form.lifeEventTypeId = type.id;
-};
-
-const resetType = () => {
-  selectedLifeEventCategory.value = props.data.life_event_categories[0];
-  selectedLifeEventType.value = null;
-};
 
 const initialLoad = () => {
   loadingData.value = true;
@@ -62,23 +45,8 @@ const initialLoad = () => {
     .catch(() => {});
 };
 
-const store = () => {
-  loadingState.value = 'loading';
-
-  axios
-    .post(props.data.url.store, form)
-    .then((response) => {
-      //editLifeEvent.value = false;
-      loadingState.value = '';
-      //religion.value = response.data.data.religion.name;
-    })
-    .catch(() => {
-      loadingState.value = '';
-    });
-};
-
 const showCreateLifeEventModal = () => {
-  lifeEventModalShown.value = true;
+  createLifeEventModalShown.value = true;
 };
 
 const toggleTimelineEventVisibility = (timelineEvent) => {
@@ -106,7 +74,7 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
 
     <div>
       <!-- add a life event -->
-
+      <create-life-event :data="props.data" :layout-data="props.layoutData" :open-modal="createLifeEventModalShown" @closeModal="createLifeEventModalShown = false" />
 
       <!-- list of timeline events -->
       <div>
