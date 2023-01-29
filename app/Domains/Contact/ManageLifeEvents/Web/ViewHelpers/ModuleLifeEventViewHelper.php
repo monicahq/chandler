@@ -62,9 +62,13 @@ class ModuleLifeEventViewHelper
 
     public static function timelineEvents($lifeEvents, User $user, Contact $contact): array
     {
-        $timelineEventsCollection = $lifeEvents
-            ->unique('timeline_event_id')
-            ->map(fn (LifeEvent $lifeEvent) => self::dtoTimelineEvent($lifeEvent->timelineEvent, $user, $contact));
+        // we don't use map() here because sometimes it returns an Object in JS
+        // instead of an array (and I don't know why)
+        $timelineEventsCollection = collect();
+        $lifeEvents = $lifeEvents->unique('timeline_event_id');
+        foreach ($lifeEvents as $lifeEvent) {
+            $timelineEventsCollection->push(self::dtoTimelineEvent($lifeEvent->timelineEvent, $user, $contact));
+        }
 
         return [
             'timeline_events' => $timelineEventsCollection,
@@ -92,17 +96,7 @@ class ModuleLifeEventViewHelper
     public static function dtoLifeEvent(LifeEvent $lifeEvent, User $user): array
     {
         return [
-            'timeline_event' => [
-                'id' => $lifeEvent->timelineEvent->id,
-            ],
-            'life_event_type' => [
-                'id' => $lifeEvent->lifeEventType->id,
-                'label' => $lifeEvent->lifeEventType->label,
-                'category' => [
-                    'id' => $lifeEvent->lifeEventType->lifeEventCategory->id,
-                    'label' => $lifeEvent->lifeEventType->lifeEventCategory->label,
-                ],
-            ],
+            'id' => $lifeEvent->id,
             'emotion_id' => $lifeEvent->emotion_id,
             'collapsed' => $lifeEvent->collapsed,
             'summary' => $lifeEvent->summary,
@@ -117,6 +111,17 @@ class ModuleLifeEventViewHelper
             'to_place' => $lifeEvent->to_place,
             'place' => $lifeEvent->place,
             'participants' => $lifeEvent->participants->map(fn (Contact $contact) => ContactCardHelper::data($contact)),
+            'timeline_event' => [
+                'id' => $lifeEvent->timelineEvent->id,
+            ],
+            'life_event_type' => [
+                'id' => $lifeEvent->lifeEventType->id,
+                'label' => $lifeEvent->lifeEventType->label,
+                'category' => [
+                    'id' => $lifeEvent->lifeEventType->lifeEventCategory->id,
+                    'label' => $lifeEvent->lifeEventType->lifeEventCategory->label,
+                ],
+            ],
         ];
     }
 }

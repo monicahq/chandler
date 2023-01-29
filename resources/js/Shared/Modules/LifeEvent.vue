@@ -48,6 +48,10 @@ const showCreateLifeEventModal = () => {
   createLifeEventModalShown.value = true;
 };
 
+const showAddLifeEventModal = (timelineEvent) => {
+  showAddLifeEventModalForTimelineEventId.value = timelineEvent.id;
+};
+
 const toggleTimelineEventVisibility = (timelineEvent) => {
   timelineEvent.collapsed = !timelineEvent.collapsed;
 };
@@ -85,7 +89,7 @@ const toggleLifeEventVisibility = ( lifeEvent) => {
         @timeline-event-created="refreshTimelineEvents" />
 
       <!-- list of timeline events -->
-      <div>
+      <div v-if="timeline">
         <div v-for="timelineEvent in timeline" :key="timelineEvent.id" class="mb-4">
 
           <!-- timeline event name -->
