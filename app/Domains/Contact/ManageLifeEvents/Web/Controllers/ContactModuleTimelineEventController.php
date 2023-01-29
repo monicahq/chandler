@@ -24,7 +24,7 @@ class ContactModuleTimelineEventController extends Controller
         $timelineEvents = $contact
             ->timelineEvents()
             ->orderBy('started_at', 'desc')
-            ->paginate(1);
+            ->paginate(15);
 
         return response()->json([
             'data' => ModuleLifeEventViewHelper::timelineEvents($timelineEvents, Auth::user(), $contact),
