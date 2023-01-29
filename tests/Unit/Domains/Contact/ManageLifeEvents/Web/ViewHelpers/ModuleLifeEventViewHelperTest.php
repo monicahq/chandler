@@ -166,7 +166,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/timelineEvents/'.$timelineEvent->id,
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents/'.$timelineEvent->id,
             ],
             $array['url']
         );
