@@ -14,6 +14,7 @@ use Illuminate\Support\Collection;
 class UpdateLifeEvent extends BaseService implements ServiceInterface
 {
     private LifeEvent $lifeEvent;
+
     private TimelineEvent $timelineEvent;
 
     private Collection $partipantsCollection;
