@@ -16,15 +16,11 @@ const props = defineProps({
   data: Object,
 });
 
-const editLifeEvent = ref(false);
 const createLifeEventModalShown = ref(false);
-const localLifeEvents = ref([]);
-const selectedLifeEventCategory = ref([]);
-const selectedLifeEventType = ref(null);
 const loadingData = ref(false);
-const editDate = ref(false);
 const paginator = ref([]);
 const timeline = ref([]);
+const showAddLifeEventModalForTimelineEventId = ref(0);
 
 onMounted(() => {
   initialLoad();
@@ -45,12 +41,29 @@ const initialLoad = () => {
     .catch(() => {});
 };
 
+const refreshTimelineEvents = (timelineEvent) => {
+  timeline.value.unshift(timelineEvent);
+};
+
+const refreshLifeEvents = (lifeEvent) => {
+  var id = timeline.value.findIndex((x) => x.id === lifeEvent.timeline_event.id);
+  timeline.value[id].life_events.unshift(lifeEvent);
+};
+
 const showCreateLifeEventModal = () => {
   createLifeEventModalShown.value = true;
 };
 
+const showAddLifeEventModal = (timelineEvent) => {
+  showAddLifeEventModalForTimelineEventId.value = timelineEvent.id;
+};
+
 const toggleTimelineEventVisibility = (timelineEvent) => {
   timelineEvent.collapsed = !timelineEvent.collapsed;
+};
+
+const toggleLifeEventVisibility = ( lifeEvent) => {
+  lifeEvent.collapsed = !lifeEvent.collapsed;
 };
 </script>
 
@@ -73,8 +86,13 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
     </div>
 
     <div>
-      <!-- add a life event -->
-      <create-life-event :data="props.data" :layout-data="props.layoutData" :open-modal="createLifeEventModalShown" @closeModal="createLifeEventModalShown = false" @timelineEventCreated="addTimelineEvent" />
+      <!-- add a timeline event -->
+      <create-life-event :data="props.data"
+        :layout-data="props.layoutData"
+        :open-modal="createLifeEventModalShown"
+        :create-timeline-event="true"
+        @close-modal="createLifeEventModalShown = false"
+        @timeline-event-created="refreshTimelineEvents" />
 
       <!-- list of timeline events -->
       <div>
@@ -82,8 +100,15 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
 
           <!-- timeline event name -->
           <div class="flex justify-between items-center border border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 rounded-lg px-3 py-2 mb-2 cursor-pointer" @click="toggleTimelineEventVisibility(timelineEvent)">
-            <span class="mr-2 text-gray-500">{{ timelineEvent.happened_at }}</span>
 
+            <!-- timeline date / label / number of events -->
+            <div>
+              <span class="mr-2 text-gray-500">{{ timelineEvent.happened_at }}</span>
+
+              <span class="ml-3 whitespace-nowrap rounded-lg bg-slate-100 py-0.5 px-2 text-sm text-slate-400">{{ timelineEvent.life_events.length }}</span>
+            </div>
+
+            <!-- chevrons -->
             <svg v-if="!timelineEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
@@ -96,18 +121,29 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
 
           <!-- life events -->
           <div v-if="timelineEvent.collapsed">
-            <div v-for="lifeEvent in timelineEvent.life_events" :key="lifeEvent.id" class="ml-6 border border-gray-200 rounded-lg mb-2">
-
+            <div v-for="lifeEvent in timelineEvent.life_events" :key="lifeEvent.id" :class="!lifeEvent.collapsed ? 'border' : ''" class="ml-6 border-gray-200 rounded-lg mb-2">
               <!-- name of life event -->
-              <div class="flex items-center border-b border-gray-200 p-3">
-                <p class="mr-4 text-sm font-bold">Activity #1</p>
-                <div>
-                  <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ lifeEvent.life_event_type.category.label }}</span> > <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ lifeEvent.life_event_type.label }}</span>
+              <div :class="lifeEvent.collapsed ? 'rounded-lg border' : ''" class="flex justify-between items-center border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 px-3 py-2 mb-2 cursor-pointer" @click="toggleLifeEventVisibility(lifeEvent)">
+                <!-- title -->
+                <div class="flex items-center">
+                  <p class="mr-4 text-sm font-bold">Activity #1</p>
+                  <div>
+                    <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ lifeEvent.life_event_type.category.label }}</span> > <span class="px-2 py-1 text-sm border bg-white font-mono rounded">{{ lifeEvent.life_event_type.label }}</span>
+                  </div>
                 </div>
+
+                  <!-- chevrons -->
+                <svg v-if="lifeEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+
+                <svg v-if="!lifeEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                </svg>
               </div>
 
               <!-- date of life event -->
-              <div class="flex items-center border-b border-gray-200 px-3 py-2 text-sm">
+              <div v-if="!lifeEvent.collapsed" class="flex items-center border-b border-gray-200 px-3 py-2 text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -116,16 +152,30 @@ const toggleTimelineEventVisibility = (timelineEvent) => {
               </div>
 
               <!-- participants -->
-              <div class="p-3 pb-1 flex">
+              <div v-if="!lifeEvent.collapsed" class="p-3 pb-1 flex">
                 <div v-for="contact in lifeEvent.participants" :key="contact.id" class="mr-4">
-                  <contact-card :contact="contact" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="true" />
+                  <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
                 </div>
               </div>
             </div>
 
             <!-- add a new life event to the timeline -->
             <div class="ml-6 mb-2">
-              <span class="text-sm text-blue-500 hover:underline cursor-pointer">Add another life event</span>
+              <span @click="showAddLifeEventModalForTimelineEventId = timelineEvent.id"
+                v-if="showAddLifeEventModalForTimelineEventId != timelineEvent.id"
+                class="text-sm text-blue-500 hover:underline cursor-pointer"
+                >
+                Add another life event
+              </span>
+
+              <create-life-event
+                :data="props.data"
+                :layout-data="props.layoutData"
+                :open-modal="showAddLifeEventModalForTimelineEventId == timelineEvent.id"
+                :create-timeline-event="false"
+                :timeline-event="timelineEvent"
+                @close-modal="showAddLifeEventModalForTimelineEventId = 0"
+                @life-event-created="refreshLifeEvents" />
             </div>
           </div>
 

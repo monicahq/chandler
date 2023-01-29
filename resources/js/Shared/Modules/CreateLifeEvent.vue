@@ -14,9 +14,11 @@ const props = defineProps({
   layoutData: Object,
   data: Object,
   openModal: Boolean,
+  createTimelineEvent: Boolean,
+  timelineEvent: Object,
 });
 
-defineEmits(['closeModal', 'timelineEventCreated']);
+const emit = defineEmits(['closeModal', 'timelineEventCreated', 'lifeEventCreated']);
 
 const form = useForm({
   lifeEventTypeId: 0,
@@ -62,12 +64,29 @@ const resetType = () => {
 const store = () => {
   loadingState.value = 'loading';
 
+  // we either called the Create life event modal from inside an existing timeline
+  // event, or from a new timeline event
+  // this changes the url we post to as we need to pass the right info back to
+  // the parent (ie. if it needs to refresh a specific timeline event, or the entire
+  // timeline)
+  var url = '';
+  if (props.createTimelineEvent) {
+    url = props.data.url.store;
+  } else {
+    url = props.timelineEvent.url.store;
+  }
+
   axios
-    .post(props.data.url.store, form)
+    .post(url, form)
     .then((response) => {
       loadingState.value = '';
       emit('closeModal');
-      emit('timelineEventCreated', response.data.data);
+
+      if (props.createTimelineEvent) {
+        emit('timelineEventCreated', response.data.data);
+      } else {
+        emit('lifeEventCreated', response.data.data);
+      }
     })
     .catch(() => {
       loadingState.value = '';

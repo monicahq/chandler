@@ -28,11 +28,11 @@ class ModuleLifeEventViewHelper
             'current_date_human_format' => DateHelper::format(Carbon::now($user->timezone), $user),
             'life_event_categories' => $lifeEventCategoriesCollection,
             'url' => [
-                'load' => route('contact.life_event.show', [
+                'load' => route('contact.timeline_event.index', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
-                'store' => route('contact.life_event.store', [
+                'store' => route('contact.timeline_event.store', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                 ]),
@@ -58,18 +58,18 @@ class ModuleLifeEventViewHelper
         ];
     }
 
-    public static function timelineEvents($lifeEvents, User $user): array
+    public static function timelineEvents($lifeEvents, User $user, Contact $contact): array
     {
         $timelineEventsCollection = $lifeEvents
             ->unique('timeline_event_id')
-            ->map(fn (LifeEvent $lifeEvent) => self::dtoTimelineEvent($lifeEvent->timelineEvent, $user));
+            ->map(fn (LifeEvent $lifeEvent) => self::dtoTimelineEvent($lifeEvent->timelineEvent, $user, $contact));
 
         return [
             'timeline_events' => $timelineEventsCollection,
         ];
     }
 
-    public static function dtoTimelineEvent(TimelineEvent $timelineEvent, User $user): array
+    public static function dtoTimelineEvent(TimelineEvent $timelineEvent, User $user, Contact $contact): array
     {
         return [
             'id' => $timelineEvent->id,
@@ -77,12 +77,22 @@ class ModuleLifeEventViewHelper
             'happened_at' => DateHelper::format($timelineEvent->started_at, $user),
             'life_events' => $timelineEvent->lifeEvents
                 ->map(fn (LifeEvent $lifeEvent) => self::dtoLifeEvent($lifeEvent, $user)),
+            'url' => [
+                'store' => route('contact.life_event.store', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'timelineEvent' => $timelineEvent->id,
+                ]),
+            ],
         ];
     }
 
     public static function dtoLifeEvent(LifeEvent $lifeEvent, User $user): array
     {
         return [
+            'timeline_event' => [
+                'id' => $lifeEvent->timelineEvent->id,
+            ],
             'life_event_type' => [
                 'id' => $lifeEvent->lifeEventType->id,
                 'label' => $lifeEvent->lifeEventType->label,
