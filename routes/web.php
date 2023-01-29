@@ -23,7 +23,6 @@ use App\Domains\Contact\ManageGroups\Web\Controllers\ContactModuleGroupControlle
 use App\Domains\Contact\ManageGroups\Web\Controllers\GroupController;
 use App\Domains\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Domains\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
-use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactLifeEventController;
 use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleLifeEventController;
 use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleTimelineEventController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;

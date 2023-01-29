@@ -3,12 +3,7 @@
 namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
 use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
-use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
-use App\Domains\Contact\ManageLoans\Services\DestroyLoan;
-use App\Domains\Contact\ManageLoans\Services\UpdateLoan;
-use App\Domains\Contact\ManageLoans\Web\ViewHelpers\ModuleLoanViewHelper;
-use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Carbon\Carbon;
