@@ -1,14 +1,8 @@
 <script setup>
 import Loading from '@/Shared/Loading.vue';
-import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
-import PrettySpan from '@/Shared/Form/PrettySpan.vue';
-import Dropdown from '@/Shared/Form/Dropdown.vue';
-import ContactSelector from '@/Shared/Form/ContactSelector.vue';
-import Avatar from '@/Shared/Avatar.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
@@ -52,10 +46,6 @@ const refreshLifeEvents = (lifeEvent) => {
 
 const showCreateLifeEventModal = () => {
   createLifeEventModalShown.value = true;
-};
-
-const showAddLifeEventModal = (timelineEvent) => {
-  showAddLifeEventModalForTimelineEventId.value = timelineEvent.id;
 };
 
 const toggleTimelineEventVisibility = (timelineEvent) => {
