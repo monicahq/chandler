@@ -11,6 +11,7 @@ use App\Models\LifeEventType;
 use App\Models\TimelineEvent;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class ModuleLifeEventViewHelper
 {
@@ -60,15 +61,11 @@ class ModuleLifeEventViewHelper
         ];
     }
 
-    public static function timelineEvents($lifeEvents, User $user, Contact $contact): array
+    public static function timelineEvents($timelineEvents, User $user, Contact $contact): array
     {
-        // we don't use map() here because sometimes it returns an Object in JS
-        // instead of an array (and I don't know why)
-        $timelineEventsCollection = collect();
-        $lifeEvents = $lifeEvents->unique('timeline_event_id');
-        foreach ($lifeEvents as $lifeEvent) {
-            $timelineEventsCollection->push(self::dtoTimelineEvent($lifeEvent->timelineEvent, $user, $contact));
-        }
+        $timelineEventsCollection = $timelineEvents->map(
+            fn (TimelineEvent $timelineEvent) => self::dtoTimelineEvent($timelineEvent, $user, $contact)
+        );
 
         return [
             'timeline_events' => $timelineEventsCollection,

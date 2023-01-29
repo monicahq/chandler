@@ -53,6 +53,14 @@ return new class() extends Migration
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
+        Schema::create('timeline_event_participants', function (Blueprint $table) {
+            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('timeline_event_id');
+            $table->timestamps();
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('timeline_event_id')->references('id')->on('timeline_events')->onDelete('cascade');
+        });
+
         Schema::create('life_events', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('timeline_event_id');

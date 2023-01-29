@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
+use App\Models\TimelineEvent;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -13,6 +14,7 @@ use Illuminate\Support\Collection;
 class CreateLifeEvent extends BaseService implements ServiceInterface
 {
     private LifeEvent $lifeEvent;
+    private TimelineEvent $timelineEvent;
 
     private Collection $partipantsCollection;
 
@@ -83,7 +85,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
-        $this->vault->timelineEvents()
+        $this->timelineEvent = $this->vault->timelineEvents()
             ->findOrFail($this->data['timeline_event_id']);
 
         $this->vault->lifeEventCategories()
@@ -117,6 +119,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
     {
         foreach ($this->partipantsCollection as $participant) {
             $participant->lifeEvents()->attach($this->lifeEvent->id);
+            $participant->timelineEvents()->syncWithoutDetaching($this->timelineEvent->id);
         }
     }
 

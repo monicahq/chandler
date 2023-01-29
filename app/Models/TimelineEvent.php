@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -42,6 +43,7 @@ class TimelineEvent extends Model
     ];
 
     /**
+     *
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
@@ -68,5 +70,15 @@ class TimelineEvent extends Model
     public function lifeEvents(): HasMany
     {
         return $this->hasMany(LifeEvent::class);
+    }
+
+    /**
+     * Get the contact records the timeline event is with.
+     *
+     * @return BelongsToMany
+     */
+    public function participants(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class, 'timeline_event_participants', 'timeline_event_id', 'contact_id');
     }
 }

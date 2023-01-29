@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
+use App\Models\TimelineEvent;
 use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -13,6 +14,7 @@ use Illuminate\Support\Collection;
 class UpdateLifeEvent extends BaseService implements ServiceInterface
 {
     private LifeEvent $lifeEvent;
+    private TimelineEvent $timelineEvent;
 
     private Collection $partipantsCollection;
 
@@ -82,12 +84,12 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $timelineEvent = $this->vault->timelineEvents()
+        $this->timelineEvent = $this->vault->timelineEvents()
             ->findOrFail($this->data['timeline_event_id']);
 
         $lifeEventType = LifeEventType::findOrFail($this->data['life_event_type_id']);
 
-        $this->lifeEvent = $timelineEvent->lifeEvents()
+        $this->lifeEvent = $this->timelineEvent->lifeEvents()
             ->findOrFail($this->data['life_event_id']);
 
         $this->vault->lifeEventCategories()
@@ -137,6 +139,7 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
     {
         foreach ($this->partipantsCollection as $participant) {
             $participant->lifeEvents()->attach($this->lifeEvent->id);
+            $participant->timelineEvents()->syncWithoutDetaching($this->timelineEvent->id);
         }
     }
 }

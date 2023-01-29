@@ -19,19 +19,16 @@ class ContactModuleTimelineEventController extends Controller
 {
     public function index(Request $request, int $vaultId, int $contactId)
     {
-        // we need to get all the life events for this contact
-        // which will give us all the timeline events
         $contact = Contact::where('vault_id', $vaultId)->findOrFail($contactId);
 
-        $lifeEvents = $contact
-            ->lifeEvents()
-            ->with('timelineEvent')
-            ->orderBy('happened_at', 'desc')
+        $timelineEvents = $contact
+            ->timelineEvents()
+            ->orderBy('started_at', 'desc')
             ->paginate(1);
 
         return response()->json([
-            'data' => ModuleLifeEventViewHelper::timelineEvents($lifeEvents, Auth::user(), $contact),
-            'paginator' => PaginatorHelper::getData($lifeEvents),
+            'data' => ModuleLifeEventViewHelper::timelineEvents($timelineEvents, Auth::user(), $contact),
+            'paginator' => PaginatorHelper::getData($timelineEvents),
         ], 200);
     }
 
