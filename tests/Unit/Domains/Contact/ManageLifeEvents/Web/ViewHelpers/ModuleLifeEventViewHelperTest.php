@@ -90,7 +90,6 @@ class ModuleLifeEventViewHelperTest extends TestCase
     public function it_gets_the_data_transfer_object_for_types(): void
     {
         $contact = Contact::factory()->create();
-        $user = User::factory()->create();
         $lifeEventCategory = LifeEventCategory::factory()->create([
             'vault_id' => $contact->vault_id,
             'label' => 'name',
