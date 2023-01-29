@@ -3,6 +3,7 @@ import Loading from '@/Shared/Loading.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
@@ -25,6 +26,19 @@ const initialLoad = () => {
 
   axios
     .get(props.data.url.load)
+    .then((response) => {
+      loadingData.value = false;
+      response.data.data.timeline_events.forEach((entry) => {
+        timeline.value.push(entry);
+      });
+      paginator.value = response.data.paginator;
+    })
+    .catch(() => {});
+};
+
+const loadMore = () => {
+  axios
+    .get(paginator.value.nextPageUrl)
     .then((response) => {
       loadingData.value = false;
       response.data.data.timeline_events.forEach((entry) => {
@@ -239,6 +253,15 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 @life-event-created="refreshLifeEvents" />
             </div>
           </div>
+        </div>
+
+        <!-- pagination -->
+        <div class="text-center" v-if="paginator.hasMorePages">
+          <span
+            @click="loadMore()"
+            class="cursor-pointer rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
+            {{ $t('app.view_older') }}
+          </span>
         </div>
       </div>
 
