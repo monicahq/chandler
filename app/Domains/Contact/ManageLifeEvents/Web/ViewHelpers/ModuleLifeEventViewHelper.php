@@ -11,7 +11,6 @@ use App\Models\LifeEventType;
 use App\Models\TimelineEvent;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class ModuleLifeEventViewHelper
 {
