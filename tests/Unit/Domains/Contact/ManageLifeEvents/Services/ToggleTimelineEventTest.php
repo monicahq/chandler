@@ -3,12 +3,12 @@
 namespace Tests\Unit\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Domains\Contact\ManageLifeEvents\Services\ToggleTimelineEvent;
+use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Exceptions\NotEnoughPermissionException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;

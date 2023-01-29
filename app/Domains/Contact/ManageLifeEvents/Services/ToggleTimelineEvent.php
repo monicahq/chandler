@@ -66,7 +66,7 @@ class ToggleTimelineEvent extends BaseService implements ServiceInterface
 
     private function update(): void
     {
-        $this->timelineEvent->collapsed = !$this->timelineEvent->collapsed;
+        $this->timelineEvent->collapsed = ! $this->timelineEvent->collapsed;
         $this->timelineEvent->save();
     }
 }

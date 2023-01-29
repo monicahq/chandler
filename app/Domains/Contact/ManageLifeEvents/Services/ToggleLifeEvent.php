@@ -3,12 +3,8 @@
 namespace App\Domains\Contact\ManageLifeEvents\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Contact;
 use App\Models\LifeEvent;
-use App\Models\LifeEventType;
 use App\Services\BaseService;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class ToggleLifeEvent extends BaseService implements ServiceInterface
 {
@@ -74,7 +70,7 @@ class ToggleLifeEvent extends BaseService implements ServiceInterface
 
     private function update(): void
     {
-        $this->lifeEvent->collapsed = !$this->lifeEvent->collapsed;
+        $this->lifeEvent->collapsed = ! $this->lifeEvent->collapsed;
         $this->lifeEvent->save();
     }
 }
