@@ -45,7 +45,9 @@ class ModuleLifeEventViewHelper
         return [
             'id' => $lifeEventCategory->id,
             'label' => $lifeEventCategory->label,
-            'life_event_types' => $lifeEventCategory->lifeEventTypes
+            'life_event_types' => $lifeEventCategory->lifeEventTypes()
+                ->orderBy('position', 'asc')
+                ->get()
                 ->map(fn (LifeEventType $lifeEventType) => self::dtoLifeEventType($lifeEventType)),
         ];
     }

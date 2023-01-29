@@ -123,7 +123,7 @@ const toggleLifeEventVisibility = ( lifeEvent) => {
           <div v-if="timelineEvent.collapsed">
             <div v-for="lifeEvent in timelineEvent.life_events" :key="lifeEvent.id" :class="!lifeEvent.collapsed ? 'border' : ''" class="ml-6 border-gray-200 rounded-lg mb-2">
               <!-- name of life event -->
-              <div :class="lifeEvent.collapsed ? 'rounded-lg border' : ''" class="flex justify-between items-center border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 px-3 py-2 mb-2 cursor-pointer" @click="toggleLifeEventVisibility(lifeEvent)">
+              <div :class="lifeEvent.collapsed ? 'rounded-lg border' : ''" class="flex justify-between items-center border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 px-3 py-2 cursor-pointer" @click="toggleLifeEventVisibility(lifeEvent)">
                 <!-- title -->
                 <div class="flex items-center">
                   <p class="mr-4 text-sm font-bold">Activity #1</p>
