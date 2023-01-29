@@ -48,16 +48,16 @@ const showCreateLifeEventModal = () => {
   createLifeEventModalShown.value = true;
 };
 
-const showAddLifeEventModal = (timelineEvent) => {
-  showAddLifeEventModalForTimelineEventId.value = timelineEvent.id;
-};
-
 const toggleTimelineEventVisibility = (timelineEvent) => {
   timelineEvent.collapsed = !timelineEvent.collapsed;
+
+  axios.post(timelineEvent.url.toggle);
 };
 
-const toggleLifeEventVisibility = ( lifeEvent) => {
+const toggleLifeEventVisibility = (lifeEvent) => {
   lifeEvent.collapsed = !lifeEvent.collapsed;
+
+  axios.post(lifeEvent.url.toggle);
 };
 </script>
 
@@ -103,18 +103,18 @@ const toggleLifeEventVisibility = ( lifeEvent) => {
             </div>
 
             <!-- chevrons -->
-            <svg v-if="!timelineEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
+            <svg v-if="timelineEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
 
-            <svg v-if="timelineEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
+            <svg v-if="!timelineEvent.collapsed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-400">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
             </svg>
 
           </div>
 
           <!-- life events -->
-          <div v-if="timelineEvent.collapsed">
+          <div v-if="!timelineEvent.collapsed">
             <div v-for="lifeEvent in timelineEvent.life_events" :key="lifeEvent.id" :class="!lifeEvent.collapsed ? 'border' : ''" class="ml-6 border-gray-200 rounded-lg mb-2">
               <!-- name of life event -->
               <div :class="lifeEvent.collapsed ? 'rounded-lg border' : ''" class="flex justify-between items-center border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 px-3 py-2 cursor-pointer" @click="toggleLifeEventVisibility(lifeEvent)">

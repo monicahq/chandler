@@ -1,12 +1,8 @@
 <script setup>
-import Loading from '@/Shared/Loading.vue';
-import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
-import Dropdown from '@/Shared/Form/Dropdown.vue';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 import Avatar from '@/Shared/Avatar.vue';
-import ContactCard from '@/Shared/ContactCard.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, watch } from 'vue';
 

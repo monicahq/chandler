@@ -80,11 +80,17 @@ class ModuleLifeEventViewHelper
         return [
             'id' => $timelineEvent->id,
             'label' => $timelineEvent->label,
+            'collapsed' => $timelineEvent->collapsed,
             'happened_at' => DateHelper::format($timelineEvent->started_at, $user),
             'life_events' => $timelineEvent->lifeEvents
-                ->map(fn (LifeEvent $lifeEvent) => self::dtoLifeEvent($lifeEvent, $user)),
+                ->map(fn (LifeEvent $lifeEvent) => self::dtoLifeEvent($lifeEvent, $user, $contact)),
             'url' => [
                 'store' => route('contact.life_event.store', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'timelineEvent' => $timelineEvent->id,
+                ]),
+                'toggle' => route('contact.timeline_event.toggle', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                     'timelineEvent' => $timelineEvent->id,
@@ -93,7 +99,7 @@ class ModuleLifeEventViewHelper
         ];
     }
 
-    public static function dtoLifeEvent(LifeEvent $lifeEvent, User $user): array
+    public static function dtoLifeEvent(LifeEvent $lifeEvent, User $user, Contact $contact): array
     {
         return [
             'id' => $lifeEvent->id,
@@ -121,6 +127,14 @@ class ModuleLifeEventViewHelper
                     'id' => $lifeEvent->lifeEventType->lifeEventCategory->id,
                     'label' => $lifeEvent->lifeEventType->lifeEventCategory->label,
                 ],
+            ],
+            'url' => [
+                'toggle' => route('contact.life_event.toggle', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'timelineEvent' => $lifeEvent->timelineEvent->id,
+                    'lifeEvent' => $lifeEvent->id,
+                ]),
             ],
         ];
     }

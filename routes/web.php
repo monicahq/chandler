@@ -25,6 +25,8 @@ use App\Domains\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInf
 use App\Domains\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
 use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleLifeEventController;
 use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleTimelineEventController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ToggleLifeEventController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ToggleTimelineEventController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
 use App\Domains\Contact\ManageMoodTrackingEvents\Web\Controllers\ContactMoodTrackingEventsController;
@@ -327,9 +329,9 @@ Route::middleware([
                     // timeline events (which contain life events)
                     Route::get('timelineEvents', [ContactModuleTimelineEventController::class, 'index'])->name('contact.timeline_event.index');
                     Route::post('timelineEvents', [ContactModuleTimelineEventController::class, 'store'])->name('contact.timeline_event.store');
-                    Route::put('timelineEvents/{timelineEvent}/toggle', [ContactModuleToggleLifeEventController::class, 'store'])->name('contact.timeline_event.toggle');
+                    Route::post('timelineEvents/{timelineEvent}/toggle', [ToggleTimelineEventController::class, 'store'])->name('contact.timeline_event.toggle');
                     Route::post('timelineEvents/{timelineEvent}', [ContactModuleLifeEventController::class, 'store'])->name('contact.life_event.store');
-                    //Route::post('timelineEvents/{lifeEvent}', [ContactModuleTimelineEventController::class, 'store'])->name('contact.life_event.store');
+                    Route::post('timelineEvents/{timelineEvent}/lifeEvents/{lifeEvent}/toggle', [ToggleLifeEventController::class, 'store'])->name('contact.life_event.toggle');
 
                     // mood tracking events
                     Route::post('moodTrackingEvents', [ContactMoodTrackingEventsController::class, 'store'])->name('contact.mood_tracking_event.store');

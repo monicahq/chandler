@@ -47,9 +47,10 @@ class ContactModuleLifeEventController extends Controller
         ];
 
         $lifeEvent = (new CreateLifeEvent())->execute($data);
+        $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, Auth::user()),
+            'data' => ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, Auth::user(), $contact),
         ], 201);
     }
 }

@@ -147,11 +147,12 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $array = ModuleLifeEventViewHelper::dtoTimelineEvent($timelineEvent, $user, $contact);
 
         $this->assertEquals(
-            5,
+            6,
             count($array)
         );
         $this->assertArrayHasKey('id', $array);
         $this->assertArrayHasKey('label', $array);
+        $this->assertArrayHasKey('collapsed', $array);
         $this->assertArrayHasKey('happened_at', $array);
         $this->assertArrayHasKey('life_events', $array);
         $this->assertArrayHasKey('url', $array);
@@ -167,6 +168,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/timelineEvents/'.$timelineEvent->id,
+                'toggle' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/timelineEvents/'.$timelineEvent->id.'/toggle',
             ],
             $array['url']
         );
@@ -194,10 +196,10 @@ class ModuleLifeEventViewHelperTest extends TestCase
             'happened_at' => '2018-01-01',
         ]);
 
-        $array = ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, $user);
+        $array = ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, $user, $contact);
 
         $this->assertEquals(
-            17,
+            18,
             count($array)
         );
 
@@ -218,6 +220,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $this->assertArrayHasKey('participants', $array);
         $this->assertArrayHasKey('timeline_event', $array);
         $this->assertArrayHasKey('life_event_type', $array);
+        $this->assertArrayHasKey('url', $array);
 
         $this->assertEquals(
             $lifeEvent->id,
