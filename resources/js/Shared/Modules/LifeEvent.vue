@@ -3,7 +3,6 @@ import Loading from '@/Shared/Loading.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
-import Pagination from '@/Components/Pagination.vue';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
