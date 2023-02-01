@@ -1,3 +1,56 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated.vue';
+import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders.vue';
+import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites.vue';
+import DueTasks from '@/Pages/Vault/Dashboard/Partials/DueTasks.vue';
+import MoodTrackingEvents from '@/Pages/Vault/Dashboard/Partials/MoodTrackingEvents.vue';
+import Feed from '@/Shared/Modules/Feed.vue';
+import LifeEvent from '@/Shared/Modules/LifeEvent.vue';
+import { onMounted, ref } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+
+const props = defineProps({
+  layoutData: Object,
+  data: Object,
+  lastUpdatedContacts: Object,
+  upcomingReminders: Object,
+  favorites: Object,
+  url: Array,
+  dueTasks: Object,
+  moodTrackingEvents: Object,
+  lifeEvents: Object,
+  activityTabShown: String,
+});
+
+const defaultTab = ref('activity');
+
+const form = useForm({
+  show_activity_tab_on_dashboard: null,
+});
+
+onMounted(() => {
+  if (props.activityTabShown) {
+    defaultTab.value = 'activity';
+  } else {
+    defaultTab.value = 'life_events';
+  }
+});
+
+const changeTab = (tab) => {
+  defaultTab.value = tab;
+
+  if (defaultTab.value === 'activity') {
+    form.show_activity_tab_on_dashboard = 1;
+  } else {
+    form.show_activity_tab_on_dashboard = 0;
+  }
+
+  axios.put(props.url.default_tab, form);
+};
+
+</script>
+
 <template>
   <layout title="Dashboard" :inside-vault="true" :layout-data="layoutData">
     <main class="relative sm:mt-24">
@@ -14,30 +67,33 @@
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
-            <h3 class="mb-3 flex items-center border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
-              <span class="relative mr-2">
-                <svg
-                  class="icon-sidebar relative inline h-4 w-4 text-gray-500 dark:text-gray-300 hover:dark:text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-                </svg>
-              </span>
+            <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-700">
+              <div class="text-center flex overflow-x-auto">
+                <div class="mr-2 flex-none">
+                  <span
+                    @click="changeTab('activity')"
+                    :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'activity' }"
+                    class="cursor-pointer inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
+                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900">Activity in this vault</span>
+                  </span>
+                </div>
+                <div class="mr-2 flex-none">
+                  <span
+                    @click="changeTab('life_events')"
+                    :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'life_events' }"
+                    class="cursor-pointer inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
+                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900">Your life events</span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-              <span class="mr-2 inline">
-                {{ $t('vault.dashboard_feed_title') }}
-              </span>
-            </h3>
+            <life-event v-if="defaultTab == 'life_events'" :data="lifeEvents" :layout-data="layoutData" />
 
-            <life-event :data="module.data" :layout-data="layoutData" />
-
-            <feed :url="url.feed" :contact-view-mode="false" />
+            <!-- feed tab -->
+            <div v-if="defaultTab == 'activity'">
+              <feed :url="url.feed" :contact-view-mode="false" />
+            </div>
           </div>
 
           <!-- right -->
@@ -56,61 +112,6 @@
     </main>
   </layout>
 </template>
-
-<script>
-import Layout from '@/Shared/Layout.vue';
-import LastUpdated from '@/Pages/Vault/Dashboard/Partials/LastUpdated.vue';
-import UpcomingReminders from '@/Pages/Vault/Dashboard/Partials/UpcomingReminders.vue';
-import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites.vue';
-import DueTasks from '@/Pages/Vault/Dashboard/Partials/DueTasks.vue';
-import MoodTrackingEvents from '@/Pages/Vault/Dashboard/Partials/MoodTrackingEvents.vue';
-import Feed from '@/Shared/Modules/Feed.vue';
-import LifeEvent from '@/Shared/Modules/LifeEvent.vue';
-
-export default {
-  components: {
-    Layout,
-    LastUpdated,
-    UpcomingReminders,
-    Favorites,
-    DueTasks,
-    Feed,
-    LifeEvent,
-    MoodTrackingEvents,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    lastUpdatedContacts: {
-      type: Object,
-      default: null,
-    },
-    upcomingReminders: {
-      type: Object,
-      default: null,
-    },
-    favorites: {
-      type: Object,
-      default: null,
-    },
-    url: {
-      type: Array,
-      default: null,
-    },
-    dueTasks: {
-      type: Object,
-      default: null,
-    },
-    moodTrackingEvents: {
-      type: Object,
-      default: null,
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .grid {

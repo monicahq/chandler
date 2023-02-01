@@ -104,6 +104,7 @@ use App\Domains\Vault\ManageReports\Web\Controllers\ReportIndexController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportMoodTrackingEventController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Domains\Vault\ManageVault\Web\Controllers\VaultDefaultTabOnDashboardController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
@@ -173,6 +174,9 @@ Route::middleware([
 
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
+
+            // update dashboard's default tab
+            Route::put('defaultTab', [VaultDefaultTabOnDashboardController::class, 'update'])->name('vault.default_tab.update');
 
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
