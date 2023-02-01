@@ -3,7 +3,6 @@
 namespace Tests\Unit\Domains\Vault\ManageVault\Services;
 
 use App\Domains\Vault\ManageVault\Services\UpdateVaultDashboardDefaultTab;
-use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\User;
 use App\Models\Vault;
