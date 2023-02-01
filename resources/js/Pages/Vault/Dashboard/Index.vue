@@ -48,7 +48,6 @@ const changeTab = (tab) => {
 
   axios.put(props.url.default_tab, form);
 };
-
 </script>
 
 <template>
@@ -68,21 +67,25 @@ const changeTab = (tab) => {
           <!-- middle -->
           <div class="p-3 sm:p-0">
             <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-700">
-              <div class="text-center flex overflow-x-auto">
+              <div class="flex overflow-x-auto text-center">
                 <div class="mr-2 flex-none">
                   <span
                     @click="changeTab('activity')"
                     :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'activity' }"
-                    class="cursor-pointer inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
-                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900">Activity in this vault</span>
+                    class="inline-block cursor-pointer border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
+                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900"
+                      >Activity in this vault</span
+                    >
                   </span>
                 </div>
                 <div class="mr-2 flex-none">
                   <span
                     @click="changeTab('life_events')"
                     :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'life_events' }"
-                    class="cursor-pointer inline-block border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
-                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900">Your life events</span>
+                    class="inline-block cursor-pointer border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
+                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900"
+                      >Your life events</span
+                    >
                   </span>
                 </div>
               </div>
