@@ -33,10 +33,11 @@
               <span class="mr-2 inline">
                 {{ $t('vault.dashboard_feed_title') }}
               </span>
-
-              <help :url="$page.props.help_links.last_updated_contacts" :top="'4px'" />
             </h3>
-            <feed :url="loadFeedUrl" :contact-view-mode="false" />
+
+            <life-event :data="module.data" :layout-data="layoutData" />
+
+            <feed :url="url.feed" :contact-view-mode="false" />
           </div>
 
           <!-- right -->
@@ -64,6 +65,7 @@ import Favorites from '@/Pages/Vault/Dashboard/Partials/Favorites.vue';
 import DueTasks from '@/Pages/Vault/Dashboard/Partials/DueTasks.vue';
 import MoodTrackingEvents from '@/Pages/Vault/Dashboard/Partials/MoodTrackingEvents.vue';
 import Feed from '@/Shared/Modules/Feed.vue';
+import LifeEvent from '@/Shared/Modules/LifeEvent.vue';
 
 export default {
   components: {
@@ -73,6 +75,7 @@ export default {
     Favorites,
     DueTasks,
     Feed,
+    LifeEvent,
     MoodTrackingEvents,
   },
 
@@ -93,8 +96,8 @@ export default {
       type: Object,
       default: null,
     },
-    loadFeedUrl: {
-      type: String,
+    url: {
+      type: Array,
       default: null,
     },
     dueTasks: {
