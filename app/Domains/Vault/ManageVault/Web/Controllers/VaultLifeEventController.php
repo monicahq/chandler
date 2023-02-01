@@ -2,12 +2,9 @@
 
 namespace App\Domains\Vault\ManageVault\Web\Controllers;
 
-use App\Domains\Contact\ManageContactFeed\Web\ViewHelpers\ModuleFeedViewHelper;
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Contact;
-use App\Models\ContactFeedItem;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
