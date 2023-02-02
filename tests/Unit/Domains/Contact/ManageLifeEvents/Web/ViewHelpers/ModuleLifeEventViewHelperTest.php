@@ -50,7 +50,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'lifeEvents' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents',
-                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents',
+                'load' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents',
             ],
             $array['url']
         );
