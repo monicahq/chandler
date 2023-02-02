@@ -167,7 +167,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               <!-- name of life event -->
               <div
                 :class="lifeEvent.collapsed ? 'rounded-lg border' : ''"
-                class="flex cursor-pointer items-center justify-between border-b rounded-t-lg border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                class="flex cursor-pointer items-center justify-between rounded-t-lg border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
                 @click="toggleLifeEventVisibility(lifeEvent)">
                 <!-- title -->
                 <div class="flex items-center">
@@ -208,7 +208,9 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               </div>
 
               <!-- description -->
-              <div v-if="!lifeEvent.collapsed && lifeEvent.description" class="flex items-center border-b border-gray-200 px-3 py-2">
+              <div
+                v-if="!lifeEvent.collapsed && lifeEvent.description"
+                class="flex items-center border-b border-gray-200 px-3 py-2">
                 {{ lifeEvent.description }}
               </div>
 
