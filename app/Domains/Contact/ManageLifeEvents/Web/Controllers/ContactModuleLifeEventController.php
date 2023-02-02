@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
 use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
+use App\Domains\Contact\ManageLifeEvents\Services\DestroyLifeEvent;
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -52,5 +53,22 @@ class ContactModuleLifeEventController extends Controller
         return response()->json([
             'data' => ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, Auth::user(), $contact),
         ], 201);
+    }
+
+    public function destroy(Request $request, int $vaultId, int $contactId, int $timelineEventId, int $lifeEventId)
+    {
+        $data = [
+            'account_id' => Auth::user()->account_id,
+            'author_id' => Auth::id(),
+            'vault_id' => $vaultId,
+            'timeline_event_id' => $timelineEventId,
+            'life_event_id' => $lifeEventId,
+        ];
+
+        (new DestroyLifeEvent())->execute($data);
+
+        return response()->json([
+            'data' => true,
+        ], 200);
     }
 }

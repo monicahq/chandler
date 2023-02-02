@@ -91,6 +91,11 @@ class ModuleLifeEventViewHelper
                     'contact' => $contact->id,
                     'timelineEvent' => $timelineEvent->id,
                 ]),
+                'destroy' => route('contact.timeline_event.destroy', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'timelineEvent' => $timelineEvent->id,
+                ]),
             ],
         ];
     }
@@ -126,6 +131,12 @@ class ModuleLifeEventViewHelper
             ],
             'url' => [
                 'toggle' => route('contact.life_event.toggle', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'timelineEvent' => $lifeEvent->timelineEvent->id,
+                    'lifeEvent' => $lifeEvent->id,
+                ]),
+                'destroy' => route('contact.life_event.destroy', [
                     'vault' => $contact->vault_id,
                     'contact' => $contact->id,
                     'timelineEvent' => $lifeEvent->timelineEvent->id,

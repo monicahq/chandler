@@ -2,6 +2,7 @@
 import Loading from '@/Shared/Loading.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import ContactCard from '@/Shared/ContactCard.vue';
+import HoverMenu from '@/Shared/HoverMenu.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
 import { onMounted, ref } from 'vue';
 
@@ -13,7 +14,7 @@ const props = defineProps({
 const createLifeEventModalShown = ref(false);
 const loadingData = ref(false);
 const paginator = ref([]);
-const timeline = ref([]);
+const localTimelines = ref([]);
 const showAddLifeEventModalForTimelineEventId = ref(0);
 
 onMounted(() => {
@@ -28,7 +29,7 @@ const initialLoad = () => {
     .then((response) => {
       loadingData.value = false;
       response.data.data.timeline_events.forEach((entry) => {
-        timeline.value.push(entry);
+        localTimelines.value.push(entry);
       });
       paginator.value = response.data.paginator;
     })
@@ -41,20 +42,45 @@ const loadMore = () => {
     .then((response) => {
       loadingData.value = false;
       response.data.data.timeline_events.forEach((entry) => {
-        timeline.value.push(entry);
+        localTimelines.value.push(entry);
       });
       paginator.value = response.data.paginator;
     })
     .catch(() => {});
 };
 
+const destroy = (timelineEvent) => {
+  if (confirm('Are you sure? This will delete the event permanently.')) {
+    axios
+    .delete(timelineEvent.url.destroy)
+    .then(() => {
+      var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+      localTimelines.value.splice(id, 1);
+    })
+    .catch(() => {});
+  }
+};
+
+const destroyLifeEvent = (timelineEvent, lifeEvent) => {
+  if (confirm('Are you sure? This will delete the event permanently.')) {
+    axios
+    .delete(lifeEvent.url.destroy)
+    .then(() => {
+      var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+      var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
+      localTimelines.value[id].life_events.splice(lifeEventId, 1);
+    })
+    .catch(() => {});
+  }
+};
+
 const refreshTimelineEvents = (timelineEvent) => {
-  timeline.value.unshift(timelineEvent);
+  localTimelines.value.unshift(timelineEvent);
 };
 
 const refreshLifeEvents = (lifeEvent) => {
-  var id = timeline.value.findIndex((x) => x.id === lifeEvent.timeline_event.id);
-  timeline.value[id].life_events.unshift(lifeEvent);
+  var id = localTimelines.value.findIndex((x) => x.id === lifeEvent.timeline_event.id);
+  localTimelines.value[id].life_events.unshift(lifeEvent);
 };
 
 const showCreateLifeEventModal = () => {
@@ -118,8 +144,8 @@ const toggleLifeEventVisibility = (lifeEvent) => {
         @timeline-event-created="refreshTimelineEvents" />
 
       <!-- list of timeline events -->
-      <div v-if="timeline">
-        <div v-for="timelineEvent in timeline" :key="timelineEvent.id" class="mb-4">
+      <div v-if="localTimelines">
+        <div v-for="timelineEvent in localTimelines" :key="timelineEvent.id" class="mb-4">
           <!-- timeline event name -->
           <div
             class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
@@ -133,28 +159,38 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               }}</span>
             </div>
 
-            <!-- chevrons -->
-            <svg
-              v-if="timelineEvent.collapsed"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-4 w-4 text-gray-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
+            <!-- chevrons and menu -->
+            <div class="flex">
+              <!-- chevrons -->
+              <svg
+                v-if="timelineEvent.collapsed"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
 
-            <svg
-              v-if="!timelineEvent.collapsed"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-4 w-4 text-gray-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
+              <svg
+                v-if="!timelineEvent.collapsed"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-4 w-4 text-gray-400 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+              </svg>
+
+              <!-- menu -->
+              <hover-menu
+                :show-edit="true"
+                :show-delete="true"
+                @edit="showEditNoteModal(note)"
+                @delete="destroy(timelineEvent)" />
+            </div>
           </div>
 
           <!-- life events -->
@@ -183,28 +219,38 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                   </div>
                 </div>
 
-                <!-- chevrons -->
-                <svg
-                  v-if="lifeEvent.collapsed"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-4 w-4 text-gray-400">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
+                <!-- chevrons and menu -->
+                <div class="flex">
+                  <!-- chevrons -->
+                  <svg
+                    v-if="lifeEvent.collapsed"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-4 w-4 text-gray-400 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
 
-                <svg
-                  v-if="!lifeEvent.collapsed"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-4 w-4 text-gray-400">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                </svg>
+                  <svg
+                    v-if="!lifeEvent.collapsed"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-4 w-4 text-gray-400 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                  </svg>
+
+                  <!-- menu -->
+                  <hover-menu
+                    :show-edit="true"
+                    :show-delete="true"
+                    @edit="showEditNoteModal(note)"
+                    @delete="destroyLifeEvent(timelineEvent, lifeEvent)" />
+                </div>
               </div>
 
               <!-- description -->

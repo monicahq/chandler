@@ -164,6 +164,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
             [
                 'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents/'.$timelineEvent->id,
                 'toggle' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents/'.$timelineEvent->id.'/toggle',
+                'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/timelineEvents/'.$timelineEvent->id,
             ],
             $array['url']
         );

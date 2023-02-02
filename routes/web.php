@@ -335,7 +335,9 @@ Route::middleware([
                     Route::post('timelineEvents', [ContactModuleTimelineEventController::class, 'store'])->name('contact.timeline_event.store');
                     Route::post('timelineEvents/{timelineEvent}/toggle', [ToggleTimelineEventController::class, 'store'])->name('contact.timeline_event.toggle');
                     Route::post('timelineEvents/{timelineEvent}', [ContactModuleLifeEventController::class, 'store'])->name('contact.life_event.store');
+                    Route::delete('timelineEvents/{timelineEvent}', [ContactModuleTimelineEventController::class, 'destroy'])->name('contact.timeline_event.destroy');
                     Route::post('timelineEvents/{timelineEvent}/lifeEvents/{lifeEvent}/toggle', [ToggleLifeEventController::class, 'store'])->name('contact.life_event.toggle');
+                    Route::delete('timelineEvents/{timelineEvent}/lifeEvents/{lifeEvent}', [ContactModuleLifeEventController::class, 'destroy'])->name('contact.life_event.destroy');
 
                     // mood tracking events
                     Route::post('moodTrackingEvents', [ContactMoodTrackingEventsController::class, 'store'])->name('contact.mood_tracking_event.store');

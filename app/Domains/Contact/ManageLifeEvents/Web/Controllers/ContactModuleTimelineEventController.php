@@ -4,6 +4,7 @@ namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
 use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
 use App\Domains\Contact\ManageLifeEvents\Services\CreateTimelineEvent;
+use App\Domains\Contact\ManageLifeEvents\Services\DestroyTimelineEvent;
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Domains\Contact\ManageLoans\Services\DestroyLoan;
 use App\Domains\Contact\ManageLoans\Services\UpdateLoan;
@@ -113,17 +114,16 @@ class ContactModuleTimelineEventController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $loanId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $timelineEventId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
-            'contact_id' => $contactId,
-            'loan_id' => $loanId,
+            'timeline_event_id' => $timelineEventId,
         ];
 
-        (new DestroyLoan())->execute($data);
+        (new DestroyTimelineEvent())->execute($data);
 
         return response()->json([
             'data' => true,
