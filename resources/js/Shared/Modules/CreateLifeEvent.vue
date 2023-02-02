@@ -179,9 +179,7 @@ const store = () => {
                 @click="chooseType(lifeEventType)"
                 class="item-list flex cursor-pointer justify-between border-b border-gray-200 px-3 py-1 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <span>{{ lifeEventType.label }}</span>
-                <span class="text-sm text-blue-500 hover:underline">{{
-                  $t('app.choose')
-                }}</span>
+                <span class="text-sm text-blue-500 hover:underline">{{ $t('app.choose') }}</span>
               </li>
             </ul>
           </div>
@@ -251,7 +249,9 @@ const store = () => {
       </div>
 
       <!-- summary -->
-      <div v-if="selectedLifeEventType && addSummaryFieldShown" class="border-b border-gray-200 p-3 dark:border-gray-700">
+      <div
+        v-if="selectedLifeEventType && addSummaryFieldShown"
+        class="border-b border-gray-200 p-3 dark:border-gray-700">
         <text-input
           ref="summaryField"
           v-model="form.summary"
@@ -266,8 +266,16 @@ const store = () => {
       </div>
 
       <!-- description -->
-      <div v-if="selectedLifeEventType && addDescriptionFieldShown" class="border-b border-gray-200 p-3 dark:border-gray-700">
-        <text-area ref="descriptionField" v-model="form.description" :label="'Description'" @esc-key-pressed="addDescriptionFieldShown = false" :maxlength="65535" :textarea-class="'block w-full'" />
+      <div
+        v-if="selectedLifeEventType && addDescriptionFieldShown"
+        class="border-b border-gray-200 p-3 dark:border-gray-700">
+        <text-area
+          ref="descriptionField"
+          v-model="form.description"
+          :label="'Description'"
+          @esc-key-pressed="addDescriptionFieldShown = false"
+          :maxlength="65535"
+          :textarea-class="'block w-full'" />
       </div>
 
       <!-- options -->
@@ -275,16 +283,18 @@ const store = () => {
         <!-- summary -->
         <div v-if="!addSummaryFieldShown">
           <span
-            class="mr-2 mb-2 cursor-pointer text-sm rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
-            @click="showAddSummaryField">+ summary
+            class="mr-2 mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:text-gray-900"
+            @click="showAddSummaryField"
+            >+ summary
           </span>
         </div>
 
         <!-- description -->
         <div v-if="!addDescriptionFieldShown">
           <span
-            class="mr-2 mb-2 cursor-pointer text-sm rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
-            @click="showAddDescriptionField">+ description
+            class="mr-2 mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:text-gray-900"
+            @click="showAddDescriptionField"
+            >+ description
           </span>
         </div>
       </div>
