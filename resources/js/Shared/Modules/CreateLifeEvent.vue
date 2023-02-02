@@ -2,9 +2,11 @@
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import TextArea from '@/Shared/Form/TextArea.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, nextTick } from 'vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -21,6 +23,8 @@ const form = useForm({
   label: null,
   started_at: null,
   participants: [],
+  summary: null,
+  description: null,
 });
 
 const loadingState = ref(false);
@@ -28,6 +32,10 @@ const selectedLifeEventCategory = ref([]);
 const selectedLifeEventType = ref(null);
 const editDate = ref(false);
 const modalShown = ref(false);
+const addSummaryFieldShown = ref(false);
+const addDescriptionFieldShown = ref(false);
+const summaryField = ref(null);
+const descriptionField = ref(null);
 
 watch(
   () => props.openModal,
@@ -37,10 +45,19 @@ watch(
 );
 
 onMounted(() => {
+  resetModal();
+});
+
+const resetModal = () => {
   modalShown.value = props.openModal;
   selectedLifeEventCategory.value = props.data.life_event_categories[0];
   form.started_at = props.data.current_date;
-});
+
+  form.summary = null;
+  form.description = null;
+  addSummaryFieldShown.value = false;
+  addDescriptionFieldShown.value = false;
+};
 
 const loadTypes = (category) => {
   var id = props.data.life_event_categories.findIndex((x) => x.id === category.id);
@@ -55,6 +72,24 @@ const chooseType = (type) => {
 const resetType = () => {
   selectedLifeEventCategory.value = props.data.life_event_categories[0];
   selectedLifeEventType.value = null;
+};
+
+const showAddSummaryField = () => {
+  form.summary = null;
+  addSummaryFieldShown.value = true;
+
+  nextTick(() => {
+    summaryField.value.focus();
+  });
+};
+
+const showAddDescriptionField = () => {
+  form.description = null;
+  addDescriptionFieldShown.value = true;
+
+  nextTick(() => {
+    descriptionField.value.focus();
+  });
 };
 
 const store = () => {
@@ -141,9 +176,10 @@ const store = () => {
               <li
                 v-for="lifeEventType in selectedLifeEventCategory.life_event_types"
                 :key="lifeEventType.id"
+                @click="chooseType(lifeEventType)"
                 class="item-list flex cursor-pointer justify-between border-b border-gray-200 px-3 py-1 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <span>{{ lifeEventType.label }}</span>
-                <span @click="chooseType(lifeEventType)" class="text-sm text-blue-500 hover:underline">{{
+                <span class="text-sm text-blue-500 hover:underline">{{
                   $t('app.choose')
                 }}</span>
               </li>
@@ -214,13 +250,43 @@ const store = () => {
           :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700'" />
       </div>
 
+      <!-- summary -->
+      <div v-if="selectedLifeEventType && addSummaryFieldShown" class="border-b border-gray-200 p-3 dark:border-gray-700">
+        <text-input
+          ref="summaryField"
+          v-model="form.summary"
+          :label="'Summary'"
+          :type="'text'"
+          :autofocus="true"
+          :input-class="'block w-full'"
+          :required="false"
+          :autocomplete="false"
+          :maxlength="255"
+          @esc-key-pressed="addSummaryFieldShown = false" />
+      </div>
+
+      <!-- description -->
+      <div v-if="selectedLifeEventType && addDescriptionFieldShown" class="border-b border-gray-200 p-3 dark:border-gray-700">
+        <text-area ref="descriptionField" v-model="form.description" :label="'Description'" @esc-key-pressed="addDescriptionFieldShown = false" :maxlength="65535" :textarea-class="'block w-full'" />
+      </div>
+
       <!-- options -->
-      <div v-if="selectedLifeEventType" class="border-b border-gray-200 p-3 dark:border-gray-700">
-        <span
-          class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
-          @click="displayMiddleNameField">
-          {{ $t('vault.create_contact_add_middle_name') }}
-        </span>
+      <div v-if="selectedLifeEventType" class="flex flex-wrap border-b border-gray-200 p-3 dark:border-gray-700">
+        <!-- summary -->
+        <div v-if="!addSummaryFieldShown">
+          <span
+            class="mr-2 mb-2 cursor-pointer text-sm rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+            @click="showAddSummaryField">+ summary
+          </span>
+        </div>
+
+        <!-- description -->
+        <div v-if="!addDescriptionFieldShown">
+          <span
+            class="mr-2 mb-2 cursor-pointer text-sm rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+            @click="showAddDescriptionField">+ description
+          </span>
+        </div>
       </div>
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="$emit('closeModal')" />
