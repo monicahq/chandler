@@ -66,28 +66,37 @@ const changeTab = (tab) => {
 
           <!-- middle -->
           <div class="p-3 sm:p-0">
-            <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-700">
-              <div class="flex overflow-x-auto text-center">
-                <div class="mr-2 flex-none">
-                  <span
-                    @click="changeTab('activity')"
-                    :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'activity' }"
-                    class="inline-block cursor-pointer border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
-                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900"
-                      >Activity in this vault</span
-                    >
-                  </span>
-                </div>
-                <div class="mr-2 flex-none">
-                  <span
-                    @click="changeTab('life_events')"
-                    :class="{ 'border-orange-500 hover:border-orange-500': defaultTab === 'life_events' }"
-                    class="inline-block cursor-pointer border-b-2 border-transparent px-2 pb-2 hover:border-gray-200 hover:dark:border-gray-700">
-                    <span class="mb-0 block rounded-sm px-3 py-1 hover:bg-gray-100 hover:dark:bg-gray-900"
-                      >Your life events</span
-                    >
-                  </span>
-                </div>
+
+            <!-- tabs -->
+            <div class="flex justify-center">
+              <div class="mb-8 inline-flex rounded-md shadow-sm">
+                <button @click="changeTab('activity')" type="button" :class="{ 'bg-gray-100 text-blue-700 dark:bg-gray-400 dark:font-bold': defaultTab === 'activity' }" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 fill-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+                  </svg>
+
+                  Activity in this vault
+                </button>
+
+                <button @click="changeTab('life_events')" type="button" :class="{ 'bg-gray-100 text-blue-700 dark:bg-gray-400 dark:font-bold': defaultTab === 'life_events' }" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 mr-2">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                  </svg>
+                  Your life events
+                </button>
               </div>
             </div>
 

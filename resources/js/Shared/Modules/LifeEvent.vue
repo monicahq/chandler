@@ -207,6 +207,11 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 </svg>
               </div>
 
+              <!-- description -->
+              <div v-if="!lifeEvent.collapsed && lifeEvent.description" class="flex items-center border-b border-gray-200 px-3 py-2">
+                {{ lifeEvent.description }}
+              </div>
+
               <!-- date of life event -->
               <div v-if="!lifeEvent.collapsed" class="flex items-center border-b border-gray-200 px-3 py-2 text-sm">
                 <svg
