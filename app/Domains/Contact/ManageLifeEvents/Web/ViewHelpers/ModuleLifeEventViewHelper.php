@@ -77,7 +77,7 @@ class ModuleLifeEventViewHelper
             'id' => $timelineEvent->id,
             'label' => $timelineEvent->label,
             'collapsed' => $timelineEvent->collapsed,
-            'happened_at' => DateHelper::format($timelineEvent->started_at, $user),
+            'happened_at' => $timelineEvent->range,
             'life_events' => $timelineEvent->lifeEvents
                 ->map(fn (LifeEvent $lifeEvent) => self::dtoLifeEvent($lifeEvent, $user, $contact)),
             'url' => [

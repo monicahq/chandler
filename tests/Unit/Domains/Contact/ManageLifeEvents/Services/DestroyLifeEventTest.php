@@ -144,5 +144,9 @@ class DestroyLifeEventTest extends TestCase
         $this->assertDatabaseMissing('life_events', [
             'id' => $lifeEvent->id,
         ]);
+
+        $this->assertDatabaseMissing('timeline_events', [
+            'id' => $timelineEvent->id,
+        ]);
     }
 }

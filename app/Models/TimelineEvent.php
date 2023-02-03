@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Helpers\DateHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * A contact's timeline is composed of many timeline events.
@@ -79,5 +82,33 @@ class TimelineEvent extends Model
     public function participants(): BelongsToMany
     {
         return $this->belongsToMany(Contact::class, 'timeline_event_participants', 'timeline_event_id', 'contact_id');
+    }
+
+    /**
+     * Get the date range of the timeline event.
+     * A timeline event can span over a long period of time.
+     * While the `started_at` field is used to sort the timeline events,
+     * we still need to know the date range of the event.
+     *
+     * @return Attribute<string,never>
+     */
+    protected function range(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $lifeEvents = $this->lifeEvents()->get();
+
+                $firstEvent = $lifeEvents->sortBy('happened_at')->first();
+                $lastEvent = $lifeEvents->sortByDesc('happened_at')->first();
+
+                if ($firstEvent->id === $lastEvent->id) {
+                    return DateHelper::format($firstEvent->happened_at, Auth::user());
+                }
+
+                return DateHelper::format($firstEvent->happened_at, Auth::user()).
+                    ' - '.
+                    DateHelper::format($lastEvent->happened_at, Auth::user());
+            }
+        );
     }
 }
