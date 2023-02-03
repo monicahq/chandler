@@ -98,6 +98,10 @@ class TimelineEvent extends Model
             get: function ($value) {
                 $lifeEvents = $this->lifeEvents()->get();
 
+                if ($lifeEvents->count() === 0) {
+                    return '';
+                }
+
                 $firstEvent = $lifeEvents->sortBy('happened_at')->first();
                 $lastEvent = $lifeEvents->sortByDesc('happened_at')->first();
 
