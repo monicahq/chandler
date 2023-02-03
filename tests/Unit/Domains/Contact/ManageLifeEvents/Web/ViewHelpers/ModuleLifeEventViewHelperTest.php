@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\ManageLoans\Web\ViewHelpers;
+namespace Tests\Unit\Domains\Contact\ManageLifeEvents\Web\ViewHelpers;
 
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Models\Contact;
