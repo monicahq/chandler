@@ -328,9 +328,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
         v-if="localTimelines.length == 0"
         class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <img src="/img/contact_blank_life_event.svg" :alt="$t('Life events')" class="mx-auto mt-4 h-20 w-20" />
-        <p class="px-5 pb-5 pt-2 text-center">
-          Life events let you document what happened in your life.
-        </p>
+        <p class="px-5 pb-5 pt-2 text-center">Life events let you document what happened in your life.</p>
       </div>
     </div>
   </div>
