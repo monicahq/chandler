@@ -52,25 +52,25 @@ const loadMore = () => {
 const destroy = (timelineEvent) => {
   if (confirm('Are you sure? This will delete the event permanently.')) {
     axios
-    .delete(timelineEvent.url.destroy)
-    .then(() => {
-      var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
-      localTimelines.value.splice(id, 1);
-    })
-    .catch(() => {});
+      .delete(timelineEvent.url.destroy)
+      .then(() => {
+        var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+        localTimelines.value.splice(id, 1);
+      })
+      .catch(() => {});
   }
 };
 
 const destroyLifeEvent = (timelineEvent, lifeEvent) => {
   if (confirm('Are you sure? This will delete the event permanently.')) {
     axios
-    .delete(lifeEvent.url.destroy)
-    .then(() => {
-      var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
-      var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
-      localTimelines.value[id].life_events.splice(lifeEventId, 1);
-    })
-    .catch(() => {});
+      .delete(lifeEvent.url.destroy)
+      .then(() => {
+        var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+        var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
+        localTimelines.value[id].life_events.splice(lifeEventId, 1);
+      })
+      .catch(() => {});
   }
 };
 
@@ -169,7 +169,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-4 w-4 text-gray-400 mr-2">
+                class="mr-2 h-4 w-4 text-gray-400">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
 
@@ -180,7 +180,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-4 w-4 text-gray-400 mr-2">
+                class="mr-2 h-4 w-4 text-gray-400">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
               </svg>
 
@@ -229,7 +229,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="h-4 w-4 text-gray-400 mr-2">
+                    class="mr-2 h-4 w-4 text-gray-400">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
 
@@ -240,7 +240,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="h-4 w-4 text-gray-400 mr-2">
+                    class="mr-2 h-4 w-4 text-gray-400">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                   </svg>
 
