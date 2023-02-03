@@ -150,7 +150,7 @@ const store = () => {
                   <div>{{ category.label }}</div>
 
                   <!-- arrow -->
-                  <span v-if="category.id !== selectedLifeEventCategory.id">
+                  <span v-if="category.id === selectedLifeEventCategory.id">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
