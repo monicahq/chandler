@@ -10,6 +10,7 @@ use App\Services\BaseService;
 class DestroyLifeEvent extends BaseService implements ServiceInterface
 {
     private LifeEvent $lifeEvent;
+
     private TimelineEvent $timelineEvent;
 
     private array $data;
