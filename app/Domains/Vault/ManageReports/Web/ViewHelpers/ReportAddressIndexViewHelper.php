@@ -46,7 +46,7 @@ class ReportAddressIndexViewHelper
                 'url' => [
                     'index' => route('vault.reports.addresses.countries.show', [
                         'vault' => $vault->id,
-                    'country' => urlencode(utf8_encode($address->country)),
+                        'country' => urlencode(utf8_encode($address->country)),
                     ]),
                 ],
             ])
