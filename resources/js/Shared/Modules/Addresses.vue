@@ -118,7 +118,7 @@ const update = (address) => {
 };
 
 const destroy = (address) => {
-  if (confirm(this.$t('contact.addresses_delete_confirm'))) {
+  if (confirm('Are you sure? This can not be undone.')) {
     axios
       .delete(address.url.destroy)
       .then(() => {
@@ -212,7 +212,7 @@ const destroy = (address) => {
         </div>
 
         <!-- existing addresses -->
-        <div v-if="choiceChooseExisting" class="p-3 border-b border-gray-200 dark:border-gray-700">
+        <div v-if="choiceChooseExisting" class="overflow-auto h-40 p-3 border-b border-gray-200 dark:border-gray-700">
           <ul
             class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <li
