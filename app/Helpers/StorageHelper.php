@@ -4,9 +4,25 @@ namespace App\Helpers;
 
 use App\Models\Account;
 use App\Models\File;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Facades\Storage;
 
 class StorageHelper
 {
+    /**
+     * Get a filesystem instance.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Filesystem\FilesystemAdapter
+     */
+    public static function disk($name = null): FilesystemAdapter
+    {
+        /** @var \Illuminate\Filesystem\FilesystemAdapter */
+        $disk = Storage::disk($name);
+
+        return $disk;
+    }
+
     /**
      * Indicate if the account can accept another file, depending on the account's
      * limits.
