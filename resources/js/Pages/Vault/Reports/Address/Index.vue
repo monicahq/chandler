@@ -19,7 +19,9 @@ defineProps({
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.reports" class="text-blue-500 hover:underline">Reports</inertia-link>
+              <inertia-link :href="layoutData.vault.url.reports" class="text-blue-500 hover:underline"
+                >Reports</inertia-link
+              >
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -43,9 +45,11 @@ defineProps({
           <!-- left -->
           <div>
             <ul>
-              <li class="font-semibold mb-2"><span class="mr-1">🌍</span> All the countries</li>
+              <li class="mb-2 font-semibold"><span class="mr-1">🌍</span> All the countries</li>
               <li v-for="country in data.countries" :key="country.id">
-                <Link :href="country.url.index" class="text-blue-500 hover:underline">{{ country.name }}</Link> ({{ country.contacts }})
+                <Link :href="country.url.index" class="text-blue-500 hover:underline">{{ country.name }}</Link> ({{
+                  country.contacts
+                }})
               </li>
             </ul>
           </div>
@@ -53,9 +57,11 @@ defineProps({
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
             <ul>
-              <li class="font-semibold mb-2"><span class="mr-1">🏙️</span> All the cities</li>
+              <li class="mb-2 font-semibold"><span class="mr-1">🏙️</span> All the cities</li>
               <li v-for="city in data.cities" :key="city.id">
-                <Link :href="city.url.index" class="text-blue-500 hover:underline">{{ city.name }}</Link> ({{ city.contacts }})
+                <Link :href="city.url.index" class="text-blue-500 hover:underline">{{ city.name }}</Link> ({{
+                  city.contacts
+                }})
               </li>
             </ul>
           </div>

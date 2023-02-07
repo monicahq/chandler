@@ -19,7 +19,9 @@ defineProps({
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="layoutData.vault.url.reports" class="text-blue-500 hover:underline">Reports</inertia-link>
+              <inertia-link :href="layoutData.vault.url.reports" class="text-blue-500 hover:underline"
+                >Reports</inertia-link
+              >
             </li>
             <li class="relative mr-2 inline">
               <svg
@@ -31,7 +33,11 @@ defineProps({
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="mr-2 inline"><inertia-link :href="data.url.addresses" class="text-blue-500 hover:underline">List of addresses</inertia-link></li>
+            <li class="mr-2 inline">
+              <inertia-link :href="data.url.addresses" class="text-blue-500 hover:underline"
+                >List of addresses</inertia-link
+              >
+            </li>
             <li class="relative mr-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,12 +59,14 @@ defineProps({
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div>
-            <h2 class="font-bold mb-3">{{ data.country }}</h2>
+            <h2 class="mb-3 font-bold">{{ data.country }}</h2>
 
-            <div v-if="data.wikipedia.description" class="border rounded p-2 border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            <div
+              v-if="data.wikipedia.description"
+              class="rounded border border-gray-200 p-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <p class="mb-3">{{ data.wikipedia.description }}</p>
 
-              <img :src="data.wikipedia.thumbnail" :alt="'Image of ' + data.country" class="rounded mb-2">
+              <img :src="data.wikipedia.thumbnail" :alt="'Image of ' + data.country" class="mb-2 rounded" />
 
               <p class="text-xs"><a :href="data.wikipedia.url" target="_blank">Information from Wikipedia</a></p>
             </div>
@@ -67,10 +75,13 @@ defineProps({
           <!-- right -->
           <div>
             <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-              <li v-for="address in data.addresses" :key="address.id" class="px-3 pt-3 pb-2 item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+              <li
+                v-for="address in data.addresses"
+                :key="address.id"
+                class="item-list border-b border-gray-200 px-3 pt-3 pb-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <span class="mb-1 block">{{ address.address }}</span>
                 <ul class="list">
-                  <li v-for="contact in address.contacts" :key="contact.id" class="inline mr-3">
+                  <li v-for="contact in address.contacts" :key="contact.id" class="mr-3 inline">
                     <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
                   </li>
                 </ul>
