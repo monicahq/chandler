@@ -3,13 +3,9 @@
 namespace Tests\Unit\Domains\Vault\ManageReports\Web\ViewHelpers;
 
 use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportAddressIndexViewHelper;
-use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportImportantDateSummaryIndexViewHelper;
 use App\Models\Address;
 use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use App\Models\User;
 use App\Models\Vault;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

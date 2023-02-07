@@ -9,7 +9,8 @@ use App\Models\Contact;
 use App\Models\Vault;
 use Illuminate\Support\Str;
 
-class ReportCountriesShowViewHelper {
+class ReportCountriesShowViewHelper
+{
     public static function data(Vault $vault, string $country): array
     {
         $addresses = $vault->addresses()

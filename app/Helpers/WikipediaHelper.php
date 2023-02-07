@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Models\Address;
-use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -14,7 +12,7 @@ class WikipediaHelper
      * All API calls are documented here:
      * https://www.mediawiki.org/w/api.php?action=help&modules=query.
      *
-     * @param string $topic
+     * @param  string  $topic
      * @return void
      */
     public static function getInformation(string $topic)

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Vault\ManageReports\Web\Controllers;
 
-use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportCitiesShowViewHelper;
 use App\Domains\Vault\ManageReports\Web\ViewHelpers\ReportCountriesShowViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
