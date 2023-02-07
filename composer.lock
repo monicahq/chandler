@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f340ac56343fcf9faab17cc76e6d55e7",
+    "content-hash": "84365c46fda0d8f1bf9e8f7561587013",
     "packages": [
         {
             "name": "asbiin/laravel-webauthn",
@@ -3169,16 +3169,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.26.1",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "05db1b22821dc34a9b71cfbe78189ec4abe600ce"
+                "reference": "11f12a2e36a6c616ffa5c6ed32272f8c870aaf69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/05db1b22821dc34a9b71cfbe78189ec4abe600ce",
-                "reference": "05db1b22821dc34a9b71cfbe78189ec4abe600ce",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/11f12a2e36a6c616ffa5c6ed32272f8c870aaf69",
+                "reference": "11f12a2e36a6c616ffa5c6ed32272f8c870aaf69",
                 "shasum": ""
             },
             "require": {
@@ -3193,7 +3193,7 @@
                 "guzzlehttp/guzzle": "^7.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.9.3",
+                "phpstan/phpstan": "1.9.14",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.1",
@@ -3231,9 +3231,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.26.1"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v1.0.0"
             },
-            "time": "2022-12-16T17:11:53+00:00"
+            "time": "2023-02-06T13:25:35+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
