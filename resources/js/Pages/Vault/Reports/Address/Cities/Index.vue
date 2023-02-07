@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import { Link } from '@inertiajs/inertia-vue3';
 import ContactCard from '@/Shared/ContactCard.vue';
 
 defineProps({

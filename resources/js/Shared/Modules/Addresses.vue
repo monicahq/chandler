@@ -4,7 +4,7 @@ import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import Dropdown from '@/Shared/Form/Dropdown.vue';
-import { onMounted, ref, nextTick } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
@@ -19,7 +19,6 @@ const localActiveAddresses = ref([]);
 const localInactiveAddresses = ref([]);
 const editedAddressId = ref(0);
 const choiceChooseExisting = ref(true);
-const warning = ref('');
 
 const form = useForm({
   existing_address: false,

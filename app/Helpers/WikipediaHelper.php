@@ -13,9 +13,9 @@ class WikipediaHelper
      * https://www.mediawiki.org/w/api.php?action=help&modules=query.
      *
      * @param  string  $topic
-     * @return void
+     * @return array
      */
-    public static function getInformation(string $topic)
+    public static function getInformation(string $topic): array
     {
         $query = http_build_query([
             'action' => 'query',
