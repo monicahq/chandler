@@ -9,29 +9,28 @@ use App\Models\Contact;
 use App\Models\Vault;
 use Illuminate\Support\Str;
 
-class ReportCitiesShowViewHelper
-{
-    public static function data(Vault $vault, string $city): array
+class ReportCountriesShowViewHelper {
+    public static function data(Vault $vault, string $country): array
     {
         $addresses = $vault->addresses()
-            ->whereNotNull('city')
-            ->where('city', Str::ucfirst($city))
-            ->orWhere('city', Str::lcfirst($city))
+            ->whereNotNull('country')
+            ->where('country', Str::ucfirst($country))
+            ->orWhere('country', Str::lcfirst($country))
             ->with('contacts')
             ->get()
             ->map(fn ($address) => [
                 'id' => $address->id,
-                'name' => Str::ucfirst($address->city),
+                'name' => Str::ucfirst($address->country),
                 'address' => MapHelper::getAddressAsString($address),
                 'contacts' => $address->contacts()
                     ->get()
                     ->map(fn (Contact $contact) => ContactCardHelper::data($contact)),
             ]);
 
-        $wikipediaInformation = WikipediaHelper::getInformation($city);
+        $wikipediaInformation = WikipediaHelper::getInformation($country);
 
         return [
-            'city' => Str::ucfirst($city),
+            'country' => Str::ucfirst($country),
             'addresses' => $addresses,
             'wikipedia' => [
                 'url' => $wikipediaInformation['url'],

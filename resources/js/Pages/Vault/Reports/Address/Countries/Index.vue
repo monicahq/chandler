@@ -43,7 +43,7 @@ defineProps({
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="mr-2 inline">{{ data.city }}</li>
+            <li class="mr-2 inline">{{ data.country }}</li>
           </ul>
         </div>
       </div>
@@ -54,12 +54,12 @@ defineProps({
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div>
-            <h2 class="font-bold mb-3">{{ data.city }}</h2>
+            <h2 class="font-bold mb-3">{{ data.country }}</h2>
 
             <div v-if="data.wikipedia.description" class="border rounded p-2 border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <p class="mb-3">{{ data.wikipedia.description }}</p>
 
-              <img :src="data.wikipedia.thumbnail" :alt="'Image of ' + data.city" class="rounded mb-2">
+              <img :src="data.wikipedia.thumbnail" :alt="'Image of ' + data.country" class="rounded mb-2">
 
               <p class="text-xs"><a :href="data.wikipedia.url" target="_blank">Information from Wikipedia</a></p>
             </div>

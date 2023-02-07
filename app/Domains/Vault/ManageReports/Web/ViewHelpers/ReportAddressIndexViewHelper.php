@@ -34,7 +34,7 @@ class ReportAddressIndexViewHelper
 
         // all the countries in the vault
         $countries = $vault->addresses()
-            ->select('country')
+            ->select('id', 'country')
             ->whereNotNull('country')
             ->withCount('contacts')
             ->distinct('country')
@@ -55,14 +55,6 @@ class ReportAddressIndexViewHelper
         return [
             'cities' => $cities,
             'countries' => $countries,
-            'url' => [
-                'mood_tracking_events' => route('vault.reports.mood_tracking_events.index', [
-                    'vault' => $vault->id,
-                ]),
-                'important_date_summary' => route('vault.reports.important_dates.index', [
-                    'vault' => $vault->id,
-                ]),
-            ],
         ];
     }
 }

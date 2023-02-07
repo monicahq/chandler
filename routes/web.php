@@ -97,6 +97,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportImportantDateSummaryController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportIndexController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportMoodTrackingEventController;

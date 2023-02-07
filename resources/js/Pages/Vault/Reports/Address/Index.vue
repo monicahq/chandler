@@ -19,7 +19,7 @@ defineProps({
               {{ $t('app.breadcrumb_location') }}
             </li>
             <li class="mr-2 inline">
-              <inertia-link :href="data.url.reports" class="text-blue-500 hover:underline">Reports</inertia-link>
+              <inertia-link :href="layoutData.vault.url.reports" class="text-blue-500 hover:underline">Reports</inertia-link>
             </li>
             <li class="relative mr-2 inline">
               <svg
