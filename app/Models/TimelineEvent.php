@@ -110,7 +110,7 @@ class TimelineEvent extends Model
                 }
 
                 return DateHelper::format($firstEvent->happened_at, Auth::user()).
-                    ' - '.
+                    ' — '.
                     DateHelper::format($lastEvent->happened_at, Auth::user());
             }
         );
