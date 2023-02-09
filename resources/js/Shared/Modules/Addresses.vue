@@ -4,6 +4,9 @@ import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import Dropdown from '@/Shared/Form/Dropdown.vue';
+import JetConfirmationModal from '@/Components/Jetstream/ConfirmationModal.vue';
+import JetDangerButton from '@/Components/Jetstream/DangerButton.vue';
+import JetSecondaryButton from '@/Components/Jetstream/SecondaryButton.vue';
 import { onMounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
@@ -19,6 +22,9 @@ const localActiveAddresses = ref([]);
 const localInactiveAddresses = ref([]);
 const editedAddressId = ref(0);
 const choiceChooseExisting = ref(true);
+const deleteAddressModalShown = ref(false);
+const processAddressDeletion = ref(false);
+const addressToDelete = ref(null);
 
 const form = useForm({
   existing_address: false,
@@ -38,7 +44,11 @@ const form = useForm({
 onMounted(() => {
   localActiveAddresses.value = props.data.active_addresses;
   localInactiveAddresses.value = props.data.inactive_addresses;
-  choiceChooseExisting.value = true;
+  if (props.data.active_addresses.length > 0) {
+    choiceChooseExisting.value = true;
+  } else {
+    choiceChooseExisting.value = false;
+  }
 });
 
 const showCreateAddressModal = () => {
@@ -69,6 +79,11 @@ const showEditAddressModal = (address) => {
   form.province = address.province;
   form.postal_code = address.postal_code;
   form.country = address.country;
+};
+
+const showDeleteAddressModal = (address) => {
+  addressToDelete.value = address;
+  deleteAddressModalShown.value = true;
 };
 
 const submit = () => {
@@ -116,24 +131,26 @@ const update = (address) => {
     });
 };
 
-const destroy = (address) => {
-  if (confirm('Are you sure? This can not be undone.')) {
-    axios
-      .delete(address.url.destroy)
-      .then(() => {
-        if (address.is_past_address) {
-          const id = localInactiveAddresses.value.findIndex((x) => x.id === address.id);
-          localInactiveAddresses.value.splice(id, 1);
-        } else {
-          const id2 = localActiveAddresses.value.findIndex((x) => x.id === address.id);
-          localActiveAddresses.value.splice(id2, 1);
-        }
-      })
-      .catch((error) => {
-        loadingState.value = null;
-        form.errors = error.response.data;
-      });
-  }
+const destroy = () => {
+  processAddressDeletion.value = true;
+
+  axios
+    .delete(addressToDelete.value.url.destroy)
+    .then(() => {
+      processAddressDeletion.value = false;
+      if (addressToDelete.value.is_past_address) {
+        const id = localInactiveAddresses.value.findIndex((x) => x.id === addressToDelete.value.id);
+        localInactiveAddresses.value.splice(id, 1);
+      } else {
+        const id2 = localActiveAddresses.value.findIndex((x) => x.id === addressToDelete.value.id);
+        localActiveAddresses.value.splice(id2, 1);
+      }
+      deleteAddressModalShown.value = false;
+    })
+    .catch((error) => {
+      loadingState.value = null;
+      form.errors = error.response.data;
+    });
 };
 </script>
 
@@ -235,7 +252,7 @@ const destroy = (address) => {
         </div>
 
         <!-- create new address -->
-        <div v-if="!choiceChooseExisting" class="border-b border-gray-200 dark:border-gray-700">
+        <div v-if="!choiceChooseExisting || props.data.addresses_in_vault.length == 0" class="border-b border-gray-200 dark:border-gray-700">
           <div v-if="form.errors.length > 0" class="p-5">
             <errors :errors="form.errors" />
           </div>
@@ -383,7 +400,7 @@ const destroy = (address) => {
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 {{ $t('app.edit') }}
               </li>
-              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
+              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="showDeleteAddressModal(address)">
                 {{ $t('app.delete') }}
               </li>
             </ul>
@@ -683,6 +700,31 @@ const destroy = (address) => {
         </div>
       </div>
     </div>
+
+    <!-- delete modal -->
+    <JetConfirmationModal :show="deleteAddressModalShown" @close="deleteAddressModalShown = false">
+      <template #title>
+        {{ $t('Delete the address') }}
+      </template>
+
+      <template #content>
+        {{ $t('Are you sure? The address will be deleted immediately.') }}
+      </template>
+
+      <template #footer>
+        <JetSecondaryButton @click="deleteAddressModalShown = false">
+          {{ $t('Cancel') }}
+        </JetSecondaryButton>
+
+        <JetDangerButton
+          class="ml-3"
+          :class="{ 'opacity-25': processAddressDeletion }"
+          :disabled="processAddressDeletion"
+          @click="destroy()">
+          {{ $t('Delete') }}
+        </JetDangerButton>
+      </template>
+    </JetConfirmationModal>
   </div>
 </template>
 
