@@ -65,7 +65,7 @@ class TimelineEventTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'Jan 01, 2019 - Jan 01, 2020',
+            'Jan 01, 2019 — Jan 01, 2020',
             $timeline->range
         );
 
@@ -75,7 +75,7 @@ class TimelineEventTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'Jan 01, 2019 - Jan 01, 2020',
+            'Jan 01, 2019 — Jan 01, 2020',
             $timeline->range
         );
     }
