@@ -27,8 +27,7 @@ class WikipediaHelper
 
         $url = 'https://en.wikipedia.org/w/api.php?'.$query;
 
-        $response = Http::get($url);
-        $response->throw();
+        $response = Http::get($url)->throw();
 
         if ($response->json('query.pages.*.missing')[0] === true) {
             return [
