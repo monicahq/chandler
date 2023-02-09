@@ -99,6 +99,9 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportImportantDateSummaryController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportIndexController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportMoodTrackingEventController;
@@ -190,6 +193,11 @@ Route::middleware([
             // reports
             Route::prefix('reports')->group(function () {
                 Route::get('', [ReportIndexController::class, 'index'])->name('vault.reports.index');
+
+                // contact addresses
+                Route::get('addresses', [ReportAddressesController::class, 'index'])->name('vault.reports.addresses.index');
+                Route::get('addresses/city/{city}', [ReportAddressesCitiesController::class, 'show'])->name('vault.reports.addresses.cities.show');
+                Route::get('addresses/country/{country}', [ReportAddressesCountriesController::class, 'show'])->name('vault.reports.addresses.countries.show');
 
                 // mood tracking event
                 Route::get('moodTrackingEvents', [ReportMoodTrackingEventController::class, 'index'])->name('vault.reports.mood_tracking_events.index');
