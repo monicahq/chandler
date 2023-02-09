@@ -27,6 +27,7 @@ use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
 use App\Models\User;
+use App\Models\VaultQuickFactTemplate;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -303,6 +304,17 @@ class ContactTest extends TestCase
         $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
 
         $this->assertTrue($contact->addresses()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_quick_facts(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $quickFactTemplate = VaultQuickFactTemplate::factory()->create();
+
+        $contact->quickFacts()->sync([$quickFactTemplate->id => ['content' => 'false']]);
+
+        $this->assertTrue($contact->quickFacts()->exists());
     }
 
     /** @test */

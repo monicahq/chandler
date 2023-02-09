@@ -407,6 +407,16 @@ class Contact extends Model
     }
 
     /**
+     * Get the quick facts associated with the contact.
+     *
+     * @return BelongsToMany
+     */
+    public function quickFacts(): BelongsToMany
+    {
+        return $this->belongsToMany(VaultQuickFactTemplate::class, 'contact_quick_fact', 'contact_id', 'vault_quick_facts_template_id')->withPivot('content')->withTimestamps();
+    }
+
+    /**
      * Get the name of the contact, according to the user preference.
      *
      * @return Attribute<string,never>
