@@ -44,26 +44,48 @@ defineProps({
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div>
-            <ul>
-              <li class="mb-2 font-semibold"><span class="mr-1">🌍</span> All the countries</li>
+            <p class="mb-2 font-semibold"><span class="mr-1">🌍</span> All the countries</p>
+
+            <!-- list of countries -->
+            <ul v-if="data.countries.length > 0">
               <li v-for="country in data.countries" :key="country.id">
                 <Link :href="country.url.index" class="text-blue-500 hover:underline">{{ country.name }}</Link> ({{
                   country.contacts
                 }})
               </li>
             </ul>
+
+            <!-- blank state -->
+            <div
+              v-if="data.countries.length == 0"
+              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <p class="p-5 text-center">
+                No countries have been added yet in any contact's addresses.
+              </p>
+            </div>
           </div>
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
-            <ul>
-              <li class="mb-2 font-semibold"><span class="mr-1">🏙️</span> All the cities</li>
+            <p class="mb-2 font-semibold"><span class="mr-1">🏙️</span> All the cities</p>
+
+            <!-- list of cities -->
+            <ul v-if="data.cities.length > 0">
               <li v-for="city in data.cities" :key="city.id">
                 <Link :href="city.url.index" class="text-blue-500 hover:underline">{{ city.name }}</Link> ({{
                   city.contacts
                 }})
               </li>
             </ul>
+
+            <!-- blank state -->
+            <div
+              v-if="data.countries.length == 0"
+              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <p class="p-5 text-center">
+                No cities have been added yet in any contact's addresses.
+              </p>
+            </div>
           </div>
         </div>
       </div>

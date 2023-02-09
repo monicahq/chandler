@@ -176,7 +176,7 @@ const destroy = (address) => {
         class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="submit()">
         <!-- radio button: choose existing or create new address -->
-        <div class="mb-2 border-b border-gray-200 p-5 dark:border-gray-700">
+        <div v-if="props.data.addresses_in_vault.length > 0" class="mb-2 border-b border-gray-200 p-5 dark:border-gray-700">
           <div class="mb-2 flex items-center">
             <input
               id="chooseExisting"
@@ -209,7 +209,7 @@ const destroy = (address) => {
         </div>
 
         <!-- existing addresses -->
-        <div v-if="choiceChooseExisting" class="h-40 overflow-auto border-b border-gray-200 p-3 dark:border-gray-700">
+        <div v-if="choiceChooseExisting && props.data.addresses_in_vault.length > 0" class="h-40 overflow-auto border-b border-gray-200 p-3 dark:border-gray-700">
           <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <li
               v-for="address in props.data.addresses_in_vault"
