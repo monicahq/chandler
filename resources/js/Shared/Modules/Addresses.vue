@@ -193,7 +193,9 @@ const destroy = () => {
         class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="submit()">
         <!-- radio button: choose existing or create new address -->
-        <div v-if="props.data.addresses_in_vault.length > 0" class="mb-2 border-b border-gray-200 p-5 dark:border-gray-700">
+        <div
+          v-if="props.data.addresses_in_vault.length > 0"
+          class="mb-2 border-b border-gray-200 p-5 dark:border-gray-700">
           <div class="mb-2 flex items-center">
             <input
               id="chooseExisting"
@@ -226,7 +228,9 @@ const destroy = () => {
         </div>
 
         <!-- existing addresses -->
-        <div v-if="choiceChooseExisting && props.data.addresses_in_vault.length > 0" class="h-40 overflow-auto border-b border-gray-200 p-3 dark:border-gray-700">
+        <div
+          v-if="choiceChooseExisting && props.data.addresses_in_vault.length > 0"
+          class="h-40 overflow-auto border-b border-gray-200 p-3 dark:border-gray-700">
           <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
             <li
               v-for="address in props.data.addresses_in_vault"
@@ -252,7 +256,9 @@ const destroy = () => {
         </div>
 
         <!-- create new address -->
-        <div v-if="!choiceChooseExisting || props.data.addresses_in_vault.length == 0" class="border-b border-gray-200 dark:border-gray-700">
+        <div
+          v-if="!choiceChooseExisting || props.data.addresses_in_vault.length == 0"
+          class="border-b border-gray-200 dark:border-gray-700">
           <div v-if="form.errors.length > 0" class="p-5">
             <errors :errors="form.errors" />
           </div>
@@ -400,7 +406,9 @@ const destroy = () => {
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 {{ $t('app.edit') }}
               </li>
-              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="showDeleteAddressModal(address)">
+              <li
+                class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                @click="showDeleteAddressModal(address)">
                 {{ $t('app.delete') }}
               </li>
             </ul>
