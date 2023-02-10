@@ -26,6 +26,7 @@ use App\Models\Pronoun;
 use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\VaultQuickFactTemplate;
 use Carbon\Carbon;
@@ -282,6 +283,17 @@ class ContactTest extends TestCase
         $contact->lifeEvents()->sync([$lifeEvent->id]);
 
         $this->assertTrue($contact->lifeEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_timeline_events(): void
+    {
+        $contact = Contact::factory()->create();
+        $timelineEvent = TimelineEvent::factory()->create();
+
+        $contact->timelineEvents()->sync([$timelineEvent->id]);
+
+        $this->assertTrue($contact->timelineEvents()->exists());
     }
 
     /** @test */
