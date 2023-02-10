@@ -102,9 +102,9 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $array = ModuleLifeEventViewHelper::dtoLifeEventType($lifeEventType);
 
         $this->assertEquals([
-                'id' => $lifeEventType->id,
-                'label' => $lifeEventType->label,
-            ],
+            'id' => $lifeEventType->id,
+            'label' => $lifeEventType->label,
+        ],
             $array
         );
     }
