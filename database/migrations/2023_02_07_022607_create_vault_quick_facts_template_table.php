@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('vault_id');
             $table->string('label')->nullable();
-            $table->string('label_translation_key');
+            $table->string('label_translation_key')->nullable();
             $table->integer('position');
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');

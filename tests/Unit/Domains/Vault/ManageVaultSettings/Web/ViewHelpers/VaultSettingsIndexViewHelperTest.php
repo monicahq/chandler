@@ -116,6 +116,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'contact_date_important_date_type_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes',
                 'mood_tracking_parameter_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters',
                 'life_event_category_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/lifeEventCategories',
+                'quick_fact_templates_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/quickFactTemplates',
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
                 'update_tab_visibility' => env('APP_URL').'/vaults/'.$vault->id.'/settings/visibility',
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id,

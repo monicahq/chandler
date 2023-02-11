@@ -119,6 +119,8 @@ use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEvent
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsQuickFactTemplateController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsQuickFactTemplatePositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
@@ -473,10 +475,10 @@ Route::middleware([
                 Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [VaultSettingsLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
 
                 // quick fact templates
-                Route::post('settings/quickFactTemplates', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.quick_fact_templates.store');
-                Route::put('settings/quickFactTemplates/{template}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.quick_fact_templates.update');
-                Route::put('settings/quickFactTemplates/{template}/order', [VaultSettingsMoodTrackingParameterPositionController::class, 'update'])->name('vault.settings.quick_fact_templates.order.update');
-                Route::delete('settings/quickFactTemplates/{template}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.quick_fact_templates.destroy');
+                Route::post('settings/quickFactTemplates', [VaultSettingsQuickFactTemplateController::class, 'store'])->name('vault.settings.quick_fact_templates.store');
+                Route::put('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'update'])->name('vault.settings.quick_fact_templates.update');
+                Route::put('settings/quickFactTemplates/{template}/order', [VaultSettingsQuickFactTemplatePositionController::class, 'update'])->name('vault.settings.quick_fact_templates.order.update');
+                Route::delete('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'destroy'])->name('vault.settings.quick_fact_templates.destroy');
             });
 
             // global search in the vault

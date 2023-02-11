@@ -5,7 +5,7 @@ import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import draggable from 'vuedraggable-es';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
   data: Object,
@@ -15,33 +15,42 @@ const loadingState = ref(false);
 const createEntryModalShown = ref(false);
 const editEntryId = ref(0);
 const localEntries = ref([]);
+const newEntry = ref(null);
 
 const form = useForm({
-  name: '',
+  label: '',
   position: '',
   errors: [],
 });
 
 onMounted(() => {
-  localEntries = data.quick_fact_templates;
+  localEntries.value = props.data.quick_fact_templates;
 });
 
-const showEntryModal = () => {
-  form.name = '';
+const showAddEntryModal = () => {
+  form.label = '';
   form.position = '';
   createEntryModalShown.value = true;
+
+  nextTick(() => {
+    newEntry.value.focus();
+  });
 };
 
 const renameEntryModal = (entry) => {
-  form.name = entry.name;
+  form.label = entry.label;
   editEntryId.value = entry.id;
+
+  nextTick(() => {
+    newEntry.value.focus();
+  });
 };
 
 const submit = () => {
   loadingState.value = 'loading';
 
   axios
-    .post(props.data.url.store, form)
+    .post(props.data.url.quick_fact_templates_store, form)
     .then((response) => {
       localEntries.value.unshift(response.data.data);
       loadingState.value = null;
@@ -70,7 +79,6 @@ const update = (entry) => {
 };
 
 const destroy = (entry) => {
-
     axios
       .delete(entry.url.destroy)
       .then(() => {
@@ -88,10 +96,7 @@ const updatePosition = (event) => {
   form.position = event.moved.newIndex + 1;
 
   axios
-    .post(event.moved.element.url.position, form)
-    .then(() => {
-      this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
-    })
+    .put(event.moved.element.url.position, form)
     .catch((error) => {
       loadingState.value = null;
       form.errors = error.response.data;
@@ -115,132 +120,116 @@ const updatePosition = (event) => {
         @click="showAddEntryModal" />
     </div>
 
-    <div class="mb-6 rounded border text-sm">
-      <!-- help text -->
-      <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+    <!-- modal to create a quick fact template entry -->
+    <form
+      v-if="createEntryModalShown"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+      @submit.prevent="submit()">
+      <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+        <errors :errors="form.errors" />
 
-        <div class="inline">
-          <p>Please reload the page to see the changes.</p>
-        </div>
+        <text-input
+          ref="newEntry"
+          v-model="form.label"
+          :label="$t('settings.religion_name')"
+          :type="'text'"
+          :autofocus="true"
+          :input-class="'block w-full'"
+          :required="true"
+          :autocomplete="false"
+          :maxlength="255"
+          @esc-key-pressed="createEntryModalShown = false" />
       </div>
 
-      <!-- modal to create a quick fact template entry -->
-      <form
-        v-if="createEntryModalShown"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
-        @submit.prevent="submit()">
-        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-          <errors :errors="form.errors" />
+      <div class="flex justify-between p-5">
+        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createEntryModalShown = false" />
+        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+      </div>
+    </form>
 
-          <text-input
-            :ref="'newReligion'"
-            v-model="form.name"
-            :label="$t('settings.religion_name')"
-            :type="'text'"
-            :autofocus="true"
-            :input-class="'block w-full'"
-            :required="true"
-            :autocomplete="false"
-            :maxlength="255"
-            @esc-key-pressed="createEntryModalShown = false" />
-        </div>
+    <!-- list of templates -->
+    <div
+      v-if="localEntries.length > 0"
+      class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <draggable
+        :list="localEntries"
+        item-key="id"
+        :component-data="{ name: 'fade' }"
+        handle=".handle"
+        @change="updatePosition">
+        <template #item="{ element }">
+          <div
+            v-if="editEntryId != element.id"
+            class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            <!-- icon to move position -->
+            <div class="mr-2 flex">
+              <svg
+                class="handle mr-2 cursor-move"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 7H9V9H7V7Z" fill="currentColor" />
+                <path d="M11 7H13V9H11V7Z" fill="currentColor" />
+                <path d="M17 7H15V9H17V7Z" fill="currentColor" />
+                <path d="M7 11H9V13H7V11Z" fill="currentColor" />
+                <path d="M13 11H11V13H13V11Z" fill="currentColor" />
+                <path d="M15 11H17V13H15V11Z" fill="currentColor" />
+                <path d="M9 15H7V17H9V15Z" fill="currentColor" />
+                <path d="M11 15H13V17H11V15Z" fill="currentColor" />
+                <path d="M17 15H15V17H17V15Z" fill="currentColor" />
+              </svg>
 
-        <div class="flex justify-between p-5">
-          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createEntryModalShown = false" />
-          <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
-        </div>
-      </form>
-
-      <!-- list of religions -->
-      <div
-        v-if="localEntries.length > 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <draggable
-          :list="localEntries"
-          item-key="id"
-          :component-data="{ name: 'fade' }"
-          handle=".handle"
-          @change="updatePosition">
-          <template #item="{ element }">
-            <div
-              v-if="editEntryId != element.id"
-              class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-              <!-- icon to move position -->
-              <div class="mr-2 flex">
-                <svg
-                  class="handle mr-2 cursor-move"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 7H9V9H7V7Z" fill="currentColor" />
-                  <path d="M11 7H13V9H11V7Z" fill="currentColor" />
-                  <path d="M17 7H15V9H17V7Z" fill="currentColor" />
-                  <path d="M7 11H9V13H7V11Z" fill="currentColor" />
-                  <path d="M13 11H11V13H13V11Z" fill="currentColor" />
-                  <path d="M15 11H17V13H15V11Z" fill="currentColor" />
-                  <path d="M9 15H7V17H9V15Z" fill="currentColor" />
-                  <path d="M11 15H13V17H11V15Z" fill="currentColor" />
-                  <path d="M17 15H15V17H17V15Z" fill="currentColor" />
-                </svg>
-
-                <span>{{ element.name }}</span>
-              </div>
-
-              <!-- actions -->
-              <ul class="text-sm">
-                <li class="inline cursor-pointer text-blue-500 hover:underline" @click="renameEntryModal(element)">
-                  {{ $t('app.rename') }}
-                </li>
-                <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                  {{ $t('app.delete') }}
-                </li>
-              </ul>
+              <span>{{ element.label }}</span>
             </div>
 
-            <form
-              v-else
-              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
-              @submit.prevent="update(element)">
-              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-                <errors :errors="form.errors" />
+            <!-- actions -->
+            <ul class="text-sm">
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="renameEntryModal(element)">
+                {{ $t('app.rename') }}
+              </li>
+              <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
+                {{ $t('app.delete') }}
+              </li>
+            </ul>
+          </div>
 
-                <text-input
-                  :ref="'rename' + element.id"
-                  v-model="form.name"
-                  :label="$t('settings.religion_name')"
-                  :type="'text'"
-                  :autofocus="true"
-                  :input-class="'block w-full'"
-                  :required="true"
-                  :autocomplete="false"
-                  :maxlength="255"
-                  @esc-key-pressed="editEntryId = 0" />
-              </div>
+          <form
+            v-else
+            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+            @submit.prevent="update(element)">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+              <errors :errors="form.errors" />
 
-              <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editEntryId = 0" />
-                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
-              </div>
-            </form>
-          </template>
-        </draggable>
-      </div>
+              <text-input
+                ref="newEntry"
+                v-model="form.label"
+                :label="$t('settings.religion_name')"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="editEntryId = 0" />
+            </div>
 
-      <!-- blank state -->
-      <div
-        v-if="localEntries.length == 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <p class="p-5 text-center">{{ $t('settings.religion_blank') }}</p>
-      </div>
+            <div class="flex justify-between p-5">
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editEntryId = 0" />
+              <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            </div>
+          </form>
+        </template>
+      </draggable>
+    </div>
+
+    <!-- blank state -->
+    <div
+      v-if="localEntries.length == 0">
+      <p class="p-5 text-center">
+        Quick facts let you document interesting facts about a contact.
+      </p>
     </div>
   </div>
 </template>

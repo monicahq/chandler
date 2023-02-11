@@ -175,6 +175,9 @@ class VaultSettingsIndexViewHelper
                 'life_event_category_store' => route('vault.settings.life_event_categories.store', [
                     'vault' => $vault->id,
                 ]),
+                'quick_fact_templates_store' => route('vault.settings.quick_fact_templates.store', [
+                    'vault' => $vault->id,
+                ]),
                 'update' => route('vault.settings.update', [
                     'vault' => $vault->id,
                 ]),
