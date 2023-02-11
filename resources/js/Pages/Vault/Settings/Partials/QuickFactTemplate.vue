@@ -79,30 +79,27 @@ const update = (entry) => {
 };
 
 const destroy = (entry) => {
-    axios
-      .delete(entry.url.destroy)
-      .then(() => {
-        var id = localEntries.value.findIndex((x) => x.id === entry.id);
-        localEntries.value.splice(id, 1);
-      })
-      .catch((error) => {
-        loadingState.value = null;
-        form.errors = error.response.data;
-      });
-};
-
-const updatePosition = (event) => {
-  // the event object comes from the draggable component
-  form.position = event.moved.newIndex + 1;
-
   axios
-    .put(event.moved.element.url.position, form)
+    .delete(entry.url.destroy)
+    .then(() => {
+      var id = localEntries.value.findIndex((x) => x.id === entry.id);
+      localEntries.value.splice(id, 1);
+    })
     .catch((error) => {
       loadingState.value = null;
       form.errors = error.response.data;
     });
 };
 
+const updatePosition = (event) => {
+  // the event object comes from the draggable component
+  form.position = event.moved.newIndex + 1;
+
+  axios.put(event.moved.element.url.position, form).catch((error) => {
+    loadingState.value = null;
+    form.errors = error.response.data;
+  });
+};
 </script>
 
 <template>
@@ -113,11 +110,7 @@ const updatePosition = (event) => {
         <span class="mr-1"> 🧑‍🏭 </span>
         Quick facts template
       </h3>
-      <pretty-button
-        v-if="!createEntryModalShown"
-        :text="'Add an entry'"
-        :icon="'plus'"
-        @click="showAddEntryModal" />
+      <pretty-button v-if="!createEntryModalShown" :text="'Add an entry'" :icon="'plus'" @click="showAddEntryModal" />
     </div>
 
     <!-- modal to create a quick fact template entry -->
@@ -225,11 +218,8 @@ const updatePosition = (event) => {
     </div>
 
     <!-- blank state -->
-    <div
-      v-if="localEntries.length == 0">
-      <p class="p-5 text-center">
-        Quick facts let you document interesting facts about a contact.
-      </p>
+    <div v-if="localEntries.length == 0">
+      <p class="p-5 text-center">Quick facts let you document interesting facts about a contact.</p>
     </div>
   </div>
 </template>
