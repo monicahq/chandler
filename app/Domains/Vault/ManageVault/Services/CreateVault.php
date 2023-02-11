@@ -10,6 +10,7 @@ use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\MoodTrackingParameter;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use App\Services\BaseService;
 
 class CreateVault extends BaseService implements ServiceInterface
@@ -63,6 +64,7 @@ class CreateVault extends BaseService implements ServiceInterface
         $this->populateDefaultContactImportantDateTypes();
         $this->populateMoodTrackingParameters();
         $this->populateDefaultLifeEventCategories();
+        $this->populateDefaultQuickVaultTemplateEntries();
 
         return $this->vault;
     }
@@ -335,6 +337,21 @@ class CreateVault extends BaseService implements ServiceInterface
             'label' => null,
             'label_translation_key' => 'vault.settings_life_event_type_sport_promotion',
             'can_be_deleted' => true,
+        ]);
+    }
+
+    private function populateDefaultQuickVaultTemplateEntries(): void
+    {
+        VaultQuickFactTemplate::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.settings_quick_fact_template_entry_hobbies',
+            'position' => 1,
+        ]);
+
+        VaultQuickFactTemplate::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.settings_quick_fact_template_entry_food',
+            'position' => 2,
         ]);
     }
 }

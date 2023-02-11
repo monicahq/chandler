@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 
-use App\Domains\Vault\ManageVaultSettings\Services\CreateLabel;
 use App\Domains\Vault\ManageVaultSettings\Services\CreateQuickFactTemplate;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Label;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\VaultQuickFactTemplate;
@@ -79,7 +77,7 @@ class CreateQuickFactTemplateTest extends TestCase
             'account_id' => $account->id,
             'author_id' => $author->id,
             'vault_id' => $vault->id,
-            'name' => 'name',
+            'label' => 'label',
         ];
 
         $quickFactTemplateEntry = (new CreateQuickFactTemplate())->execute($request);
@@ -87,7 +85,7 @@ class CreateQuickFactTemplateTest extends TestCase
         $this->assertDatabaseHas('vault_quick_facts_templates', [
             'id' => $quickFactTemplateEntry->id,
             'vault_id' => $vault->id,
-            'name' => 'name',
+            'label' => 'label',
             'position' => 1,
         ]);
 

@@ -471,6 +471,12 @@ Route::middleware([
                 Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
                 Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
                 Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [VaultSettingsLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
+
+                // quick fact templates
+                Route::post('settings/quickFactTemplates', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.quick_fact_templates.store');
+                Route::put('settings/quickFactTemplates/{template}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.quick_fact_templates.update');
+                Route::put('settings/quickFactTemplates/{template}/order', [VaultSettingsMoodTrackingParameterPositionController::class, 'update'])->name('vault.settings.quick_fact_templates.order.update');
+                Route::delete('settings/quickFactTemplates/{template}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.quick_fact_templates.destroy');
             });
 
             // global search in the vault

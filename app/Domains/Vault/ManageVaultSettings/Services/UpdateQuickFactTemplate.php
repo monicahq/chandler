@@ -3,10 +3,8 @@
 namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Label;
 use App\Models\VaultQuickFactTemplate;
 use App\Services\BaseService;
-use Illuminate\Support\Str;
 
 class UpdateQuickFactTemplate extends BaseService implements ServiceInterface
 {
@@ -22,7 +20,7 @@ class UpdateQuickFactTemplate extends BaseService implements ServiceInterface
             'author_id' => 'required|integer|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'vault_quick_facts_template_id' => 'required|integer|exists:vault_quick_facts_templates,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -53,7 +51,7 @@ class UpdateQuickFactTemplate extends BaseService implements ServiceInterface
         $quickFactTemplateEntry = $this->vault->quickFactsTemplateEntries()
             ->findOrFail($data['vault_quick_facts_template_id']);
 
-        $quickFactTemplateEntry->name = $data['name'];
+        $quickFactTemplateEntry->label = $data['label'];
         $quickFactTemplateEntry->save();
 
         return $quickFactTemplateEntry;

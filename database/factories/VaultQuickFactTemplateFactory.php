@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\VaultQuickFactTemplate;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,8 +22,9 @@ class VaultQuickFactTemplateFactory extends Factory
     {
         return [
             'vault_id' => Vault::factory(),
-            'name' => $this->faker->name(),
+            'label' => $this->faker->name(),
             'position' => 1,
+            'label_translation_key' => 'vault_quick_fact_template.label_translation_key',
         ];
     }
 }

@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 use App\Domains\Vault\ManageVaultSettings\Services\UpdateQuickFactTemplate;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Label;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\VaultQuickFactTemplate;
@@ -89,7 +88,7 @@ class UpdateQuickFactTemplateTest extends TestCase
             'author_id' => $author->id,
             'vault_id' => $vault->id,
             'vault_quick_facts_template_id' => $quickFactTemplateEntry->id,
-            'name' => 'label name',
+            'label' => 'label name',
         ];
 
         $quickFactTemplateEntry = (new UpdateQuickFactTemplate())->execute($request);
@@ -97,7 +96,7 @@ class UpdateQuickFactTemplateTest extends TestCase
         $this->assertDatabaseHas('vault_quick_facts_templates', [
             'id' => $quickFactTemplateEntry->id,
             'vault_id' => $vault->id,
-            'name' => 'label name',
+            'label' => 'label name',
         ]);
     }
 }

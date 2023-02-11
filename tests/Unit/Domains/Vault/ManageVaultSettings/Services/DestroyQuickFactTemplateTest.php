@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Services;
 use App\Domains\Vault\ManageVaultSettings\Services\DestroyQuickFactTemplate;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
-use App\Models\Label;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\VaultQuickFactTemplate;

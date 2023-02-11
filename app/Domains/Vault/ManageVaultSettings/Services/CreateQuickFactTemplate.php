@@ -3,10 +3,8 @@
 namespace App\Domains\Vault\ManageVaultSettings\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Label;
 use App\Models\VaultQuickFactTemplate;
 use App\Services\BaseService;
-use Illuminate\Support\Str;
 
 class CreateQuickFactTemplate extends BaseService implements ServiceInterface
 {
@@ -23,7 +21,7 @@ class CreateQuickFactTemplate extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -58,7 +56,7 @@ class CreateQuickFactTemplate extends BaseService implements ServiceInterface
 
         $this->quickFactTemplateEntry = VaultQuickFactTemplate::create([
             'vault_id' => $data['vault_id'],
-            'name' => $data['name'],
+            'label' => $data['label'],
             'position' => $newPosition,
         ]);
 
