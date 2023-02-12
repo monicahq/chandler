@@ -133,4 +133,7 @@ return [
 
     'min_read' => '{count} min read',
     'word_count' => '{count} words',
+
+    'distance_format_km' => ':count km',
+    'distance_format_miles' => ':count miles',
 ];

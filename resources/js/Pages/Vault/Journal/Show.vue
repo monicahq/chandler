@@ -130,7 +130,7 @@ defineProps({
           <!-- right -->
           <div class="p-3 sm:p-0">
             <!-- cta -->
-            <div class="mb-6 flex justify-center">
+            <div class="mb-8 flex justify-center">
               <pretty-link
                 v-if="layoutData.vault.permission.at_least_editor"
                 :href="data.url.create"
@@ -139,7 +139,9 @@ defineProps({
             </div>
 
             <!-- slices of life -->
-            <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
+            <p class="mb-2 font-medium">
+              <span class="mr-1"> 🍕 </span> Slices of life
+            </p>
             <div v-for="slice in data.slices" :key="slice.id" class="mb-6 last:mb-0">
               <img v-if="slice.cover_image" class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
               <div
@@ -148,6 +150,14 @@ defineProps({
                 <inertia-link :href="slice.url.show" class="font-semibold">{{ slice.name }}</inertia-link>
                 <p class="text-xs text-gray-600">{{ slice.date_range }}</p>
               </div>
+            </div>
+
+            <!-- no slices of life yet -->
+            <div
+              v-if="data.slices.length == 0"
+              class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <img src="/img/journal_slice_of_life_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-14 w-14" />
+              <p class="px-5 pb-5 pt-2 text-center">Group journal entries together with slices of life.</p>
             </div>
 
             <div>
