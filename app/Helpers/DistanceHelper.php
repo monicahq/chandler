@@ -3,16 +3,15 @@
 namespace App\Helpers;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 
 class DistanceHelper
 {
     /**
      * Format the distance according to the preferences of the user.
      *
-     * @param User $user
-     * @param integer $distance
-     * @param string $unit
+     * @param  User  $user
+     * @param  int  $distance
+     * @param  string  $unit
      * @return string
      */
     public static function format(User $user, int $distance, string $unit): string

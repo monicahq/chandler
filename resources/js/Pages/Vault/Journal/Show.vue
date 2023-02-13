@@ -139,9 +139,7 @@ defineProps({
             </div>
 
             <!-- slices of life -->
-            <p class="mb-2 font-medium">
-              <span class="mr-1"> 🍕 </span> Slices of life
-            </p>
+            <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
             <div v-for="slice in data.slices" :key="slice.id" class="mb-6 last:mb-0">
               <img v-if="slice.cover_image" class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
               <div

@@ -296,8 +296,7 @@ const store = () => {
       <!-- description -->
       <div
         v-if="selectedLifeEventType && addDistanceFieldShown"
-        class="border-b border-gray-200 p-3 dark:border-gray-700 flex items-center">
-
+        class="flex items-center border-b border-gray-200 pt-3 pb-1 pr-3 pl-3 dark:border-gray-700">
         <text-input
           ref="distanceField"
           v-model="form.distance"
@@ -322,9 +321,7 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="km"
-                class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label for="km" class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 km
               </label>
             </div>
@@ -339,9 +336,7 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="miles"
-                class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label for="miles" class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 miles
               </label>
             </div>

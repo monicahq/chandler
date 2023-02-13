@@ -3,7 +3,6 @@
 namespace App\Domains\Settings\ManageUserPreferences\Web\Controllers;
 
 use App\Domains\Settings\ManageUserPreferences\Services\StoreDistanceFormatPreference;
-use App\Domains\Settings\ManageUserPreferences\Services\StoreNumberFormatPreference;
 use App\Domains\Settings\ManageUserPreferences\Web\ViewHelpers\UserPreferencesIndexViewHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
