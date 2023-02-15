@@ -9,10 +9,19 @@
     "social"
   ],
   "license": "AGPL-3.0-or-later",
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/asbiin/laravel-sentry-tunnel"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/asbiin/laravel-language-detector"
+  }
+  ],
   "require": {
     "php": "^8.1",
     "asbiin/laravel-webauthn": "^3.2",
-    "fruitcake/laravel-cors": "^2.2",
     "guzzlehttp/guzzle": "^7.4",
     "http-interop/http-factory-guzzle": "^1.2",
     "inertiajs/inertia-laravel": "^0",
@@ -28,7 +37,7 @@
     "laravel/tinker": "^2.7",
     "meilisearch/meilisearch-php": "^1.0",
     "monicahq/laravel-sabre": "^1.6",
-    "naugrim/laravel-sentry-tunnel": "^1.0",
+    "naugrim/laravel-sentry-tunnel": "dev-laravel-10",
     "sentry/sentry-laravel": "^3.0",
     "socialiteproviders/facebook": "^4.1",
     "socialiteproviders/github": "^4.1",
@@ -38,12 +47,12 @@
     "socialiteproviders/twitter": "^4.1",
     "tightenco/ziggy": "1.5.0",
     "uploadcare/uploadcare-php": "^3.2",
-    "vluzrmos/language-detector": "^2.3"
+    "vluzrmos/language-detector": "dev-laravel-10"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.7",
     "barryvdh/laravel-ide-helper": "^2.12",
-    "brianium/paratest": "^6.4",
+    "brianium/paratest": "^7.0",
     "fakerphp/faker": "^1.9",
     "laravel/pint": "^1.1",
     "laravel/sail": "^1.14",
@@ -82,7 +91,8 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "allow-plugins": {
-      "composer/package-versions-deprecated": true
+      "composer/package-versions-deprecated": true,
+      "php-http/discovery": true
     }
   },
   "minimum-stability": "stable",
