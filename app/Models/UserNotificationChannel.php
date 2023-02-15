@@ -50,8 +50,6 @@ class UserNotificationChannel extends Model
 
     /**
      * Get the user associated with the user notification channel.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -61,8 +59,6 @@ class UserNotificationChannel extends Model
     /**
      * Get the user notification sent records associated with the user
      * notification channel.
-     *
-     * @return HasMany
      */
     public function userNotificationSent(): HasMany
     {
@@ -71,8 +67,6 @@ class UserNotificationChannel extends Model
 
     /**
      * Get the contact reminder records associated with the user.
-     *
-     * @return BelongsToMany
      */
     public function contactReminders(): BelongsToMany
     {

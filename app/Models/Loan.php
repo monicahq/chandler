@@ -62,8 +62,6 @@ class Loan extends Model
 
     /**
      * Get the vault associated with the loan.
-     *
-     * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
@@ -72,8 +70,6 @@ class Loan extends Model
 
     /**
      * Get the currency associated with the loan.
-     *
-     * @return BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -82,8 +78,6 @@ class Loan extends Model
 
     /**
      * Get the contact that did the loan.
-     *
-     * @return BelongsToMany
      */
     public function loaners(): BelongsToMany
     {
@@ -92,8 +86,6 @@ class Loan extends Model
 
     /**
      * Get the contact records the loan was made to.
-     *
-     * @return BelongsToMany
      */
     public function loanees(): BelongsToMany
     {

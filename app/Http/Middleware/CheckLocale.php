@@ -11,7 +11,6 @@ class CheckLocale
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function __construct(
@@ -22,8 +21,6 @@ class CheckLocale
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -41,9 +38,6 @@ class CheckLocale
 
     /**
      * Get the current or default locale.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
      */
     public function getLocale(Request $request): ?string
     {

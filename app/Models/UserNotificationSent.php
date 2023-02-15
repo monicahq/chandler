@@ -35,8 +35,6 @@ class UserNotificationSent extends Model
 
     /**
      * Get the user notification channel associated with the user notification sent.
-     *
-     * @return BelongsTo
      */
     public function notificationChannel(): BelongsTo
     {

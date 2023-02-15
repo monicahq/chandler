@@ -48,8 +48,6 @@ class TimelineEvent extends Model
 
     /**
      * Get the vault associated with the timeline event.
-     *
-     * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
@@ -58,8 +56,6 @@ class TimelineEvent extends Model
 
     /**
      * Get the life events associated with the timeline event.
-     *
-     * @return HasMany
      */
     public function lifeEvents(): HasMany
     {
@@ -68,8 +64,6 @@ class TimelineEvent extends Model
 
     /**
      * Get the contact records the timeline event is with.
-     *
-     * @return BelongsToMany
      */
     public function participants(): BelongsToMany
     {

@@ -41,8 +41,6 @@ class ContactTask extends Model
 
     /**
      * Get the contact associated with the contact task.
-     *
-     * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
@@ -51,8 +49,6 @@ class ContactTask extends Model
 
     /**
      * Get the author associated with the contact task.
-     *
-     * @return BelongsTo
      */
     public function author(): BelongsTo
     {

@@ -40,6 +40,7 @@ class ContactReminder extends Model
         'last_triggered_at',
         'number_times_triggered',
     ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -51,8 +52,6 @@ class ContactReminder extends Model
 
     /**
      * Get the contact associated with the contact reminder.
-     *
-     * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
@@ -61,8 +60,6 @@ class ContactReminder extends Model
 
     /**
      * Get the user notification channel records associated with the contact reminder.
-     *
-     * @return BelongsToMany
      */
     public function userNotificationChannels(): BelongsToMany
     {

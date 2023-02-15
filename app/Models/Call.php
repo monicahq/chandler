@@ -54,8 +54,6 @@ class Call extends Model
 
     /**
      * Get the contact associated with the call.
-     *
-     * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
@@ -64,8 +62,6 @@ class Call extends Model
 
     /**
      * Get the author associated with the call.
-     *
-     * @return BelongsTo
      */
     public function author(): BelongsTo
     {
@@ -74,8 +70,6 @@ class Call extends Model
 
     /**
      * Get the call reason associated with the call.
-     *
-     * @return BelongsTo
      */
     public function callReason(): BelongsTo
     {
@@ -84,8 +78,6 @@ class Call extends Model
 
     /**
      * Get the emotion associated with the call.
-     *
-     * @return BelongsTo
      */
     public function emotion(): BelongsTo
     {

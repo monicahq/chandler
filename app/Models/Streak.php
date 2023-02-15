@@ -31,8 +31,6 @@ class Streak extends Model
 
     /**
      * Get the goal associated with the streak.
-     *
-     * @return BelongsTo
      */
     public function goal(): BelongsTo
     {

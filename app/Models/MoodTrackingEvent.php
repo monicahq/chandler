@@ -37,8 +37,6 @@ class MoodTrackingEvent extends Model
 
     /**
      * Get the contact associated with the mood tracking event.
-     *
-     * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
@@ -47,8 +45,6 @@ class MoodTrackingEvent extends Model
 
     /**
      * Get the mood tracking parameter associated with the mood tracking event.
-     *
-     * @return BelongsTo
      */
     public function moodTrackingParameter(): BelongsTo
     {
@@ -57,8 +53,6 @@ class MoodTrackingEvent extends Model
 
     /**
      * Get the mood tracking event's feed item.
-     *
-     * @return MorphOne
      */
     public function feedItem(): MorphOne
     {
