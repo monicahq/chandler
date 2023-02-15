@@ -17,7 +17,7 @@
     {
       "type": "vcs",
       "url": "https://github.com/asbiin/laravel-language-detector"
-  }
+    }
   ],
   "require": {
     "php": "^8.1",
