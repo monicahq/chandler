@@ -49,15 +49,7 @@ class Call extends Model
      */
     protected $casts = [
         'answered' => 'boolean',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'called_at',
+        'called_at' => 'datetime',
     ];
 
     /**

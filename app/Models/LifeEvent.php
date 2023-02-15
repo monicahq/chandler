@@ -37,21 +37,13 @@ class LifeEvent extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'happened_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'collapsed' => 'boolean',
+        'happened_at' => 'datetime',
     ];
 
     /**

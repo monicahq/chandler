@@ -40,14 +40,13 @@ class ContactReminder extends Model
         'last_triggered_at',
         'number_times_triggered',
     ];
-
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = [
-        'last_triggered_at',
+    protected $casts = [
+        'last_triggered_at' => 'datetime',
     ];
 
     /**

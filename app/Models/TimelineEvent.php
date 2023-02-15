@@ -37,21 +37,13 @@ class TimelineEvent extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'started_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'collapsed' => 'boolean',
+        'started_at' => 'datetime',
     ];
 
     /**

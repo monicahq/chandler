@@ -40,22 +40,14 @@ class Loan extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'loaned_at',
-        'settled_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'settled' => 'boolean',
+        'loaned_at' => 'datetime',
+        'settled_at' => 'datetime',
     ];
 
     /**
