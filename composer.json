@@ -19,7 +19,7 @@
     "knuckleswtf/scribe": "^4.2",
     "laravel-notification-channels/telegram": "^3.0",
     "laravel/fortify": "^1.13",
-    "laravel/framework": "^9.22",
+    "laravel/framework": "^9.22|^10.0",
     "laravel/jetstream": "^2.10",
     "laravel/sanctum": "^3.1",
     "laravel/scout": "^9.4",
