@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Contact\ManageGroups\Services;
+namespace App\Domains\Contact\ManageQuickFacts\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Services\BaseService;
 
-class DestroyGroup extends BaseService implements ServiceInterface
+class DestroyQuickFact extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
@@ -18,7 +18,8 @@ class DestroyGroup extends BaseService implements ServiceInterface
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'group_id' => 'required|integer|exists:groups,id',
+            'contact_id' => 'required|integer|exists:contacts,id',
+            'quick_fact_id' => 'required|integer|exists:quick_facts,id',
         ];
     }
 
@@ -33,11 +34,12 @@ class DestroyGroup extends BaseService implements ServiceInterface
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_vault_editor',
+            'contact_must_belong_to_vault',
         ];
     }
 
     /**
-     * Destroy a group.
+     * Destroy a quick fact.
      *
      * @param  array  $data
      */
@@ -45,9 +47,9 @@ class DestroyGroup extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $group = $this->vault->groups()
-            ->findOrFail($data['group_id']);
+        $quickFact = $this->contact->quickFacts()
+            ->findOrFail($data['quick_fact_id']);
 
-        $group->delete();
+        $quickFact->delete();
     }
 }

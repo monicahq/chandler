@@ -23,12 +23,14 @@ return new class extends Migration
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
-        Schema::create('contact_quick_fact', function (Blueprint $table) {
-            $table->unsignedBigInteger('contact_id');
+        Schema::create('quick_facts', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('vault_quick_facts_template_id');
+            $table->unsignedBigInteger('contact_id');
             $table->string('content');
             $table->timestamps();
             $table->foreign('vault_quick_facts_template_id')->references('id')->on('vault_quick_facts_templates')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 
@@ -40,6 +42,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('vault_quick_facts_templates');
-        Schema::dropIfExists('contact_quick_fact');
+        Schema::dropIfExists('quick_facts');
     }
 };

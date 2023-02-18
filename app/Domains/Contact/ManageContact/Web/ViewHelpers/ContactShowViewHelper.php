@@ -31,6 +31,7 @@ use App\Models\Contact;
 use App\Models\Module;
 use App\Models\TemplatePage;
 use App\Models\User;
+use App\Models\VaultQuickFactTemplate;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
@@ -57,6 +58,7 @@ class ContactShowViewHelper
             'template_pages' => $templatesPagesCollection,
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'group_summary_information' => GroupsViewHelper::summary($contact),
+            'quick_fact_template_entries' => self::quickFacts($contact),
             'modules' => $firstPage ? self::modules($firstPage, $contact, $user) : [],
             'avatar' => [
                 'uploadcarePublicKey' => config('services.uploadcare.public_key'),
@@ -106,6 +108,7 @@ class ContactShowViewHelper
             'template_pages' => self::getTemplatePagesList($templatePages, $contact, $templatePage),
             'contact_information' => self::getContactInformation($templatePages, $contact, $user),
             'group_summary_information' => GroupsViewHelper::summary($contact),
+            'quick_fact_template_entries' => self::quickFacts($contact),
             'modules' => self::modules($templatePage, $contact, $user),
             'avatar' => [
                 'uploadcarePublicKey' => config('services.uploadcare.public_key'),
@@ -311,5 +314,21 @@ class ContactShowViewHelper
         }
 
         return $modulesCollection;
+    }
+
+    public static function quickFacts(Contact $contact): array
+    {
+        $quickFactsTemplateEntries = $contact
+            ->vault
+            ->quickFactsTemplateEntries()
+            ->get()
+            ->map(fn (VaultQuickFactTemplate $template) => [
+                'id' => $template->id,
+                'label' => $template->label,
+            ]);
+
+        return [
+            'templates' => $quickFactsTemplateEntries,
+        ];
     }
 }

@@ -43,7 +43,7 @@ class CreateGroup extends BaseService implements ServiceInterface
     }
 
     /**
-     * Create a family.
+     * Create a group.
      *
      * @param  array  $data
      * @return Group

@@ -23,6 +23,7 @@ use App\Models\Note;
 use App\Models\Pet;
 use App\Models\Post;
 use App\Models\Pronoun;
+use App\Models\QuickFact;
 use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
@@ -322,9 +323,7 @@ class ContactTest extends TestCase
     public function it_has_many_quick_facts(): void
     {
         $contact = Contact::factory()->create([]);
-        $quickFactTemplate = VaultQuickFactTemplate::factory()->create();
-
-        $contact->quickFacts()->sync([$quickFactTemplate->id => ['content' => 'false']]);
+        QuickFact::factory()->create(['contact_id' => $contact->id]);
 
         $this->assertTrue($contact->quickFacts()->exists());
     }
