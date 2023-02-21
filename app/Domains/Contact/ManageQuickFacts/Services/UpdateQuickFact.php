@@ -66,7 +66,7 @@ class UpdateQuickFact extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->contact->quickFacts()
+        $this->quickFact = $this->contact->quickFacts()
             ->findOrFail($this->data['quick_fact_id']);
     }
 }
