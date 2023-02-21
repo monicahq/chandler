@@ -225,6 +225,11 @@ Route::middleware([
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
 
+                    // quick facts
+                    Route::post('/quickFacts/{template}', [ContactQuickFactController::class, 'store'])->name('contact.quick_fact.store');
+                    Route::put('/quickFacts/{template}/{quickFact}', [ContactQuickFactController::class, 'update'])->name('contact.quick_fact.update');
+                    Route::delete('/quickFacts/{template}/{quickFact}', [ContactQuickFactController::class, 'destroy'])->name('contact.quick_fact.destroy');
+
                     // toggle archive/favorite
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
                     Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
