@@ -341,7 +341,7 @@ class ContactShowViewHelper
             ->quickFactsTemplateEntries()
             ->first();
 
-        $quickFacts = ContactModuleQuickFactViewHelper::data($contact, $firstTemplate);
+        $quickFacts = $firstTemplate ? ContactModuleQuickFactViewHelper::data($contact, $firstTemplate) : null;
 
         return [
             'show_quick_facts' => $contact->show_quick_facts,
