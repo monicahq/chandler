@@ -4,9 +4,7 @@ namespace App\Domains\Contact\ManageQuickFacts\Web\ViewHelpers;
 
 use App\Models\Contact;
 use App\Models\QuickFact;
-use App\Models\Religion;
 use App\Models\VaultQuickFactTemplate;
-use Illuminate\Support\Collection;
 
 class ContactModuleQuickFactViewHelper
 {

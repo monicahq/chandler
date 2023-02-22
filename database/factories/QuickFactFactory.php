@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Contact;
-use App\Models\ContactImportantDate;
-use App\Models\ContactImportantDateType;
 use App\Models\QuickFact;
 use App\Models\VaultQuickFactTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;

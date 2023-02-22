@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Contact\ManageQuickFacts\Services;
 
-use App\Domains\Contact\ManageLifeEvents\Services\ToggleLifeEvent;
 use App\Domains\Contact\ManageQuickFacts\Services\ToggleQuickFactModule;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;

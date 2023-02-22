@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageQuickFacts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\LifeEvent;
 use App\Services\BaseService;
 
 class ToggleQuickFactModule extends BaseService implements ServiceInterface
@@ -60,7 +59,7 @@ class ToggleQuickFactModule extends BaseService implements ServiceInterface
 
     private function update(): void
     {
-        $this->contact->show_quick_facts = !$this->contact->show_quick_facts;
+        $this->contact->show_quick_facts = ! $this->contact->show_quick_facts;
         $this->contact->save();
     }
 }

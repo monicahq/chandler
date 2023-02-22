@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\ContactImportantDate;
 use App\Models\QuickFact;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

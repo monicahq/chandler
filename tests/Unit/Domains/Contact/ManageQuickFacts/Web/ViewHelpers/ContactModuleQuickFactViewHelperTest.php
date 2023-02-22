@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Contact\ManageQuickFacts\Web\ViewHelpers;
 use App\Domains\Contact\ManageQuickFacts\Web\ViewHelpers\ContactModuleQuickFactViewHelper;
 use App\Models\Contact;
 use App\Models\QuickFact;
-use App\Models\Religion;
 use App\Models\VaultQuickFactTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -32,7 +31,7 @@ class ContactModuleQuickFactViewHelperTest extends TestCase
 
         $this->assertEquals(
             [
-                'store' => env('APP_URL') . '/vaults/' . $contact->vault->id . '/contacts/' . $contact->id . '/quickFacts/' . $template->id,
+                'store' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/quickFacts/'.$template->id,
             ],
             $array['url']
         );

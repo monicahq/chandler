@@ -2,12 +2,10 @@
 
 namespace Tests\Unit\Domains\Contact\ManageQuickFacts\Services;
 
-use App\Domains\Contact\ManageGroups\Services\DestroyGroup;
 use App\Domains\Contact\ManageQuickFacts\Services\DestroyQuickFact;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\Group;
 use App\Models\QuickFact;
 use App\Models\User;
 use App\Models\Vault;

@@ -6,13 +6,11 @@ use App\Domains\Contact\ManageQuickFacts\Services\CreateQuickFact;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\GroupType;
 use App\Models\User;
 use App\Models\Vault;
 use App\Models\VaultQuickFactTemplate;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -30,7 +28,7 @@ class CreateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $regis->account, $contact, $vault, $vaultTemplate);
@@ -60,7 +58,7 @@ class CreateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $account, $contact, $vault, $vaultTemplate);
@@ -78,7 +76,7 @@ class CreateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
 
         $this->executeService($regis, $regis->account, $contact, $vault, $vaultTemplate);

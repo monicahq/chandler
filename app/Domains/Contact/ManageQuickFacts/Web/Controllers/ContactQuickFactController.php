@@ -2,8 +2,6 @@
 
 namespace App\Domains\Contact\ManageQuickFacts\Web\Controllers;
 
-use App\Domains\Contact\ManageGroups\Services\AddContactToGroup;
-use App\Domains\Contact\ManageGroups\Services\CreateGroup;
 use App\Domains\Contact\ManageGroups\Services\RemoveContactFromGroup;
 use App\Domains\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Domains\Contact\ManageQuickFacts\Services\CreateQuickFact;
@@ -42,7 +40,7 @@ class ContactQuickFactController extends Controller
         $contact = Contact::find($contactId);
 
         return response()->json([
-            'data' => ModuleGroupsViewHelper::dto($contact, $quickFact),
+            'data' => ContactModuleQuickFactViewHelper::dto($contact, $quickFact),
         ], 201);
     }
 

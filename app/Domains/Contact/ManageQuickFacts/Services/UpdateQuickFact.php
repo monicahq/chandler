@@ -3,7 +3,6 @@
 namespace App\Domains\Contact\ManageQuickFacts\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Group;
 use App\Models\QuickFact;
 use App\Services\BaseService;
 

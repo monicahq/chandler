@@ -29,7 +29,6 @@ use App\Models\Religion;
 use App\Models\Template;
 use App\Models\TimelineEvent;
 use App\Models\User;
-use App\Models\VaultQuickFactTemplate;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

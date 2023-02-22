@@ -1,4 +1,5 @@
 <script setup>
+import Loading from '@/Shared/Loading.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
@@ -13,13 +14,17 @@ const form = useForm({
   content: '',
 });
 
+const loading = ref(false);
 const loadingState = ref(false);
 const createQuickFactModalShown = ref(false);
 const openState = ref(false);
 const localQuickFacts = ref([]);
+const localTemplate = ref([]);
 
 onMounted(() => {
   openState.value = props.data.show_quick_facts;
+  localQuickFacts.value = props.data.quick_facts.quick_facts;
+  localTemplate.value = props.data.template;
 });
 
 const toggle = () => {
@@ -29,10 +34,14 @@ const toggle = () => {
 };
 
 const get = (template) => {
+  loading.value = true;
+  localTemplate.value = template;
+
   axios
     .get(template.url.show)
     .then((response) => {
-      localQuickFacts.value = response.data.quick_facts;
+      localQuickFacts.value = response.data.data.quick_facts;
+      loading.value = false;
     });
 };
 
@@ -93,29 +102,33 @@ const store = () => {
       <div class="flex mb-4">
         <ul class="list">
           <li v-for="template in data.templates" :key="template.id" class="inline mr-2">
-            <span @click="get(template)" class="px-2 py-1 border border-gray-200 rounded bg-white font-semibold text-sm cursor-pointer">{{ template.label }}</span>
+            <span @click="get(template)" :class="localTemplate.id === template.id ? 'border border-gray-200 rounded bg-white font-semibold' : ''"  class="px-2 py-1 text-sm cursor-pointer">{{ template.label }}</span>
           </li>
         </ul>
       </div>
 
       <!-- content -->
-      <ul>
-        <li class="flex items-center mb-1">
+      <ul v-if="localQuickFacts.length > 0 && !loading">
+        <li v-for="quickFact in localQuickFacts" :key="quickFact.id" class="flex items-center mb-1">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
 
-          <span>sjflasjdfl</span>
-        </li>
-        <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-
-          <span>sjflasjdfl</span>
+          <span>{{ quickFact.content }}</span>
         </li>
         <li>edit</li>
       </ul>
+
+      <!-- blank state -->
+      <div v-if="localQuickFacts.length == 0 && !loading" class="mb-2">
+        <p class="px-5 pb-2 text-center">There are no quick facts here yet.</p>
+        <img src="/img/contact_blank_quick_facts.svg" :alt="$t('Activity feed')" class="mx-auto h-20 w-20" />
+      </div>
+
+      <!-- loading mode -->
+      <div v-if="loading"  class="px-20 py-5 text-center">
+        <Loading />
+      </div>
 
       <!-- modal to create a quick fact -->
       <form

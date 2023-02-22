@@ -2,13 +2,10 @@
 
 namespace Tests\Unit\Domains\Contact\ManageQuickFacts\Services;
 
-use App\Domains\Contact\ManageGroups\Services\UpdateGroup;
 use App\Domains\Contact\ManageQuickFacts\Services\UpdateQuickFact;
 use App\Exceptions\NotEnoughPermissionException;
 use App\Models\Account;
 use App\Models\Contact;
-use App\Models\Group;
-use App\Models\GroupType;
 use App\Models\QuickFact;
 use App\Models\User;
 use App\Models\Vault;
@@ -33,7 +30,7 @@ class UpdateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
         $quickFact = QuickFact::factory()->create([
             'contact_id' => $contact->id,
@@ -67,7 +64,7 @@ class UpdateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
         $quickFact = QuickFact::factory()->create([
             'contact_id' => $contact->id,
@@ -89,7 +86,7 @@ class UpdateQuickFactTest extends TestCase
             'vault_id' => $vault->id,
         ]);
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
         $quickFact = QuickFact::factory()->create([
             'contact_id' => $contact->id,
@@ -109,7 +106,7 @@ class UpdateQuickFactTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
         $quickFact = QuickFact::factory()->create([
             'contact_id' => $contact->id,
@@ -129,7 +126,7 @@ class UpdateQuickFactTest extends TestCase
         $vault = $this->setPermissionInVault($regis, Vault::PERMISSION_EDIT, $vault);
         $contact = Contact::factory()->create();
         $vaultTemplate = VaultQuickFactTemplate::factory()->create([
-            'vault_id' => $regis->account_id,
+            'vault_id' => $vault->id,
         ]);
         $quickFact = QuickFact::factory()->create([
             'vault_quick_facts_template_id' => $vaultTemplate->id,
