@@ -50,6 +50,7 @@ class Contact extends Model
         'nickname',
         'maiden_name',
         'can_be_deleted',
+        'show_quick_facts',
         'template_id',
         'last_updated_at',
         'company_id',
@@ -71,6 +72,7 @@ class Contact extends Model
     protected $casts = [
         'can_be_deleted' => 'boolean',
         'listed' => 'boolean',
+        'show_quick_facts' => 'boolean',
         'last_updated_at' => 'datetime',
     ];
 

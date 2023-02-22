@@ -32,6 +32,10 @@ return new class extends Migration
             $table->foreign('vault_quick_facts_template_id')->references('id')->on('vault_quick_facts_templates')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
+
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->boolean('show_quick_facts')->default(false)->after('can_be_deleted');
+        });
     }
 
     /**

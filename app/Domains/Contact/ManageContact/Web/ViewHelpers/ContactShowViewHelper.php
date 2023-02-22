@@ -328,7 +328,14 @@ class ContactShowViewHelper
             ]);
 
         return [
+            'show_quick_facts' => $contact->show_quick_facts,
             'templates' => $quickFactsTemplateEntries,
+            'url' => [
+                'toggle' => route('contact.quick_fact.toggle', [
+                    'vault' => $contact->vault->id,
+                    'contact' => $contact->id,
+                ]),
+            ],
         ];
     }
 }
