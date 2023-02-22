@@ -7,6 +7,7 @@ use App\Domains\Contact\ManageGroups\Services\CreateGroup;
 use App\Domains\Contact\ManageGroups\Services\RemoveContactFromGroup;
 use App\Domains\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Domains\Contact\ManageQuickFacts\Services\CreateQuickFact;
+use App\Domains\Contact\ManageQuickFacts\Web\ViewHelpers\ContactModuleQuickFactViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactQuickFactController extends Controller
 {
+    public function show(Request $request, int $vaultId, int $contactId, int $templateId): JsonResponse
+    {
+        $contact = Contact::find($contactId);
+        $template = $contact->vault->quickFactsTemplateEntries()->findOrFail($templateId);
+
+        return response()->json([
+            'data' => ContactModuleQuickFactViewHelper::data($contact, $template),
+        ], 200);
+    }
+
     public function store(Request $request, int $vaultId, int $contactId, int $templateId): JsonResponse
     {
         $data = [

@@ -20,6 +20,7 @@ use App\Domains\Contact\ManageNotes\Web\ViewHelpers\ModuleNotesViewHelper;
 use App\Domains\Contact\ManagePets\Web\ViewHelpers\ModulePetsViewHelper;
 use App\Domains\Contact\ManagePhotos\Web\ViewHelpers\ModulePhotosViewHelper;
 use App\Domains\Contact\ManagePronouns\Web\ViewHelpers\ModuleGenderPronounViewHelper;
+use App\Domains\Contact\ManageQuickFacts\Web\ViewHelpers\ContactModuleQuickFactViewHelper;
 use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ModuleFamilySummaryViewHelper;
 use App\Domains\Contact\ManageRelationships\Web\ViewHelpers\ModuleRelationshipViewHelper;
 use App\Domains\Contact\ManageReligion\Web\ViewHelpers\ModuleReligionViewHelper;
@@ -325,11 +326,27 @@ class ContactShowViewHelper
             ->map(fn (VaultQuickFactTemplate $template) => [
                 'id' => $template->id,
                 'label' => $template->label,
+                'url' => [
+                    'show' => route('contact.quick_fact.show', [
+                        'vault' => $contact->vault->id,
+                        'contact' => $contact->id,
+                        'template' => $template->id,
+                    ]),
+                ],
             ]);
+
+        // get the quick facts of the first template
+        $firstTemplate = $contact
+            ->vault
+            ->quickFactsTemplateEntries()
+            ->first();
+
+        $quickFacts = ContactModuleQuickFactViewHelper::data($contact, $firstTemplate);
 
         return [
             'show_quick_facts' => $contact->show_quick_facts,
             'templates' => $quickFactsTemplateEntries,
+            'quick_facts' => $quickFacts,
             'url' => [
                 'toggle' => route('contact.quick_fact.toggle', [
                     'vault' => $contact->vault->id,

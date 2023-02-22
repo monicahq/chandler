@@ -35,6 +35,7 @@ use App\Domains\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Domains\Contact\ManagePets\Web\Controllers\ContactModulePetController;
 use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactModulePhotoController;
 use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactPhotoController;
+use App\Domains\Contact\ManageQuickFacts\Web\Controllers\ContactQuickFactController;
 use App\Domains\Contact\ManageQuickFacts\Web\Controllers\ContactQuickFactToggleController;
 use App\Domains\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionController;
@@ -227,6 +228,7 @@ Route::middleware([
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
 
                     // quick facts
+                    Route::get('/quickFacts/{template}', [ContactQuickFactController::class, 'show'])->name('contact.quick_fact.show');
                     Route::post('/quickFacts/{template}', [ContactQuickFactController::class, 'store'])->name('contact.quick_fact.store');
                     Route::put('/quickFacts/toggle', [ContactQuickFactToggleController::class, 'update'])->name('contact.quick_fact.toggle');
                     Route::put('/quickFacts/{template}/{quickFact}', [ContactQuickFactController::class, 'update'])->name('contact.quick_fact.update');

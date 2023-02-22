@@ -1,11 +1,22 @@
 <script setup>
+import Errors from '@/Shared/Form/Errors.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   data: Object,
 });
 
+const form = useForm({
+  content: '',
+});
+
+const loadingState = ref(false);
+const createQuickFactModalShown = ref(false);
 const openState = ref(false);
+const localQuickFacts = ref([]);
 
 onMounted(() => {
   openState.value = props.data.show_quick_facts;
@@ -15,6 +26,28 @@ const toggle = () => {
   axios.put(props.data.url.toggle).then((response) => {
     openState.value = !openState.value;
   });
+};
+
+const get = (template) => {
+  axios
+    .get(template.url.show)
+    .then((response) => {
+      localQuickFacts.value = response.data.quick_facts;
+    });
+};
+
+const store = () => {
+  loadingState.value = 'loading';
+
+  axios
+    .put(props.data.url.store, form)
+    .then((response) => {
+      loadingState.value = '';
+      createQuickFactModalShown.value = false;
+    })
+    .catch(() => {
+      loadingState.value = '';
+    });
 };
 </script>
 
@@ -60,7 +93,7 @@ const toggle = () => {
       <div class="flex mb-4">
         <ul class="list">
           <li v-for="template in data.templates" :key="template.id" class="inline mr-2">
-            <span class="px-2 py-1 border border-gray-200 rounded bg-white font-semibold text-sm">{{ template.label }}</span>
+            <span @click="get(template)" class="px-2 py-1 border border-gray-200 rounded bg-white font-semibold text-sm cursor-pointer">{{ template.label }}</span>
           </li>
         </ul>
       </div>
@@ -81,8 +114,36 @@ const toggle = () => {
 
           <span>sjflasjdfl</span>
         </li>
-        <li>+ edit</li>
+        <li>edit</li>
       </ul>
+
+      <!-- modal to create a quick fact -->
+      <form
+        v-if="createQuickFactModalShown"
+        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        @submit.prevent="submit()">
+        <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+          <errors :errors="form.errors" />
+
+          <text-input
+            :ref="newQuickFact"
+            v-model="form.content"
+            :label="'Content'"
+            :type="'text'"
+            :autofocus="true"
+            :input-class="'block w-full'"
+            :required="true"
+            :autocomplete="false"
+            :maxlength="255"
+            @esc-key-pressed="createQuickFactModalShown = false" />
+        </div>
+
+        <div class="flex justify-between p-5">
+          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createQuickFactModalShown = false" />
+          <pretty-button :text="'Create address type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        </div>
+      </form>
+
     </div>
   </div>
 </template>
