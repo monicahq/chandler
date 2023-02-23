@@ -37,10 +37,8 @@ class ContactQuickFactController extends Controller
 
         $quickFact = (new CreateQuickFact())->execute($data);
 
-        $contact = Contact::find($contactId);
-
         return response()->json([
-            'data' => ContactModuleQuickFactViewHelper::dto($contact, $quickFact),
+            'data' => ContactModuleQuickFactViewHelper::dto($quickFact),
         ], 201);
     }
 

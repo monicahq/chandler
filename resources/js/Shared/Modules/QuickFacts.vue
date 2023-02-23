@@ -2,9 +2,10 @@
 import Loading from '@/Shared/Loading.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
   data: Object,
@@ -20,16 +21,26 @@ const createQuickFactModalShown = ref(false);
 const openState = ref(false);
 const localQuickFacts = ref([]);
 const localTemplate = ref([]);
+const contentField = ref(null);
 
 onMounted(() => {
   openState.value = props.data.show_quick_facts;
   localQuickFacts.value = props.data.quick_facts.quick_facts;
-  localTemplate.value = props.data.template;
+  localTemplate.value = props.data.quick_facts.template;
 });
 
 const toggle = () => {
   axios.put(props.data.url.toggle).then((response) => {
     openState.value = !openState.value;
+  });
+};
+
+const showCreateQuickModal = () => {
+  createQuickFactModalShown.value = true;
+  form.content = '';
+
+  nextTick(() => {
+    contentField.value.focus();
   });
 };
 
@@ -49,10 +60,11 @@ const store = () => {
   loadingState.value = 'loading';
 
   axios
-    .put(props.data.url.store, form)
+    .post(localTemplate.value.url.store, form)
     .then((response) => {
       loadingState.value = '';
       createQuickFactModalShown.value = false;
+      localQuickFacts.value.push(response.data.data);
     })
     .catch(() => {
       loadingState.value = '';
@@ -120,8 +132,8 @@ const store = () => {
       </ul>
 
       <!-- blank state -->
-      <div v-if="localQuickFacts.length == 0 && !loading" class="mb-2">
-        <p class="px-5 pb-2 text-center">There are no quick facts here yet.</p>
+      <div v-if="localQuickFacts.length == 0 && !loading && !createQuickFactModalShown" class="mb-2">
+        <p class="px-5 pb-2 text-center">There are no quick facts here yet. <span @click="showCreateQuickModal" class="text-blue-500 hover:underline cursor-pointer">Add one now</span></p>
         <img src="/img/contact_blank_quick_facts.svg" :alt="$t('Activity feed')" class="mx-auto h-20 w-20" />
       </div>
 
@@ -134,12 +146,12 @@ const store = () => {
       <form
         v-if="createQuickFactModalShown"
         class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
-        @submit.prevent="submit()">
+        @submit.prevent="store()">
         <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <errors :errors="form.errors" />
 
           <text-input
-            :ref="newQuickFact"
+            ref="contentField"
             v-model="form.content"
             :label="'Content'"
             :type="'text'"
@@ -153,7 +165,7 @@ const store = () => {
 
         <div class="flex justify-between p-5">
           <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createQuickFactModalShown = false" />
-          <pretty-button :text="'Create address type'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+          <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
         </div>
       </form>
 

@@ -16,6 +16,17 @@ class ContactModuleQuickFactViewHelper
             ->map(fn (QuickFact $quickFact) => self::dto($quickFact));
 
         return [
+            'template' => [
+                'id' => $template->id,
+                'label' => $template->label,
+                'url' => [
+                    'store' => route('contact.quick_fact.store', [
+                        'vault' => $contact->vault_id,
+                        'contact' => $contact->id,
+                        'template' => $template->id,
+                    ]),
+                ],
+            ],
             'quick_facts' => $quickFacts,
             'url' => [
                 'store' => route('contact.quick_fact.store', [
