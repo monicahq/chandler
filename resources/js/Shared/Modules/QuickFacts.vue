@@ -22,6 +22,7 @@ const openState = ref(false);
 const localQuickFacts = ref([]);
 const localTemplate = ref([]);
 const contentField = ref(null);
+const editMode = ref(false);
 
 onMounted(() => {
   openState.value = props.data.show_quick_facts;
@@ -121,14 +122,14 @@ const store = () => {
 
       <!-- content -->
       <ul v-if="localQuickFacts.length > 0 && !loading">
-        <li v-for="quickFact in localQuickFacts" :key="quickFact.id" class="flex items-center mb-1">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1">
+        <li v-for="quickFact in localQuickFacts" :key="quickFact.id" class="flex items-center border-b border-gray-300 border-dotted px-2 py-2 hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1 flex-none">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
 
-          <span>{{ quickFact.content }}</span>
+          <span class="grow">{{ quickFact.content }}</span>
         </li>
-        <li>edit</li>
+        <li v-if="!createQuickFactModalShown" class="ml-2 mt-1"><span @click="showCreateQuickModal()" class="cursor-pointer text-blue-500 hover:underline">+ add another</span></li>
       </ul>
 
       <!-- blank state -->
@@ -145,7 +146,7 @@ const store = () => {
       <!-- modal to create a quick fact -->
       <form
         v-if="createQuickFactModalShown"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+        class="mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="store()">
         <div class="border-b border-gray-200 p-5 dark:border-gray-700">
           <errors :errors="form.errors" />
