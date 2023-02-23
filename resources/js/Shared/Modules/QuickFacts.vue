@@ -32,7 +32,7 @@ onMounted(() => {
 });
 
 const toggle = () => {
-  axios.put(props.data.url.toggle).then((response) => {
+  axios.put(props.data.url.toggle).then(() => {
     openState.value = !openState.value;
   });
 };
@@ -90,14 +90,19 @@ const update = (quickFact) => {
     .then((response) => {
       loadingState.value = '';
       editedQuickFactId.value = 0;
-
-      // var id = localQuickFacts.value.findIndex((x) => x.id === quickFact.id);
-      // localQuickFacts.value.splice(id, 1);
-
       localQuickFacts.value[localQuickFacts.value.findIndex((x) => x.id === quickFact.id)] = response.data.data;
     })
     .catch(() => {
       loadingState.value = '';
+    });
+};
+
+const destroy = (quickFact) => {
+  axios
+    .delete(quickFact.url.destroy)
+    .then(() => {
+      var id = localQuickFacts.value.findIndex((x) => x.id === quickFact.id);
+      localQuickFacts.value.splice(id, 1);
     });
 };
 </script>
@@ -167,7 +172,7 @@ const update = (quickFact) => {
                   :show-edit="true"
                   :show-delete="true"
                   @edit="showEditQuickFactModal(quickFact)"
-                  @delete="destroy(task)" />
+                  @delete="destroy(quickFact)" />
           </div>
 
           <!-- edit mode -->

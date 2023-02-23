@@ -2,9 +2,8 @@
 
 namespace App\Domains\Contact\ManageQuickFacts\Web\Controllers;
 
-use App\Domains\Contact\ManageGroups\Services\RemoveContactFromGroup;
-use App\Domains\Contact\ManageGroups\Web\ViewHelpers\ModuleGroupsViewHelper;
 use App\Domains\Contact\ManageQuickFacts\Services\CreateQuickFact;
+use App\Domains\Contact\ManageQuickFacts\Services\DestroyQuickFact;
 use App\Domains\Contact\ManageQuickFacts\Services\UpdateQuickFact;
 use App\Domains\Contact\ManageQuickFacts\Web\ViewHelpers\ContactModuleQuickFactViewHelper;
 use App\Http\Controllers\Controller;
@@ -61,21 +60,20 @@ class ContactQuickFactController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId, int $groupId)
+    public function destroy(Request $request, int $vaultId, int $contactId, int $templateId, int $quickFactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
             'contact_id' => $contactId,
-            'group_id' => $groupId,
+            'quick_fact_id' => $quickFactId,
         ];
 
-        $group = (new RemoveContactFromGroup())->execute($data);
-        $contact = Contact::find($contactId);
+        (new DestroyQuickFact())->execute($data);
 
         return response()->json([
-            'data' => ModuleGroupsViewHelper::dto($contact, $group, false),
+            'data' => true,
         ], 200);
     }
 }

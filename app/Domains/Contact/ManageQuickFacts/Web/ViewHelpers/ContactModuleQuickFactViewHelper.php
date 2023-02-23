@@ -52,6 +52,12 @@ class ContactModuleQuickFactViewHelper
                     'template' => $quickFact->vault_quick_facts_template_id,
                     'quickFact' => $quickFact->id,
                 ]),
+                'destroy' => route('contact.quick_fact.destroy', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'template' => $quickFact->vault_quick_facts_template_id,
+                    'quickFact' => $quickFact->id,
+                ]),
             ],
         ];
     }

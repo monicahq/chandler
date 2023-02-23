@@ -56,6 +56,7 @@ class ContactModuleQuickFactViewHelperTest extends TestCase
                 'content' => $quickFact->content,
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/quickFacts/'.$template->id.'/'.$quickFact->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/quickFacts/'.$template->id.'/'.$quickFact->id,
                 ],
             ],
             $array
