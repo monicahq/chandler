@@ -1,5 +1,6 @@
 <script setup>
 import Loading from '@/Shared/Loading.vue';
+import HoverMenu from '@/Shared/HoverMenu.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
@@ -22,7 +23,7 @@ const openState = ref(false);
 const localQuickFacts = ref([]);
 const localTemplate = ref([]);
 const contentField = ref(null);
-const editMode = ref(false);
+const editedQuickFactId = ref(null);
 
 onMounted(() => {
   openState.value = props.data.show_quick_facts;
@@ -36,9 +37,18 @@ const toggle = () => {
   });
 };
 
-const showCreateQuickModal = () => {
+const showCreateQuickFactModal = () => {
   createQuickFactModalShown.value = true;
   form.content = '';
+
+  nextTick(() => {
+    contentField.value.focus();
+  });
+};
+
+const showEditQuickFactModal = (quickFact) => {
+  editedQuickFactId.value = quickFact.id;
+  form.content = quickFact.content;
 
   nextTick(() => {
     contentField.value.focus();
@@ -66,6 +76,25 @@ const store = () => {
       loadingState.value = '';
       createQuickFactModalShown.value = false;
       localQuickFacts.value.push(response.data.data);
+    })
+    .catch(() => {
+      loadingState.value = '';
+    });
+};
+
+const update = (quickFact) => {
+  loadingState.value = 'loading';
+
+  axios
+    .put(quickFact.url.update, form)
+    .then((response) => {
+      loadingState.value = '';
+      editedQuickFactId.value = 0;
+
+      // var id = localQuickFacts.value.findIndex((x) => x.id === quickFact.id);
+      // localQuickFacts.value.splice(id, 1);
+
+      localQuickFacts.value[localQuickFacts.value.findIndex((x) => x.id === quickFact.id)] = response.data.data;
     })
     .catch(() => {
       loadingState.value = '';
@@ -122,19 +151,58 @@ const store = () => {
 
       <!-- content -->
       <ul v-if="localQuickFacts.length > 0 && !loading">
-        <li v-for="quickFact in localQuickFacts" :key="quickFact.id" class="flex items-center border-b border-gray-300 border-dotted px-2 py-2 hover:bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1 flex-none">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+        <li v-for="quickFact in localQuickFacts" :key="quickFact.id" class="border-b border-gray-300 border-dotted px-2 py-2 hover:bg-gray-100">
 
-          <span class="grow">{{ quickFact.content }}</span>
+          <!-- normal mode -->
+          <div v-if="editedQuickFactId !== quickFact.id" class="flex justify-between items-center">
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-green-600 mr-1 flex-none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+
+              <span class="grow">{{ quickFact.content }}</span>
+            </div>
+
+            <hover-menu
+                  :show-edit="true"
+                  :show-delete="true"
+                  @edit="showEditQuickFactModal(quickFact)"
+                  @delete="destroy(task)" />
+          </div>
+
+          <!-- edit mode -->
+          <form
+            v-if="editedQuickFactId === quickFact.id"
+            class="mt-2 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+            @submit.prevent="update(quickFact)">
+            <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+              <errors :errors="form.errors" />
+
+              <text-input
+                ref="contentField"
+                v-model="form.content"
+                :label="'Content'"
+                :type="'text'"
+                :autofocus="true"
+                :input-class="'block w-full'"
+                :required="true"
+                :autocomplete="false"
+                :maxlength="255"
+                @esc-key-pressed="editedQuickFactId = 0" />
+            </div>
+
+            <div class="flex justify-between p-5">
+              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedQuickFactId = 0" />
+              <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            </div>
+          </form>
         </li>
-        <li v-if="!createQuickFactModalShown" class="ml-2 mt-1"><span @click="showCreateQuickModal()" class="cursor-pointer text-blue-500 hover:underline">+ add another</span></li>
+        <li v-if="!createQuickFactModalShown" class="ml-2 mt-1"><span @click="showCreateQuickFactModal()" class="cursor-pointer text-blue-500 hover:underline">+ add another</span></li>
       </ul>
 
       <!-- blank state -->
       <div v-if="localQuickFacts.length == 0 && !loading && !createQuickFactModalShown" class="mb-2">
-        <p class="px-5 pb-2 text-center">There are no quick facts here yet. <span @click="showCreateQuickModal" class="text-blue-500 hover:underline cursor-pointer">Add one now</span></p>
+        <p class="px-5 pb-2 text-center">There are no quick facts here yet. <span @click="showCreateQuickFactModal" class="text-blue-500 hover:underline cursor-pointer">Add one now</span></p>
         <img src="/img/contact_blank_quick_facts.svg" :alt="$t('Activity feed')" class="mx-auto h-20 w-20" />
       </div>
 

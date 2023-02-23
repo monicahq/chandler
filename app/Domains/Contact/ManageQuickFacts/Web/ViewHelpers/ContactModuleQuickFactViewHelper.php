@@ -40,9 +40,19 @@ class ContactModuleQuickFactViewHelper
 
     public static function dto(QuickFact $quickFact): array
     {
+        $contact = $quickFact->contact;
+
         return [
             'id' => $quickFact->id,
             'content' => $quickFact->content,
+            'url' => [
+                'update' => route('contact.quick_fact.update', [
+                    'vault' => $contact->vault_id,
+                    'contact' => $contact->id,
+                    'template' => $quickFact->vault_quick_facts_template_id,
+                    'quickFact' => $quickFact->id,
+                ]),
+            ],
         ];
     }
 }
