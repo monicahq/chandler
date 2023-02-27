@@ -22,9 +22,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: laravel-pint
-        uses: aglipanci/laravel-pint-action@1.0.0
+        uses: aglipanci/laravel-pint-action@2.1.0
         with:
-          preset: laravel
+          configPath: pint.json
 
       - name: Check if there is any file update needed
         run: |
