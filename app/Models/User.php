@@ -98,8 +98,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Send the email verification notification.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {
@@ -114,8 +112,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the account record associated with the user.
-     *
-     * @return BelongsTo
      */
     public function account(): BelongsTo
     {
@@ -124,8 +120,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the vault records associated with the user.
-     *
-     * @return BelongsToMany
      */
     public function vaults(): BelongsToMany
     {
@@ -136,8 +130,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the contact records associated with the user.
-     *
-     * @return BelongsToMany
      */
     public function contacts(): BelongsToMany
     {
@@ -148,8 +140,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the note records associated with the user.
-     *
-     * @return HasMany
      */
     public function notes(): HasMany
     {
@@ -158,8 +148,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the notification channel records associated with the user.
-     *
-     * @return HasMany
      */
     public function notificationChannels(): HasMany
     {
@@ -168,8 +156,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the task records associated with the user.
-     *
-     * @return HasMany
      */
     public function contactTasks(): HasMany
     {
@@ -193,9 +179,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Get the contact of the user in the given vault.
      * All users have a contact in the vaults.
-     *
-     * @param  Vault  $vault
-     * @return null|Contact
      */
     public function getContactInVault(Vault $vault): ?Contact
     {

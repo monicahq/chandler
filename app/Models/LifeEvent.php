@@ -38,27 +38,17 @@ class LifeEvent extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'happened_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'collapsed' => 'boolean',
+        'happened_at' => 'datetime',
     ];
 
     /**
      * Get the timeline event associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function timelineEvent(): BelongsTo
     {
@@ -67,8 +57,6 @@ class LifeEvent extends Model
 
     /**
      * Get the life event type associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function lifeEventType(): BelongsTo
     {
@@ -77,8 +65,6 @@ class LifeEvent extends Model
 
     /**
      * Get the currency associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -87,8 +73,6 @@ class LifeEvent extends Model
 
     /**
      * Get the emotion associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function emotion(): BelongsTo
     {
@@ -97,8 +81,6 @@ class LifeEvent extends Model
 
     /**
      * Get the contact who paid for the life event.
-     *
-     * @return BelongsTo
      */
     public function paidBy(): BelongsTo
     {
@@ -107,8 +89,6 @@ class LifeEvent extends Model
 
     /**
      * Get the contact records the life event is with.
-     *
-     * @return BelongsToMany
      */
     public function participants(): BelongsToMany
     {
