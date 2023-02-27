@@ -78,8 +78,6 @@ class Contact extends Model
 
     /**
      * Get the columns that should receive a unique identifier.
-     *
-     * @return array
      */
     public function uniqueIds(): array
     {
@@ -89,7 +87,6 @@ class Contact extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array
      *
      * @codeCoverageIgnore
      */
@@ -120,9 +117,6 @@ class Contact extends Model
 
     /**
      * Scope a query to only include contacts who are active.
-     *
-     * @param  Builder  $query
-     * @return Builder
      */
     public function scopeActive(Builder $query): Builder
     {
@@ -131,8 +125,6 @@ class Contact extends Model
 
     /**
      * Used to delete related objects from Meilisearch/Algolia instance.
-     *
-     * @return void
      */
     protected static function boot(): void
     {
@@ -155,8 +147,6 @@ class Contact extends Model
 
     /**
      * Get the vault associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
@@ -165,8 +155,6 @@ class Contact extends Model
 
     /**
      * Get the gender associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function gender(): BelongsTo
     {
@@ -175,8 +163,6 @@ class Contact extends Model
 
     /**
      * Get the pronoun associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function pronoun(): BelongsTo
     {
@@ -185,8 +171,6 @@ class Contact extends Model
 
     /**
      * Get the template associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function template(): BelongsTo
     {
@@ -195,8 +179,6 @@ class Contact extends Model
 
     /**
      * Get the relationships associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function relationships(): BelongsToMany
     {
@@ -205,8 +187,6 @@ class Contact extends Model
 
     /**
      * Get the labels associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function labels(): BelongsToMany
     {
@@ -215,8 +195,6 @@ class Contact extends Model
 
     /**
      * Get the contact information records associated with the contact.
-     *
-     * @return HasMany
      */
     public function contactInformations(): HasMany
     {
@@ -225,8 +203,6 @@ class Contact extends Model
 
     /**
      * Get the note records associated with the contact.
-     *
-     * @return HasMany
      */
     public function notes(): HasMany
     {
@@ -235,8 +211,6 @@ class Contact extends Model
 
     /**
      * Get the date records associated with the contact.
-     *
-     * @return HasMany
      */
     public function importantDates(): HasMany
     {
@@ -245,8 +219,6 @@ class Contact extends Model
 
     /**
      * Get the contact reminders records associated with the contact.
-     *
-     * @return HasMany
      */
     public function reminders(): HasMany
     {
@@ -279,8 +251,6 @@ class Contact extends Model
 
     /**
      * Get the company associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function company(): BelongsTo
     {
@@ -289,8 +259,6 @@ class Contact extends Model
 
     /**
      * Get the tasks associated with the contact.
-     *
-     * @return HasMany
      */
     public function tasks(): HasMany
     {
@@ -299,8 +267,6 @@ class Contact extends Model
 
     /**
      * Get the calls associated with the contact.
-     *
-     * @return HasMany
      */
     public function calls(): HasMany
     {
@@ -309,8 +275,6 @@ class Contact extends Model
 
     /**
      * Get the pets associated with the contact.
-     *
-     * @return HasMany
      */
     public function pets(): HasMany
     {
@@ -319,8 +283,6 @@ class Contact extends Model
 
     /**
      * Get the goals associated with the contact.
-     *
-     * @return HasMany
      */
     public function goals(): HasMany
     {
@@ -329,8 +291,6 @@ class Contact extends Model
 
     /**
      * Get the files associated with the contact.
-     *
-     * @return MorphMany
      */
     public function files(): MorphMany
     {
@@ -340,8 +300,6 @@ class Contact extends Model
     /**
      * Get the file associated with the contact.
      * If it exists, it's the avatar.
-     *
-     * @return BelongsTo
      */
     public function file(): BelongsTo
     {
@@ -350,8 +308,6 @@ class Contact extends Model
 
     /**
      * Get the groups associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function groups(): BelongsToMany
     {
@@ -360,8 +316,6 @@ class Contact extends Model
 
     /**
      * Get the posts associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function posts(): BelongsToMany
     {
@@ -370,8 +324,6 @@ class Contact extends Model
 
     /**
      * Get the religion associated with the contact.
-     *
-     * @return BelongsTo
      */
     public function religion(): BelongsTo
     {
@@ -380,8 +332,6 @@ class Contact extends Model
 
     /**
      * Get the life events associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function lifeEvents(): BelongsToMany
     {
@@ -390,8 +340,6 @@ class Contact extends Model
 
     /**
      * Get the timeline events associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function timelineEvents(): BelongsToMany
     {
@@ -400,8 +348,6 @@ class Contact extends Model
 
     /**
      * Get the mood tracking events associated with the contact.
-     *
-     * @return HasMany
      */
     public function moodTrackingEvents(): HasMany
     {
@@ -410,8 +356,6 @@ class Contact extends Model
 
     /**
      * Get the addresses associated with the contact.
-     *
-     * @return BelongsToMany
      */
     public function addresses(): BelongsToMany
     {
