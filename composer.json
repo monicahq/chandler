@@ -9,19 +9,11 @@
     "social"
   ],
   "license": "AGPL-3.0-or-later",
-  "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/asbiin/laravel-sentry-tunnel"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/asbiin/laravel-language-detector"
-    }
-  ],
   "require": {
     "php": "^8.1",
+    "ext-fileinfo": "*",
     "asbiin/laravel-webauthn": "^3.2",
+    "codezero/laravel-localizer": "^1.7",
     "guzzlehttp/guzzle": "^7.4",
     "http-interop/http-factory-guzzle": "^1.2",
     "inertiajs/inertia-laravel": "^0",
@@ -37,7 +29,7 @@
     "laravel/tinker": "^2.7",
     "meilisearch/meilisearch-php": "^1.0",
     "monicahq/laravel-sabre": "^1.6",
-    "naugrim/laravel-sentry-tunnel": "dev-laravel-10",
+    "naugrim/laravel-sentry-tunnel": "^1.1",
     "sentry/sentry-laravel": "^3.0",
     "socialiteproviders/facebook": "^4.1",
     "socialiteproviders/github": "^4.1",
@@ -46,8 +38,7 @@
     "socialiteproviders/microsoft-azure": "^5.1",
     "socialiteproviders/twitter": "^4.1",
     "tightenco/ziggy": "1.5.0",
-    "uploadcare/uploadcare-php": "^3.2",
-    "vluzrmos/language-detector": "dev-laravel-10"
+    "uploadcare/uploadcare-php": "^3.2"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.7",
