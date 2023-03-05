@@ -43,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Possible distance unit.
      */
-    public const DISTANCE_UNIT_MILES = 'miles';
+    public const DISTANCE_UNIT_MILES = 'mi';
 
     public const DISTANCE_UNIT_KM = 'km';
 
