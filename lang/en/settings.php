@@ -42,7 +42,7 @@ return [
     'user_preferences_distance_format_title' => 'How should we display distance values',
     'user_preferences_distance_format_description' => 'Current way of displaying distances:',
     'user_preferences_distance_format_km' => 'kilometers (km)',
-    'user_preferences_distance_format_miles' => 'miles',
+    'user_preferences_distance_format_miles' => 'miles (mi)',
 
     'user_preferences_timezone_title' => 'Timezone',
     'user_preferences_timezone_description' => 'Regardless of where you are located in the world, have dates displayed in your own timezone.',
