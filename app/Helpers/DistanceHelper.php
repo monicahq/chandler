@@ -22,6 +22,6 @@ class DistanceHelper
             $distance = round($distance / 1.609344, 2);
         }
 
-        return trans('app.distance_format_'.$user->distance_format, ['count' => $distance]);
+        return trans('app.distance_format_'.$user->distance_format, ['distance' => $distance]);
     }
 }

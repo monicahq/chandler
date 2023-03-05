@@ -135,5 +135,5 @@ return [
     'word_count' => '{count} words',
 
     'distance_format_km' => ':distance km',
-    'distance_format_miles' => ':distance miles',
+    'distance_format_mi' => ':distance miles',
 ];
