@@ -178,10 +178,15 @@ defineProps({
               <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_mood') }}</p>
 
               <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-                <li v-for="mood in data.moodTrackingEvents" :key="mood.id" class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 p-3">
+                <li
+                  v-for="mood in data.moodTrackingEvents"
+                  :key="mood.id"
+                  class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <span>{{ mood.mood_tracking_parameter.label }}</span>
-                  <span class="text-sm block" v-if="mood.number_of_hours_slept">Slept {{ mood.number_of_hours_slept }} hours</span>
-                  <span v-if="mood.note" class="text-sm block">{{ mood.note }}</span>
+                  <span class="block text-sm" v-if="mood.number_of_hours_slept"
+                    >Slept {{ mood.number_of_hours_slept }} hours</span
+                  >
+                  <span v-if="mood.note" class="block text-sm">{{ mood.note }}</span>
                 </li>
               </ul>
             </div>

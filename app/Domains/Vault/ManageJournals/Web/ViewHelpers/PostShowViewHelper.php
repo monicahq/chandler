@@ -157,6 +157,7 @@ class PostShowViewHelper
         if (! $contact) {
             return null;
         }
+
         return MoodTrackingEvent::where('contact_id', $contact->id)
             ->whereDate('rated_at', $post->written_at)
             ->with('moodTrackingParameter')
