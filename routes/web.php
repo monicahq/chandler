@@ -420,6 +420,9 @@ Route::middleware([
                         Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
                         Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');
                     });
+
+                    //  journal metrics
+                    Route::get('metrics', [JournalMetricController::class, 'index'])->name('metrics.index');
                 });
             });
 
