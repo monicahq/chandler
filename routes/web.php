@@ -422,7 +422,8 @@ Route::middleware([
                     });
 
                     //  journal metrics
-                    Route::get('metrics', [JournalMetricController::class, 'index'])->name('metrics.index');
+                    Route::get('metrics', [JournalMetricController::class, 'index'])->name('journal_metrics.index');
+                    Route::post('metrics', [JournalMetricController::class, 'store'])->name('journal_metrics.store');
                 });
             });
 

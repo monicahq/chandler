@@ -11,7 +11,7 @@ class JournalMetricIndexViewHelper
 {
     public static function data(Journal $journal): array
     {
-        $slices = $journal->journalMetrics()
+        $journalMetrics = $journal->journalMetrics()
             ->orderBy('label')
             ->get()
             ->map(fn (JournalMetric $journalMetric) => self::dto($journalMetric));
@@ -27,9 +27,9 @@ class JournalMetricIndexViewHelper
                     ]),
                 ],
             ],
-            'slicesOfLife' => $slices,
+            'journalMetrics' => $journalMetrics,
             'url' => [
-                'store' => route('slices.store', [
+                'store' => route('journal_metrics.store', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                 ]),
@@ -42,13 +42,6 @@ class JournalMetricIndexViewHelper
         return [
             'id' => $metric->id,
             'label' => $metric->label,
-            'url' => [
-                'show' => route('slices.show', [
-                    'vault' => $slice->journal->vault_id,
-                    'journal' => $slice->journal_id,
-                    'slice' => $slice->id,
-                ]),
-            ],
         ];
     }
 }
