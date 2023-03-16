@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\PostShowViewHelper;
 use App\Models\File;
 use App\Models\Journal;
-use App\Models\MoodTrackingEvent;
 use App\Models\Post;
 use App\Models\PostSection;
 use App\Models\Tag;
