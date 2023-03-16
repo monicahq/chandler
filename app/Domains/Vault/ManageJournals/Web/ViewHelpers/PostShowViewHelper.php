@@ -164,7 +164,6 @@ class PostShowViewHelper
             ->get()
             ->map(fn (MoodTrackingEvent $mood) => [
                 'id' => $mood->id,
-                'rating' => $mood->rating,
                 'note' => $mood->note,
                 'number_of_hours_slept' => $mood->number_of_hours_slept,
                 'mood_tracking_parameter' => [
