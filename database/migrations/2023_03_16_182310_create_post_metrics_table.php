@@ -23,7 +23,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('journal_metric_id');
-            $table->double('value');
+            $table->integer('value');
             $table->string('label')->nullable();
             $table->timestamps();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');

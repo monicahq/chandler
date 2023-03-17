@@ -2,7 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\Post;
+use App\Models\JournalMetric;
+use App\Models\PostMetric;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -13,8 +14,17 @@ class JournalMetricTest extends TestCase
     /** @test */
     public function it_has_one_journal()
     {
-        $post = Post::factory()->create();
+        $journalMetric = JournalMetric::factory()->create();
 
-        $this->assertTrue($post->journal()->exists());
+        $this->assertTrue($journalMetric->journal()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_post_metrics(): void
+    {
+        $journalMetric = JournalMetric::factory()->create();
+        PostMetric::factory()->create(['journal_metric_id' => $journalMetric->id]);
+
+        $this->assertTrue($journalMetric->postMetrics()->exists());
     }
 }

@@ -2,10 +2,8 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
-use App\Helpers\SliceOfLifeHelper;
 use App\Models\Journal;
 use App\Models\JournalMetric;
-use App\Models\SliceOfLife;
 
 class JournalMetricIndexViewHelper
 {

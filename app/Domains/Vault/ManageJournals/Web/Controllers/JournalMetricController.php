@@ -3,20 +3,13 @@
 namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
 use App\Domains\Vault\ManageJournals\Services\CreateJournalMetric;
-use App\Domains\Vault\ManageJournals\Services\CreateSliceOfLife;
-use App\Domains\Vault\ManageJournals\Services\DestroySliceOfLife;
-use App\Domains\Vault\ManageJournals\Services\UpdateSliceOfLife;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\JournalMetricIndexViewHelper;
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeEditViewHelper;
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeIndexViewHelper;
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Redirect;
 
 class JournalMetricController extends Controller
 {

@@ -5,7 +5,6 @@ namespace Tests\Unit\Domains\Vault\ManageJournals\Web\ViewHelpers;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\JournalMetricIndexViewHelper;
 use App\Models\Journal;
 use App\Models\JournalMetric;
-use App\Models\SliceOfLife;
 use App\Models\Vault;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
