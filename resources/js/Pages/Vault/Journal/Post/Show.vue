@@ -61,9 +61,54 @@ defineProps({
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="mr-8">
+            <!-- post previous/next -->
+            <div class="mb-4 flex justify-between">
+              <!-- previous post -->
+              <div v-if="data.previousPost" class="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="mr-1 h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                </svg>
+
+                <inertia-link
+                  v-if="data.previousPost"
+                  :href="data.previousPost.url.show"
+                  class="text-sm text-gray-400 hover:underline">
+                  {{ data.previousPost.title }}
+                </inertia-link>
+              </div>
+
+              <!-- next post -->
+              <div v-if="data.nextPost" class="flex items-center">
+                <inertia-link
+                  v-if="data.nextPost"
+                  :href="data.nextPost.url.show"
+                  class="text-sm text-gray-400 hover:underline">
+                  {{ data.nextPost.title }}
+                </inertia-link>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="ml-1 h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </div>
+            </div>
+
             <div class="post relative rounded bg-white">
+              <!-- date of the post -->
               <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
 
+              <!-- tags -->
               <ul v-if="data.tags" class="p0 list mb-3">
                 <li
                   v-for="tag in data.tags"
@@ -73,6 +118,7 @@ defineProps({
                 </li>
               </ul>
 
+              <!-- title -->
               <h1 v-if="data.title_exists" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
 
               <!-- photos -->
@@ -127,8 +173,25 @@ defineProps({
               </div>
             </div>
 
+            <!-- mood tracking events -->
+            <div v-if="data.moodTrackingEvents.length > 0">
+              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_mood') }}</p>
+
+              <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                <li
+                  v-for="mood in data.moodTrackingEvents"
+                  :key="mood.id"
+                  class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  <span>{{ mood.mood_tracking_parameter.label }}</span>
+                  <span class="block text-sm" v-if="mood.number_of_hours_slept"
+                    >Slept {{ mood.number_of_hours_slept }} hours</span
+                  >
+                  <span v-if="mood.note" class="block text-sm">{{ mood.note }}</span>
+                </li>
+              </ul>
+            </div>
+
             <!-- options -->
-            <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_options') }}</p>
             <ul class="mb-6 text-sm">
               <li class="flex items-center">
                 <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">Edit post</inertia-link>
@@ -180,6 +243,22 @@ defineProps({
     right: -3px;
     top: 1px;
     transform: rotate(1.4deg);
+  }
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 </style>

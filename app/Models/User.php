@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     use HasApiTokens;
     use TwoFactorAuthenticatable;
     use WebauthnAuthenticatable;
+    use HasUuids;
 
     /**
      * Possible number format types.
@@ -39,6 +41,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public const MAPS_SITE_GOOGLE_MAPS = 'google_maps';
 
     public const MAPS_SITE_OPEN_STREET_MAPS = 'open_street_maps';
+
+    /**
+     * Possible distance unit.
+     */
+    public const DISTANCE_UNIT_MILES = 'mi';
+
+    public const DISTANCE_UNIT_KM = 'km';
 
     /**
      * The attributes that are mass assignable.
@@ -58,6 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'name_order',
         'date_format',
         'number_format',
+        'distance_format',
         'timezone',
         'default_map_site',
         'locale',
@@ -89,9 +99,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     ];
 
     /**
+     * Get the columns that should receive a unique identifier.
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
+
+    /**
      * Send the email verification notification.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {
@@ -106,8 +122,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the account record associated with the user.
-     *
-     * @return BelongsTo
      */
     public function account(): BelongsTo
     {
@@ -116,8 +130,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the vault records associated with the user.
-     *
-     * @return BelongsToMany
      */
     public function vaults(): BelongsToMany
     {
@@ -128,8 +140,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the contact records associated with the user.
-     *
-     * @return BelongsToMany
      */
     public function contacts(): BelongsToMany
     {
@@ -140,8 +150,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the note records associated with the user.
-     *
-     * @return HasMany
      */
     public function notes(): HasMany
     {
@@ -150,8 +158,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the notification channel records associated with the user.
-     *
-     * @return HasMany
      */
     public function notificationChannels(): HasMany
     {
@@ -160,8 +166,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     /**
      * Get the task records associated with the user.
-     *
-     * @return HasMany
      */
     public function contactTasks(): HasMany
     {
@@ -185,9 +189,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Get the contact of the user in the given vault.
      * All users have a contact in the vaults.
-     *
-     * @param  Vault  $vault
-     * @return null|Contact
      */
     public function getContactInVault(Vault $vault): ?Contact
     {

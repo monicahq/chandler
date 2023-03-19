@@ -10,6 +10,7 @@ use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
 use App\Models\MoodTrackingParameter;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use App\Services\BaseService;
 
 class CreateVault extends BaseService implements ServiceInterface
@@ -20,8 +21,6 @@ class CreateVault extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -37,8 +36,6 @@ class CreateVault extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -49,9 +46,6 @@ class CreateVault extends BaseService implements ServiceInterface
 
     /**
      * Create a vault.
-     *
-     * @param  array  $data
-     * @return Vault
      */
     public function execute(array $data): Vault
     {
@@ -63,6 +57,7 @@ class CreateVault extends BaseService implements ServiceInterface
         $this->populateDefaultContactImportantDateTypes();
         $this->populateMoodTrackingParameters();
         $this->populateDefaultLifeEventCategories();
+        $this->populateDefaultQuickVaultTemplateEntries();
 
         return $this->vault;
     }
@@ -203,6 +198,153 @@ class CreateVault extends BaseService implements ServiceInterface
             'label' => null,
             'label_translation_key' => 'vault.settings_life_event_type_transportation_metro',
             'can_be_deleted' => true,
+        ]);
+
+        // social category
+        $category = LifeEventCategory::create([
+            'vault_id' => $this->vault->id,
+            'position' => 2,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_category_social',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 1,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_ate',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 2,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_drank',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 3,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_bar',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 4,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_movie',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 5,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_tv',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 6,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_social_tv_show',
+            'can_be_deleted' => true,
+        ]);
+
+        // sport category
+        $category = LifeEventCategory::create([
+            'vault_id' => $this->vault->id,
+            'position' => 3,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_category_sport',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 1,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_ran',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 2,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_soccer',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 3,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_basketball',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 4,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_golf',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 5,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_tennis',
+            'can_be_deleted' => true,
+        ]);
+
+        // work category
+        $category = LifeEventCategory::create([
+            'vault_id' => $this->vault->id,
+            'position' => 4,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_category_work',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 1,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_work_job',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 2,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_work_quit',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 3,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_work_fired',
+            'can_be_deleted' => true,
+        ]);
+        LifeEventType::create([
+            'life_event_category_id' => $category->id,
+            'position' => 4,
+            'label' => null,
+            'label_translation_key' => 'vault.settings_life_event_type_sport_promotion',
+            'can_be_deleted' => true,
+        ]);
+    }
+
+    private function populateDefaultQuickVaultTemplateEntries(): void
+    {
+        VaultQuickFactTemplate::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.settings_quick_fact_template_entry_hobbies',
+            'position' => 1,
+        ]);
+
+        VaultQuickFactTemplate::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.settings_quick_fact_template_entry_food',
+            'position' => 2,
         ]);
     }
 }

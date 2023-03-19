@@ -23,9 +23,11 @@ use App\Models\Note;
 use App\Models\Pet;
 use App\Models\Post;
 use App\Models\Pronoun;
+use App\Models\QuickFact;
 use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -284,6 +286,17 @@ class ContactTest extends TestCase
     }
 
     /** @test */
+    public function it_has_many_timeline_events(): void
+    {
+        $contact = Contact::factory()->create();
+        $timelineEvent = TimelineEvent::factory()->create();
+
+        $contact->timelineEvents()->sync([$timelineEvent->id]);
+
+        $this->assertTrue($contact->timelineEvents()->exists());
+    }
+
+    /** @test */
     public function it_has_many_mood_tracking_events(): void
     {
         $contact = Contact::factory()->create();
@@ -303,6 +316,15 @@ class ContactTest extends TestCase
         $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
 
         $this->assertTrue($contact->addresses()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_quick_facts(): void
+    {
+        $contact = Contact::factory()->create([]);
+        QuickFact::factory()->create(['contact_id' => $contact->id]);
+
+        $this->assertTrue($contact->quickFacts()->exists());
     }
 
     /** @test */

@@ -24,9 +24,8 @@ class ExportJob extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'uuid',
         'account_id',
-        'user_id',
+        'author_id',
         'type',
         'status',
         'filesystem',
@@ -67,9 +66,9 @@ class ExportJob extends Model
      *
      * @return BelongsTo
      */
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     /**
@@ -95,6 +94,6 @@ class ExportJob extends Model
         $this->ended_at = now();
         $this->save();
 
-        $this->user->notify(new ExportAccountDone($this));
+        $this->author->notify(new ExportAccountDone($this));
     }
 }

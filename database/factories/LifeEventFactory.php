@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Contact;
 use App\Models\LifeEvent;
 use App\Models\LifeEventType;
-use App\Models\Vault;
+use App\Models\TimelineEvent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +23,7 @@ class LifeEventFactory extends Factory
     public function definition()
     {
         return [
-            'vault_id' => Vault::factory(),
+            'timeline_event_id' => TimelineEvent::factory(),
             'life_event_type_id' => LifeEventType::factory(),
             'summary' => $this->faker->sentence(),
             'description' => $this->faker->sentence(),
@@ -32,7 +32,7 @@ class LifeEventFactory extends Factory
             'currency_id' => null,
             'paid_by_contact_id' => Contact::factory(),
             'duration_in_minutes' => $this->faker->randomNumber(),
-            'distance_in_km' => $this->faker->randomNumber(),
+            'distance' => $this->faker->randomNumber(),
             'from_place' => $this->faker->city(),
             'to_place' => $this->faker->city(),
             'place' => $this->faker->city(),

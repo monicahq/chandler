@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Settings\ExportAccount\Settings;
+namespace App\Domains\Settings\ExportAccount\Services;
 
 use App\Models\User;
 use Illuminate\Support\Str;

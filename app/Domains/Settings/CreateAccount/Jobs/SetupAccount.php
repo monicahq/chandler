@@ -43,8 +43,6 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -56,8 +54,6 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -68,9 +64,6 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     /**
      * Execute the service.
-     *
-     * @param  array  $data
-     * @return void
      */
     public function execute(array $data): void
     {
@@ -90,8 +83,6 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     /**
      * Populate currencies in the account.
-     *
-     * @return void
      */
     private function populateCurrencies(): void
     {
@@ -103,8 +94,6 @@ class SetupAccount extends QueuableService implements ServiceInterface
 
     /**
      * Add the first notification channel based on the email address of the user.
-     *
-     * @return void
      */
     private function addNotificationChannel(): void
     {
@@ -417,6 +406,22 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'template_id' => $this->template->id,
             'name' => trans('app.default_template_page_life_events'),
             'can_be_deleted' => true,
+        ]);
+
+        // life events
+        $module = (new CreateModule())->execute([
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
+            'name' => trans('app.module_life_events'),
+            'type' => Module::TYPE_LIFE_EVENTS,
+            'can_be_deleted' => false,
+        ]);
+        (new AssociateModuleToTemplatePage())->execute([
+            'account_id' => $this->author->account_id,
+            'author_id' => $this->author->id,
+            'template_id' => $this->template->id,
+            'template_page_id' => $templatePageSocial->id,
+            'module_id' => $module->id,
         ]);
 
         // goals

@@ -23,7 +23,7 @@ class Account extends ExportResource
     ];
 
     protected $properties = [
-        'number_of_invitations_sent',
+        // 'number_of_invitations_sent',
     ];
 
     public function data(): ?array
@@ -31,32 +31,32 @@ class Account extends ExportResource
         return  [
             'data' => [
                 User::countCollection($this->users),
-                Contact::countCollection($this->allContacts),
-                Relationship::countCollection($this->relationships),
-                Addressbook::countCollection($this->addressBooks),
-                AddressbookSubscription::countCollection($this->addressBookSubscriptions),
-                Photo::countCollection($this->photos),
-                Document::countCollection($this->documents),
-                Activity::countCollection($this->activities),
+                // Contact::countCollection($this->allContacts),
+                // Relationship::countCollection($this->relationships),
+                // Addressbook::countCollection($this->addressBooks),
+                // AddressbookSubscription::countCollection($this->addressBookSubscriptions),
+                // Photo::countCollection($this->photos),
+                // Document::countCollection($this->documents),
+                // Activity::countCollection($this->activities),
             ],
             'properties' => [
-                'default_gender' => $this->when($this->default_gender_id !== null, function () {
-                    $defaultGender = Gender::where(['account_id' => $this->id])->find($this->default_gender_id);
+                // 'default_gender' => $this->when($this->default_gender_id !== null, function () {
+                //     $defaultGender = Gender::where(['account_id' => $this->id])->find($this->default_gender_id);
 
-                    return $defaultGender->uuid;
-                }),
-                'journal_entries' => JournalEntry::collection($this->journalEntries()->entry()->get()),
-                'modules' => Module::collection($this->modules),
-                'reminder_rules' => ReminderRule::collection($this->reminderRules),
-                'audit_logs' => AuditLog::collection($this->auditLogs),
+                //     return $defaultGender->uuid;
+                // }),
+                // 'journal_entries' => JournalEntry::collection($this->journalEntries()->entry()->get()),
+                // 'modules' => Module::collection($this->modules),
+                // 'reminder_rules' => ReminderRule::collection($this->reminderRules),
+                // 'audit_logs' => AuditLog::collection($this->auditLogs),
             ],
             'instance' => [
-                'activity_types' => ActivityType::collection($this->activityTypes),
-                'activity_type_categories' => ActivityTypeCategory::collection($this->activityTypeCategories),
-                'contact_field_types' => ContactFieldType::collection($this->contactFieldTypes),
-                'genders' => GenderResource::collection($this->genders),
-                'life_event_types' => LifeEventType::collection($this->lifeEventTypes),
-                'life_event_categories' => LifeEventCategory::collection($this->lifeEventCategories),
+                // 'activity_types' => ActivityType::collection($this->activityTypes),
+                // 'activity_type_categories' => ActivityTypeCategory::collection($this->activityTypeCategories),
+                // 'contact_field_types' => ContactFieldType::collection($this->contactFieldTypes),
+                // 'genders' => GenderResource::collection($this->genders),
+                // 'life_event_types' => LifeEventType::collection($this->lifeEventTypes),
+                // 'life_event_categories' => LifeEventCategory::collection($this->lifeEventCategories),
             ],
         ];
     }

@@ -6,6 +6,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import TextArea from '@/Shared/Form/TextArea.vue';
 import Errors from '@/Shared/Form/Errors.vue';
+import { onMounted, nextTick, ref } from 'vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -15,6 +16,14 @@ const props = defineProps({
 const form = useForm({
   name: '',
   description: '',
+});
+
+const nameField = ref(null);
+
+onMounted(() => {
+  nextTick(() => {
+    nameField.value.focus();
+  });
 });
 
 const submit = () => {
@@ -72,6 +81,7 @@ const submit = () => {
 
             <text-input
               v-model="form.name"
+              :ref="'nameField'"
               :autofocus="true"
               :div-outer-class="'mb-5'"
               :input-class="'block w-full'"
@@ -89,12 +99,7 @@ const submit = () => {
           <!-- actions -->
           <div class="flex justify-between p-5">
             <pretty-link :href="data.url.back" :text="$t('app.cancel')" :classes="'mr-3'" />
-            <pretty-button
-              :href="'data.url.vault.create'"
-              :text="$t('app.add')"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save'" />
+            <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </div>

@@ -86,6 +86,12 @@ defineProps({
                 </Link>
               </li>
               <li class="flex justify-start">
+                <span class="mr-2">[]</span>
+                <Link :href="route('settings.export.index')" class="text-blue-500 hover:underline">
+                  {{ $t('Export your account') }}
+                </Link>
+              </li>
+              <li class="flex justify-start">
                 <span class="mr-2">💩</span>
                 <Link :href="data.url.cancel.index" class="text-blue-500 hover:underline">
                   {{ $t('settings.cancel_your_account') }}

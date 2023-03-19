@@ -2,6 +2,7 @@
 
 namespace App\Domains\Settings\ExportAccount\Jobs;
 
+use App\Domains\Settings\ExportAccount\Services\JsonExportAccount;
 use App\Helpers\StorageHelper;
 use App\Models\ExportJob;
 use Throwable;
@@ -40,7 +41,7 @@ class ExportAccount implements ShouldQueue
         $exportJob->status = ExportJob::EXPORT_TODO;
         $exportJob->save();
         $this->exportJob = $exportJob->withoutRelations();
-        $this->path = $path ?? 'exports';
+        $this->path = $path ?? "exports/{$exportJob->account->uuid}";
     }
 
     /**
@@ -51,11 +52,10 @@ class ExportAccount implements ShouldQueue
         $this->exportJob->start();
 
         $tempFileName = '';
-        $handler = app(JsonExportAccount::class);
         try {
-            $tempFileName = $handler->execute([
+            $tempFileName = app(JsonExportAccount::class)->execute([
                 'account_id' => $this->exportJob->account_id,
-                'user_id' => $this->exportJob->user_id,
+                'author_id' => $this->exportJob->author_id,
             ]);
 
             // get the temp file that we just created

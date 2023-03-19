@@ -10,13 +10,14 @@ use App\Models\File;
 use App\Models\Group;
 use App\Models\Journal;
 use App\Models\Label;
-use App\Models\LifeEvent;
 use App\Models\LifeEventCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -169,14 +170,14 @@ class VaultTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_life_events(): void
+    public function it_has_many_timeline_events(): void
     {
         $vault = Vault::factory()->create();
-        LifeEvent::factory()->count(2)->create([
+        TimelineEvent::factory()->count(2)->create([
             'vault_id' => $vault->id,
         ]);
 
-        $this->assertTrue($vault->lifeEvents()->exists());
+        $this->assertTrue($vault->timelineEvents()->exists());
     }
 
     /** @test */
@@ -188,5 +189,16 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->addresses()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_quick_fact_template_entries(): void
+    {
+        $vault = Vault::factory()->create();
+        VaultQuickFactTemplate::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->quickFactsTemplateEntries()->exists());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Account extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +21,14 @@ class Account extends Model
     protected $fillable = [
         'storage_limit_in_mb',
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     /**
      * Get the users associated with the account.
@@ -32,8 +42,6 @@ class Account extends Model
 
     /**
      * Get the templates associated with the account.
-     *
-     * @return HasMany
      */
     public function templates(): HasMany
     {
@@ -42,8 +50,6 @@ class Account extends Model
 
     /**
      * Get the modules associated with the account.
-     *
-     * @return HasMany
      */
     public function modules(): HasMany
     {
@@ -52,8 +58,6 @@ class Account extends Model
 
     /**
      * Get the information associated with the account.
-     *
-     * @return HasMany
      */
     public function groupTypes(): HasMany
     {
@@ -62,8 +66,6 @@ class Account extends Model
 
     /**
      * Get the relationship group types associated with the account.
-     *
-     * @return HasMany
      */
     public function relationshipGroupTypes(): HasMany
     {
@@ -72,8 +74,6 @@ class Account extends Model
 
     /**
      * Get the genders associated with the account.
-     *
-     * @return HasMany
      */
     public function genders(): HasMany
     {
@@ -82,8 +82,6 @@ class Account extends Model
 
     /**
      * Get the pronouns associated with the account.
-     *
-     * @return HasMany
      */
     public function pronouns(): HasMany
     {
@@ -92,8 +90,6 @@ class Account extends Model
 
     /**
      * Get the contact information types associated with the account.
-     *
-     * @return HasMany
      */
     public function contactInformationTypes(): HasMany
     {
@@ -102,8 +98,6 @@ class Account extends Model
 
     /**
      * Get the address types associated with the account.
-     *
-     * @return HasMany
      */
     public function addressTypes(): HasMany
     {
@@ -112,8 +106,6 @@ class Account extends Model
 
     /**
      * Get the pet categories associated with the account.
-     *
-     * @return HasMany
      */
     public function petCategories(): HasMany
     {
@@ -122,8 +114,6 @@ class Account extends Model
 
     /**
      * Get the emotions associated with the account.
-     *
-     * @return HasMany
      */
     public function emotions(): HasMany
     {
@@ -132,8 +122,6 @@ class Account extends Model
 
     /**
      * Get the currencies in the account.
-     *
-     * @return BelongsToMany
      */
     public function currencies(): BelongsToMany
     {
@@ -144,8 +132,6 @@ class Account extends Model
 
     /**
      * Get the call reason types associated with the account.
-     *
-     * @return HasMany
      */
     public function callReasonTypes(): HasMany
     {
@@ -154,8 +140,6 @@ class Account extends Model
 
     /**
      * Get the gift occasions associated with the account.
-     *
-     * @return HasMany
      */
     public function giftOccasions(): HasMany
     {
@@ -164,8 +148,6 @@ class Account extends Model
 
     /**
      * Get the gift stages associated with the account.
-     *
-     * @return HasMany
      */
     public function giftStates(): HasMany
     {
@@ -174,8 +156,6 @@ class Account extends Model
 
     /**
      * Get the vaults associated with the account.
-     *
-     * @return HasMany
      */
     public function vaults(): HasMany
     {
@@ -184,8 +164,6 @@ class Account extends Model
 
     /**
      * Get the post templates associated with the account.
-     *
-     * @return HasMany
      */
     public function postTemplates(): HasMany
     {
@@ -194,11 +172,17 @@ class Account extends Model
 
     /**
      * Get the religions associated with the account.
-     *
-     * @return HasMany
      */
     public function religions(): HasMany
     {
         return $this->hasMany(Religion::class);
+    }
+
+    /**
+     * Get the export jobs associated with the account.
+     */
+    public function exportJobs(): HasMany
+    {
+        return $this->hasMany(ExportJob::class);
     }
 }

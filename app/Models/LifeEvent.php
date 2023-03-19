@@ -19,8 +19,10 @@ class LifeEvent extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'vault_id',
+        'timeline_event_id',
         'life_event_type_id',
+        'emotion_id',
+        'collapsed',
         'summary',
         'description',
         'happened_at',
@@ -28,35 +30,33 @@ class LifeEvent extends Model
         'currency_id',
         'paid_by_contact_id',
         'duration_in_minutes',
-        'distance_in_km',
+        'distance',
+        'distance_unit',
         'from_place',
         'to_place',
         'place',
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = [
-        'happened_at',
+    protected $casts = [
+        'collapsed' => 'boolean',
+        'happened_at' => 'datetime',
     ];
 
     /**
-     * Get the vault associated with the life event.
-     *
-     * @return BelongsTo
+     * Get the timeline event associated with the life event.
      */
-    public function vault(): BelongsTo
+    public function timelineEvent(): BelongsTo
     {
-        return $this->belongsTo(Vault::class);
+        return $this->belongsTo(TimelineEvent::class);
     }
 
     /**
      * Get the life event type associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function lifeEventType(): BelongsTo
     {
@@ -65,8 +65,6 @@ class LifeEvent extends Model
 
     /**
      * Get the currency associated with the life event.
-     *
-     * @return BelongsTo
      */
     public function currency(): BelongsTo
     {
@@ -74,9 +72,15 @@ class LifeEvent extends Model
     }
 
     /**
+     * Get the emotion associated with the life event.
+     */
+    public function emotion(): BelongsTo
+    {
+        return $this->belongsTo(Emotion::class);
+    }
+
+    /**
      * Get the contact who paid for the life event.
-     *
-     * @return BelongsTo
      */
     public function paidBy(): BelongsTo
     {
@@ -85,8 +89,6 @@ class LifeEvent extends Model
 
     /**
      * Get the contact records the life event is with.
-     *
-     * @return BelongsToMany
      */
     public function participants(): BelongsToMany
     {

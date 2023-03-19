@@ -25,6 +25,7 @@ return new class() extends Migration
             $table->string('timezone')->nullable();
             $table->string('number_format')->default(User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL);
             $table->string('default_map_site')->default(User::MAPS_SITE_OPEN_STREET_MAPS);
+            $table->string('distance_format')->default(User::DISTANCE_UNIT_MILES);
             $table->string('password')->nullable();
             $table->boolean('is_account_administrator')->default(false);
             $table->boolean('help_shown')->default(true);
@@ -35,24 +36,6 @@ return new class() extends Migration
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
-
-        Schema::create('vaults', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid')->nullable();
-            $table->unsignedBigInteger('account_id');
-            $table->string('type');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->unsignedBigInteger('default_template_id')->nullable();
-            $table->boolean('show_group_tab')->default(true);
-            $table->boolean('show_tasks_tab')->default(true);
-            $table->boolean('show_files_tab')->default(true);
-            $table->boolean('show_journal_tab')->default(true);
-            $table->boolean('show_companies_tab')->default(true);
-            $table->timestamps();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
-            $table->foreign('default_template_id')->references('id')->on('templates')->onDelete('set null');
-        });
     }
 
     /**
@@ -61,6 +44,5 @@ return new class() extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('vaults');
     }
 };

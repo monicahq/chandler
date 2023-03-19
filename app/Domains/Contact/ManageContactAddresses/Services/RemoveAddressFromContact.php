@@ -17,8 +17,6 @@ class RemoveAddressFromContact extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -33,8 +31,6 @@ class RemoveAddressFromContact extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -48,9 +44,6 @@ class RemoveAddressFromContact extends BaseService implements ServiceInterface
 
     /**
      * Remove an address from a contact.
-     *
-     * @param  array  $data
-     * @return Address
      */
     public function execute(array $data): Address
     {
@@ -72,6 +65,10 @@ class RemoveAddressFromContact extends BaseService implements ServiceInterface
     private function remove(): void
     {
         $this->contact->addresses()->detach($this->address);
+
+        if ($this->address->contacts()->count() === 0) {
+            $this->address->delete();
+        }
     }
 
     private function createFeedItem(): void

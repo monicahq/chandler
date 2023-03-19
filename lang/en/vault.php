@@ -119,9 +119,9 @@ return [
     'journal_show_years' => 'Years',
     'journal_show_tags' => 'All tags',
     'journal_show_contacts' => 'Contacts in this post',
-    'journal_show_options' => 'Options',
     'journal_show_blank' => 'The journal lets you document your life with your own words.',
     'journal_post_edit_tags' => 'Tags',
+    'journal_show_mood' => 'Your mood that you logged at this date',
 
     /***************************************************************
      * VAULT SETTINGS
@@ -196,10 +196,35 @@ return [
     'settings_mood_tracking_parameters_meh' => '😐 Meh',
     'settings_mood_tracking_parameters_bad' => '😔 Bad',
     'settings_mood_tracking_parameters_awful' => '😩 Awful',
+
     'settings_life_event_category_transportation' => 'Transportation',
     'settings_life_event_type_transportation_bike' => 'Rode a bike',
     'settings_life_event_type_transportation_car' => 'Drove',
     'settings_life_event_type_transportation_walk' => 'Walked',
     'settings_life_event_type_transportation_bus' => 'Took the bus',
     'settings_life_event_type_transportation_metro' => 'Took the metro',
+
+    'settings_life_event_category_social' => 'Social',
+    'settings_life_event_type_social_ate' => 'Ate',
+    'settings_life_event_type_social_drank' => 'Drank',
+    'settings_life_event_type_social_bar' => 'Went to a bar',
+    'settings_life_event_type_social_movie' => 'Watched a movie',
+    'settings_life_event_type_social_tv' => 'Watched TV',
+    'settings_life_event_type_social_tv_show' => 'Watched a tv show',
+
+    'settings_life_event_category_sport' => 'Sport',
+    'settings_life_event_type_sport_ran' => 'Ran',
+    'settings_life_event_type_sport_soccer' => 'Played soccer',
+    'settings_life_event_type_sport_basketball' => 'Played basketball',
+    'settings_life_event_type_sport_golf' => 'Played golf',
+    'settings_life_event_type_sport_tennis' => 'Played tennis',
+
+    'settings_life_event_category_work' => 'Work',
+    'settings_life_event_type_work_job' => 'Took a new job',
+    'settings_life_event_type_work_quit' => 'Quit job',
+    'settings_life_event_type_work_fired' => 'Got fired',
+    'settings_life_event_type_sport_promotion' => 'Had a promotion',
+
+    'settings_quick_fact_template_entry_hobbies' => 'Hobbies',
+    'settings_quick_fact_template_entry_food' => 'Food preferencies',
 ];

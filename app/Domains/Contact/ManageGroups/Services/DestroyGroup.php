@@ -9,8 +9,6 @@ class DestroyGroup extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -24,8 +22,6 @@ class DestroyGroup extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -37,9 +33,7 @@ class DestroyGroup extends BaseService implements ServiceInterface
     }
 
     /**
-     * Destroy a family.
-     *
-     * @param  array  $data
+     * Destroy a group.
      */
     public function execute(array $data): void
     {
