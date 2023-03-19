@@ -25,7 +25,7 @@ class PostMetricFactory extends Factory
             'post_id' => Post::factory(),
             'journal_metric_id' => JournalMetric::factory(),
             'label' => $this->faker->sentence(),
-            'value' => $this->faker->sentence(),
+            'value' => $this->faker->randomNumber(),
         ];
     }
 }
