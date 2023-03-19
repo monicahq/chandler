@@ -77,7 +77,7 @@ class JournalMetricController extends Controller
             'author_id' => Auth::id(),
             'vault_id' => $vaultId,
             'journal_id' => $journalId,
-            'journal_metric_id' => $journalMetricId
+            'journal_metric_id' => $journalMetricId,
         ];
 
         (new DestroyJournalMetric())->execute($data);
