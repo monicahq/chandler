@@ -44,6 +44,7 @@ class JournalShowViewHelperTest extends TestCase
         );
         $this->assertEquals(
             [
+                'journal_metrics' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id.'/metrics',
                 'edit' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id.'/edit',
                 'destroy' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id,
                 'create' => env('APP_URL').'/vaults/'.$journal->vault->id.'/journals/'.$journal->id.'/posts/create',

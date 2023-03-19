@@ -40,6 +40,13 @@ class JournalMetricIndexViewHelper
         return [
             'id' => $metric->id,
             'label' => $metric->label,
+            'url' => [
+                'destroy' => route('journal_metrics.destroy', [
+                    'vault' => $metric->journal->vault_id,
+                    'journal' => $metric->journal->id,
+                    'metric' => $metric->id,
+                ]),
+            ],
         ];
     }
 }

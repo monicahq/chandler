@@ -96,6 +96,7 @@ use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
 use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\JournalMetricController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
@@ -424,6 +425,7 @@ Route::middleware([
                     //  journal metrics
                     Route::get('metrics', [JournalMetricController::class, 'index'])->name('journal_metrics.index');
                     Route::post('metrics', [JournalMetricController::class, 'store'])->name('journal_metrics.store');
+                    Route::delete('metrics/{metric}', [JournalMetricController::class, 'destroy'])->name('journal_metrics.destroy');
                 });
             });
 

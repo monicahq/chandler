@@ -30,6 +30,10 @@ class JournalShowViewHelper
             'tags' => self::tags($journal),
             'slices' => self::slices($journal),
             'url' => [
+                'journal_metrics' => route('journal_metrics.index', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
                 'edit' => route('journal.edit', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,

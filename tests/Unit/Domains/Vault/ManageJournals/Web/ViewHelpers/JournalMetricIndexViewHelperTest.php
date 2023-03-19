@@ -44,6 +44,9 @@ class JournalMetricIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => $journalMetric->id,
                     'label' => 'this is a title',
+                    'url' => [
+                        'destroy' => env('APP_URL') . '/vaults/' . $vault->id . '/journals/' . $journal->id . '/metrics/' . $journalMetric->id,
+                    ],
                 ],
             ],
             $array['journalMetrics']->toArray()
@@ -67,6 +70,9 @@ class JournalMetricIndexViewHelperTest extends TestCase
             [
                 'id' => $journalMetric->id,
                 'label' => 'this is a title',
+                'url' => [
+                    'destroy' => env('APP_URL') . '/vaults/' . $vault->id . '/journals/' . $journal->id.'/metrics/'.$journalMetric->id,
+                ],
             ],
             JournalMetricIndexViewHelper::dto($journalMetric)
         );

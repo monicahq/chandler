@@ -59,6 +59,7 @@ const destroy = () => {
         <p v-if="data.description" class="mb-8">{{ data.description }}</p>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
+
           <!-- left -->
           <div class="p-3 sm:p-0">
             <!-- years -->
@@ -83,9 +84,12 @@ const destroy = () => {
               </li>
             </ul>
 
-            <inertia-link :href="data.url.edit" class="mt-6 mb-2 block text-sm text-blue-500 hover:underline"
-              >Edit journal</inertia-link
+            <inertia-link :href="data.url.journal_metrics" class="mt-6 mb-2 block text-sm text-blue-500 hover:underline"
+              >Edit journal metrics</inertia-link
             >
+            <inertia-link :href="data.url.edit" class="mb-2 block text-sm text-blue-500 hover:underline"
+                >Edit journal information</inertia-link
+              >
             <span @click="destroy()" class="block cursor-pointer text-sm text-blue-500 hover:underline"
               >Delete journal</span
             >
