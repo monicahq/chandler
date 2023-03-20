@@ -2,6 +2,7 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
+use Illuminate\Support\Str;
 use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Helpers\SliceOfLifeHelper;
@@ -121,7 +122,10 @@ class PostShowViewHelper
             ->map(fn (PostSection $section) => [
                 'id' => $section->id,
                 'label' => $section->label,
-                'content' => $section->content,
+                'content' => (string) Str::of($section->content)->markdown([
+                    'html_input' => 'strip',
+                    'allow_unsafe_links' => false,
+                ]),
             ]);
     }
 
