@@ -2,7 +2,6 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
-use Illuminate\Support\Str;
 use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Helpers\SliceOfLifeHelper;
@@ -14,6 +13,7 @@ use App\Models\PostSection;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class PostShowViewHelper
 {
