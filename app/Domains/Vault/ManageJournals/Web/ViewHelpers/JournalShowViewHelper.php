@@ -34,6 +34,10 @@ class JournalShowViewHelper
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                 ]),
+                'photo_index' => route('journal.photo.index', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
                 'edit' => route('journal.edit', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,

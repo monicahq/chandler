@@ -97,6 +97,7 @@ use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalMetricController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\JournalPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
@@ -381,6 +382,7 @@ Route::middleware([
 
                 Route::prefix('{journal}')->middleware(['journal'])->group(function () {
                     Route::get('', [JournalController::class, 'show'])->name('journal.show');
+                    Route::get('photos', [JournalPhotoController::class, 'index'])->name('journal.photo.index');
                     Route::get('years/{year}', [JournalController::class, 'year'])->name('journal.year');
                     Route::get('edit', [JournalController::class, 'edit'])->name('journal.edit');
                     Route::put('', [JournalController::class, 'update'])->name('journal.update');
