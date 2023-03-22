@@ -6,8 +6,6 @@ use App\Domains\Vault\ManageJournals\Web\ViewHelpers\JournalPhotoIndexViewHelper
 use App\Models\File;
 use App\Models\Journal;
 use App\Models\Post;
-use App\Models\SliceOfLife;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -56,7 +54,7 @@ class JournalPhotoIndexViewHelperTest extends TestCase
                     'id' => $file->id,
                     'name' => $file->name,
                     'url' => [
-                        'display' => 'https://ucarecdn.com/' . $file->uuid . '/-/scale_crop/200x200/smart/-/format/auto/-/quality/smart_retina/',
+                        'display' => 'https://ucarecdn.com/'.$file->uuid.'/-/scale_crop/200x200/smart/-/format/auto/-/quality/smart_retina/',
                     ],
                 ],
             ],
@@ -85,8 +83,8 @@ class JournalPhotoIndexViewHelperTest extends TestCase
                 'id' => $file->id,
                 'name' => $file->name,
                 'url' => [
-                    'display' => 'https://ucarecdn.com/' . $file->uuid . '/-/scale_crop/200x200/smart/-/format/auto/-/quality/smart_retina/',
-                ]
+                    'display' => 'https://ucarecdn.com/'.$file->uuid.'/-/scale_crop/200x200/smart/-/format/auto/-/quality/smart_retina/',
+                ],
             ],
             $array
         );
