@@ -1,8 +1,8 @@
 <script setup>
 import Errors from '@/Shared/Form/Errors.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
-import Dropdown from '@/Shared/Form/Dropdown.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 
@@ -11,28 +11,40 @@ const props = defineProps({
 });
 
 const form = useForm({
-  slice_of_life_id: '',
+  journal_metric_id: '',
+  label: '',
+  value: '',
 });
 
 const loadingState = ref(false);
-const editSlicesModalShown = ref(false);
-const localSlices = ref([]);
-const slice = ref({
-  id: '',
-  name: '',
-  url: {
-    show: '',
-  },
-});
+const localJournalMetrics = ref([]);
+const journalMetricModal = ref(0);
+const addModalShown = ref(false);
 
 onMounted(() => {
-  form.slice_of_life_id = props.data.slice ? props.data.slice.id : null;
-  slice.value = props.data.slice;
-  localSlices.value = props.data.slices;
+  localJournalMetrics.value = props.data.journal_metrics;
 });
 
-const showSliceModal = () => {
-  editSlicesModalShown.value = true;
+const showAddMetricModal = (journalMetric) => {
+  journalMetricModal.value = journalMetric.id;
+  addModalShown.value = true;
+  form.label = '';
+  form.value = '';
+};
+
+const store = (journalMetric) => {
+  loadingState.value = 'loading';
+  form.journal_metric_id = journalMetric.id;
+
+  axios
+    .post(journalMetric.url.store, form)
+    .then((response) => {
+      loadingState.value = '';
+      localJournalMetrics.value[localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id)].post_metrics.push(response.data.data);
+    })
+    .catch(() => {
+      loadingState.value = '';
+    });
 };
 
 const update = () => {
@@ -63,86 +75,82 @@ const reset = () => {
   <div class="mb-8">
     <p class="mb-2 flex items-center justify-between font-bold">
       <span>Post metrics</span>
-
-      <span
-        v-if="!editSlicesModalShown"
-        class="relative cursor-pointer text-xs text-gray-600 dark:text-gray-400"
-        @click="showSliceModal">
-        {{ $t('app.edit') }}
-      </span>
-
-      <!-- close button -->
-      <span
-        v-if="editSlicesModalShown"
-        class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
-        @click="editSlicesModalShown = false">
-        {{ $t('app.close') }}
-      </span>
     </p>
 
-    <!-- edit post metric -->
-    <div
-      v-if="editSlicesModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-      <form @submit.prevent="update()">
-        <div class="border-b border-gray-200 p-2 dark:border-gray-700">
-          <errors :errors="form.errors" />
+    <!-- journal metrics -->
+    <div v-for="journalMetric in localJournalMetrics" :key="journalMetric.id" class="mb-3">
+      <div class="flex">
+        <div class="font-semibold">{{ journalMetric.label }}</div>
+      </div>
+      <ul class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <li v-for="postMetric in journalMetric.post_metrics" :key="postMetric.id" class="flex items-center justify-between item-list px-3 py-1 border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+          <span>{{ postMetric.label }}</span>
+          <span>{{ postMetric.value }}</span>
+        </li>
+      </ul>
+      <p @click="showAddMetricModal(journalMetric)" class="mb-6 text-sm text-blue-500 hover:underline cursor-pointer">+ add a new metric</p>
 
-          <!-- slices of life -->
-          <dropdown
-            v-model="form.slice_of_life_id"
-            :data="localSlices"
-            :required="false"
-            :div-outer-class="'mb-2'"
-            :placeholder="$t('app.choose_value')"
-            :dropdown-class="'block w-full'" />
-        </div>
+      <div
+        v-if="addModalShown && journalMetric.id === journalMetricModal"
+        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <form @submit.prevent="store(journalMetric)">
+          <div class="border-b border-gray-200 p-2 dark:border-gray-700">
+            <errors :errors="form.errors" />
 
-        <div class="flex justify-between p-2">
-          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editSlicesModalShown = false" />
-          <pretty-button
-            :href="'data.url.vault.create'"
-            :text="$t('app.save')"
-            :state="loadingState"
-            :icon="'check'"
-            :classes="'save'" />
-        </div>
+            <text-input
+              :ref="'name'"
+              v-model="form.value"
+              :autofocus="true"
+              :div-outer-class="'mb-5'"
+              :input-class="'block w-full'"
+              :required="true"
+              :type="'number'"
+              :min="0"
+              :max="1000000"
+              :label="'Value (a number)'" />
 
-        <div v-if="slice" class="border-t border-gray-200 p-2 dark:border-gray-700">
-          <p class="cursor-pointer text-sm text-blue-500 hover:underline" @click="reset()">Or remove the slice</p>
-        </div>
-      </form>
+            <text-input
+              :ref="'name'"
+              v-model="form.label"
+              :div-outer-class="'mb-5'"
+              :input-class="'block w-full'"
+              :required="false"
+              :maxlength="255"
+              :label="'More details'" />
+          </div>
+
+          <div class="flex justify-between p-2">
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editSlicesModalShown = false" />
+            <pretty-button
+              :href="'data.url.vault.create'"
+              :text="$t('app.save')"
+              :state="loadingState"
+              :icon="'check'"
+              :classes="'save'" />
+          </div>
+        </form>
+      </div>
     </div>
 
     <!-- blank state -->
-    <p v-if="!slice" class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
-
-    <div v-else>
-      <inertia-link :href="slice.url.show" class="text-blue-500 hover:underline">
-        {{ slice.name }}
-      </inertia-link>
-    </div>
+    <p v-if="data.journal_metrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">There are no journal metrics.</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.icon-sidebar {
-  top: -2px;
-}
-
-.tag-list {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-
-  li:last-child {
-    border-bottom: 0;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
 
-  li:hover:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }
 </style>

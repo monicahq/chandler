@@ -99,6 +99,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalMetricController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostMetricController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
@@ -409,6 +410,9 @@ Route::middleware([
                         // slices of life
                         Route::put('slices', [PostSliceOfLifeController::class, 'update'])->name('post.slices.update');
                         Route::delete('slices', [PostSliceOfLifeController::class, 'destroy'])->name('post.slices.destroy');
+
+                        // post metrics
+                        Route::post('metrics', [PostMetricController::class, 'store'])->name('post.metrics.store');
                     });
 
                     // slices of life
