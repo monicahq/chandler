@@ -82,9 +82,7 @@ defineProps({
                   {{ data.previousPost.title }}
                 </inertia-link>
               </div>
-              <div v-else>
-                &nbsp;
-              </div>
+              <div v-else>&nbsp;</div>
 
               <!-- next post -->
               <div v-if="data.nextPost" class="flex items-center">
@@ -105,9 +103,7 @@ defineProps({
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                 </svg>
               </div>
-              <div v-else>
-                &nbsp;
-              </div>
+              <div v-else>&nbsp;</div>
             </div>
 
             <div class="post relative rounded bg-white">
