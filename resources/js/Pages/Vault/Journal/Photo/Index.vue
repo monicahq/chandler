@@ -1,8 +1,7 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 
-const props = defineProps({
+defineProps({
   layoutData: Object,
   data: Object,
 });
