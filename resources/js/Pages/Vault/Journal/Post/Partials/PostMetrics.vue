@@ -20,6 +20,7 @@ const loadingState = ref(false);
 const localJournalMetrics = ref([]);
 const journalMetricModal = ref(0);
 const addModalShown = ref(false);
+const editModeJournalMetricId = ref(0);
 
 onMounted(() => {
   localJournalMetrics.value = props.data.journal_metrics;
@@ -32,6 +33,10 @@ const showAddMetricModal = (journalMetric) => {
   form.value = '';
 };
 
+const showEditMetricModal = (journalMetric) => {
+  editModeJournalMetricId.value = journalMetric.id;
+};
+
 const store = (journalMetric) => {
   loadingState.value = 'loading';
   form.journal_metric_id = journalMetric.id;
@@ -40,7 +45,9 @@ const store = (journalMetric) => {
     .post(journalMetric.url.store, form)
     .then((response) => {
       loadingState.value = '';
-      localJournalMetrics.value[localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id)].post_metrics.push(response.data.data);
+      localJournalMetrics.value[
+        localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id)
+      ].post_metrics.push(response.data.data);
       addModalShown.value = false;
     })
     .catch(() => {
@@ -48,27 +55,14 @@ const store = (journalMetric) => {
     });
 };
 
-const update = () => {
-  loadingState.value = 'loading';
-
-  axios
-    .put(props.data.url.slice_store, form)
-    .then((response) => {
-      editSlicesModalShown.value = false;
-      loadingState.value = '';
-      slice.value = response.data.data;
-    })
-    .catch(() => {
-      loadingState.value = '';
+const destroy = (journalMetric, postMetric) => {
+  if (confirm('Are you sure?')) {
+    axios.delete(postMetric.url.destroy).then(() => {
+      var id = localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id);
+      var postMetricId = localJournalMetrics.value[id].post_metrics.findIndex((x) => x.id === postMetric.id);
+      localJournalMetrics.value[id].post_metrics.splice(postMetricId, 1);
     });
-};
-
-const reset = () => {
-  form.slice_of_life_id = null;
-  axios.delete(props.data.url.slice_reset, form).then(() => {
-    editSlicesModalShown.value = false;
-    slice.value = null;
-  });
+  }
 };
 </script>
 
@@ -81,15 +75,56 @@ const reset = () => {
     <!-- journal metrics -->
     <div v-for="journalMetric in localJournalMetrics" :key="journalMetric.id" class="mb-3">
       <div class="flex">
-        <div class="font-semibold">{{ journalMetric.label }}</div>
+        <div class="mb-1 font-semibold">{{ journalMetric.label }}</div>
       </div>
-      <ul v-if="journalMetric.post_metrics.length > 0" class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <li v-for="postMetric in journalMetric.post_metrics" :key="postMetric.id" class="flex items-center justify-between item-list px-3 py-1 border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-          <span>{{ postMetric.label }}</span>
-          <span>{{ postMetric.value }}</span>
+      <ul
+        v-if="journalMetric.post_metrics.length > 0"
+        class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <li
+          v-for="postMetric in journalMetric.post_metrics"
+          :key="postMetric.id"
+          class="item-list flex items-center justify-between border-b border-gray-200 px-3 py-1 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+          <span class="italic">{{ postMetric.label }}</span>
+
+          <div class="flex items-center">
+            <span class="font-mono text-sm">{{ postMetric.value }}</span>
+            <span
+              @click="destroy(journalMetric, postMetric)"
+              v-if="editModeJournalMetricId === journalMetric.id"
+              class="ml-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-4 w-4 cursor-pointer text-red-500 hover:text-red-900">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+          </div>
         </li>
       </ul>
-      <p @click="showAddMetricModal(journalMetric)" v-if="!addModalShown" class="mb-6 text-sm text-blue-500 hover:underline cursor-pointer">+ add a new metric</p>
+      <ul>
+        <li
+          @click="showAddMetricModal(journalMetric)"
+          v-if="!addModalShown && editModeJournalMetricId != journalMetric.id"
+          class="mb-6 mr-3 inline cursor-pointer text-sm text-blue-500 hover:underline">
+          add a new metric
+        </li>
+        <li
+          @click="showEditMetricModal(journalMetric)"
+          v-if="!addModalShown && journalMetric.post_metrics.length > 0 && editModeJournalMetricId != journalMetric.id"
+          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
+          edit
+        </li>
+        <li
+          @click="editModeJournalMetricId = 0"
+          v-if="editModeJournalMetricId == journalMetric.id"
+          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
+          close edit mode
+        </li>
+      </ul>
 
       <!-- modal to add a new post metric -->
       <div
@@ -135,7 +170,9 @@ const reset = () => {
     </div>
 
     <!-- blank state -->
-    <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">There are no journal metrics.</p>
+    <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">
+      There are no journal metrics.
+    </p>
   </div>
 </template>
 

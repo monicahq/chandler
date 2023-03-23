@@ -229,6 +229,14 @@ class PostEditViewHelper
             'id' => $postMetric->id,
             'value' => $postMetric->value,
             'label' => $postMetric->label,
+            'url' => [
+                'destroy' => route('post.metrics.destroy', [
+                    'vault' => $postMetric->post->journal->vault_id,
+                    'journal' => $postMetric->post->journal_id,
+                    'post' => $postMetric->post->id,
+                    'metric' => $postMetric->id,
+                ]),
+            ],
         ];
     }
 }

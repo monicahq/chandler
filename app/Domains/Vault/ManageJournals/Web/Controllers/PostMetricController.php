@@ -2,11 +2,9 @@
 
 namespace App\Domains\Vault\ManageJournals\Web\Controllers;
 
-use App\Domains\Vault\ManageJournals\Services\AddPostToSliceOfLife;
 use App\Domains\Vault\ManageJournals\Services\CreatePostMetric;
-use App\Domains\Vault\ManageJournals\Services\RemovePostFromSliceOfLife;
+use App\Domains\Vault\ManageJournals\Services\DestroyPostMetric;
 use App\Domains\Vault\ManageJournals\Web\ViewHelpers\PostEditViewHelper;
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\SliceOfLifeShowViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
 use Illuminate\Http\Request;
@@ -34,7 +32,7 @@ class PostMetricController extends Controller
         ], 201);
     }
 
-    public function destroy(Request $request, int $vaultId, int $journalId, int $postId)
+    public function destroy(Request $request, int $vaultId, int $journalId, int $postId, int $postMetricId)
     {
         $vault = Vault::findOrFail($vaultId);
         $journal = $vault->journals()->findOrFail($journalId);
@@ -46,9 +44,10 @@ class PostMetricController extends Controller
             'vault_id' => $vaultId,
             'journal_id' => $journalId,
             'post_id' => $postId,
+            'post_metric_id' => $postMetricId,
         ];
 
-        (new RemovePostFromSliceOfLife())->execute($data);
+        (new DestroyPostMetric())->execute($data);
 
         return response()->json([
             'data' => null,

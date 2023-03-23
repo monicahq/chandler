@@ -413,6 +413,7 @@ Route::middleware([
 
                         // post metrics
                         Route::post('metrics', [PostMetricController::class, 'store'])->name('post.metrics.store');
+                        Route::delete('metrics/{metric}', [PostMetricController::class, 'destroy'])->name('post.metrics.destroy');
                     });
 
                     // slices of life
