@@ -74,9 +74,7 @@ const destroy = (journalMetric, postMetric) => {
 
     <!-- journal metrics -->
     <div v-for="journalMetric in localJournalMetrics" :key="journalMetric.id" class="mb-3">
-      <div class="flex">
-        <div class="mb-1 font-semibold">{{ journalMetric.label }}</div>
-      </div>
+      <div class="mb-1 font-semibold">{{ journalMetric.label }}</div>
       <ul
         v-if="journalMetric.post_metrics.length > 0"
         class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">

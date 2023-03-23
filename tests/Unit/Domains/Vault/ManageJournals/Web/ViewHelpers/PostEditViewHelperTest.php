@@ -169,7 +169,7 @@ class PostEditViewHelperTest extends TestCase
                 'value' => 123,
                 'label' => 'label',
                 'url' => [
-                    'destroy' => env('APP_URL').'/vaults/'.$journal->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/metrics/'.$postMetric->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/journals/'.$journal->id.'/posts/'.$post->id.'/metrics/'.$postMetric->id,
                 ],
             ],
             $array
