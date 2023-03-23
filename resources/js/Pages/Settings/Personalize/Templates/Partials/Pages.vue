@@ -231,7 +231,7 @@ export default {
       axios
         .post(this.data.url.template_page_store, this.form)
         .then((response) => {
-          this.flash('The page has been added', 'success');
+          this.flash(this.$t('settings.personalize_pages_new_success'), 'success');
           this.localPages.push(response.data.data);
           this.loadingState = null;
           this.createPageModalShown = false;
@@ -248,7 +248,7 @@ export default {
       axios
         .put(page.url.update, this.form)
         .then((response) => {
-          this.flash('The page has been updated', 'success');
+          this.flash(this.$t('settings.personalize_pages_update_success'), 'success');
           this.localPages[this.localPages.findIndex((x) => x.id === page.id)] = response.data.data;
           this.loadingState = null;
           this.renamePageModalShownId = 0;
@@ -260,9 +260,7 @@ export default {
     },
 
     destroy(page) {
-      if (
-        confirm("Are you sure? This will remove the pages from all contacts, but won't delete the contacts themselves.")
-      ) {
+      if (confirm(this.$t('settings.personalize_templates_destroy_confirmation'))) {
         axios
           .delete(page.url.destroy)
           .then(() => {
