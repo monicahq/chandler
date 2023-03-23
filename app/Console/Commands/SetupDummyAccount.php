@@ -54,8 +54,6 @@ class SetupDummyAccount extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -91,7 +89,7 @@ class SetupDummyAccount extends Command
         } else {
             $this->artisan('☐ Migration of the database', 'migrate:fresh', ['--force' => true]);
         }
-        $this->artisan('☐ Reset search engine', 'scout:setup', ['--force' => true]);
+        $this->artisan('☐ Reset search engine', 'scout:setup', ['--force' => true, '--flush' => true]);
     }
 
     private function stop(): void

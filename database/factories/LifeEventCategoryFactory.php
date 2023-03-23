@@ -2,17 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
 use App\Models\LifeEventCategory;
+use App\Models\Vault;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LifeEventCategory>
+ */
 class LifeEventCategoryFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
     protected $model = LifeEventCategory::class;
 
     /**
@@ -23,10 +21,11 @@ class LifeEventCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'account_id' => Account::factory(),
+            'vault_id' => Vault::factory(),
             'label' => $this->faker->name(),
             'label_translation_key' => $this->faker->name(),
             'can_be_deleted' => true,
+            'position' => 1,
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Domains\Contact\ManageContact\Web\Controllers\ContactArchiveController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactFavoriteController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactLabelController;
+use App\Domains\Contact\ManageContact\Web\Controllers\ContactMoveController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactNoTemplateController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactPageController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactTemplateController;
@@ -22,20 +23,25 @@ use App\Domains\Contact\ManageGroups\Web\Controllers\ContactModuleGroupControlle
 use App\Domains\Contact\ManageGroups\Web\Controllers\GroupController;
 use App\Domains\Contact\ManageJobInformation\Web\Controllers\ContactModuleJobInformationController;
 use App\Domains\Contact\ManageLabels\Web\Controllers\ContactModuleLabelController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleLifeEventController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ContactModuleTimelineEventController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ToggleLifeEventController;
+use App\Domains\Contact\ManageLifeEvents\Web\Controllers\ToggleTimelineEventController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleLoanController;
 use App\Domains\Contact\ManageLoans\Web\Controllers\ContactModuleToggleLoanController;
+use App\Domains\Contact\ManageMoodTrackingEvents\Web\Controllers\ContactMoodTrackingEventsController;
 use App\Domains\Contact\ManageNotes\Web\Controllers\ContactModuleNoteController;
 use App\Domains\Contact\ManageNotes\Web\Controllers\ContactNotesController;
 use App\Domains\Contact\ManagePets\Web\Controllers\ContactModulePetController;
 use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactModulePhotoController;
 use App\Domains\Contact\ManagePhotos\Web\Controllers\ContactPhotoController;
+use App\Domains\Contact\ManageQuickFacts\Web\Controllers\ContactQuickFactController;
+use App\Domains\Contact\ManageQuickFacts\Web\Controllers\ContactQuickFactToggleController;
 use App\Domains\Contact\ManageRelationships\Web\Controllers\ContactRelationshipsController;
 use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionController;
 use App\Domains\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Domains\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Domains\Settings\CancelAccount\Web\Controllers\CancelAccountController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivitiesController;
-use App\Domains\Settings\ManageActivityTypes\Web\Controllers\PersonalizeActivityTypesController;
 use App\Domains\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
@@ -51,9 +57,6 @@ use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeCo
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypePositionController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRoleController;
 use App\Domains\Settings\ManageGroupTypes\Web\Controllers\PersonalizeGroupTypeRolePositionController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventCategoriesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesController;
-use App\Domains\Settings\ManageLifeEventCategories\Web\Controllers\PersonalizeLifeEventTypesPositionController;
 use App\Domains\Settings\ManageModules\Web\Controllers\PersonalizeModulesController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsController;
 use App\Domains\Settings\ManageNotificationChannels\Web\Controllers\NotificationsLogController;
@@ -82,6 +85,7 @@ use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatePage
 use App\Domains\Settings\ManageTemplates\Web\Controllers\PersonalizeTemplatesController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesDateFormatController;
+use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesDistanceFormatController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesHelpController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesLocaleController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesMapsPreferenceController;
@@ -89,18 +93,40 @@ use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOr
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageGifts\Web\Controllers\GiftController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\JournalPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportImportantDateSummaryController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportIndexController;
+use App\Domains\Vault\ManageReports\Web\Controllers\ReportMoodTrackingEventController;
 use App\Domains\Vault\ManageTasks\Web\Controllers\VaultTaskController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultController;
+use App\Domains\Vault\ManageVault\Web\Controllers\VaultDefaultTabOnDashboardController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultFeedController;
 use App\Domains\Vault\ManageVault\Web\Controllers\VaultReminderController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsContactImportantDateTypeController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLabelController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsQuickFactTemplateController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsQuickFactTemplatePositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTabVisibilityController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTagController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsTemplateController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsUserController;
@@ -159,6 +185,9 @@ Route::middleware([
         Route::middleware(['vault'])->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
 
+            // update dashboard's default tab
+            Route::put('defaultTab', [VaultDefaultTabOnDashboardController::class, 'update'])->name('vault.default_tab.update');
+
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
@@ -167,6 +196,22 @@ Route::middleware([
 
             // tasks
             Route::get('tasks', [VaultTaskController::class, 'index'])->name('vault.tasks.index');
+
+            // reports
+            Route::prefix('reports')->group(function () {
+                Route::get('', [ReportIndexController::class, 'index'])->name('vault.reports.index');
+
+                // contact addresses
+                Route::get('addresses', [ReportAddressesController::class, 'index'])->name('vault.reports.addresses.index');
+                Route::get('addresses/city/{city}', [ReportAddressesCitiesController::class, 'show'])->name('vault.reports.addresses.cities.show');
+                Route::get('addresses/country/{country}', [ReportAddressesCountriesController::class, 'show'])->name('vault.reports.addresses.countries.show');
+
+                // mood tracking event
+                Route::get('moodTrackingEvents', [ReportMoodTrackingEventController::class, 'index'])->name('vault.reports.mood_tracking_events.index');
+
+                // important date summary
+                Route::get('importantDates', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.important_dates.index');
+            });
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -185,9 +230,20 @@ Route::middleware([
                     Route::post('', [ContactController::class, 'update'])->name('contact.update');
                     Route::delete('', [ContactController::class, 'destroy'])->name('contact.destroy');
 
+                    // quick facts
+                    Route::get('/quickFacts/{template}', [ContactQuickFactController::class, 'show'])->name('contact.quick_fact.show');
+                    Route::post('/quickFacts/{template}', [ContactQuickFactController::class, 'store'])->name('contact.quick_fact.store');
+                    Route::put('/quickFacts/toggle', [ContactQuickFactToggleController::class, 'update'])->name('contact.quick_fact.toggle');
+                    Route::put('/quickFacts/{template}/{quickFact}', [ContactQuickFactController::class, 'update'])->name('contact.quick_fact.update');
+                    Route::delete('/quickFacts/{template}/{quickFact}', [ContactQuickFactController::class, 'destroy'])->name('contact.quick_fact.destroy');
+
                     // toggle archive/favorite
                     Route::put('/toggle', [ContactArchiveController::class, 'update'])->name('contact.archive.update');
                     Route::put('/toggle-favorite', [ContactFavoriteController::class, 'update'])->name('contact.favorite.update');
+
+                    // move contact to another vault
+                    Route::get('/move', [ContactMoveController::class, 'show'])->name('contact.move.show');
+                    Route::post('/move', [ContactMoveController::class, 'store'])->name('contact.move.store');
 
                     // template
                     Route::get('update-template', [ContactNoTemplateController::class, 'show'])->name('contact.blank');
@@ -255,6 +311,7 @@ Route::middleware([
                     // job information
                     Route::get('companies/list', [ContactModuleJobInformationController::class, 'index'])->name('contact.companies.list.index');
                     Route::put('jobInformation', [ContactModuleJobInformationController::class, 'update'])->name('contact.job_information.update');
+                    Route::delete('jobInformation', [ContactModuleJobInformationController::class, 'destroy'])->name('contact.job_information.destroy');
 
                     // religion
                     Route::put('religion', [ContactModuleReligionController::class, 'update'])->name('contact.religion.update');
@@ -294,6 +351,18 @@ Route::middleware([
                     // groups
                     Route::post('groups', [ContactModuleGroupController::class, 'store'])->name('contact.group.store');
                     Route::delete('groups/{group}', [ContactModuleGroupController::class, 'destroy'])->name('contact.group.destroy');
+
+                    // timeline events (which contain life events)
+                    Route::get('timelineEvents', [ContactModuleTimelineEventController::class, 'index'])->name('contact.timeline_event.index');
+                    Route::post('timelineEvents', [ContactModuleTimelineEventController::class, 'store'])->name('contact.timeline_event.store');
+                    Route::post('timelineEvents/{timelineEvent}/toggle', [ToggleTimelineEventController::class, 'store'])->name('contact.timeline_event.toggle');
+                    Route::post('timelineEvents/{timelineEvent}', [ContactModuleLifeEventController::class, 'store'])->name('contact.life_event.store');
+                    Route::delete('timelineEvents/{timelineEvent}', [ContactModuleTimelineEventController::class, 'destroy'])->name('contact.timeline_event.destroy');
+                    Route::post('timelineEvents/{timelineEvent}/lifeEvents/{lifeEvent}/toggle', [ToggleLifeEventController::class, 'store'])->name('contact.life_event.toggle');
+                    Route::delete('timelineEvents/{timelineEvent}/lifeEvents/{lifeEvent}', [ContactModuleLifeEventController::class, 'destroy'])->name('contact.life_event.destroy');
+
+                    // mood tracking events
+                    Route::post('moodTrackingEvents', [ContactMoodTrackingEventsController::class, 'store'])->name('contact.mood_tracking_event.store');
                 });
             });
 
@@ -313,7 +382,11 @@ Route::middleware([
 
                 Route::prefix('{journal}')->middleware(['journal'])->group(function () {
                     Route::get('', [JournalController::class, 'show'])->name('journal.show');
+                    Route::get('photos', [JournalPhotoController::class, 'index'])->name('journal.photo.index');
                     Route::get('years/{year}', [JournalController::class, 'year'])->name('journal.year');
+                    Route::get('edit', [JournalController::class, 'edit'])->name('journal.edit');
+                    Route::put('', [JournalController::class, 'update'])->name('journal.update');
+                    Route::delete('', [JournalController::class, 'destroy'])->name('journal.destroy');
 
                     // posts
                     Route::get('posts/create', [PostController::class, 'create'])->name('post.create');
@@ -324,12 +397,31 @@ Route::middleware([
                         Route::get('', [PostController::class, 'show'])->name('post.show');
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
+                        Route::post('photos', [PostPhotoController::class, 'store'])->name('post.photos.store');
+                        Route::delete('photos/{photo}', [PostPhotoController::class, 'destroy'])->name('post.photos.destroy');
                         Route::delete('', [PostController::class, 'destroy'])->name('post.destroy');
 
                         // tags
                         Route::post('tags', [PostTagController::class, 'store'])->name('post.tag.store');
                         Route::put('tags/{tag}', [PostTagController::class, 'update'])->name('post.tag.update');
                         Route::delete('tags/{tag}', [PostTagController::class, 'destroy'])->name('post.tag.destroy');
+
+                        // slices of life
+                        Route::put('slices', [PostSliceOfLifeController::class, 'update'])->name('post.slices.update');
+                        Route::delete('slices', [PostSliceOfLifeController::class, 'destroy'])->name('post.slices.destroy');
+                    });
+
+                    // slices of life
+                    Route::get('slices', [SliceOfLifeController::class, 'index'])->name('slices.index');
+                    Route::post('slices', [SliceOfLifeController::class, 'store'])->name('slices.store');
+
+                    Route::prefix('slices/{slice}')->middleware(['slice'])->group(function () {
+                        Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
+                        Route::get('edit', [SliceOfLifeController::class, 'edit'])->name('slices.edit');
+                        Route::put('', [SliceOfLifeController::class, 'update'])->name('slices.update');
+                        Route::put('cover', [SliceOfLifeCoverImageController::class, 'update'])->name('slices.cover.update');
+                        Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
+                        Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');
                     });
                 });
             });
@@ -345,6 +437,14 @@ Route::middleware([
                 Route::get('photos', [VaultFileController::class, 'photos'])->name('photos');
                 Route::get('documents', [VaultFileController::class, 'documents'])->name('documents');
                 Route::get('avatars', [VaultFileController::class, 'avatars'])->name('avatars');
+
+                Route::delete('{file}', [VaultFileController::class, 'destroy'])->name('destroy');
+            });
+
+            // companies
+            Route::prefix('companies')->name('vault.companies.')->group(function () {
+                Route::get('', [VaultCompanyController::class, 'index'])->name('index');
+                Route::get('{company}', [VaultCompanyController::class, 'show'])->name('show');
             });
 
             // vault settings
@@ -373,6 +473,33 @@ Route::middleware([
                 Route::post('settings/contactImportantDateTypes', [VaultSettingsContactImportantDateTypeController::class, 'store'])->name('vault.settings.important_date_type.store');
                 Route::put('settings/contactImportantDateTypes/{type}', [VaultSettingsContactImportantDateTypeController::class, 'update'])->name('vault.settings.important_date_type.update');
                 Route::delete('settings/contactImportantDateTypes/{type}', [VaultSettingsContactImportantDateTypeController::class, 'destroy'])->name('vault.settings.important_date_type.destroy');
+
+                // tab visibility
+                Route::put('settings/visibility', [VaultSettingsTabVisibilityController::class, 'update'])->name('vault.settings.tab.update');
+
+                // mood tracking parameters
+                Route::post('settings/moodTrackingParameters', [VaultSettingsMoodTrackingParameterController::class, 'store'])->name('vault.settings.mood_tracking_parameter.store');
+                Route::put('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'update'])->name('vault.settings.mood_tracking_parameter.update');
+                Route::put('settings/moodTrackingParameters/{parameter}/order', [VaultSettingsMoodTrackingParameterPositionController::class, 'update'])->name('vault.settings.mood_tracking_parameter.order.update');
+                Route::delete('settings/moodTrackingParameters/{parameter}', [VaultSettingsMoodTrackingParameterController::class, 'destroy'])->name('vault.settings.mood_tracking_parameter.destroy');
+
+                // life event categories
+                Route::post('settings/lifeEventCategories', [VaultSettingsLifeEventCategoriesController::class, 'store'])->name('vault.settings.life_event_categories.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'update'])->name('vault.settings.life_event_categories.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}', [VaultSettingsLifeEventCategoriesController::class, 'destroy'])->name('vault.settings.life_event_categories.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/order', [VaultSettingsLifeEventCategoriesPositionController::class, 'update'])->name('vault.settings.life_event_categories.order.update');
+
+                // life event types
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [VaultSettingsLifeEventTypesController::class, 'store'])->name('vault.settings.life_event_types.store');
+                Route::put('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'update'])->name('vault.settings.life_event_types.update');
+                Route::delete('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [VaultSettingsLifeEventTypesController::class, 'destroy'])->name('vault.settings.life_event_types.destroy');
+                Route::post('settings/lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [VaultSettingsLifeEventTypesPositionController::class, 'update'])->name('vault.settings.life_event_types.order.update');
+
+                // quick fact templates
+                Route::post('settings/quickFactTemplates', [VaultSettingsQuickFactTemplateController::class, 'store'])->name('vault.settings.quick_fact_templates.store');
+                Route::put('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'update'])->name('vault.settings.quick_fact_templates.update');
+                Route::put('settings/quickFactTemplates/{template}/order', [VaultSettingsQuickFactTemplatePositionController::class, 'update'])->name('vault.settings.quick_fact_templates.order.update');
+                Route::delete('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'destroy'])->name('vault.settings.quick_fact_templates.destroy');
             });
 
             // global search in the vault
@@ -396,6 +523,7 @@ Route::middleware([
             Route::post('date', [PreferencesDateFormatController::class, 'store'])->name('date.store');
             Route::post('timezone', [PreferencesTimezoneController::class, 'store'])->name('timezone.store');
             Route::post('number', [PreferencesNumberFormatController::class, 'store'])->name('number.store');
+            Route::post('distance', [PreferencesDistanceFormatController::class, 'store'])->name('distance.store');
             Route::post('maps', [PreferencesMapsPreferenceController::class, 'store'])->name('maps.store');
             Route::post('locale', [PreferencesLocaleController::class, 'store'])->name('locale.store');
             Route::post('help', [PreferencesHelpController::class, 'store'])->name('help.store');
@@ -452,29 +580,6 @@ Route::middleware([
                 Route::post('callReasonTypes/{callReasonType}/reasons', [PersonalizeCallReasonsController::class, 'store'])->name('call_reasons.store');
                 Route::put('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'update'])->name('call_reasons.update');
                 Route::delete('callReasonTypes/{callReasonType}/reasons/{reason}', [PersonalizeCallReasonsController::class, 'destroy'])->name('call_reasons.destroy');
-
-                // activity types
-                Route::get('activityTypes', [PersonalizeActivityTypesController::class, 'index'])->name('activity.index');
-                Route::post('activityTypes', [PersonalizeActivityTypesController::class, 'store'])->name('activity.type.store');
-                Route::put('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'update'])->name('activity.type.update');
-                Route::delete('activityTypes/{activityType}', [PersonalizeActivityTypesController::class, 'destroy'])->name('activity.type.destroy');
-
-                // activities
-                Route::post('activityTypes/{activityType}/activities', [PersonalizeActivitiesController::class, 'store'])->name('activity.store');
-                Route::put('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'update'])->name('activity.update');
-                Route::delete('activityTypes/{activityType}/activities/{activity}', [PersonalizeActivitiesController::class, 'destroy'])->name('activity.destroy');
-
-                // life event categories
-                Route::get('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'index'])->name('life_event_categories.index');
-                Route::post('lifeEventCategories', [PersonalizeLifeEventCategoriesController::class, 'store'])->name('life_event_categories.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'update'])->name('life_event_categories.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}', [PersonalizeLifeEventCategoriesController::class, 'destroy'])->name('life_event_categories.destroy');
-
-                // life event types
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes', [PersonalizeLifeEventTypesController::class, 'store'])->name('life_event_types.store');
-                Route::put('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'update'])->name('life_event_types.update');
-                Route::delete('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}', [PersonalizeLifeEventTypesController::class, 'destroy'])->name('life_event_types.destroy');
-                Route::post('lifeEventCategories/{lifeEventCategory}/lifeEventTypes/{lifeEventType}/order', [PersonalizeLifeEventTypesPositionController::class, 'update'])->name('life_event_types.order.update');
 
                 // gift occasions
                 Route::get('giftOccasions', [PersonalizeGiftOccasionController::class, 'index'])->name('gift_occasions.index');

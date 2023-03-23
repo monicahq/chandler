@@ -33,7 +33,7 @@ class Group extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array
+     *
      * @codeCoverageIgnore
      */
     #[SearchUsingPrefix(['id', 'vault_id'])]
@@ -59,8 +59,6 @@ class Group extends Model
 
     /**
      * Get the vault associated with the group.
-     *
-     * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
@@ -69,8 +67,6 @@ class Group extends Model
 
     /**
      * Get the vault associated with the group.
-     *
-     * @return BelongsTo
      */
     public function groupType(): BelongsTo
     {
@@ -79,8 +75,6 @@ class Group extends Model
 
     /**
      * Get the contacts associated with the group.
-     *
-     * @return BelongsToMany
      */
     public function contacts(): BelongsToMany
     {
@@ -89,8 +83,6 @@ class Group extends Model
 
     /**
      * Get the group's feed item.
-     *
-     * @return MorphOne
      */
     public function feedItem(): MorphOne
     {

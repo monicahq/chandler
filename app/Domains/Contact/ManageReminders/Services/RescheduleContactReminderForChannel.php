@@ -5,12 +5,12 @@ namespace App\Domains\Contact\ManageReminders\Services;
 use App\Interfaces\ServiceInterface;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
-use App\Services\QueuableService;
+use App\Services\BaseService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
-class RescheduleContactReminderForChannel extends QueuableService implements ServiceInterface
+class RescheduleContactReminderForChannel extends BaseService implements ServiceInterface
 {
     private UserNotificationChannel $userNotificationChannel;
 
@@ -18,10 +18,10 @@ class RescheduleContactReminderForChannel extends QueuableService implements Ser
 
     private Carbon $upcomingDate;
 
+    private array $data;
+
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -37,9 +37,6 @@ class RescheduleContactReminderForChannel extends QueuableService implements Ser
      * previous iteration has been sent, for the given channel.
      * Before sending this occurence, we need to make the user notification
      * channel is still active.
-     *
-     * @param  array  $data
-     * @return void
      */
     public function execute(array $data): void
     {
@@ -55,6 +52,10 @@ class RescheduleContactReminderForChannel extends QueuableService implements Ser
 
         if ($this->contactReminder->type !== ContactReminder::TYPE_ONE_TIME) {
             $this->schedule();
+        } else {
+            DB::table('contact_reminder_scheduled')
+                ->where('id', $this->data['contact_reminder_scheduled_id'])
+                ->delete();
         }
     }
 

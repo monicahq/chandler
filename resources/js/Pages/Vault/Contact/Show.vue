@@ -32,6 +32,8 @@ import Documents from '@/Shared/Modules/Documents.vue';
 import Photos from '@/Shared/Modules/Photos.vue';
 import Religion from '@/Shared/Modules/Religion.vue';
 import Posts from '@/Shared/Modules/Posts.vue';
+import LifeEvent from '@/Shared/Modules/LifeEvent.vue';
+import QuickFacts from '@/Shared/Modules/QuickFacts.vue';
 import Uploadcare from '@/Components/Uploadcare.vue';
 
 const props = defineProps({
@@ -144,6 +146,10 @@ const destroyAvatar = () => {
 .group-list-item:not(:last-child):after {
   content: ',';
 }
+
+.icon-sidebar {
+  color: #646b76;
+}
 </style>
 
 <template>
@@ -250,6 +256,12 @@ const destroyAvatar = () => {
                   {{ $t('contact.contact_change_template_cta') }}
                 </Link>
               </li>
+              <!-- move contact to another vault -->
+              <li class="mb-2">
+                <Link :href="data.url.move_contact" class="cursor-pointer text-blue-500 hover:underline">
+                  {{ $t('contact.contact_move_contact_cta') }}
+                </Link>
+              </li>
               <!-- delete contact -->
               <li v-if="data.options.can_be_deleted">
                 <span class="cursor-pointer text-blue-500 hover:underline" @click="deletingContact = true">
@@ -261,6 +273,11 @@ const destroyAvatar = () => {
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
+            <!-- quick facts -->
+            <Quick-facts
+              v-if="data.quick_fact_template_entries.templates.length > 0"
+              :data="data.quick_fact_template_entries" />
+
             <!-- family summary -->
             <div v-if="data.group_summary_information.length > 0">
               <div class="mb-6 flex rounded border border-gray-200 p-3 dark:border-gray-700">
@@ -327,6 +344,8 @@ const destroyAvatar = () => {
                 <Photos v-else-if="module.type == 'photos'" :data="module.data" />
 
                 <Posts v-else-if="module.type == 'posts'" :data="module.data" />
+
+                <Life-Event v-else-if="module.type == 'life_events'" :data="module.data" :layout-data="layoutData" />
               </div>
             </div>
           </div>

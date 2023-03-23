@@ -7,6 +7,7 @@ use App\Http\Middleware\CheckContactAccess;
 use App\Http\Middleware\CheckGroupAccess;
 use App\Http\Middleware\CheckJournalAccess;
 use App\Http\Middleware\CheckPostAccess;
+use App\Http\Middleware\CheckSliceOfLifeAccess;
 use App\Http\Middleware\CheckVaultAccess;
 use App\Http\Middleware\CheckVaultPermissionAtLeastEditor;
 use App\Http\Middleware\CheckVaultPermissionAtLeastManager;
@@ -19,12 +20,11 @@ class Kernel extends HttpKernel
      *
      * These middleware are run during every request to your application.
      *
-     * @var array
+     * @var array<int,string>
      */
     protected $middleware = [
-        // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
@@ -34,7 +34,7 @@ class Kernel extends HttpKernel
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string,array<int,string>>
      */
     protected $middlewareGroups = [
         'web' => [
@@ -42,11 +42,11 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \CodeZero\Localizer\Middleware\SetLocale::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
-            \App\Http\Middleware\CheckLocale::class,
         ],
 
         'api' => [
@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
      *
      * These middleware may be assigned to groups or used individually.
      *
-     * @var array
+     * @var array<string,string>
      */
     protected $routeMiddleware = [
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
@@ -79,6 +79,7 @@ class Kernel extends HttpKernel
         'contact' => CheckContactAccess::class,
         'group' => CheckGroupAccess::class,
         'journal' => CheckJournalAccess::class,
+        'slice' => CheckSliceOfLifeAccess::class,
         'post' => CheckPostAccess::class,
         'administrator' => CheckAdministratorPrivilege::class,
         'atLeastVaultEditor' => CheckVaultPermissionAtLeastEditor::class,

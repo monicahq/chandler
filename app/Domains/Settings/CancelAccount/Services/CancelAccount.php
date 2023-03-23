@@ -4,7 +4,6 @@ namespace App\Domains\Settings\CancelAccount\Services;
 
 use App\Interfaces\ServiceInterface;
 use App\Models\Account;
-use App\Models\Contact;
 use App\Models\File;
 use App\Services\QueuableService;
 
@@ -12,8 +11,6 @@ class CancelAccount extends QueuableService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -25,8 +22,6 @@ class CancelAccount extends QueuableService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -38,9 +33,6 @@ class CancelAccount extends QueuableService implements ServiceInterface
 
     /**
      * Delete an account.
-     *
-     * @param  array  $data
-     * @return void
      */
     public function execute(array $data): void
     {
@@ -55,9 +47,8 @@ class CancelAccount extends QueuableService implements ServiceInterface
     private function destroyAllFiles(Account $account): void
     {
         $vaultIds = $account->vaults()->select('id')->get()->toArray();
-        $contactIds = Contact::whereIn('vault_id', $vaultIds)->select('id')->get()->toArray();
 
-        File::whereIn('contact_id', $contactIds)->chunk(100, function ($files) {
+        File::whereIn('vault_id', $vaultIds)->chunk(100, function ($files) {
             $files->each(function ($file) {
                 $file->delete();
             });

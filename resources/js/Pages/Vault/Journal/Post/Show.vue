@@ -56,14 +56,61 @@ defineProps({
       </div>
     </nav>
 
-    <main class="relative sm:mt-16">
+    <main class="relative sm:mt-8">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="mr-8">
+            <!-- post previous/next -->
+            <div class="mb-4 flex justify-between">
+              <!-- previous post -->
+              <div v-if="data.previousPost" class="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="mr-1 h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+                </svg>
+
+                <inertia-link
+                  v-if="data.previousPost"
+                  :href="data.previousPost.url.show"
+                  class="text-sm text-gray-400 hover:underline">
+                  {{ data.previousPost.title }}
+                </inertia-link>
+              </div>
+              <div v-else>&nbsp;</div>
+
+              <!-- next post -->
+              <div v-if="data.nextPost" class="flex items-center">
+                <inertia-link
+                  v-if="data.nextPost"
+                  :href="data.nextPost.url.show"
+                  class="text-sm text-gray-400 hover:underline">
+                  {{ data.nextPost.title }}
+                </inertia-link>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="ml-1 h-4 w-4 text-gray-400">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </div>
+              <div v-else>&nbsp;</div>
+            </div>
+
             <div class="post relative rounded bg-white">
+              <!-- date of the post -->
               <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
 
+              <!-- tags -->
               <ul v-if="data.tags" class="p0 list mb-3">
                 <li
                   v-for="tag in data.tags"
@@ -73,16 +120,27 @@ defineProps({
                 </li>
               </ul>
 
+              <!-- title -->
               <h1 v-if="data.title_exists" class="mb-4 text-2xl font-medium">{{ data.title }}</h1>
+
+              <!-- photos -->
+              <div v-if="data.photos.length > 0" class="mb-4 flex">
+                <div
+                  v-for="photo in data.photos"
+                  :key="photo.id"
+                  class="mr-2 rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  <img :src="photo.url.display" :alt="photo.name" />
+                </div>
+              </div>
 
               <!-- sections -->
               <div v-if="data.sections.length > 0" class="prose">
                 <div v-for="section in data.sections" :key="section.id" class="mb-4">
-                  <div class="mb-1 italic text-gray-400">
+                  <div v-if="data.sections.length > 1" class="mb-1 italic text-gray-400">
                     {{ section.label }}
                   </div>
 
-                  <div class="mb-6">{{ section.content }}</div>
+                  <div class="mb-6" v-html="section.content"></div>
                 </div>
               </div>
 
@@ -95,33 +153,50 @@ defineProps({
           <div class="">
             <!-- contacts -->
             <div v-if="data.contacts.length > 0" class="mb-4">
-              <p class="mb-2 font-bold">{{ $t('vault.journal_show_contacts') }}</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_contacts') }}</p>
 
               <div v-for="contact in data.contacts" :key="contact.id" class="mb-2 block">
                 <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
               </div>
             </div>
 
+            <!-- slice of life -->
+            <div v-if="data.sliceOfLife" class="mb-4">
+              <p class="mb-2 text-sm font-semibold">Slice of life</p>
+              <div class="mb-6 last:mb-0">
+                <div
+                  class="rounded border-b border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
+                  <inertia-link :href="data.sliceOfLife.url.show" class="font-semibold">{{
+                    data.sliceOfLife.name
+                  }}</inertia-link>
+                  <p class="text-xs text-gray-600">{{ data.sliceOfLife.date_range }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- mood tracking events -->
+            <div v-if="data.moodTrackingEvents.length > 0">
+              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_mood') }}</p>
+
+              <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                <li
+                  v-for="mood in data.moodTrackingEvents"
+                  :key="mood.id"
+                  class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  <span>{{ mood.mood_tracking_parameter.label }}</span>
+                  <span class="block text-sm" v-if="mood.number_of_hours_slept"
+                    >Slept {{ mood.number_of_hours_slept }} hours</span
+                  >
+                  <span v-if="mood.note" class="block text-sm">{{ mood.note }}</span>
+                </li>
+              </ul>
+            </div>
+
             <!-- options -->
-            <p class="mb-2 font-bold">{{ $t('vault.journal_show_options') }}</p>
             <ul class="mb-6 text-sm">
               <li class="flex items-center">
-                <svg
-                  class="mr-2 h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
-                </svg>
-
-                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">{{
-                  $t('app.edit')
-                }}</inertia-link>
+                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">Edit post</inertia-link>
               </li>
             </ul>
           </div>
@@ -170,6 +245,22 @@ defineProps({
     right: -3px;
     top: 1px;
     transform: rotate(1.4deg);
+  }
+}
+
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 </style>

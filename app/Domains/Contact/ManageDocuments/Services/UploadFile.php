@@ -5,7 +5,6 @@ namespace App\Domains\Contact\ManageDocuments\Services;
 use App\Exceptions\EnvVariablesNotSetException;
 use App\Models\File;
 use App\Services\BaseService;
-use Carbon\Carbon;
 
 class UploadFile extends BaseService
 {
@@ -15,8 +14,6 @@ class UploadFile extends BaseService
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -24,7 +21,6 @@ class UploadFile extends BaseService
             'account_id' => 'required|integer|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|integer|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
             'uuid' => 'required|string',
             'name' => 'required|string',
             'original_url' => 'required|string',
@@ -37,8 +33,6 @@ class UploadFile extends BaseService
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -46,7 +40,6 @@ class UploadFile extends BaseService
             'author_must_belong_to_account',
             'vault_must_belong_to_account',
             'author_must_be_vault_editor',
-            'contact_must_belong_to_vault',
         ];
     }
 
@@ -57,16 +50,12 @@ class UploadFile extends BaseService
      * However, we abstract uploads by the File object. This service here takes
      * the payload that Uploadcare sends us back, and map it into a File object
      * that the clients will consume.
-     *
-     * @param  array  $data
-     * @return File
      */
     public function execute(array $data): File
     {
         $this->data = $data;
         $this->validate();
         $this->save();
-        $this->updateLastEditedDate();
 
         return $this->file;
     }
@@ -87,7 +76,7 @@ class UploadFile extends BaseService
     private function save(): void
     {
         $this->file = File::create([
-            'contact_id' => $this->data['contact_id'],
+            'vault_id' => $this->data['vault_id'],
             'uuid' => $this->data['uuid'],
             'name' => $this->data['name'],
             'original_url' => $this->data['original_url'],
@@ -96,11 +85,5 @@ class UploadFile extends BaseService
             'size' => $this->data['size'],
             'type' => $this->data['type'],
         ]);
-    }
-
-    private function updateLastEditedDate(): void
-    {
-        $this->contact->last_updated_at = Carbon::now();
-        $this->contact->save();
     }
 }

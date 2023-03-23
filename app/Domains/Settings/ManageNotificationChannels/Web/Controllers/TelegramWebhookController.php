@@ -13,7 +13,6 @@ class TelegramWebhookController extends Controller
     /**
      * Store Telegram Chat ID from telegram webhook message.
      *
-     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +40,11 @@ class TelegramWebhookController extends Controller
         $chatId = $request->message['chat']['id'];
 
         // Get the User ID from the cache using the temp code as key.
-        $channel = UserNotificationChannel::where('verification_token', $verificationKey)->first();
+        try {
+            $channel = UserNotificationChannel::where('verification_token', $verificationKey)->firstOrFail();
+        } catch (Exception) {
+            return response('Error', 404);
+        }
 
         // Update user with the Telegram Chat ID
         $channel->content = $chatId;

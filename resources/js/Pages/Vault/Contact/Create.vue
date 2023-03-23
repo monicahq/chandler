@@ -44,6 +44,17 @@
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <errors :errors="form.errors" />
 
+            <!-- prefix -->
+            <text-input
+              v-if="showPrefixField"
+              :id="'prefix'"
+              v-model="form.prefix"
+              :div-outer-class="'mb-5'"
+              :input-class="'block w-full'"
+              :required="false"
+              :maxlength="255"
+              :label="$t('vault.create_contact_prefix')" />
+
             <!-- first name -->
             <text-input
               v-model="form.first_name"
@@ -86,7 +97,7 @@
               :maxlength="255"
               :label="$t('vault.create_contact_nickname')" />
 
-            <!-- nickname -->
+            <!-- maiden name -->
             <text-input
               v-if="showMaidenNameField"
               :id="'maiden_name'"
@@ -96,6 +107,17 @@
               :required="false"
               :maxlength="255"
               :label="$t('vault.create_contact_maiden_name')" />
+
+            <!-- suffix -->
+            <text-input
+              v-if="showSuffixField"
+              :id="'suffix'"
+              v-model="form.suffix"
+              :div-outer-class="'mb-5'"
+              :input-class="'block w-full'"
+              :required="false"
+              :maxlength="255"
+              :label="$t('vault.create_contact_suffix')" />
 
             <!-- genders -->
             <dropdown
@@ -134,37 +156,49 @@
             <div class="flex flex-wrap text-xs">
               <span
                 v-if="!showMiddleNameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayMiddleNameField">
                 {{ $t('vault.create_contact_add_middle_name') }}
               </span>
               <span
+                v-if="!showPrefixField"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                @click="displayPrefixField">
+                {{ $t('vault.create_contact_add_prefix') }}
+              </span>
+              <span
+                v-if="!showSuffixField"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                @click="displaySuffixField">
+                {{ $t('vault.create_contact_add_suffix') }}
+              </span>
+              <span
                 v-if="!showNicknameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayNicknameField">
                 {{ $t('vault.create_contact_add_nickname') }}
               </span>
               <span
                 v-if="!showMaidenNameField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayMaidenNameField">
                 {{ $t('vault.create_contact_add_maiden_name') }}
               </span>
               <span
                 v-if="data.genders.length > 0 && !showGenderField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayGenderField">
                 {{ $t('vault.create_contact_add_gender') }}
               </span>
               <span
                 v-if="data.pronouns.length > 0 && !showPronounField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayPronounField">
                 {{ $t('vault.create_contact_add_pronoun') }}
               </span>
               <span
                 v-if="data.templates.length > 0 && !showTemplateField"
-                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:text-gray-900"
+                class="mr-2 mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayTemplateField">
                 {{ $t('vault.create_contact_add_change_template') }}
               </span>
@@ -225,11 +259,15 @@ export default {
       showGenderField: false,
       showPronounField: false,
       showTemplateField: false,
+      showSuffixField: false,
+      showPrefixField: false,
       form: {
         first_name: '',
         last_name: '',
         middle_name: '',
         nickname: '',
+        prefix: '',
+        suffix: '',
         maiden_name: '',
         gender_id: '',
         pronoun_id: '',
@@ -262,6 +300,14 @@ export default {
 
     displayTemplateField() {
       this.showTemplateField = true;
+    },
+
+    displaySuffixField() {
+      this.showSuffixField = true;
+    },
+
+    displayPrefixField() {
+      this.showPrefixField = true;
     },
 
     submit() {

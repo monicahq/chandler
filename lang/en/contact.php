@@ -8,6 +8,7 @@ return [
     'contact_archive_cta' => 'Archive contact',
     'contact_unarchive_cta' => 'Unarchive contact',
     'contact_change_template_cta' => 'Change template',
+    'contact_move_contact_cta' => 'Move contact',
     'contact_delete_cta' => 'Delete contact',
     'contact_archived' => 'The contact is archived',
     'contact_toggle_confirm' => 'Are you sure?',
@@ -52,6 +53,7 @@ return [
     'feed_item_favorited' => 'added the contact to the favorites',
     'feed_item_unfavorited' => 'removed the contact from the favorites',
     'feed_item_changed_avatar' => 'updated the avatar of the contact',
+    'feed_item_mood_tracking_event_added' => 'logged the mood',
 
     /***************************************************************
      * MODULE: GROUP
@@ -66,7 +68,8 @@ return [
     'addresses_title' => 'Addresses',
     'addresses_cta' => 'Add an address',
     'addresses_address_type' => 'Address type',
-    'addresses_street' => 'Street',
+    'addresses_line_1' => 'Address',
+    'addresses_line_2' => 'Apartment, suite, etc.',
     'addresses_city' => 'City',
     'addresses_province' => 'Province',
     'addresses_postal_code' => 'Postal code',

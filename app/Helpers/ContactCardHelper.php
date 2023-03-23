@@ -4,19 +4,14 @@ namespace App\Helpers;
 
 use App\Domains\Contact\ManageGroups\Web\ViewHelpers\GroupsViewHelper;
 use App\Models\Contact;
-use App\Models\User;
 
 class ContactCardHelper
 {
     /**
      * Get all the information about a contact needed to display the contact card
      * component.
-     *
-     * @param  Contact  $contact
-     * @param  User  $user
-     * @return array
      */
-    public static function data(Contact $contact, User $user): array
+    public static function data(Contact $contact): array
     {
         return [
             'id' => $contact->id,

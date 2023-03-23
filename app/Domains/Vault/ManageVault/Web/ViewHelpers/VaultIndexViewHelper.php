@@ -13,9 +13,6 @@ class VaultIndexViewHelper
 {
     /**
      * Get all the data needed for the general layout page.
-     *
-     * @param  Vault|null  $vault
-     * @return array
      */
     public static function layoutData(Vault $vault = null): array
     {
@@ -31,6 +28,14 @@ class VaultIndexViewHelper
                     'at_least_editor' => VaultHelper::getPermission(Auth::user(), $vault) <= Vault::PERMISSION_EDIT,
                     'at_least_manager' => VaultHelper::getPermission(Auth::user(), $vault) <= Vault::PERMISSION_MANAGE,
                 ],
+                'visibility' => [
+                    'show_group_tab' => $vault->show_group_tab,
+                    'show_tasks_tab' => $vault->show_tasks_tab,
+                    'show_files_tab' => $vault->show_files_tab,
+                    'show_journal_tab' => $vault->show_journal_tab,
+                    'show_companies_tab' => $vault->show_companies_tab,
+                    'show_reports_tab' => $vault->show_reports_tab,
+                ],
                 'url' => [
                     'dashboard' => route('vault.show', [
                         'vault' => $vault->id,
@@ -44,6 +49,9 @@ class VaultIndexViewHelper
                     'groups' => route('group.index', [
                         'vault' => $vault->id,
                     ]),
+                    'companies' => route('vault.companies.index', [
+                        'vault' => $vault->id,
+                    ]),
                     'tasks' => route('vault.tasks.index', [
                         'vault' => $vault->id,
                     ]),
@@ -51,6 +59,9 @@ class VaultIndexViewHelper
                         'vault' => $vault->id,
                     ]),
                     'gifts' => route('vault.gifts.index', [
+                        'vault' => $vault->id,
+                    ]),
+                    'reports' => route('vault.reports.index', [
                         'vault' => $vault->id,
                     ]),
                     'settings' => route('vault.settings.index', [

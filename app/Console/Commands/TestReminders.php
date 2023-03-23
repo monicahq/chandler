@@ -31,8 +31,6 @@ class TestReminders extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -46,10 +44,9 @@ class TestReminders extends Command
 
         foreach ($scheduledContactReminders as $scheduledReminder) {
             $channel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
+            $contactReminder = ContactReminder::findOrFail($scheduledReminder->contact_reminder_id);
 
             if ($channel->type == UserNotificationChannel::TYPE_EMAIL && $channel->active) {
-                $contactReminder = ContactReminder::findOrFail($scheduledReminder->contact_reminder_id);
-
                 $contact = $contactReminder->contact;
                 $contactName = NameHelper::formatContactName($channel->user, $contact);
 
@@ -57,12 +54,17 @@ class TestReminders extends Command
                     ->notify(new ReminderTriggered($channel, $contactReminder->label, $contactName));
             }
 
+            if ($channel->type === UserNotificationChannel::TYPE_TELEGRAM) {
+                Notification::route('telegram', $channel->content)
+                    ->notify(new ReminderTriggered($channel, $contactReminder->label, ''));
+            }
+
             try {
-                (new RescheduleContactReminderForChannel([
+                (new RescheduleContactReminderForChannel())->execute([
                     'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
                     'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
                     'contact_reminder_scheduled_id' => $scheduledReminder->id,
-                ]))->handle();
+                ]);
             } catch (ModelNotFoundException) {
                 continue;
             }

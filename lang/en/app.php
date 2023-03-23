@@ -8,7 +8,9 @@ return [
     'layout_menu_reports' => 'Reports',
     'layout_menu_contacts' => 'Contacts',
     'layout_menu_groups' => 'Groups',
+    'layout_menu_companies' => 'Companies',
     'layout_menu_tasks' => 'Tasks',
+    'layout_menu_reports' => 'Reports',
     'layout_menu_gift_center' => 'Gifts',
     'layout_menu_loans' => 'Loans & debts',
     'layout_menu_files' => 'Files',
@@ -24,6 +26,7 @@ return [
     'breadcrumb_dashboard_index' => 'Dashboard',
     'breadcrumb_dashboard_reminders' => 'All the planned reminders',
     'breadcrumb_group_index' => 'Groups',
+    'breadcrumb_companies_index' => 'Companies',
     'breadcrumb_contact_index' => 'Contacts',
     'breadcrumb_contact_show' => 'Profile of :name',
     'breadcrumb_contact_create' => 'Create a contact',
@@ -63,6 +66,7 @@ return [
     'search' => 'Search',
     'choose' => 'Choose',
     'remove' => 'Remove',
+    'change' => 'Change',
     'publish' => 'Publish',
     'yes' => 'Yes',
     'no' => 'No',
@@ -91,7 +95,7 @@ return [
     'default_template_page_social' => 'Social',
     'default_template_page_feed' => 'Feed',
     'default_template_page_information' => 'Information',
-    'default_template_page_life_events' => 'Life events & goals',
+    'default_template_page_life_events' => 'Life & goals',
     'default_template_page_contact' => 'Ways to connect',
 
     'module_names' => 'Contact name',
@@ -117,6 +121,7 @@ return [
     'module_photos' => 'Photos',
     'module_posts' => 'Posts about the contact',
     'module_religions' => 'Religions',
+    'module_life_events' => 'Life',
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 
@@ -128,4 +133,7 @@ return [
 
     'min_read' => '{count} min read',
     'word_count' => '{count} words',
+
+    'distance_format_km' => ':distance km',
+    'distance_format_mi' => ':distance miles',
 ];

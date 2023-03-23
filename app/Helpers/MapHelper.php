@@ -11,10 +11,6 @@ class MapHelper
     /**
      * Return a link for the given address, on the website based on the
      * preferences of the given user.
-     *
-     * @param  Address  $address
-     * @param  User  $user
-     * @return string
      */
     public static function getMapLink(Address $address, User $user): string
     {
@@ -39,15 +35,17 @@ class MapHelper
 
     /**
      * Get the address as a sentence.
-     *
-     * @return string|null
      */
     public static function getAddressAsString(Address $address): ?string
     {
         $sentence = '';
 
-        if (! is_null($address->street)) {
-            $sentence = $address->street;
+        if (! is_null($address->line_1)) {
+            $sentence = $address->line_1;
+        }
+
+        if (! is_null($address->line_2)) {
+            $sentence .= ' '.$address->line_2;
         }
 
         if (! is_null($address->city)) {
@@ -72,12 +70,6 @@ class MapHelper
 
     /**
      * Return the URL for a static image for the given place.
-     *
-     * @param  Address  $address
-     * @param  int  $width
-     * @param  int  $height
-     * @param  int  $zoom
-     * @return string|null
      */
     public static function getStaticImage(Address $address, int $width, int $height, int $zoom = 7): ?string
     {

@@ -34,7 +34,15 @@ class ReminderTriggered extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'telegram'];
+        if ($this->channel->type === UserNotificationChannel::TYPE_EMAIL) {
+            return ['mail'];
+        }
+
+        if ($this->channel->type === UserNotificationChannel::TYPE_TELEGRAM) {
+            return ['telegram'];
+        }
+
+        return [];
     }
 
     /**
@@ -68,9 +76,15 @@ class ReminderTriggered extends Notification
             'subject_line' => $this->content,
         ]);
 
+        // content contains the label of the ContactReminder object
+        $content = '🔔 Reminder: '.
+            $this->content.' '.
+            trans('email.reminder_triggered_for').' '.
+            $this->contactName;
+
         return TelegramMessage::create()
             ->to($this->channel->content)
-            ->content($this->content);
+            ->content($content);
     }
 
     /**

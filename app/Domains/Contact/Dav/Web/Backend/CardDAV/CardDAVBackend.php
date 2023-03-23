@@ -27,6 +27,7 @@ use Sabre\DAV\Sync\Plugin as DAVSyncPlugin;
 
 /**
  * @template TValue of ?Contact
+ *
  * @implements IDAVBackend<TValue>
  */
 class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
@@ -40,8 +41,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 
     /**
      * Returns the uri for this backend.
-     *
-     * @return string
      */
     public function backendUri(): string
     {
@@ -63,7 +62,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      *   {http://calendarserver.org/ns/}getctag
      *
      * @param  string  $principalUri
-     * @return array
      */
     public function getAddressBooksForUser($principalUri): array
     {
@@ -98,8 +96,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 
     /**
      * Extension for Calendar objects.
-     *
-     * @return string
      */
     public function getExtension(): string
     {
@@ -160,7 +156,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * @param  string  $syncToken
      * @param  int  $syncLevel
      * @param  int|null  $limit
-     * @return array|null
      */
     public function getChangesForAddressBook($addressBookId, $syncToken, $syncLevel, $limit = null): ?array
     {
@@ -169,9 +164,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 
     /**
      * Prepare datas for this contact.
-     *
-     * @param  Contact  $contact
-     * @return array
      */
     public function prepareCard(Contact $contact): array
     {
@@ -210,7 +202,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * Get the new exported version of the object.
      *
      * @param  mixed  $obj  contact
-     * @return string
      */
     protected function refreshObject($obj): string
     {
@@ -227,10 +218,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
 
     /**
      * Returns the contact for the specific uuid.
-     *
-     * @param  string|null  $collectionId
-     * @param  string  $uuid
-     * @return Contact|null
      */
     public function getObjectUuid(?string $collectionId, string $uuid): ?Contact
     {
@@ -252,7 +239,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
     /**
      * Returns the collection of all active contacts.
      *
-     * @param  string|null  $collectionId
      * @return \Illuminate\Support\Collection<array-key, Contact>
      */
     public function getObjects(?string $collectionId): Collection
@@ -275,7 +261,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
     /**
      * Returns the collection of deleted contacts.
      *
-     * @param  string|null  $collectionId
      * @return \Illuminate\Support\Collection<array-key, Contact>
      */
     public function getDeletedObjects(?string $collectionId): Collection
@@ -312,7 +297,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * This may speed up certain requests, especially with large cards.
      *
      * @param  mixed  $addressbookId
-     * @return array
      */
     public function getCards($addressbookId): array
     {
@@ -368,7 +352,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * @param  mixed  $addressBookId
      * @param  string  $cardUri
      * @param  string  $cardData
-     * @return string|null
      */
     public function createCard($addressBookId, $cardUri, $cardData): ?string
     {
@@ -398,7 +381,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * @param  mixed  $addressBookId
      * @param  string  $cardUri
      * @param  string|resource  $cardData
-     * @return string|null
      */
     public function updateCard($addressBookId, $cardUri, $cardData): ?string
     {
@@ -427,7 +409,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      *
      * @param  mixed  $addressBookId
      * @param  string  $cardUri
-     * @return bool
      */
     public function deleteCard($addressBookId, $cardUri): bool
     {
@@ -461,7 +442,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      *
      * @param  string  $addressBookId
      * @param  \Sabre\DAV\PropPatch  $propPatch
-     * @return bool|null
      */
     public function updateAddressBook($addressBookId, DAV\PropPatch $propPatch): ?bool
     {
@@ -476,7 +456,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      *
      * @param  string  $principalUri
      * @param  string  $url  Just the 'basename' of the url.
-     * @param  array  $properties
      * @return int|bool
      */
     public function createAddressBook($principalUri, $url, array $properties)
@@ -488,7 +467,6 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
      * Deletes an entire addressbook and all its contents.
      *
      * @param  mixed  $addressBookId
-     * @return bool|null
      */
     public function deleteAddressBook($addressBookId): ?bool
     {

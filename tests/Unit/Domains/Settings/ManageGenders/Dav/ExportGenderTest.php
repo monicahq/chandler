@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domains\Contact\DAV\Services;
+namespace Tests\Unit\Domains\Settings\ManageGenders\Dav;
 
 use App\Domains\Settings\ManageGenders\Dav\ExportGender;
 use App\Models\Contact;
@@ -22,6 +22,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_to_vcard()
@@ -42,6 +43,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_female()
@@ -70,6 +72,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_unknown()
@@ -97,6 +100,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_type_null()
@@ -125,6 +129,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_type_null_male()
@@ -153,6 +158,7 @@ class ExportGenderTest extends TestCase
 
     /**
      * @group dav
+     *
      * @test
      */
     public function it_adds_gender_type_null_female()

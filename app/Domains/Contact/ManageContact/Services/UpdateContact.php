@@ -20,8 +20,6 @@ class UpdateContact extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -37,13 +35,13 @@ class UpdateContact extends BaseService implements ServiceInterface
             'maiden_name' => 'nullable|string|max:255',
             'gender_id' => 'nullable|integer|exists:genders,id',
             'pronoun_id' => 'nullable|integer|exists:pronouns,id',
+            'suffix' => 'nullable|string|max:255',
+            'prefix' => 'nullable|string|max:255',
         ];
     }
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -57,9 +55,6 @@ class UpdateContact extends BaseService implements ServiceInterface
 
     /**
      * Update a contact.
-     *
-     * @param  array  $data
-     * @return Contact
      */
     public function execute(array $data): Contact
     {
@@ -71,6 +66,8 @@ class UpdateContact extends BaseService implements ServiceInterface
         $this->contact->middle_name = $this->valueOrNull($data, 'middle_name');
         $this->contact->maiden_name = $this->valueOrNull($data, 'maiden_name');
         $this->contact->nickname = $this->valueOrNull($data, 'nickname');
+        $this->contact->suffix = $this->valueOrNull($data, 'suffix');
+        $this->contact->prefix = $this->valueOrNull($data, 'prefix');
         if ($this->valueOrNull($this->data, 'gender_id')) {
             $this->contact->gender_id = $this->gender->id;
         } else {

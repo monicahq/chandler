@@ -3,9 +3,11 @@
 namespace App\Domains\Vault\ManageJournals\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
+use App\Helpers\SliceOfLifeHelper;
 use App\Helpers\SQLHelper;
 use App\Models\Journal;
 use App\Models\Post;
+use App\Models\SliceOfLife;
 use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
@@ -26,8 +28,25 @@ class JournalShowViewHelper
             'months' => $monthsCollection,
             'years' => self::yearsOfContentInJournal($journal),
             'tags' => self::tags($journal),
+            'slices' => self::slices($journal),
             'url' => [
+                'photo_index' => route('journal.photo.index', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
+                'edit' => route('journal.edit', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
+                'destroy' => route('journal.destroy', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
                 'create' => route('post.create', [
+                    'vault' => $journal->vault_id,
+                    'journal' => $journal->id,
+                ]),
+                'slice_index' => route('slices.index', [
                     'vault' => $journal->vault_id,
                     'journal' => $journal->id,
                 ]),
@@ -38,10 +57,8 @@ class JournalShowViewHelper
     /**
      * Get all the posts in the given year, ordered by month descending.
      *
-     * @param  Journal  $journal
-     * @param  int  $year
-     * @param  User  $user
-     * @return Collection
+     *
+     * @psalm-suppress NoValue
      */
     public static function postsInYear(Journal $journal, int $year, User $user): Collection
     {
@@ -120,9 +137,6 @@ class JournalShowViewHelper
 
     /**
      * Get all the years that have posts in the journal.
-     *
-     * @param  Journal  $journal
-     * @return Collection
      */
     public static function yearsOfContentInJournal(Journal $journal): Collection
     {
@@ -170,5 +184,27 @@ class JournalShowViewHelper
         }
 
         return $tagsCollection;
+    }
+
+    public static function slices(Journal $journal): Collection
+    {
+        $slicesCollection = $journal
+            ->slicesOfLife()
+            ->get()
+            ->map(fn (SliceOfLife $slice) => [
+                'id' => $slice->id,
+                'name' => $slice->name,
+                'date_range' => SliceOfLifeHelper::getDateRange($slice),
+                'cover_image' => $slice->file ? 'https://ucarecdn.com/'.$slice->file->uuid.'/-/scale_crop/200x100/smart/-/format/auto/-/quality/smart_retina/' : null,
+                'url' => [
+                    'show' => route('slices.show', [
+                        'vault' => $journal->vault_id,
+                        'journal' => $journal->id,
+                        'slice' => $slice->id,
+                    ]),
+                ],
+            ]);
+
+        return $slicesCollection;
     }
 }

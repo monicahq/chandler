@@ -17,8 +17,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -33,8 +31,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -48,9 +44,6 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
 
     /**
      * Set the given photo as the contact's avatar.
-     *
-     * @param  array  $data
-     * @return Contact
      */
     public function execute(array $data): Contact
     {
@@ -69,7 +62,7 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
     {
         $this->validateRules($this->data);
 
-        $this->file = $this->contact->files()
+        $this->file = $this->vault->files()
             ->where('type', File::TYPE_AVATAR)
             ->findOrFail($this->data['file_id']);
     }
@@ -85,6 +78,8 @@ class UpdatePhotoAsAvatar extends BaseService implements ServiceInterface
     {
         $this->contact->file_id = $this->file->id;
         $this->contact->save();
+
+        $this->contact->files()->save($this->file);
     }
 
     private function updateLastEditedDate(): void

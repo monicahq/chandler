@@ -14,8 +14,6 @@ class DestroyPost extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -30,8 +28,6 @@ class DestroyPost extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -44,15 +40,13 @@ class DestroyPost extends BaseService implements ServiceInterface
 
     /**
      * Delete a journal.
-     *
-     * @param  array  $data
-     * @return void
      */
     public function execute(array $data): void
     {
         $this->data = $data;
 
         $this->validate();
+        $this->destroyFiles();
         $this->post->delete();
     }
 
@@ -65,5 +59,13 @@ class DestroyPost extends BaseService implements ServiceInterface
 
         $this->post = $journal->posts()
             ->findOrFail($this->data['post_id']);
+    }
+
+    private function destroyFiles(): void
+    {
+        $files = $this->post->files;
+        foreach ($files as $file) {
+            $file->delete();
+        }
     }
 }

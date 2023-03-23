@@ -48,7 +48,7 @@ class ContactShowViewHelperTest extends TestCase
         $array = ContactShowViewHelper::data($contact, $user);
 
         $this->assertEquals(
-            9,
+            10,
             count($array)
         );
 
@@ -57,6 +57,7 @@ class ContactShowViewHelperTest extends TestCase
         $this->assertArrayHasKey('template_pages', $array);
         $this->assertArrayHasKey('contact_information', $array);
         $this->assertArrayHasKey('group_summary_information', $array);
+        $this->assertArrayHasKey('quick_fact_template_entries', $array);
         $this->assertArrayHasKey('modules', $array);
         $this->assertArrayHasKey('options', $array);
         $this->assertArrayHasKey('avatar', $array);
@@ -85,6 +86,7 @@ class ContactShowViewHelperTest extends TestCase
                 'update_template' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/update-template',
                 'destroy' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id,
                 'update_avatar' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/avatar',
+                'move_contact' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/move',
                 'destroy_avatar' => env('APP_URL').'/vaults/'.$contact->vault->id.'/contacts/'.$contact->id.'/avatar',
             ],
             $array['url']

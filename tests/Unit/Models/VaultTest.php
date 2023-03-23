@@ -2,17 +2,23 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Address;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\ContactImportantDateType;
 use App\Models\Gift;
+use App\Models\File;
 use App\Models\Group;
 use App\Models\Journal;
 use App\Models\Label;
+use App\Models\LifeEventCategory;
+use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -140,5 +146,71 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->tags()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_files(): void
+    {
+        $vault = Vault::factory()->create();
+        File::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->files()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_mood_tracking_parameters(): void
+    {
+        $vault = Vault::factory()->create();
+        MoodTrackingParameter::factory()->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->moodTrackingParameters()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_life_event_categories(): void
+    {
+        $vault = Vault::factory()->create();
+        LifeEventCategory::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->lifeEventCategories()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_timeline_events(): void
+    {
+        $vault = Vault::factory()->create();
+        TimelineEvent::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->timelineEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_addresses(): void
+    {
+        $vault = Vault::factory()->create();
+        Address::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->addresses()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_quick_fact_template_entries(): void
+    {
+        $vault = Vault::factory()->create();
+        VaultQuickFactTemplate::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->quickFactsTemplateEntries()->exists());
     }
 }

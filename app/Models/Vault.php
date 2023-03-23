@@ -42,12 +42,31 @@ class Vault extends Model
         'name',
         'description',
         'default_template_id',
+        'show_activity_tab_on_dashboard',
+        'show_group_tab',
+        'show_tasks_tab',
+        'show_files_tab',
+        'show_journal_tab',
+        'show_companies_tab',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'show_group_tab' => 'boolean',
+        'show_tasks_tab' => 'boolean',
+        'show_files_tab' => 'boolean',
+        'show_journal_tab' => 'boolean',
+        'show_companies_tab' => 'boolean',
+        'show_reports_tab' => 'boolean',
+        'show_activity_tab_on_dashboard' => 'boolean',
     ];
 
     /**
      * Get the columns that should receive a unique identifier.
-     *
-     * @return array
      */
     public function uniqueIds(): array
     {
@@ -56,10 +75,8 @@ class Vault extends Model
 
     /**
      * Used to delete related objects from Meilisearch/Algolia instance.
-     *
-     * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -73,8 +90,6 @@ class Vault extends Model
 
     /**
      * Get the account associated with the vault.
-     *
-     * @return BelongsTo
      */
     public function account(): BelongsTo
     {
@@ -83,8 +98,6 @@ class Vault extends Model
 
     /**
      * Get the template associated with the vault.
-     *
-     * @return BelongsTo
      */
     public function template(): BelongsTo
     {
@@ -93,8 +106,6 @@ class Vault extends Model
 
     /**
      * Get the contact associated with the vault.
-     *
-     * @return HasMany
      */
     public function contacts(): HasMany
     {
@@ -103,8 +114,6 @@ class Vault extends Model
 
     /**
      * Get the labels associated with the vault.
-     *
-     * @return HasMany
      */
     public function labels(): HasMany
     {
@@ -113,8 +122,6 @@ class Vault extends Model
 
     /**
      * Get the users associated with the vault.
-     *
-     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -125,8 +132,6 @@ class Vault extends Model
 
     /**
      * Get the contact important date types associated with the vault.
-     *
-     * @return HasMany
      */
     public function contactImportantDateTypes(): HasMany
     {
@@ -135,8 +140,6 @@ class Vault extends Model
 
     /**
      * Get the companies associated with the vault.
-     *
-     * @return HasMany
      */
     public function companies(): HasMany
     {
@@ -175,8 +178,6 @@ class Vault extends Model
 
     /**
      * Get the tags associated with the vault.
-     *
-     * @return HasMany
      */
     public function tags(): HasMany
     {
@@ -185,11 +186,57 @@ class Vault extends Model
 
     /**
      * Get the loans associated with the vault.
-     *
-     * @return HasMany
      */
     public function loans(): HasMany
     {
         return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the files associated with the vault.
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+    /**
+     * Get the mood tracking parameters associated with the vault.
+     */
+    public function moodTrackingParameters(): HasMany
+    {
+        return $this->hasMany(MoodTrackingParameter::class);
+    }
+
+    /**
+     * Get the life event categories associated with the vault.
+     */
+    public function lifeEventCategories(): HasMany
+    {
+        return $this->hasMany(LifeEventCategory::class);
+    }
+
+    /**
+     * Get the timeline events associated with the vault.
+     */
+    public function timelineEvents(): HasMany
+    {
+        return $this->hasMany(TimelineEvent::class);
+    }
+
+    /**
+     * Get the address records associated with the vault.
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    /**
+     * Get the quick fact template entries records associated with the vault.
+     */
+    public function quickFactsTemplateEntries(): HasMany
+    {
+        return $this->hasMany(VaultQuickFactTemplate::class);
     }
 }

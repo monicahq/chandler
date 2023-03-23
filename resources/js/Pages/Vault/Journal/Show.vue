@@ -1,11 +1,22 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 
-defineProps({
+const props = defineProps({
   layoutData: Object,
   data: Object,
 });
+
+const form = useForm({});
+
+const destroy = () => {
+  if (confirm('Are you sure? This will delete the journal, and the entries, permanently.')) {
+    form.delete(props.data.url.destroy, {
+      onFinish: () => {},
+    });
+  }
+};
 </script>
 
 <template>
@@ -43,7 +54,53 @@ defineProps({
 
     <main class="sm:mt-18 relative">
       <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-        <h1 class="mb-8 text-2xl">{{ data.name }}</h1>
+        <h1 class="text-2xl" :class="data.description ? 'mb-4' : 'mb-8'">{{ data.name }}</h1>
+
+        <p v-if="data.description" class="mb-8">{{ data.description }}</p>
+
+        <!-- tabs -->
+        <div class="flex justify-center">
+          <div class="mb-8 inline-flex rounded-md shadow-sm">
+            <inertia-link
+              :href="data.url.show"
+              class="inline-flex items-center rounded-l-lg border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mr-2 h-4 w-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              </svg>
+
+              Journal entries
+            </inertia-link>
+
+            <inertia-link
+              :href="data.url.photo_index"
+              :class="{ 'bg-gray-100 text-blue-700 dark:bg-gray-400 dark:font-bold': defaultTab === 'life_events' }"
+              class="inline-flex items-center rounded-r-md border-t border-b border-r border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mr-2 h-4 w-4">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+
+              Photos
+            </inertia-link>
+          </div>
+        </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
@@ -63,12 +120,19 @@ defineProps({
             <p v-if="data.tags.length > 0" class="mb-2 font-medium">
               <span class="mr-1"> ⚡ </span> {{ $t('vault.journal_show_tags') }}
             </p>
-            <ul v-if="data.tags.length > 0">
+            <ul v-if="data.tags.length > 0" class="">
               <li v-for="tag in data.tags" :key="tag.id" class="mb-2 flex items-center justify-between">
                 <span>{{ tag.name }}</span>
                 <span class="text-sm text-gray-400">{{ tag.count }}</span>
               </li>
             </ul>
+
+            <inertia-link :href="data.url.edit" class="mt-6 mb-2 block text-sm text-blue-500 hover:underline"
+              >Edit journal</inertia-link
+            >
+            <span @click="destroy()" class="block cursor-pointer text-sm text-blue-500 hover:underline"
+              >Delete journal</span
+            >
           </div>
 
           <!-- middle -->
@@ -84,7 +148,7 @@ defineProps({
 
             <!-- list of posts -->
             <ul
-              v-if="data.months.length > 0"
+              v-if="data.months.length > 0 && data.years.length > 0"
               class="post-list mb-6 rounded-lg border border-b-0 border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <!-- loop on months -->
               <li v-for="month in data.months" :key="month.id">
@@ -122,6 +186,8 @@ defineProps({
             <!-- blank state -->
             <div v-else class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <p class="p-5 text-center">
+                <img src="/img/journal_blank_index.svg" class="mx-auto block h-32 w-32 py-6" />
+
                 {{ $t('vault.journal_show_blank') }}
               </p>
             </div>
@@ -130,7 +196,7 @@ defineProps({
           <!-- right -->
           <div class="p-3 sm:p-0">
             <!-- cta -->
-            <div class="mb-6 flex justify-center">
+            <div class="mb-8 flex justify-center">
               <pretty-link
                 v-if="layoutData.vault.permission.at_least_editor"
                 :href="data.url.create"
@@ -140,28 +206,30 @@ defineProps({
 
             <!-- slices of life -->
             <p class="mb-2 font-medium"><span class="mr-1"> 🍕 </span> Slices of life</p>
-            <div class="mb-6">
-              <img
-                class="h-32 w-full rounded-t"
-                src="https://images.unsplash.com/photo-1665328236871-4932f62b72de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-                alt="" />
-              <div
-                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                <p class="font-semibold">Trip to Venice</p>
-                <p class="text-sm text-gray-600">Jan 23 - Mar 20</p>
+            <div v-if="data.slices.length > 0" class="mb-2">
+              <div v-for="slice in data.slices" :key="slice.id" class="mb-6 last:mb-0">
+                <img v-if="slice.cover_image" class="h-32 w-full rounded-t" :src="slice.cover_image" alt="" />
+                <div
+                  class="rounded-b border-b border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  :class="slice.cover_image ? '' : 'border-t'">
+                  <inertia-link :href="slice.url.show" class="font-semibold">{{ slice.name }}</inertia-link>
+                  <p class="text-xs text-gray-600">{{ slice.date_range }}</p>
+                </div>
               </div>
             </div>
 
-            <div class="mb-6">
-              <img
-                class="h-32 w-full rounded-t"
-                src="https://images.unsplash.com/photo-1665324031594-382930e876df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80"
-                alt="" />
-              <div
-                class="rounded-b border-b border-r border-l border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-                <p class="font-semibold">Holiday 2022</p>
-                <p class="text-sm text-gray-600">Jun 21 - Aug 12</p>
-              </div>
+            <!-- no slices of life yet -->
+            <div
+              v-if="data.slices.length == 0"
+              class="mb-1 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+              <img src="/img/journal_slice_of_life_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-14 w-14" />
+              <p class="px-5 pb-5 pt-2 text-center">Group journal entries together with slices of life.</p>
+            </div>
+
+            <div>
+              <inertia-link :href="data.url.slice_index" class="text-sm text-blue-500 hover:underline"
+                >View all slices</inertia-link
+              >
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ class Note extends Model
     /**
      * Get the indexable data array for the model.
      *
-     * @return array
+     *
      * @codeCoverageIgnore
      */
     #[SearchUsingPrefix(['id', 'vault_id'])]
@@ -61,8 +61,6 @@ class Note extends Model
 
     /**
      * Get the contact associated with the note.
-     *
-     * @return BelongsTo
      */
     public function contact(): BelongsTo
     {
@@ -71,8 +69,6 @@ class Note extends Model
 
     /**
      * Get the author associated with the note.
-     *
-     * @return BelongsTo
      */
     public function author(): BelongsTo
     {
@@ -81,8 +77,6 @@ class Note extends Model
 
     /**
      * Get the emotion associated with the note.
-     *
-     * @return BelongsTo
      */
     public function emotion(): BelongsTo
     {
@@ -91,8 +85,6 @@ class Note extends Model
 
     /**
      * Get the note's feed item.
-     *
-     * @return MorphOne
      */
     public function feedItem(): MorphOne
     {

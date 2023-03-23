@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 
@@ -24,19 +25,10 @@ class Post extends Model
      */
     protected $fillable = [
         'journal_id',
+        'slice_of_life_id',
         'title',
         'view_count',
         'published',
-        'written_at',
-        'updated_at',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
         'written_at',
         'updated_at',
     ];
@@ -48,12 +40,12 @@ class Post extends Model
      */
     protected $casts = [
         'published' => 'boolean',
+        'written_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
      * Get the journal associated with the post.
-     *
-     * @return BelongsTo
      */
     public function journal(): BelongsTo
     {
@@ -61,9 +53,15 @@ class Post extends Model
     }
 
     /**
+     * Get the slice of life associated with the post.
+     */
+    public function sliceOfLife(): BelongsTo
+    {
+        return $this->belongsTo(SliceOfLife::class);
+    }
+
+    /**
      * Get the post sections associated with the post.
-     *
-     * @return HasMany
      */
     public function postSections(): HasMany
     {
@@ -72,8 +70,6 @@ class Post extends Model
 
     /**
      * Get the contacts associated with the post.
-     *
-     * @return BelongsToMany
      */
     public function contacts(): BelongsToMany
     {
@@ -82,8 +78,6 @@ class Post extends Model
 
     /**
      * Get the post's feed item.
-     *
-     * @return MorphOne
      */
     public function feedItem(): MorphOne
     {
@@ -92,12 +86,18 @@ class Post extends Model
 
     /**
      * Get the tags associated with the post.
-     *
-     * @return BelongsToMany
      */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Get the files associated with the post.
+     */
+    public function files(): MorphMany
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 
     /**

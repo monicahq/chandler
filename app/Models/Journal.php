@@ -26,8 +26,6 @@ class Journal extends Model
 
     /**
      * Get the vault associated with the journal.
-     *
-     * @return BelongsTo
      */
     public function vault(): BelongsTo
     {
@@ -36,11 +34,17 @@ class Journal extends Model
 
     /**
      * Get the posts associated with the journal.
-     *
-     * @return HasMany
      */
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the slices of life associated with the journal.
+     */
+    public function slicesOfLife(): HasMany
+    {
+        return $this->hasMany(SliceOfLife::class);
     }
 }

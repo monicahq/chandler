@@ -5,10 +5,14 @@ namespace Tests\Unit\Domains\Vault\ManageVaultSettings\Web\ViewHelpers;
 use App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
 use App\Models\Contact;
 use App\Models\Label;
+use App\Models\LifeEventCategory;
+use App\Models\LifeEventType;
+use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
 use App\Models\User;
 use App\Models\Vault;
+use App\Models\VaultQuickFactTemplate;
 use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -31,11 +35,16 @@ class VaultSettingsIndexViewHelperTest extends TestCase
             'account_id' => $template->account_id,
         ]);
         $vault->users()->sync([$userInVault->id => ['permission' => 100, 'contact_id' => Contact::factory()->create()->id]]);
+        MoodTrackingParameter::factory()->create([
+            'vault_id' => $vault->id,
+            'label' => 'test',
+            'position' => 2,
+        ]);
 
         $vault->refresh();
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertCount(
-            8,
+            13,
             $array
         );
         $this->assertArrayHasKey('templates', $array);
@@ -45,6 +54,10 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('labels', $array);
         $this->assertArrayHasKey('label_colors', $array);
         $this->assertArrayHasKey('tags', $array);
+        $this->assertArrayHasKey('mood_tracking_parameters', $array);
+        $this->assertArrayHasKey('mood_tracking_parameter_colors', $array);
+        $this->assertArrayHasKey('life_event_categories', $array);
+        $this->assertArrayHasKey('quick_fact_templates', $array);
         $this->assertEquals(
             [
                 0 => [
@@ -54,6 +67,17 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 ],
             ],
             $array['templates']->toArray()
+        );
+        $this->assertEquals(
+            [
+                'show_group_tab' => true,
+                'show_tasks_tab' => true,
+                'show_files_tab' => true,
+                'show_journal_tab' => true,
+                'show_companies_tab' => true,
+                'show_reports_tab' => true,
+            ],
+            $array['visibility']
         );
         $this->assertEquals(
             [
@@ -90,7 +114,11 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'label_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/labels',
                 'tag_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/tags',
                 'contact_date_important_date_type_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/contactImportantDateTypes',
+                'mood_tracking_parameter_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters',
+                'life_event_category_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/lifeEventCategories',
+                'quick_fact_templates_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/quickFactTemplates',
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
+                'update_tab_visibility' => env('APP_URL').'/vaults/'.$vault->id.'/settings/visibility',
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id,
             ],
             $array['url']
@@ -137,6 +165,122 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/tags/'.$tag->id,
                     'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/settings/tags/'.$tag->id,
+                ],
+            ],
+            $array
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_data_needed_for_the_mood_tracking_parameter(): void
+    {
+        $vault = Vault::factory()->create();
+        $moodTrackingParameter = MoodTrackingParameter::factory()->create([
+            'vault_id' => $vault->id,
+            'label' => 'test',
+            'hex_color' => '3243',
+            'position' => 2,
+        ]);
+        $array = VaultSettingsIndexViewHelper::dtoMoodTrackingParameter($moodTrackingParameter);
+        $this->assertEquals(
+            [
+                'id' => $moodTrackingParameter->id,
+                'label' => 'test',
+                'hex_color' => '3243',
+                'position' => 2,
+                'url' => [
+                    'position' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id.'/order',
+                    'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters/'.$moodTrackingParameter->id,
+                ],
+            ],
+            $array
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_dto_for_life_event_category(): void
+    {
+        $lifeEventCategory = LifeEventCategory::factory()->create();
+
+        $array = VaultSettingsIndexViewHelper::dtoLifeEventCategory($lifeEventCategory);
+        $this->assertEquals(
+            6,
+            count($array)
+        );
+        $this->assertArrayHasKey('life_event_types', $array);
+        $this->assertEquals(
+            $lifeEventCategory->label,
+            $array['label']
+        );
+        $this->assertEquals(
+            true,
+            $array['can_be_deleted']
+        );
+        $this->assertEquals(
+            1,
+            $array['position']
+        );
+        $this->assertEquals(
+            [
+                'store' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes',
+                'position' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/order',
+                'update' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id,
+                'destroy' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id,
+            ],
+            $array['url']
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_dto_for_life_event_type(): void
+    {
+        $lifeEventCategory = LifeEventCategory::factory()->create();
+        $lifeEventType = LifeEventType::factory()->create([
+            'life_event_category_id' => $lifeEventCategory->id,
+        ]);
+
+        $array = VaultSettingsIndexViewHelper::dtoType($lifeEventCategory, $lifeEventType);
+        $this->assertEquals(
+            6,
+            count($array)
+        );
+        $this->assertEquals(
+            [
+                'id' => $lifeEventType->id,
+                'label' => $lifeEventType->label,
+                'can_be_deleted' => $lifeEventType->can_be_deleted,
+                'life_event_category_id' => $lifeEventCategory->id,
+                'position' => 1,
+                'url' => [
+                    'position' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id.'/order',
+                    'update' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$lifeEventCategory->vault_id.'/settings/lifeEventCategories/'.$lifeEventCategory->id.'/lifeEventTypes/'.$lifeEventType->id,
+                ],
+            ],
+            $array
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_dto_for_quick_fact_template(): void
+    {
+        $template = VaultQuickFactTemplate::factory()->create();
+
+        $array = VaultSettingsIndexViewHelper::dtoQuickFactTemplateEntry($template);
+        $this->assertEquals(
+            4,
+            count($array)
+        );
+        $this->assertEquals(
+            [
+                'id' => $template->id,
+                'label' => $template->label,
+                'position' => 1,
+                'url' => [
+                    'position' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id.'/order',
+                    'update' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id,
                 ],
             ],
             $array

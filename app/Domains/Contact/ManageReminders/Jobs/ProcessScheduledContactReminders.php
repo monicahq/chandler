@@ -6,7 +6,6 @@ use App\Domains\Contact\ManageReminders\Services\RescheduleContactReminderForCha
 use App\Helpers\NameHelper;
 use App\Models\ContactReminder;
 use App\Models\UserNotificationChannel;
-use App\Models\UserNotificationSent;
 use App\Notifications\ReminderTriggered;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -35,47 +34,41 @@ class ProcessScheduledContactReminders implements ShouldQueue
 
         $scheduledContactReminders = DB::table('contact_reminder_scheduled')
             ->where('scheduled_at', '<=', $currentDate)
-            ->where('triggered_at', null)
             ->get();
 
         foreach ($scheduledContactReminders as $scheduledReminder) {
-            $channel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
+            $userNotificationChannel = UserNotificationChannel::findOrFail($scheduledReminder->user_notification_channel_id);
 
-            if ($channel->type === UserNotificationChannel::TYPE_EMAIL) {
-                $contactReminder = ContactReminder::find($scheduledReminder->contact_reminder_id);
-                $contact = $contactReminder->contact;
-                $contactName = NameHelper::formatContactName($channel->user, $contact);
+            $contactReminder = ContactReminder::find($scheduledReminder->contact_reminder_id);
+            $contact = $contactReminder->contact;
+            $contactName = NameHelper::formatContactName($userNotificationChannel->user, $contact);
 
-                Notification::route('mail', $channel->content)
-                    ->notify(new ReminderTriggered($channel, $contactReminder->label, $contactName));
-
-                UserNotificationSent::create([
-                    'user_notification_channel_id' => $channel->id,
-                    'sent_at' => Carbon::now(),
-                    'subject_line' => $contactReminder->label,
-                ]);
+            if ($userNotificationChannel->type === UserNotificationChannel::TYPE_EMAIL) {
+                Notification::route('mail', $userNotificationChannel->content)
+                    ->notify(new ReminderTriggered($userNotificationChannel, $contactReminder->label, $contactName));
             }
 
-            $this->updateScheduledContactReminderTriggeredAt($scheduledReminder->id);
+            if ($userNotificationChannel->type === UserNotificationChannel::TYPE_TELEGRAM) {
+                Notification::route('telegram', $userNotificationChannel->content)
+                    ->notify(new ReminderTriggered($userNotificationChannel, $contactReminder->label, $contactName));
+            }
+
+            $this->updateScheduledContactReminderTriggeredAt($scheduledReminder);
             $this->updateNumberOfTimesTriggered($scheduledReminder->contact_reminder_id);
 
-            $this->appendToChain(
-                new RescheduleContactReminderForChannel([
-                    'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
-                    'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
-                    'contact_reminder_scheduled_id' => $scheduledReminder->id,
-                ])
-            );
+            (new RescheduleContactReminderForChannel())->execute([
+                'contact_reminder_id' => $scheduledReminder->contact_reminder_id,
+                'user_notification_channel_id' => $scheduledReminder->user_notification_channel_id,
+                'contact_reminder_scheduled_id' => $scheduledReminder->id,
+            ]);
         }
     }
 
-    private function updateScheduledContactReminderTriggeredAt(int $id): void
+    private function updateScheduledContactReminderTriggeredAt($scheduledReminder): void
     {
         DB::table('contact_reminder_scheduled')
-            ->where('id', $id)
-            ->update([
-                'triggered_at' => Carbon::now(),
-            ]);
+            ->where('id', $scheduledReminder->id)
+            ->update(['triggered_at' => Carbon::now()]);
     }
 
     private function updateNumberOfTimesTriggered(int $id): void

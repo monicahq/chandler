@@ -17,14 +17,18 @@ use App\Models\Gift;
 use App\Models\Goal;
 use App\Models\Group;
 use App\Models\Label;
+use App\Models\LifeEvent;
 use App\Models\Loan;
+use App\Models\MoodTrackingEvent;
 use App\Models\Note;
 use App\Models\Pet;
 use App\Models\Post;
 use App\Models\Pronoun;
+use App\Models\QuickFact;
 use App\Models\RelationshipType;
 use App\Models\Religion;
 use App\Models\Template;
+use App\Models\TimelineEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -104,17 +108,6 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertTrue($contact->contactInformations()->exists());
-    }
-
-    /** @test */
-    public function it_has_many_addresses(): void
-    {
-        $contact = Contact::factory()->create();
-        Address::factory()->count(2)->create([
-            'contact_id' => $contact->id,
-        ]);
-
-        $this->assertTrue($contact->addresses()->exists());
     }
 
     /** @test */
@@ -255,7 +248,8 @@ class ContactTest extends TestCase
     {
         $contact = Contact::factory()->create();
         File::factory()->count(2)->create([
-            'contact_id' => $contact->id,
+            'fileable_id' => $contact->id,
+            'fileable_type' => Contact::class,
         ]);
 
         $this->assertTrue($contact->files()->exists());
@@ -265,9 +259,7 @@ class ContactTest extends TestCase
     public function it_has_one_file(): void
     {
         $contact = Contact::factory()->create();
-        $file = File::factory()->create([
-            'contact_id' => $contact->id,
-        ]);
+        $file = File::factory()->create();
         $contact->file_id = $file->id;
         $contact->save();
 
@@ -306,6 +298,59 @@ class ContactTest extends TestCase
     }
 
     /** @test */
+    public function it_has_many_life_events(): void
+    {
+        $contact = Contact::factory()->create();
+        $lifeEvent = LifeEvent::factory()->create();
+
+        $contact->lifeEvents()->sync([$lifeEvent->id]);
+
+        $this->assertTrue($contact->lifeEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_timeline_events(): void
+    {
+        $contact = Contact::factory()->create();
+        $timelineEvent = TimelineEvent::factory()->create();
+
+        $contact->timelineEvents()->sync([$timelineEvent->id]);
+
+        $this->assertTrue($contact->timelineEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_mood_tracking_events(): void
+    {
+        $contact = Contact::factory()->create();
+        MoodTrackingEvent::factory()->count(2)->create([
+            'contact_id' => $contact->id,
+        ]);
+
+        $this->assertTrue($contact->moodTrackingEvents()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_addresses(): void
+    {
+        $contact = Contact::factory()->create([]);
+        $address = Address::factory()->create();
+
+        $contact->addresses()->sync([$address->id => ['is_past_address' => false]]);
+
+        $this->assertTrue($contact->addresses()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_quick_facts(): void
+    {
+        $contact = Contact::factory()->create([]);
+        QuickFact::factory()->create(['contact_id' => $contact->id]);
+
+        $this->assertTrue($contact->quickFacts()->exists());
+    }
+
+    /** @test */
     public function it_gets_the_name(): void
     {
         $user = User::factory()->create([
@@ -321,31 +366,31 @@ class ContactTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'James',
+            'Dr. James III',
             $contact->name
         );
 
         $user->update(['name_order' => '%last_name%']);
         $this->assertEquals(
-            'Bond',
+            'Dr. Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%first_name% %last_name%']);
         $this->assertEquals(
-            'James Bond',
+            'Dr. James Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%first_name% (%maiden_name%) %last_name%']);
         $this->assertEquals(
-            'James (Muller) Bond',
+            'Dr. James (Muller) Bond III',
             $contact->name
         );
 
         $user->update(['name_order' => '%last_name% (%maiden_name%)  || (%nickname%) || %first_name%']);
         $this->assertEquals(
-            'Bond (Muller)  || (007) || James',
+            'Dr. Bond (Muller)  || (007) || James III',
             $contact->name
         );
     }

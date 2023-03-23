@@ -41,11 +41,6 @@ class PostController extends Controller
      * The post will be created upon visiting the page.
      * This will create the post as a draft, with all the post sections
      * populated from the post template.
-     *
-     * @param  Request  $request
-     * @param  int  $vaultId
-     * @param  int  $journalId
-     * @param  int  $templateId
      */
     public function store(Request $request, int $vaultId, int $journalId, int $templateId)
     {
@@ -107,7 +102,7 @@ class PostController extends Controller
 
         return Inertia::render('Vault/Journal/Post/Edit', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => PostEditViewHelper::data($journal, $post),
+            'data' => PostEditViewHelper::data($journal, $post, Auth::user()),
         ]);
     }
 
@@ -123,7 +118,7 @@ class PostController extends Controller
             'post_id' => $postId,
             'title' => $request->input('title'),
             'sections' => $request->input('sections'),
-            'written_at' => Carbon::now()->format('Y-m-d'),
+            'written_at' => Carbon::parse($request->input('date'))->format('Y-m-d'),
         ]);
 
         $post->contacts()->detach();

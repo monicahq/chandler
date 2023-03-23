@@ -14,8 +14,6 @@ class CreateContact extends BaseService implements ServiceInterface
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -29,6 +27,8 @@ class CreateContact extends BaseService implements ServiceInterface
             'middle_name' => 'nullable|string|max:255',
             'nickname' => 'nullable|string|max:255',
             'maiden_name' => 'nullable|string|max:255',
+            'prefix' => 'nullable|string|max:255',
+            'suffix' => 'nullable|string|max:255',
             'gender_id' => 'nullable|integer|exists:genders,id',
             'pronoun_id' => 'nullable|integer|exists:pronouns,id',
             'template_id' => 'nullable|integer|exists:templates,id',
@@ -38,8 +38,6 @@ class CreateContact extends BaseService implements ServiceInterface
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -52,9 +50,6 @@ class CreateContact extends BaseService implements ServiceInterface
 
     /**
      * Create a contact.
-     *
-     * @param  array  $data
-     * @return Contact
      */
     public function execute(array $data): Contact
     {
@@ -106,6 +101,8 @@ class CreateContact extends BaseService implements ServiceInterface
             'maiden_name' => $this->valueOrNull($this->data, 'maiden_name'),
             'gender_id' => $this->valueOrNull($this->data, 'gender_id'),
             'pronoun_id' => $this->valueOrNull($this->data, 'pronoun_id'),
+            'suffix' => $this->valueOrNull($this->data, 'suffix'),
+            'prefix' => $this->valueOrNull($this->data, 'prefix'),
             'template_id' => $templateId,
             'last_updated_at' => Carbon::now(),
             'listed' => $this->valueOrTrue($this->data, 'listed'),
