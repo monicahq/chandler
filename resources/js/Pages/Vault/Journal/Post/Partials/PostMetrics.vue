@@ -4,7 +4,7 @@ import TextInput from '@/Shared/Form/TextInput.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 
 const props = defineProps({
   data: Object,
@@ -41,6 +41,7 @@ const store = (journalMetric) => {
     .then((response) => {
       loadingState.value = '';
       localJournalMetrics.value[localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id)].post_metrics.push(response.data.data);
+      addModalShown.value = false;
     })
     .catch(() => {
       loadingState.value = '';
@@ -82,14 +83,15 @@ const reset = () => {
       <div class="flex">
         <div class="font-semibold">{{ journalMetric.label }}</div>
       </div>
-      <ul class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <ul v-if="journalMetric.post_metrics.length > 0" class="mb-2 rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <li v-for="postMetric in journalMetric.post_metrics" :key="postMetric.id" class="flex items-center justify-between item-list px-3 py-1 border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <span>{{ postMetric.label }}</span>
           <span>{{ postMetric.value }}</span>
         </li>
       </ul>
-      <p @click="showAddMetricModal(journalMetric)" class="mb-6 text-sm text-blue-500 hover:underline cursor-pointer">+ add a new metric</p>
+      <p @click="showAddMetricModal(journalMetric)" v-if="!addModalShown" class="mb-6 text-sm text-blue-500 hover:underline cursor-pointer">+ add a new metric</p>
 
+      <!-- modal to add a new post metric -->
       <div
         v-if="addModalShown && journalMetric.id === journalMetricModal"
         class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
@@ -98,7 +100,6 @@ const reset = () => {
             <errors :errors="form.errors" />
 
             <text-input
-              :ref="'name'"
               v-model="form.value"
               :autofocus="true"
               :div-outer-class="'mb-5'"
@@ -107,20 +108,21 @@ const reset = () => {
               :type="'number'"
               :min="0"
               :max="1000000"
-              :label="'Value (a number)'" />
+              :label="'Numerical value'"
+              @esc-key-pressed="addModalShown = false" />
 
             <text-input
-              :ref="'name'"
               v-model="form.label"
               :div-outer-class="'mb-5'"
               :input-class="'block w-full'"
               :required="false"
               :maxlength="255"
-              :label="'More details'" />
+              :label="'More details'"
+              @esc-key-pressed="addModalShown = false" />
           </div>
 
           <div class="flex justify-between p-2">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editSlicesModalShown = false" />
+            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addModalShown = false" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('app.save')"
@@ -133,7 +135,7 @@ const reset = () => {
     </div>
 
     <!-- blank state -->
-    <p v-if="data.journal_metrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">There are no journal metrics.</p>
+    <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">There are no journal metrics.</p>
   </div>
 </template>
 
