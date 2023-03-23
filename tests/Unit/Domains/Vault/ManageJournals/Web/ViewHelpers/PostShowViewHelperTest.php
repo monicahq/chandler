@@ -59,7 +59,7 @@ class PostShowViewHelperTest extends TestCase
         $journalMetric = JournalMetric::factory()->create([
             'journal_id' => $journal->id,
         ]);
-        $postMetric = PostMetric::factory()->create([
+        PostMetric::factory()->create([
             'post_id' => $post->id,
             'value' => 123,
             'label' => 'label',
