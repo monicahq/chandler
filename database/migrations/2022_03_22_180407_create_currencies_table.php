@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -23,10 +24,9 @@ return new class() extends Migration
         Schema::create('account_currencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('currency_id');
-            $table->unsignedBigInteger('account_id');
+            $table->foreignIdFor(Account::class);
             $table->boolean('active')->default(true);
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->timestamps();
         });
 

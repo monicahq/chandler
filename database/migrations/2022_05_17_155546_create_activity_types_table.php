@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,13 +16,12 @@ return new class() extends Migration
     {
         Schema::create('life_event_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('account_id');
+            $table->foreignIdFor(Account::class);
             $table->string('label')->nullable();
             $table->string('label_translation_key')->nullable();
             $table->boolean('can_be_deleted')->default(false);
             $table->string('type')->nullable();
             $table->timestamps();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
 
         Schema::create('life_event_types', function (Blueprint $table) {
@@ -50,10 +50,9 @@ return new class() extends Migration
 
         Schema::create('activity_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('account_id');
+            $table->foreignIdFor(Account::class);
             $table->string('label');
             $table->timestamps();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
 
         Schema::create('activities', function (Blueprint $table) {

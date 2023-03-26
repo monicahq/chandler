@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +16,7 @@ return new class() extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->unsignedBigInteger('account_id');
+            $table->foreignIdFor(Account::class);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
@@ -34,7 +35,6 @@ return new class() extends Migration
             $table->string('locale')->default('en');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
     }
 
