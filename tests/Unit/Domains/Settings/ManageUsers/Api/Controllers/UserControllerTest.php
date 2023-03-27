@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domains\Settings\ManageUsers\Api\Controllers;
 
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ApiTestCase;
@@ -89,9 +88,7 @@ class UserControllerTest extends ApiTestCase
     {
         $this->createUser(['read']);
 
-        $user = User::factory()->create();
-
-        $response = $this->get('/api/vaults/'.$user->id);
+        $response = $this->get('/api/users/0');
 
         $response->assertResourceNotFound();
     }
