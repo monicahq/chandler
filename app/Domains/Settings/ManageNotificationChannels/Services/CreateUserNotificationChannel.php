@@ -21,8 +21,8 @@ class CreateUserNotificationChannel extends BaseService implements ServiceInterf
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|string|exists:accounts,id',
+            'author_id' => 'required|string|exists:users,id',
             'label' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'content' => 'required|string|max:65535',

@@ -18,9 +18,9 @@ class ToggleLifeEvent extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
             'timeline_event_id' => 'required|integer|exists:timeline_events,id',
             'life_event_id' => 'required|integer|exists:life_events,id',
         ];

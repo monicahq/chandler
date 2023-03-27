@@ -49,7 +49,7 @@ class ImportVCard extends BaseService implements ServiceInterface
     /**
      * The Account id.
      */
-    public int $accountId = 0;
+    public string $accountId = null;
 
     /**
      * Get the validation rules that apply to the service.
@@ -57,8 +57,8 @@ class ImportVCard extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|string|exists:accounts,id',
+            'author_id' => 'required|string|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'contact_id' => 'nullable|integer|exists:contacts,id',
             'entry' => [

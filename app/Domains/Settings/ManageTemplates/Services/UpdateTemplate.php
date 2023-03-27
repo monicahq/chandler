@@ -16,8 +16,8 @@ class UpdateTemplate extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|string|exists:accounts,id',
+            'author_id' => 'required|string|exists:users,id',
             'template_id' => 'required|integer|exists:templates,id',
             'name' => 'required|string|max:255',
         ];

@@ -18,8 +18,8 @@ class UpdateReligion extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|string|exists:accounts,id',
+            'author_id' => 'required|string|exists:users,id',
             'religion_id' => 'required|integer|exists:religions,id',
             'name' => 'required|string|max:255',
         ];

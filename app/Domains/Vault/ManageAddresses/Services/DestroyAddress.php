@@ -16,9 +16,9 @@ class DestroyAddress extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
             'address_id' => 'required|integer|exists:addresses,id',
         ];
     }

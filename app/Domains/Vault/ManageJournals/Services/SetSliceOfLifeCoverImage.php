@@ -21,9 +21,9 @@ class SetSliceOfLifeCoverImage extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'slice_of_life_id' => 'nullable|integer|exists:slices_of_life,id',
             'file_id' => 'required|integer|exists:files,id',

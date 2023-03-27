@@ -21,10 +21,10 @@ class RemoveVaultAccess extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|string|exists:accounts,id',
+            'author_id' => 'required|string|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id' => 'required|string|exists:users,id',
         ];
     }
 

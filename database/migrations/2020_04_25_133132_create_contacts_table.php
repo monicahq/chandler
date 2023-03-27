@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -57,24 +58,22 @@ return new class() extends Migration
 
         Schema::create('user_vault', function (Blueprint $table) {
             $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignIdFor(User::class);
             $table->unsignedBigInteger('contact_id');
             $table->integer('permission');
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
         Schema::create('contact_vault_user', function (Blueprint $table) {
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignIdFor(User::class);
             $table->integer('number_of_views');
             $table->boolean('is_favorite')->default(false);
             $table->timestamps();
             $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }

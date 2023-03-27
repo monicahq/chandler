@@ -13,9 +13,9 @@ class DestroyRelationshipGroupType extends BaseService implements ServiceInterfa
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'relationship_group_type_id' => 'required|integer|exists:relationship_group_types,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
         ];
     }
 

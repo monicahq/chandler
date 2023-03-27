@@ -18,10 +18,10 @@ class CreateContact extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'uuid' => 'nullable|string',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',

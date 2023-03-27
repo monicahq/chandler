@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,7 +31,7 @@ return new class() extends Migration
 
         Schema::create('user_notification_channels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->string('type');
             $table->string('label')->nullable();
             $table->text('content');
@@ -39,7 +40,6 @@ return new class() extends Migration
             $table->datetime('verified_at')->nullable();
             $table->string('verification_token')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('contact_reminder_scheduled', function (Blueprint $table) {

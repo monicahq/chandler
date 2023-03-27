@@ -20,9 +20,9 @@ class RemoveContactFromGroup extends BaseService implements ServiceInterface
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
+            'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'author_id' => 'required|string|exists:users,id',
             'group_id' => 'required|integer|exists:groups,id',
             'contact_id' => 'required|integer|exists:contacts,id',
         ];
