@@ -49,7 +49,7 @@ class ImportVCard extends BaseService implements ServiceInterface
     /**
      * The Account id.
      */
-    public string $accountId = null;
+    public ?string $accountId = null;
 
     /**
      * Get the validation rules that apply to the service.
@@ -116,7 +116,7 @@ class ImportVCard extends BaseService implements ServiceInterface
      */
     private function clear(): void
     {
-        $this->accountId = 0;
+        $this->accountId = null;
     }
 
     /**
