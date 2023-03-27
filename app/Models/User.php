@@ -153,7 +153,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     public function notificationChannels(): HasMany
     {
-        return $this->hasMany(UserNotificationChannel::class, 'user_id');
+        return $this->hasMany(UserNotificationChannel::class);
     }
 
     /**
