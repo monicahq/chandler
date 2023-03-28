@@ -121,7 +121,7 @@ class RemoveSliceOfLifeCoverImageTest extends TestCase
 
         (new RemoveSliceOfLifeCoverImage())->execute($request);
 
-        $this->assertDatabaseHas('slices_of_life', [
+        $this->assertDatabaseHas('slice_of_lives', [
             'id' => $slice->id,
             'file_cover_image_id' => null,
         ]);

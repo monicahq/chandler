@@ -18,7 +18,7 @@ class CheckSliceOfLifeAccess
         $requestedJournalId = $request->route()->parameter('journal');
         $requestedSliceOfLifeId = $request->route()->parameter('slice');
 
-        $exists = DB::table('slices_of_life')->where([
+        $exists = DB::table('slice_of_lives')->where([
             'journal_id' => $requestedJournalId,
             'id' => $requestedSliceOfLifeId,
         ])->exists();
