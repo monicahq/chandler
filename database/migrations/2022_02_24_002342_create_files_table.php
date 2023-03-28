@@ -16,7 +16,7 @@ return new class() extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('fileable_id')->nullable();
+            $table->string('fileable_id')->nullable();
             $table->string('fileable_type')->nullable();
             $table->string('uuid');
             $table->string('original_url')->nullable();
