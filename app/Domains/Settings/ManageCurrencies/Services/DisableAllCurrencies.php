@@ -37,7 +37,7 @@ class DisableAllCurrencies extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        DB::table('account_currencies')
+        DB::table('account_currency')
             ->where('account_id', $data['account_id'])
             ->update([
                 'active' => false,

@@ -58,7 +58,7 @@ class VCardContactTest extends TestCase
         $response->assertHeaderMissing('ETag');
 
         $this->assertDatabaseHas('contacts', [
-            'uuid' => $uuid,
+            'id' => $uuid,
             'vault_id' => $vault->id,
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -340,8 +340,8 @@ class VCardContactTest extends TestCase
                  <d:getetag />
                  <card:address-data content-type=\"text/vcard\" version=\"4.0\" />
                </d:prop>
-               <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact1->uuid}.vcf</d:href>
-               <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact2->uuid}.vcf</d:href>
+               <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact1->id}.vcf</d:href>
+               <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact2->id}.vcf</d:href>
              </card:addressbook-multiget>"
         );
 
@@ -352,7 +352,7 @@ class VCardContactTest extends TestCase
         $vcard2 = mb_ereg_replace("\n", "&#13;\n", $this->getCard($contact2));
 
         $response->assertSee('<d:response>'.
-          "<d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact1->uuid}.vcf</d:href>".
+          "<d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact1->id}.vcf</d:href>".
           '<d:propstat>'.
             '<d:prop>'.
               "<d:getetag>&quot;{$this->getEtag($contact1)}&quot;</d:getetag>".
@@ -362,7 +362,7 @@ class VCardContactTest extends TestCase
            '</d:propstat>'.
           '</d:response>', false);
         $response->assertSee('<d:response>'.
-            "<d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact2->uuid}.vcf</d:href>".
+            "<d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact2->id}.vcf</d:href>".
             '<d:propstat>'.
               '<d:prop>'.
                 "<d:getetag>&quot;{$this->getEtag($contact2)}&quot;</d:getetag>".

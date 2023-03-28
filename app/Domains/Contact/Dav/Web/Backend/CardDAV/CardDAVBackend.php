@@ -231,7 +231,7 @@ class CardDAVBackend extends AbstractBackend implements IDAVBackend, SyncSupport
         }
 
         return Contact::where([
-            'uuid' => $uuid,
+            'id' => $uuid,
             'vault_id' => $vault->id,
         ])->first();
     }

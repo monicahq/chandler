@@ -117,7 +117,7 @@ class Account extends Model
      */
     public function currencies(): BelongsToMany
     {
-        return $this->belongsToMany(Currency::class, 'account_currencies', 'account_id', 'currency_id')
+        return $this->belongsToMany(Currency::class)
             ->withPivot('active')
             ->withTimestamps();
     }

@@ -21,7 +21,7 @@ return new class() extends Migration
             $table->timestamps();
         });
 
-        Schema::create('account_currencies', function (Blueprint $table) {
+        Schema::create('account_currency', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('currency_id');
             $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
@@ -206,6 +206,6 @@ return new class() extends Migration
     public function down()
     {
         Schema::dropIfExists('currencies');
-        Schema::dropIfExists('account_currencies');
+        Schema::dropIfExists('account_currency');
     }
 };
