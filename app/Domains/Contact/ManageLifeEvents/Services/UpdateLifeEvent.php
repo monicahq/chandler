@@ -101,7 +101,7 @@ class UpdateLifeEvent extends BaseService implements ServiceInterface
         }
 
         $this->partipantsCollection = collect($this->data['participant_ids'])
-            ->map(fn (int $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
+            ->map(fn (string $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
     }
 
     private function update(): void

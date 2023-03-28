@@ -3,6 +3,7 @@
 namespace App\Domains\Contact\ManageLoans\Services;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\Contact;
 use App\Models\Loan;
 use App\Services\BaseService;
 use Carbon\Carbon;
@@ -73,21 +74,11 @@ class UpdateLoan extends BaseService implements ServiceInterface
         $this->loan = $this->vault->loans()
             ->findOrFail($this->data['loan_id']);
 
-        $this->loanersCollection = collect();
-        foreach ($this->data['loaner_ids'] as $loanerId) {
-            $this->loanersCollection->push(
-                $this->vault->contacts()
-                    ->findOrFail($loanerId)
-            );
-        }
+        $this->loanersCollection = collect($this->data['loaner_ids'])
+            ->map(fn (string $id): Contact => $this->vault->contacts()->findOrFail($id));
 
-        $this->loaneesCollection = collect();
-        foreach ($this->data['loanee_ids'] as $loaneeId) {
-            $this->loaneesCollection->push(
-                $this->vault->contacts()
-                    ->findOrFail($loaneeId)
-            );
-        }
+        $this->loaneesCollection = collect($this->data['loanee_ids'])
+            ->map(fn (string $id): Contact => $this->vault->contacts()->findOrFail($id));
     }
 
     private function update(): void

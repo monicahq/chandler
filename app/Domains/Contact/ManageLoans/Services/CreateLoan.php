@@ -75,14 +75,10 @@ class CreateLoan extends BaseService implements ServiceInterface
         $this->validateRules($this->data);
 
         $this->loanersCollection = collect($this->data['loaner_ids'])
-            ->map(fn ($id) => $this->vault->contacts()
-                ->findOrFail($id)
-            );
+            ->map(fn (string $id): Contact => $this->vault->contacts()->findOrFail($id));
 
         $this->loaneesCollection = collect($this->data['loanee_ids'])
-            ->map(fn ($id) => $this->vault->contacts()
-                ->findOrFail($id)
-            );
+            ->map(fn (string $id): Contact => $this->vault->contacts()->findOrFail($id));
     }
 
     private function create(): void

@@ -99,7 +99,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
         // todo:  we should also check that the participants_id array contains
         // only integers
         $this->partipantsCollection = collect($this->data['participant_ids'])
-            ->map(fn (int $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
+            ->map(fn (string $participantId): Contact => $this->vault->contacts()->findOrFail($participantId));
     }
 
     private function updateLastEditedDate(): void
