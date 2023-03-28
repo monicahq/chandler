@@ -22,7 +22,7 @@ class DestroySliceOfLife extends BaseService implements ServiceInterface
             'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
-            'slice_of_life_id' => 'required|string|exists:slice_of_lives,id',
+            'slice_of_life_id' => 'required|integer|exists:slice_of_lives,id',
         ];
     }
 

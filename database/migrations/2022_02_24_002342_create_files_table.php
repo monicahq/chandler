@@ -17,7 +17,11 @@ return new class() extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
-            $table->nullableMorphs('fileable');
+
+            $table->string("fileable_type")->nullable();
+            $table->string("fileable_id")->nullable();
+            $table->index(["fileable_type", "fileable_id"]);
+
             $table->string('uuid');
             $table->string('original_url')->nullable();
             $table->string('cdn_url')->nullable();

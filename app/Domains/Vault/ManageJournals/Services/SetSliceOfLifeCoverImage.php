@@ -25,7 +25,7 @@ class SetSliceOfLifeCoverImage extends BaseService implements ServiceInterface
             'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
-            'slice_of_life_id' => 'nullable|string|exists:slice_of_lives,id',
+            'slice_of_life_id' => 'nullable|integer|exists:slice_of_lives,id',
             'file_id' => 'required|integer|exists:files,id',
         ];
     }

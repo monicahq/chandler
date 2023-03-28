@@ -26,7 +26,7 @@ class AddPostToSliceOfLife extends BaseService implements ServiceInterface
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'post_id' => 'required|integer|exists:posts,id',
-            'slice_of_life_id' => 'nullable|string|exists:slice_of_lives,id',
+            'slice_of_life_id' => 'nullable|integer|exists:slice_of_lives,id',
         ];
     }
 
