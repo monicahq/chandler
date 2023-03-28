@@ -171,13 +171,13 @@ class CardDAVTest extends TestCase
         $this->assertDatabaseHas('synctokens', [
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ]);
 
         $tokens = SyncToken::where([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ])->orderBy('created_at')->get();
 
         $this->assertGreaterThan(0, $tokens->count());
@@ -296,7 +296,7 @@ class CardDAVTest extends TestCase
         $tokens = SyncToken::where([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ])->orderBy('created_at')->get();
 
         $this->assertGreaterThan(0, $tokens->count());
@@ -328,7 +328,7 @@ class CardDAVTest extends TestCase
         $token = SyncToken::factory()->create([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
             'timestamp' => now(),
         ]);
 
@@ -352,7 +352,7 @@ class CardDAVTest extends TestCase
         $token = SyncToken::where([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ])
             ->orderBy('created_at')
             ->get()
@@ -397,7 +397,7 @@ class CardDAVTest extends TestCase
         $tokens = SyncToken::where([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ])
             ->orderBy('created_at')
             ->get();
@@ -434,7 +434,7 @@ class CardDAVTest extends TestCase
         $token = SyncToken::factory()->create([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
             'timestamp' => now(),
         ]);
 
@@ -458,7 +458,7 @@ class CardDAVTest extends TestCase
         $token = SyncToken::where([
             'account_id' => $user->account_id,
             'user_id' => $user->id,
-            'name' => "contacts-{$vault->uuid}",
+            'name' => "contacts-{$vault->id}",
         ])
             ->orderBy('created_at')
             ->get()
