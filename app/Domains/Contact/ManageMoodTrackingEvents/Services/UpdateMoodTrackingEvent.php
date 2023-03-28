@@ -21,7 +21,7 @@ class UpdateMoodTrackingEvent extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
             'mood_tracking_parameter_id' => 'required|integer|exists:mood_tracking_parameters,id',
             'mood_tracking_event_id' => 'required|integer|exists:mood_tracking_events,id',
             'rated_at' => 'required|date_format:Y-m-d',

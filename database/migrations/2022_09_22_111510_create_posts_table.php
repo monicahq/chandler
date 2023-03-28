@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Account;
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('post_templates', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->integer('position');
             $table->boolean('can_be_deleted')->default(true);
@@ -56,10 +57,9 @@ return new class extends Migration
 
         Schema::create('contact_post', function (Blueprint $table) {
             $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
         Schema::create('tags', function (Blueprint $table) {

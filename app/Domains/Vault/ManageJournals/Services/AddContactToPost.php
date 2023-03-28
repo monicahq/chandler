@@ -26,7 +26,7 @@ class AddContactToPost extends BaseService implements ServiceInterface
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'post_id' => 'required|integer|exists:posts,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
         ];
     }
 

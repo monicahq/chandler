@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +17,7 @@ return new class() extends Migration
     {
         Schema::create('contact_reminders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->integer('day')->nullable();
             $table->integer('month')->nullable();
@@ -26,7 +27,6 @@ return new class() extends Migration
             $table->datetime('last_triggered_at')->nullable();
             $table->integer('number_times_triggered')->default(0);
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
 
         Schema::create('user_notification_channels', function (Blueprint $table) {

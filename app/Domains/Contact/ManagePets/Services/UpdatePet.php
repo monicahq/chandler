@@ -21,7 +21,7 @@ class UpdatePet extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
             'pet_id' => 'required|integer|exists:pets,id',
             'pet_category_id' => 'required|integer|exists:pet_categories,id',
             'name' => 'nullable|string|max:255',

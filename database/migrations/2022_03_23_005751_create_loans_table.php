@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,12 +32,10 @@ return new class() extends Migration
 
         Schema::create('contact_loan', function (Blueprint $table) {
             $table->unsignedBigInteger('loan_id');
-            $table->unsignedBigInteger('loaner_id');
-            $table->unsignedBigInteger('loanee_id');
+            $table->foreignIdFor(Contact::class, 'loaner_id')->constrained('contacts')->cascadeOnDelete();
+            $table->foreignIdFor(Contact::class, 'loanee_id')->constrained('contacts')->cascadeOnDelete();
             $table->timestamps();
             $table->foreign('loan_id')->references('id')->on('loans')->onDelete('cascade');
-            $table->foreign('loaner_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->foreign('loanee_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 

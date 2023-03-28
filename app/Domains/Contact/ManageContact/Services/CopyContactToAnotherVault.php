@@ -27,7 +27,7 @@ class CopyContactToAnotherVault extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'other_vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
         ];
     }
 

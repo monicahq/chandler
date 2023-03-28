@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('webauthn_keys', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
 
             $table->string('name')->default('key');
             $table->string('credentialId', 768);

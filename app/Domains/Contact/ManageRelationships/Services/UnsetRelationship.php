@@ -23,8 +23,8 @@ class UnsetRelationship extends BaseService implements ServiceInterface
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'relationship_type_id' => 'required|integer|exists:relationship_types,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
-            'other_contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
+            'other_contact_id' => 'required|string|exists:contacts,id',
         ];
     }
 

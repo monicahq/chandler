@@ -76,7 +76,7 @@ class ContactController extends Controller
         ], 201);
     }
 
-    public function show(Request $request, int $vaultId, int $contactId)
+    public function show(Request $request, int $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::with([
@@ -108,7 +108,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function edit(Request $request, int $vaultId, int $contactId)
+    public function edit(Request $request, int $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
@@ -119,7 +119,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function update(Request $request, int $vaultId, int $contactId)
+    public function update(Request $request, int $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -147,7 +147,7 @@ class ContactController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId)
+    public function destroy(Request $request, int $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

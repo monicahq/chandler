@@ -34,7 +34,7 @@ trait CardEtag
         $data = "BEGIN:VCARD
 VERSION:4.0
 PRODID:-//Sabre//Sabre VObject {$sabreversion}//EN
-UID:{$contact->uuid}
+UID:{$contact->id}
 SOURCE:{$url}
 FN:{$contact->name}
 N:{$contact->last_name};{$contact->first_name};{$contact->middle_name};;

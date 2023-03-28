@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Account;
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ return new class() extends Migration
     {
         Schema::create('group_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->integer('position');
             $table->timestamps();
@@ -50,11 +51,10 @@ return new class() extends Migration
 
         Schema::create('contact_group', function (Blueprint $table) {
             $table->unsignedBigInteger('group_id');
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('group_type_role_id')->nullable();
             $table->timestamps();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('group_type_role_id')->references('id')->on('group_type_roles')->onDelete('set null');
         });
     }

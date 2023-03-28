@@ -14,7 +14,7 @@ return new class() extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
         });
@@ -33,7 +33,7 @@ return new class() extends Migration
 
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('type')->nullable();
             $table->boolean('reserved_to_contact_information')->default(false);

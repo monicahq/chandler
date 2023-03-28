@@ -14,7 +14,7 @@ return new class() extends Migration
     {
         Schema::create('address_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
         });

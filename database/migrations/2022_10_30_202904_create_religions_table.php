@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('religions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name')->nullable();
             $table->string('translation_key')->nullable();
             $table->integer('position')->nullable();

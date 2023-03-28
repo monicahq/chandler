@@ -23,7 +23,7 @@ class UpdateContactInformation extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
             'contact_information_type_id' => 'required|integer|exists:contact_information_types,id',
             'contact_information_id' => 'required|integer|exists:contact_information,id',
             'data' => 'required|string|max:255',

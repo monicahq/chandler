@@ -77,14 +77,6 @@ class Contact extends Model
     ];
 
     /**
-     * Get the columns that should receive a unique identifier.
-     */
-    public function uniqueIds(): array
-    {
-        return ['uuid'];
-    }
-
-    /**
      * Get the indexable data array for the model.
      *
      *

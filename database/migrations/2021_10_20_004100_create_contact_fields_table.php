@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Account;
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class() extends Migration
     {
         Schema::create('contact_information_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('protocol')->nullable();
             $table->boolean('can_be_deleted')->default(true);
@@ -24,11 +25,10 @@ return new class() extends Migration
 
         Schema::create('contact_information', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('type_id');
             $table->string('data');
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('contact_information_types')->onDelete('cascade');
         });
     }

@@ -108,7 +108,7 @@ class CreateContact extends BaseService implements ServiceInterface
             'listed' => $this->valueOrTrue($this->data, 'listed'),
         ]);
         if (($uuid = $this->valueOrNull($this->data, 'uuid')) !== null) {
-            $this->contact->uuid = $uuid;
+            $this->contact->id = $uuid;
         }
     }
 

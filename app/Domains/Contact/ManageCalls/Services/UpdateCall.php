@@ -20,7 +20,7 @@ class UpdateCall extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
             'call_id' => 'required|integer|exists:calls,id',
             'call_reason_id' => 'nullable|integer|exists:call_reasons,id',
             'called_at' => 'required|date_format:Y-m-d',

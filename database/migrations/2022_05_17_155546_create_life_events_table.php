@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -54,10 +55,9 @@ return new class() extends Migration
         });
 
         Schema::create('timeline_event_participants', function (Blueprint $table) {
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('timeline_event_id');
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('timeline_event_id')->references('id')->on('timeline_events')->onDelete('cascade');
         });
 
@@ -72,7 +72,7 @@ return new class() extends Migration
             $table->text('description')->nullable();
             $table->integer('costs')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('paid_by_contact_id')->nullable();
+            $table->foreignIdFor(Contact::class, 'paid_by_contact_id')->nullable()->constrained('contacts')->nullOnDelete();
             $table->integer('duration_in_minutes')->nullable();
             $table->integer('distance')->nullable();
             $table->char('distance_unit', 2)->nullable();
@@ -83,15 +83,13 @@ return new class() extends Migration
             $table->foreign('timeline_event_id')->references('id')->on('timeline_events')->onDelete('cascade');
             $table->foreign('life_event_type_id')->references('id')->on('life_event_types')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
-            $table->foreign('paid_by_contact_id')->references('id')->on('contacts')->onDelete('set null');
             $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('set null');
         });
 
         Schema::create('life_event_participants', function (Blueprint $table) {
-            $table->unsignedBigInteger('contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('life_event_id');
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('life_event_id')->references('id')->on('life_events')->onDelete('cascade');
         });
     }

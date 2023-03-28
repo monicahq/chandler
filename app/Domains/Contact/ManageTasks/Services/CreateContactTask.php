@@ -22,7 +22,7 @@ class CreateContactTask extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'vault_id' => 'required|integer|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
-            'contact_id' => 'required|integer|exists:contacts,id',
+            'contact_id' => 'required|string|exists:contacts,id',
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'due_at' => 'nullable|date_format:Y-m-d',

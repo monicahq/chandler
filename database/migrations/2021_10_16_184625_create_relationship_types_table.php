@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Account;
+use App\Models\Contact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class() extends Migration
     {
         Schema::create('relationship_group_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('type')->nullable();
             $table->boolean('can_be_deleted')->default(true);
@@ -35,12 +36,10 @@ return new class() extends Migration
         Schema::create('relationships', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('relationship_type_id');
-            $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('related_contact_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Contact::class, 'related_contact_id')->constrained('contacts')->cascadeOnDelete();
             $table->timestamps();
             $table->foreign('relationship_type_id')->references('id')->on('relationship_types')->onDelete('cascade');
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->foreign('related_contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 

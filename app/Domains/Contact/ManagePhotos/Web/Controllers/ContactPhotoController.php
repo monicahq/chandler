@@ -15,7 +15,7 @@ use Inertia\Inertia;
 
 class ContactPhotoController extends Controller
 {
-    public function index(Request $request, int $vaultId, int $contactId)
+    public function index(Request $request, int $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
@@ -32,7 +32,7 @@ class ContactPhotoController extends Controller
         ]);
     }
 
-    public function show(Request $request, int $vaultId, int $contactId, int $photoId)
+    public function show(Request $request, int $vaultId, string $contactId, int $photoId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);

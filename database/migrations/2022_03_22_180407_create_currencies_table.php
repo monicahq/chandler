@@ -24,7 +24,7 @@ return new class() extends Migration
         Schema::create('account_currencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('currency_id');
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->boolean('active')->default(true);
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
             $table->timestamps();

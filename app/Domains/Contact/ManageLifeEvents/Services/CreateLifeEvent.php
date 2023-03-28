@@ -37,7 +37,7 @@ class CreateLifeEvent extends BaseService implements ServiceInterface
             'happened_at' => 'required|date|date_format:Y-m-d',
             'costs' => 'nullable|integer',
             'currency_id' => 'nullable|integer|exists:currencies,id',
-            'paid_by_contact_id' => 'nullable|integer|exists:contacts,id',
+            'paid_by_contact_id' => 'nullable|string|exists:contacts,id',
             'duration_in_minutes' => 'nullable|integer',
             'distance' => 'nullable|integer',
             'distance_unit' => 'nullable|string|max:255',

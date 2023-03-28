@@ -60,7 +60,7 @@ class ImportVCard extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
             'vault_id' => 'required|integer|exists:vaults,id',
-            'contact_id' => 'nullable|integer|exists:contacts,id',
+            'contact_id' => 'nullable|string|exists:contacts,id',
             'entry' => [
                 'required',
                 function (string $attribute, mixed $value, Closure $fail) {
@@ -299,7 +299,7 @@ class ImportVCard extends BaseService implements ServiceInterface
         return ! empty($uuid = (string) $entry->UID) && Uuid::isValid($uuid)
             ? Contact::where([
                 'vault_id' => $this->vault->id,
-                'uuid' => $uuid,
+                'id' => $uuid,
             ])->first()
             : null;
     }

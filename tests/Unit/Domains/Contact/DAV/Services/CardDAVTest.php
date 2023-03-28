@@ -69,7 +69,7 @@ class CardDAVTest extends TestCase
         $response->assertHeader('X-Sabre-Version');
 
         $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/</d:href>", false);
-        $contactId = urlencode($contact->uuid);
+        $contactId = urlencode($contact->id);
         $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contactId}.vcf</d:href>", false);
     }
 
@@ -117,12 +117,12 @@ class CardDAVTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $vaultname = rawurlencode($vault->name);
 
-        $response = $this->call('PROPFIND', "/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf");
+        $response = $this->call('PROPFIND', "/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf");
 
         $response->assertStatus(207);
         $response->assertHeader('X-Sabre-Version');
 
-        $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</d:href>", false);
+        $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</d:href>", false);
     }
 
     /**
@@ -137,12 +137,12 @@ class CardDAVTest extends TestCase
         $contact = Contact::factory()->random()->create(['vault_id' => $vault->id]);
         $vaultname = rawurlencode($vault->name);
 
-        $response = $this->call('PROPFIND', "/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}");
+        $response = $this->call('PROPFIND', "/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}");
 
         $response->assertStatus(207);
         $response->assertHeader('X-Sabre-Version');
 
-        $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}</d:href>", false);
+        $response->assertSee("<d:response><d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}</d:href>", false);
     }
 
     public function test_carddav_getctag()
@@ -224,7 +224,7 @@ class CardDAVTest extends TestCase
     //         "<d:href>/dav/addressbooks/{$user->email}/$vaultname/</d:href>".
     //         '<d:propstat>'.
     //             '<d:prop>'.
-    //                 "<cs:me-card>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</cs:me-card>".
+    //                 "<cs:me-card>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</cs:me-card>".
     //             '</d:prop>'.
     //             '<d:status>HTTP/1.1 200 OK</d:status>'.
     //         '</d:propstat>'.
@@ -246,7 +246,7 @@ class CardDAVTest extends TestCase
     //             <set>
     //                 <prop>
     //                     <cs:me-card>
-    //                         <href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</href>
+    //                         <href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</href>
     //                     </cs:me-card>
     //                 </prop>
     //             </set>
@@ -360,7 +360,7 @@ class CardDAVTest extends TestCase
 
         $response->assertSee(
             "<d:response>
-  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</d:href>
+  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</d:href>
   <d:propstat>
    <d:prop>
     <d:getetag>&quot;{$this->getEtag($contact)}&quot;</d:getetag>
@@ -407,7 +407,7 @@ class CardDAVTest extends TestCase
 
         $response->assertSee(
             "<d:response>
-  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</d:href>
+  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</d:href>
   <d:propstat>
    <d:prop>
     <d:getetag>&quot;{$this->getEtag($contact)}&quot;</d:getetag>
@@ -467,7 +467,7 @@ class CardDAVTest extends TestCase
         $response->assertSee("<d:multistatus xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\" xmlns:card=\"urn:ietf:params:xml:ns:carddav\">
  <d:response>
   <d:status>HTTP/1.1 404 Not Found</d:status>
-  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->uuid}.vcf</d:href>
+  <d:href>/dav/addressbooks/{$user->email}/$vaultname/{$contact->id}.vcf</d:href>
   <d:propstat>
    <d:prop/>
    <d:status>HTTP/1.1 418 I'm a teapot</d:status>

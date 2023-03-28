@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('synctokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignIdFor(Account::class);
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('name')->default('contacts');
             $table->timestamp('timestamp');
             $table->timestamps();

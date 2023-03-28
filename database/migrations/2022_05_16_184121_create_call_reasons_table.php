@@ -16,7 +16,7 @@ return new class() extends Migration
     {
         Schema::create('call_reason_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->timestamps();
         });

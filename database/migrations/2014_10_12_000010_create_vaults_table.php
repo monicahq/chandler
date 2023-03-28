@@ -15,7 +15,7 @@ return new class() extends Migration
         Schema::create('vaults', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->string('name');
             $table->string('description')->nullable();
