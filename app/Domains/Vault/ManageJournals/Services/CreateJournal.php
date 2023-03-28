@@ -19,7 +19,7 @@ class CreateJournal extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|string|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',

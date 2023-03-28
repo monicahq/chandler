@@ -19,7 +19,7 @@ class CreateGroup extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|string|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'group_type_id' => 'required|integer|exists:group_types,id',
             'name' => 'nullable|string|max:255',

@@ -71,7 +71,7 @@ class PostTest extends TestCase
     {
         $post = Post::factory()->create();
         File::factory()->count(2)->create([
-            'fileable_id' => $post->id,
+            'fileable_id' => (string) $post->id,
             'fileable_type' => Post::class,
         ]);
 

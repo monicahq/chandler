@@ -16,7 +16,7 @@ class DestroyContactImportantDateType extends BaseService implements ServiceInte
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'contact_important_date_type_id' => 'required|integer|exists:contact_important_date_types,id',
         ];
     }

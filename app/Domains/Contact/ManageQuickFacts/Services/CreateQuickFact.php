@@ -21,7 +21,7 @@ class CreateQuickFact extends BaseService implements ServiceInterface
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
             'contact_id' => 'required|string|exists:contacts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'vault_quick_facts_template_id' => 'required|integer|exists:vault_quick_facts_templates,id',
             'content' => 'required|string|max:255',
         ];

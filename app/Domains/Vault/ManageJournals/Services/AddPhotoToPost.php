@@ -22,7 +22,7 @@ class AddPhotoToPost extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|string|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'post_id' => 'nullable|integer|exists:posts,id',
@@ -50,7 +50,7 @@ class AddPhotoToPost extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->file->fileable_id = $this->post->id;
+        $this->file->fileable_id = (string) $this->post->id;
         $this->file->fileable_type = Post::class;
         $this->file->type = File::TYPE_PHOTO;
         $this->file->save();

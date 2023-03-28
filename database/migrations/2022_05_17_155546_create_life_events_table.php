@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,13 +25,12 @@ return new class() extends Migration
 
         Schema::create('life_event_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->integer('position')->nullable();
             $table->string('label')->nullable();
             $table->string('label_translation_key')->nullable();
             $table->boolean('can_be_deleted')->default(false);
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::create('life_event_types', function (Blueprint $table) {
@@ -46,12 +46,11 @@ return new class() extends Migration
 
         Schema::create('timeline_events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->date('started_at');
             $table->string('label')->nullable();
             $table->boolean('collapsed')->default(true);
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::create('timeline_event_participants', function (Blueprint $table) {

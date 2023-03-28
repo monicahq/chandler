@@ -49,7 +49,7 @@ class VaultController extends Controller
         ], 201);
     }
 
-    public function show(Request $request, int $vaultId)
+    public function show(Request $request, string $vaultId)
     {
         $vault = Vault::find($vaultId);
 
@@ -75,7 +75,7 @@ class VaultController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, int $vaultId)
+    public function destroy(Request $request, string $vaultId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

@@ -15,7 +15,7 @@ class DestroyTag extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'tag_id' => 'required|integer|exists:tags,id',
         ];
     }

@@ -21,7 +21,7 @@ class ChangeVaultAccess extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'user_id' => 'required|string|exists:users,id',
             'permission' => 'required|integer',
         ];

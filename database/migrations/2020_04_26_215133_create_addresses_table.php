@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class() extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('address_type_id')->nullable();
             $table->string('line_1')->nullable();
             $table->string('line_2')->nullable();
@@ -25,7 +26,6 @@ return new class() extends Migration
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('address_type_id')->references('id')->on('address_types')->onDelete('set null');
         });
 

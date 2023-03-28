@@ -22,7 +22,7 @@ class SetSliceOfLifeCoverImage extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|string|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'journal_id' => 'required|integer|exists:journals,id',
             'slice_of_life_id' => 'nullable|integer|exists:slices_of_life,id',
@@ -53,7 +53,7 @@ class SetSliceOfLifeCoverImage extends BaseService implements ServiceInterface
         $this->slice->file_cover_image_id = $this->file->id;
         $this->slice->save();
 
-        $this->file->fileable_id = $this->slice->id;
+        $this->file->fileable_id = (string) $this->slice->id;
         $this->file->fileable_type = SliceOfLife::class;
         $this->file->save();
 

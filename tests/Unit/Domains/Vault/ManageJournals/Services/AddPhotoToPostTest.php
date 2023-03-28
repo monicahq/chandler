@@ -144,7 +144,7 @@ class AddPhotoToPostTest extends TestCase
 
         $this->assertDatabaseHas('files', [
             'id' => $file->id,
-            'fileable_id' => $post->id,
+            'fileable_id' => (string) $post->id,
             'fileable_type' => Post::class,
             'type' => File::TYPE_PHOTO,
         ]);

@@ -20,7 +20,7 @@ class CreateContact extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'id' => 'nullable|string',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',

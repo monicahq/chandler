@@ -50,7 +50,7 @@ class PostShowViewHelperTest extends TestCase
             'size' => 123,
             'type' => File::TYPE_PHOTO,
         ]);
-        $file->fileable_id = $post->id;
+        $file->fileable_id = (string) $post->id;
         $file->fileable_type = Post::class;
         $file->save();
 

@@ -21,7 +21,7 @@ use Inertia\Inertia;
 
 class ContactController extends Controller
 {
-    public function index(Request $request, int $vaultId)
+    public function index(Request $request, string $vaultId)
     {
         $vault = Vault::findOrFail($vaultId);
 
@@ -37,7 +37,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function create(Request $request, int $vaultId)
+    public function create(Request $request, string $vaultId)
     {
         $vault = Vault::findOrFail($vaultId);
 
@@ -47,7 +47,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function store(Request $request, int $vaultId)
+    public function store(Request $request, string $vaultId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -76,7 +76,7 @@ class ContactController extends Controller
         ], 201);
     }
 
-    public function show(Request $request, int $vaultId, string $contactId)
+    public function show(Request $request, string $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::with([
@@ -108,7 +108,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function edit(Request $request, int $vaultId, string $contactId)
+    public function edit(Request $request, string $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
@@ -119,7 +119,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function update(Request $request, int $vaultId, string $contactId)
+    public function update(Request $request, string $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -147,7 +147,7 @@ class ContactController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, string $contactId)
+    public function destroy(Request $request, string $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

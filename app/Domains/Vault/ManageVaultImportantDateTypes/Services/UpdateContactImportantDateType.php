@@ -16,7 +16,7 @@ class UpdateContactImportantDateType extends BaseService implements ServiceInter
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'contact_important_date_type_id' => 'required|integer|exists:contact_important_date_types,id',
             'label' => 'required|string|max:255',
             'internal_type' => 'nullable|string|max:255',

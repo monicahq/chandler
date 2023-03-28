@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactModuleStreakController extends Controller
 {
-    public function update(Request $request, int $vaultId, string $contactId, int $goalId)
+    public function update(Request $request, string $vaultId, string $contactId, int $goalId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,

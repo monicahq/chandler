@@ -88,7 +88,7 @@ class UserControllerTest extends ApiTestCase
     {
         $this->createUser(['read']);
 
-        $response = $this->get('/api/users/0');
+        $response = $this->get('/api/users/a');
 
         $response->assertResourceNotFound();
     }

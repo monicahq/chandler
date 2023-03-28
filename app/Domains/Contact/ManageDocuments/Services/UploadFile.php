@@ -19,7 +19,7 @@ class UploadFile extends BaseService
     {
         return [
             'account_id' => 'required|string|exists:accounts,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'author_id' => 'required|string|exists:users,id',
             'uuid' => 'required|string',
             'name' => 'required|string',

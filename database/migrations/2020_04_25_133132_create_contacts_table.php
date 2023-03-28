@@ -2,6 +2,7 @@
 
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ return new class() extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->unsignedBigInteger('pronoun_id')->nullable();
             $table->unsignedBigInteger('template_id')->nullable();
@@ -40,7 +41,6 @@ return new class() extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('gender_id')->references('id')->on('genders')->onDelete('set null');
             $table->foreign('pronoun_id')->references('id')->on('pronouns')->onDelete('set null');
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
@@ -58,22 +58,20 @@ return new class() extends Migration
         });
 
         Schema::create('user_vault', function (Blueprint $table) {
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
             $table->integer('permission');
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::create('contact_vault_user', function (Blueprint $table) {
             $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->integer('number_of_views');
             $table->boolean('is_favorite')->default(false);
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
     }
 

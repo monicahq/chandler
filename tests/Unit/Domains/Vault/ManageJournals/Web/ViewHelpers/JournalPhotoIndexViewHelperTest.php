@@ -30,7 +30,7 @@ class JournalPhotoIndexViewHelperTest extends TestCase
             'size' => 123,
             'uuid' => 123,
             'type' => File::TYPE_PHOTO,
-            'fileable_id' => $post->id,
+            'fileable_id' => (string) $post->id,
             'fileable_type' => Post::class,
         ]);
 

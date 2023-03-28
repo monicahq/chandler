@@ -16,7 +16,7 @@ class UpdateVault extends BaseService implements ServiceInterface
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
         ];

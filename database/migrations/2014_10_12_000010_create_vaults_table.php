@@ -13,8 +13,8 @@ return new class() extends Migration
     public function up()
     {
         Schema::create('vaults', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid')->nullable();
+            $table->uuid('id');
+            $table->primary('id');
             $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->string('name');

@@ -16,7 +16,7 @@ class CreateContactImportantDateType extends BaseService implements ServiceInter
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'label' => 'required|string|max:255',
             'internal_type' => 'nullable|string|max:255',
             'can_be_deleted' => 'nullable|boolean',

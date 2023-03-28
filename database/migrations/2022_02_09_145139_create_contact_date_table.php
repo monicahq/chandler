@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,12 +17,11 @@ return new class() extends Migration
     {
         Schema::create('contact_important_date_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->string('internal_type')->nullable();
             $table->boolean('can_be_deleted')->default(true);
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::create('contact_important_dates', function (Blueprint $table) {

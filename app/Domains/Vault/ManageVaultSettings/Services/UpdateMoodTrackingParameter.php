@@ -16,7 +16,7 @@ class UpdateMoodTrackingParameter extends BaseService implements ServiceInterfac
         return [
             'account_id' => 'required|string|exists:accounts,id',
             'author_id' => 'required|string|exists:users,id',
-            'vault_id' => 'required|integer|exists:vaults,id',
+            'vault_id' => 'required|string|exists:vaults,id',
             'mood_tracking_parameter_id' => 'required|integer|exists:mood_tracking_parameters,id',
             'label' => 'required|string|max:255',
             'hex_color' => 'string|max:255',

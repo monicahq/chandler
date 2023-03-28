@@ -2,6 +2,7 @@
 
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -36,12 +37,11 @@ return new class() extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->unsignedBigInteger('vault_id');
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('group_type_id');
             $table->string('name');
             $table->timestamps();
 
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
             $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('cascade');
 
             if (config('scout.driver') === 'database' && in_array(DB::connection()->getDriverName(), ['mysql', 'pgsql'])) {
