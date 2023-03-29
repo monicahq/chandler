@@ -50,7 +50,7 @@ class AddPhotoToPost extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->file->fileable_id = (string) $this->post->id;
+        $this->file->fileable_id = $this->post->id;
         $this->file->fileable_type = Post::class;
         $this->file->type = File::TYPE_PHOTO;
         $this->file->save();

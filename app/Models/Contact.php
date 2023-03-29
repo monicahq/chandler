@@ -70,6 +70,7 @@ class Contact extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'vault_id' => 'string',
         'can_be_deleted' => 'boolean',
         'listed' => 'boolean',
         'show_quick_facts' => 'boolean',
@@ -286,7 +287,7 @@ class Contact extends Model
      */
     public function files(): MorphMany
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->morphMany(File::class, 'ufileable', 'fileable_type');
     }
 
     /**

@@ -149,7 +149,7 @@ class SetSliceOfLifeCoverImageTest extends TestCase
 
         $this->assertDatabaseHas('files', [
             'id' => $file->id,
-            'fileable_id' => (string) $slice->id,
+            'fileable_id' => $slice->id,
             'fileable_type' => SliceOfLife::class,
         ]);
     }

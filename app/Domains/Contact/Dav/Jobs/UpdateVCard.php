@@ -86,7 +86,7 @@ class UpdateVCard extends QueuableService implements ServiceInterface
 
         $contactId = null;
         if ($cardUri) {
-            $contactObject = $backend->getObject($this->vault->uuid, $cardUri);
+            $contactObject = $backend->getObject($this->vault->id, $cardUri);
 
             if ($contactObject) {
                 $contactId = $contactObject->id;

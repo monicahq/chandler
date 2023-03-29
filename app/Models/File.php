@@ -32,6 +32,7 @@ class File extends Model
         'vault_id',
         'fileable_id',
         'fileable_type',
+        'ufileable_id',
         'uuid',
         'original_url',
         'cdn_url',
@@ -62,6 +63,14 @@ class File extends Model
      * Get the parent model that matches this file.
      */
     public function fileable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get the parent model that matches this file.
+     */
+    public function ufileable(): MorphTo
     {
         return $this->morphTo();
     }

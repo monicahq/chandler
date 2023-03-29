@@ -18,9 +18,9 @@ return new class() extends Migration
             $table->id();
             $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
 
-            $table->string("fileable_type")->nullable();
-            $table->string("fileable_id")->nullable();
-            $table->index(["fileable_type", "fileable_id"]);
+            $table->nullableNumericMorphs('fileable');
+            $table->uuid("ufileable_id")->nullable();
+            $table->index(["fileable_type", "ufileable_id"]);
 
             $table->string('uuid');
             $table->string('original_url')->nullable();

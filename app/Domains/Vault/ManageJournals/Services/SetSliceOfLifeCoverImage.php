@@ -53,7 +53,7 @@ class SetSliceOfLifeCoverImage extends BaseService implements ServiceInterface
         $this->slice->file_cover_image_id = $this->file->id;
         $this->slice->save();
 
-        $this->file->fileable_id = (string) $this->slice->id;
+        $this->file->fileable_id = $this->slice->id;
         $this->file->fileable_type = SliceOfLife::class;
         $this->file->save();
 
