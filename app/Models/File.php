@@ -76,6 +76,6 @@ class File extends Model
      */
     public function ufileable(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo(type: 'fileable_type');
     }
 }
