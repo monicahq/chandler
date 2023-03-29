@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property string $fileable_type
+ * @property int $fileable_id
+ */
 class File extends Model
 {
     use HasFactory;
