@@ -57,7 +57,8 @@ class ApiController extends Controller
             return $this->{$method}(...array_values($parameters));
         } catch (ModelNotFoundException) {
             return $this->respondNotFound();
-        } catch (QueryException) {
+        } catch (QueryException $e) {
+            dump($e);
             return $this->respondInvalidQuery();
         } catch (ValidationException $e) {
             return $this->respondValidatorFailed($e->validator);
