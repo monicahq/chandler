@@ -3,8 +3,8 @@
 namespace Tests\Unit\Domains\Settings\ManageUsers\Api\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Tests\ApiTestCase;
 
 class UserControllerTest extends ApiTestCase

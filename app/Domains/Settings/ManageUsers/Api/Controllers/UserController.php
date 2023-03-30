@@ -42,12 +42,8 @@ class UserController extends ApiController
     #[ResponseFromApiResource(UserResource::class, User::class)]
     public function show(Request $request, string $userId)
     {
-        dump($userId);
-
         $user = $request->user()->account->users()
             ->findOrFail($userId);
-
-        dump($user);
 
         return new UserResource($user);
     }
