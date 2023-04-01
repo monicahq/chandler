@@ -8,6 +8,6 @@ abstract class PolicyBase
 {
     protected function id($model)
     {
-        return is_subclass_of($model, Model::class) ? $model->id : $model;
+        return is_subclass_of($model, Model::class) ? $model->getKey() : $model;
     }
 }
