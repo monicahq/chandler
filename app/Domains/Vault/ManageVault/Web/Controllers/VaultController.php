@@ -49,10 +49,8 @@ class VaultController extends Controller
         ], 201);
     }
 
-    public function show(Request $request, int $vaultId)
+    public function show(Request $request, Vault $vault)
     {
-        $vault = Vault::find($vaultId);
-
         $contact = Auth::user()->getContactInVault($vault);
 
         return Inertia::render('Vault/Dashboard/Index', [
@@ -66,10 +64,10 @@ class VaultController extends Controller
             'lifeEvents' => ModuleLifeEventViewHelper::data($contact, Auth::user()),
             'url' => [
                 'feed' => route('vault.feed.show', [
-                    'vault' => $vaultId,
+                    'vault' => $vault,
                 ]),
                 'default_tab' => route('vault.default_tab.update', [
-                    'vault' => $vaultId,
+                    'vault' => $vault,
                 ]),
             ],
         ]);

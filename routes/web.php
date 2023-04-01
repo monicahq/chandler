@@ -181,7 +181,7 @@ Route::middleware([
         Route::get('create', [VaultController::class, 'create'])->name('vault.create');
         Route::post('', [VaultController::class, 'store'])->name('vault.store');
 
-        Route::middleware(['vault'])->prefix('{vault}')->group(function () {
+        Route::middleware('can:any,\App\Models\Vault,vault')->prefix('{vault}')->group(function () {
             Route::get('', [VaultController::class, 'show'])->name('vault.show');
 
             // update dashboard's default tab

@@ -8,7 +8,6 @@ use App\Http\Middleware\CheckGroupAccess;
 use App\Http\Middleware\CheckJournalAccess;
 use App\Http\Middleware\CheckPostAccess;
 use App\Http\Middleware\CheckSliceOfLifeAccess;
-use App\Http\Middleware\CheckVaultAccess;
 use App\Http\Middleware\CheckVaultPermissionAtLeastEditor;
 use App\Http\Middleware\CheckVaultPermissionAtLeastManager;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -75,7 +74,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'vault' => CheckVaultAccess::class,
         'contact' => CheckContactAccess::class,
         'group' => CheckGroupAccess::class,
         'journal' => CheckJournalAccess::class,
