@@ -222,7 +222,7 @@ Route::middleware([
                 Route::middleware(['atLeastVaultEditor'])->post('', [ContactController::class, 'store'])->name('contact.store');
 
                 // contact page
-                Route::middleware(['contact'])->prefix('{contact}')->group(function () {
+                Route::middleware('can:any,\App\Models\Contact,contact,vault')->prefix('{contact}')->group(function () {
                     // general page information
                     Route::get('', [ContactController::class, 'show'])->name('contact.show');
                     Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
