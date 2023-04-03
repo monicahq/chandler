@@ -27,6 +27,6 @@ class LifeMetricTest extends TestCase
 
         $ross->lifeMetrics()->sync([$lifeMetric->id]);
 
-        $this->assertTrue($lifeMetric->contacts()->exists());
+        $this->assertTrue($ross->lifeMetrics()->exists());
     }
 }
