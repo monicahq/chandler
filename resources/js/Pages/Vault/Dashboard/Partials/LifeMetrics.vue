@@ -45,7 +45,7 @@ const showLifeMetricGraph = (lifeMetric) => {
 };
 
 const toggleGraph = (lifeMetric) => {
-  var id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
+  let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
   localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
 };
 
@@ -99,7 +99,7 @@ const destroy = (lifeMetric) => {
     axios
       .delete(lifeMetric.url.destroy)
       .then(() => {
-        var id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
+        let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
         localLifeMetrics.value.splice(id, 1);
       })
       .catch(() => {});

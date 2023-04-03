@@ -25,7 +25,7 @@ class LifeMetricTest extends TestCase
         $ross = Contact::factory()->create();
         $lifeMetric = LifeMetric::factory()->create();
 
-        $lifeMetric->contacts()->attach($ross->id);
+        $ross->lifeMetrics()->sync([$lifeMetric->id]);
 
         $this->assertTrue($lifeMetric->contacts()->exists());
     }

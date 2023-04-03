@@ -40,11 +40,9 @@ class CreateLifeMetric extends BaseService implements ServiceInterface
     {
         $this->validateRules($data);
 
-        $lifeMetric = LifeMetric::create([
+        return LifeMetric::create([
             'vault_id' => $data['vault_id'],
             'label' => $data['label'],
         ]);
-
-        return $lifeMetric;
     }
 }
