@@ -22,10 +22,10 @@ class LifeMetricTest extends TestCase
     /** @test */
     public function it_has_many_contacts(): void
     {
-        $ross = Contact::factory()->create([]);
+        $ross = Contact::factory()->create();
         $lifeMetric = LifeMetric::factory()->create();
 
-        $lifeMetric->contacts()->attach([$ross->id]);
+        $lifeMetric->contacts()->attach($ross->id);
 
         $this->assertTrue($lifeMetric->contacts()->exists());
     }
