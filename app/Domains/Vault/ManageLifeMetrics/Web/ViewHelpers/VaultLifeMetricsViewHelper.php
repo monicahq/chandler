@@ -11,6 +11,11 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
+/**
+ * Sorry if you need to read this code. I'm not proud of it.
+ * It's messy, it's inelegant.
+ * I don't like to deal with data like this.
+ */
 class VaultLifeMetricsViewHelper
 {
     public static function data(Vault $vault, User $user, int $year): array
@@ -40,6 +45,7 @@ class VaultLifeMetricsViewHelper
         $monthlyEvents = $events->filter(function ($lifeMetricEvent) use ($year) {
             return Carbon::parse($lifeMetricEvent->pivot->created_at)->year == $year;
         });
+        $maxNumberOfEvents = 0;
         $eventsInMonthCollection = collect();
         for ($month = 1; $month < 13; $month++) {
             $eventsCounter = 0;
@@ -49,10 +55,14 @@ class VaultLifeMetricsViewHelper
                     $eventsCounter++;
                 }
             }
-            $date = CarbonImmutable::now()->month($month)->day(1);
 
+            if ($maxNumberOfEvents > $eventsCounter) {
+                $maxNumberOfEvents = $eventsCounter;
+            }
+
+            $date = CarbonImmutable::now()->month($month)->day(1);
             $eventsInMonthCollection->push([
-                'month' => $month,
+                'id' => $month,
                 'friendly_name' => DateHelper::formatMonthNumber($date),
                 'events' => $eventsCounter,
             ]);
@@ -65,6 +75,7 @@ class VaultLifeMetricsViewHelper
             'stats' => self::stats($lifeMetric, $contact),
             'years' => self::years($lifeMetric, $contact),
             'months' => $eventsInMonthCollection,
+            'max_number_of_events' => $maxNumberOfEvents,
             'url' => [
                 'store' => route('vault.life_metrics.contact.store', [
                     'vault' => $contact->vault->id,

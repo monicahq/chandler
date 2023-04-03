@@ -662,6 +662,11 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+charts.css@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/charts.css/-/charts.css-0.9.0.tgz#df0da443226d549b2ab36ed6532fa04571c59916"
+  integrity sha512-gOqyyRZGifTNCdyVdMwO6/9+5sHyue1csqOrCr7V/FwzuAiaj+gGL6DX7LGPXCHIQBumsM5/mKiIe/BadwzvzA==
+
 "chokidar@>=3.0.0 <4.0.0", chokidar@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"

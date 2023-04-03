@@ -1,5 +1,4 @@
 <script setup>
-import Loading from '@/Shared/Loading.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
@@ -21,6 +20,7 @@ const labelField = ref(null);
 const loadingState = ref('');
 const localLifeMetrics = ref([]);
 const editedLifeMetricId = ref(0);
+const graphLifeMetricId = ref(0);
 
 onMounted(() => {
   localLifeMetrics.value = props.data.data;
@@ -38,6 +38,10 @@ const showCreateLifeMetricModal = () => {
 const showEditLifeMetricModal = (lifeMetric) => {
   editedLifeMetricId.value = lifeMetric.id;
   form.label = lifeMetric.label;
+};
+
+const showLifeMetricGraph = (lifeMetric) => {
+  graphLifeMetricId.value = lifeMetric.id;
 };
 
 const store = () => {
@@ -92,19 +96,6 @@ const destroy = (lifeMetric) => {
       .then(() => {
         var id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
         localLifeMetrics.value.splice(id, 1);
-      })
-      .catch(() => {});
-  }
-};
-
-const destroyLifeEvent = (timelineEvent, lifeEvent) => {
-  if (confirm('Are you sure? This will delete the event permanently.')) {
-    axios
-      .delete(lifeEvent.url.destroy)
-      .then(() => {
-        var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
-        var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
-        localTimelines.value[id].life_events.splice(lifeEventId, 1);
       })
       .catch(() => {});
   }
@@ -182,7 +173,7 @@ const destroyLifeEvent = (timelineEvent, lifeEvent) => {
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
                 <ul>
-                  <li class="text-sm text-gray-600">
+                  <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
                     Total:
                     <a-tooltip placement="bottomLeft" :title="'Events this week'" arrow-point-at-center>
                       <span
@@ -224,14 +215,16 @@ const destroyLifeEvent = (timelineEvent, lifeEvent) => {
               @delete="destroy(lifeMetric)" />
           </div>
 
-          <!-- years -->
-          <!-- <ul class="list">
-            <li class="inline">Years</li>
-            <li class="inline">2022</li>
-            <li class="inline">2021</li>
-          </ul> -->
-
           <!-- graph -->
+          <table class="charts-css column">
+            <caption> Front End Developer Salary </caption>
+
+            <tbody>
+              <tr v-for="month in lifeMetric.months" :key="month.id">
+                <td :style="'--size: calc(' + month.events + '/' + lifeMetric.max_number_of_events"> {{ month.friendly_name }} </td>
+              </tr>
+            </tbody>
+          </table>
 
           <!-- edit modal -->
           <form

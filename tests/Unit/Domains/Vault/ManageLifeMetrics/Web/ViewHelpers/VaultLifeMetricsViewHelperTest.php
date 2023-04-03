@@ -92,62 +92,62 @@ class VaultLifeMetricsViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 0 => [
-                    'month' => 1,
+                    'id' => 1,
                     'friendly_name' => 'Jan',
                     'events' => 1,
                 ],
                 1 => [
-                    'month' => 2,
+                    'id' => 2,
                     'friendly_name' => 'Feb',
                     'events' => 1,
                 ],
                 2 => [
-                    'month' => 3,
+                    'id' => 3,
                     'friendly_name' => 'Mar',
                     'events' => 0,
                 ],
                 3 => [
-                    'month' => 4,
+                    'id' => 4,
                     'friendly_name' => 'Apr',
                     'events' => 1,
                 ],
                 4 => [
-                    'month' => 5,
+                    'id' => 5,
                     'friendly_name' => 'May',
                     'events' => 0,
                 ],
                 5 => [
-                    'month' => 6,
+                    'id' => 6,
                     'friendly_name' => 'Jun',
                     'events' => 0,
                 ],
                 6 => [
-                    'month' => 7,
+                    'id' => 7,
                     'friendly_name' => 'Jul',
                     'events' => 0,
                 ],
                 7 => [
-                    'month' => 8,
+                    'id' => 8,
                     'friendly_name' => 'Aug',
                     'events' => 0,
                 ],
                 8 => [
-                    'month' => 9,
+                    'id' => 9,
                     'friendly_name' => 'Sep',
                     'events' => 0,
                 ],
                 9 => [
-                    'month' => 10,
+                    'id' => 10,
                     'friendly_name' => 'Oct',
                     'events' => 0,
                 ],
                 10 => [
-                    'month' => 11,
+                    'id' => 11,
                     'friendly_name' => 'Nov',
                     'events' => 0,
                 ],
                 11 => [
-                    'month' => 12,
+                    'id' => 12,
                     'friendly_name' => 'Dec',
                     'events' => 0,
                 ],
