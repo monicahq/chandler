@@ -44,6 +44,11 @@ const showLifeMetricGraph = (lifeMetric) => {
   graphLifeMetricId.value = lifeMetric.id;
 };
 
+const toggleGraph = (lifeMetric) => {
+  var id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
+  localLifeMetrics.value[id].show_graph = !localLifeMetrics.value[id].show_graph;
+};
+
 const store = () => {
   loadingState.value = 'loading';
 
@@ -149,6 +154,7 @@ const destroy = (lifeMetric) => {
           :input-class="'block w-full'"
           :required="true"
           :autocomplete="false"
+          :placeholder="'Watch Netflix every day'"
           :maxlength="255"
           @esc-key-pressed="createLifeMetricModalShown = false" />
       </div>
@@ -172,7 +178,7 @@ const destroy = (lifeMetric) => {
             <div class="mr-8 flex w-full items-center justify-between">
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
-                <ul>
+                <ul @click="toggleGraph(lifeMetric)">
                   <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
                     Total:
                     <a-tooltip placement="bottomLeft" :title="'Events this week'" arrow-point-at-center>
@@ -216,15 +222,19 @@ const destroy = (lifeMetric) => {
           </div>
 
           <!-- graph -->
-          <table class="charts-css column">
-            <caption> Front End Developer Salary </caption>
+          <div v-if="editedLifeMetricId !== lifeMetric.id && lifeMetric.show_graph" class="mb-2 border border-gray-200 rounded-lg m-3">
+            <table class="charts-css column h-72 show-labels show-primary-axis">
+              <tbody>
+                <tr v-for="month in lifeMetric.months" :key="month.id">
+                  <td :style="'--size: calc(' + month.events + '/' + lifeMetric.max_number_of_events">
+                    {{ month.friendly_name }}
 
-            <tbody>
-              <tr v-for="month in lifeMetric.months" :key="month.id">
-                <td :style="'--size: calc(' + month.events + '/' + lifeMetric.max_number_of_events"> {{ month.friendly_name }} </td>
-              </tr>
-            </tbody>
-          </table>
+                    <span class="tooltip"> {{ month.events }} events </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <!-- edit modal -->
           <form

@@ -56,7 +56,7 @@ class VaultLifeMetricsViewHelper
                 }
             }
 
-            if ($maxNumberOfEvents > $eventsCounter) {
+            if ($maxNumberOfEvents < $eventsCounter) {
                 $maxNumberOfEvents = $eventsCounter;
             }
 
@@ -71,6 +71,7 @@ class VaultLifeMetricsViewHelper
         return [
             'id' => $lifeMetric->id,
             'incremented' => false,
+            'show_graph' => false,
             'label' => $lifeMetric->label,
             'stats' => self::stats($lifeMetric, $contact),
             'years' => self::years($lifeMetric, $contact),
