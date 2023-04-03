@@ -222,8 +222,10 @@ const destroy = (lifeMetric) => {
           </div>
 
           <!-- graph -->
-          <div v-if="editedLifeMetricId !== lifeMetric.id && lifeMetric.show_graph" class="mb-2 border border-gray-200 rounded-lg m-3">
-            <table class="charts-css column h-72 show-labels show-primary-axis">
+          <div
+            v-if="editedLifeMetricId !== lifeMetric.id && lifeMetric.show_graph"
+            class="m-3 mb-2 rounded-lg border border-gray-200">
+            <table class="charts-css column show-labels show-primary-axis h-72">
               <tbody>
                 <tr v-for="month in lifeMetric.months" :key="month.id">
                   <td :style="'--size: calc(' + month.events + '/' + lifeMetric.max_number_of_events">
