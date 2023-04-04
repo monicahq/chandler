@@ -187,6 +187,9 @@ Route::middleware([
             // update dashboard's default tab
             Route::put('defaultTab', [VaultDefaultTabOnDashboardController::class, 'update'])->name('vault.default_tab.update');
 
+            // calendar
+            Route::get('calendar', [VaultCalendarController::class, 'index'])->name('vault.calendar.index');
+
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 

@@ -26,6 +26,7 @@ return new class() extends Migration
             $table->boolean('show_journal_tab')->default(true);
             $table->boolean('show_companies_tab')->default(true);
             $table->boolean('show_reports_tab')->default(true);
+            $table->boolean('show_calendar_tab')->default(true);
             $table->timestamps();
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->foreign('default_template_id')->references('id')->on('templates')->onDelete('set null');

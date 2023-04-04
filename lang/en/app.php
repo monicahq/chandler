@@ -7,6 +7,7 @@ return [
     'layout_menu_dashboard' => 'Dashboard',
     'layout_menu_reports' => 'Reports',
     'layout_menu_contacts' => 'Contacts',
+    'layout_menu_calendar' => 'Calendar',
     'layout_menu_groups' => 'Groups',
     'layout_menu_companies' => 'Companies',
     'layout_menu_tasks' => 'Tasks',

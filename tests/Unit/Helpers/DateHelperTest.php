@@ -5,6 +5,7 @@ namespace Tests\Unit\Helpers;
 use App\Helpers\DateHelper;
 use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -390,6 +391,18 @@ class DateHelperTest extends TestCase
         $this->assertEquals(
             '2019-01-20T23:21:44Z',
             DateHelper::getTimestamp($testDate)
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_number_of_weeks_in_a_month()
+    {
+        Carbon::setTestNow(Carbon::create(2018, 2, 1));
+        $testDate = CarbonImmutable::now();
+
+        $this->assertEquals(
+            5,
+            DateHelper::weeksInMonth($testDate)
         );
     }
 }
