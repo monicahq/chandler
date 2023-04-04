@@ -36,7 +36,7 @@ class VaultCalendarIndexViewHelper
                 for ($day = $currentDay->dayOfWeekIso - 1; $day > 0; $day--) {
                     $daysBeforeFirstDay++;
                     $weekDays->push([
-                        'id' => $day,
+                        'id' => $currentDay->subDays($day)->day,
                         'date' => $currentDay->subDays($day)->format('d'),
                     ]);
                 }
@@ -44,7 +44,7 @@ class VaultCalendarIndexViewHelper
 
             for ($day = $daysBeforeFirstDay; $day <= 7; $day++) {
                 $weekDays->push([
-                    'id' => $day,
+                    'id' => $currentDay->day,
                     'date' => $currentDay->format('d'),
                 ]);
                 $currentDay = $currentDay->addDay();
