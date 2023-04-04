@@ -13,7 +13,10 @@ class VaultCalendarIndexViewHelper
     public static function data(Vault $vault): array
     {
         return [
-
+            'weeks' => self::buildMonth(
+                (int) CarbonImmutable::now()->format('m'),
+                (int) CarbonImmutable::now()->format('Y')
+            ),
         ];
     }
 
@@ -38,6 +41,8 @@ class VaultCalendarIndexViewHelper
                     $weekDays->push([
                         'id' => $currentDay->subDays($day)->day,
                         'date' => $currentDay->subDays($day)->format('d'),
+                        'current_day' => false,
+                        'is_in_month' => false,
                     ]);
                 }
             }
@@ -46,6 +51,8 @@ class VaultCalendarIndexViewHelper
                 $weekDays->push([
                     'id' => $currentDay->day,
                     'date' => $currentDay->format('d'),
+                    'current_day' => $currentDay->isToday() ? true : false,
+                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month ? true : false,
                 ]);
                 $currentDay = $currentDay->addDay();
             }

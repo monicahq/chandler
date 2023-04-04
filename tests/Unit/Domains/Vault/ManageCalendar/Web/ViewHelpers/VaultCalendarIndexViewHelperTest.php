@@ -3,6 +3,7 @@
 namespace Tests\Unit\Domains\Vault\ManageCalendar\Web\ViewHelpers;
 
 use App\Domains\Vault\ManageCalendar\Web\ViewHelpers\VaultCalendarIndexViewHelper;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -18,6 +19,7 @@ class VaultCalendarIndexViewHelperTest extends TestCase
     /** @test */
     public function it_builds_the_monthly_calendar(): void
     {
+        Carbon::setTestNow(Carbon::create(2023, 4, 2));
         $collection = VaultCalendarIndexViewHelper::buildMonth(4, 2023);
 
         $this->assertEquals(5, $collection->count());
@@ -30,30 +32,44 @@ class VaultCalendarIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => 27,
                     'date' => '27',
+                    'current_day' => false,
+                    'is_in_month' => false,
                 ],
                 1 => [
                     'id' => 28,
                     'date' => '28',
+                    'current_day' => false,
+                    'is_in_month' => false,
                 ],
                 2 => [
                     'id' => 29,
                     'date' => '29',
+                    'current_day' => false,
+                    'is_in_month' => false,
                 ],
                 3 => [
                     'id' => 30,
                     'date' => '30',
+                    'current_day' => false,
+                    'is_in_month' => false,
                 ],
                 4 => [
                     'id' => 31,
                     'date' => '31',
+                    'current_day' => false,
+                    'is_in_month' => false,
                 ],
                 5 => [
                     'id' => 1,
                     'date' => '01',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 6 => [
                     'id' => 2,
                     'date' => '02',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
             ],
             $collection->toArray()[0]['days']->toArray()
@@ -63,30 +79,44 @@ class VaultCalendarIndexViewHelperTest extends TestCase
                 0 => [
                     'id' => 24,
                     'date' => '24',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 1 => [
                     'id' => 25,
                     'date' => '25',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 2 => [
                     'id' => 26,
                     'date' => '26',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 3 => [
                     'id' => 27,
                     'date' => '27',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 4 => [
                     'id' => 28,
                     'date' => '28',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 5 => [
                     'id' => 29,
                     'date' => '29',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
                 6 => [
                     'id' => 30,
                     'date' => '30',
+                    'current_day' => false,
+                    'is_in_month' => true,
                 ],
             ],
             $collection->toArray()[4]['days']->toArray()
