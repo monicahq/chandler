@@ -4,19 +4,36 @@ namespace App\Domains\Vault\ManageCalendar\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
 use App\Models\Vault;
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class VaultCalendarIndexViewHelper
 {
-    public static function data(Vault $vault): array
+    public static function data(Vault $vault, int $year, int $month): array
     {
+        $date = Carbon::createFromDate($year, $month, 1);
+        $previousMonth = $date->copy()->subMonth();
+        $nextMonth = $date->copy()->addMonth();
+
         return [
-            'weeks' => self::buildMonth(
-                (int) CarbonImmutable::now()->format('m'),
-                (int) CarbonImmutable::now()->format('Y')
-            ),
+            'current_month' => DateHelper::formatLongMonthAndYear($date),
+            'weeks' => self::buildMonth($month, $year),
+            'previous_month' => DateHelper::formatLongMonthAndYear($previousMonth),
+            'next_month' => DateHelper::formatLongMonthAndYear($nextMonth),
+            'url' => [
+                'previous' => route('vault.calendar.month', [
+                    'vault' => $vault->id,
+                    'year' => $previousMonth->year,
+                    'month' => $previousMonth->month,
+                ]),
+                'next' => route('vault.calendar.month', [
+                    'vault' => $vault->id,
+                    'year' => $nextMonth->year,
+                    'month' => $nextMonth->month,
+                ]),
+            ],
         ];
     }
 
@@ -24,6 +41,7 @@ class VaultCalendarIndexViewHelper
     {
         $month = Str::padLeft($month, 2, '0');
         $firstDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->startOfMonth();
+        $lastDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->endOfMonth();
         $numberOfWeeksInMonth = DateHelper::weeksInMonth($firstDayOfMonth);
 
         $calendarWeeks = collect();
@@ -48,6 +66,25 @@ class VaultCalendarIndexViewHelper
             }
 
             for ($day = $daysBeforeFirstDay; $day <= 7; $day++) {
+                $weekDays->push([
+                    'id' => $currentDay->day,
+                    'date' => $currentDay->format('d'),
+                    'current_day' => $currentDay->isToday() ? true : false,
+                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month ? true : false,
+                ]);
+                $currentDay = $currentDay->addDay();
+            }
+
+            $calendarWeeks->push([
+                'id' => $week,
+                'days' => $weekDays,
+            ]);
+        }
+
+        // one more row is missing
+        if ($currentDay->isBefore($lastDayOfMonth)) {
+            $weekDays = collect();
+            for ($day = $currentDay->dayOfWeekIso; $day <= 7; $day++) {
                 $weekDays->push([
                     'id' => $currentDay->day,
                     'date' => $currentDay->format('d'),

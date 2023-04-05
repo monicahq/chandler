@@ -169,6 +169,7 @@ class DateHelper
 
     /**
      * Return the number of weeks in a month.
+     * This is for the Calendar view.
      */
     public static function weeksInMonth(CarbonImmutable $date): int
     {

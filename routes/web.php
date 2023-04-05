@@ -190,6 +190,7 @@ Route::middleware([
 
             // calendar
             Route::get('calendar', [VaultCalendarController::class, 'index'])->name('vault.calendar.index');
+            Route::get('calendar/years/{year}/months/{month}', [VaultCalendarController::class, 'month'])->name('vault.calendar.month');
 
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');

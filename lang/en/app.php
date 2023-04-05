@@ -137,4 +137,12 @@ return [
 
     'distance_format_km' => ':distance km',
     'distance_format_mi' => ':distance miles',
+
+    'monday' => 'Monday',
+    'tuesday' => 'Tuesday',
+    'wednesday' => 'Wednesday',
+    'thursday' => 'Thursday',
+    'friday' => 'Friday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
 ];
