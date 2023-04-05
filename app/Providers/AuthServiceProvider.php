@@ -57,10 +57,10 @@ class AuthServiceProvider extends ServiceProvider
             if ($contact instanceof Contact) {
                 return $contact->vault_id === static::id($vault);
             }
-    
+
             return Contact::where([
                 'id' => static::id($contact),
-                'vault_id' => static::id($vault)
+                'vault_id' => static::id($vault),
             ])->exists();
         });
 
@@ -68,10 +68,10 @@ class AuthServiceProvider extends ServiceProvider
             if ($group instanceof Group) {
                 return $group->vault_id === static::id($vault);
             }
-    
+
             return Group::where([
                 'id' => static::id($group),
-                'vault_id' => static::id($vault)
+                'vault_id' => static::id($vault),
             ])->exists();
         });
 
@@ -79,10 +79,10 @@ class AuthServiceProvider extends ServiceProvider
             if ($journal instanceof Journal) {
                 return $journal->vault_id === static::id($vault);
             }
-    
+
             return Journal::where([
                 'id' => static::id($journal),
-                'vault_id' => static::id($vault)
+                'vault_id' => static::id($vault),
             ])->exists();
         });
 
@@ -90,10 +90,10 @@ class AuthServiceProvider extends ServiceProvider
             if ($post instanceof Post) {
                 return $post->journal_id === static::id($journal);
             }
-    
+
             return Post::where([
                 'id' => static::id($post),
-                'journal_id' => static::id($journal)
+                'journal_id' => static::id($journal),
             ])->exists();
         });
 
@@ -101,13 +101,12 @@ class AuthServiceProvider extends ServiceProvider
             if ($sliceOfLife instanceof SliceOfLife) {
                 return $sliceOfLife->journal_id === static::id($journal);
             }
-    
+
             return SliceOfLife::where([
                 'id' => static::id($sliceOfLife),
-                'journal_id' => static::id($journal)
+                'journal_id' => static::id($journal),
             ])->exists();
         });
-
     }
 
     protected static function id($model)

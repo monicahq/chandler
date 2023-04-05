@@ -18,6 +18,7 @@ class VaultController extends Controller
 {
     /**
      * Create the controller instance.
+     *
      * @see \App\Policies\VaultPolicy
      */
     public function __construct()

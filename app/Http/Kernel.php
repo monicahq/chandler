@@ -2,11 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CheckAdministratorPrivilege;
-use App\Http\Middleware\CheckPostAccess;
-use App\Http\Middleware\CheckSliceOfLifeAccess;
-use App\Http\Middleware\CheckVaultPermissionAtLeastEditor;
-use App\Http\Middleware\CheckVaultPermissionAtLeastManager;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
