@@ -392,7 +392,7 @@ Route::middleware([
                     Route::get('posts/template/{template}', [PostController::class, 'store'])->name('post.store');
 
                     // details of a post
-                    Route::middleware('can:post-owner,vault,post')->prefix('posts/{post}')->group(function () {
+                    Route::middleware('can:post-owner,journal,post')->prefix('posts/{post}')->group(function () {
                         Route::get('', [PostController::class, 'show'])->name('post.show');
                         Route::get('edit', [PostController::class, 'edit'])->name('post.edit');
                         Route::put('update', [PostController::class, 'update'])->name('post.update');
@@ -414,7 +414,7 @@ Route::middleware([
                     Route::get('slices', [SliceOfLifeController::class, 'index'])->name('slices.index');
                     Route::post('slices', [SliceOfLifeController::class, 'store'])->name('slices.store');
 
-                    Route::middleware('can:slice-owner,vault,slice')->prefix('slices/{slice}')->group(function () {
+                    Route::middleware('can:slice-owner,journal,slice')->prefix('slices/{slice}')->group(function () {
                         Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
                         Route::get('edit', [SliceOfLifeController::class, 'edit'])->name('slices.edit');
                         Route::put('', [SliceOfLifeController::class, 'update'])->name('slices.update');

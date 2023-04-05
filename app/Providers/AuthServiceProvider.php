@@ -86,25 +86,25 @@ class AuthServiceProvider extends ServiceProvider
             ])->exists();
         });
 
-        Gate::define('post-owner', function (User $user, $vault, $post): bool {
+        Gate::define('post-owner', function (User $user, $journal, $post): bool {
             if ($post instanceof Post) {
-                return $post->vault_id === static::id($vault);
+                return $post->journal_id === static::id($journal);
             }
     
             return Post::where([
                 'id' => static::id($post),
-                'vault_id' => static::id($vault)
+                'journal_id' => static::id($journal)
             ])->exists();
         });
 
-        Gate::define('sliceOfLife-owner', function (User $user, $vault, $sliceOfLife): bool {
+        Gate::define('sliceOfLife-owner', function (User $user, $journal, $sliceOfLife): bool {
             if ($sliceOfLife instanceof SliceOfLife) {
-                return $sliceOfLife->vault_id === static::id($vault);
+                return $sliceOfLife->journal_id === static::id($journal);
             }
     
             return SliceOfLife::where([
                 'id' => static::id($sliceOfLife),
-                'vault_id' => static::id($vault)
+                'journal_id' => static::id($journal)
             ])->exists();
         });
 
