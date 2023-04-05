@@ -3,16 +3,48 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Vault;
+use Illuminate\Support\Facades\Gate;
 
-class VaultPolicy extends PolicyBase
+class VaultPolicy
 {
     /**
-     * Determine whether the user can access the model.
+     * Determine whether the user can view any models.
      */
-    public function any(User $user, $vault): bool
+    public function viewAny(User $user): bool
     {
-        return $user->vaults()
-            ->wherePivotIn('vault_id', [$this->id($vault)])
-            !== null;
+        return true;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Vault $vault): bool
+    {
+        return Gate::forUser($user)->allows('vault-viewer', $vault);
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Vault $vault): bool
+    {
+        return Gate::forUser($user)->allows('vault-manager', $vault);
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Vault $vault): bool
+    {
+        return Gate::forUser($user)->allows('vault-editor', $vault);
     }
 }

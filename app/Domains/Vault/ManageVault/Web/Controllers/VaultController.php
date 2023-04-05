@@ -16,6 +16,15 @@ use Inertia\Inertia;
 
 class VaultController extends Controller
 {
+    /**
+     * Create the controller instance.
+     * @see \App\Policies\VaultPolicy
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Vault::class, 'vault');
+    }
+
     public function index()
     {
         return Inertia::render('Vault/Index', [
@@ -73,12 +82,12 @@ class VaultController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, int $vaultId)
+    public function destroy(Request $request, Vault $vault)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
-            'vault_id' => $vaultId,
+            'vault_id' => $vault->id,
         ];
 
         (new DestroyVault())->execute($data);

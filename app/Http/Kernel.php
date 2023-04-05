@@ -3,8 +3,6 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckAdministratorPrivilege;
-use App\Http\Middleware\CheckGroupAccess;
-use App\Http\Middleware\CheckJournalAccess;
 use App\Http\Middleware\CheckPostAccess;
 use App\Http\Middleware\CheckSliceOfLifeAccess;
 use App\Http\Middleware\CheckVaultPermissionAtLeastEditor;
@@ -73,12 +71,5 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'group' => CheckGroupAccess::class,
-        'journal' => CheckJournalAccess::class,
-        'slice' => CheckSliceOfLifeAccess::class,
-        'post' => CheckPostAccess::class,
-        'administrator' => CheckAdministratorPrivilege::class,
-        'atLeastVaultEditor' => CheckVaultPermissionAtLeastEditor::class,
-        'atLeastVaultManager' => CheckVaultPermissionAtLeastManager::class,
     ];
 }
