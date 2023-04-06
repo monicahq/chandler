@@ -1,11 +1,28 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
-import { onMounted, ref } from 'vue';
+import ContactCard from '@/Shared/ContactCard.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   layoutData: Object,
   data: Object,
 });
+
+const currentDay = ref([]);
+const currentDayLoaded = ref(false);
+
+const get = (day) => {
+  if (day.is_in_month === false) {
+    return;
+  }
+
+  axios
+    .get(day.url.show)
+    .then((response) => {
+      currentDayLoaded.value = true;
+      currentDay.value = response.data.data;
+    });
+};
 </script>
 
 <template>
@@ -14,9 +31,6 @@ const props = defineProps({
       <div class="max-w-8xl mx-auto py-2 sm:py-6 sm:px-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
-          <div class="p-3 sm:p-0">left</div>
-
-          <!-- middle -->
           <div class="p-3 sm:p-0">
             <!-- month browser -->
             <div class="mb-4 flex items-center justify-between">
@@ -25,7 +39,7 @@ const props = defineProps({
 
               <!-- month next/previous -->
               <div class="flex justify-center">
-                <div class="mb-8 inline-flex rounded-md shadow-sm">
+                <div class="inline-flex rounded-md shadow-sm">
                   <inertia-link
                     :href="data.url.previous"
                     class="inline-flex items-center rounded-l-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
@@ -80,17 +94,68 @@ const props = defineProps({
               <div
                 v-for="day in week.days"
                 :key="day.id"
+                @click="get(day)"
                 class="h-32 border-r p-2 last:border-r-0"
-                :class="day.is_in_month ? '' : 'bg-slate-50'">
-                <span class="p-1 text-xs" :class="day.current_day ? 'rounded-lg bg-slate-200' : ''">{{
-                  day.date
-                }}</span>
+                :class="day.is_in_month ? 'cursor-pointer' : 'bg-slate-50'">
+
+                <!-- date of the day -->
+                <div class="flex items-center justify-between">
+                  <span class="p-1 text-xs mb-1 inline-block" :class="day.current_day ? 'rounded-lg bg-slate-200' : ''">{{
+                    day.date
+                  }}</span>
+
+                  <!-- mood for the day -->
+                  <div v-if="day.mood_events">
+                    <div v-for="moodEvent in day.mood_events" class="mr-2 inline-block h-4 w-4 rounded-full" :class="moodEvent.hex_color" />
+                  </div>
+                </div>
+
+                <!-- important dates -->
+                <div v-if="day.important_dates">
+                  <div v-if="day.important_dates.length > 0" class="text-xs mb-1 text-gray-600">Important dates</div>
+                  <div v-if="day.important_dates.length > 0" class="flex">
+                    <div v-for="contact in day.important_dates" :key="contact.id">
+                      <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="false" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- right -->
-          <div class="p-3 sm:p-0">sda</div>
+          <!-- right part -->
+          <!-- detail of a day -->
+          <div v-if="currentDayLoaded" class="p-3 sm:p-0 border border-gray-200 rounded-lg">
+
+            <!-- day name -->
+            <div class="p-2 border-b border-gray-200 text-center text-sm font-semibold">
+              {{ currentDay.day }}
+            </div>
+
+            <!-- important dates -->
+            <div v-if="currentDay.important_dates" class="p-3">
+              <div class="text-sm mb-2 text-gray-600">Important dates</div>
+              <ul>
+                <li v-for="importantDate in currentDay.important_dates" :key="importantDate.id" class="flex justify-between mb-1">
+                  <span>{{ importantDate.label }}</span>
+                  <span><contact-card :contact="importantDate.contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="false" /></span>
+                </li>
+              </ul>
+              <div class="flex">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- blank state -->
+          <div v-else class="p-3 sm:p-0 border border-gray-200 rounded-lg flex items-center bg-gray-50">
+            <div>
+              <img src="/img/calendar_day_blank.svg" :alt="$t('Groups')" class="mx-auto mt-4 h-36 w-36" />
+              <p class="px-5 pb-5 pt-2 text-center">
+                Click on a day to see the details
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -99,7 +164,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .special-grid {
-  grid-template-columns: 100px 1fr 200px;
+  grid-template-columns: 1fr 250px;
 }
 
 @media (max-width: 480px) {

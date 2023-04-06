@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Vault;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class VaultCalendarController extends Controller
@@ -20,6 +21,7 @@ class VaultCalendarController extends Controller
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'data' => VaultCalendarIndexViewHelper::data(
                 vault: $vault,
+                user: Auth::user(),
                 year: Carbon::now()->year,
                 month: Carbon::now()->month,
             ),
@@ -34,9 +36,24 @@ class VaultCalendarController extends Controller
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
             'data' => VaultCalendarIndexViewHelper::data(
                 vault: $vault,
+                user: Auth::user(),
                 year: $year,
                 month: $month,
             ),
         ]);
+    }
+
+    public function day(Request $request, int $vaultId, int $year, int $month, int $day)
+    {
+        $vault = Vault::findOrFail($vaultId);
+
+        return response()->json([
+            'data' => VaultCalendarIndexViewHelper::getDay(
+                vault: $vault,
+                year: $year,
+                month: $month,
+                day: $day,
+            ),
+        ], 200);
     }
 }

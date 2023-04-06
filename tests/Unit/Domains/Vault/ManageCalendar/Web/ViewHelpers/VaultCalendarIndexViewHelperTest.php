@@ -3,6 +3,8 @@
 namespace Tests\Unit\Domains\Vault\ManageCalendar\Web\ViewHelpers;
 
 use App\Domains\Vault\ManageCalendar\Web\ViewHelpers\VaultCalendarIndexViewHelper;
+use App\Models\Contact;
+use App\Models\ContactImportantDate;
 use App\Models\Vault;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -19,12 +21,20 @@ class VaultCalendarIndexViewHelperTest extends TestCase
         $array = VaultCalendarIndexViewHelper::data($vault, 2023, 4);
 
         $this->assertCount(
-            5,
+            7,
             $array
         );
         $this->assertEquals(
             'April 2023',
             $array['current_month']
+        );
+        $this->assertEquals(
+            4,
+            $array['month']
+        );
+        $this->assertEquals(
+            2023,
+            $array['year']
         );
         $this->assertEquals(
             'May 2023',
@@ -47,7 +57,8 @@ class VaultCalendarIndexViewHelperTest extends TestCase
     public function it_builds_the_monthly_calendar(): void
     {
         Carbon::setTestNow(Carbon::create(2023, 4, 2));
-        $collection = VaultCalendarIndexViewHelper::buildMonth(4, 2023);
+        $vault = Vault::factory()->create();
+        $collection = VaultCalendarIndexViewHelper::buildMonth($vault, 4, 2023);
 
         $this->assertEquals(5, $collection->count());
         $this->assertEquals(
@@ -55,98 +66,41 @@ class VaultCalendarIndexViewHelperTest extends TestCase
             $collection->toArray()[0]['id']
         );
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => 27,
-                    'date' => '27',
-                    'current_day' => false,
-                    'is_in_month' => false,
-                ],
-                1 => [
-                    'id' => 28,
-                    'date' => '28',
-                    'current_day' => false,
-                    'is_in_month' => false,
-                ],
-                2 => [
-                    'id' => 29,
-                    'date' => '29',
-                    'current_day' => false,
-                    'is_in_month' => false,
-                ],
-                3 => [
-                    'id' => 30,
-                    'date' => '30',
-                    'current_day' => false,
-                    'is_in_month' => false,
-                ],
-                4 => [
-                    'id' => 31,
-                    'date' => '31',
-                    'current_day' => false,
-                    'is_in_month' => false,
-                ],
-                5 => [
-                    'id' => 1,
-                    'date' => '01',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                6 => [
-                    'id' => 2,
-                    'date' => '02',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-            ],
-            $collection->toArray()[0]['days']->toArray()
+            27,
+            $collection->toArray()[0]['days']->toArray()[0]['id']
+        );
+        $this->assertFalse(
+            $collection->toArray()[0]['days']->toArray()[0]['current_day']
+        );
+        $this->assertFalse(
+            $collection->toArray()[0]['days']->toArray()[0]['is_in_month']
         );
         $this->assertEquals(
-            [
-                0 => [
-                    'id' => 24,
-                    'date' => '24',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                1 => [
-                    'id' => 25,
-                    'date' => '25',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                2 => [
-                    'id' => 26,
-                    'date' => '26',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                3 => [
-                    'id' => 27,
-                    'date' => '27',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                4 => [
-                    'id' => 28,
-                    'date' => '28',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                5 => [
-                    'id' => 29,
-                    'date' => '29',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-                6 => [
-                    'id' => 30,
-                    'date' => '30',
-                    'current_day' => false,
-                    'is_in_month' => true,
-                ],
-            ],
-            $collection->toArray()[4]['days']->toArray()
+            2,
+            $collection->toArray()[0]['days']->toArray()[6]['id']
         );
+        $this->assertFalse(
+            $collection->toArray()[0]['days']->toArray()[6]['current_day']
+        );
+        $this->assertTrue(
+            $collection->toArray()[0]['days']->toArray()[6]['is_in_month']
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_important_dates(): void
+    {
+        $contact = Contact::factory()->create();
+        ContactImportantDate::factory()->create([
+            'contact_id' => $contact->id,
+            'day' => '03',
+            'month' => '03',
+        ]);
+
+        $contactIds = Contact::all()->pluck('id');
+
+        $collection = VaultCalendarIndexViewHelper::getImportantDates(3, 3, $contactIds);
+
+        $this->assertEquals(1, $collection->count());
     }
 }
