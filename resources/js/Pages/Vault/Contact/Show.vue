@@ -130,6 +130,20 @@ const destroyAvatar = () => {
       form.errors = error.response.data;
     });
 };
+
+const download = () => {
+  return axios.post(props.data.url.download_vcard)
+    .then((response) => {
+      const filename = response.headers['content-disposition'].split('filename=')[1];
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -256,6 +270,12 @@ const destroyAvatar = () => {
               <li class="mb-2">
                 <Link :href="data.url.move_contact" class="cursor-pointer text-blue-500 hover:underline">
                   {{ $t('contact.contact_move_contact_cta') }}
+                </Link>
+              </li>
+              <!-- download as vcard -->
+              <li class="mb-2">
+                <Link @click.prevent="download()" class="cursor-pointer text-blue-500 hover:underline">
+                  {{ $t('contact.contact_download_vcard') }}
                 </Link>
               </li>
               <!-- delete contact -->
