@@ -50,7 +50,7 @@ class JsonExportAccount extends BaseService
     {
         $this->validateRules($data);
 
-        $this->tempFileName = 'temp/'.Str::random(40).'.json';
+        $this->tempFileName = 'temp/'.Str::uuid().'.json';
 
         $this->writeExport($data, $this->author);
 

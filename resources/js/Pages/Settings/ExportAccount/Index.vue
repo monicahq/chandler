@@ -18,10 +18,22 @@ const showExport = ref(false);
 
 const exportAccount = () => {
   form.post(route('settings.export.store'));
+
+  showExport.value = false;
 };
 
 const download = (job) => {
-  return axios.post(route('settings.export.download', { id: job.id }));
+  return axios.post(route('settings.export.download', { id: job.id }))
+    .then((response) => {
+      const filename = response.headers['content-disposition'].split('filename=')[1];
+      const url = window.URL.createObjectURL(new Blob([JSON.stringify(response.data, null, 2)]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
 };
 </script>
 
@@ -84,10 +96,6 @@ const download = (job) => {
 
               <td class="flex items-center justify-between px-5 py-2">
                 <Link @click="download(job)" as="button" preserve-scroll>
-                  {{ $t('Download') }}
-                </Link>
-
-                <Link :href="route('settings.export.download', { id: job.id })" method="post" as="button" preserve-scroll>
                   {{ $t('Download') }}
                 </Link>
               </td>

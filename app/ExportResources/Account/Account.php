@@ -13,7 +13,11 @@ use App\ExportResources\Journal\JournalEntry;
 use App\ExportResources\Contact\ContactFieldType;
 use App\ExportResources\Relationship\Relationship;
 use App\ExportResources\Contact\Gender as GenderResource;
+use App\ExportResources\Vault\Vault;
 
+/**
+ * @mixin \App\Models\Account
+ */
 class Account extends ExportResource
 {
     protected $columns = [
@@ -23,7 +27,6 @@ class Account extends ExportResource
     ];
 
     protected $properties = [
-        // 'number_of_invitations_sent',
     ];
 
     public function data(): ?array
@@ -31,6 +34,7 @@ class Account extends ExportResource
         return  [
             'data' => [
                 User::countCollection($this->users),
+                Vault::countCollection($this->vaults),
                 // Contact::countCollection($this->allContacts),
                 // Relationship::countCollection($this->relationships),
                 // Addressbook::countCollection($this->addressBooks),
