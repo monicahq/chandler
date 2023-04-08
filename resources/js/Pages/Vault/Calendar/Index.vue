@@ -105,8 +105,12 @@ const get = (day) => {
                   }}</span>
 
                   <!-- mood for the day -->
-                  <div v-if="day.mood_events">
-                    <div v-for="moodEvent in day.mood_events" class="mr-2 inline-block h-4 w-4 rounded-full" :class="moodEvent.hex_color" />
+                  <div class="flex">
+                    <div v-for="mood in day.mood_events" :key="mood.id">
+                      <a-tooltip placement="topLeft" :title="mood.mood_tracking_parameter.label" arrow-point-at-center>
+                        <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="mood.mood_tracking_parameter.hex_color" />
+                      </a-tooltip>
+                    </div>
                   </div>
                 </div>
 
