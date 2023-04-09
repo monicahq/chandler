@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  node-version: 18
+
 concurrency:
   group: Lint js ${{ github.ref }}
   cancel-in-progress: true
