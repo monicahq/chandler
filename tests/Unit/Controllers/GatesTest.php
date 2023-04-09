@@ -8,11 +8,14 @@ use App\Models\Journal;
 use App\Models\Post;
 use App\Models\SliceOfLife;
 use App\Models\Vault;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
 
 class GatesTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @test */
     public function it_checks_administrator()
     {
