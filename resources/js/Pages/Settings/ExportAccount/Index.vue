@@ -23,42 +23,42 @@ const exportAccount = () => {
 };
 
 const download = (job) => {
-  return axios.post(route('settings.export.download', { id: job.id }))
-    .then((response) => {
-      const filename = response.headers['content-disposition'].split('filename=')[1];
-      const url = window.URL.createObjectURL(new Blob([JSON.stringify(response.data, null, 2)]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
+  return axios.post(route('settings.export.download', { id: job.id })).then((response) => {
+    const filename = response.headers['content-disposition'].split('filename=')[1];
+    const url = window.URL.createObjectURL(new Blob([JSON.stringify(response.data, null, 2)]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
 };
 </script>
 
 <template>
   <layout :layout-data="layoutData">
-    <Breadcrumb :items="[
-    {
-      name: $t('app.breadcrumb_settings'),
-      url: data.url.settings
-    }, {
-      name: $t('Export account')
-    }]" />
+    <Breadcrumb
+      :items="[
+        {
+          name: $t('app.breadcrumb_settings'),
+          url: data.url.settings,
+        },
+        {
+          name: $t('Export account'),
+        },
+      ]" />
 
     <main class="relative sm:mt-24">
-      <div class="mx-auto max-w-lg px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
-
-        <p>
-          Export your account
-        </p>
+      <div class="mx-auto max-w-lg px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
+        <p>Export your account</p>
 
         <PrettyButton
-                :text="'Export your account'"
-                :state="loadingState"
-                :icon="'check'"
-                :classes="'save'" @click="showExport = true" />
+          :text="'Export your account'"
+          :state="loadingState"
+          :icon="'check'"
+          :classes="'save'"
+          @click="showExport = true" />
 
         <table class="mt-4">
           <thead>
@@ -85,7 +85,6 @@ const download = (job) => {
               v-for="job in data.jobs"
               :key="job.id"
               class="odd:bg-white even:bg-slate-50 hover:bg-slate-100 dark:odd:bg-slate-900 dark:even:bg-slate-800 hover:dark:bg-slate-700">
-
               <td class="items-center justify-between px-5 py-2">
                 {{ job.date }}
               </td>
@@ -99,11 +98,9 @@ const download = (job) => {
                   {{ $t('Download') }}
                 </Link>
               </td>
-
             </tr>
           </tbody>
         </table>
-
       </div>
     </main>
 
@@ -112,9 +109,7 @@ const download = (job) => {
         {{ $t('Export your account') }}
       </template>
 
-      <template #content>
-
-      </template>
+      <template #content> </template>
 
       <template #footer>
         <JetSecondaryButton @click="showExport = false">
@@ -125,12 +120,10 @@ const download = (job) => {
           class="ml-3"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
-          @click="exportAccount"
-        >
+          @click="exportAccount">
           {{ $t('Export your account') }}
         </Button>
       </template>
-
     </DialogModal>
   </layout>
 </template>
