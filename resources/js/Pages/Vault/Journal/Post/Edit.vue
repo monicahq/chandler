@@ -222,7 +222,7 @@ const destroy = () => {
     </nav>
 
     <main class="relative sm:mt-16">
-      <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div>
@@ -325,14 +325,15 @@ const destroy = () => {
                   :maxlength="255"
                   @esc-key-pressed="createNoteModalShown = false" />
 
-                <div v-for="section in form.sections" :key="section.id">
+                <div v-for="section in form.sections" :key="section.id" class="mb-8">
                   <text-area
                     v-model="section.content"
                     :label="section.label"
                     :rows="10"
                     :required="true"
                     :maxlength="65535"
-                    :textarea-class="'block w-full mb-8'" />
+                    :markdown="true"
+                    :textarea-class="'block w-full'" />
                 </div>
               </div>
             </div>

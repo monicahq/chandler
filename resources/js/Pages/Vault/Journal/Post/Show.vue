@@ -56,8 +56,8 @@ defineProps({
       </div>
     </nav>
 
-    <main class="relative sm:mt-16">
-      <div class="mx-auto max-w-6xl px-2 py-2 sm:py-6 sm:px-6 lg:px-8">
+    <main class="relative sm:mt-8">
+      <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
           <div class="mr-8">
@@ -82,6 +82,7 @@ defineProps({
                   {{ data.previousPost.title }}
                 </inertia-link>
               </div>
+              <div v-else>&nbsp;</div>
 
               <!-- next post -->
               <div v-if="data.nextPost" class="flex items-center">
@@ -102,6 +103,7 @@ defineProps({
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                 </svg>
               </div>
+              <div v-else>&nbsp;</div>
             </div>
 
             <div class="post relative rounded bg-white">
@@ -113,7 +115,7 @@ defineProps({
                 <li
                   v-for="tag in data.tags"
                   :key="tag.id"
-                  class="mr-2 inline-block rounded bg-neutral-200 py-1 px-2 text-xs font-semibold text-neutral-500 last:mr-0">
+                  class="mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0">
                   {{ tag.name }}
                 </li>
               </ul>
@@ -138,7 +140,7 @@ defineProps({
                     {{ section.label }}
                   </div>
 
-                  <div class="mb-6">{{ section.content }}</div>
+                  <div class="mb-6" v-html="section.content"></div>
                 </div>
               </div>
 
@@ -163,7 +165,7 @@ defineProps({
               <p class="mb-2 text-sm font-semibold">Slice of life</p>
               <div class="mb-6 last:mb-0">
                 <div
-                  class="rounded border-b border-t border-r border-l border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  class="rounded border-b border-l border-r border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
                   :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
                   <inertia-link :href="data.sliceOfLife.url.show" class="font-semibold">{{
                     data.sliceOfLife.name
