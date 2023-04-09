@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Account;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -15,16 +17,15 @@ return new class extends Migration
     {
         Schema::create('export_jobs', function (Blueprint $table) {
             $table->uuid('id');
-            $table->unsignedBigInteger('account_id');
-            $table->unsignedBigInteger('author_id');
+            $table->primary('id');
+            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class, 'author_id')->constrained('users')->cascadeOnDelete();
             $table->string('status', 6)->nullable();
             $table->string('location', 6)->nullable();
             $table->string('filename', 256)->nullable();
             $table->datetime('started_at')->nullable();
             $table->datetime('ended_at')->nullable();
             $table->timestamps();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

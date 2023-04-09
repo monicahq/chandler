@@ -36,14 +36,8 @@ class ExportAccountController extends Controller
      *
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|null
      */
-    public function download(Request $request, string $id)
+    public function download(Request $request, ExportJob $job)
     {
-        $job = ExportJob::where([
-            'account_id' => $request->user()->account_id,
-            'author_id' => $request->user()->id,
-            'id' => $id,
-        ])->firstOrFail();
-
         if ($job->status !== ExportJob::EXPORT_DONE) {
             return redirect()->route('settings.export.index')
                 ->withErrors(__('Download impossible, this export is not done yet.'));
@@ -51,10 +45,10 @@ class ExportAccountController extends Controller
         $disk = StorageHelper::disk($job->location);
 
         return $disk->response($job->filename,
-            "monica.json",
+            'monica.json',
             [
-                'Content-Type' => "application/json; charset=utf-8",
-                'Content-Disposition' => "attachment; filename=monica.json",
+                'Content-Type' => 'application/json; charset=utf-8',
+                'Content-Disposition' => 'attachment; filename=monica.json',
             ]
         );
     }

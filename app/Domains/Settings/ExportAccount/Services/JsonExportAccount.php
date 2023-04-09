@@ -2,12 +2,12 @@
 
 namespace App\Domains\Settings\ExportAccount\Services;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\BaseService;
-use App\Models\Account;
-use Illuminate\Support\Facades\Storage;
 use App\ExportResources\Account\Account as AccountResource;
+use App\Models\Account;
+use App\Models\User;
+use App\Services\BaseService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class JsonExportAccount extends BaseService
 {
@@ -16,21 +16,17 @@ class JsonExportAccount extends BaseService
 
     /**
      * Get the validation rules that apply to the service.
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            'account_id' => 'required|integer|exists:accounts,id',
-            'author_id' => 'required|integer|exists:users,id',
+            'account_id' => 'required|uuid|exists:accounts,id',
+            'author_id' => 'required|uuid|exists:users,id',
         ];
     }
 
     /**
      * Get the permissions that apply to the user calling the service.
-     *
-     * @return array
      */
     public function permissions(): array
     {
@@ -42,9 +38,6 @@ class JsonExportAccount extends BaseService
 
     /**
      * Export account as Json.
-     *
-     * @param  array  $data
-     * @return string
      */
     public function execute(array $data): string
     {
@@ -59,9 +52,6 @@ class JsonExportAccount extends BaseService
 
     /**
      * Export data in temp file.
-     *
-     * @param  array  $data
-     * @param  User  $user
      */
     private function writeExport(array $data, User $user)
     {
@@ -70,7 +60,7 @@ class JsonExportAccount extends BaseService
         $result['app_version'] = config('monica.app_version');
         $result['export_date'] = now();
         $result['url'] = config('app.url');
-        $result['exported_by'] = $user->uuid;
+        $result['exported_by'] = $user->id;
         $result['account'] = $this->exportAccount($data);
 
         $this->writeToTempFile(json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_SLASHES));
@@ -90,7 +80,6 @@ class JsonExportAccount extends BaseService
     /**
      * Export the Account table.
      *
-     * @param  array  $data
      * @return mixed
      */
     private function exportAccount(array $data)

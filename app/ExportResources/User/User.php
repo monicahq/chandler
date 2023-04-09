@@ -2,9 +2,8 @@
 
 namespace App\ExportResources\User;
 
-use App\Models\Contact\Contact;
 use App\ExportResources\ExportResource;
-use Illuminate\Http\Resources\MissingValue;
+use App\Models\Contact\Contact;
 
 /**
  * @mixin \App\Models\User
@@ -12,7 +11,7 @@ use Illuminate\Http\Resources\MissingValue;
 class User extends ExportResource
 {
     protected $columns = [
-        'uuid',
+        'uuid' => 'id',
         'first_name',
         'last_name',
         'email',

@@ -2,9 +2,9 @@
 
 namespace App\ExportResources;
 
-use Illuminate\Support\Arr;
-use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MissingValue;
+use Illuminate\Support\Arr;
 
 class ExportResource extends JsonResource
 {
@@ -88,9 +88,6 @@ class ExportResource extends JsonResource
             : $this->export($this->columns, $this->properties, $this->data());
     }
 
-    /**
-     * @return array|null
-     */
     public function data(): ?array
     {
         return null;
@@ -99,10 +96,8 @@ class ExportResource extends JsonResource
     /**
      * Create the Insert query for the given table.
      *
-     * @param  array  $columns
      * @param  array  $properties
      * @param  array  $data
-     * @return array|null
      */
     protected function export(array $columns, array $properties = null, array $data = null): ?array
     {
@@ -112,8 +107,8 @@ class ExportResource extends JsonResource
             return null;
         }
 
-        foreach ($columns as $column) {
-            $result[$column] = $this->{$column};
+        foreach ($columns as $key => $column) {
+            $result[is_string($key) ? $key : $column] = $this->{$column};
         }
 
         if ($data !== null) {

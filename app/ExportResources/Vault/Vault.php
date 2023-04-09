@@ -4,7 +4,6 @@ namespace App\ExportResources\Vault;
 
 use App\ExportResources\Contact\Contact;
 use App\ExportResources\ExportResource;
-use Illuminate\Http\Resources\MissingValue;
 
 /**
  * @mixin \App\Models\Vault
@@ -12,7 +11,7 @@ use Illuminate\Http\Resources\MissingValue;
 class Vault extends ExportResource
 {
     protected $columns = [
-        'uuid',
+        'uuid' => 'id',
         'type',
         'name',
         'description',

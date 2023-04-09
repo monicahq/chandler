@@ -5,14 +5,14 @@ namespace App\Domains\Settings\ExportAccount\Jobs;
 use App\Domains\Settings\ExportAccount\Services\JsonExportAccount;
 use App\Helpers\StorageHelper;
 use App\Models\ExportJob;
-use Throwable;
-use Illuminate\Http\File;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\File;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class ExportAccount implements ShouldQueue
 {
@@ -32,16 +32,13 @@ class ExportAccount implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param  ExportJob  $exportJob
-     * @param  string|null  $path
      */
     public function __construct(ExportJob $exportJob, string $path = null)
     {
         $exportJob->status = ExportJob::EXPORT_TODO;
         $exportJob->save();
         $this->exportJob = $exportJob->withoutRelations();
-        $this->path = $path ?? "exports/{$exportJob->account->uuid}";
+        $this->path = $path ?? "exports/{$exportJob->account->id}";
     }
 
     /**
@@ -82,8 +79,6 @@ class ExportAccount implements ShouldQueue
 
     /**
      * Handle a job failure.
-     *
-     * @param  \Throwable  $exception
      */
     public function failed(Throwable $exception): void
     {

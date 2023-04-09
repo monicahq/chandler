@@ -2,9 +2,9 @@
 
 namespace App\ExportResources\Contact;
 
+use App\ExportResources\Account\Activity;
 use App\ExportResources\Account\Photo;
 use App\ExportResources\ExportResource;
-use App\ExportResources\Account\Activity;
 use App\ExportResources\Instance\SpecialDate;
 use App\Models\Contact\Reminder as ContactReminder;
 
@@ -14,7 +14,7 @@ use App\Models\Contact\Reminder as ContactReminder;
 class Contact extends ExportResource
 {
     protected $columns = [
-        'uuid',
+        'uuid' => 'id',
         'created_at',
         'updated_at',
     ];

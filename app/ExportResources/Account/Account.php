@@ -2,18 +2,18 @@
 
 namespace App\ExportResources\Account;
 
-use App\Models\Contact\Gender;
-use App\ExportResources\User\User;
-use App\ExportResources\User\Module;
-use App\ExportResources\ExportResource;
 use App\ExportResources\Contact\Contact;
+use App\ExportResources\Contact\ContactFieldType;
 use App\ExportResources\Contact\Document;
+use App\ExportResources\Contact\Gender as GenderResource;
+use App\ExportResources\ExportResource;
 use App\ExportResources\Instance\AuditLog;
 use App\ExportResources\Journal\JournalEntry;
-use App\ExportResources\Contact\ContactFieldType;
 use App\ExportResources\Relationship\Relationship;
-use App\ExportResources\Contact\Gender as GenderResource;
+use App\ExportResources\User\Module;
+use App\ExportResources\User\User;
 use App\ExportResources\Vault\Vault;
+use App\Models\Contact\Gender;
 
 /**
  * @mixin \App\Models\Account
@@ -21,7 +21,7 @@ use App\ExportResources\Vault\Vault;
 class Account extends ExportResource
 {
     protected $columns = [
-        'uuid',
+        'uuid' => 'id',
         'created_at',
         'updated_at',
     ];

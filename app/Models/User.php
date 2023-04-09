@@ -99,14 +99,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     ];
 
     /**
-     * Get the columns that should receive a unique identifier.
-     */
-    public function uniqueIds(): array
-    {
-        return ['uuid'];
-    }
-
-    /**
      * Send the email verification notification.
      */
     public function sendEmailVerificationNotification(): void
