@@ -46,23 +46,23 @@ const webauthn = new WebAuthn((name, message) => {
 
 const _errorMessage = (name, message) => {
   switch (name) {
-  case 'InvalidStateError':
-    return trans('Unexpected error on login.');
-  case 'NotAllowedError':
-    return trans('The operation either timed out or was not allowed.');
-  default:
-    return message;
+    case 'InvalidStateError':
+      return trans('Unexpected error on login.');
+    case 'NotAllowedError':
+      return trans('The operation either timed out or was not allowed.');
+    default:
+      return message;
   }
 };
 
 const notSupportedMessage = () => {
   switch (webauthn.notSupportedMessage()) {
-  case 'not_supported':
-    return trans('Your browser doesn’t currently support WebAuthn.');
-  case 'not_secured':
-    return trans('WebAuthn only supports secure connections. Please load this page with https scheme.');
-  default:
-    return '';
+    case 'not_supported':
+      return trans('Your browser doesn’t currently support WebAuthn.');
+    case 'not_secured':
+      return trans('WebAuthn only supports secure connections. Please load this page with https scheme.');
+    default:
+      return '';
   }
 };
 
