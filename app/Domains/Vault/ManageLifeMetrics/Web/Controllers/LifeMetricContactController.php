@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LifeMetricContactController extends Controller
 {
-    public function store(Request $request, int $vaultId, int $lifeMetricId)
+    public function store(Request $request, string $vaultId, int $lifeMetricId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
