@@ -17,7 +17,7 @@ class UpdateVaultDashboardDefaultTab extends BaseService implements ServiceInter
             'account_id' => 'required|uuid|exists:accounts,id',
             'author_id' => 'required|uuid|exists:users,id',
             'vault_id' => 'required|uuid|exists:vaults,id',
-            'default_activity_tab' => 'required|boolean',
+            'default_activity_tab' => 'required|string',
         ];
     }
 
