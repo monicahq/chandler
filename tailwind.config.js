@@ -33,6 +33,7 @@ module.exports = {
     'bg-red-400',
     'bg-stone-400',
     'bg-stone-700',
+    'bg-slate-900',
     {
       pattern: /bg-(green)-(100|200|300|400|500|600|700|800|900)/,
     },

@@ -6,6 +6,7 @@ use App\Helpers\ContactCardHelper;
 use App\Helpers\DateHelper;
 use App\Models\ContactImportantDate;
 use App\Models\MoodTrackingEvent;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
@@ -62,6 +63,7 @@ class VaultCalendarIndexViewHelper
                 'is_in_month' => $day->month === $firstDayOfMonth->month,
                 'important_dates' => self::getImportantDates($day->month, $day->day, $contactsId),
                 'mood_events' => self::getMood($vault, $user, $day),
+                'posts' => self::getJournalEntries($vault, $day),
                 'url' => [
                     'show' => route('vault.calendar.day', [
                         'vault' => $vault->id,
@@ -113,6 +115,27 @@ class VaultCalendarIndexViewHelper
             ]);
     }
 
+    public static function getJournalEntries(Vault $vault, CarbonImmutable $day): Collection
+    {
+        $journalIds = $vault->journals->pluck('id');
+
+        return Post::whereIn('journal_id', $journalIds)
+            ->whereDate('written_at', $day)
+            ->with('journal')
+            ->get()
+            ->map(fn (Post $post) => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'url' => [
+                    'show' => route('post.show', [
+                        'vault' => $post->journal->vault_id,
+                        'journal' => $post->journal_id,
+                        'post' => $post->id,
+                    ]),
+                ],
+            ]);
+    }
+
     public static function getDayInformation(Vault $vault, User $user, int $year, int $month, int $day): array
     {
         $date = Carbon::createFromDate($year, $month, $day);
@@ -123,6 +146,7 @@ class VaultCalendarIndexViewHelper
             'day' => DateHelper::formatFullDate($date),
             'important_dates' => self::getImportantDates($date->month, $date->day, $contactsId),
             'mood_events' => self::getMood($vault, $user, $immutableDate),
+            'posts' => self::getJournalEntries($vault, $immutableDate),
         ];
     }
 }

@@ -74,13 +74,13 @@ const get = (day) => {
             </div>
 
             <!-- days -->
-            <div class="grid grid-cols-7 rounded-t-lg border-l border-r border-t last:border-b">
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.monday') }}</div>
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.tuesday') }}</div>
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.wednesday') }}</div>
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.thursday') }}</div>
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.friday') }}</div>
-              <div class="border-r p-2 text-center text-xs">{{ $t('app.saturday') }}</div>
+            <div class="grid grid-cols-7 rounded-t-lg border-l border-r border-t last:border-b dark:border-gray-700">
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.monday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.tuesday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.wednesday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.thursday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.friday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.saturday') }}</div>
               <div class="p-2 text-center text-xs">{{ $t('app.sunday') }}</div>
             </div>
 
@@ -88,18 +88,20 @@ const get = (day) => {
             <div
               v-for="week in data.weeks"
               :key="week.id"
-              class="grid grid-cols-7 border-l border-r border-t last:rounded-b-lg last:border-b">
+              class="grid grid-cols-7 border-l border-r border-t last:rounded-b-lg last:border-b dark:border-gray-700">
               <div
                 v-for="day in week"
                 :key="day.id"
                 @click="get(day)"
-                class="h-32 border-r p-2 last:border-r-0"
-                :class="day.is_in_month ? 'cursor-pointer' : 'bg-slate-50'">
+                class="h-32 border-r p-2 last:border-r-0 dark:border-gray-700"
+                :class="day.is_in_month ? 'cursor-pointer' : 'bg-slate-50 dark:bg-slate-900'">
                 <!-- date of the day -->
                 <div class="flex items-center justify-between">
-                  <span class="mb-1 inline-block p-1 text-xs" :class="day.is_today ? 'rounded-lg bg-slate-200' : ''">{{
-                    day.date
-                  }}</span>
+                  <span
+                    class="mb-1 inline-block p-1 text-xs"
+                    :class="day.is_today ? 'rounded-lg bg-slate-200 dark:bg-slate-900' : ''"
+                    >{{ day.date }}</span
+                  >
 
                   <!-- mood for the day -->
                   <div class="flex">
@@ -123,22 +125,26 @@ const get = (day) => {
                       :displayName="false" />
                   </div>
                 </div>
+
+                <!-- posts of journal -->
+                <div v-if="day.posts?.length > 0" class="mb-1 text-xs text-gray-600">
+                  {{ $tChoice('vault.journal_number_posts', day.posts.length, { count: day.posts.length }) }}
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- right part -->
-
-          <!-- detail of a day -->
-          <div v-if="dayDetailsLoaded" class="rounded-lg border border-gray-200 p-3 sm:p-0">
+          <!-- right part: detail of a day -->
+          <div v-if="dayDetailsLoaded" class="rounded-lg border border-gray-200 p-3 dark:border-gray-700 sm:p-0">
             <!-- day name -->
-            <div class="border-b border-gray-200 p-2 text-center text-sm font-semibold">
+            <div class="border-b border-gray-200 p-2 text-center text-sm font-semibold dark:border-gray-700">
               {{ loadedDay.day }}
             </div>
 
             <!-- mood -->
-            <div v-if="loadedDay.mood_events.length > 0" class="border-b border-gray-200">
-              <h2 class="mb-2 border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600">
+            <div v-if="loadedDay.mood_events.length > 0" class="border-b border-gray-200 dark:border-gray-700">
+              <h2
+                class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
                 Your mood that day
               </h2>
               <ul class="p-3">
@@ -152,7 +158,9 @@ const get = (day) => {
                   </div>
 
                   <!-- optional information -->
-                  <div v-if="mood.number_of_hours_slept || mood.note" class="rounded-lg border border-gray-200 p-3">
+                  <div
+                    v-if="mood.number_of_hours_slept || mood.note"
+                    class="rounded-lg border border-gray-200 p-3 dark:border-gray-700">
                     <!-- number of hours slept -->
                     <div v-if="mood.number_of_hours_slept" class="mb-1 flex items-center text-sm text-gray-600">
                       <svg
@@ -182,7 +190,8 @@ const get = (day) => {
 
             <!-- important dates -->
             <div v-if="loadedDay.important_dates.length > 0">
-              <h2 class="mb-2 border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600">
+              <h2
+                class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
                 Important dates
               </h2>
               <ul class="p-3">
@@ -201,9 +210,28 @@ const get = (day) => {
               </ul>
             </div>
 
+            <!-- journal entries -->
+            <div v-if="loadedDay.posts.length > 0" class="border-b border-gray-200 dark:border-gray-700">
+              <h2
+                class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
+                Posts in your journals
+              </h2>
+              <ul class="p-3">
+                <li v-for="post in loadedDay.posts" :key="post.id" class="mb-2">
+                  <inertia-link :href="post.url.show" class="text-sm text-blue-500 hover:underline">{{
+                    post.title
+                  }}</inertia-link>
+                </li>
+              </ul>
+            </div>
+
             <!-- case of no data in the day -->
             <div
-              v-if="loadedDay.mood_events.length === 0 && loadedDay.important_dates.length === 0"
+              v-if="
+                loadedDay.mood_events.length === 0 &&
+                loadedDay.important_dates.length === 0 &&
+                loadedDay.posts.length === 0
+              "
               class="flex items-center justify-center">
               <p class="mt-4 px-5 pb-5 pt-2 text-center text-gray-600">
                 There are no events on that day, future or past.
@@ -212,7 +240,9 @@ const get = (day) => {
           </div>
 
           <!-- no day selected: blank state -->
-          <div v-else class="flex items-center rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-0">
+          <div
+            v-else
+            class="flex items-center rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-slate-900 sm:p-0">
             <div>
               <img src="/img/calendar_day_blank.svg" :alt="$t('Groups')" class="mx-auto mt-4 h-36 w-36" />
               <p class="px-5 pb-5 pt-2 text-center">Click on a day to see the details</p>
