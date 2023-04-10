@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use App\Notifications\ExportAccountDone;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ExportJob extends Model
 {
     use HasUuids, HasFactory;
 
     public const EXPORT_TODO = 'todo';
+
     public const EXPORT_DOING = 'doing';
+
     public const EXPORT_DONE = 'done';
+
     public const EXPORT_FAILED = 'failed';
 
     /**
@@ -73,8 +75,6 @@ class ExportJob extends Model
 
     /**
      * Start the export job.
-     *
-     * @return void
      */
     public function start(): void
     {
@@ -85,8 +85,6 @@ class ExportJob extends Model
 
     /**
      * End the export job.
-     *
-     * @return void
      */
     public function end(): void
     {

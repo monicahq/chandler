@@ -13,7 +13,6 @@ class StorageHelper
      * Get a filesystem instance.
      *
      * @param  string  $name
-     * @return \Illuminate\Filesystem\FilesystemAdapter
      */
     public static function disk($name = null): FilesystemAdapter
     {

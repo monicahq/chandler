@@ -3,10 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Account;
+use App\Models\ExportJob;
 use App\Models\User;
-use App\Models\Account\ExportJob;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ExportJob>
+ */
 class ExportJobFactory extends Factory
 {
     protected $model = ExportJob::class;

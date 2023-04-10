@@ -2,10 +2,10 @@
 
 namespace App\ExportResources;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
-class MapUuidResourceCollection extends AnonymousResourceCollection
+class MapIdResourceCollection extends AnonymousResourceCollection
 {
     /**
      * Transform the resource into a JSON array.
@@ -15,10 +15,13 @@ class MapUuidResourceCollection extends AnonymousResourceCollection
      */
     public function toArray($request)
     {
+        $class = Str::of($this->collects)->afterLast('\\');
+        $id = (new("\\App\\Models\\$class"))->usesUniqueIds ? 'id' : 'uuid';
+
         return [
             'count' => $this->count(),
-            'type' => Str::of($this->collects)->afterLast('\\')->kebab()->replace('-', '_'),
-            'values' => $this->collection->mapUuid(),
+            'type' => $class->kebab()->replace('-', '_'),
+            'values' => $this->collection->pluck($id),
         ];
     }
 }

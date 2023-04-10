@@ -1,6 +1,6 @@
 <?php
 
-#region declare
+//region declare
 use App\Domains\Contact\ManageAvatar\Web\Controllers\ModuleAvatarController;
 use App\Domains\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactArchiveController;
@@ -137,12 +137,12 @@ use App\Domains\Vault\Search\Web\Controllers\VaultSearchController;
 use App\Http\Controllers\Auth\AcceptInvitationController;
 use App\Http\Controllers\Auth\SocialiteCallbackController;
 use App\Http\Controllers\Profile\UserTokenController;
-use App\Http\Middleware\HandleInertiaRequests;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
-#endregion
+
+//endregion
 
 Route::get('/', function () {
     if (! Auth::check()) {
@@ -699,7 +699,7 @@ Route::middleware([
             // export
             Route::get('export', [ExportAccountController::class, 'index'])->name('export.index');
             Route::post('export', [ExportAccountController::class, 'store'])->name('export.store');
-            Route::post('download/{id}', [ExportAccountController::class, 'download'])->name('export.download'); //->withoutMiddleware([HandleInertiaRequests::class]);
+            Route::post('download/{id}', [ExportAccountController::class, 'download'])->name('export.download');
         });
     });
 

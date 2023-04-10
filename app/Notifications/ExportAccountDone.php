@@ -2,15 +2,15 @@
 
 namespace App\Notifications;
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Helpers\DateHelper;
-use Illuminate\Bus\Queueable;
 use App\Models\ExportJob;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Notifications\Notification;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
 
 class ExportAccountDone extends Notification implements ShouldQueue
 {
@@ -24,7 +24,6 @@ class ExportAccountDone extends Notification implements ShouldQueue
     /**
      * Create a new message instance.
      *
-     * @param  ExportJob  $exportJob
      * @return void
      */
     public function __construct(ExportJob $exportJob)
@@ -45,9 +44,6 @@ class ExportAccountDone extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  User  $user
-     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail(User $user): MailMessage
     {

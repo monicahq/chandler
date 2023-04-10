@@ -2,8 +2,8 @@
 
 namespace App\ExportResources;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
 class CountResourceCollection extends AnonymousResourceCollection
 {

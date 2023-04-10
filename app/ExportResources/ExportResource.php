@@ -64,7 +64,7 @@ class ExportResource extends JsonResource
             return new MissingValue();
         }
 
-        return tap(new MapUuidResourceCollection($resource, static::class), function ($collection) {
+        return tap(new MapIdResourceCollection($resource, static::class), function ($collection) {
             if (property_exists(static::class, 'preserveKeys')) {
                 $collection->preserveKeys = (new static([]))->preserveKeys === true;
             }
