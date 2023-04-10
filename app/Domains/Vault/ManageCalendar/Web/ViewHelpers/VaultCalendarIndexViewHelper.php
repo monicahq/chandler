@@ -21,11 +21,11 @@ class VaultCalendarIndexViewHelper
         $previousMonth = $date->copy()->subMonth();
         $nextMonth = $date->copy()->addMonth();
 
-        $collection = self::buildMonth($vault, Auth::user(), $month, $year);
+        $collection = self::buildMonth($vault, Auth::user(), $year, $month);
 
         return [
-            'current_month' => DateHelper::formatLongMonthAndYear($date),
             'weeks' => $collection,
+            'current_month' => DateHelper::formatLongMonthAndYear($date),
             'previous_month' => DateHelper::formatLongMonthAndYear($previousMonth),
             'next_month' => DateHelper::formatLongMonthAndYear($nextMonth),
             'url' => [
@@ -46,87 +46,35 @@ class VaultCalendarIndexViewHelper
     /**
      * This is not the most beautiful code I've ever written, but it works.
      */
-    public static function buildMonth(Vault $vault, User $user, int $month, int $year): Collection
+    public static function buildMonth(Vault $vault, User $user, int $year, int $month): Collection
     {
-        $firstDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->startOfMonth();
-        $lastDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->endOfMonth();
-        $numberOfWeeksInMonth = DateHelper::weeksInMonth($firstDayOfMonth);
-
-        $calendarWeeks = collect();
-        $currentDay = $firstDayOfMonth;
-
+        $firstDayOfMonth = CarbonImmutable::create($year, $month, 1)->startOfMonth();
+        $lastDayOfMonth = CarbonImmutable::create($year, $month, 1)->endOfMonth();
+        $startOfWeek = $firstDayOfMonth->startOfWeek();
+        $endOfWeek = $lastDayOfMonth->endOfWeek();
         $contactsId = $vault->contacts()->pluck('id');
 
-        for ($week = 1; $week <= $numberOfWeeksInMonth; $week++) {
-            // for the first week, we need to add the days before the first day
-            // of the month
-            $weekDays = collect();
-            $daysBeforeFirstDay = 1;
-            if ($week === 1) {
-                for ($day = $currentDay->dayOfWeekIso - 1; $day > 0; $day--) {
-                    $daysBeforeFirstDay++;
-                    $weekDays->push([
-                        'id' => $currentDay->subDays($day)->day,
-                        'date' => $currentDay->subDays($day)->format('d'),
-                        'current_day' => false,
-                        'is_in_month' => false,
-                    ]);
-                }
-            }
-
-            // then we loop over the days of the months
-            for ($day = $daysBeforeFirstDay; $day <= 7; $day++) {
-                $weekDays->push([
-                    'id' => $currentDay->day,
-                    'date' => $currentDay->format('d'),
-                    'current_day' => $currentDay->isToday(),
-                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month,
-                    'important_dates' => self::getImportantDates($currentDay->day, $currentDay->month, $contactsId),
-                    'mood_events' => self::getMood($vault, $user, $currentDay),
-                    'url' => [
-                        'show' => route('vault.calendar.day', [
-                            'vault' => $vault->id,
-                            'year' => $currentDay->year,
-                            'month' => $currentDay->month,
-                            'day' => $currentDay->day,
-                        ]),
-                    ],
-                ]);
-                $currentDay = $currentDay->addDay();
-            }
-
-            $calendarWeeks->push([
-                'id' => $week,
-                'days' => $weekDays,
-            ]);
-        }
-
-        // one more row representing a week might be missing, depending on the
-        // month
-        if ($currentDay->isBefore($lastDayOfMonth)) {
-            $weekDays = collect();
-            for ($day = $currentDay->dayOfWeekIso; $day <= 7; $day++) {
-                $weekDays->push([
-                    'id' => $currentDay->day,
-                    'date' => $currentDay->format('d'),
-                    'current_day' => $currentDay->isToday() ? true : false,
-                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month ? true : false,
-                    'important_dates' => self::getImportantDates($currentDay->day, $currentDay->month, $contactsId),
-                    'mood_events' => self::getMood($vault, $user, $currentDay),
-                ]);
-                $currentDay = $currentDay->addDay();
-            }
-
-            $calendarWeeks->push([
-                'id' => $week,
-                'days' => $weekDays,
-            ]);
-        }
-
-        return $calendarWeeks;
+        return collect($startOfWeek->toPeriod($endOfWeek)->toArray())
+            ->map(fn (CarbonImmutable $day) => [
+                'id' => $day->day,
+                'date' => $day->format('d'),
+                'is_today' => $day->isToday(),
+                'is_in_month' => $day->month === $firstDayOfMonth->month,
+                'important_dates' => self::getImportantDates($day->month, $day->day, $contactsId),
+                'mood_events' => self::getMood($vault, $user, $day),
+                'url' => [
+                    'show' => route('vault.calendar.day', [
+                        'vault' => $vault->id,
+                        'year' => $day->year,
+                        'month' => $day->month,
+                        'day' => $day->day,
+                    ]),
+                ],
+            ])
+            ->chunk(7);
     }
 
-    public static function getImportantDates(int $day, int $month, Collection $contactsId): Collection
+    public static function getImportantDates(int $month, int $day, Collection $contactsId): Collection
     {
         return ContactImportantDate::where('day', $day)
             ->where('month', $month)
@@ -134,7 +82,15 @@ class VaultCalendarIndexViewHelper
             ->with('contact')
             ->get()
             ->unique('contact_id')
-            ->map(fn (ContactImportantDate $importantDate) => ContactCardHelper::data($importantDate->contact));
+            ->map(fn (ContactImportantDate $importantDate) => [
+                'id' => $importantDate->id,
+                'label' => $importantDate->label,
+                'type' => [
+                    'id' => $importantDate->contactImportantDateType?->id,
+                    'label' => $importantDate->contactImportantDateType?->label,
+                ],
+                'contact' => ContactCardHelper::data($importantDate->contact),
+            ]);
     }
 
     public static function getMood(Vault $vault, User $user, CarbonImmutable $date): Collection
@@ -147,7 +103,8 @@ class VaultCalendarIndexViewHelper
             ->get()
             ->map(fn (MoodTrackingEvent $moodTrackingEvent) => [
                 'id' => $moodTrackingEvent->id,
-                'mood' => $moodTrackingEvent->mood,
+                'note' => $moodTrackingEvent->note,
+                'number_of_hours_slept' => $moodTrackingEvent->number_of_hours_slept,
                 'mood_tracking_parameter' => [
                     'id' => $moodTrackingEvent->moodTrackingParameter->id,
                     'label' => $moodTrackingEvent->moodTrackingParameter->label,
@@ -156,29 +113,15 @@ class VaultCalendarIndexViewHelper
             ]);
     }
 
-    public static function getDayInformation(Vault $vault, User $user, int $day, int $month, int $year): array
+    public static function getDayInformation(Vault $vault, User $user, int $year, int $month, int $day): array
     {
         $date = Carbon::createFromDate($year, $month, $day);
-
+        $immutableDate = CarbonImmutable::createFromDate($year, $month, $day);
         $contactsId = $vault->contacts()->pluck('id');
-        $importantDates = ContactImportantDate::where('day', $day)
-            ->where('month', $month)
-            ->whereIn('contact_id', $contactsId)
-            ->with('contact')
-            ->get()
-            ->map(fn (ContactImportantDate $importantDate) => [
-                'id' => $importantDate->id,
-                'label' => $importantDate->label,
-                'type' => [
-                    'id' => $importantDate->contactImportantDateType?->id,
-                    'label' => $importantDate->contactImportantDateType?->label,
-                ],
-                'contact' => ContactCardHelper::data($importantDate->contact),
-            ]);
 
         return [
             'day' => DateHelper::formatFullDate($date),
-            'important_dates' => $importantDates,
+            'important_dates' => self::getImportantDates($date->month, $date->day, $contactsId),
             'mood_events' => self::getMood($vault, $user, $immutableDate),
         ];
     }

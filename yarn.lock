@@ -3423,7 +3423,7 @@ __metadata:
     tailwindcss: ^3.0.24
     tiny-emitter: ^2.1.0
     uploadcare-vue: ^1.0.0
-    v-calendar: ^3.0.0-alpha.8
+    v-calendar: ^3.0.3
     vite: ^4.0.4
     vue: ^3.2.36
     vue-clipboard3: ^2.0.0
@@ -3970,7 +3970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"v-calendar@npm:^3.0.0-alpha.8":
+"v-calendar@npm:^3.0.3":
   version: 3.0.3
   resolution: "v-calendar@npm:3.0.3"
   dependencies:

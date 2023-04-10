@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
 class DateHelper
@@ -165,17 +164,5 @@ class DateHelper
     public static function getTimestamp(?Carbon $date): string
     {
         return $date ? $date->translatedFormat(config('api.timestamp_format')) : '';
-    }
-
-    /**
-     * Return the number of weeks in a month.
-     * This is for the Calendar view.
-     */
-    public static function weeksInMonth(CarbonImmutable $date): int
-    {
-        $numberOfDaysInMonth = $date->daysInMonth;
-        $daysInWeek = 7;
-
-        return ceil($numberOfDaysInMonth / $daysInWeek);
     }
 }

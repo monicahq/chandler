@@ -90,18 +90,16 @@ const get = (day) => {
               :key="week.id"
               class="grid grid-cols-7 border-l border-r border-t last:rounded-b-lg last:border-b">
               <div
-                v-for="day in week.days"
+                v-for="day in week"
                 :key="day.id"
                 @click="get(day)"
                 class="h-32 border-r p-2 last:border-r-0"
                 :class="day.is_in_month ? 'cursor-pointer' : 'bg-slate-50'">
                 <!-- date of the day -->
                 <div class="flex items-center justify-between">
-                  <span
-                    class="mb-1 inline-block p-1 text-xs"
-                    :class="day.current_day ? 'rounded-lg bg-slate-200' : ''"
-                    >{{ day.date }}</span
-                  >
+                  <span class="mb-1 inline-block p-1 text-xs" :class="day.is_today ? 'rounded-lg bg-slate-200' : ''">{{
+                    day.date
+                  }}</span>
 
                   <!-- mood for the day -->
                   <div class="flex">
@@ -116,15 +114,13 @@ const get = (day) => {
                 </div>
 
                 <!-- important dates -->
-                <div v-if="day.important_dates">
-                  <div v-if="day.important_dates.length > 0" class="mb-1 text-xs text-gray-600">Important dates</div>
-                  <div v-if="day.important_dates.length > 0" class="flex">
-                    <div v-for="contact in day.important_dates" :key="contact.id">
-                      <contact-card
-                        :contact="contact"
-                        :avatarClasses="'h-5 w-5 rounded-full mr-2'"
-                        :displayName="false" />
-                    </div>
+                <div v-if="day.important_dates?.length > 0" class="mb-1 text-xs text-gray-600">Important dates</div>
+                <div v-if="day.important_dates?.length > 0" class="flex">
+                  <div v-for="date in day.important_dates" :key="date.id">
+                    <contact-card
+                      :contact="date.contact"
+                      :avatarClasses="'h-5 w-5 rounded-full mr-2'"
+                      :displayName="false" />
                   </div>
                 </div>
               </div>
@@ -141,12 +137,55 @@ const get = (day) => {
             </div>
 
             <!-- mood -->
-            <div v-if="loadedDay.mood_events">sdfs</div>
+            <div v-if="loadedDay.mood_events.length > 0" class="border-b border-gray-200">
+              <h2 class="mb-2 border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600">
+                Your mood that day
+              </h2>
+              <ul class="p-3">
+                <li v-for="mood in loadedDay.mood_events" :key="mood.id" class="mb-2">
+                  <!-- mood tracking parameter -->
+                  <div class="flex items-center">
+                    <div
+                      class="mr-2 inline-block h-4 w-4 rounded-full"
+                      :class="mood.mood_tracking_parameter.hex_color" />
+                    <span>{{ mood.mood_tracking_parameter.label }}</span>
+                  </div>
+
+                  <!-- optional information -->
+                  <div v-if="mood.number_of_hours_slept || mood.note" class="rounded-lg border border-gray-200 p-3">
+                    <!-- number of hours slept -->
+                    <div v-if="mood.number_of_hours_slept" class="mb-1 flex items-center text-sm text-gray-600">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="mr-1 h-4 w-4 text-gray-400">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                      </svg>
+
+                      {{ mood.number_of_hours_slept }} hours slept
+                    </div>
+
+                    <!-- note -->
+                    <div v-if="mood.note" class="flex items-center text-sm text-gray-600">
+                      {{ mood.note }}
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
             <!-- important dates -->
-            <div v-if="loadedDay.important_dates.length > 0" class="p-3">
-              <div class="mb-2 text-sm text-gray-600">Important dates</div>
-              <ul>
+            <div v-if="loadedDay.important_dates.length > 0">
+              <h2 class="mb-2 border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600">
+                Important dates
+              </h2>
+              <ul class="p-3">
                 <li
                   v-for="importantDate in loadedDay.important_dates"
                   :key="importantDate.id"
@@ -160,11 +199,19 @@ const get = (day) => {
                   /></span>
                 </li>
               </ul>
-              <div class="flex"></div>
+            </div>
+
+            <!-- case of no data in the day -->
+            <div
+              v-if="loadedDay.mood_events.length === 0 && loadedDay.important_dates.length === 0"
+              class="flex items-center justify-center">
+              <p class="mt-4 px-5 pb-5 pt-2 text-center text-gray-600">
+                There are no events on that day, future or past.
+              </p>
             </div>
           </div>
 
-          <!-- blank state -->
+          <!-- no day selected: blank state -->
           <div v-else class="flex items-center rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-0">
             <div>
               <img src="/img/calendar_day_blank.svg" :alt="$t('Groups')" class="mx-auto mt-4 h-36 w-36" />
