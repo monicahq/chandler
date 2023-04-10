@@ -226,7 +226,7 @@ class ContactTest extends TestCase
     {
         $contact = Contact::factory()->create();
         File::factory()->count(2)->create([
-            'fileable_id' => $contact->id,
+            'ufileable_id' => $contact->id,
             'fileable_type' => Contact::class,
         ]);
 

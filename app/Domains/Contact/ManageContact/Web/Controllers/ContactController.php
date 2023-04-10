@@ -17,15 +17,14 @@ use App\Models\Contact;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class ContactController extends Controller
 {
-    public function index(Request $request, int $vaultId)
+    public function index(Request $request, Vault $vault)
     {
-        $vault = Vault::findOrFail($vaultId);
-
-        $contacts = Contact::where('vault_id', $request->route()->parameter('vault'))
+        $contacts = Contact::where('vault_id', $vault->id)
             ->where('listed', true)
             ->orderBy('created_at', 'asc')
             ->paginate(25);
@@ -37,9 +36,9 @@ class ContactController extends Controller
         ]);
     }
 
-    public function create(Request $request, int $vaultId)
+    public function create(Request $request, Vault $vault)
     {
-        $vault = Vault::findOrFail($vaultId);
+        Gate::authorize('vault-editor', $vault);
 
         return Inertia::render('Vault/Contact/Create', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
@@ -47,8 +46,10 @@ class ContactController extends Controller
         ]);
     }
 
-    public function store(Request $request, int $vaultId)
+    public function store(Request $request, string $vaultId)
     {
+        Gate::authorize('vault-editor', $vaultId);
+
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
@@ -76,7 +77,7 @@ class ContactController extends Controller
         ], 201);
     }
 
-    public function show(Request $request, int $vaultId, int $contactId)
+    public function show(Request $request, string $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::with([
@@ -108,7 +109,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function edit(Request $request, int $vaultId, int $contactId)
+    public function edit(Request $request, string $vaultId, string $contactId)
     {
         $vault = Vault::findOrFail($vaultId);
         $contact = Contact::findOrFail($contactId);
@@ -119,7 +120,7 @@ class ContactController extends Controller
         ]);
     }
 
-    public function update(Request $request, int $vaultId, int $contactId)
+    public function update(Request $request, string $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -147,7 +148,7 @@ class ContactController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $contactId)
+    public function destroy(Request $request, string $vaultId, string $contactId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
