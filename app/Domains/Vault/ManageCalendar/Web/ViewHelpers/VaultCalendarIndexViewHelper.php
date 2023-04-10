@@ -45,7 +45,7 @@ class VaultCalendarIndexViewHelper
     }
 
     /**
-     * This is not the most beautiful code I've ever written, but it works.
+     * Completely copied from https://tighten.com/insights/building-a-calendar-with-carbon/.
      */
     public static function buildMonth(Vault $vault, User $user, int $year, int $month): Collection
     {
