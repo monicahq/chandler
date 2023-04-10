@@ -38,7 +38,7 @@ class ContactInformation extends Model
      */
     public function contactInformationType(): BelongsTo
     {
-        return $this->belongsTo(ContactInformationType::class);
+        return $this->belongsTo(ContactInformationType::class, 'type_id');
     }
 
     /**

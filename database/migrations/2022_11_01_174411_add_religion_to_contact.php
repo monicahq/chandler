@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->foreignIdFor(Religion::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Religion::class)->nullable()->after('file_id')->constrained()->nullOnDelete();
         });
     }
 

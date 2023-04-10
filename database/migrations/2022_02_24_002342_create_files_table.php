@@ -34,7 +34,7 @@ return new class() extends Migration
         });
 
         Schema::table('contacts', function (Blueprint $table) {
-            $table->foreignIdFor(File::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(File::class)->nullable()->after('company_id')->constrained()->nullOnDelete();
         });
     }
 

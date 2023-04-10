@@ -27,7 +27,7 @@ return new class() extends Migration
         Schema::create('contact_information', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(ContactInformationType::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ContactInformationType::class, 'type_id')->constrained('contact_information_types')->cascadeOnDelete();
             $table->string('data');
             $table->timestamps();
         });
