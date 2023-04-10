@@ -13,9 +13,9 @@ use Inertia\Inertia;
 
 class VaultCalendarController extends Controller
 {
-    public function index(Request $request, int $vaultId)
+    public function index(Request $request, Vault $vault)
     {
-        $vault = Vault::findOrFail($vaultId);
+        $vault = Vault::findOrFail($vault->id);
 
         return Inertia::render('Vault/Calendar/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
@@ -28,9 +28,9 @@ class VaultCalendarController extends Controller
         ]);
     }
 
-    public function month(Request $request, int $vaultId, int $year, int $month)
+    public function month(Request $request, Vault $vault, int $year, int $month)
     {
-        $vault = Vault::findOrFail($vaultId);
+        $vault = Vault::findOrFail($vault->id);
 
         return Inertia::render('Vault/Calendar/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
@@ -43,13 +43,14 @@ class VaultCalendarController extends Controller
         ]);
     }
 
-    public function day(Request $request, int $vaultId, int $year, int $month, int $day)
+    public function day(Request $request, Vault $vault, int $year, int $month, int $day)
     {
-        $vault = Vault::findOrFail($vaultId);
+        $vault = Vault::findOrFail($vault->id);
 
         return response()->json([
-            'data' => VaultCalendarIndexViewHelper::getDay(
+            'data' => VaultCalendarIndexViewHelper::getDayInformation(
                 vault: $vault,
+                user: Auth::user(),
                 year: $year,
                 month: $month,
                 day: $day,

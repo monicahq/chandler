@@ -12,7 +12,6 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class VaultCalendarIndexViewHelper
 {
@@ -25,8 +24,6 @@ class VaultCalendarIndexViewHelper
         $collection = self::buildMonth($vault, Auth::user(), $month, $year);
 
         return [
-            'month' => $month,
-            'year' => $year,
             'current_month' => DateHelper::formatLongMonthAndYear($date),
             'weeks' => $collection,
             'previous_month' => DateHelper::formatLongMonthAndYear($previousMonth),
@@ -46,9 +43,11 @@ class VaultCalendarIndexViewHelper
         ];
     }
 
+    /**
+     * This is not the most beautiful code I've ever written, but it works.
+     */
     public static function buildMonth(Vault $vault, User $user, int $month, int $year): Collection
     {
-        $month = Str::padLeft($month, 2, '0');
         $firstDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->startOfMonth();
         $lastDayOfMonth = CarbonImmutable::createFromDate($year, $month, 1)->endOfMonth();
         $numberOfWeeksInMonth = DateHelper::weeksInMonth($firstDayOfMonth);
@@ -80,8 +79,8 @@ class VaultCalendarIndexViewHelper
                 $weekDays->push([
                     'id' => $currentDay->day,
                     'date' => $currentDay->format('d'),
-                    'current_day' => $currentDay->isToday() ? true : false,
-                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month ? true : false,
+                    'current_day' => $currentDay->isToday(),
+                    'is_in_month' => $currentDay->month === $firstDayOfMonth->month,
                     'important_dates' => self::getImportantDates($currentDay->day, $currentDay->month, $contactsId),
                     'mood_events' => self::getMood($vault, $user, $currentDay),
                     'url' => [
@@ -103,7 +102,7 @@ class VaultCalendarIndexViewHelper
         }
 
         // one more row representing a week might be missing, depending on the
-        // week
+        // month
         if ($currentDay->isBefore($lastDayOfMonth)) {
             $weekDays = collect();
             for ($day = $currentDay->dayOfWeekIso; $day <= 7; $day++) {
@@ -157,9 +156,10 @@ class VaultCalendarIndexViewHelper
             ]);
     }
 
-    public static function getDay(Vault $vault, int $day, int $month, int $year): array
+    public static function getDayInformation(Vault $vault, User $user, int $day, int $month, int $year): array
     {
         $date = Carbon::createFromDate($year, $month, $day);
+
         $contactsId = $vault->contacts()->pluck('id');
         $importantDates = ContactImportantDate::where('day', $day)
             ->where('month', $month)
@@ -179,6 +179,7 @@ class VaultCalendarIndexViewHelper
         return [
             'day' => DateHelper::formatFullDate($date),
             'important_dates' => $importantDates,
+            'mood_events' => self::getMood($vault, $user, $immutableDate),
         ];
     }
 }
