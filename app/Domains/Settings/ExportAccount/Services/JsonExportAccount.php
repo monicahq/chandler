@@ -11,8 +11,7 @@ use Illuminate\Support\Str;
 
 class JsonExportAccount extends BaseService
 {
-    /** @var string */
-    protected $tempFileName;
+    protected string $tempFileName;
 
     /**
      * Get the validation rules that apply to the service.
@@ -68,10 +67,8 @@ class JsonExportAccount extends BaseService
 
     /**
      * Write to a temp file.
-     *
-     * @return void
      */
-    private function writeToTempFile(string $sql)
+    private function writeToTempFile(string $sql): void
     {
         Storage::disk('local')
             ->append($this->tempFileName, $sql);
@@ -79,10 +76,8 @@ class JsonExportAccount extends BaseService
 
     /**
      * Export the Account table.
-     *
-     * @return mixed
      */
-    private function exportAccount(array $data)
+    private function exportAccount(array $data): array
     {
         $account = Account::find($data['account_id']);
 

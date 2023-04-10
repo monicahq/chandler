@@ -23,11 +23,9 @@ class ExportJobFactory extends Factory
     {
         return [
             'account_id' => Account::factory(),
-            'user_id' => function (array $attributes) {
-                return User::factory([
-                    'account_id' => $attributes['account_id'],
-                ]);
-            },
+            'user_id' => fn (array $attributes) => User::factory([
+                'account_id' => $attributes['account_id'],
+            ]),
             'type' => 'json',
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\ExportResources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Arr;
@@ -24,11 +25,8 @@ class ExportResource extends JsonResource
 
     /**
      * Create a new resource instance.
-     *
-     * @param  mixed  $resource
-     * @return void
      */
-    final public function __construct($resource)
+    final public function __construct(mixed $resource)
     {
         $this->resource = $resource;
     }
@@ -36,16 +34,16 @@ class ExportResource extends JsonResource
     /**
      * Create a new anonymous resource collection.
      *
-     * @param  mixed  $resource
      * @return CountResourceCollection|MissingValue
      */
-    public static function countCollection($resource)
+    #[\ReturnTypeWillChange]
+    public static function countCollection(mixed $resource)
     {
         if ($resource->count() === 0) {
             return new MissingValue();
         }
 
-        return tap(new CountResourceCollection($resource, static::class), function ($collection) {
+        return tap(new CountResourceCollection($resource, static::class), function (CountResourceCollection $collection) {
             if (property_exists(static::class, 'preserveKeys')) {
                 $collection->preserveKeys = (new static([]))->preserveKeys === true;
             }
@@ -55,16 +53,16 @@ class ExportResource extends JsonResource
     /**
      * Create a new anonymous resource collection.
      *
-     * @param  mixed  $resource
-     * @return MapUuidResourceCollection|MissingValue
+     * @return MapIdResourceCollection|MissingValue
      */
+    #[\ReturnTypeWillChange]
     public static function uuidCollection($resource)
     {
         if ($resource->count() === 0) {
             return new MissingValue();
         }
 
-        return tap(new MapIdResourceCollection($resource, static::class), function ($collection) {
+        return tap(new MapIdResourceCollection($resource, static::class), function (MapIdResourceCollection $collection) {
             if (property_exists(static::class, 'preserveKeys')) {
                 $collection->preserveKeys = (new static([]))->preserveKeys === true;
             }
@@ -74,10 +72,10 @@ class ExportResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    #[\ReturnTypeWillChange]
+    public function toArray(Request $request)
     {
         if (is_null($this->resource)) {
             return [];
@@ -95,9 +93,6 @@ class ExportResource extends JsonResource
 
     /**
      * Create the Insert query for the given table.
-     *
-     * @param  array  $properties
-     * @param  array  $data
      */
     protected function export(array $columns, array $properties = null, array $data = null): ?array
     {

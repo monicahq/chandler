@@ -19,16 +19,14 @@ class ExportAccount implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var string
+     * Path to the export file.
      */
-    protected $path = '';
+    protected string $path = '';
 
     /**
-     * Export job.
-     *
-     * @var ExportJob
+     * Export job to run.
      */
-    protected $exportJob;
+    protected ExportJob $exportJob;
 
     /**
      * Create a new job instance.
