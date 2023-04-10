@@ -12,7 +12,6 @@ use App\Models\Vault;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class VaultCalendarIndexViewHelper
 {
@@ -22,7 +21,7 @@ class VaultCalendarIndexViewHelper
         $previousMonth = $date->copy()->subMonth();
         $nextMonth = $date->copy()->addMonth();
 
-        $collection = self::buildMonth($vault, Auth::user(), $year, $month);
+        $collection = self::buildMonth($vault, $user, $year, $month);
 
         return [
             'weeks' => $collection,
