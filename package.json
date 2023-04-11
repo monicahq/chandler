@@ -52,7 +52,7 @@
   },
   "lint-staged": {
     "*.js|resources/**/*.{vue,js}": [
-      "yarn run eslint --fix",
+      "eslint --fix",
       "prettier --write --ignore-unknown"
     ],
     "resources/**/*.{css,scss}": [
