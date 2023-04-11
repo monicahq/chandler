@@ -24,45 +24,6 @@ return new class extends Migration
             $table->integer('position')->nullable();
             $table->timestamps();
         });
-
-        Vault::chunk(200, function ($vaults) {
-            foreach ($vaults as $vault) {
-                DB::table('mood_tracking_parameters')->insert([
-                    'vault_id' => $vault->id,
-                    'label_translation_key' => 'vault.settings_mood_tracking_parameters_awesome',
-                    'hex_color' => 'bg-lime-500',
-                    'position' => 1,
-                ]);
-
-                DB::table('mood_tracking_parameters')->insert([
-                    'vault_id' => $vault->id,
-                    'label_translation_key' => 'vault.settings_mood_tracking_parameters_good',
-                    'hex_color' => 'bg-lime-300',
-                    'position' => 2,
-                ]);
-
-                DB::table('mood_tracking_parameters')->insert([
-                    'vault_id' => $vault->id,
-                    'label_translation_key' => 'vault.settings_mood_tracking_parameters_meh',
-                    'hex_color' => 'bg-cyan-600',
-                    'position' => 3,
-                ]);
-
-                DB::table('mood_tracking_parameters')->insert([
-                    'vault_id' => $vault->id,
-                    'label_translation_key' => 'vault.settings_mood_tracking_parameters_bad',
-                    'hex_color' => 'bg-orange-300',
-                    'position' => 4,
-                ]);
-
-                DB::table('mood_tracking_parameters')->insert([
-                    'vault_id' => $vault->id,
-                    'label_translation_key' => 'vault.settings_mood_tracking_parameters_awful',
-                    'hex_color' => 'bg-red-700',
-                    'position' => 5,
-                ]);
-            }
-        });
     }
 
     /**
