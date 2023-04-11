@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostMetricController extends Controller
 {
-    public function store(Request $request, int $vaultId, int $journalId, int $postId)
+    public function store(Request $request, string $vaultId, int $journalId, int $postId)
     {
         $data = [
             'account_id' => Auth::user()->account_id,
@@ -32,7 +32,7 @@ class PostMetricController extends Controller
         ], 201);
     }
 
-    public function destroy(Request $request, int $vaultId, int $journalId, int $postId, int $postMetricId)
+    public function destroy(Request $request, string $vaultId, int $journalId, int $postId, int $postMetricId)
     {
         $vault = Vault::findOrFail($vaultId);
         $journal = $vault->journals()->findOrFail($journalId);

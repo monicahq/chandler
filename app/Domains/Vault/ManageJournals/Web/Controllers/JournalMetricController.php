@@ -15,7 +15,7 @@ use Inertia\Inertia;
 
 class JournalMetricController extends Controller
 {
-    public function index(Request $request, int $vaultId, int $journalId)
+    public function index(Request $request, string $vaultId, int $journalId)
     {
         $vault = Vault::findOrFail($vaultId);
         $journal = $vault->journals()->findOrFail($journalId);
@@ -26,7 +26,7 @@ class JournalMetricController extends Controller
         ]);
     }
 
-    public function store(Request $request, int $vaultId, int $journalId)
+    public function store(Request $request, string $vaultId, int $journalId)
     {
         $vault = Vault::findOrFail($vaultId);
         $vault->journals()->findOrFail($journalId);
@@ -46,7 +46,7 @@ class JournalMetricController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, int $vaultId, int $journalId, int $journalMetricId)
+    public function update(Request $request, string $vaultId, int $journalId, int $journalMetricId)
     {
         $vault = Vault::findOrFail($vaultId);
         $vault->journals()->findOrFail($journalId);
@@ -67,7 +67,7 @@ class JournalMetricController extends Controller
         ], 200);
     }
 
-    public function destroy(Request $request, int $vaultId, int $journalId, int $journalMetricId)
+    public function destroy(Request $request, string $vaultId, int $journalId, int $journalMetricId)
     {
         $vault = Vault::findOrFail($vaultId);
         $vault->journals()->findOrFail($journalId);
