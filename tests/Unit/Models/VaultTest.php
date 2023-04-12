@@ -8,9 +8,11 @@ use App\Models\Contact;
 use App\Models\ContactImportantDateType;
 use App\Models\File;
 use App\Models\Group;
+use App\Models\Ingredient;
 use App\Models\Journal;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
+use App\Models\Meal;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
@@ -200,5 +202,27 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->quickFactsTemplateEntries()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_meals(): void
+    {
+        $vault = Vault::factory()->create();
+        Meal::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->meals()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_ingredients(): void
+    {
+        $vault = Vault::factory()->create();
+        Ingredient::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->ingredients()->exists());
     }
 }

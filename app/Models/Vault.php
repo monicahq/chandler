@@ -221,4 +221,20 @@ class Vault extends Model
     {
         return $this->hasMany(VaultQuickFactTemplate::class);
     }
+
+    /**
+     * Get the meal records associated with the vault.
+     */
+    public function meals(): HasMany
+    {
+        return $this->hasMany(Meal::class);
+    }
+
+    /**
+     * Get the ingredient records associated with the vault.
+     */
+    public function ingredients(): HasMany
+    {
+        return $this->hasMany(Ingredient::class);
+    }
 }
