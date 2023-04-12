@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Contact;
+use App\Models\MoodTrackingParameter;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +17,12 @@ return new class extends Migration
     {
         Schema::create('mood_tracking_events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('mood_tracking_parameter_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(MoodTrackingParameter::class)->constrained()->cascadeOnDelete();
             $table->datetime('rated_at');
             $table->text('note')->nullable();
             $table->integer('number_of_hours_slept')->nullable();
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->foreign('mood_tracking_parameter_id')->references('id')->on('mood_tracking_parameters')->onDelete('cascade');
         });
     }
 

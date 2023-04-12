@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\File;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +17,12 @@ return new class() extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('fileable_id')->nullable();
-            $table->string('fileable_type')->nullable();
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
+
+            $table->nullableNumericMorphs('fileable');
+            $table->uuid('ufileable_id')->nullable();
+            $table->index(['fileable_type', 'ufileable_id']);
+
             $table->string('uuid');
             $table->string('original_url')->nullable();
             $table->string('cdn_url')->nullable();
@@ -26,12 +31,10 @@ return new class() extends Migration
             $table->string('type');
             $table->integer('size');
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
         });
 
         Schema::table('contacts', function (Blueprint $table) {
-            $table->unsignedBigInteger('file_id')->nullable()->after('company_id');
-            $table->foreign('file_id')->references('id')->on('files')->onDelete('set null');
+            $table->foreignIdFor(File::class)->nullable()->after('company_id')->constrained()->nullOnDelete();
         });
     }
 
@@ -42,9 +45,10 @@ return new class() extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
         Schema::table('contacts', function (Blueprint $table) {
+            $table->dropForeign(['file_id']);
             $table->dropColumn('file_id');
         });
+        Schema::dropIfExists('files');
     }
 };

@@ -70,19 +70,12 @@ class Contact extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'vault_id' => 'string',
         'can_be_deleted' => 'boolean',
         'listed' => 'boolean',
         'show_quick_facts' => 'boolean',
         'last_updated_at' => 'datetime',
     ];
-
-    /**
-     * Get the columns that should receive a unique identifier.
-     */
-    public function uniqueIds(): array
-    {
-        return ['uuid'];
-    }
 
     /**
      * Get the indexable data array for the model.
@@ -294,7 +287,7 @@ class Contact extends Model
      */
     public function files(): MorphMany
     {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->morphMany(File::class, 'ufileable', 'fileable_type');
     }
 
     /**
@@ -311,7 +304,7 @@ class Contact extends Model
      */
     public function groups(): BelongsToMany
     {
-        return $this->belongsToMany(Group::class, 'contact_group');
+        return $this->belongsToMany(Group::class);
     }
 
     /**
@@ -319,7 +312,7 @@ class Contact extends Model
      */
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class, 'contact_post');
+        return $this->belongsToMany(Post::class);
     }
 
     /**
@@ -359,7 +352,9 @@ class Contact extends Model
      */
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Address::class, 'contact_address', 'contact_id')->withPivot('is_past_address')->withTimestamps();
+        return $this->belongsToMany(Address::class, 'contact_address')
+            ->withPivot('is_past_address')
+            ->withTimestamps();
     }
 
     /**

@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Address;
+use App\Models\AddressType;
+use App\Models\Contact;
+use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +17,8 @@ return new class() extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vault_id');
-            $table->unsignedBigInteger('address_type_id')->nullable();
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(AddressType::class)->nullable()->constrained()->nullOnDelete();
             $table->string('line_1')->nullable();
             $table->string('line_2')->nullable();
             $table->string('city')->nullable();
@@ -24,17 +28,13 @@ return new class() extends Migration
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->timestamps();
-            $table->foreign('vault_id')->references('id')->on('vaults')->onDelete('cascade');
-            $table->foreign('address_type_id')->references('id')->on('address_types')->onDelete('set null');
         });
 
         Schema::create('contact_address', function (Blueprint $table) {
-            $table->unsignedBigInteger('contact_id');
-            $table->unsignedBigInteger('address_id');
+            $table->foreignIdFor(Contact::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Address::class)->constrained()->cascadeOnDelete();
             $table->boolean('is_past_address')->default(false);
             $table->timestamps();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
         });
     }
 
@@ -43,7 +43,7 @@ return new class() extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
         Schema::dropIfExists('contact_address');
+        Schema::dropIfExists('addresses');
     }
 };
