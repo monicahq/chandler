@@ -176,7 +176,7 @@ defineProps({
             </div>
 
             <!-- post metrics -->
-            <div v-if="data.journalMetrics" class="mb-4">
+            <div v-if="data.journalMetrics.length > 0" class="mb-4">
               <p class="mb-2 text-sm font-semibold">Post metrics</p>
               <div v-for="journalMetric in data.journalMetrics" :key="journalMetric.id">
                 <div class="mb-1 flex items-center justify-between font-semibold">
