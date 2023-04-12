@@ -24,7 +24,7 @@ class IngredientTest extends TestCase
         $ingredient = Ingredient::factory()->create([]);
         $meal = Meal::factory()->create();
 
-        $ingredient->meals()->sync([$ingredient->id]);
+        $ingredient->meals()->sync([$meal->id]);
 
         $this->assertTrue($ingredient->meals()->exists());
     }
