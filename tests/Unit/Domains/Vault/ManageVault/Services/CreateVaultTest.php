@@ -71,6 +71,11 @@ class CreateVaultTest extends TestCase
             $contact->can_be_deleted
         );
 
+        $this->assertInstanceOf(
+            Vault::class,
+            $vault
+        );
+
         $this->assertDatabaseHas('user_vault', [
             'vault_id' => $vault->id,
             'user_id' => $author->id,
@@ -90,9 +95,29 @@ class CreateVaultTest extends TestCase
             'can_be_deleted' => false,
         ]);
 
-        $this->assertInstanceOf(
-            Vault::class,
-            $vault
-        );
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_breakfast',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_lunch',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_dinner',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_snack',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_drink',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_category_dessert',
+        ]);
     }
 }

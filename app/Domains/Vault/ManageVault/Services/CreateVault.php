@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\ContactImportantDate;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\MealCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Vault;
 use App\Models\VaultQuickFactTemplate;
@@ -58,6 +59,7 @@ class CreateVault extends BaseService implements ServiceInterface
         $this->populateMoodTrackingParameters();
         $this->populateDefaultLifeEventCategories();
         $this->populateDefaultQuickVaultTemplateEntries();
+        $this->populateDefaultMealCategories();
 
         return $this->vault;
     }
@@ -345,6 +347,40 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'label_translation_key' => 'vault.settings_quick_fact_template_entry_food',
             'position' => 2,
+        ]);
+    }
+
+    private function populateDefaultMealCategories(): void
+    {
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_breakfast',
+            'position' => 1,
+        ]);
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_lunch',
+            'position' => 2,
+        ]);
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_dinner',
+            'position' => 3,
+        ]);
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_snack',
+            'position' => 4,
+        ]);
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_drink',
+            'position' => 5,
+        ]);
+        MealCategory::create([
+            'vault_id' => $this->vault->id,
+            'label_translation_key' => 'vault.meal_category_dessert',
+            'position' => 6,
         ]);
     }
 }

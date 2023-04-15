@@ -2,6 +2,7 @@
 
 use App\Models\Ingredient;
 use App\Models\Meal;
+use App\Models\MealCategory;
 use App\Models\Vault;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,9 +15,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('meal_categories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
+            $table->string('label')->nullable();
+            $table->string('label_translation_key')->nullable();
+            $table->integer('position')->nullable();
+            $table->timestamps();
+        });
+
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(MealCategory::class, 'meal_category_id')->nullable()->constrained('meal_categories')->nullOnDelete();
             $table->string('name');
             $table->timestamps();
         });
@@ -43,5 +54,6 @@ return new class extends Migration
         Schema::dropIfExists('ingredient_meal');
         Schema::dropIfExists('ingredients');
         Schema::dropIfExists('meals');
+        Schema::dropIfExists('meal_categories');
     }
 };

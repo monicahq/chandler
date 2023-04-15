@@ -124,6 +124,16 @@ return [
     'journal_show_mood' => 'Your mood that you logged at this date',
 
     /***************************************************************
+     * MEAL CATEGORIES
+     **************************************************************/
+    'meal_category_breakfast' => 'Breakfast',
+    'meal_category_lunch' => 'Lunch',
+    'meal_category_dinner' => 'Dinner',
+    'meal_category_snack' => 'Snack',
+    'meal_category_drink' => 'Drink',
+    'meal_category_dessert' => 'Dessert',
+
+    /***************************************************************
      * VAULT SETTINGS
      **************************************************************/
 

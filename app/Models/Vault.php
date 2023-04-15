@@ -223,6 +223,14 @@ class Vault extends Model
     }
 
     /**
+     * Get the meal category records associated with the vault.
+     */
+    public function mealCategories(): HasMany
+    {
+        return $this->hasMany(MealCategory::class);
+    }
+
+    /**
      * Get the meal records associated with the vault.
      */
     public function meals(): HasMany

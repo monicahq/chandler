@@ -45,7 +45,7 @@ class CreatePostTemplateSection extends BaseService implements ServiceInterface
         $postTemplate = $this->account()->postTemplates()
             ->findOrFail($data['post_template_id']);
 
-        // determine the new position of the template page
+        // determine the new position of the template section
         $newPosition = $postTemplate->postTemplateSections()
             ->max('position');
         $newPosition++;

@@ -103,6 +103,8 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenController;
+use App\Domains\Vault\ManageKitchen\Web\Controllers\MealCategoryController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -439,6 +441,16 @@ Route::middleware([
             Route::prefix('companies')->name('vault.companies.')->group(function () {
                 Route::get('', [VaultCompanyController::class, 'index'])->name('index');
                 Route::get('{company}', [VaultCompanyController::class, 'show'])->name('show');
+            });
+
+            // kitchen
+            Route::prefix('kitchen')->name('vault.kitchen.')->group(function () {
+                Route::get('', [KitchenController::class, 'index'])->name('index');
+
+                // meal categories
+                Route::post('mealCategories', [MealCategoryController::class, 'store'])->name('meal_categories.store');
+                Route::put('mealCategories/{mealCategory}', [MealCategoryController::class, 'update'])->name('meal_categories.update');
+                Route::delete('mealCategories/{mealCategory}', [MealCategoryController::class, 'destroy'])->name('meal_categories.destroy');
             });
 
             // vault settings

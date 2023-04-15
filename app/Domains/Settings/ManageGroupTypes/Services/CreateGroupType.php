@@ -55,7 +55,7 @@ class CreateGroupType extends BaseService implements ServiceInterface
 
     private function create(): void
     {
-        // determine the new position of the template page
+        // determine the new position of the group type
         $newPosition = $this->account()->groupTypes()
             ->max('position');
         $newPosition++;

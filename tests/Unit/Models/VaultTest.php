@@ -13,6 +13,7 @@ use App\Models\Journal;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
 use App\Models\Meal;
+use App\Models\MealCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
@@ -202,6 +203,17 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->quickFactsTemplateEntries()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_meal_categories(): void
+    {
+        $vault = Vault::factory()->create();
+        MealCategory::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->mealCategories()->exists());
     }
 
     /** @test */

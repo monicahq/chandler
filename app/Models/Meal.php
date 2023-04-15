@@ -38,4 +38,12 @@ class Meal extends Model
     {
         return $this->belongsToMany(Ingredient::class);
     }
+
+    /**
+     * Get the meal category associated with the meal.
+     */
+    public function mealCategory(): BelongsTo
+    {
+        return $this->belongsTo(MealCategory::class);
+    }
 }

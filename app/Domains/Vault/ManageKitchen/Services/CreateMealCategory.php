@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Domains\Settings\ManagePostTemplates\Services;
+namespace App\Domains\Vault\ManageKitchen\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\PostTemplate;
+use App\Models\Meal;
+use App\Models\MealCategory;
 use App\Services\BaseService;
 
-class CreatePostTemplate extends BaseService implements ServiceInterface
+class CreateMealCategory extends BaseService implements ServiceInterface
 {
-    private PostTemplate $postTemplate;
-
     /**
      * Get the validation rules that apply to the service.
      */
@@ -17,9 +16,9 @@ class CreatePostTemplate extends BaseService implements ServiceInterface
     {
         return [
             'account_id' => 'required|uuid|exists:accounts,id',
+            'vault_id' => 'required|uuid|exists:vaults,id',
             'author_id' => 'required|uuid|exists:users,id',
             'label' => 'required|string|max:255',
-            'can_be_deleted' => 'required|boolean',
         ];
     }
 
@@ -30,29 +29,24 @@ class CreatePostTemplate extends BaseService implements ServiceInterface
     {
         return [
             'author_must_belong_to_account',
-            'author_must_be_account_administrator',
+            'vault_must_belong_to_account',
+            'author_must_be_vault_editor',
         ];
     }
 
-    /**
-     * Create a post type.
-     */
-    public function execute(array $data): PostTemplate
+    public function execute(array $data): MealCategory
     {
         $this->validateRules($data);
 
-        // determine the new position of the post template
-        $newPosition = $this->account()->postTemplates()
+        // determine the new position of the meal category
+        $newPosition = $this->vault->mealCategories()
             ->max('position');
         $newPosition++;
 
-        $this->postTemplate = PostTemplate::create([
-            'account_id' => $data['account_id'],
+        return MealCategory::create([
+            'vault_id' => $data['vault_id'],
             'label' => $data['label'],
             'position' => $newPosition,
-            'can_be_deleted' => $this->valueOrTrue($data, 'can_be_deleted'),
         ]);
-
-        return $this->postTemplate;
     }
 }
