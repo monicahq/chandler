@@ -20,6 +20,8 @@
 
         <quick-fact-template :data="data" />
 
+        <meal-categories :data="data" />
+
         <delete :data="data" />
       </div>
     </main>
@@ -38,6 +40,7 @@ import ContactImportantDateTypes from '@/Pages/Vault/Settings/Partials/ContactIm
 import MoodTrackingParameters from '@/Pages/Vault/Settings/Partials/MoodTrackingParameters.vue';
 import LifeEventTypesAndCategories from '@/Pages/Vault/Settings/Partials/LifeEventTypesAndCategories.vue';
 import QuickFactTemplate from '@/Pages/Vault/Settings/Partials/QuickFactTemplate.vue';
+import MealCategories from '@/Pages/Vault/Settings/Partials/MealCategories.vue';
 
 export default {
   components: {
@@ -52,6 +55,7 @@ export default {
     MoodTrackingParameters,
     LifeEventTypesAndCategories,
     QuickFactTemplate,
+    MealCategories,
   },
 
   props: {

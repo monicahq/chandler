@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Domains\Vault\ManageKitchen\Web\Controllers;
+namespace App\Domains\Vault\ManageVaultSettings\Web\Controllers;
 
 use App\Domains\Vault\ManageKitchen\Services\CreateMealCategory;
 use App\Domains\Vault\ManageKitchen\Services\DestroyMealCategory;
 use App\Domains\Vault\ManageKitchen\Services\UpdateMealCategory;
-use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenSettingsViewHelper;
+use App\Domains\Vault\ManageVaultSettings\Web\ViewHelpers\VaultSettingsIndexViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MealCategoryController extends Controller
+class VaultSettingsMealCategoryController extends Controller
 {
     public function store(Request $request, Vault $vault): JsonResponse
     {
@@ -24,7 +24,7 @@ class MealCategoryController extends Controller
         ]);
 
         return response()->json([
-            'data' => KitchenSettingsViewHelper::dto($mealCategory),
+            'data' => VaultSettingsIndexViewHelper::dtoMealCategory($mealCategory),
         ], 201);
     }
 
@@ -39,7 +39,7 @@ class MealCategoryController extends Controller
         ]);
 
         return response()->json([
-            'data' => KitchenSettingsViewHelper::dto($mealCategory),
+            'data' => VaultSettingsIndexViewHelper::dtoMealCategory($mealCategory),
         ], 200);
     }
 

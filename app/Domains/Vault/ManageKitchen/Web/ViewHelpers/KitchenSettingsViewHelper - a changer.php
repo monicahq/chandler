@@ -37,7 +37,7 @@ class KitchenSettingsViewHelper
                     'mealCategory' => $mealCategory->id,
                 ]),
                 'destroy' => route('vault.kitchen.meal_categories.destroy', [
-                    'vault' => $vault->id,
+                    'vault' => $mealCategory->vault_id,
                     'mealCategory' => $mealCategory->id,
                 ]),
             ],

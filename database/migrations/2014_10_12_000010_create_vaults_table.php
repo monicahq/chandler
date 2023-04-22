@@ -27,6 +27,7 @@ return new class() extends Migration
             $table->boolean('show_journal_tab')->default(true);
             $table->boolean('show_companies_tab')->default(true);
             $table->boolean('show_reports_tab')->default(true);
+            $table->boolean('show_kitchen_tab')->default(true);
             $table->timestamps();
             $table->foreign('default_template_id')->references('id')->on('templates')->onDelete('set null');
         });

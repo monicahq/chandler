@@ -22,6 +22,7 @@ class MealCategoryFactory extends Factory
     {
         return [
             'vault_id' => Vault::factory(),
+            'position' => 1,
             'label' => $this->faker->name(),
         ];
     }

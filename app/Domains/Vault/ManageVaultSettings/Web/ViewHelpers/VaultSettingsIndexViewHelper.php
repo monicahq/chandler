@@ -7,6 +7,7 @@ use App\Helpers\VaultHelper;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\MealCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\User;
@@ -133,6 +134,12 @@ class VaultSettingsIndexViewHelper
             ->get()
             ->map(fn (VaultQuickFactTemplate $vaultQuickFactTemplate) => self::dtoQuickFactTemplateEntry($vaultQuickFactTemplate));
 
+        // meal categories
+        $mealCategories = $vault->mealCategories()
+            ->orderBy('position')
+            ->get()
+            ->map(fn (MealCategory $mealCategory) => self::dtoMealCategory($mealCategory));
+
         return [
             'templates' => $templatesCollection,
             'users_in_vault' => $usersInVaultCollection,
@@ -145,6 +152,7 @@ class VaultSettingsIndexViewHelper
             'mood_tracking_parameter_colors' => $moodTrackingParameterColorsCollection,
             'life_event_categories' => $lifeEventCategories,
             'quick_fact_templates' => $quickFactTemplates,
+            'meal_categories' => $mealCategories,
             'visibility' => [
                 'show_group_tab' => $vault->show_group_tab,
                 'show_tasks_tab' => $vault->show_tasks_tab,
@@ -152,6 +160,7 @@ class VaultSettingsIndexViewHelper
                 'show_journal_tab' => $vault->show_journal_tab,
                 'show_companies_tab' => $vault->show_companies_tab,
                 'show_reports_tab' => $vault->show_reports_tab,
+                'show_kitchen_tab' => $vault->show_kitchen_tab,
             ],
             'url' => [
                 'template_update' => route('vault.settings.template.update', [
@@ -176,6 +185,9 @@ class VaultSettingsIndexViewHelper
                     'vault' => $vault,
                 ]),
                 'quick_fact_templates_store' => route('vault.settings.quick_fact_templates.store', [
+                    'vault' => $vault,
+                ]),
+                'kitchen_store' => route('vault.settings.meal_categories.store', [
                     'vault' => $vault,
                 ]),
                 'update' => route('vault.settings.update', [
@@ -353,6 +365,29 @@ class VaultSettingsIndexViewHelper
                 'destroy' => route('vault.settings.quick_fact_templates.destroy', [
                     'vault' => $template->vault_id,
                     'template' => $template->id,
+                ]),
+            ],
+        ];
+    }
+
+    public static function dtoMealCategory(MealCategory $mealCategory): array
+    {
+        return [
+            'id' => $mealCategory->id,
+            'label' => $mealCategory->label,
+            'position' => $mealCategory->position,
+            'url' => [
+                'position' => route('vault.settings.meal_categories.order.update', [
+                    'vault' => $mealCategory->vault_id,
+                    'mealCategory' => $mealCategory->id,
+                ]),
+                'update' => route('vault.settings.meal_categories.update', [
+                    'vault' => $mealCategory->vault_id,
+                    'mealCategory' => $mealCategory->id,
+                ]),
+                'destroy' => route('vault.settings.meal_categories.destroy', [
+                    'vault' => $mealCategory->vault_id,
+                    'mealCategory' => $mealCategory->id,
                 ]),
             ],
         ];

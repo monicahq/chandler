@@ -104,7 +104,6 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenController;
-use App\Domains\Vault\ManageKitchen\Web\Controllers\MealCategoryController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -123,6 +122,8 @@ use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEvent
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventCategoriesPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsLifeEventTypesPositionController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMealCategoryController;
+use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMealCategoryPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsMoodTrackingParameterPositionController;
 use App\Domains\Vault\ManageVaultSettings\Web\Controllers\VaultSettingsQuickFactTemplateController;
@@ -446,11 +447,6 @@ Route::middleware([
             // kitchen
             Route::prefix('kitchen')->name('vault.kitchen.')->group(function () {
                 Route::get('', [KitchenController::class, 'index'])->name('index');
-
-                // meal categories
-                Route::post('mealCategories', [MealCategoryController::class, 'store'])->name('meal_categories.store');
-                Route::put('mealCategories/{mealCategory}', [MealCategoryController::class, 'update'])->name('meal_categories.update');
-                Route::delete('mealCategories/{mealCategory}', [MealCategoryController::class, 'destroy'])->name('meal_categories.destroy');
             });
 
             // vault settings
@@ -505,6 +501,12 @@ Route::middleware([
                 Route::put('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'update'])->name('vault.settings.quick_fact_templates.update');
                 Route::put('settings/quickFactTemplates/{template}/order', [VaultSettingsQuickFactTemplatePositionController::class, 'update'])->name('vault.settings.quick_fact_templates.order.update');
                 Route::delete('settings/quickFactTemplates/{template}', [VaultSettingsQuickFactTemplateController::class, 'destroy'])->name('vault.settings.quick_fact_templates.destroy');
+
+                // meal categories
+                Route::post('settings/mealCategories', [VaultSettingsMealCategoryController::class, 'store'])->name('vault.settings.meal_categories.store');
+                Route::put('settings/mealCategories/{mealCategory}', [VaultSettingsMealCategoryController::class, 'update'])->name('vault.settings.meal_categories.update');
+                Route::put('settings/mealCategories/{mealCategory}/order', [VaultSettingsMealCategoryPositionController::class, 'update'])->name('vault.settings.meal_categories.order.update');
+                Route::delete('settings/mealCategories/{mealCategory}', [VaultSettingsMealCategoryController::class, 'destroy'])->name('vault.settings.meal_categories.destroy');
             });
 
             // global search in the vault

@@ -62,6 +62,7 @@ class Vault extends Model
         'show_journal_tab' => 'boolean',
         'show_companies_tab' => 'boolean',
         'show_reports_tab' => 'boolean',
+        'show_kitchen_tab' => 'boolean',
         'show_activity_tab_on_dashboard' => 'boolean',
     ];
 
