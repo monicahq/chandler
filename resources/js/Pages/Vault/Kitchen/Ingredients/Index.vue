@@ -232,9 +232,8 @@ const destroy = (ingredient) => {
         <div
           v-if="localIngredients.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">
-            Pet categories let you add types of pets that contacts can add to their profile.
-          </p>
+          <img src="/img/kitchen_ingredient_blank.svg" :alt="$t('Calls')" class="mx-auto mt-4 h-40 w-40" />
+          <p class="p-5 text-center">Here is the list of all the ingredients that are used in the meals you'll cook.</p>
         </div>
       </div>
     </main>
