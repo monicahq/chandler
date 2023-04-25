@@ -106,6 +106,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenController;
+use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenIngredientsController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -458,6 +459,10 @@ Route::middleware([
             // kitchen
             Route::prefix('kitchen')->name('vault.kitchen.')->group(function () {
                 Route::get('', [KitchenController::class, 'index'])->name('index');
+                Route::get('ingredients', [KitchenIngredientsController::class, 'index'])->name('ingredients.index');
+                Route::post('ingredients', [KitchenIngredientsController::class, 'store'])->name('ingredients.store');
+                Route::put('ingredients/{ingredient}', [KitchenIngredientsController::class, 'update'])->name('ingredients.update');
+                Route::delete('ingredients/{ingredient}', [KitchenIngredientsController::class, 'destroy'])->name('ingredients.destroy');
             });
 
             // vault settings
