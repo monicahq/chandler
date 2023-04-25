@@ -22,7 +22,7 @@ class UpdateIngredient extends BaseService implements ServiceInterface
             'vault_id' => 'required|uuid|exists:vaults,id',
             'author_id' => 'required|uuid|exists:users,id',
             'ingredient_id' => 'required|integer|exists:ingredients,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -43,7 +43,7 @@ class UpdateIngredient extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->ingredient->name = $data['name'];
+        $this->ingredient->label = $data['label'];
         $this->ingredient->save();
 
         return $this->ingredient;

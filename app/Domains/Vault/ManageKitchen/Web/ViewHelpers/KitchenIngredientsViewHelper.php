@@ -27,7 +27,7 @@ class KitchenIngredientsViewHelper
     {
         return [
             'id' => $ingredient->id,
-            'name' => $ingredient->name,
+            'label' => $ingredient->label,
             'url' => [
                 'update' => route('vault.kitchen.ingredients.update', [
                     'vault' => $ingredient->vault_id,

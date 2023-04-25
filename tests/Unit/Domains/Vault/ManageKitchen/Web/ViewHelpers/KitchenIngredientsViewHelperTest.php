@@ -25,7 +25,7 @@ class KitchenIngredientsViewHelperTest extends TestCase
         ]);
         $ingredient = Ingredient::factory()->create([
             'vault_id' => $vault->id,
-            'name' => 'name',
+            'label' => 'label',
         ]);
 
         $array = KitchenIngredientsViewHelper::data($vault);
@@ -49,7 +49,7 @@ class KitchenIngredientsViewHelperTest extends TestCase
         ]);
         $ingredient = Ingredient::factory()->create([
             'vault_id' => $vault->id,
-            'name' => 'name',
+            'label' => 'label',
         ]);
 
         $array = KitchenIngredientsViewHelper::dto($ingredient);
@@ -57,7 +57,7 @@ class KitchenIngredientsViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 'id' => $ingredient->id,
-                'name' => 'name',
+                'label' => 'label',
                 'url' => [
                     'update' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/ingredients/'.$ingredient->id,
                     'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/ingredients/'.$ingredient->id,

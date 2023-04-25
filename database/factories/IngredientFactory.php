@@ -22,7 +22,7 @@ class IngredientFactory extends Factory
     {
         return [
             'vault_id' => Vault::factory(),
-            'name' => $this->faker->name(),
+            'label' => $this->faker->name(),
         ];
     }
 }

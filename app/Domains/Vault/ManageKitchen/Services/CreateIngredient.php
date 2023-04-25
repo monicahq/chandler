@@ -17,7 +17,7 @@ class CreateIngredient extends BaseService implements ServiceInterface
             'account_id' => 'required|uuid|exists:accounts,id',
             'vault_id' => 'required|uuid|exists:vaults,id',
             'author_id' => 'required|uuid|exists:users,id',
-            'name' => 'required|string|max:255',
+            'label' => 'required|string|max:255',
         ];
     }
 
@@ -39,7 +39,7 @@ class CreateIngredient extends BaseService implements ServiceInterface
 
         return Ingredient::create([
             'vault_id' => $data['vault_id'],
-            'name' => $data['name'],
+            'label' => $data['label'],
         ]);
     }
 }

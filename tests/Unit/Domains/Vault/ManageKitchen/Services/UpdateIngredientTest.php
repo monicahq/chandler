@@ -88,7 +88,7 @@ class UpdateIngredientTest extends TestCase
             'author_id' => $author->id,
             'vault_id' => $vault->id,
             'ingredient_id' => $ingredient->id,
-            'name' => 'label name',
+            'label' => 'label name',
         ];
 
         $ingredient = (new UpdateIngredient())->execute($request);
@@ -96,7 +96,7 @@ class UpdateIngredientTest extends TestCase
         $this->assertDatabaseHas('ingredients', [
             'id' => $ingredient->id,
             'vault_id' => $vault->id,
-            'name' => 'label name',
+            'label' => 'label name',
         ]);
 
         $this->assertInstanceOf(

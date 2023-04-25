@@ -28,4 +28,28 @@ class IngredientTest extends TestCase
 
         $this->assertTrue($ingredient->meals()->exists());
     }
+
+    /** @test */
+    public function it_gets_the_ingredient_name()
+    {
+        $ingredient = Ingredient::factory()->create([
+            'label' => null,
+            'label_translation_key' => 'Sikhism',
+        ]);
+
+        $this->assertEquals(
+            'Sikhism',
+            $ingredient->label
+        );
+
+        $ingredient = Ingredient::factory()->create([
+            'label' => 'God',
+            'label_translation_key' => null,
+        ]);
+
+        $this->assertEquals(
+            'God',
+            $ingredient->label
+        );
+    }
 }

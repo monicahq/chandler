@@ -31,7 +31,7 @@ class KitchenIngredientsController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vault->id,
-            'name' => $request->input('name'),
+            'label' => $request->input('label'),
         ];
 
         $ingredient = (new CreateIngredient())->execute($data);
@@ -48,7 +48,7 @@ class KitchenIngredientsController extends Controller
             'author_id' => Auth::id(),
             'vault_id' => $vault->id,
             'ingredient_id' => $ingredient->id,
-            'name' => $request->input('name'),
+            'label' => $request->input('label'),
         ];
 
         $ingredient = (new UpdateIngredient())->execute($data);

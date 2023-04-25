@@ -22,11 +22,11 @@ onMounted(() => {
 });
 
 const form = useForm({
-  name: null,
+  label: null,
 });
 
 const showAddModal = () => {
-  form.name = null;
+  form.label = null;
   createIngredientModalShown.value = true;
 
   nextTick(() => {
@@ -35,7 +35,7 @@ const showAddModal = () => {
 };
 
 const showUpdateModal = (ingredient) => {
-  form.name = ingredient.name;
+  form.label = ingredient.label;
   editedIngredientId.value = ingredient.id;
 
   nextTick(() => {
@@ -159,7 +159,7 @@ const destroy = (ingredient) => {
 
             <text-input
               ref="nameField"
-              v-model="form.name"
+              v-model="form.label"
               :label="'Name'"
               :type="'text'"
               :autofocus="true"
@@ -186,7 +186,7 @@ const destroy = (ingredient) => {
             class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- detail of the ingredient -->
             <div v-if="editedIngredientId != ingredient.id" class="flex items-center justify-between px-5 py-2">
-              <span class="text-base">{{ ingredient.name }}</span>
+              <span class="text-base">{{ ingredient.label }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
@@ -209,7 +209,7 @@ const destroy = (ingredient) => {
 
                 <text-input
                   ref="nameField"
-                  v-model="form.name"
+                  v-model="form.label"
                   :label="'Name'"
                   :type="'text'"
                   :autofocus="true"

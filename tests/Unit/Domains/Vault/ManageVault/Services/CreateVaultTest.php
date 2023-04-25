@@ -119,5 +119,14 @@ class CreateVaultTest extends TestCase
             'vault_id' => $vault->id,
             'label_translation_key' => 'vault.meal_category_dessert',
         ]);
+
+        $this->assertDatabaseHas('ingredients', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_ingredients_tomatoes',
+        ]);
+        $this->assertDatabaseHas('ingredients', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'vault.meal_ingredients_onions',
+        ]);
     }
 }
