@@ -27,6 +27,7 @@ return [
     'breadcrumb_dashboard_index' => 'Dashboard',
     'breadcrumb_dashboard_reminders' => 'All the planned reminders',
     'breadcrumb_group_index' => 'Groups',
+    'breadcrumb_kitchen_index' => 'Kitchen',
     'breadcrumb_companies_index' => 'Companies',
     'breadcrumb_contact_index' => 'Contacts',
     'breadcrumb_contact_show' => 'Profile of :name',

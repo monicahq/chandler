@@ -95,7 +95,7 @@ const destroy = (ingredient) => {
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_journal_index') }}
+                {{ $t('app.breadcrumb_kitchen_index') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -108,9 +108,7 @@ const destroy = (ingredient) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">
-              {{ data.name }}
-            </li>
+            <li class="inline">Liste des ingrédients</li>
           </ul>
         </div>
       </div>
@@ -131,7 +129,7 @@ const destroy = (ingredient) => {
               :href="data.url.photo_index"
               :class="{ 'bg-gray-100 text-blue-700 dark:bg-gray-400 dark:font-bold': defaultTab === 'life_events' }"
               class="inline-flex items-center rounded-r-md border-b border-r border-t border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
-              Ingredients
+              {{ $t('Ingredients de fou') }}
             </inertia-link>
           </div>
         </div>
