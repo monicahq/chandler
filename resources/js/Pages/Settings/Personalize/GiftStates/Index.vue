@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Gift states</li>
+            <li class="inline">{{ $t('Gift states') }}</li>
           </ul>
         </div>
       </div>
@@ -50,11 +50,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🎁 </span>
-            All the gift states
+            {{ $t('All the gift states') }}
           </h3>
           <pretty-button
             v-if="!createGiftStateModalShown"
-            :text="'Add a gift state'"
+            :text="$t('Add a gift state')"
             :icon="'plus'"
             @click="showGiftStateModal" />
         </div>
@@ -123,13 +123,11 @@
 
                   <!-- actions -->
                   <ul class="text-sm">
-                    <li
-                      class="inline cursor-pointer text-blue-500 hover:underline"
-                      @click="renameGiftStateModal(element)">
-                      Rename
+                    <li class="inline cursor-pointer" @click="renameGiftStateModal(element)">
+                      <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                     </li>
                     <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                      Delete
+                      {{ $t('Delete') }}
                     </li>
                   </ul>
                 </div>
@@ -170,7 +168,7 @@
         <div
           v-if="localGiftStates.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">Gift states let you define the various states for your gifts.</p>
+          <p class="p-5 text-center">{{ $t('Gift states let you define the various states for your gifts.') }}</p>
         </div>
       </div>
     </main>
@@ -246,7 +244,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The gift state has been created', 'success');
+          this.flash(this.$t('The gift state has been created'), 'success');
           this.localGiftStates.push(response.data.data);
           this.loadingState = null;
           this.createGiftStateModalShown = false;
@@ -263,7 +261,7 @@ export default {
       axios
         .put(giftState.url.update, this.form)
         .then((response) => {
-          this.flash('The gift state has been updated', 'success');
+          this.flash(this.$t('The gift state has been updated'), 'success');
           this.localGiftStates[this.localGiftStates.findIndex((x) => x.id === giftState.id)] = response.data.data;
           this.loadingState = null;
           this.editGiftStateId = 0;
@@ -279,7 +277,7 @@ export default {
         axios
           .delete(giftState.url.destroy)
           .then(() => {
-            this.flash('The gift state has been deleted', 'success');
+            this.flash(this.$t('The gift state has been deleted'), 'success');
             var id = this.localGiftStates.findIndex((x) => x.id === giftState.id);
             this.localGiftStates.splice(id, 1);
           })

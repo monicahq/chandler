@@ -24,7 +24,7 @@
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_settings_preferences') }}
+              {{ $t('User preferences') }}
             </li>
           </ul>
         </div>

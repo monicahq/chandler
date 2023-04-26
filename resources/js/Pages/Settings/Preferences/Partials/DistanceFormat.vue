@@ -5,7 +5,7 @@
       <h3 class="mb-4 flex font-semibold sm:mb-0">
         <span class="mr-1"> ✈️ </span>
         <span class="mr-2">
-          {{ $t('settings.user_preferences_distance_format_title') }}
+          {{ $t('How should we display distance values') }}
         </span>
 
         <help :url="$page.props.help_links.settings_preferences_numerical_format" :top="'5px'" />
@@ -40,7 +40,7 @@
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label for="km" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ $t('settings.user_preferences_distance_format_km') }}
+            {{ $t('kilometers (km)') }}
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -52,7 +52,7 @@
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label for="miles" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ $t('settings.user_preferences_distance_format_miles') }}
+            {{ $t('miles (mi)') }}
           </label>
         </div>
       </div>
@@ -115,6 +115,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then(() => {
+          this.flash(this.$t('Changes saved'), 'success');
           this.localDistanceFormat = this.form.distanceFormat;
           this.editMode = false;
           this.loadingState = null;
@@ -127,15 +128,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-pre {
-  background-color: #1f2937;
-  color: #c9ef78;
-}
-
-.example {
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
-}
-</style>

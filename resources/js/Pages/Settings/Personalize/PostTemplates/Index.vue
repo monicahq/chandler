@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('app.breadcrumb_settings_personalize_post_templates') }}</li>
+            <li class="inline">{{ $t('Post templates') }}</li>
           </ul>
         </div>
       </div>
@@ -50,11 +50,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 📮 </span>
-            {{ $t('settings.personalize_post_templates_title') }}
+            {{ $t('Post templates') }}
           </h3>
           <pretty-button
             v-if="!createPostTemplateModalShown"
-            :text="$t('settings.personalize_post_templates_cta')"
+            :text="$t('Add a post template')"
             :icon="'plus'"
             @click="showCreatePostTemplateModal" />
         </div>
@@ -75,7 +75,13 @@
           </svg>
 
           <div>
-            <p>{{ $t('settings.personalize_post_templates_help') }}</p>
+            <p>
+              {{
+                $t(
+                  'A post template defines how the content of a post should be displayed. You can define as many templates as you want, and choose which template should be used on which post.',
+                )
+              }}
+            </p>
           </div>
         </div>
 
@@ -144,10 +150,8 @@
 
                     <!-- actions -->
                     <ul class="text-sm">
-                      <li
-                        class="inline cursor-pointer text-blue-500 hover:underline"
-                        @click="renamePostTemplateModal(element)">
-                        {{ $t('Rename') }}
+                      <li class="inline cursor-pointer" @click="renamePostTemplateModal(element)">
+                        <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                       </li>
                       <li
                         v-if="element.can_be_deleted"
@@ -201,7 +205,7 @@
                                 <li
                                   class="inline cursor-pointer text-blue-500 hover:underline"
                                   @click="renameSectionModal(id, element)">
-                                  {{ $t('Rename') }}
+                                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                                 </li>
                                 <li
                                   v-if="element.can_be_deleted"
@@ -256,7 +260,7 @@
                       "
                       class="inline cursor-pointer text-sm text-blue-500 hover:underline"
                       @click="showCreateSectionModal(element)"
-                      >add a section</span
+                      >{{ $t('add a section') }}</span
                     >
 
                     <!-- form: create new section -->
@@ -295,11 +299,12 @@
                       "
                       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                       <p class="p-5 text-center">
-                        No roles yet.
+                        {{ $t('No roles yet.') }}
+
                         <span
                           class="block cursor-pointer text-sm text-blue-500 hover:underline"
                           @click="showCreateSectionModal(element)"
-                          >add a section</span
+                          >{{ $t('add a section') }}</span
                         >
                       </p>
                     </div>
@@ -429,7 +434,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The post template has been created', 'success');
+          this.flash(this.$t('The post template has been created'), 'success');
           this.localPostTemplates.push(response.data.data);
           this.loadingState = null;
           this.createPostTemplateModalShown = false;
@@ -446,7 +451,7 @@ export default {
       axios
         .put(postTemplate.url.update, this.form)
         .then((response) => {
-          this.flash('The post template has been updated', 'success');
+          this.flash(this.$t('The post template has been updated'), 'success');
           this.localPostTemplates[this.localPostTemplates.findIndex((x) => x.id === postTemplate.id)] =
             response.data.data;
           this.loadingState = null;
@@ -463,7 +468,7 @@ export default {
         axios
           .delete(postTemplate.url.destroy)
           .then(() => {
-            this.flash('The post template has been deleted', 'success');
+            this.flash(this.$t('The post template has been deleted'), 'success');
             var id = this.localPostTemplates.findIndex((x) => x.id === postTemplate.id);
             this.localPostTemplates.splice(id, 1);
           })
@@ -495,7 +500,7 @@ export default {
       axios
         .post(postTemplate.url.store, this.form)
         .then((response) => {
-          this.flash('The section has been created', 'success');
+          this.flash(this.$t('The section has been created'), 'success');
           var id = this.localPostTemplates.findIndex((x) => x.id === postTemplate.id);
           this.localPostTemplates[id].post_template_sections.push(response.data.data);
           this.loadingState = null;
@@ -514,7 +519,7 @@ export default {
       axios
         .put(section.url.update, this.form)
         .then((response) => {
-          this.flash('The section has been updated', 'success');
+          this.flash(this.$t('The section has been updated'), 'success');
 
           var postTemplateId = this.localPostTemplates.findIndex((x) => x.id === section.post_template_id);
           var sectionId = this.localPostTemplates[postTemplateId].post_template_sections.findIndex(
@@ -537,7 +542,7 @@ export default {
         axios
           .delete(section.url.destroy)
           .then(() => {
-            this.flash('The section has been deleted', 'success');
+            this.flash(this.$t('The section has been deleted'), 'success');
 
             var postTemplateId = this.localPostTemplates.findIndex((x) => x.id === section.post_template_id);
             var sectionId = this.localPostTemplates[postTemplateId].post_template_sections.findIndex(

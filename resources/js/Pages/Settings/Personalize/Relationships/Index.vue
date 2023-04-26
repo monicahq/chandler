@@ -39,7 +39,7 @@
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_settings_personalize_relationship_types') }}
+              {{ $t('Relationship types') }}
             </li>
           </ul>
         </div>
@@ -52,13 +52,13 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🥸 </span>
-            {{ $t('settings.personalize_relationship_types_title') }}
+            {{ $t('All the relationship types') }}
           </h3>
           <pretty-button
-            v-if="!createGroupTypeModalShown"
-            :text="$t('settings.personalize_relationship_types_cta')"
+            v-if="!createRelationshipGroupTypeModalShown"
+            :text="$t('Add a relationship group type')"
             :icon="'plus'"
-            @click="showGroupTypeModal" />
+            @click="showCreateRelationshipGroupTypeModal" />
         </div>
 
         <!-- help text -->
@@ -78,21 +78,29 @@
 
           <div>
             <p class="mb-2">
-              {{ $t('settings.personalize_relationship_types_help_1') }}
+              {{
+                $t(
+                  'When you define a relationship between two contacts, for instance a father-son relationship, Monica creates two relations, one for each contact:',
+                )
+              }}
             </p>
             <ul class="mb-2 list-disc pl-4">
-              <li>{{ $t('settings.personalize_relationship_types_help_2') }}</li>
-              <li>{{ $t('settings.personalize_relationship_types_help_3') }}</li>
+              <li>{{ $t('a father-son relation shown on the father page,') }}</li>
+              <li>{{ $t('a son-father relation shown on the son page.') }}</li>
             </ul>
             <p class="mb-2">
-              {{ $t('settings.personalize_relationship_types_help_4') }}
+              {{
+                $t(
+                  'We call them a relation, and its reverse relation. For each relation you define, you need to define its counterpart.',
+                )
+              }}
             </p>
           </div>
         </div>
 
         <!-- modal to create a relationship -->
         <form
-          v-if="createGroupTypeModalShown"
+          v-if="createRelationshipGroupTypeModalShown"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submitGroupType()">
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -100,19 +108,22 @@
 
             <text-input
               :ref="'newGroupType'"
-              v-model="form.groupTypeName"
-              :label="$t('settings.personalize_relationship_types_new_name')"
+              v-model="form.relationshipGroupTypeName"
+              :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
               :required="true"
               :autocomplete="false"
               :maxlength="255"
-              @esc-key-pressed="createGroupTypeModalShown = false" />
+              @esc-key-pressed="createRelationshipGroupTypeModalShown = false" />
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-span
+              :text="$t('Cancel')"
+              :classes="'mr-3'"
+              @click="createRelationshipGroupTypeModalShown = false" />
             <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
@@ -124,16 +135,14 @@
           <li v-for="groupType in localGroupTypes" :key="groupType.id">
             <!-- detail of the relationship -->
             <div
-              v-if="renameGroupTypeModalShownId != groupType.id"
+              v-if="renameRelationshipGroupTypeModalShownId != groupType.id"
               class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span class="text-base font-semibold">{{ groupType.name }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="inline cursor-pointer text-blue-500 hover:underline"
-                  @click="renameGroupTypeModal(groupType)">
-                  {{ $t('Rename') }}
+                <li class="inline cursor-pointer" @click="renameRelationshipGroupTypeModal(groupType)">
+                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
                 <li
                   v-if="groupType.can_be_deleted"
@@ -146,7 +155,7 @@
 
             <!-- rename a group type modal -->
             <form
-              v-if="renameGroupTypeModalShownId == groupType.id"
+              v-if="renameRelationshipGroupTypeModalShownId == groupType.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
               @submit.prevent="updateGroupType(groupType)">
               <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -154,19 +163,22 @@
 
                 <text-input
                   :ref="'rename' + groupType.id"
-                  v-model="form.groupTypeName"
-                  :label="$t('settings.personalize_relationship_types_new_name')"
+                  v-model="form.relationshipGroupTypeName"
+                  :label="$t('Name')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
                   :required="true"
                   :autocomplete="false"
                   :maxlength="255"
-                  @esc-key-pressed="renameGroupTypeModalShownId = 0" />
+                  @esc-key-pressed="renameRelationshipGroupTypeModalShownId = 0" />
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renameGroupTypeModalShownId = 0" />
+                <pretty-span
+                  :text="$t('Cancel')"
+                  :classes="'mr-3'"
+                  @click.prevent="renameRelationshipGroupTypeModalShownId = 0" />
                 <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
@@ -201,10 +213,8 @@
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li
-                    class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameRelationTypeModal(type)">
-                    {{ $t('Rename') }}
+                  <li class="inline cursor-pointer" @click="renameRelationTypeModal(type)">
+                    <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                   </li>
                   <li
                     v-if="type.can_be_deleted"
@@ -226,7 +236,7 @@
                   <text-input
                     :ref="'rename' + type.id"
                     v-model="form.name"
-                    :label="$t('settings.personalize_relationship_types_new_relationship_name')"
+                    :label="$t('Name')"
                     :type="'text'"
                     :autofocus="true"
                     :input-class="'block w-full'"
@@ -239,7 +249,7 @@
 
                   <text-input
                     v-model="form.nameReverseRelationship"
-                    :label="$t('settings.personalize_relationship_types_new_relationship_reverse_name')"
+                    :label="$t('Name of the reverse relationship')"
                     :type="'text'"
                     :autofocus="true"
                     :input-class="'block w-full'"
@@ -267,7 +277,7 @@
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showRelationshipTypeModal(groupType)"
-                >{{ $t('settings.personalize_relationship_types_add_relationship') }}</span
+                >{{ $t('Add a relationship type') }}</span
               >
             </div>
 
@@ -282,7 +292,7 @@
                 <text-input
                   :ref="'newRelationshipType'"
                   v-model="form.name"
-                  :label="$t('settings.personalize_relationship_types_new_relationship_name')"
+                  :label="$t('Name')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -295,7 +305,7 @@
 
                 <text-input
                   v-model="form.nameReverseRelationship"
-                  :label="$t('settings.personalize_relationship_types_new_relationship_reverse_name')"
+                  :label="$t('Name of the reverse relationship')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -322,7 +332,7 @@
           v-if="localGroupTypes.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">
-            {{ $t('settings.personalize_relationship_types_blank') }}
+            {{ $t('Relationship types let you link contacts and document how they are connected.') }}
           </p>
         </div>
       </div>
@@ -360,13 +370,13 @@ export default {
   data() {
     return {
       loadingState: '',
-      createGroupTypeModalShown: false,
-      renameGroupTypeModalShownId: 0,
+      createRelationshipGroupTypeModalShown: false,
+      renameRelationshipGroupTypeModalShownId: 0,
       createRelationshipTypeModalId: 0,
       renameRelationshipTypeModalId: 0,
       localGroupTypes: [],
       form: {
-        groupTypeName: '',
+        relationshipGroupTypeName: '',
         name: '',
         nameReverseRelationship: '',
         errors: [],
@@ -379,18 +389,18 @@ export default {
   },
 
   methods: {
-    showGroupTypeModal() {
-      this.form.groupTypeName = '';
-      this.createGroupTypeModalShown = true;
+    showCreateRelationshipGroupTypeModal() {
+      this.form.relationshipGroupTypeName = '';
+      this.createRelationshipGroupTypeModalShown = true;
 
       this.$nextTick(() => {
         this.$refs.newGroupType.focus();
       });
     },
 
-    renameGroupTypeModal(groupType) {
-      this.form.groupTypeName = groupType.name;
-      this.renameGroupTypeModalShownId = groupType.id;
+    renameRelationshipGroupTypeModal(groupType) {
+      this.form.relationshipGroupTypeName = groupType.name;
+      this.renameRelationshipGroupTypeModalShownId = groupType.id;
 
       this.$nextTick(() => {
         this.$refs[`rename${groupType.id}`].focus();
@@ -423,10 +433,10 @@ export default {
       axios
         .post(this.data.url.group_type_store, this.form)
         .then((response) => {
-          this.flash('The group type has been created', 'success');
+          this.flash(this.$t('The group type has been created'), 'success');
           this.localGroupTypes.unshift(response.data.data);
           this.loadingState = null;
-          this.createGroupTypeModalShown = false;
+          this.createRelationshipTypeModalShown = false;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -440,10 +450,10 @@ export default {
       axios
         .put(groupType.url.update, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_relationship_types_group_update_success'), 'success');
+          this.flash(this.$t('The group type has been updated'), 'success');
           this.localGroupTypes[this.localGroupTypes.findIndex((x) => x.id === groupType.id)] = response.data.data;
           this.loadingState = null;
-          this.renameGroupTypeModalShownId = 0;
+          this.renameRelationshipGroupTypeModalShownId = 0;
         })
         .catch((error) => {
           this.loadingState = null;
@@ -452,11 +462,17 @@ export default {
     },
 
     destroyGroupType(groupType) {
-      if (confirm(this.$t('settings.personalize_relationship_types_group_destroy_confirm'))) {
+      if (
+        confirm(
+          this.$t(
+            'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
+          ),
+        )
+      ) {
         axios
           .delete(groupType.url.destroy)
           .then(() => {
-            this.flash(this.$t('settings.personalize_relationship_types_group_destroy_success'), 'success');
+            this.flash(this.$t('The group type has been deleted'), 'success');
             var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             this.localGroupTypes.splice(id, 1);
           })

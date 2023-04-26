@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="mb-4 mt-8 items-center justify-between border-b pb-3 sm:mt-0 sm:flex">
-      <h3>{{ $t('settings.personalize_template_show_module_title') }}</h3>
+      <h3>{{ $t('Modules in this page') }}</h3>
 
       <!-- add module -->
       <pretty-button
         v-if="!addModuleModalShown && moduleLoaded"
-        :text="$t('settings.personalize_template_show_module_cta')"
+        :text="$t('Add a module')"
         :icon="'plus'"
         @click="showModuleModal" />
 
@@ -23,7 +23,7 @@
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <li
         class="item-list border-b border-gray-200 bg-slate-50 py-2 pl-2 pr-5 text-sm dark:border-gray-700 dark:bg-slate-900">
-        {{ $t('settings.personalize_template_show_module_available_modules') }}
+        {{ $t('Available modules:') }}
       </li>
       <li
         v-for="module in localAllModules"
@@ -37,7 +37,7 @@
           >{{ $t('Add') }}</span
         >
         <span v-if="module.already_used" class="text-xs"
-          ><span class="mr-1">✅</span> {{ $t('settings.personalize_template_show_module_already_used') }}</span
+          ><span class="mr-1">✅</span> {{ $t('Already used on this page') }}</span
         >
       </li>
     </ul>
@@ -95,14 +95,14 @@
     <!-- blank state -->
     <div v-if="localPageModules.length == 0 && moduleLoaded">
       <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
-        {{ $t('settings.personalize_template_show_module_add_module') }}
+        {{ $t('Add at least one module.') }}
       </p>
     </div>
 
     <!-- no page selected -->
     <div v-if="!moduleLoaded">
       <p class="rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
-        {{ $t('settings.personalize_template_show_module_select') }}
+        {{ $t('Please select a page on the left to load modules.') }}
       </p>
     </div>
   </div>
@@ -162,7 +162,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_template_show_module_add_success'), 'success');
+          this.flash(this.$t('The module has been added'), 'success');
           this.localPageModules.unshift(response.data.data);
           this.addModuleModalShown = false;
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = true;
@@ -176,7 +176,7 @@ export default {
       axios
         .delete(module.url.destroy)
         .then(() => {
-          this.flash(this.$t('settings.personalize_template_show_module_remove_success'), 'success');
+          this.flash(this.$t('The module has been removed'), 'success');
           this.localAllModules[this.localAllModules.findIndex((x) => x.id === module.id)].already_used = false;
 
           var id = this.localPageModules.findIndex((x) => x.id === module.id);
@@ -194,7 +194,7 @@ export default {
       axios
         .post(event.moved.element.url.position, this.form)
         .then(() => {
-          this.flash(this.$t('settings.personalize_template_show_module_order_success'), 'success');
+          this.flash(this.$t('The position has been saved'), 'success');
         })
         .catch((error) => {
           this.loadingState = null;

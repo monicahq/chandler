@@ -5,7 +5,7 @@
       <h3 class="mb-4 flex font-semibold sm:mb-0">
         <span class="mr-1"> 🗓 </span>
         <span class="mr-2">
-          {{ $t('settings.user_preferences_locale_title') }}
+          {{ $t('Language of the application') }}
         </span>
 
         <help :url="$page.props.help_links.settings_preferences_language" :top="'5px'" />
@@ -16,7 +16,7 @@
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="px-5 py-2">
-        <span class="mb-2 block">{{ $t('settings.user_preferences_locale_current_language') }}</span>
+        <span class="mb-2 block">{{ $t('Current language:') }}</span>
         <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ localLocaleI18n }}</span>
       </p>
     </div>
@@ -34,10 +34,10 @@
           name="locale"
           class="rounded-md border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm">
           <option value="en">
-            {{ $t('settings.user_preferences_locale_en') }}
+            {{ $t('English') }}
           </option>
           <option value="fr">
-            {{ $t('settings.user_preferences_locale_fr') }}
+            {{ $t('French') }}
           </option>
         </select>
       </div>
@@ -103,7 +103,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash(this.$t('app.notification_flash_changes_saved'), 'success');
+          this.flash(this.$t('Changes saved'), 'success');
           this.localLocale = response.data.data.locale;
           this.localLocaleI18n = response.data.data.locale_i18n;
           this.editMode = false;
@@ -125,7 +125,7 @@ export default {
 <style lang="scss" scoped>
 select {
   padding-left: 8px;
-  padding-right: 20px;
+  padding-right: 30px;
   background-position: right 3px center;
 }
 </style>

@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Pronouns</li>
+            <li class="inline">{{ $t('Pronouns') }}</li>
           </ul>
         </div>
       </div>
@@ -50,11 +50,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🚻 </span>
-            All the pronouns
+            {{ $t('All the pronouns') }}
           </h3>
           <pretty-button
             v-if="!createPronounModalShown"
-            :text="'Add a pronoun'"
+            :text="this.$t('Add a pronoun')"
             :icon="'plus'"
             @click="showPronounModal" />
         </div>
@@ -82,7 +82,7 @@
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createPronounModalShown = false" />
-            <pretty-button :text="'Create pronoun'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -100,10 +100,8 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-                  @click="updatePronounModal(pronoun)">
-                  Rename
+                <li class="mr-4 inline cursor-pointer" @click="updatePronounModal(pronoun)">
+                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pronoun)">
                   {{ $t('Delete') }}
@@ -145,8 +143,11 @@
           v-if="localPronouns.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">
-            Pronouns are basically how we identify ourselves apart from our name. It's how someone refers to you in
-            conversation.
+            {{
+              $t(
+                "Pronouns are basically how we identify ourselves apart from our name. It's how someone refers to you in conversation.",
+              )
+            }}
           </p>
         </div>
       </div>
@@ -223,7 +224,7 @@ export default {
       axios
         .post(this.data.url.pronoun_store, this.form)
         .then((response) => {
-          this.flash('The pronoun has been created', 'success');
+          this.flash(this.$t('The pronoun has been created'), 'success');
           this.localPronouns.unshift(response.data.data);
           this.loadingState = null;
           this.createPronounModalShown = false;
@@ -240,7 +241,7 @@ export default {
       axios
         .put(pronoun.url.update, this.form)
         .then((response) => {
-          this.flash('The pronoun has been updated', 'success');
+          this.flash(this.$t('The pronoun has been updated'), 'success');
           this.localPronouns[this.localPronouns.findIndex((x) => x.id === pronoun.id)] = response.data.data;
           this.loadingState = null;
           this.renamePronounModalShownId = 0;
@@ -252,15 +253,11 @@ export default {
     },
 
     destroy(pronoun) {
-      if (
-        confirm(
-          "Are you sure? This will remove the pronouns from all contacts, but won't delete the contacts themselves.",
-        )
-      ) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(pronoun.url.destroy)
           .then(() => {
-            this.flash('The pronoun has been deleted', 'success');
+            this.flash(this.$t('The pronoun has been deleted'), 'success');
             var id = this.localPronouns.findIndex((x) => x.id === pronoun.id);
             this.localPronouns.splice(id, 1);
           })

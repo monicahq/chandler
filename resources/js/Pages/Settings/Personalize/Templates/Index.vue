@@ -39,7 +39,7 @@
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_settings_personalize_templates') }}
+              {{ $t('Templates') }}
             </li>
           </ul>
         </div>
@@ -52,11 +52,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 📐 </span>
-            {{ $t('settings.personalize_templates_title') }}
+            {{ $t('All the templates') }}
           </h3>
           <pretty-button
             v-if="!createTemplateModalShown"
-            :text="$t('settings.personalize_templates_cta')"
+            :text="$t('Add a template')"
             :icon="'plus'"
             @click="showTemplateModal" />
         </div>
@@ -78,10 +78,18 @@
 
           <div>
             <p class="mb-2">
-              {{ $t('settings.personalize_templates_help') }}
+              {{
+                $t(
+                  'Templates let you customize what data should be displayed on your contacts. You can define as many templates as you want, and choose which template should be used on which contact.',
+                )
+              }}
             </p>
             <p>
-              {{ $t('settings.personalize_templates_help_2') }}
+              {{
+                $t(
+                  'You need at least one template for contacts to be displayed. Without a template, Monica won’t know which information it should display.',
+                )
+              }}
             </p>
           </div>
         </div>
@@ -97,7 +105,7 @@
             <text-input
               :ref="'newTemplate'"
               v-model="form.name"
-              :label="$t('settings.personalize_templates_new_name')"
+              :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
@@ -129,10 +137,8 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-                  @click="showUpdateTemplateModal(template)">
-                  {{ $t('Rename') }}
+                <li class="mr-4 inline cursor-pointer" @click="showUpdateTemplateModal(template)">
+                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(template)">
                   {{ $t('Delete') }}
@@ -151,7 +157,7 @@
                 <text-input
                   :ref="'rename' + template.id"
                   v-model="form.name"
-                  :label="$t('settings.personalize_templates_edit_name')"
+                  :label="$t('Name')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -174,7 +180,7 @@
           v-if="localTemplates.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">
-            {{ $t('settings.personalize_templates_blank') }}
+            {{ $t('Create at least one template to use Monica.') }}
           </p>
         </div>
       </div>
@@ -251,7 +257,7 @@ export default {
       axios
         .post(this.data.url.template_store, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_templates_new_success'), 'success');
+          this.flash(this.$t('The template has been created'), 'success');
           this.localTemplates.unshift(response.data.data);
           this.loadingState = null;
           this.createTemplateModalShown = false;
@@ -268,7 +274,7 @@ export default {
       axios
         .put(template.url.update, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_templates_update_success'), 'success');
+          this.flash(this.$t('The template has been updated'), 'success');
           this.localTemplates[this.localTemplates.findIndex((x) => x.id === template.id)] = response.data.data;
           this.loadingState = null;
           this.renameTemplateModalShownId = 0;
@@ -280,11 +286,17 @@ export default {
     },
 
     destroy(template) {
-      if (confirm(this.$t('settings.personalize_templates_destroy_confirmation'))) {
+      if (
+        confirm(
+          this.$t(
+            'Are you sure? This will remove the template from all contacts, but won’t delete the contacts themselves.',
+          ),
+        )
+      ) {
         axios
           .delete(template.url.destroy)
           .then(() => {
-            this.flash(this.$t('settings.personalize_templates_destroy_success'), 'success');
+            this.flash(this.$t('The template has been deleted'), 'success');
             var id = this.localTemplates.findIndex((x) => x.id === template.id);
             this.localTemplates.splice(id, 1);
           })

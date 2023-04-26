@@ -5,7 +5,7 @@
       <h3 class="mb-4 flex font-semibold sm:mb-0">
         <span class="mr-1"> 🗺️ </span>
         <span class="mr-2">
-          {{ $t('settings.user_preferences_map_title') }}
+          {{ $t('What should we use to display maps?') }}
         </span>
 
         <help :url="$page.props.help_links.settings_preferences_maps" :top="'5px'" />
@@ -16,7 +16,7 @@
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="px-5 py-2">
-        <span class="mb-2 block">{{ $t('settings.user_preferences_map_current') }}</span>
+        <span class="mb-2 block">{{ $t('Current site used to display maps:') }}</span>
         <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ currentMap }}</span>
       </p>
     </div>
@@ -108,7 +108,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash(this.$t('app.notification_flash_changes_saved'), 'success');
+          this.flash(this.$t('Changes saved'), 'success');
           this.currentMap = response.data.data.default_map_site_i18n;
           this.editMode = false;
           this.loadingState = null;

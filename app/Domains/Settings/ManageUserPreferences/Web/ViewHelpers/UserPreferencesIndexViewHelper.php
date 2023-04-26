@@ -148,13 +148,13 @@ class UserPreferencesIndexViewHelper
         $collection->push([
             'id' => 1,
             'type' => trans('settings.user_preferences_map_site_google_maps'),
-            'description' => trans('settings.user_preferences_map_site_google_maps_description'),
+            'description' => trans('Google Maps offers the best accuracy and details, but it is not ideal from a privacy standpoint.'),
             'value' => User::MAPS_SITE_GOOGLE_MAPS,
         ]);
         $collection->push([
             'id' => 2,
             'type' => trans('settings.user_preferences_map_site_open_street_maps'),
-            'description' => trans('settings.user_preferences_map_site_open_street_maps_description'),
+            'description' => trans('Open Street Maps is a great privacy alternative, but offers less details.'),
             'value' => User::MAPS_SITE_OPEN_STREET_MAPS,
         ]);
 

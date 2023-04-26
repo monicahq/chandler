@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Group types</li>
+            <li class="inline">{{ $t('Group types') }}</li>
           </ul>
         </div>
       </div>
@@ -54,7 +54,7 @@
           </h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
-            :text="'Add a group type'"
+            :text="$t('Add a group type')"
             :icon="'plus'"
             @click="showCreateGroupTypeModal" />
         </div>
@@ -76,8 +76,11 @@
 
           <div>
             <p>
-              A group is two or more people together. It can be a family, a household, a sport club. Whatever is
-              important to you.
+              {{
+                $t(
+                  'A group is two or more people together. It can be a family, a household, a sport club. Whatever is important to you.',
+                )
+              }}
             </p>
           </div>
         </div>
@@ -147,20 +150,18 @@
 
                     <!-- actions -->
                     <ul class="text-sm">
-                      <li
-                        class="inline cursor-pointer text-blue-500 hover:underline"
-                        @click="renameGroupTypeModal(element)">
-                        Rename
+                      <li class="inline cursor-pointer" @click="renameGroupTypeModal(element)">
+                        <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                       </li>
                       <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                        Delete
+                        {{ $t('Delete') }}
                       </li>
                     </ul>
                   </div>
 
                   <!-- available roles -->
                   <div class="ml-8">
-                    <p class="mb-1 text-sm text-gray-500">Roles:</p>
+                    <p class="mb-1 text-sm text-gray-500">{{ $t('Roles:') }}</p>
 
                     <draggable
                       :list="element.group_type_roles"
@@ -198,15 +199,13 @@
 
                               <!-- actions -->
                               <ul class="text-sm">
-                                <li
-                                  class="inline cursor-pointer text-blue-500 hover:underline"
-                                  @click="renameRoleModal(id, element)">
-                                  Rename
+                                <li class="inline cursor-pointer" @click="renameRoleModal(id, element)">
+                                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                                 </li>
                                 <li
                                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                                   @click="destroyRole(element)">
-                                  Delete
+                                  {{ $t('Delete') }}
                                 </li>
                               </ul>
                             </div>
@@ -253,7 +252,7 @@
                       "
                       class="inline cursor-pointer text-sm text-blue-500 hover:underline"
                       @click="showCreateRoleModal(element)"
-                      >add a role</span
+                      >{{ $t('add a role') }}</span
                     >
 
                     <!-- form: create new role -->
@@ -294,7 +293,7 @@
                         <span
                           class="block cursor-pointer text-sm text-blue-500 hover:underline"
                           @click="showCreateRoleModal(element)"
-                          >add a role</span
+                          >{{ $t('add a role') }}</span
                         >
                       </p>
                     </div>
@@ -335,7 +334,7 @@
         <div
           v-if="localGroupTypes.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">Group types let you group people together.</p>
+          <p class="p-5 text-center">{{ $t('Group types let you group people together.') }}</p>
         </div>
       </div>
     </main>
@@ -431,7 +430,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The group type has been created', 'success');
+          this.flash(this.$t('The group type has been created'), 'success');
           this.localGroupTypes.push(response.data.data);
           this.loadingState = null;
           this.createGroupTypeModalShown = false;
@@ -448,7 +447,7 @@ export default {
       axios
         .put(groupType.url.update, this.form)
         .then((response) => {
-          this.flash('The group type has been updated', 'success');
+          this.flash(this.$t('The group type has been updated'), 'success');
           this.localGroupTypes[this.localGroupTypes.findIndex((x) => x.id === groupType.id)] = response.data.data;
           this.loadingState = null;
           this.editGroupTypeId = 0;
@@ -464,7 +463,7 @@ export default {
         axios
           .delete(groupType.url.destroy)
           .then(() => {
-            this.flash('The group type has been deleted', 'success');
+            this.flash(this.$t('The group type has been deleted'), 'success');
             var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             this.localGroupTypes.splice(id, 1);
           })
@@ -496,7 +495,7 @@ export default {
       axios
         .post(groupType.url.store, this.form)
         .then((response) => {
-          this.flash('The role has been created', 'success');
+          this.flash(this.$t('The role has been created'), 'success');
           var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
           this.localGroupTypes[id].group_type_roles.push(response.data.data);
           this.loadingState = null;
@@ -515,7 +514,7 @@ export default {
       axios
         .put(role.url.update, this.form)
         .then((response) => {
-          this.flash('The role has been updated', 'success');
+          this.flash(this.$t('The role has been updated'), 'success');
 
           var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === role.group_type_id);
           var roleId = this.localGroupTypes[groupTypeId].group_type_roles.findIndex((x) => x.id === role.id);
@@ -536,7 +535,7 @@ export default {
         axios
           .delete(role.url.destroy)
           .then(() => {
-            this.flash('The role has been deleted', 'success');
+            this.flash(this.$t('The role has been deleted'), 'success');
 
             var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === role.group_type_id);
             var roleId = this.localGroupTypes[groupTypeId].group_type_roles.findIndex((x) => x.id === role.id);

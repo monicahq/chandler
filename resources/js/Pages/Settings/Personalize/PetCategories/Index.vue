@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Pet categories</li>
+            <li class="inline">{{ $t('Pet categories') }}</li>
           </ul>
         </div>
       </div>
@@ -50,11 +50,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🐱 </span>
-            All the pet categories
+            {{ $t('All the pet categories') }}
           </h3>
           <pretty-button
             v-if="!createPetCategoryModalShown"
-            :text="'Add a pet category'"
+            :text="$t('Add')"
             :icon="'plus'"
             @click="showPetCategoryModal" />
         </div>
@@ -82,7 +82,7 @@
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createPetCategoryModalShown = false" />
-            <pretty-button :text="'Create pet category'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -102,13 +102,11 @@
 
               <!-- actions -->
               <ul class="text-sm">
-                <li
-                  class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
-                  @click="updatePetCategoryModal(petCategory)">
-                  Rename
+                <li class="mr-4 inline cursor-pointer" @click="updatePetCategoryModal(petCategory)">
+                  <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(petCategory)">
-                  Delete
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -150,7 +148,7 @@
           v-if="localPetCategories.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <p class="p-5 text-center">
-            Pet categories let you add types of pets that contacts can add to their profile.
+            {{ $t('Pet categories let you add types of pets that contacts can add to their profile.') }}
           </p>
         </div>
       </div>
@@ -227,7 +225,7 @@ export default {
       axios
         .post(this.data.url.pet_category_store, this.form)
         .then((response) => {
-          this.flash('The pet category has been created', 'success');
+          this.flash(this.$t('The pet category has been created'), 'success');
           this.localPetCategories.unshift(response.data.data);
           this.loadingState = null;
           this.createPetCategoryModalShown = false;
@@ -244,7 +242,7 @@ export default {
       axios
         .put(petCategory.url.update, this.form)
         .then((response) => {
-          this.flash('The pet category has been updated', 'success');
+          this.flash(this.$t('The pet category has been updated'), 'success');
           this.localPetCategories[this.localPetCategories.findIndex((x) => x.id === petCategory.id)] =
             response.data.data;
           this.loadingState = null;
@@ -257,15 +255,11 @@ export default {
     },
 
     destroy(petCategory) {
-      if (
-        confirm(
-          "Are you sure? This will remove the pets from the contacts who have them, but won't delete the contacts themselves.",
-        )
-      ) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(petCategory.url.destroy)
           .then(() => {
-            this.flash('The pet category has been deleted', 'success');
+            this.flash(this.$t('The pet category has been deleted'), 'success');
             var id = this.localPetCategories.findIndex((x) => x.id === petCategory.id);
             this.localPetCategories.splice(id, 1);
           })

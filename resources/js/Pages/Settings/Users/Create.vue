@@ -55,10 +55,14 @@ k
           <!-- title -->
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="mb-1 text-center text-2xl font-medium">
-              {{ $t('settings.users_management_new_title') }}
+              {{ $t('Invite someone') }}
             </h1>
             <p class="text-center">
-              {{ $t('settings.users_management_new_description') }}
+              {{
+                $t(
+                  'This user will be part of your account, but won’t get access to all the vaults in this account unless you give specific access to them. This person will be able to create vaults as well.',
+                )
+              }}
             </p>
           </div>
 
@@ -68,7 +72,7 @@ k
 
             <text-input
               v-model="form.email"
-              :label="$t('settings.users_management_new_email')"
+              :label="$t('Email address to send the invitation to')"
               :type="'email'"
               :autofocus="true"
               :input-class="'block w-full'"
@@ -82,7 +86,7 @@ k
             <!-- role types -->
             <div>
               <p class="mb-2">
-                {{ $t('settings.users_management_new_permission') }}
+                {{ $t('What permission should the user have?') }}
               </p>
 
               <!-- view -->
@@ -97,7 +101,7 @@ k
                 <label
                   for="viewer"
                   class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('settings.users_management_regular_user') }}
+                  {{ $t('Regular user') }}
                 </label>
               </div>
 
@@ -113,9 +117,13 @@ k
                 <label
                   for="manager"
                   class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('settings.users_management_administrator_role') }}
+                  {{ $t('Administrator') }}
                   <span class="ml-4 font-normal text-gray-500">
-                    {{ $t('settings.users_management_administrator_role_help') }}
+                    {{
+                      $t(
+                        'Can do everything, including adding or removing other users, managing billing and closing the account.',
+                      )
+                    }}
                   </span>
                 </label>
               </div>
@@ -124,11 +132,7 @@ k
 
           <div class="flex justify-between p-5">
             <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
-            <pretty-button
-              :text="$t('settings.users_management_new_cta')"
-              :state="loadingState"
-              :icon="'check'"
-              :classes="'save'" />
+            <pretty-button :text="$t('Send invitation')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </div>
@@ -185,7 +189,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          localStorage.success = this.$t('settings.users_management_new_success');
+          localStorage.success = this.$t('Invitation sent');
           this.$inertia.visit(response.data.data);
         })
         .catch((error) => {

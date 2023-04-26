@@ -40,7 +40,7 @@
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.templates" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_settings_personalize_templates') }}
+                {{ $t('Templates') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -87,13 +87,17 @@
 
           <div>
             <p class="mb-1">
-              {{ $t('settings.personalize_template_show_title') }}
+              {{ $t('This template will define what information are displayed on a contact page.') }}
             </p>
             <p class="mb-1">
               {{ $t('settings.personalize_template_show_description') }}
             </p>
             <p>
-              {{ $t('settings.personalize_template_show_description_2') }}
+              {{
+                $t(
+                  'Note that removing a module from a page will not delete the actual data on your contact pages. It will simply hide it.',
+                )
+              }}
             </p>
           </div>
         </div>
