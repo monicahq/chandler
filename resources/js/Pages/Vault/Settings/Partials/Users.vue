@@ -13,7 +13,7 @@
         @click="showAddUserModal" />
       <pretty-span
         v-if="addUserModalShown && localUsersInAccount.length == 0"
-        :text="$t('app.cancel')"
+        :text="$t('Cancel')"
         @click="addUserModalShown = false" />
     </div>
 
@@ -108,7 +108,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" @click="addUserModalShown = false" />
+        <pretty-span :text="$t('Cancel')" @click="addUserModalShown = false" />
         <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
@@ -138,7 +138,7 @@
                 {{ $t('vault.settings_users_change_permission') }}
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(user)">
-                {{ $t('app.remove') }}
+                {{ $t('Remove') }}
               </li>
             </ul>
           </div>
@@ -207,7 +207,7 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('app.cancel')" @click="editedUser = []" />
+              <pretty-span :text="$t('Cancel')" @click="editedUser = []" />
               <pretty-button
                 :text="$t('vault.settings_users_edit_permission_cta')"
                 :state="loadingState"

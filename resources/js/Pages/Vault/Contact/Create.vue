@@ -126,7 +126,7 @@
               :data="data.genders"
               :required="false"
               :div-outer-class="'mb-5'"
-              :placeholder="$t('app.choose_value')"
+              :placeholder="$t('Choose a value')"
               :dropdown-class="'block w-full'"
               :label="$t('vault.create_contact_gender')" />
 
@@ -137,7 +137,7 @@
               :data="data.pronouns"
               :required="false"
               :div-outer-class="'mb-5'"
-              :placeholder="$t('app.choose_value')"
+              :placeholder="$t('Choose a value')"
               :dropdown-class="'block w-full'"
               :label="$t('vault.create_contact_pronoun')" />
 
@@ -148,7 +148,7 @@
               :data="data.templates"
               :required="false"
               :div-outer-class="'mb-5'"
-              :placeholder="$t('app.choose_value')"
+              :placeholder="$t('Choose a value')"
               :dropdown-class="'block w-full'"
               :label="$t('vault.create_contact_template')" />
 
@@ -207,7 +207,7 @@
 
           <!-- actions -->
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('app.cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('app.add')"

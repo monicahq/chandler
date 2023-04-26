@@ -101,8 +101,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createCallReasonTypeModalShown = false" />
-            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createCallReasonTypeModalShown = false" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -155,7 +155,7 @@
 
               <div class="flex justify-between p-5">
                 <pretty-span
-                  :text="$t('app.cancel')"
+                  :text="$t('Cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameCallReasonTypeModalShownId = 0" />
                 <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
@@ -208,7 +208,7 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="renameReasonModalId = 0" />
+                  <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renameReasonModalId = 0" />
                   <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
@@ -248,7 +248,7 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="createReasonModalId = 0" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="createReasonModalId = 0" />
                 <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
               </div>
             </form>

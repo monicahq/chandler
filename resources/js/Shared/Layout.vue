@@ -163,7 +163,7 @@
               <inertia-link :href="layoutData.url.settings" class="relative inline">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="icon-cog relative mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 dark:text-gray-400 sm:h-4 sm:w-4"
+                  class="icon-cog relative mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">
@@ -186,7 +186,7 @@
               <inertia-link class="inline" method="post" :href="route('logout')" as="button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 dark:text-gray-400 sm:h-4 sm:w-4"
+                  class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">

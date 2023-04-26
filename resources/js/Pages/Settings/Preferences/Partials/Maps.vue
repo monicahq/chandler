@@ -10,7 +10,7 @@
 
         <help :url="$page.props.help_links.settings_preferences_maps" :top="'5px'" />
       </h3>
-      <pretty-button v-if="!editMode" :text="$t('app.edit')" @click="enableEditMode" />
+      <pretty-button v-if="!editMode" :text="$t('Edit')" @click="enableEditMode" />
     </div>
 
     <!-- normal mode -->
@@ -52,8 +52,8 @@
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="$t('app.cancel')" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-link :text="$t('Cancel')" :classes="'mr-3'" @click="editMode = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save'" />
       </div>
     </form>
   </div>

@@ -139,8 +139,8 @@ const submit = () => {
 
           <!-- actions -->
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('app.cancel')" :classes="'mr-3'" />
-            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </div>

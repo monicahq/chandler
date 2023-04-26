@@ -27,7 +27,7 @@
       <a-tooltip
         v-if="!localData.is_favorite"
         placement="topLeft"
-        title="Set as favorite"
+        :title="$t('Set as favorite')"
         arrow-point-at-center
         @click.prevent="toggleFavorite">
         <svg

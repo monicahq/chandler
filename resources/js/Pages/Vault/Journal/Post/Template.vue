@@ -74,7 +74,7 @@ defineProps({
               <pretty-link
                 v-if="layoutData.vault.permission.at_least_editor"
                 :href="template.url.create"
-                :text="$t('app.choose')"
+                :text="$t('Choose')"
                 :icon="'plus'" />
             </div>
           </li>

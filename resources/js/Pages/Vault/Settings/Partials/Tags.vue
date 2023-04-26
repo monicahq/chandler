@@ -36,7 +36,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createTagModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createTagModalShown = false" />
         <pretty-button
           :text="$t('vault.settings_tags_create_cta')"
           :state="loadingState"
@@ -65,12 +65,12 @@
           <!-- actions -->
           <ul class="text-sm">
             <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="updateTagModal(tag)">
-              {{ $t('app.edit') }}
+              {{ $t('Edit') }}
             </li>
             <li
               class="inline cursor-pointer text-red-500 hover:text-red-900 hover:dark:text-red-100"
               @click="destroy(tag)">
-              {{ $t('app.delete') }}
+              {{ $t('Delete') }}
             </li>
           </ul>
         </div>
@@ -98,7 +98,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editTagModalShownId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editTagModalShownId = 0" />
             <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>

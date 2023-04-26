@@ -13,7 +13,7 @@
       <!-- cancel button -->
       <pretty-button
         v-if="addModuleModalShown && moduleLoaded"
-        :text="$t('app.cancel')"
+        :text="$t('Cancel')"
         @click="addModuleModalShown = false" />
     </div>
 
@@ -83,7 +83,7 @@
               <!-- actions -->
               <ul class="text-sm">
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="remove(element)">
-                  {{ $t('app.remove') }}
+                  {{ $t('Remove') }}
                 </li>
               </ul>
             </div>

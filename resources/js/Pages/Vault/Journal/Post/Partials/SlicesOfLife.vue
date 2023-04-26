@@ -68,7 +68,7 @@ const reset = () => {
         v-if="!editSlicesModalShown && localSlices.length > 0"
         class="relative cursor-pointer text-xs text-gray-600 dark:text-gray-400"
         @click="showSliceModal">
-        {{ $t('app.edit') }}
+        {{ $t('Edit') }}
       </span>
 
       <!-- close button -->
@@ -76,7 +76,7 @@ const reset = () => {
         v-if="editSlicesModalShown"
         class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
         @click="editSlicesModalShown = false">
-        {{ $t('app.close') }}
+        {{ $t('Close') }}
       </span>
     </p>
 
@@ -94,15 +94,15 @@ const reset = () => {
             :data="localSlices"
             :required="false"
             :div-outer-class="'mb-2'"
-            :placeholder="$t('app.choose_value')"
+            :placeholder="$t('Choose a value')"
             :dropdown-class="'block w-full'" />
         </div>
 
         <div class="flex justify-between p-2">
-          <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editSlicesModalShown = false" />
+          <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="editSlicesModalShown = false" />
           <pretty-button
             :href="'data.url.vault.create'"
-            :text="$t('app.save')"
+            :text="$t('Save')"
             :state="loadingState"
             :icon="'check'"
             :classes="'save'" />

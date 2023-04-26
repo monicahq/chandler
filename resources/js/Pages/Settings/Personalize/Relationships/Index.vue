@@ -112,8 +112,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
-            <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -139,7 +139,7 @@
                   v-if="groupType.can_be_deleted"
                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                   @click="destroyGroupType(groupType)">
-                  {{ $t('app.delete') }}
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -166,10 +166,7 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span
-                  :text="$t('app.cancel')"
-                  :classes="'mr-3'"
-                  @click.prevent="renameGroupTypeModalShownId = 0" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renameGroupTypeModalShownId = 0" />
                 <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
@@ -213,7 +210,7 @@
                     v-if="type.can_be_deleted"
                     class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                     @click="destroyRelationshipType(groupType, type)">
-                    {{ $t('app.delete') }}
+                    {{ $t('Delete') }}
                   </li>
                 </ul>
               </div>
@@ -255,7 +252,7 @@
 
                 <div class="flex justify-between p-5">
                   <pretty-span
-                    :text="$t('app.cancel')"
+                    :text="$t('Cancel')"
                     :classes="'mr-3'"
                     @click.prevent="renameRelationshipTypeModalId = 0" />
                   <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
@@ -311,7 +308,7 @@
 
               <div class="flex justify-between p-5">
                 <pretty-span
-                  :text="$t('app.cancel')"
+                  :text="$t('Cancel')"
                   :classes="'mr-3'"
                   @click.prevent="createRelationshipTypeModalId = 0" />
                 <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />

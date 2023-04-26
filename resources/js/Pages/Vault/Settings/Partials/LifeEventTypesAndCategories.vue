@@ -231,8 +231,8 @@ const destroyLifeEventType = (lifeEventType) => {
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createLifeEventCategoryModalShown = false" />
-        <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createLifeEventCategoryModalShown = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
@@ -280,7 +280,7 @@ const destroyLifeEventType = (lifeEventType) => {
                     {{ $t('app.rename') }}
                   </li>
                   <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                    {{ $t('app.delete') }}
+                    {{ $t('Delete') }}
                   </li>
                 </ul>
               </div>
@@ -333,7 +333,7 @@ const destroyLifeEventType = (lifeEventType) => {
                             <li
                               class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                               @click="destroyLifeEventType(element)">
-                              {{ $t('app.delete') }}
+                              {{ $t('Delete') }}
                             </li>
                           </ul>
                         </div>
@@ -362,7 +362,7 @@ const destroyLifeEventType = (lifeEventType) => {
                       </div>
 
                       <div class="flex justify-between p-5">
-                        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="lifeEventCategoryId = 0" />
+                        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="lifeEventCategoryId = 0" />
                         <pretty-button
                           :text="$t('app.rename')"
                           :state="loadingState"
@@ -408,10 +408,10 @@ const destroyLifeEventType = (lifeEventType) => {
 
                   <div class="flex justify-between p-5">
                     <pretty-span
-                      :text="$t('app.cancel')"
+                      :text="$t('Cancel')"
                       :classes="'mr-3'"
                       @click="createLifeEventTypeModalShown = false" />
-                    <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+                    <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
                   </div>
                 </form>
 
@@ -457,7 +457,7 @@ const destroyLifeEventType = (lifeEventType) => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editLifeEventCategoryId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editLifeEventCategoryId = 0" />
               <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>

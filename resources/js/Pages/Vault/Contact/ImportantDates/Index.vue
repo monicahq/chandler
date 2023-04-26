@@ -86,7 +86,7 @@
                 v-model="form.contact_important_date_type_id"
                 :data="data.date_types"
                 :required="false"
-                :placeholder="$t('app.choose_value')"
+                :placeholder="$t('Choose a value')"
                 :dropdown-class="'block w-full'"
                 :help="'Some dates have a special type that we will use in the software to calculate an age.'"
                 :label="'Date type'" />
@@ -140,7 +140,7 @@
                   :data="data.months"
                   :required="true"
                   :div-outer-class="'mb-5 mr-2'"
-                  :placeholder="$t('app.choose_value')"
+                  :placeholder="$t('Choose a value')"
                   :dropdown-class="'block w-full'"
                   :label="'Month'" />
 
@@ -149,7 +149,7 @@
                   :data="data.days"
                   :required="true"
                   :div-outer-class="'mb-5'"
-                  :placeholder="$t('app.choose_value')"
+                  :placeholder="$t('Choose a value')"
                   :dropdown-class="'block w-full'"
                   :label="'Day'" />
               </div>
@@ -235,7 +235,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createDateModalShown = false" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createDateModalShown = false" />
             <pretty-button :text="'Add date'" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
@@ -266,7 +266,7 @@
                   Edit
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">
-                  {{ $t('app.delete') }}
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -299,7 +299,7 @@
                     v-model="form.contact_important_date_type_id"
                     :data="data.date_types"
                     :required="false"
-                    :placeholder="$t('app.choose_value')"
+                    :placeholder="$t('Choose a value')"
                     :dropdown-class="'block w-full'"
                     :help="'Some dates have a special type that we will use in the software to calculate an age.'"
                     :label="'Date type'" />
@@ -357,7 +357,7 @@
                       :data="data.months"
                       :required="true"
                       :div-outer-class="'mb-5 mr-2'"
-                      :placeholder="$t('app.choose_value')"
+                      :placeholder="$t('Choose a value')"
                       :dropdown-class="'block w-full'"
                       :label="'Month'" />
 
@@ -366,7 +366,7 @@
                       :data="data.days"
                       :required="true"
                       :div-outer-class="'mb-5'"
-                      :placeholder="$t('app.choose_value')"
+                      :placeholder="$t('Choose a value')"
                       :dropdown-class="'block w-full'"
                       :label="'Day'" />
                   </div>
@@ -403,8 +403,8 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedDateId = 0" />
-                <pretty-button :text="$t('app.save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="editedDateId = 0" />
+                <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>

@@ -249,7 +249,7 @@ const destroy = () => {
                   <span
                     class="inline cursor-pointer text-red-500 hover:text-red-900"
                     @click="showDeletePhotoModal(photo)">
-                    {{ $t('app.delete') }}
+                    {{ $t('Delete') }}
                   </span>
                 </li>
               </ul>
@@ -469,7 +469,7 @@ const destroy = () => {
             </ul>
 
             <!-- delete -->
-            <div @click="destroy" class="cursor-pointer text-red-500 hover:text-red-900">{{ $t('app.delete') }}</div>
+            <div @click="destroy" class="cursor-pointer text-red-500 hover:text-red-900">{{ $t('Delete') }}</div>
           </div>
         </div>
       </div>

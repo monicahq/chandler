@@ -123,7 +123,7 @@ k
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('app.cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
             <pretty-button
               :text="$t('settings.users_management_new_cta')"
               :state="loadingState"

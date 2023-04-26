@@ -111,7 +111,7 @@
               :data="data.genders"
               :required="false"
               :div-outer-class="'mb-5'"
-              :placeholder="$t('app.choose_value')"
+              :placeholder="$t('Choose a value')"
               :dropdown-class="'block w-full'"
               :label="'Gender'" />
 
@@ -121,7 +121,7 @@
               :data="data.pronouns"
               :required="false"
               :div-outer-class="'mb-5'"
-              :placeholder="$t('app.choose_value')"
+              :placeholder="$t('Choose a value')"
               :dropdown-class="'block w-full'"
               :label="'Pronoun'" />
 
@@ -147,10 +147,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.show" :text="$t('app.cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.show" :text="$t('Cancel')" :classes="'mr-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
-              :text="'Update'"
+              :text="$t('Update')"
               :state="loadingState"
               :icon="'check'"
               :classes="'save'" />

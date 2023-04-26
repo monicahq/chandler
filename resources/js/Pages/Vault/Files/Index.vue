@@ -93,7 +93,7 @@
                     <a :href="file.url.download" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
                   </li>
                   <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
-                    {{ $t('app.delete') }}
+                    {{ $t('Delete') }}
                   </li>
                 </ul>
               </li>

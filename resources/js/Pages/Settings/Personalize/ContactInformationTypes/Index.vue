@@ -96,7 +96,7 @@
 
           <div class="flex justify-between p-5">
             <pretty-span
-              :text="$t('app.cancel')"
+              :text="$t('Cancel')"
               :classes="'mr-3'"
               @click="createContactInformationTypeModalShown = false" />
             <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
@@ -137,7 +137,7 @@
                   v-if="contactInformationType.can_be_deleted"
                   class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
                   @click="destroy(contactInformationType)">
-                  {{ $t('app.delete') }}
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -177,7 +177,7 @@
 
               <div class="flex justify-between p-5">
                 <pretty-span
-                  :text="$t('app.cancel')"
+                  :text="$t('Cancel')"
                   :classes="'mr-3'"
                   @click.prevent="renameContactInformationTypeModalShownId = 0" />
                 <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />

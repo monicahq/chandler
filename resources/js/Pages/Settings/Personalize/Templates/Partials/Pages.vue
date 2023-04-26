@@ -80,7 +80,7 @@
                 {{ $t('app.rename') }}
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                {{ $t('app.delete') }}
+                {{ $t('Delete') }}
               </li>
             </ul>
           </div>
@@ -108,7 +108,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="renamePageModalShownId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renamePageModalShownId = 0" />
             <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
@@ -137,7 +137,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createPageModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createPageModalShown = false" />
         <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>

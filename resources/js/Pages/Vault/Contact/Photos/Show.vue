@@ -98,7 +98,7 @@
           </div>
 
           <span class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(data)">
-            {{ $t('app.delete') }}
+            {{ $t('Delete') }}
           </span>
         </div>
 

@@ -7,7 +7,7 @@
         v-if="!editTagModalShown"
         class="relative cursor-pointer text-xs text-gray-600 dark:text-gray-400"
         @click="showEditModal">
-        {{ $t('app.edit') }}
+        {{ $t('Edit') }}
       </span>
 
       <!-- close button -->
@@ -15,7 +15,7 @@
         v-if="editTagModalShown"
         class="cursor-pointer text-xs text-gray-600 dark:text-gray-400"
         @click="editTagModalShown = false">
-        {{ $t('app.close') }}
+        {{ $t('Close') }}
       </span>
     </p>
 

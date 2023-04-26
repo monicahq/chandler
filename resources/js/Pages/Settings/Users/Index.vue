@@ -102,10 +102,10 @@
               <!-- actions -->
               <ul v-if="!user.is_logged_user" class="text-sm">
                 <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="showEditModal(user)">
-                  {{ $t('app.edit') }}
+                  {{ $t('Edit') }}
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(user)">
-                  {{ $t('app.delete') }}
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -154,7 +154,7 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editModalshownId = 0" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editModalshownId = 0" />
                 <pretty-button :text="$t('app.update')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
