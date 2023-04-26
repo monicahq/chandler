@@ -90,7 +90,7 @@
     </div>
 
     <!-- blank state -->
-    <p v-if="localTags.length == 0" class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
+    <p v-if="localTags.length == 0" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
   </div>
 </template>
 
@@ -156,7 +156,7 @@ export default {
       axios
         .post(this.data.url.tag_store, this.form)
         .then((response) => {
-          this.flash('The tag has been added', 'success');
+          this.flash(this.$t('The tag has been added'), 'success');
           this.form.search = '';
           this.localTagsInVault.push(response.data.data);
           this.localTags.push(response.data.data);

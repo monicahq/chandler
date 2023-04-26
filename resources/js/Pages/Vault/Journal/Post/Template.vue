@@ -49,7 +49,7 @@ defineProps({
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_post_create_template') }}
+              {{ $t('Choose a template') }}
             </li>
           </ul>
         </div>
@@ -58,7 +58,7 @@ defineProps({
 
     <main class="relative sm:mt-16">
       <div class="mx-auto max-w-lg px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <h3 class="mb-4">Please choose a template for this new post</h3>
+        <h3 class="mb-4">{{ $t('Please choose a template for this new post') }}</h3>
         <ul class="mb-6 rounded-lg border border-gray-200 dark:border-gray-800 dark:bg-gray-900">
           <li
             v-for="template in data.templates"
@@ -67,7 +67,9 @@ defineProps({
             <div class="flex items-center justify-between">
               <div>
                 <p class="font-semibold">{{ template.label }}</p>
-                <p class="text-sm text-gray-500">{{ template.sections.length }} template sections</p>
+                <p class="text-sm text-gray-500">
+                  {{ $t(':count template sections', { count: template.sections.length }) }}
+                </p>
               </div>
 
               <!-- choose button -->

@@ -59,7 +59,7 @@ const submit = () => {
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_journal_create') }}
+              {{ $t('Create a journal') }}
             </li>
           </ul>
         </div>
@@ -73,7 +73,7 @@ const submit = () => {
           @submit.prevent="submit()">
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">
-              {{ $t('vault.journal_create_title') }}
+              {{ $t('Create a journal') }}
             </h1>
           </div>
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -87,11 +87,11 @@ const submit = () => {
               :input-class="'block w-full'"
               :required="true"
               :maxlength="255"
-              :label="$t('vault.journal_create_name')" />
+              :label="$t('Name')" />
 
             <text-area
               v-model="form.description"
-              :label="$t('vault.journal_create_description')"
+              :label="$t('Description')"
               :maxlength="255"
               :textarea-class="'block w-full'" />
           </div>

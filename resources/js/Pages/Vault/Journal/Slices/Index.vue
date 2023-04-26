@@ -85,7 +85,7 @@ const submit = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Slices of life</li>
+            <li class="inline">{{ $t('Slices of life') }}</li>
           </ul>
         </div>
       </div>
@@ -97,13 +97,14 @@ const submit = () => {
         <div class="mb-6 flex items-center justify-between">
           <h3>
             <span class="mr-1"> 🍕 </span>
-            All the slices of life in {{ data.journal.name }}
+
+            {{ $t('All the slices of life in :name', { name: data.journal.name }) }}
           </h3>
 
           <pretty-button
             v-if="!createSliceOfLifeModalShown"
             @click="showSliceOfLifeModal"
-            :text="'Create a slice of life'"
+            :text="$t('Create a slice of life')"
             :icon="'plus'" />
         </div>
 
@@ -151,7 +152,7 @@ const submit = () => {
           v-if="localSlices.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <img src="/img/journal_slice_of_life_blank.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-44 w-44" />
-          <p class="px-5 pb-5 pt-2 text-center">Group journal entries together with slices of life.</p>
+          <p class="px-5 pb-5 pt-2 text-center">{{ $t('Group journal entries together with slices of life.') }}</p>
         </div>
       </div>
     </main>
@@ -172,16 +173,6 @@ const submit = () => {
   li:hover:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }
-}
-
-.special-grid {
-  grid-template-columns: 150px 1fr 200px;
-}
-
-@media (max-width: 480px) {
-  .special-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>

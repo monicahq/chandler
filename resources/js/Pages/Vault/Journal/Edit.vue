@@ -74,7 +74,7 @@ const submit = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Edit journal</li>
+            <li class="inline">{{ $t('Edit journal') }}</li>
           </ul>
         </div>
       </div>
@@ -87,7 +87,7 @@ const submit = () => {
           @submit.prevent="submit()">
           <div class="section-head border-b border-gray-200 bg-blue-50 p-5 dark:border-gray-700 dark:bg-blue-900">
             <h1 class="text-center text-2xl font-medium">
-              {{ $t('vault.journal_create_title') }}
+              {{ $t('Edit a journal') }}
             </h1>
           </div>
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -101,11 +101,11 @@ const submit = () => {
               :input-class="'block w-full'"
               :required="true"
               :maxlength="255"
-              :label="$t('vault.journal_create_name')" />
+              :label="$t('Name')" />
 
             <text-area
               v-model="form.description"
-              :label="$t('vault.journal_create_description')"
+              :label="$t('Description')"
               :maxlength="255"
               :textarea-class="'block w-full'" />
           </div>
