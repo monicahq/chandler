@@ -69,7 +69,7 @@ const destroy = (journalMetric, postMetric) => {
 <template>
   <div class="mb-8">
     <p class="mb-2 flex items-center justify-between font-bold">
-      <span>Post metrics</span>
+      <span>{{ $t('Post metrics') }}</span>
     </p>
 
     <!-- journal metrics -->
@@ -108,19 +108,19 @@ const destroy = (journalMetric, postMetric) => {
           @click="showAddMetricModal(journalMetric)"
           v-if="!addModalShown && editModeJournalMetricId != journalMetric.id"
           class="mb-6 mr-3 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          add a new metric
+          {{ $t('add a new metric') }}
         </li>
         <li
           @click="showEditMetricModal(journalMetric)"
           v-if="!addModalShown && journalMetric.post_metrics.length > 0 && editModeJournalMetricId != journalMetric.id"
-          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          edit
+          class="mb-6 inline cursor-pointer text-sm">
+          <span class="text-blue-500 hover:underline">{{ $t('edit') }}</span>
         </li>
         <li
           @click="editModeJournalMetricId = 0"
           v-if="editModeJournalMetricId == journalMetric.id"
-          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          close edit mode
+          class="mb-6 inline cursor-pointer text-sm">
+          <span class="text-blue-500 hover:underline">{{ $t('close edit mode') }}</span>
         </li>
       </ul>
 
@@ -141,7 +141,7 @@ const destroy = (journalMetric, postMetric) => {
               :type="'number'"
               :min="0"
               :max="1000000"
-              :label="'Numerical value'"
+              :label="$t('Numerical value')"
               @esc-key-pressed="addModalShown = false" />
 
             <text-input
@@ -150,7 +150,7 @@ const destroy = (journalMetric, postMetric) => {
               :input-class="'block w-full'"
               :required="false"
               :maxlength="255"
-              :label="'More details'"
+              :label="$t('More details')"
               @esc-key-pressed="addModalShown = false" />
           </div>
 
@@ -169,7 +169,7 @@ const destroy = (journalMetric, postMetric) => {
 
     <!-- blank state -->
     <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">
-      There are no journal metrics.
+      {{ $t('There are no journal metrics.') }}
     </p>
   </div>
 </template>

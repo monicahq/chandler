@@ -30,7 +30,7 @@ const move = (vault) => {
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
-                Contacts
+                {{ $t('Contacts') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -72,8 +72,11 @@ const move = (vault) => {
             </svg>
 
             <p>
-              You can move contacts between vaults. This change is immediate. You can only move contacts to vaults you
-              are part of. All the contacts data will move with it.
+              {{
+                $t(
+                  'You can move contacts between vaults. This change is immediate. You can only move contacts to vaults you are part of. All the contacts data will move with it.',
+                )
+              }}
             </p>
           </div>
 
@@ -87,7 +90,9 @@ const move = (vault) => {
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li class="inline cursor-pointer text-blue-500 hover:underline" @click="move(vault)">Choose</li>
+                  <li class="inline cursor-pointer text-blue-500 hover:underline" @click="move(vault)">
+                    {{ $t('Choose') }}
+                  </li>
                 </ul>
               </div>
             </li>

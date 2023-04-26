@@ -62,7 +62,7 @@ const reset = () => {
 <template>
   <div class="mb-8">
     <p class="mb-2 flex items-center justify-between font-bold">
-      <span>Slices of life</span>
+      <span>{{ $t('Slices of life') }}</span>
 
       <span
         v-if="!editSlicesModalShown && localSlices.length > 0"
@@ -109,13 +109,15 @@ const reset = () => {
         </div>
 
         <div v-if="slice" class="border-t border-gray-200 p-2 dark:border-gray-700">
-          <p class="cursor-pointer text-sm text-blue-500 hover:underline" @click="reset()">Or remove the slice</p>
+          <p class="cursor-pointer text-sm text-blue-500 hover:underline" @click="reset()">
+            {{ $t('Or remove the slice') }}
+          </p>
         </div>
       </form>
     </div>
 
     <!-- blank state -->
-    <p v-if="!slice" class="text-sm text-gray-600 dark:text-gray-400">Not set</p>
+    <p v-if="!slice" class="text-sm text-gray-600 dark:text-gray-400">{{ $t('Not set') }}</p>
 
     <div v-else>
       <inertia-link :href="slice.url.show" class="text-blue-500 hover:underline">
@@ -124,5 +126,3 @@ const reset = () => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

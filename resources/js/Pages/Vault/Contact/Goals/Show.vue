@@ -10,7 +10,7 @@
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_contact_index') }}
+                {{ $t('Contacts') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -25,7 +25,7 @@
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.contact" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_contact_show', { name: data.contact.name }) }}
+                {{ $t('Profile of :name', { name: data.contact.name }) }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -39,7 +39,7 @@
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_contact_goal') }}
+              {{ $t('Detail of a goal') }}
             </li>
           </ul>
         </div>
@@ -91,19 +91,19 @@
             <!-- stats -->
             <div class="mb-6 flex justify-between rounded border border-gray-200 p-3 dark:border-gray-700">
               <div class="mr-6 flex items-center">
-                <div class="mr-3 w-14 text-right text-sm text-gray-500">Total streaks</div>
+                <div class="mr-3 w-14 text-right text-sm text-gray-500">{{ $t('Total streaks') }}</div>
                 <div class="text-4xl">
                   {{ localGoal.count }}
                 </div>
               </div>
               <div class="mr-6 flex items-center">
-                <div class="mr-3 w-14 text-right text-sm text-gray-500">Current streak</div>
+                <div class="mr-3 w-14 text-right text-sm text-gray-500">{{ $t('Current streak') }}</div>
                 <div class="text-4xl">
                   {{ localGoal.streaks_statistics.current_streak }}
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="mr-3 w-14 text-right text-sm text-gray-500">Longest streak</div>
+                <div class="mr-3 w-14 text-right text-sm text-gray-500">{{ $t('Longest streak') }}</div>
                 <div class="text-4xl">
                   {{ localGoal.streaks_statistics.max_streak }}
                 </div>
@@ -111,7 +111,7 @@
             </div>
 
             <!-- details -->
-            <p class="mb-2 text-xs">Details in the last year</p>
+            <p class="mb-2 text-xs">{{ $t('Details in the last year') }}</p>
             <div class="grid-calendar grid">
               <div v-for="week in localGoal.weeks" :key="week.id">
                 <div v-for="streak in week.streaks" :key="streak.id" class="">
@@ -191,7 +191,7 @@ export default {
       axios
         .put(this.localGoal.url.update, this.form)
         .then((response) => {
-          this.flash(this.$t('contact.goals_update_success'), 'success');
+          this.flash(this.$t('The goal has been edited'), 'success');
           this.localGoal = response.data.data;
           this.editMode = false;
         })
@@ -201,11 +201,11 @@ export default {
     },
 
     destroy() {
-      if (confirm(this.$t('contact.goals_delete_confirm'))) {
+      if (confirm(this.$t('Are you sure? This will delete the goal and all the streaks permanently.'))) {
         axios
           .delete(this.localGoal.url.destroy)
           .then((response) => {
-            localStorage.success = this.$t('contact.goals_delete_success');
+            localStorage.success = this.$t('The goal has been deleted');
             this.$inertia.visit(response.data.data);
           })
           .catch((error) => {

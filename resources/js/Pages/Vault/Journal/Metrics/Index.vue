@@ -77,7 +77,7 @@ const destroy = (metric) => {
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_journal_index') }}
+                {{ $t('Journals') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -105,7 +105,7 @@ const destroy = (metric) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Journal metrics</li>
+            <li class="inline">{{ $t('Journal metrics') }}</li>
           </ul>
         </div>
       </div>
@@ -117,13 +117,13 @@ const destroy = (metric) => {
         <div class="mb-6 flex items-center justify-between">
           <h3>
             <span class="mr-1"> 📊 </span>
-            All journal metrics in {{ data.journal.name }}
+            {{ $t('All journal metrics in :name', { name: data.journal.name }) }}
           </h3>
 
           <pretty-button
             v-if="!createJournalMetricModalShown"
             @click="showJournalMetricModal"
-            :text="'Create a journal metric'"
+            :text="$t('Create a journal metric')"
             :icon="'plus'" />
         </div>
 
@@ -177,7 +177,9 @@ const destroy = (metric) => {
           v-if="localMetrics.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <img src="/img/journal_blank_index.svg" :alt="$t('Journal')" class="mx-auto mt-4 h-44 w-44" />
-          <p class="px-5 pb-5 pt-2 text-center">Journal metrics let you track data accross all your journal entries.</p>
+          <p class="px-5 pb-5 pt-2 text-center">
+            {{ $t('Journal metrics let you track data accross all your journal entries.') }}
+          </p>
         </div>
       </div>
     </main>
@@ -198,16 +200,6 @@ const destroy = (metric) => {
   li:hover:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-  }
-}
-
-.special-grid {
-  grid-template-columns: 150px 1fr 200px;
-}
-
-@media (max-width: 480px) {
-  .special-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>
