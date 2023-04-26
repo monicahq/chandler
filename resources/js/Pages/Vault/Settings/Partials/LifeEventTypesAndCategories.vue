@@ -105,7 +105,7 @@ const update = (lifeEventCategory) => {
 };
 
 const destroy = (lifeEventCategory) => {
-  if (confirm('Are you sure? This can not be undone.')) {
+  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEventCategory.url.destroy)
       .then(() => {
@@ -174,7 +174,7 @@ const updateLifeEventType = (lifeEventType) => {
 };
 
 const destroyLifeEventType = (lifeEventType) => {
-  if (confirm('Are you sure? This can not be undone.')) {
+  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEventType.url.destroy)
       .then(() => {

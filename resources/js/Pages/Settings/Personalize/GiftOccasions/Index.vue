@@ -38,7 +38,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Gift occasions</li>
+            <li class="inline">{{ $t('Gift occasions') }}</li>
           </ul>
         </div>
       </div>
@@ -50,11 +50,11 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🎁 </span>
-            All the gift occasions
+            {{ $t('All the gift occasions') }}
           </h3>
           <pretty-button
             v-if="!createGiftOccasionModalShown"
-            :text="'Add a gift occasion'"
+            :text="$t('Add a gift occasion')"
             :icon="'plus'"
             @click="showGiftOccasionModal" />
         </div>
@@ -125,13 +125,11 @@
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li
-                    class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameGiftOccasionModal(element)">
-                    Rename
+                  <li class="inline cursor-pointer" @click="renameGiftOccasionModal(element)">
+                    <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                   </li>
                   <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
-                    Delete
+                    {{ $t('Delete') }}
                   </li>
                 </ul>
               </div>
@@ -146,7 +144,7 @@
                   <text-input
                     :ref="'rename' + element.id"
                     v-model="form.label"
-                    :label="'Name of gift occasion'"
+                    :label="$t('Name')"
                     :type="'text'"
                     :autofocus="true"
                     :input-class="'block w-full'"
@@ -169,7 +167,7 @@
         <div
           v-if="localGiftOccasions.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <p class="p-5 text-center">Gift occasions let you categorize all your gifts.</p>
+          <p class="p-5 text-center">{{ $t('Gift occasions let you categorize all your gifts.') }}</p>
         </div>
       </div>
     </main>
@@ -245,7 +243,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash('The gift occasion has been created', 'success');
+          this.flash(this.$t('The gift occasion has been created'), 'success');
           this.localGiftOccasions.unshift(response.data.data);
           this.loadingState = null;
           this.createGiftOccasionModalShown = false;
@@ -262,7 +260,7 @@ export default {
       axios
         .put(giftOccasion.url.update, this.form)
         .then((response) => {
-          this.flash('The gift occasion has been updated', 'success');
+          this.flash(this.$t('The gift occasion has been updated'), 'success');
           this.localGiftOccasions[this.localGiftOccasions.findIndex((x) => x.id === giftOccasion.id)] =
             response.data.data;
           this.loadingState = null;
@@ -275,11 +273,11 @@ export default {
     },
 
     destroy(giftOccasion) {
-      if (confirm('Are you sure? This can not be undone.')) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(giftOccasion.url.destroy)
           .then(() => {
-            this.flash('The gift occasion has been deleted', 'success');
+            this.flash(this.$t('The gift occasion has been deleted'), 'success');
             var id = this.localGiftOccasions.findIndex((x) => x.id === giftOccasion.id);
             this.localGiftOccasions.splice(id, 1);
           })
@@ -297,7 +295,7 @@ export default {
       axios
         .post(event.moved.element.url.position, this.form)
         .then(() => {
-          this.flash('The order has been saved', 'success');
+          this.flash(this.$t('The position has been saved'), 'success');
         })
         .catch((error) => {
           this.loadingState = null;

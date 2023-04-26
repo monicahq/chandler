@@ -275,7 +275,7 @@ export default {
     },
 
     destroy(giftState) {
-      if (confirm('Are you sure? This can not be undone.')) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(giftState.url.destroy)
           .then(() => {
@@ -297,7 +297,7 @@ export default {
       axios
         .post(event.moved.element.url.position, this.form)
         .then(() => {
-          this.flash('The order has been saved', 'success');
+          this.flash(this.$t('The position has been saved'), 'success');
         })
         .catch((error) => {
           this.loadingState = null;

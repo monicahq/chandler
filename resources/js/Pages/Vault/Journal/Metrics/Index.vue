@@ -50,7 +50,7 @@ const submit = () => {
 };
 
 const destroy = (metric) => {
-  if (confirm('Are you sure? This can not be undone.')) {
+  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(metric.url.destroy)
       .then(() => {

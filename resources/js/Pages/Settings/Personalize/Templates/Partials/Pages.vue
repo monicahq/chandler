@@ -285,7 +285,7 @@ export default {
       axios
         .post(event.moved.element.url.order, this.form)
         .then(() => {
-          this.flash('The order has been saved', 'success');
+          this.flash(this.$t('The position has been saved'), 'success');
         })
         .catch((error) => {
           this.loadingState = null;

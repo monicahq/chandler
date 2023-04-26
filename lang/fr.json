@@ -27,6 +27,7 @@
   "View all": "Voir tout",
   "Month": "Mois",
   "Day": "Jour",
+  "The position has been saved": "L'ordre a été enregistré",
   "You are here:": "Vous êtes ici :",
   "Settings": "Paramètres",
   "Not set": "Non défini",
@@ -312,4 +313,11 @@
   "The gender has been updated": "Le genre a été mis à jour",
   "Are you sure? This will remove the genders from all contacts, but won't delete the contacts themselves.": "Êtes-vous sûr ? Cela supprimera les genres de tous les contacts, mais ne supprimera pas les contacts eux-mêmes.",
   "The gender has been deleted": "Le genre a été supprimé",
+  "Gift occasions": "Occasions de cadeaux",
+  "The gift occasion has been deleted": "L'occasion de cadeau a été supprimée",
+  "The gift occasion has been updated": "L'occasion de cadeau a été mise à jour",
+  "The gift occasion has been created": "L'occasion de cadeau a été créée",
+  "Gift occasions let you categorize all your gifts.": "Les occasions de cadeaux vous permettent de catégoriser tous vos cadeaux.",
+  "Add a gift occasion": "Ajouter une occasion de cadeau",
+  "All the gift occasions": "Toutes les occasions de cadeaux"
 }
