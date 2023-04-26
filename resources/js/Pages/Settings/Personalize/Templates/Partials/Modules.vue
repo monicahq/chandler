@@ -34,7 +34,7 @@
           v-if="!module.already_used"
           class="inline cursor-pointer text-blue-500 hover:underline"
           @click="add(module)"
-          >{{ $t('app.add') }}</span
+          >{{ $t('Add') }}</span
         >
         <span v-if="module.already_used" class="text-xs"
           ><span class="mr-1">✅</span> {{ $t('settings.personalize_template_show_module_already_used') }}</span

@@ -6,7 +6,7 @@
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600 dark:text-gray-400">
-              {{ $t('app.breadcrumb_location') }}
+              {{ $t('You are here:') }}
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
@@ -52,7 +52,7 @@
           <!-- left -->
           <div>
             <div @click="showEditModal()" class="cursor-pointer text-blue-500 hover:underline">
-              {{ $t('app.rename') }}
+              {{ $t('Rename') }}
             </div>
             <div @click="destroy()" class="cursor-pointer text-blue-500 hover:underline">{{ $t('Delete') }}</div>
           </div>
@@ -73,7 +73,7 @@
                 <text-input
                   :ref="'newName'"
                   v-model="form.name"
-                  :label="'Name'"
+                  :label="$t('Name')"
                   :type="'text'"
                   :input-class="'block w-full'"
                   :required="true"

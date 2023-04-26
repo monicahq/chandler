@@ -15,10 +15,10 @@ defineProps({
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
             <li class="mr-2 inline">
-              {{ $t('app.breadcrumb_location') }}
+              {{ $t('You are here:') }}
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_settings') }}
+              {{ $t('Settings') }}
             </li>
           </ul>
         </div>

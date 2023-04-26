@@ -220,7 +220,7 @@ const destroyLifeEventType = (lifeEventType) => {
         <text-input
           ref="newLifeEventCategory"
           v-model="form.label"
-          :label="'Name'"
+          :label="$t('Name')"
           :type="'text'"
           :autofocus="true"
           :input-class="'block w-full'"
@@ -277,7 +277,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   <li
                     class="inline cursor-pointer text-blue-500 hover:underline"
                     @click="renameLifeEventCategoryModal(element)">
-                    {{ $t('app.rename') }}
+                    {{ $t('Rename') }}
                   </li>
                   <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                     {{ $t('Delete') }}
@@ -328,7 +328,7 @@ const destroyLifeEventType = (lifeEventType) => {
                             <li
                               class="inline cursor-pointer text-blue-500 hover:underline"
                               @click="renameLifeEventTypeModal(id, element)">
-                              {{ $t('app.rename') }}
+                              {{ $t('Rename') }}
                             </li>
                             <li
                               class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
@@ -351,7 +351,7 @@ const destroyLifeEventType = (lifeEventType) => {
                         <text-input
                           :ref="'newLifeEventType'"
                           v-model="form.label"
-                          :label="'Name'"
+                          :label="$t('Name')"
                           :type="'text'"
                           :autofocus="true"
                           :input-class="'block w-full'"
@@ -363,11 +363,7 @@ const destroyLifeEventType = (lifeEventType) => {
 
                       <div class="flex justify-between p-5">
                         <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="lifeEventCategoryId = 0" />
-                        <pretty-button
-                          :text="$t('app.rename')"
-                          :state="loadingState"
-                          :icon="'check'"
-                          :classes="'save'" />
+                        <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                       </div>
                     </form>
                   </template>
@@ -396,7 +392,7 @@ const destroyLifeEventType = (lifeEventType) => {
                     <text-input
                       :ref="'newLifeEventType'"
                       v-model="form.label"
-                      :label="'Name'"
+                      :label="$t('Name')"
                       :type="'text'"
                       :autofocus="true"
                       :input-class="'block w-full'"
@@ -446,7 +442,7 @@ const destroyLifeEventType = (lifeEventType) => {
               <text-input
                 ref="newLifeEventCategory"
                 v-model="form.label"
-                :label="'Name'"
+                :label="$t('Name')"
                 :type="'text'"
                 :autofocus="true"
                 :input-class="'block w-full'"
@@ -458,7 +454,7 @@ const destroyLifeEventType = (lifeEventType) => {
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editLifeEventCategoryId = 0" />
-              <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </template>

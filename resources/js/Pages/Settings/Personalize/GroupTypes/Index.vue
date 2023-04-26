@@ -6,11 +6,11 @@
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600 dark:text-gray-400">
-              {{ $t('app.breadcrumb_location') }}
+              {{ $t('You are here:') }}
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_settings') }}
+                {{ $t('Settings') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -25,7 +25,7 @@
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_settings_personalize') }}
+                {{ $t('Personalize your account') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -93,7 +93,7 @@
             <text-input
               :ref="'newGroupType'"
               v-model="form.label"
-              :label="'Name'"
+              :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
@@ -224,7 +224,7 @@
                             <text-input
                               :ref="'newRole'"
                               v-model="form.label"
-                              :label="'Name'"
+                              :label="$t('Name')"
                               :type="'text'"
                               :autofocus="true"
                               :input-class="'block w-full'"
@@ -237,7 +237,7 @@
                           <div class="flex justify-between p-5">
                             <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="roleGroupTypeId = 0" />
                             <pretty-button
-                              :text="$t('app.rename')"
+                              :text="$t('Rename')"
                               :state="loadingState"
                               :icon="'check'"
                               :classes="'save'" />
@@ -267,7 +267,7 @@
                         <text-input
                           :ref="'newRole'"
                           v-model="form.label"
-                          :label="'Name'"
+                          :label="$t('Name')"
                           :type="'text'"
                           :autofocus="true"
                           :input-class="'block w-full'"
@@ -312,7 +312,7 @@
                   <text-input
                     :ref="'rename' + element.id"
                     v-model="form.label"
-                    :label="'Name'"
+                    :label="$t('Name')"
                     :type="'text'"
                     :autofocus="true"
                     :input-class="'block w-full'"
@@ -324,7 +324,7 @@
 
                 <div class="flex justify-between p-5">
                   <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editGroupTypeId = 0" />
-                  <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+                  <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
                 </div>
               </form>
             </template>

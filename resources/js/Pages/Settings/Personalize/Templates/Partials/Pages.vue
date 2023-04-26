@@ -77,7 +77,7 @@
 
             <ul class="text-xs">
               <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="renamePageModal(element)">
-                {{ $t('app.rename') }}
+                {{ $t('Rename') }}
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                 {{ $t('Delete') }}
@@ -109,7 +109,7 @@
 
           <div class="flex justify-between p-5">
             <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renamePageModalShownId = 0" />
-            <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+            <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
           </div>
         </form>
       </template>
@@ -138,7 +138,7 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createPageModalShown = false" />
-        <pretty-button :text="$t('app.add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 

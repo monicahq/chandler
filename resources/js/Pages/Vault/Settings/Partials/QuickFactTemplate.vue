@@ -180,7 +180,7 @@ const updatePosition = (event) => {
             <!-- actions -->
             <ul class="text-sm">
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="renameEntryModal(element)">
-                {{ $t('app.rename') }}
+                {{ $t('Rename') }}
               </li>
               <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                 {{ $t('Delete') }}
@@ -210,7 +210,7 @@ const updatePosition = (event) => {
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editEntryId = 0" />
-              <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </template>
