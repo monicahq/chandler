@@ -55,7 +55,7 @@ defineProps({
                     </svg>
                   </span>
 
-                  {{ $t('vault.journal_index_last_updated', { date: journal.last_updated }) }}
+                  {{ $t('Updated on :date', { date: journal.last_updated }) }}
                 </div>
               </div>
 

@@ -43,7 +43,7 @@
           <input
             type="text"
             class="dark:highlight-white/5 block w-64 rounded-md border border-gray-300 px-2 py-1 text-center placeholder:text-gray-600 hover:cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 dark:border-0 dark:border-gray-700 dark:bg-slate-900 placeholder:dark:text-gray-400 hover:dark:bg-slate-700 sm:text-sm"
-            :placeholder="$t('app.layout_menu_search')"
+            :placeholder="$t('Search something')"
             @focus="goToSearchPage" />
         </div>
 
@@ -179,7 +179,7 @@
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
 
-                <span class="text-sm dark:text-sky-400">{{ $t('app.layout_menu_settings') }}</span>
+                <span class="text-sm dark:text-sky-400">{{ $t('Settings') }}</span>
               </inertia-link>
             </li>
             <li class="inline">
@@ -197,7 +197,7 @@
                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
 
-                <span class="text-sm dark:text-sky-400">{{ $t('app.layout_menu_logout') }}</span>
+                <span class="text-sm dark:text-sky-400">{{ $t('Logout') }}</span>
               </inertia-link>
             </li>
           </ul>
@@ -216,7 +216,7 @@
                     $page.component === 'Vault/Dashboard/Index',
                 }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
-                {{ $t('app.layout_menu_dashboard') }}
+                {{ $t('Dashboard') }}
               </inertia-link>
 
               <!-- <inertia-link
@@ -229,7 +229,7 @@
                 :href="layoutData.vault.url.contacts"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_contacts') }}
+                {{ $t('Contacts') }}
               </inertia-link>
 
               <inertia-link
@@ -237,7 +237,7 @@
                 v-if="layoutData.vault.visibility.show_journal_tab"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Journal') }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_journals') }}
+                {{ $t('Journals') }}
               </inertia-link>
 
               <inertia-link
@@ -245,7 +245,7 @@
                 v-if="layoutData.vault.visibility.show_group_tab"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Group') }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_groups') }}
+                {{ $t('Groups') }}
               </inertia-link>
 
               <inertia-link
@@ -253,7 +253,7 @@
                 v-if="layoutData.vault.visibility.show_companies_tab"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Companies') }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_companies') }}
+                {{ $t('Companies') }}
               </inertia-link>
 
               <inertia-link
@@ -264,7 +264,7 @@
                     $page.component.startsWith('Vault/Dashboard/Task'),
                 }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
-                {{ $t('app.layout_menu_tasks') }}
+                {{ $t('Tasks') }}
               </inertia-link>
 
               <inertia-link
@@ -275,7 +275,7 @@
                     $page.component.startsWith('Vault/Reports'),
                 }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 dark:hover:text-slate-300">
-                {{ $t('app.layout_menu_reports') }}
+                {{ $t('Reports') }}
               </inertia-link>
 
               <!-- <inertia-link
@@ -295,7 +295,7 @@
                 v-if="layoutData.vault.visibility.show_files_tab"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Files') }"
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_files') }}
+                {{ $t('Files') }}
               </inertia-link>
 
               <inertia-link
@@ -303,7 +303,7 @@
                 :href="layoutData.vault.url.settings"
                 :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Settings') }"
                 class="rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
-                {{ $t('app.layout_menu_vault_settings') }}
+                {{ $t('Vault settings') }}
               </inertia-link>
             </div>
           </div>

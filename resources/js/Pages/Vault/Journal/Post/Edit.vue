@@ -8,7 +8,7 @@ import SlicesOfLife from '@/Pages/Vault/Journal/Post/Partials/SlicesOfLife.vue';
 import PostMetrics from '@/Pages/Vault/Journal/Post/Partials/PostMetrics.vue';
 import Uploadcare from '@/Components/Uploadcare.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, watch, ref } from 'vue';
+import { onBeforeMount, onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 import JetConfirmationModal from '@/Components/Jetstream/ConfirmationModal.vue';
@@ -34,7 +34,7 @@ const form = useForm({
 });
 
 const saveInProgress = ref(false);
-const statistics = ref([]);
+const statistics = ref(null);
 const deletePhotoModalShown = ref(false);
 const photoToDelete = ref(null);
 const processPhotoDeletion = ref(false);
@@ -44,9 +44,13 @@ const modelConfig = ref({
   mask: 'YYYY-MM-DD',
 });
 
+// if this code is inside onMounted, it will not work, and I don't know why
+
+onBeforeMount(() => {
+  statistics.value = props.data.statistics;
+});
 onMounted(() => {
   form.title = props.data.title;
-  statistics.value = props.data.statistics;
   form.contacts = props.data.contacts;
   form.date = props.data.editable_date;
   localPhotos.value = props.data.photos;
@@ -345,7 +349,7 @@ const destroy = () => {
             <!-- Publish action -->
             <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
               <div class="bg-form rounded-b-lg p-5">
-                <pretty-link :href="data.url.show" :text="'Close'" :icon="'exit'" />
+                <pretty-link :href="data.url.show" :text="$t('Close')" :icon="'exit'" />
               </div>
             </div>
 
@@ -415,7 +419,7 @@ const destroy = () => {
             <tags :data="data" />
 
             <!-- stats -->
-            <p class="mb-2 font-bold">Statistics</p>
+            <p class="mb-2 font-bold">{{ $t('Statistics') }}</p>
             <ul class="mb-6 text-sm">
               <li class="mb-2 flex items-center">
                 <svg
