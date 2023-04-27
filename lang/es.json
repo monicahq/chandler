@@ -661,5 +661,10 @@
   "Logout": "Cerrar sesión",
   "Companies": "Empresas",
   "Files": "Archivos",
-  "Vault settings": "Configuración de la bóveda"
+  "Vault settings": "Configuración de la bóveda",
+  "All the important date types used in the vault": "Todos los tipos de fechas importantes utilizadas en la bóveda",
+  "Date types are essential as they let you categorize dates that you add to a contact.": "Los tipos de fechas son esenciales ya que le permiten categorizar las fechas que agrega a un contacto.",
+  "The type has been created": "El tipo ha sido creado.",
+  "The type has been updated": "El tipo ha sido actualizado.",
+  "The type has been deleted": "El tipo ha sido eliminado."
 }

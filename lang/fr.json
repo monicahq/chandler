@@ -662,5 +662,10 @@
   "Logout": "Déconnexion",
   "Companies": "Entreprises",
   "Files": "Fichiers",
-  "Vault settings": "Paramètres de la voûte"
+  "Vault settings": "Paramètres de la voûte",
+  "All the important date types used in the vault": "Tous les types de dates importantes utilisés dans la voûte",
+  "Date types are essential as they let you categorize dates that you add to a contact.": "Les types de dates sont essentiels car ils vous permettent de catégoriser les dates que vous ajoutez à un contact.",
+  "The type has been created": "Le type a été créé",
+  "The type has been updated": "Le type a été mis à jour",
+  "The type has been deleted": "Le type a été supprimé"
 }

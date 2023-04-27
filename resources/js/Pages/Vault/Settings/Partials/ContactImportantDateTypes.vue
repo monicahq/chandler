@@ -4,13 +4,9 @@
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 📁 </span>
-        {{ $t('vault.settings_important_dates_title') }}
+        {{ $t('All the important date types used in the vault') }}
       </h3>
-      <pretty-button
-        v-if="!createTypeModalShown"
-        :text="$t('vault.settings_important_dates_cta')"
-        :icon="'plus'"
-        @click="showTypeModal" />
+      <pretty-button v-if="!createTypeModalShown" :text="$t('Add a type')" :icon="'plus'" @click="showTypeModal" />
     </div>
 
     <!-- modal to create a type -->
@@ -24,7 +20,7 @@
         <text-input
           :ref="'newtype'"
           v-model="form.label"
-          :label="$t('vault.settings_important_dates_name')"
+          :label="$t('Name')"
           :type="'text'"
           :autofocus="true"
           :input-class="'block w-full'"
@@ -62,8 +58,8 @@
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="inline cursor-pointer text-blue-500 hover:underline" @click="edit(type)">
-              {{ $t('Edit') }}
+            <li class="inline cursor-pointer" @click="edit(type)">
+              <span class="text-blue-500 hover:underline">{{ $t('Edit') }}</span>
             </li>
             <li
               v-if="type.can_be_deleted"
@@ -85,7 +81,7 @@
             <text-input
               :ref="'rename' + type.id"
               v-model="form.label"
-              :label="$t('vault.settings_important_dates_name')"
+              :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
@@ -109,7 +105,7 @@
       v-if="localTypes.length == 0"
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="p-5 text-center">
-        {{ $t('vault.settings_important_dates_blank') }}
+        {{ $t('Date types are essential as they let you categorize dates that you add to a contact.') }}
       </p>
     </div>
   </div>
@@ -182,7 +178,7 @@ export default {
       axios
         .post(this.data.url.contact_date_important_date_type_store, this.form)
         .then((response) => {
-          this.flash(this.$t('vault.settings_important_dates_create_success'), 'success');
+          this.flash(this.$t('The type has been created'), 'success');
           this.localTypes.unshift(response.data.data);
           this.loadingState = null;
           this.createTypeModalShown = false;
@@ -199,7 +195,7 @@ export default {
       axios
         .put(type.url.update, this.form)
         .then((response) => {
-          this.flash(this.$t('vault.settings_important_dates_update_success'), 'success');
+          this.flash(this.$t('The type has been updated'), 'success');
           this.localTypes[this.localTypes.findIndex((x) => x.id === type.id)] = response.data.data;
           this.loadingState = null;
           this.editTypeModalShownId = 0;
@@ -211,11 +207,11 @@ export default {
     },
 
     destroy(type) {
-      if (confirm(this.$t('vault.settings_important_dates_destroy_confirmation'))) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(type.url.destroy)
           .then(() => {
-            this.flash(this.$t('vault.settings_important_dates_destroy_success'), 'success');
+            this.flash(this.$t('The type has been deleted'), 'success');
             var id = this.localTypes.findIndex((x) => x.id === type.id);
             this.localTypes.splice(id, 1);
           })
