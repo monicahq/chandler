@@ -36,7 +36,7 @@ const update = () => {
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 🎟️ </span>
 
-        Tab visibility
+        {{ $t('Tabs visibility') }}
       </h3>
     </div>
 

@@ -74,13 +74,7 @@ return [
     'download' => 'Download',
     'undefined' => 'Undefined',
 
-    'unknown_name' => 'Unknown name',
-
-    'error_title' => '👇 Oops. An error occured.',
-
     'no_results' => 'No results',
-
-    'help_open_new_page' => 'This link will open in a new tab',
 
     'default_template_name' => 'Default template',
     'default_template_page_contact_information' => 'Contact information',
