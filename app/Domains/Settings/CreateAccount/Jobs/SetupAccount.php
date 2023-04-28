@@ -120,7 +120,8 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $request = [
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.default_template_name'),
+            'name' => null,
+            'name_translation_key' => ('Default template'),
         ];
 
         $this->template = (new CreateTemplate())->execute($request);
@@ -138,7 +139,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_avatar'),
+            'name_translation_key' => 'Avatar',
             'type' => Module::TYPE_AVATAR,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -155,7 +156,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_names'),
+            'name_translation_key' => 'Contact name',
             'type' => Module::TYPE_CONTACT_NAMES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -172,7 +173,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_family_summary'),
+            'name_translation_key' => 'Family summary',
             'type' => Module::TYPE_FAMILY_SUMMARY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -189,7 +190,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_important_dates'),
+            'name_translation_key' => 'Important dates',
             'type' => Module::TYPE_IMPORTANT_DATES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -206,7 +207,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_gender_pronoun'),
+            'name_translation_key' => 'Gender and pronoun',
             'type' => Module::TYPE_GENDER_PRONOUN,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -223,7 +224,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_labels'),
+            'name_translation_key' => 'Labels',
             'type' => Module::TYPE_LABELS,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -240,7 +241,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_companies'),
+            'name_translation_key' => 'Job information',
             'type' => Module::TYPE_COMPANY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -257,7 +258,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_religions'),
+            'name_translation_key' => 'Religions',
             'type' => Module::TYPE_RELIGIONS,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -277,13 +278,13 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_feed'),
+            'name_translation_key' => 'Activity feed',
             'can_be_deleted' => true,
         ]);
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_feed'),
+            'name_translation_key' => 'Contact feed',
             'type' => Module::TYPE_FEED,
             'can_be_deleted' => false,
         ]);
@@ -302,7 +303,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_contact'),
+            'name_translation_key' => 'Ways to connect',
             'can_be_deleted' => true,
         ]);
 
@@ -310,7 +311,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_addresses'),
+            'name_translation_key' => 'Addresses',
             'type' => Module::TYPE_ADDRESSES,
             'can_be_deleted' => false,
         ]);
@@ -326,7 +327,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_contact_information'),
+            'name_translation_key' => 'Contact information',
             'type' => Module::TYPE_CONTACT_INFORMATION,
             'can_be_deleted' => false,
         ]);
@@ -345,7 +346,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_social'),
+            'name_translation_key' => 'Social',
             'can_be_deleted' => true,
         ]);
 
@@ -353,7 +354,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_relationships'),
+            'name_translation_key' => 'Relationships',
             'type' => Module::TYPE_RELATIONSHIPS,
             'can_be_deleted' => false,
         ]);
@@ -369,7 +370,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_pets'),
+            'name_translation_key' => 'Pets',
             'type' => Module::TYPE_PETS,
             'can_be_deleted' => false,
         ]);
@@ -385,7 +386,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_groups'),
+            'name_translation_key' => 'Groups',
             'type' => Module::TYPE_GROUPS,
             'can_be_deleted' => false,
         ]);
@@ -404,7 +405,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_life_events'),
+            'name_translation_key' => 'Life & goals',
             'can_be_deleted' => true,
         ]);
 
@@ -412,7 +413,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_life_events'),
+            'name_translation_key' => 'Life',
             'type' => Module::TYPE_LIFE_EVENTS,
             'can_be_deleted' => false,
         ]);
@@ -428,7 +429,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_goals'),
+            'name_translation_key' => 'Goals',
             'type' => Module::TYPE_GOALS,
             'can_be_deleted' => false,
         ]);
@@ -447,7 +448,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name' => trans('app.default_template_page_information'),
+            'name_translation_key' => 'Information',
             'can_be_deleted' => true,
         ]);
 
@@ -455,7 +456,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_documents'),
+            'name_translation_key' => 'Documents',
             'type' => Module::TYPE_DOCUMENTS,
             'can_be_deleted' => false,
         ]);
@@ -471,7 +472,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_photos'),
+            'name_translation_key' => 'Photos',
             'type' => Module::TYPE_PHOTOS,
             'can_be_deleted' => false,
         ]);
@@ -487,7 +488,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_notes'),
+            'name_translation_key' => 'Notes',
             'type' => Module::TYPE_NOTES,
             'can_be_deleted' => false,
             'pagination' => 3,
@@ -504,7 +505,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_reminders'),
+            'name_translation_key' => 'Reminders',
             'type' => Module::TYPE_REMINDERS,
             'can_be_deleted' => false,
         ]);
@@ -520,7 +521,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_loans'),
+            'name_translation_key' => 'Loans',
             'type' => Module::TYPE_LOANS,
             'can_be_deleted' => false,
         ]);
@@ -536,7 +537,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_tasks'),
+            'name_translation_key' => 'Tasks',
             'type' => Module::TYPE_TASKS,
             'can_be_deleted' => false,
         ]);
@@ -552,7 +553,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_calls'),
+            'name_translation_key' => 'Calls',
             'type' => Module::TYPE_CALLS,
             'can_be_deleted' => false,
         ]);
@@ -568,7 +569,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('app.module_posts'),
+            'name_translation_key' => 'Posts',
             'type' => Module::TYPE_POSTS,
             'can_be_deleted' => false,
         ]);
@@ -604,9 +605,9 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addGenders(): void
     {
         $types = collect([
-            trans('account.gender_male'),
-            trans('account.gender_female'),
-            trans('account.gender_other'),
+            'Male',
+            'Female',
+            'Other',
         ]);
 
         foreach ($types as $type) {

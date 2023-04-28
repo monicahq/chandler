@@ -39,6 +39,15 @@
           <option value="fr">
             {{ $t('French') }}
           </option>
+          <option value="fr">
+            {{ $t('German') }}
+          </option>
+          <option value="fr">
+            {{ $t('Italian') }}
+          </option>
+          <option value="fr">
+            {{ $t('Portugese') }}
+          </option>
         </select>
       </div>
 

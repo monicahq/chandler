@@ -768,5 +768,20 @@
   "Unknown name": "Nom inconnu",
   "Birthdate": "Date de naissance",
   "Deceased date": "Date de décès",
-  "Tabs visibility": "Visibilité des onglets"
+  "Tabs visibility": "Visibilité des onglets",
+  "Default template": "Modèle par défaut",
+  "Life & goals": "Vie et objectifs",
+  "Information": "Information",
+  "Activity feed": "Flux d'activité",
+  "Ways to connect": "Façons de se connecter",
+  "Avatar": "Avatar",
+  "Contact name": "Nom du contact",
+  "Gender and pronoun": "Genre et pronom",
+  "Contact feed": "Flux de contact",
+  "Life": "Vie",
+  "Male": "Mâle",
+  "Female": "Femelle",
+  "Other": "Autre",
+  "German": "Allemand",
+  "Italian": "Italien"
 }
