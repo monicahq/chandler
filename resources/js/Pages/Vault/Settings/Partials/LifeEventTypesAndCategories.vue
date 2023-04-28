@@ -200,16 +200,16 @@ const destroyLifeEventType = (lifeEventType) => {
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 👩‍🍼 </span>
-        Life event types and categories
+        {{ $t('Life event types and categories') }}
       </h3>
       <pretty-button
         v-if="!createLifeEventCategoryModalShown"
-        :text="'Add a life event category'"
+        :text="$t('Add a life event category')"
         :icon="'plus'"
         @click="showCreateLifeEventCategoryModal" />
     </div>
 
-    <!-- modal to create a post template -->
+    <!-- modal to create a life event category -->
     <form
       v-if="createLifeEventCategoryModalShown"
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
@@ -274,10 +274,8 @@ const destroyLifeEventType = (lifeEventType) => {
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li
-                    class="inline cursor-pointer text-blue-500 hover:underline"
-                    @click="renameLifeEventCategoryModal(element)">
-                    {{ $t('Rename') }}
+                  <li class="inline cursor-pointer" @click="renameLifeEventCategoryModal(element)">
+                    <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                   </li>
                   <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                     {{ $t('Delete') }}
@@ -287,7 +285,7 @@ const destroyLifeEventType = (lifeEventType) => {
 
               <!-- available life event types -->
               <div class="ml-8">
-                <p class="mb-1 text-sm text-gray-500">Life event types:</p>
+                <p class="mb-1 text-sm text-gray-500">{{ $t('Life event types:') }}</p>
 
                 <draggable
                   :list="element.life_event_types"
@@ -325,10 +323,8 @@ const destroyLifeEventType = (lifeEventType) => {
 
                           <!-- actions -->
                           <ul class="text-sm">
-                            <li
-                              class="inline cursor-pointer text-blue-500 hover:underline"
-                              @click="renameLifeEventTypeModal(id, element)">
-                              {{ $t('Rename') }}
+                            <li class="inline cursor-pointer" @click="renameLifeEventTypeModal(id, element)">
+                              <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                             </li>
                             <li
                               class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
@@ -378,7 +374,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   "
                   class="inline cursor-pointer text-sm text-blue-500 hover:underline"
                   @click="showCreateLifeEventTypeModal(element)"
-                  >add a life event type</span
+                  >{{ $t('add a life event type') }}</span
                 >
 
                 <!-- form: create new life event type -->
@@ -420,11 +416,12 @@ const destroyLifeEventType = (lifeEventType) => {
                   "
                   class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                   <p class="p-5 text-center">
-                    No life event types yet.
+                    {{ $t('No life event types yet.') }}
+
                     <span
                       class="block cursor-pointer text-sm text-blue-500 hover:underline"
                       @click="showCreateLifeEventTypeModal(element)"
-                      >add a life event type</span
+                      >{{ $t('add a life event type') }}</span
                     >
                   </p>
                 </div>

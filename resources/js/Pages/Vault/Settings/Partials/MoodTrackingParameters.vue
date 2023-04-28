@@ -83,7 +83,7 @@ const update = (moodTrackingParameter) => {
 };
 
 const destroy = (moodTrackingParameter) => {
-  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
+  if (confirm($t('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(moodTrackingParameter.url.destroy)
       .then(() => {
@@ -114,11 +114,11 @@ const updatePosition = (event) => {
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 🤭 </span>
-        Mood tracking parameters
+        {{ $t('Mood tracking parameters') }}
       </h3>
       <pretty-button
         v-if="!createMoodTrackingParametersModalShown"
-        :text="'Add a parameter'"
+        :text="$t('Add a parameter')"
         :icon="'plus'"
         @click="showMoodTrackingParameterModal" />
     </div>
@@ -144,7 +144,7 @@ const updatePosition = (event) => {
           @esc-key-pressed="createMoodTrackingParametersModalShown = false" />
 
         <p class="mb-2 block text-sm">
-          {{ $t('vault.settings_labels_create_color') }}
+          {{ $t('Choose a color') }}
         </p>
         <div class="grid grid-cols-8 gap-4">
           <div v-for="color in data.mood_tracking_parameter_colors" :key="color.hex_color" class="flex items-center">
@@ -182,7 +182,7 @@ const updatePosition = (event) => {
       </svg>
 
       <div>
-        <p>You can customize the criteria that let you track your mood.</p>
+        <p>{{ $t('You can customize the criteria that let you track your mood.') }}</p>
       </div>
     </div>
 

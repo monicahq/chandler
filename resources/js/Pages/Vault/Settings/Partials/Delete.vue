@@ -4,7 +4,7 @@
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 🗑 </span>
-        {{ $t('vault.settings_delete_title') }}
+        {{ $t('Delete the vault') }}
       </h3>
     </div>
 
@@ -27,7 +27,11 @@
 
         <div>
           <p>
-            {{ $t('vault.settings_delete_description') }}
+            {{
+              $t(
+                'Deleting the vault means deleting all the data inside this vault, forever. There is no turning back. Please be certain.',
+              )
+            }}
           </p>
         </div>
       </div>
@@ -67,11 +71,11 @@ export default {
 
   methods: {
     destroy() {
-      if (confirm(this.$t('vault.settings_delete_cta_confirmation'))) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
         axios
           .delete(this.data.url.destroy)
           .then((response) => {
-            localStorage.success = this.$t('vault.settings_delete_destroy_success');
+            localStorage.success = this.$t('The vault has been deleted');
             this.$inertia.visit(response.data.data);
           })
           .catch((error) => {
