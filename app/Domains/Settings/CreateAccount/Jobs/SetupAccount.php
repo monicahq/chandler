@@ -614,7 +614,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             $request = [
                 'account_id' => $this->author->account_id,
                 'author_id' => $this->author->id,
-                'name' => $type,
+                'name_translation_key' => $type,
             ];
 
             (new CreateGender())->execute($request);
@@ -627,20 +627,20 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addPronouns(): void
     {
         $pronouns = collect([
-            trans('account.pronoun_he_him'),
-            trans('account.pronoun_she_her'),
-            trans('account.pronoun_they_them'),
-            trans('account.pronoun_per_per'),
-            trans('account.pronoun_ve_ver'),
-            trans('account.pronoun_xe_xem'),
-            trans('account.pronoun_ze_hir'),
+            'he/him',
+            'she/her',
+            'they/them',
+            'per/per',
+            've/ver',
+            'xe/xem',
+            'ze/hir',
         ]);
 
         foreach ($pronouns as $pronoun) {
             $request = [
                 'account_id' => $this->author->account_id,
                 'author_id' => $this->author->id,
-                'name' => $pronoun,
+                'name_translation_key' => $pronoun,
             ];
 
             (new CreatePronoun())->execute($request);
@@ -655,49 +655,49 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.group_type_family'),
+            'label_translation_key' => 'Family',
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label' => trans('account.group_type_family_role_parent'),
+            'label_translation_key' => 'Parent',
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label' => trans('account.group_type_family_role_child'),
+            'label_translation_key' => 'Child',
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.group_type_couple_without_children'),
+            'label_translation_key' => 'Couple',
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label' => trans('account.group_type_couple_role'),
+            'label_translation_key' => 'Partner',
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.group_type_club'),
+            'label_translation_key' => 'Club',
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.group_type_association'),
+            'label_translation_key' => 'Association',
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.group_type_roomates'),
+            'label_translation_key' => 'Roomates',
         ]);
     }
 
@@ -707,50 +707,50 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('account.relationship_type_love'),
+            'name_translation_key' => 'Love',
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_LOVE,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name' => trans('account.relationship_type_partner'),
-                'name_reverse_relationship' => trans('account.relationship_type_partner'),
+                'name_translation_key' => 'significant other',
+                'name_reverse_relationship_translation_key' => 'significant other',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_LOVE,
             ],
             [
-                'name' => trans('account.relationship_type_spouse'),
-                'name_reverse_relationship' => trans('account.relationship_type_spouse'),
+                'name_translation_key' => 'spouse',
+                'name_reverse_relationship_translation_key' => 'spouse',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_LOVE,
             ],
             [
-                'name' => trans('account.relationship_type_date'),
-                'name_reverse_relationship' => trans('account.relationship_type_date'),
+                'name_translation_key' => 'date',
+                'name_reverse_relationship_translation_key' => 'date',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_lover'),
-                'name_reverse_relationship' => trans('account.relationship_type_lover'),
+                'name_translation_key' => 'lover',
+                'name_reverse_relationship_translation_key' => 'lover',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_inlovewith'),
-                'name_reverse_relationship' => trans('account.relationship_type_lovedby'),
+                'name_translation_key' => 'in love with',
+                'name_reverse_relationship_translation_key' => 'loved by',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_ex'),
-                'name_reverse_relationship' => trans('account.relationship_type_ex'),
+                'name_translation_key' => 'ex-boyfriend',
+                'name_reverse_relationship_translation_key' => 'ex-boyfriend',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -761,50 +761,50 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('account.relationship_type_family'),
+            'name_translation_key' => 'Family',
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_FAMILY,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name' => trans('account.relationship_type_parent'),
-                'name_reverse_relationship' => trans('account.relationship_type_child'),
+                'name_translation_key' => 'parent',
+                'name_reverse_relationship_translation_key' => 'child',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_CHILD,
             ],
             [
-                'name' => trans('account.relationship_type_sibling'),
-                'name_reverse_relationship' => trans('account.relationship_type_sibling'),
+                'name_translation_key' => 'brother/sister',
+                'name_reverse_relationship_translation_key' => 'brother/sister',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_grandparent'),
-                'name_reverse_relationship' => trans('account.relationship_type_grandchild'),
+                'name_translation_key' => 'grand parent',
+                'name_reverse_relationship_translation_key' => 'grand child',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_uncle'),
-                'name_reverse_relationship' => trans('account.relationship_type_nephew'),
+                'name_translation_key' => 'uncle/aunt',
+                'name_reverse_relationship_translation_key' => 'nephew/niece',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_cousin'),
-                'name_reverse_relationship' => trans('account.relationship_type_cousin'),
+                'name_translation_key' => 'cousin',
+                'name_reverse_relationship_translation_key' => 'cousin',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_godfather'),
-                'name_reverse_relationship' => trans('account.relationship_type_godson'),
+                'name_translation_key' => 'godparent',
+                'name_reverse_relationship_translation_key' => 'godchild',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -815,21 +815,21 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('account.relationship_type_friend_title'),
+            'name_translation_key' => 'Friend',
             'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name' => trans('account.relationship_type_friend'),
-                'name_reverse_relationship' => trans('account.relationship_type_friend'),
+                'name_translation_key' => 'friend',
+                'name_reverse_relationship_translation_key' => 'friend',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_bestfriend'),
-                'name_reverse_relationship' => trans('account.relationship_type_bestfriend'),
+                'name_translation_key' => 'best friend',
+                'name_reverse_relationship_translation_key' => 'best friend',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -840,28 +840,28 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name' => trans('account.relationship_type_work'),
+            'name_translation_key' => 'Work',
             'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name' => trans('account.relationship_type_colleague'),
-                'name_reverse_relationship' => trans('account.relationship_type_colleague'),
+                'name_translation_key' => 'colleague',
+                'name_reverse_relationship_translation_key' => 'colleague',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_subordinate'),
-                'name_reverse_relationship' => trans('account.relationship_type_boss'),
+                'name_translation_key' => 'subordinate',
+                'name_reverse_relationship_translation_key' => 'boss',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name' => trans('account.relationship_type_mentor'),
-                'name_reverse_relationship' => trans('account.relationship_type_protege'),
+                'name_translation_key' => 'mentor',
+                'name_reverse_relationship_translation_key' => 'protege',
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -872,17 +872,17 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addAddressTypes(): void
     {
         $addresses = collect([
-            trans('account.address_type_home'),
-            trans('account.address_type_secondary_residence'),
-            trans('account.address_type_work'),
-            trans('account.address_type_chalet'),
+            '🏡 Home',
+            '🏠 Secondary residence',
+            '🏢 Work',
+            '🌳 Chalet',
         ]);
 
         foreach ($addresses as $address) {
             (new CreateAddressType())->execute([
                 'account_id' => $this->author->account_id,
                 'author_id' => $this->author->id,
-                'name' => $address,
+                'name_translation_key' => $address,
             ]);
         }
     }
@@ -892,62 +892,62 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.default_call_reason_types_personal'),
+            'label_translation_key' => 'Personal',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_advice'),
+            'label_translation_key' => 'For advice',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_say_hello'),
+            'label_translation_key' => 'Just to say hello',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_need_anything'),
+            'label_translation_key' => 'To see if they need anything',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_respect'),
+            'label_translation_key' => 'Out of respect and appreciation',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_story'),
+            'label_translation_key' => 'To hear their story',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_personal_love'),
+            'label_translation_key' => '',
         ]);
 
         // business
         $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label' => trans('account.default_call_reason_types_business'),
+            'label_translation_key' => 'Business',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_business_purchases'),
+            'label_translation_key' => 'Discuss recent purchases',
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label' => trans('account.default_call_reason_business_partnership'),
+            'label_translation_key' => 'Discuss partnership',
         ]);
     }
 

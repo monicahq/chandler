@@ -50,7 +50,7 @@
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 👥 </span>
-            All the group types
+            {{ $t('All the group types') }}
           </h3>
           <pretty-button
             v-if="!createGroupTypeModalShown"
@@ -289,7 +289,7 @@
                       "
                       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                       <p class="p-5 text-center">
-                        No roles yet.
+                        {{ $t('No roles yet.') }}
                         <span
                           class="block cursor-pointer text-sm text-blue-500 hover:underline"
                           @click="showCreateRoleModal(element)"
