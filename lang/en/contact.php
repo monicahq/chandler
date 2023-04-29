@@ -10,6 +10,7 @@ return [
     'contact_change_template_cta' => 'Change template',
     'contact_move_contact_cta' => 'Move contact',
     'contact_delete_cta' => 'Delete contact',
+    'contact_download_vcard' => 'Download as vCard',
     'contact_archived' => 'The contact is archived',
     'contact_toggle_confirm' => 'Are you sure?',
     'contact_delete_confirm' => 'Are you sure? This will remove everything we know about this contact.',
