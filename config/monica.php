@@ -4,6 +4,49 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Access to paid features
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if the instance can access the paid features that
+    | are available on https://monicahq.com, for free.
+    | If set to false, the instance won't have access to the paid features.
+    |
+    */
+
+    'requires_subscription' => env('REQUIRES_SUBSCRIPTION', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Licence key server
+    |--------------------------------------------------------------------------
+    |
+    | When REQUIRES_SUBSCRIPTION is set to true, we need to check if the user
+    | has a valid licence key to unlock paid features. Licence keys are managed
+    | on our own customer portal.
+    |
+    */
+    'customer_portal_url' => env('CUSTOMER_PORTAL_URL', ''),
+
+    'customer_portal_client_id' => env('CUSTOMER_PORTAL_CLIENT_ID'),
+
+    'customer_portal_client_secret' => env('CUSTOMER_PORTAL_CLIENT_SECRET'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Licence key encryption key
+    |--------------------------------------------------------------------------
+    |
+    | All licence keys are encrypted with this key on the customer portal when
+    | the key is generated.
+    |
+    */
+
+    'customer_portal_private_key' => env('CUSTOMER_PORTAL_PRIVATE_KEY'),
+
+    'licence_cipher' => 'AES-256-GCM',
+
+    /*
+    |--------------------------------------------------------------------------
     | Version of the application
     |--------------------------------------------------------------------------
     |

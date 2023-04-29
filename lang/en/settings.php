@@ -8,6 +8,7 @@ return [
     'manage_users' => 'Manage users',
     'manage_storage' => 'Manage storage',
     'personalize_your_contacts_data' => 'Personalize your contacts data',
+    'subscription' => 'Manage subscription',
     'cancel_your_account' => 'Cancel your account',
 
     /***************************************************************
@@ -257,4 +258,10 @@ return [
     'religion_update_success' => 'The religion has been updated',
     'religion_delete_success' => 'The religion has been deleted',
     'religion_delete_warning' => 'Are you sure? This can not be undone.',
+
+    /***************************************************************
+     * SUBSCRIPTION MANAGEMENT
+     **************************************************************/
+
+    'subscription_title' => 'Subscription management',
 ];

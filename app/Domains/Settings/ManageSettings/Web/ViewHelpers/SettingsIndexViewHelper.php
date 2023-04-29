@@ -10,6 +10,7 @@ class SettingsIndexViewHelper
     {
         return [
             'is_account_administrator' => $user->is_account_administrator,
+            'requires_subscription' => config('monica.requires_subscription'),
             'url' => [
                 'preferences' => [
                     'index' => route('settings.preferences.index'),
@@ -25,6 +26,9 @@ class SettingsIndexViewHelper
                 ],
                 'storage' => [
                     'index' => route('settings.storage.index'),
+                ],
+                'subscription' => [
+                    'index' => route('settings.subscription.index'),
                 ],
                 'cancel' => [
                     'index' => route('settings.cancel.index'),

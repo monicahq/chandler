@@ -94,7 +94,6 @@ const showEditModal = () => {
         <div class="flex justify-between p-2">
           <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editReligion = false" />
           <pretty-button
-            :href="'data.url.vault.create'"
             :text="$t('app.save')"
             :state="loadingState"
             :icon="'check'"
