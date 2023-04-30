@@ -884,5 +884,6 @@
   "Three things that happened today": "Tre cose che sono successe oggi",
   ":distance km": ":distance km",
   ":distance miles": ":distance miglia",
-  "Email address": "Indirizzo email"
+  "Email address": "Indirizzo email",
+  "This is a test notification for :name": "Questa è una notifica di test per :name"
 }
