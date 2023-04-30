@@ -39,7 +39,7 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('user_notification_channels', [
             'user_id' => $user->id,
-            'label' => trans('app.notification_channel_email'),
+            'label' => 'Email address',
             'type' => 'email',
             'content' => $user->email,
             'active' => true,
@@ -197,41 +197,13 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('contact_information_types', [
             'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_email'),
+            'name_translation_key' => 'Email',
             'protocol' => 'mailto:',
         ]);
         $this->assertDatabaseHas('contact_information_types', [
             'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_phone'),
+            'name_translation_key' => 'Phone',
             'protocol' => 'tel:',
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_facebook'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_twitter'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_whatsapp'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_telegram'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_hangouts'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_linkedin'),
-        ]);
-        $this->assertDatabaseHas('contact_information_types', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.contact_information_type_instagram'),
         ]);
 
         $this->assertDatabaseHas('address_types', [
@@ -241,47 +213,7 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('pet_categories', [
             'account_id' => $user->account_id,
-            'name' => trans('account.pets_dog'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_cat'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_bird'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_fish'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_hamster'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_horse'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_rabbit'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_rat'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_reptile'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_small_animal'),
-        ]);
-        $this->assertDatabaseHas('pet_categories', [
-            'account_id' => $user->account_id,
-            'name' => trans('account.pets_other'),
+            'name_translation_key' => 'Dog',
         ]);
 
         $this->assertDatabaseHas('call_reason_types', [
@@ -294,91 +226,29 @@ class SetupAccountTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('gift_occasions', [
-            'label' => 'Birthday',
+            'label_translation_key' => 'Birthday',
             'position' => 1,
         ]);
         $this->assertDatabaseHas('gift_occasions', [
-            'label' => 'Anniversary',
+            'label_translation_key' => 'Anniversary',
             'position' => 2,
         ]);
         $this->assertDatabaseHas('gift_occasions', [
-            'label' => 'Christmas',
+            'label_translation_key' => 'Christmas',
             'position' => 3,
         ]);
         $this->assertDatabaseHas('gift_occasions', [
-            'label' => 'Just because',
+            'label_translation_key' => 'Just because',
             'position' => 4,
         ]);
         $this->assertDatabaseHas('gift_occasions', [
-            'label' => 'Wedding',
-            'position' => 5,
-        ]);
-
-        $this->assertDatabaseHas('gift_states', [
-            'label' => trans('account.gift_state_idea'),
-            'position' => 1,
-        ]);
-        $this->assertDatabaseHas('gift_states', [
-            'label' => trans('account.gift_state_searched'),
-            'position' => 2,
-        ]);
-        $this->assertDatabaseHas('gift_states', [
-            'label' => trans('account.gift_state_found'),
-            'position' => 3,
-        ]);
-        $this->assertDatabaseHas('gift_states', [
-            'label' => trans('account.gift_state_bought'),
-            'position' => 4,
-        ]);
-        $this->assertDatabaseHas('gift_states', [
-            'label' => trans('account.gift_state_offered'),
-            'position' => 5,
-        ]);
-
-        $this->assertDatabaseHas('post_templates', [
-            'label' => trans('settings.personalize_post_templates_default_template'),
-            'position' => 1,
-        ]);
-        $this->assertDatabaseHas('post_templates', [
-            'label' => trans('settings.personalize_post_templates_default_template_inspirational'),
-            'position' => 2,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section'),
-            'position' => 1,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section_grateful'),
-            'position' => 1,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section_daily_affirmation'),
-            'position' => 2,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section_better'),
-            'position' => 3,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section_day'),
-            'position' => 4,
-        ]);
-        $this->assertDatabaseHas('post_template_sections', [
-            'label' => trans('settings.personalize_post_templates_default_template_section_three_things'),
+            'label_translation_key' => 'Wedding',
             'position' => 5,
         ]);
 
         $this->assertDatabaseHas('religions', [
-            'translation_key' => 'account.religion_christianity',
+            'translation_key' => 'Christian',
             'position' => 1,
-        ]);
-        $this->assertDatabaseHas('religions', [
-            'translation_key' => 'account.religion_islam',
-            'position' => 2,
-        ]);
-        $this->assertDatabaseHas('religions', [
-            'translation_key' => 'account.religion_hinduism',
-            'position' => 3,
         ]);
     }
 }

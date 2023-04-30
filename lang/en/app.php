@@ -111,10 +111,6 @@ return [
 
     'module_option_default_number_of_items_to_display' => 'Default number of items to display',
 
-    'emotion_positive' => '😁 Positive',
-    'emotion_neutral' => '😶‍🌫️ Neutral',
-    'emotion_negative' => '😡 Negative',
-
     'notification_channel_email' => 'My email',
 
     'min_read' => '{count} min read',
