@@ -922,5 +922,6 @@
   "removed the contact from the favorites": "ha rimosso il contatto dai preferiti",
   "updated the avatar of the contact": "ha aggiornato l'avatar del contatto",
   "logged the mood": "ha registrato l'umore",
-  "unknown action": "azione sconosciuta"
+  "unknown action": "azione sconosciuta",
+  "The contact has been deleted": "Il contatto è stato eliminato"
 }

@@ -5,6 +5,7 @@ import ContactCard from '@/Shared/ContactCard.vue';
 import HoverMenu from '@/Shared/HoverMenu.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
 import { onMounted, ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   layoutData: Object,
@@ -50,7 +51,7 @@ const loadMore = () => {
 };
 
 const destroy = (timelineEvent) => {
-  if (confirm('Are you sure? This will delete the event permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(timelineEvent.url.destroy)
       .then(() => {
@@ -62,7 +63,7 @@ const destroy = (timelineEvent) => {
 };
 
 const destroyLifeEvent = (timelineEvent, lifeEvent) => {
-  if (confirm('Are you sure? This will delete the event permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEvent.url.destroy)
       .then(() => {

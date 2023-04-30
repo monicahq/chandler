@@ -6,6 +6,7 @@ import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, nextTick } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   data: Object,
@@ -105,7 +106,7 @@ const update = (lifeEventCategory) => {
 };
 
 const destroy = (lifeEventCategory) => {
-  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEventCategory.url.destroy)
       .then(() => {
@@ -174,7 +175,7 @@ const updateLifeEventType = (lifeEventType) => {
 };
 
 const destroyLifeEventType = (lifeEventType) => {
-  if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEventType.url.destroy)
       .then(() => {

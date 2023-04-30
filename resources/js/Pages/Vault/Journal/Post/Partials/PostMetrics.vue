@@ -5,6 +5,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   data: Object,
@@ -56,7 +57,7 @@ const store = (journalMetric) => {
 };
 
 const destroy = (journalMetric, postMetric) => {
-  if (confirm('Are you sure?')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios.delete(postMetric.url.destroy).then(() => {
       var id = localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id);
       var postMetricId = localJournalMetrics.value[id].post_metrics.findIndex((x) => x.id === postMetric.id);

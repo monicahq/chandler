@@ -6,6 +6,7 @@ import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, nextTick } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   data: Object,
@@ -83,7 +84,7 @@ const update = (moodTrackingParameter) => {
 };
 
 const destroy = (moodTrackingParameter) => {
-  if (confirm($t('Are you sure? This action cannot be undone.'))) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(moodTrackingParameter.url.destroy)
       .then(() => {

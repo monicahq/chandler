@@ -2,6 +2,7 @@
 import Layout from '@/Shared/Layout.vue';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   layoutData: Object,
@@ -11,9 +12,11 @@ const props = defineProps({
 const form = useForm({});
 
 const destroy = () => {
-  if (confirm('Are you sure? This will delete the journal, and the entries, permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     form.delete(props.data.url.destroy, {
-      onFinish: () => {},
+      onFinish: () => {
+        localStorage.success = trans('Changes saved');
+      },
     });
   }
 };

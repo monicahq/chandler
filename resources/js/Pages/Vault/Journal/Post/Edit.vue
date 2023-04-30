@@ -10,6 +10,7 @@ import Uploadcare from '@/Components/Uploadcare.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onBeforeMount, onMounted, watch, ref } from 'vue';
 import { debounce } from 'lodash';
+import { trans } from 'laravel-vue-i18n';
 import ContactSelector from '@/Shared/Form/ContactSelector.vue';
 import JetConfirmationModal from '@/Components/Jetstream/ConfirmationModal.vue';
 import JetDangerButton from '@/Components/Jetstream/DangerButton.vue';
@@ -155,7 +156,7 @@ const update = () => {
 };
 
 const destroy = () => {
-  if (confirm('Are you sure you want to delete this post?')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     form.delete(props.data.url.destroy, {
       onFinish: () => {},
     });

@@ -13,7 +13,6 @@ return [
     'contact_archived' => 'The contact is archived',
     'contact_toggle_confirm' => 'Are you sure?',
     'contact_delete_confirm' => 'Are you sure? This will remove everything we know about this contact.',
-    'contact_delete_success' => 'The contact has been deleted',
 
     /***************************************************************
      * MODULE: FEED

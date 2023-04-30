@@ -4,6 +4,7 @@ import ContactCard from '@/Shared/ContactCard.vue';
 import Uploadcare from '@/Components/Uploadcare.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   layoutData: Object,
@@ -52,7 +53,7 @@ const destroyCoverImage = () => {
 };
 
 const destroy = () => {
-  if (confirm('Are you sure?')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     form.delete(props.data.slice.url.destroy);
   }
 };

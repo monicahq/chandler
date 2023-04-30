@@ -70,7 +70,7 @@ const destroy = () => {
     .then((response) => {
       deleteContactForm.processing = false;
 
-      localStorage.success = trans('contact.contact_delete_success');
+      localStorage.success = trans('The contact has been deleted');
       Inertia.visit(response.data.data);
     })
     .catch((error) => {
@@ -87,7 +87,7 @@ const toggleArchive = () => {
     .then((response) => {
       toggleArchiveForm.processing = false;
 
-      localStorage.success = trans('app.notification_flash_changes_saved');
+      localStorage.success = trans('Changes saved');
       Inertia.visit(response.data.data);
     })
     .catch((error) => {
@@ -112,7 +112,7 @@ const upload = () => {
     .put(props.data.url.update_avatar, form)
     .then((response) => {
       Inertia.visit(response.data.data);
-      flash(trans('contact.photos_new_success'), 'success');
+      flash(trans('The photo has been added'), 'success');
     })
     .catch((error) => {
       form.errors = error.response.data;
@@ -124,7 +124,7 @@ const destroyAvatar = () => {
     .delete(props.data.url.destroy_avatar)
     .then((response) => {
       Inertia.visit(response.data.data);
-      localStorage.success = trans('app.notification_flash_changes_saved');
+      localStorage.success = trans('Changes saved');
     })
     .catch((error) => {
       form.errors = error.response.data;
