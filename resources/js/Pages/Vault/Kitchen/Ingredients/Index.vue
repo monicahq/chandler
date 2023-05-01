@@ -5,6 +5,8 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, nextTick } from 'vue';
+import { trans } from 'laravel-vue-i18n';
+import { flash } from '@/methods.js';
 
 const props = defineProps({
   layoutData: Object,
@@ -49,6 +51,7 @@ const store = () => {
   axios
     .post(props.data.url.store, form)
     .then((response) => {
+      flash(trans('The ingredient has been added'), 'success');
       loadingState.value = '';
       createIngredientModalShown.value = false;
       localIngredients.value.push(response.data.data);
@@ -74,7 +77,7 @@ const update = (ingredient) => {
 };
 
 const destroy = (ingredient) => {
-  if (confirm('Are you sure? This will delete the journal, and the entries, permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios.delete(ingredient.url.destroy).then(() => {
       var id = localIngredients.value.findIndex((x) => x.id === ingredient.id);
       localIngredients.value.splice(id, 1);
@@ -91,11 +94,11 @@ const destroy = (ingredient) => {
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600 dark:text-gray-400">
-              {{ $t('app.breadcrumb_location') }}
+              {{ $t('You are here:') }}
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_kitchen_index') }}
+                {{ $t('Kitchen') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -108,7 +111,7 @@ const destroy = (ingredient) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">Liste des ingrédients</li>
+            <li class="inline">{{ $t('Liste des ingrédients') }}</li>
           </ul>
         </div>
       </div>
@@ -122,14 +125,14 @@ const destroy = (ingredient) => {
             <inertia-link
               :href="data.url.show"
               class="inline-flex items-center rounded-l-lg border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
-              Meals
+              {{ $t('Meals') }}
             </inertia-link>
 
             <inertia-link
               :href="data.url.photo_index"
               :class="{ 'bg-gray-100 text-blue-700 dark:bg-gray-400 dark:font-bold': defaultTab === 'life_events' }"
               class="inline-flex items-center rounded-r-md border-b border-r border-t border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-blue-500">
-              {{ $t('Ingredients de fou') }}
+              {{ $t('Ingredients') }}
             </inertia-link>
           </div>
         </div>
@@ -138,7 +141,7 @@ const destroy = (ingredient) => {
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
             <span class="mr-1"> 🥕 </span>
-            All the ingredients
+            {{ $t('All the ingredients') }}
           </h3>
           <pretty-button
             v-if="!createIngredientModalShown"
@@ -158,7 +161,7 @@ const destroy = (ingredient) => {
             <text-input
               ref="nameField"
               v-model="form.label"
-              :label="'Name'"
+              :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
@@ -169,8 +172,8 @@ const destroy = (ingredient) => {
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createIngredientModalShown = false" />
-            <pretty-button :text="'Create'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createIngredientModalShown = false" />
+            <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
@@ -189,10 +192,10 @@ const destroy = (ingredient) => {
               <!-- actions -->
               <ul class="text-sm">
                 <li class="mr-4 inline" @click="showUpdateModal(ingredient)">
-                  <span class="cursor-pointer text-blue-500 hover:underline">Rename</span>
+                  <span class="cursor-pointer text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(ingredient)">
-                  Delete
+                  {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
@@ -208,7 +211,7 @@ const destroy = (ingredient) => {
                 <text-input
                   ref="nameField"
                   v-model="form.label"
-                  :label="'Name'"
+                  :label="$t('Name')"
                   :type="'text'"
                   :autofocus="true"
                   :input-class="'block w-full'"
@@ -219,8 +222,8 @@ const destroy = (ingredient) => {
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click.prevent="editedIngredientId = 0" />
-                <pretty-button :text="$t('app.rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editedIngredientId = 0" />
+                <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
           </li>
@@ -231,7 +234,9 @@ const destroy = (ingredient) => {
           v-if="localIngredients.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <img src="/img/kitchen_ingredient_blank.svg" :alt="$t('Calls')" class="mx-auto mt-4 h-40 w-40" />
-          <p class="p-5 text-center">Here is the list of all the ingredients that are used in the meals you'll cook.</p>
+          <p class="p-5 text-center">
+            {{ $t("Here is the list of all the ingredients that are used in the meals you'll cook.") }}
+          </p>
         </div>
       </div>
     </main>
