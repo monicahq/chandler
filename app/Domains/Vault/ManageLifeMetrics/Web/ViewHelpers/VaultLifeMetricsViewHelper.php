@@ -42,9 +42,8 @@ class VaultLifeMetricsViewHelper
             ->get();
 
         // get all the events for the given year
-        $monthlyEvents = $events->filter(function ($lifeMetricEvent) use ($year) {
-            return Carbon::parse($lifeMetricEvent->pivot->created_at)->year == $year;
-        });
+        $monthlyEvents = $events->filter(fn ($lifeMetricEvent) => Carbon::parse($lifeMetricEvent->pivot->created_at)->year === $year
+        );
         $maxNumberOfEvents = 0;
         $eventsInMonthCollection = collect();
         for ($month = 1; $month < 13; $month++) {
@@ -100,12 +99,9 @@ class VaultLifeMetricsViewHelper
             ->where('life_metric_id', $lifeMetric->id)
             ->get();
 
-        $yearsCollection = collect();
-        foreach ($events as $lifeMetricEvent) {
-            $yearsCollection->push([
-                'year' => (Carbon::parse($lifeMetricEvent->pivot->created_at))->year,
-            ]);
-        }
+        $yearsCollection = $events->map(fn ($lifeMetricEvent) => [
+            'year' => (Carbon::parse($lifeMetricEvent->pivot->created_at))->year,
+        ]);
 
         return $yearsCollection->unique('year')->sortByDesc('year')->values();
     }
