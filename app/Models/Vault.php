@@ -218,7 +218,7 @@ class Vault extends Model
      */
     public function quickFactsTemplateEntries(): HasMany
     {
-        return $this->hasMany(VaultQuickFactTemplate::class);
+        return $this->hasMany(VaultQuickFactsTemplate::class);
     }
 
     /**
