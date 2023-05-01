@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import { trans } from 'laravel-vue-i18n';
+import { flash } from '@/methods.js';
 import JetDialogModal from '@/Components/Jetstream/DialogModal.vue';
 import JetConfirmationModal from '@/Components/Jetstream/ConfirmationModal.vue';
 import JetButton from '@/Components/Button.vue';
@@ -124,7 +125,7 @@ const destroyAvatar = () => {
     .delete(props.data.url.destroy_avatar)
     .then((response) => {
       Inertia.visit(response.data.data);
-      localStorage.success = trans('Changes saved');
+      flash(trans('Changes saved'), 'success');
     })
     .catch((error) => {
       form.errors = error.response.data;
