@@ -23,6 +23,9 @@ class UpdateMeal extends BaseService implements ServiceInterface
             'author_id' => 'required|uuid|exists:users,id',
             'meal_id' => 'required|integer|exists:meals,id',
             'name' => 'required|string|max:255',
+            'url_to_recipe' => 'nullable|string|max:255',
+            'time_to_prepare_in_minutes' => 'nullable|integer',
+            'time_to_cook_in_minutes' => 'nullable|integer',
         ];
     }
 
@@ -44,6 +47,9 @@ class UpdateMeal extends BaseService implements ServiceInterface
         $this->validate();
 
         $this->meal->name = $data['name'];
+        $this->meal->url_to_recipe = $this->valueOrNull($data, 'url_to_recipe');
+        $this->meal->time_to_prepare_in_minutes = $this->valueOrNull($data, 'time_to_prepare_in_minutes');
+        $this->meal->time_to_cook_in_minutes = $this->valueOrNull($data, 'time_to_cook_in_minutes');
         $this->meal->save();
 
         return $this->meal;

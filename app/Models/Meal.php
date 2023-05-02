@@ -20,7 +20,11 @@ class Meal extends Model
      */
     protected $fillable = [
         'vault_id',
+        'meal_category_id',
         'name',
+        'url_to_recipe',
+        'time_to_prepare_in_minutes',
+        'time_to_cook_in_minutes',
     ];
 
     /**
@@ -36,7 +40,7 @@ class Meal extends Model
      */
     public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class)->withPivot('quantity', 'position');
     }
 
     /**

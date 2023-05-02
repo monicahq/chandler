@@ -106,6 +106,7 @@ class AddIngredientToMealTest extends TestCase
             'vault_id' => $vault->id,
             'meal_id' => $meal->id,
             'ingredient_id' => $ingredient->id,
+            'quantity' => '3',
         ];
 
         (new AddIngredientToMeal())->execute($request);
@@ -113,6 +114,7 @@ class AddIngredientToMealTest extends TestCase
         $this->assertDatabaseHas('ingredient_meal', [
             'meal_id' => $meal->id,
             'ingredient_id' => $ingredient->id,
+            'quantity' => '3',
         ]);
     }
 }

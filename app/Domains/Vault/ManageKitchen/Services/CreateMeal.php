@@ -18,6 +18,9 @@ class CreateMeal extends BaseService implements ServiceInterface
             'vault_id' => 'required|uuid|exists:vaults,id',
             'author_id' => 'required|uuid|exists:users,id',
             'name' => 'required|string|max:255',
+            'url_to_recipe' => 'nullable|string|max:255',
+            'time_to_prepare_in_minutes' => 'nullable|integer',
+            'time_to_cook_in_minutes' => 'nullable|integer',
         ];
     }
 
@@ -40,6 +43,9 @@ class CreateMeal extends BaseService implements ServiceInterface
         return Meal::create([
             'vault_id' => $data['vault_id'],
             'name' => $data['name'],
+            'url_to_recipe' => $this->valueOrNull($data, 'url_to_recipe'),
+            'time_to_prepare_in_minutes' => $this->valueOrNull($data, 'time_to_prepare_in_minutes'),
+            'time_to_cook_in_minutes' => $this->valueOrNull($data, 'time_to_cook_in_minutes'),
         ]);
     }
 }

@@ -89,6 +89,9 @@ class UpdateMealTest extends TestCase
             'vault_id' => $vault->id,
             'meal_id' => $meal->id,
             'name' => 'label name',
+            'url_to_recipe' => 'https://www.google.com',
+            'time_to_prepare_in_minutes' => 10,
+            'time_to_cook_in_minutes' => 20,
         ];
 
         $meal = (new UpdateMeal())->execute($request);

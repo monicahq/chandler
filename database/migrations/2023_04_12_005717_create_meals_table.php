@@ -29,6 +29,9 @@ return new class extends Migration
             $table->foreignIdFor(Vault::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(MealCategory::class, 'meal_category_id')->nullable()->constrained('meal_categories')->nullOnDelete();
             $table->string('name');
+            $table->string('url_to_recipe')->nullable();
+            $table->integer('time_to_prepare_in_minutes')->nullable();
+            $table->integer('time_to_cook_in_minutes')->nullable();
             $table->timestamps();
         });
 
@@ -43,7 +46,8 @@ return new class extends Migration
         Schema::create('ingredient_meal', function (Blueprint $table) {
             $table->foreignIdFor(Ingredient::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Meal::class)->constrained()->cascadeOnDelete();
-            $table->integer('quantity')->nullable();
+            $table->string('quantity')->nullable();
+            $table->integer('position')->nullable();
         });
     }
 

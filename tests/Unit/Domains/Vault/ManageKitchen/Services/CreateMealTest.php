@@ -78,6 +78,9 @@ class CreateMealTest extends TestCase
             'author_id' => $author->id,
             'vault_id' => $vault->id,
             'name' => 'name',
+            'url_to_recipe' => 'url_to_recipe',
+            'time_to_prepare_in_minutes' => 10,
+            'time_to_cook_in_minutes' => 10,
         ];
 
         $meal = (new CreateMeal())->execute($request);

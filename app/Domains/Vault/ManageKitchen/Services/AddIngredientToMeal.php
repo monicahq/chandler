@@ -26,6 +26,7 @@ class AddIngredientToMeal extends BaseService implements ServiceInterface
             'author_id' => 'required|uuid|exists:users,id',
             'meal_id' => 'required|integer|exists:meals,id',
             'ingredient_id' => 'required|integer|exists:ingredients,id',
+            'quantity' => 'nullable|string|max:255',
         ];
     }
 
@@ -46,7 +47,11 @@ class AddIngredientToMeal extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
 
-        $this->meal->ingredients()->syncWithoutDetaching($this->ingredient);
+        $this->meal->ingredients()->syncWithoutDetaching([
+            $this->ingredient->id => [
+                'quantity' => $this->data['quantity'],
+            ],
+        ]);
     }
 
     private function validate(): void
