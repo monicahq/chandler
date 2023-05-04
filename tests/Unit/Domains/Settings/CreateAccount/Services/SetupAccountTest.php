@@ -197,7 +197,7 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('contact_information_types', [
             'account_id' => $user->account_id,
-            'name_translation_key' => 'Email',
+            'name_translation_key' => 'Email address',
             'protocol' => 'mailto:',
         ]);
         $this->assertDatabaseHas('contact_information_types', [
