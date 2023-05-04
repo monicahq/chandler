@@ -71,7 +71,7 @@
 
           <div>
             <p class="mb-2">
-              {{ $t("You can choose which currencies should be enabled in your account, and which one shouldn't.") }}
+              {{ $t('You can choose which currencies should be enabled in your account, and which one shouldn’t.') }}
             </p>
             <p>{{ $t('You can change that at any time.') }}</p>
           </div>

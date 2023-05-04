@@ -93,7 +93,7 @@ defineProps({
           <div
             v-else
             class="rounded-lg border border-gray-200 bg-gray-100 p-3 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900">
-            {{ $t('No dates in this month') }}
+            {{ $t('No dates in this month.') }}
           </div>
         </div>
       </div>

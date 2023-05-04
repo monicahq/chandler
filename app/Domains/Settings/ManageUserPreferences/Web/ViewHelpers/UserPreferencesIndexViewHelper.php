@@ -190,6 +190,6 @@ class UserPreferencesIndexViewHelper
 
     public static function language(string $code): string
     {
-        return trans('auth.lang', [], $code);
+        return trans('auth.lang', locale: $code);
     }
 }

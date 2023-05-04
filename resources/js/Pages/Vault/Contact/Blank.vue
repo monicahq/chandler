@@ -55,7 +55,7 @@
               <p v-if="data.templates.length > 0" class="mb-2">
                 {{
                   $t(
-                    'Please choose one template below to tell Monica how this contact should be displayed. Templates let you define which data should be diplayed on the contact page.',
+                    'Please choose one template below to tell Monica how this contact should be displayed. Templates let you define which data should be displayed on the contact page.',
                   )
                 }}
               </p>

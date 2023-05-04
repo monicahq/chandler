@@ -118,7 +118,7 @@
               <label
                 for="me_not_answered"
                 class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
+                {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
               </label>
             </div>
           </div>
@@ -150,7 +150,7 @@
               <label
                 for="contact_not_answered"
                 class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ $t(":name called, but I didn't answer", { name: data.contact_name }) }}
+                {{ $t(':name called, but I didn’t answer', { name: data.contact_name }) }}
               </label>
             </div>
           </div>
@@ -393,7 +393,7 @@
                   <label
                     for="me_not_answered"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t("I called, but :name didn't answer", { name: data.contact_name }) }}
+                    {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
                   </label>
                 </div>
               </div>
@@ -425,7 +425,7 @@
                   <label
                     for="contact_not_answered"
                     class="ml-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ $t(":name called, but I didn't answer", { name: data.contact_name }) }}
+                    {{ $t(':name called, but I didn’t answer', { name: data.contact_name }) }}
                   </label>
                 </div>
               </div>

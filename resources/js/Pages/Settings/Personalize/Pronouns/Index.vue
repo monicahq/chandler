@@ -145,7 +145,7 @@
           <p class="p-5 text-center">
             {{
               $t(
-                "Pronouns are basically how we identify ourselves apart from our name. It's how someone refers to you in conversation.",
+                'Pronouns are basically how we identify ourselves apart from our name. It’s how someone refers to you in conversation.',
               )
             }}
           </p>

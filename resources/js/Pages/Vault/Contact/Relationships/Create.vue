@@ -129,7 +129,7 @@
                     <label
                       for="unknown"
                       class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {{ $t("I don't know the name") }}
+                      {{ $t('I don’t know the name') }}
                     </label>
                   </div>
 

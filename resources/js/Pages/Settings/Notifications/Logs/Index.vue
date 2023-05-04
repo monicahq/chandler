@@ -84,7 +84,7 @@
             <p>
               {{
                 $t(
-                  'This page shows all the notifications that have been sent in this channel in the past. It primeraly serves as a way to debug in case you don’t receive the notification you’ve set up.',
+                  'This page shows all the notifications that have been sent in this channel in the past. It primarily serves as a way to debug in case you don’t receive the notification you’ve set up.',
                 )
               }}
             </p>

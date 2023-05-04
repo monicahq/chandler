@@ -59,7 +59,7 @@
           <li class="mb-2">
             {{
               $t(
-                "Once you click the Setup button below, you'll have to open Telegram with the button we'll provide you with. This will locate the Monica Telegram bot for you.",
+                'Once you click the Setup button below, you’ll have to open Telegram with the button we’ll provide you with. This will locate the Monica Telegram bot for you.',
               )
             }}
           </li>
@@ -69,7 +69,7 @@
           <li>
             {{
               $t(
-                "Wait a few seconds for Monica (the application) to recognize you. We'll send you a fake notification to see if it works.",
+                'Wait a few seconds for Monica (the application) to recognize you. We’ll send you a fake notification to see if it works.',
               )
             }}
           </li>

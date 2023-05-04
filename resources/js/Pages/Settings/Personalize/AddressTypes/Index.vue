@@ -255,7 +255,7 @@ export default {
       if (
         confirm(
           this.$t(
-            "Are you sure? This will remove the address types from all contacts, but won't delete the contacts themselves.",
+            'Are you sure? This will remove the address types from all contacts, but won’t delete the contacts themselves.',
           ),
         )
       ) {
