@@ -188,8 +188,8 @@ class UserPreferencesIndexViewHelper
         ];
     }
 
-    public static function language(string $code): string
+    public static function language(?string $code): string
     {
-        return trans('auth.lang', locale: $code);
+        return $code !== null ? trans('auth.lang', locale: $code) : '';
     }
 }
