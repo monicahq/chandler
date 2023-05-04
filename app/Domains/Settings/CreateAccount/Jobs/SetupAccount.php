@@ -956,7 +956,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $information = (new CreateContactInformationType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Email', locale: 'en'),
+            'name_translation_key' => trans('Email address', locale: 'en'),
             'protocol' => 'mailto:',
         ]);
         $information->can_be_deleted = false;
