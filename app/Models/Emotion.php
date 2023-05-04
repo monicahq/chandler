@@ -54,7 +54,7 @@ class Emotion extends Model
         return Attribute::make(
             get: function ($value, $attributes) {
                 if (! $value) {
-                    return trans($attributes['name_translation_key']);
+                    return __($attributes['name_translation_key']);
                 }
 
                 return $value;

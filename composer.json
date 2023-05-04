@@ -41,6 +41,7 @@
     "uploadcare/uploadcare-php": "^3.2"
   },
   "require-dev": {
+    "amirami/localizator": "^0.12.1@alpha",
     "barryvdh/laravel-debugbar": "^3.7",
     "barryvdh/laravel-ide-helper": "^2.12",
     "brianium/paratest": "^7.0",
@@ -86,6 +87,6 @@
       "php-http/discovery": true
     }
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true
 }

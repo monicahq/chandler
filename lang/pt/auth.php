@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'lang' => 'Português',
     'failed' => 'Essas credenciais não correspondem aos nossos registros.',
+    'lang' => 'Português',
     'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
-
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',

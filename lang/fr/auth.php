@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'lang' => 'Français',
     'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
+    'lang' => 'Français',
     'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans :seconds secondes.',
-
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',

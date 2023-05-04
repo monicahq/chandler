@@ -65,7 +65,7 @@ class RelationshipType extends Model
         return Attribute::make(
             get: function ($value, $attributes) {
                 if (! $value) {
-                    return trans($attributes['name_translation_key']);
+                    return __($attributes['name_translation_key']);
                 }
 
                 return $value;
@@ -86,7 +86,7 @@ class RelationshipType extends Model
         return Attribute::make(
             get: function ($value, $attributes) {
                 if (! $value) {
-                    return trans($attributes['name_reverse_relationship_translation_key']);
+                    return __($attributes['name_reverse_relationship_translation_key']);
                 }
 
                 return $value;

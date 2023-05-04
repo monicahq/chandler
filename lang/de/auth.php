@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'lang' => 'Deutsch',
     'failed' => 'Diese Anmeldedaten stimmen nicht mit unseren Aufzeichnungen überein.',
+    'lang' => 'Deutsch',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
-
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',

@@ -1,10 +1,9 @@
 <?php
 
 return [
-    'lang' => 'Italiano',
     'failed' => 'Queste credenziali non corrispondono ai nostri record.',
+    'lang' => 'Italiano',
     'throttle' => 'Troppi tentativi di accesso. Riprova tra :seconds secondi.',
-
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',

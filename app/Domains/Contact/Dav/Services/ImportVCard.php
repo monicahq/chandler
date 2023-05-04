@@ -247,7 +247,7 @@ class ImportVCard extends BaseService implements ServiceInterface
             return (string) $entry->NICKNAME;
         }
 
-        return (string) __('Unknown contact name');
+        return (string) trans('Unknown contact name');
     }
 
     /**
