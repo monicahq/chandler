@@ -22,7 +22,7 @@
 
         <!-- preferred time -->
         <p class="mb-2 block text-sm">
-          {{ $t('settings.notification_channels_email_at') }}
+          {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
         <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
           <span class="mr-2">

@@ -47,7 +47,7 @@
             <!-- actions -->
             <ul class="text-sm">
               <li v-if="template.is_default">
-                {{ $t('vault.settings_default_template_current_default_status') }}
+                {{ $t('Current default') }}
               </li>
               <li v-else class="inline cursor-pointer text-blue-500 hover:underline" @click="update(template)">
                 {{ $t('Set as default') }}

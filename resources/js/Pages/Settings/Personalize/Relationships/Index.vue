@@ -489,7 +489,7 @@ export default {
       axios
         .post(groupType.url.store, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_relationship_types_new_success'), 'success');
+          this.flash(this.$t('The relationship type has been created'), 'success');
           this.loadingState = null;
           this.createRelationshipTypeModalId = 0;
           var id = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
@@ -507,7 +507,7 @@ export default {
       axios
         .put(type.url.update, this.form)
         .then((response) => {
-          this.flash(this.$t('settings.personalize_relationship_types_update_success'), 'success');
+          this.flash(this.$t('The relationship type has been updated'), 'success');
           this.loadingState = null;
           this.renameRelationshipTypeModalId = 0;
           var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
@@ -521,11 +521,17 @@ export default {
     },
 
     destroyRelationshipType(groupType, type) {
-      if (confirm(this.$t('settings.personalize_relationship_types_destroy_confirm'))) {
+      if (
+        confirm(
+          this.$t(
+            'Are you sure? This will delete all the relationships of this type for all the contacts that were using it.',
+          ),
+        )
+      ) {
         axios
           .delete(type.url.destroy)
           .then(() => {
-            this.flash(this.$t('settings.personalize_relationship_types_destroy_success'), 'success');
+            this.flash(this.$t('The relationship type has been deleted'), 'success');
             var groupTypeId = this.localGroupTypes.findIndex((x) => x.id === groupType.id);
             var typeId = this.localGroupTypes[groupTypeId].types.findIndex((x) => x.id === type.id);
             this.localGroupTypes[groupTypeId].types.splice(typeId, 1);

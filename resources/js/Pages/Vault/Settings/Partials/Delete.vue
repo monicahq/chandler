@@ -38,7 +38,7 @@
 
       <p class="mb-1 px-5 py-2 text-center">
         <pretty-link
-          :text="$t('vault.settings_delete_cta')"
+          :text="$t('Delete the vault')"
           :classes="'mr-3 text-red-600 dark:text-red-400 border-red-600 dark:border-red-400'"
           @click="destroy" />
       </p>

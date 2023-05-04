@@ -258,7 +258,7 @@ const updatePosition = (event) => {
                 @esc-key-pressed="editMoodTrackingParameterId = 0" />
 
               <p class="mb-2 block text-sm">
-                {{ $t('vault.settings_labels_create_color') }}
+                {{ $t('Choose a color') }}
               </p>
               <div class="grid grid-cols-8 gap-4">
                 <div

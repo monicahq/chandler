@@ -113,7 +113,7 @@
     <div
       v-if="addUserModalShown && localUsersInAccount.length == 0"
       class="mb-6 rounded-lg border border-gray-200 bg-white p-5 text-center dark:border-gray-700 dark:bg-gray-900">
-      <p>{{ $t('vault.settings_users_invite_blank') }}</p>
+      <p>{{ $t('There are no other users in this account.') }}</p>
     </div>
 
     <!-- list of existing users -->
@@ -202,11 +202,7 @@
 
             <div class="flex justify-between p-5">
               <pretty-span :text="$t('Cancel')" @click="editedUser = []" />
-              <pretty-button
-                :text="$t('vault.settings_users_edit_permission_cta')"
-                :state="loadingState"
-                :icon="'check'"
-                :classes="'save'" />
+              <pretty-button :text="$t('Change permission')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </li>

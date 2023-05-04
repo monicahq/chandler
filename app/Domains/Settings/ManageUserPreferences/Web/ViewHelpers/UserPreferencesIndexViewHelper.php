@@ -190,13 +190,6 @@ class UserPreferencesIndexViewHelper
 
     public static function language(string $code): string
     {
-        return match ($code) {
-            'en' => trans('English', [], 'en'),
-            'fr' => trans('French', [], 'fr'),
-            'it' => trans('Italian', [], 'it'),
-            'de' => trans('German', [], 'de'),
-            'pt' => trans('Portugese', [], 'pt'),
-            default => $code,
-        };
+        return trans('auth.lang', [], $code);
     }
 }

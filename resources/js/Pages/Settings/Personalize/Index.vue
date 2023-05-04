@@ -47,7 +47,7 @@
             <!-- <li class="mb-2 flex">
               <span class="mr-2">🥪</span>
               <inertia-link :href="data.url.manage_modules" class="text-blue-500 hover:underline">
-                {{ $t('settings.personalize_title_manage_module') }}
+                {{ $t('Manage modules') }}
               </inertia-link>
             </li> -->
             <li class="mb-2 flex">

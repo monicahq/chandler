@@ -203,7 +203,7 @@ defineProps({
 
             <!-- mood tracking events -->
             <div v-if="data.moodTrackingEvents.length > 0">
-              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_mood') }}</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('Your mood that you logged at this date') }}</p>
 
               <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                 <li

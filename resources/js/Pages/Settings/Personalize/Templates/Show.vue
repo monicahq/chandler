@@ -90,7 +90,11 @@
               {{ $t('This template will define what information are displayed on a contact page.') }}
             </p>
             <p class="mb-1">
-              {{ $t('settings.personalize_template_show_description') }}
+              {{
+                $t(
+                  'A template is made of pages, and in each page, there are modules. How data is displayed is entirely up to you.',
+                )
+              }}
             </p>
             <p>
               {{
