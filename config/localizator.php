@@ -48,7 +48,7 @@ return [
          * Add here any custom defined functions.
          * NOTE: The translation string should always be the first argument.
          */
-        'functions' => ['trans', 'trans_choice', '@lang', '\\$t', '\\$tChoice'],
+        'functions' => ['__', 'trans', 'trans_choice', 'trans_key', '@lang', '\\$t', '\\$tChoice'],
     ],
 
     /**

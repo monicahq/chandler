@@ -86,7 +86,7 @@ class AttemptToAuthenticateWebauthn
         $this->limiter->increment($request);
 
         throw ValidationException::withMessages([
-            Webauthn::username() => [__('webauthn::errors.login_failed')],
+            Webauthn::username() => [trans_ignore('webauthn::errors.login_failed')],
         ]);
     }
 

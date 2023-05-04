@@ -121,7 +121,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'name' => null,
-            'name_translation_key' => trans('Default template', locale: 'en'),
+            'name_translation_key' => trans_key('Default template'),
         ];
 
         $this->template = (new CreateTemplate())->execute($request);
@@ -139,7 +139,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Avatar', locale: 'en'),
+            'name_translation_key' => trans_key('Avatar'),
             'type' => Module::TYPE_AVATAR,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -156,7 +156,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Contact name', locale: 'en'),
+            'name_translation_key' => trans_key('Contact name'),
             'type' => Module::TYPE_CONTACT_NAMES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -173,7 +173,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Family summary', locale: 'en'),
+            'name_translation_key' => trans_key('Family summary'),
             'type' => Module::TYPE_FAMILY_SUMMARY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -190,7 +190,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Important dates', locale: 'en'),
+            'name_translation_key' => trans_key('Important dates'),
             'type' => Module::TYPE_IMPORTANT_DATES,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -207,7 +207,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Gender and pronoun', locale: 'en'),
+            'name_translation_key' => trans_key('Gender and pronoun'),
             'type' => Module::TYPE_GENDER_PRONOUN,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -224,7 +224,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Labels', locale: 'en'),
+            'name_translation_key' => trans_key('Labels'),
             'type' => Module::TYPE_LABELS,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -241,7 +241,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Job information', locale: 'en'),
+            'name_translation_key' => trans_key('Job information'),
             'type' => Module::TYPE_COMPANY,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -258,7 +258,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Religions', locale: 'en'),
+            'name_translation_key' => trans_key('Religions'),
             'type' => Module::TYPE_RELIGIONS,
             'can_be_deleted' => false,
             'reserved_to_contact_information' => true,
@@ -278,13 +278,13 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name_translation_key' => trans('Activity feed', locale: 'en'),
+            'name_translation_key' => trans_key('Activity feed'),
             'can_be_deleted' => true,
         ]);
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Contact feed', locale: 'en'),
+            'name_translation_key' => trans_key('Contact feed'),
             'type' => Module::TYPE_FEED,
             'can_be_deleted' => false,
         ]);
@@ -303,7 +303,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name_translation_key' => trans('Ways to connect', locale: 'en'),
+            'name_translation_key' => trans_key('Ways to connect'),
             'can_be_deleted' => true,
         ]);
 
@@ -311,7 +311,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Addresses', locale: 'en'),
+            'name_translation_key' => trans_key('Addresses'),
             'type' => Module::TYPE_ADDRESSES,
             'can_be_deleted' => false,
         ]);
@@ -327,7 +327,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Contact information', locale: 'en'),
+            'name_translation_key' => trans_key('Contact information'),
             'type' => Module::TYPE_CONTACT_INFORMATION,
             'can_be_deleted' => false,
         ]);
@@ -346,7 +346,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name_translation_key' => trans('Social', locale: 'en'),
+            'name_translation_key' => trans_key('Social'),
             'can_be_deleted' => true,
         ]);
 
@@ -354,7 +354,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Relationships', locale: 'en'),
+            'name_translation_key' => trans_key('Relationships'),
             'type' => Module::TYPE_RELATIONSHIPS,
             'can_be_deleted' => false,
         ]);
@@ -370,7 +370,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Pets', locale: 'en'),
+            'name_translation_key' => trans_key('Pets'),
             'type' => Module::TYPE_PETS,
             'can_be_deleted' => false,
         ]);
@@ -386,7 +386,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Groups', locale: 'en'),
+            'name_translation_key' => trans_key('Groups'),
             'type' => Module::TYPE_GROUPS,
             'can_be_deleted' => false,
         ]);
@@ -405,7 +405,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name_translation_key' => trans('Life & goals', locale: 'en'),
+            'name_translation_key' => trans_key('Life & goals'),
             'can_be_deleted' => true,
         ]);
 
@@ -413,7 +413,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Life', locale: 'en'),
+            'name_translation_key' => trans_key('Life'),
             'type' => Module::TYPE_LIFE_EVENTS,
             'can_be_deleted' => false,
         ]);
@@ -429,7 +429,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Goals', locale: 'en'),
+            'name_translation_key' => trans_key('Goals'),
             'type' => Module::TYPE_GOALS,
             'can_be_deleted' => false,
         ]);
@@ -448,7 +448,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'template_id' => $this->template->id,
-            'name_translation_key' => trans('Information', locale: 'en'),
+            'name_translation_key' => trans_key('Information'),
             'can_be_deleted' => true,
         ]);
 
@@ -456,7 +456,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Documents', locale: 'en'),
+            'name_translation_key' => trans_key('Documents'),
             'type' => Module::TYPE_DOCUMENTS,
             'can_be_deleted' => false,
         ]);
@@ -472,7 +472,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Photos', locale: 'en'),
+            'name_translation_key' => trans_key('Photos'),
             'type' => Module::TYPE_PHOTOS,
             'can_be_deleted' => false,
         ]);
@@ -488,7 +488,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Notes', locale: 'en'),
+            'name_translation_key' => trans_key('Notes'),
             'type' => Module::TYPE_NOTES,
             'can_be_deleted' => false,
             'pagination' => 3,
@@ -505,7 +505,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Reminders', locale: 'en'),
+            'name_translation_key' => trans_key('Reminders'),
             'type' => Module::TYPE_REMINDERS,
             'can_be_deleted' => false,
         ]);
@@ -521,7 +521,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Loans', locale: 'en'),
+            'name_translation_key' => trans_key('Loans'),
             'type' => Module::TYPE_LOANS,
             'can_be_deleted' => false,
         ]);
@@ -537,7 +537,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Tasks', locale: 'en'),
+            'name_translation_key' => trans_key('Tasks'),
             'type' => Module::TYPE_TASKS,
             'can_be_deleted' => false,
         ]);
@@ -553,7 +553,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Calls', locale: 'en'),
+            'name_translation_key' => trans_key('Calls'),
             'type' => Module::TYPE_CALLS,
             'can_be_deleted' => false,
         ]);
@@ -569,7 +569,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $module = (new CreateModule())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Posts', locale: 'en'),
+            'name_translation_key' => trans_key('Posts'),
             'type' => Module::TYPE_POSTS,
             'can_be_deleted' => false,
         ]);
@@ -605,9 +605,9 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addGenders(): void
     {
         $types = collect([
-            trans('Male', locale: 'en'),
-            trans('Female', locale: 'en'),
-            trans('Other', locale: 'en'),
+            trans_key('Male'),
+            trans_key('Female'),
+            trans_key('Other'),
         ]);
 
         foreach ($types as $type) {
@@ -627,13 +627,13 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addPronouns(): void
     {
         $pronouns = collect([
-            trans('he/him', locale: 'en'),
-            trans('she/her', locale: 'en'),
-            trans('they/them', locale: 'en'),
-            trans('per/per', locale: 'en'),
-            trans('ve/ver', locale: 'en'),
-            trans('xe/xem', locale: 'en'),
-            trans('ze/hir', locale: 'en'),
+            trans_key('he/him'),
+            trans_key('she/her'),
+            trans_key('they/them'),
+            trans_key('per/per'),
+            trans_key('ve/ver'),
+            trans_key('xe/xem'),
+            trans_key('ze/hir'),
         ]);
 
         foreach ($pronouns as $pronoun) {
@@ -655,49 +655,49 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Family', locale: 'en'),
+            'label_translation_key' => trans_key('Family'),
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label_translation_key' => trans('Parent', locale: 'en'),
+            'label_translation_key' => trans_key('Parent'),
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label_translation_key' => trans('Child', locale: 'en'),
+            'label_translation_key' => trans_key('Child'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Couple', locale: 'en'),
+            'label_translation_key' => trans_key('Couple'),
         ]);
         (new CreateGroupTypeRole())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'group_type_id' => $groupType->id,
-            'label_translation_key' => trans('Partner', locale: 'en'),
+            'label_translation_key' => trans_key('Partner'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Club', locale: 'en'),
+            'label_translation_key' => trans_key('Club'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Association', locale: 'en'),
+            'label_translation_key' => trans_key('Association'),
         ]);
 
         $groupType = (new CreateGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Roomates', locale: 'en'),
+            'label_translation_key' => trans_key('Roomates'),
         ]);
     }
 
@@ -707,50 +707,50 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Love', locale: 'en'),
+            'name_translation_key' => trans_key('Love'),
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_LOVE,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name_translation_key' => trans('significant other', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('significant other', locale: 'en'),
+                'name_translation_key' => trans_key('significant other'),
+                'name_reverse_relationship_translation_key' => trans_key('significant other'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_LOVE,
             ],
             [
-                'name_translation_key' => trans('spouse', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('spouse', locale: 'en'),
+                'name_translation_key' => trans_key('spouse'),
+                'name_reverse_relationship_translation_key' => trans_key('spouse'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_LOVE,
             ],
             [
-                'name_translation_key' => trans('date', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('date', locale: 'en'),
+                'name_translation_key' => trans_key('date'),
+                'name_reverse_relationship_translation_key' => trans_key('date'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('lover', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('lover', locale: 'en'),
+                'name_translation_key' => trans_key('lover'),
+                'name_reverse_relationship_translation_key' => trans_key('lover'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('in love with', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('loved by', locale: 'en'),
+                'name_translation_key' => trans_key('in love with'),
+                'name_reverse_relationship_translation_key' => trans_key('loved by'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('ex-boyfriend', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('ex-boyfriend', locale: 'en'),
+                'name_translation_key' => trans_key('ex-boyfriend'),
+                'name_reverse_relationship_translation_key' => trans_key('ex-boyfriend'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -761,50 +761,50 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Family', locale: 'en'),
+            'name_translation_key' => trans_key('Family'),
             'can_be_deleted' => false,
             'type' => RelationshipGroupType::TYPE_FAMILY,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name_translation_key' => trans('parent', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('child', locale: 'en'),
+                'name_translation_key' => trans_key('parent'),
+                'name_reverse_relationship_translation_key' => trans_key('child'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => false,
                 'type' => RelationshipType::TYPE_CHILD,
             ],
             [
-                'name_translation_key' => trans('brother/sister', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('brother/sister', locale: 'en'),
+                'name_translation_key' => trans_key('brother/sister'),
+                'name_reverse_relationship_translation_key' => trans_key('brother/sister'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('grand parent', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('grand child', locale: 'en'),
+                'name_translation_key' => trans_key('grand parent'),
+                'name_reverse_relationship_translation_key' => trans_key('grand child'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('uncle/aunt', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('nephew/niece', locale: 'en'),
+                'name_translation_key' => trans_key('uncle/aunt'),
+                'name_reverse_relationship_translation_key' => trans_key('nephew/niece'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('cousin', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('cousin', locale: 'en'),
+                'name_translation_key' => trans_key('cousin'),
+                'name_reverse_relationship_translation_key' => trans_key('cousin'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('godparent', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('godchild', locale: 'en'),
+                'name_translation_key' => trans_key('godparent'),
+                'name_reverse_relationship_translation_key' => trans_key('godchild'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -815,21 +815,21 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Friend', locale: 'en'),
+            'name_translation_key' => trans_key('Friend'),
             'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name_translation_key' => trans('friend', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('friend', locale: 'en'),
+                'name_translation_key' => trans_key('friend'),
+                'name_reverse_relationship_translation_key' => trans_key('friend'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('best friend', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('best friend', locale: 'en'),
+                'name_translation_key' => trans_key('best friend'),
+                'name_reverse_relationship_translation_key' => trans_key('best friend'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -840,28 +840,28 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $group = (new CreateRelationshipGroupType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Work', locale: 'en'),
+            'name_translation_key' => trans_key('Work'),
             'can_be_deleted' => true,
         ]);
 
         DB::table('relationship_types')->insert([
             [
-                'name_translation_key' => trans('colleague', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('colleague', locale: 'en'),
+                'name_translation_key' => trans_key('colleague'),
+                'name_reverse_relationship_translation_key' => trans_key('colleague'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('subordinate', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('boss', locale: 'en'),
+                'name_translation_key' => trans_key('subordinate'),
+                'name_reverse_relationship_translation_key' => trans_key('boss'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
             ],
             [
-                'name_translation_key' => trans('mentor', locale: 'en'),
-                'name_reverse_relationship_translation_key' => trans('protege', locale: 'en'),
+                'name_translation_key' => trans_key('mentor'),
+                'name_reverse_relationship_translation_key' => trans_key('protege'),
                 'relationship_group_type_id' => $group->id,
                 'can_be_deleted' => true,
                 'type' => null,
@@ -872,10 +872,10 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addAddressTypes(): void
     {
         $addresses = collect([
-            trans('🏡 Home', locale: 'en'),
-            trans('🏠 Secondary residence', locale: 'en'),
-            trans('🏢 Work', locale: 'en'),
-            trans('🌳 Chalet', locale: 'en'),
+            trans_key('🏡 Home'),
+            trans_key('🏠 Secondary residence'),
+            trans_key('🏢 Work'),
+            trans_key('🌳 Chalet'),
         ]);
 
         foreach ($addresses as $address) {
@@ -892,62 +892,62 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Personal', locale: 'en'),
+            'label_translation_key' => trans_key('Personal'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('For advice', locale: 'en'),
+            'label_translation_key' => trans_key('For advice'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('Just to say hello', locale: 'en'),
+            'label_translation_key' => trans_key('Just to say hello'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('To see if they need anything', locale: 'en'),
+            'label_translation_key' => trans_key('To see if they need anything'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('Out of respect and appreciation', locale: 'en'),
+            'label_translation_key' => trans_key('Out of respect and appreciation'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('To hear their story', locale: 'en'),
+            'label_translation_key' => trans_key('To hear their story'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('', locale: 'en'),
+            'label_translation_key' => trans_key(''),
         ]);
 
         // business
         $type = (new CreateCallReasonType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Business', locale: 'en'),
+            'label_translation_key' => trans_key('Business'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('Discuss recent purchases', locale: 'en'),
+            'label_translation_key' => trans_key('Discuss recent purchases'),
         ]);
         (new CreateCallReason())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'call_reason_type_id' => $type->id,
-            'label_translation_key' => trans('Discuss partnership', locale: 'en'),
+            'label_translation_key' => trans_key('Discuss partnership'),
         ]);
     }
 
@@ -956,7 +956,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $information = (new CreateContactInformationType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Email', locale: 'en'),
+            'name_translation_key' => trans_key('Email'),
             'protocol' => 'mailto:',
         ]);
         $information->can_be_deleted = false;
@@ -966,7 +966,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $information = (new CreateContactInformationType())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'name_translation_key' => trans('Phone', locale: 'en'),
+            'name_translation_key' => trans_key('Phone'),
             'protocol' => 'tel:',
         ]);
         $information->can_be_deleted = false;
@@ -1013,16 +1013,16 @@ class SetupAccount extends QueuableService implements ServiceInterface
     private function addPetCategories(): void
     {
         $categories = collect([
-            trans('Dog', locale: 'en'),
-            trans('Cat', locale: 'en'),
-            trans('Bird', locale: 'en'),
-            trans('Fish', locale: 'en'),
-            trans('Small animal', locale: 'en'),
-            trans('Hamster', locale: 'en'),
-            trans('Horse', locale: 'en'),
-            trans('Rabbit', locale: 'en'),
-            trans('Rat', locale: 'en'),
-            trans('Reptile', locale: 'en'),
+            trans_key('Dog'),
+            trans_key('Cat'),
+            trans_key('Bird'),
+            trans_key('Fish'),
+            trans_key('Small animal'),
+            trans_key('Hamster'),
+            trans_key('Horse'),
+            trans_key('Rabbit'),
+            trans_key('Rat'),
+            trans_key('Reptile'),
         ]);
 
         foreach ($categories as $category) {
@@ -1039,17 +1039,17 @@ class SetupAccount extends QueuableService implements ServiceInterface
         DB::table('emotions')->insert([
             [
                 'account_id' => $this->author->account_id,
-                'name_translation_key' => trans('😡 Negative', locale: 'en'),
+                'name_translation_key' => trans_key('😡 Negative'),
                 'type' => Emotion::TYPE_NEGATIVE,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'name_translation_key' => trans('😶‍🌫️ Neutral', locale: 'en'),
+                'name_translation_key' => trans_key('😶‍🌫️ Neutral'),
                 'type' => Emotion::TYPE_NEUTRAL,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'name_translation_key' => trans('😁 Positive', locale: 'en'),
+                'name_translation_key' => trans_key('😁 Positive'),
                 'type' => Emotion::TYPE_POSITIVE,
             ],
         ]);
@@ -1060,27 +1060,27 @@ class SetupAccount extends QueuableService implements ServiceInterface
         DB::table('gift_occasions')->insert([
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Birthday', locale: 'en'),
+                'label_translation_key' => trans_key('Birthday'),
                 'position' => 1,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Anniversary', locale: 'en'),
+                'label_translation_key' => trans_key('Anniversary'),
                 'position' => 2,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Christmas', locale: 'en'),
+                'label_translation_key' => trans_key('Christmas'),
                 'position' => 3,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Just because', locale: 'en'),
+                'label_translation_key' => trans_key('Just because'),
                 'position' => 4,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Wedding', locale: 'en'),
+                'label_translation_key' => trans_key('Wedding'),
                 'position' => 5,
             ],
         ]);
@@ -1091,27 +1091,27 @@ class SetupAccount extends QueuableService implements ServiceInterface
         DB::table('gift_states')->insert([
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Idea', locale: 'en'),
+                'label_translation_key' => trans_key('Idea'),
                 'position' => 1,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Searched', locale: 'en'),
+                'label_translation_key' => trans_key('Searched'),
                 'position' => 2,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Found', locale: 'en'),
+                'label_translation_key' => trans_key('Found'),
                 'position' => 3,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Bought', locale: 'en'),
+                'label_translation_key' => trans_key('Bought'),
                 'position' => 4,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'label_translation_key' => trans('Offered', locale: 'en'),
+                'label_translation_key' => trans_key('Offered'),
                 'position' => 5,
             ],
         ]);
@@ -1123,7 +1123,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $postTemplate = (new CreatePostTemplate())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Regular post', locale: 'en'),
+            'label_translation_key' => trans_key('Regular post'),
             'can_be_deleted' => false,
         ]);
 
@@ -1131,7 +1131,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('Content', locale: 'en'),
+            'label_translation_key' => trans_key('Content'),
             'can_be_deleted' => false,
         ]);
 
@@ -1139,7 +1139,7 @@ class SetupAccount extends QueuableService implements ServiceInterface
         $postTemplate = (new CreatePostTemplate())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
-            'label_translation_key' => trans('Inspirational post', locale: 'en'),
+            'label_translation_key' => trans_key('Inspirational post'),
             'can_be_deleted' => true,
         ]);
 
@@ -1147,35 +1147,35 @@ class SetupAccount extends QueuableService implements ServiceInterface
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('I am grateful for', locale: 'en'),
+            'label_translation_key' => trans_key('I am grateful for'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('Daily affirmation', locale: 'en'),
+            'label_translation_key' => trans_key('Daily affirmation'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('How could I have done this day better?', locale: 'en'),
+            'label_translation_key' => trans_key('How could I have done this day better?'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('What would make today great?', locale: 'en'),
+            'label_translation_key' => trans_key('What would make today great?'),
             'can_be_deleted' => true,
         ]);
         (new CreatePostTemplateSection())->execute([
             'account_id' => $this->author->account_id,
             'author_id' => $this->author->id,
             'post_template_id' => $postTemplate->id,
-            'label_translation_key' => trans('Three things that happened today', locale: 'en'),
+            'label_translation_key' => trans_key('Three things that happened today'),
             'can_be_deleted' => true,
         ]);
     }
@@ -1185,47 +1185,47 @@ class SetupAccount extends QueuableService implements ServiceInterface
         DB::table('religions')->insert([
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Christian', locale: 'en'),
+                'translation_key' => trans_key('Christian'),
                 'position' => 1,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Muslim', locale: 'en'),
+                'translation_key' => trans_key('Muslim'),
                 'position' => 2,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Hinduist', locale: 'en'),
+                'translation_key' => trans_key('Hinduist'),
                 'position' => 3,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Buddhist', locale: 'en'),
+                'translation_key' => trans_key('Buddhist'),
                 'position' => 4,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Shintoist', locale: 'en'),
+                'translation_key' => trans_key('Shintoist'),
                 'position' => 5,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Taoist', locale: 'en'),
+                'translation_key' => trans_key('Taoist'),
                 'position' => 6,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Sikh', locale: 'en'),
+                'translation_key' => trans_key('Sikh'),
                 'position' => 7,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Jew', locale: 'en'),
+                'translation_key' => trans_key('Jew'),
                 'position' => 8,
             ],
             [
                 'account_id' => $this->author->account_id,
-                'translation_key' => trans('Atheist', locale: 'en'),
+                'translation_key' => trans_key('Atheist'),
                 'position' => 9,
             ],
         ]);

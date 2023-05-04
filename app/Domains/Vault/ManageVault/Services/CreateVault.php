@@ -119,35 +119,35 @@ class CreateVault extends BaseService implements ServiceInterface
         MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
             'label' => null,
-            'label_translation_key' => trans('🥳 Awesome', locale: 'en'),
+            'label_translation_key' => trans_key('🥳 Awesome'),
             'position' => 1,
             'hex_color' => 'bg-lime-500',
         ]);
         MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
             'label' => null,
-            'label_translation_key' => trans('😀 Good', locale: 'en'),
+            'label_translation_key' => trans_key('😀 Good'),
             'position' => 2,
             'hex_color' => 'bg-lime-300',
         ]);
         MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
             'label' => null,
-            'label_translation_key' => trans('😐 Meh', locale: 'en'),
+            'label_translation_key' => trans_key('😐 Meh'),
             'position' => 3,
             'hex_color' => 'bg-cyan-600',
         ]);
         MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
             'label' => null,
-            'label_translation_key' => trans('😔 Bad', locale: 'en'),
+            'label_translation_key' => trans_key('😔 Bad'),
             'position' => 4,
             'hex_color' => 'bg-orange-300',
         ]);
         MoodTrackingParameter::create([
             'vault_id' => $this->vault->id,
             'label' => null,
-            'label_translation_key' => trans('😩 Awful', locale: 'en'),
+            'label_translation_key' => trans_key('😩 Awful'),
             'position' => 5,
             'hex_color' => 'bg-red-700',
         ]);
@@ -160,7 +160,7 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'position' => 1,
             'label' => null,
-            'label_translation_key' => trans('Transportation', locale: 'en'),
+            'label_translation_key' => trans_key('Transportation'),
             'can_be_deleted' => true,
         ]);
 
@@ -168,35 +168,35 @@ class CreateVault extends BaseService implements ServiceInterface
             'life_event_category_id' => $category->id,
             'position' => 1,
             'label' => null,
-            'label_translation_key' => trans('Rode a bike', locale: 'en'),
+            'label_translation_key' => trans_key('Rode a bike'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 2,
             'label' => null,
-            'label_translation_key' => trans('Drove', locale: 'en'),
+            'label_translation_key' => trans_key('Drove'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 3,
             'label' => null,
-            'label_translation_key' => trans('Walked', locale: 'en'),
+            'label_translation_key' => trans_key('Walked'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 4,
             'label' => null,
-            'label_translation_key' => trans('Took the bus', locale: 'en'),
+            'label_translation_key' => trans_key('Took the bus'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 5,
             'label' => null,
-            'label_translation_key' => trans('Took the metro', locale: 'en'),
+            'label_translation_key' => trans_key('Took the metro'),
             'can_be_deleted' => true,
         ]);
 
@@ -205,49 +205,49 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'position' => 2,
             'label' => null,
-            'label_translation_key' => trans('Social', locale: 'en'),
+            'label_translation_key' => trans_key('Social'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 1,
             'label' => null,
-            'label_translation_key' => trans('Ate', locale: 'en'),
+            'label_translation_key' => trans_key('Ate'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 2,
             'label' => null,
-            'label_translation_key' => trans('Drank', locale: 'en'),
+            'label_translation_key' => trans_key('Drank'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 3,
             'label' => null,
-            'label_translation_key' => trans('Went to a bar', locale: 'en'),
+            'label_translation_key' => trans_key('Went to a bar'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 4,
             'label' => null,
-            'label_translation_key' => trans('Watched a movie', locale: 'en'),
+            'label_translation_key' => trans_key('Watched a movie'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 5,
             'label' => null,
-            'label_translation_key' => trans('Watched TV', locale: 'en'),
+            'label_translation_key' => trans_key('Watched TV'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 6,
             'label' => null,
-            'label_translation_key' => trans('Watched a tv show', locale: 'en'),
+            'label_translation_key' => trans_key('Watched a tv show'),
             'can_be_deleted' => true,
         ]);
 
@@ -256,42 +256,42 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'position' => 3,
             'label' => null,
-            'label_translation_key' => trans('Sport', locale: 'en'),
+            'label_translation_key' => trans_key('Sport'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 1,
             'label' => null,
-            'label_translation_key' => trans('Ran', locale: 'en'),
+            'label_translation_key' => trans_key('Ran'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 2,
             'label' => null,
-            'label_translation_key' => trans('Played soccer', locale: 'en'),
+            'label_translation_key' => trans_key('Played soccer'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 3,
             'label' => null,
-            'label_translation_key' => trans('Played basketball', locale: 'en'),
+            'label_translation_key' => trans_key('Played basketball'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 4,
             'label' => null,
-            'label_translation_key' => trans('Played golf', locale: 'en'),
+            'label_translation_key' => trans_key('Played golf'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 5,
             'label' => null,
-            'label_translation_key' => trans('Played tennis', locale: 'en'),
+            'label_translation_key' => trans_key('Played tennis'),
             'can_be_deleted' => true,
         ]);
 
@@ -300,35 +300,35 @@ class CreateVault extends BaseService implements ServiceInterface
             'vault_id' => $this->vault->id,
             'position' => 4,
             'label' => null,
-            'label_translation_key' => trans('Work', locale: 'en'),
+            'label_translation_key' => trans_key('Work'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 1,
             'label' => null,
-            'label_translation_key' => trans('Took a new job', locale: 'en'),
+            'label_translation_key' => trans_key('Took a new job'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 2,
             'label' => null,
-            'label_translation_key' => trans('Quit job', locale: 'en'),
+            'label_translation_key' => trans_key('Quit job'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 3,
             'label' => null,
-            'label_translation_key' => trans('Got fired', locale: 'en'),
+            'label_translation_key' => trans_key('Got fired'),
             'can_be_deleted' => true,
         ]);
         LifeEventType::create([
             'life_event_category_id' => $category->id,
             'position' => 4,
             'label' => null,
-            'label_translation_key' => trans('Had a promotion', locale: 'en'),
+            'label_translation_key' => trans_key('Had a promotion'),
             'can_be_deleted' => true,
         ]);
     }
@@ -337,13 +337,13 @@ class CreateVault extends BaseService implements ServiceInterface
     {
         VaultQuickFactsTemplate::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => trans('Hobbies', locale: 'en'),
+            'label_translation_key' => trans_key('Hobbies'),
             'position' => 1,
         ]);
 
         VaultQuickFactsTemplate::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => trans('Food preferences', locale: 'en'),
+            'label_translation_key' => trans_key('Food preferences'),
             'position' => 2,
         ]);
     }
