@@ -147,21 +147,21 @@ class UserPreferencesIndexViewHelper
         $collection = collect();
         $collection->push([
             'id' => 1,
-            'type' => 'Google Maps',
+            'type' => trans('Google Maps'),
             'description' => trans('Google Maps offers the best accuracy and details, but it is not ideal from a privacy standpoint.'),
             'value' => User::MAPS_SITE_GOOGLE_MAPS,
         ]);
         $collection->push([
             'id' => 2,
-            'type' => 'Open Street Maps',
+            'type' => trans('Open Street Maps'),
             'description' => trans('Open Street Maps is a great privacy alternative, but offers less details.'),
             'value' => User::MAPS_SITE_OPEN_STREET_MAPS,
         ]);
 
         $i18n = match ($user->default_map_site) {
-            User::MAPS_SITE_GOOGLE_MAPS => 'Google Maps',
-            User::MAPS_SITE_OPEN_STREET_MAPS => 'Open Street Maps',
-            default => 'Google Maps',
+            User::MAPS_SITE_GOOGLE_MAPS => trans('Google Maps'),
+            User::MAPS_SITE_OPEN_STREET_MAPS => trans('Open Street Maps'),
+            default => trans('Google Maps'),
         };
 
         return [
@@ -176,21 +176,27 @@ class UserPreferencesIndexViewHelper
 
     public static function dtoLocale(User $user): array
     {
-        $localei18n = match ($user->locale) {
-            'en' => trans('English'),
-            'fr' => trans('French'),
-            'it' => trans('Italian'),
-            'de' => trans('German'),
-            'pt' => trans('Portugese'),
-            default => trans('English'),
-        };
-
         return [
             'locale' => $user->locale,
-            'locale_i18n' => $localei18n,
+            'locale_i18n' => self::language($user->locale),
+            'languages' => collect(config('localizer.supported-locales'))->mapWithKeys(fn ($locale) => [
+                $locale => self::language($locale),
+            ])->sortBy(fn ($value) => $value),
             'url' => [
                 'store' => route('settings.preferences.locale.store'),
             ],
         ];
+    }
+
+    public static function language(string $code): string
+    {
+        return match ($code) {
+            'en' => trans('English', [], 'en'),
+            'fr' => trans('French', [], 'fr'),
+            'it' => trans('Italian', [], 'it'),
+            'de' => trans('German', [], 'de'),
+            'pt' => trans('Portugese', [], 'pt'),
+            default => $code,
+        };
     }
 }

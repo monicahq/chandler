@@ -16,10 +16,10 @@
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="px-5 py-2">
-        <span class="mb-2 block">{{ $t('settings.user_preferences_number_format_description') }}</span>
-        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{
-          localDistanceFormat
-        }}</span>
+        <span class="mb-2 block">{{ $t('Current way of displaying numbers:') }}</span>
+        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">
+          {{ distance }}
+        </span>
       </p>
     </div>
 
@@ -97,6 +97,18 @@ export default {
         errors: [],
       },
     };
+  },
+
+  computed: {
+    distance() {
+      switch (this.localDistanceFormat) {
+        case 'miles':
+          return this.$t('miles (mi)');
+
+        default:
+          return this.$t('kilometers (km)');
+      }
+    },
   },
 
   mounted() {

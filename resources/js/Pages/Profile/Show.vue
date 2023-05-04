@@ -34,7 +34,7 @@ const providersExists = computed(() => size(props.providers) > 0);
             url: route('settings.index'),
           },
           {
-            name: 'Account and security ',
+            name: $t('Account and security'),
           },
         ]" />
     </template>

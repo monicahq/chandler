@@ -436,7 +436,9 @@ const destroy = () => {
                     d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                 </svg>
 
-                <span>{{ $t(':count words', { count: statistics.word_count }) }}</span>
+                <span>{{
+                  $tChoice(':count word|:count words', statistics.word_count, { count: statistics.word_count })
+                }}</span>
               </li>
               <li class="mb-2 flex items-center">
                 <svg
@@ -452,7 +454,11 @@ const destroy = () => {
                     d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
 
-                <span>{{ $t(':count min read', { count: statistics.time_to_read_in_minute }) }}</span>
+                <span>{{
+                  $tChoice(':count min read', statistics.time_to_read_in_minute, {
+                    count: statistics.time_to_read_in_minute,
+                  })
+                }}</span>
               </li>
               <li class="flex items-center">
                 <svg
@@ -469,7 +475,11 @@ const destroy = () => {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
 
-                <span>{{ $t('Read :count times', { count: statistics.view_count }) }}</span>
+                <span>{{
+                  $tChoice('Read :count time|Read :count times', statistics.view_count, {
+                    count: statistics.view_count,
+                  })
+                }}</span>
               </li>
             </ul>
 

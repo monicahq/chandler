@@ -15,7 +15,7 @@
               :type="'text'"
               :autofocus="true"
               :input-class="'block w-full'"
-              :placeholder="'Type something'"
+              :placeholder="$t('Type something')"
               :required="true"
               :autocomplete="false"
               :maxlength="255"

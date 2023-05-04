@@ -72,7 +72,7 @@
             <div class="mr-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color" />
             <span class="mr-2">{{ label.name }}</span>
             <span v-if="label.count > 0" class="text-xs text-gray-500"
-              >({{ $t(':count contacts', { count: label.count }) }})</span
+              >({{ $tChoice(':count contact|:count contacts', label.count, { count: label.count }) }})</span
             >
           </span>
 

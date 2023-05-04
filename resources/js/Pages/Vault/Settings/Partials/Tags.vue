@@ -50,7 +50,7 @@
           <span class="flex items-center text-base">
             <span class="mr-2">{{ tag.name }}</span>
             <span v-if="tag.count > 0" class="text-xs text-gray-500"
-              >({{ $t(':count posts', { count: tag.count }) }})</span
+              >({{ $tChoice(':count post|:count posts', tag.count, { count: tag.count }) }})</span
             >
           </span>
 

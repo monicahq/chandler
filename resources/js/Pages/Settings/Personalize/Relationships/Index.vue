@@ -242,7 +242,7 @@
                     :input-class="'block w-full'"
                     :required="true"
                     :div-outer-class="'mb-4'"
-                    :placeholder="'Parent'"
+                    :placeholder="$t('Parent')"
                     :autocomplete="false"
                     :maxlength="255"
                     @esc-key-pressed="renameRelationshipTypeModalId = 0" />
@@ -255,7 +255,7 @@
                     :input-class="'block w-full'"
                     :required="true"
                     :autocomplete="false"
-                    :placeholder="'Child'"
+                    :placeholder="$t('Child')"
                     :maxlength="255"
                     @esc-key-pressed="renameRelationshipTypeModalId = 0" />
                 </div>
@@ -298,7 +298,7 @@
                   :input-class="'block w-full'"
                   :required="true"
                   :div-outer-class="'mb-4'"
-                  :placeholder="'Parent'"
+                  :placeholder="$t('Parent')"
                   :autocomplete="false"
                   :maxlength="255"
                   @esc-key-pressed="createRelationshipTypeModalId = 0" />
@@ -311,7 +311,7 @@
                   :input-class="'block w-full'"
                   :required="true"
                   :autocomplete="false"
-                  :placeholder="'Child'"
+                  :placeholder="$t('Child')"
                   :maxlength="255"
                   @esc-key-pressed="createRelationshipTypeModalId = 0" />
               </div>

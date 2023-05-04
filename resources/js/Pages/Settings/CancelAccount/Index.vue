@@ -49,7 +49,7 @@
               <li>
                 {{
                   $t(
-                    "The account's data will be permanently deleted from our servers within 30 days and from all backups within 60 days.",
+                    'The account’s data will be permanently deleted from our servers within 30 days and from all backups within 60 days.',
                   )
                 }}
               </li>

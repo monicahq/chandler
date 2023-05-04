@@ -61,7 +61,7 @@
         <div class="border border-gray-200 dark:border-gray-700 rounded-lg grid grid-cols-2 mb-8">
           <!-- account limit -->
           <div class="flex justify-between p-3 border-r border-gray-200 dark:border-gray-700">
-            <p>{{ $t('Your account limit') }}</p>
+            <p>{{ $t('Your account limits') }}</p>
             <p class="font-bold">
               {{ data.account_limit }}
             </p>

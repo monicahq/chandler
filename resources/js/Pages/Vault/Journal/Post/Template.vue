@@ -68,7 +68,11 @@ defineProps({
               <div>
                 <p class="font-semibold">{{ template.label }}</p>
                 <p class="text-sm text-gray-500">
-                  {{ $t(':count template sections', { count: template.sections.length }) }}
+                  {{
+                    $tChoice(':count template section|:count template sections', template.sections.length, {
+                      count: template.sections.length,
+                    })
+                  }}
                 </p>
               </div>
 

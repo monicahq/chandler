@@ -19,10 +19,15 @@
           {{ errors.message }}
         </p>
         <p>
-          <a href="" @click.prevent="toggle">More errors</a>
+          <a href="" @click.prevent="toggle">
+            {{ $t('More errors') }}
+          </a>
         </p>
         <p v-show="traces">
-          <span class="mb0"> Exception {{ errors.exception }} </span>
+          <span class="mb0">
+            {{ $t('Exception:') }}
+            {{ errors.exception }}
+          </span>
           <br />
           <span v-for="trace in errors.trace" :key="trace.id">
             {{ trace.class }}{{ trace.type }}{{ trace.function }}<br />

@@ -95,7 +95,7 @@
                   :input-class="'block w-full'"
                   :required="true"
                   :autocomplete="false"
-                  :placeholder="'Filter'"
+                  :placeholder="$t('Filter')"
                   :maxlength="255" />
               </div>
 
