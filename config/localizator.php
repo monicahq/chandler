@@ -27,7 +27,7 @@ return [
         /**
          * Directories which should be looked inside.
          */
-        'dirs' => ['resources/views/*', 'resources/js/*', 'app/*'],
+        'dirs' => ['resources/views', 'resources/js', 'app'],
 
         /**
          * Subdirectories which will be excluded.
@@ -48,7 +48,7 @@ return [
          * Add here any custom defined functions.
          * NOTE: The translation string should always be the first argument.
          */
-        'functions' => ['trans', 'trans_choice', '@lang', '$t', '$tChoice'],
+        'functions' => ['trans', 'trans_choice', '@lang', '\\$t', '\\$tChoice'],
     ],
 
     /**
