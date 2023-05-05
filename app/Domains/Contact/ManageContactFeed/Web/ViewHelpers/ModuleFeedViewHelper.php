@@ -36,7 +36,7 @@ class ModuleFeedViewHelper
 
     private static function getSentence(ContactFeedItem $item): mixed
     {
-        $i18n = match ($item->action) {
+        return match ($item->action) {
             'contact_created' => trans('created the contact'),
             'author_deleted' => trans('Deleted author'),
             'information_updated' => trans('updated the contact information'),
@@ -74,8 +74,6 @@ class ModuleFeedViewHelper
             'mood_tracking_event_added' => trans('logged the mood'),
             default => trans('unknown action'),
         };
-
-        return $i18n;
     }
 
     private static function getAuthor(ContactFeedItem $item, Vault $vault): ?array

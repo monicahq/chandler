@@ -16,7 +16,9 @@
     <!-- normal mode -->
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="px-5 py-2">
-        <span class="mb-2 block">{{ $t('Current way of displaying numbers:') }}</span>
+        <span class="mb-2 block">
+          {{ $t('Current way of displaying numbers:') }}
+        </span>
         <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">
           {{ distance }}
         </span>
@@ -31,28 +33,16 @@
       <div class="border-b border-gray-200 px-5 py-2 dark:border-gray-700">
         <errors :errors="form.errors" />
 
-        <div class="mb-2 mt-2 flex items-center">
+        <div v-for="d in ['km', 'mi']" :key="d" class="mb-2 mt-2 flex items-center">
           <input
-            id="km"
+            :id="d"
             v-model="form.distanceFormat"
-            value="km"
-            name="date-format"
+            :value="d"
+            name="distance-format"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="km" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ $t('kilometers (km)') }}
-          </label>
-        </div>
-        <div class="mb-2 flex items-center">
-          <input
-            id="miles"
-            v-model="form.distanceFormat"
-            value="miles"
-            name="date-format"
-            type="radio"
-            class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="miles" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ $t('miles (mi)') }}
+          <label :for="d" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ localeDistance(d) }}
           </label>
         </div>
       </div>
@@ -101,13 +91,7 @@ export default {
 
   computed: {
     distance() {
-      switch (this.localDistanceFormat) {
-        case 'miles':
-          return this.$t('miles (mi)');
-
-        default:
-          return this.$t('kilometers (km)');
-      }
+      return this.localeDistance(this.localDistanceFormat);
     },
   },
 
@@ -117,6 +101,10 @@ export default {
   },
 
   methods: {
+    localeDistance(val) {
+      return val === 'mi' ? this.$t('miles (mi)') : this.$t('kilometers (km)');
+    },
+
     enableEditMode() {
       this.editMode = true;
     },
