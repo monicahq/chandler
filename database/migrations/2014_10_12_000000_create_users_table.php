@@ -19,15 +19,16 @@ return new class() extends Migration
             $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('password')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('name_order')->default('%first_name% %last_name%');
+            $table->string('contact_sort_order')->default(User::CONTACT_SORT_ORDER_LAST_UPDATED);
             $table->string('date_format')->default('MMM DD, YYYY');
             $table->string('timezone')->nullable();
             $table->string('number_format')->default(User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL);
             $table->string('default_map_site')->default(User::MAPS_SITE_OPEN_STREET_MAPS);
             $table->string('distance_format')->default(User::DISTANCE_UNIT_MILES);
-            $table->string('password')->nullable();
             $table->boolean('is_account_administrator')->default(false);
             $table->boolean('help_shown')->default(true);
             $table->string('invitation_code')->nullable();

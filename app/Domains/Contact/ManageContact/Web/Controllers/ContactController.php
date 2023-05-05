@@ -14,6 +14,7 @@ use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +25,24 @@ class ContactController extends Controller
 {
     public function index(Request $request, Vault $vault)
     {
-        $contacts = Contact::where('vault_id', $vault->id)
-            ->where('listed', true)
-            ->orderBy('created_at', 'asc')
-            ->paginate(25);
+        switch (Auth::user()->contact_sort_order) {
+            case User::CONTACT_SORT_ORDER_ASC:
+                $contacts = Contact::where('vault_id', $vault->id)
+                    ->where('listed', true)
+                    ->orderBy('last_name', 'asc')
+                    ->paginate(25);
+            case User::CONTACT_SORT_ORDER_DESC:
+                $contacts = Contact::where('vault_id', $vault->id)
+                    ->where('listed', true)
+                    ->orderBy('last_name', 'desc')
+                    ->paginate(25);
+            default:
+                $contacts = Contact::where('vault_id', $vault->id)
+                ->where('listed', true)
+                ->orderBy('last_updated_at', 'desc')
+                ->paginate(25);
+                break;
+        }
 
         return Inertia::render('Vault/Contact/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
