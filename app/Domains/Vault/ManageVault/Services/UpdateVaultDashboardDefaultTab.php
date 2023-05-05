@@ -17,7 +17,7 @@ class UpdateVaultDashboardDefaultTab extends BaseService implements ServiceInter
             'account_id' => 'required|uuid|exists:accounts,id',
             'author_id' => 'required|uuid|exists:users,id',
             'vault_id' => 'required|uuid|exists:vaults,id',
-            'show_activity_tab_on_dashboard' => 'required|boolean',
+            'default_activity_tab' => 'required|string',
         ];
     }
 
@@ -40,7 +40,7 @@ class UpdateVaultDashboardDefaultTab extends BaseService implements ServiceInter
     {
         $this->validateRules($data);
 
-        $this->vault->show_activity_tab_on_dashboard = $data['show_activity_tab_on_dashboard'];
+        $this->vault->default_activity_tab = $data['default_activity_tab'];
         $this->vault->save();
 
         return $this->vault;

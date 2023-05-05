@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\File;
 use App\Models\MoodTrackingEvent;
 use App\Models\Post;
+use App\Models\PostMetric;
 use App\Models\PostSection;
 use App\Models\Tag;
 use App\Models\User;
@@ -42,11 +43,12 @@ class PostShowViewHelper
             ->first();
 
         $moodTrackingEvents = self::getMood($user, $post);
+        $journalMetrics = self::getMetrics($post);
 
         return [
             'id' => $post->id,
             'title' => $post->title,
-            'title_exists' => $post->title === trans('app.undefined') ? false : true,
+            'title_exists' => $post->title === trans('Undefined') ? false : true,
             'written_at' => DateHelper::format($post->written_at, $user),
             'published' => $post->published,
             'sections' => $sections,
@@ -54,10 +56,11 @@ class PostShowViewHelper
             'contacts' => $contacts,
             'photos' => $photos,
             'moodTrackingEvents' => $moodTrackingEvents,
+            'journalMetrics' => $journalMetrics,
             'previousPost' => $previousPost ? [
                 'id' => $previousPost->id,
                 'title' => $previousPost->title,
-                'title_exists' => $previousPost->title === trans('app.undefined') ? false : true,
+                'title_exists' => $previousPost->title === trans('Undefined') ? false : true,
                 'url' => [
                     'show' => route('post.show', [
                         'vault' => $post->journal->vault_id,
@@ -69,7 +72,7 @@ class PostShowViewHelper
             'nextPost' => $nextPost ? [
                 'id' => $nextPost->id,
                 'title' => $nextPost->title,
-                'title_exists' => $nextPost->title === trans('app.undefined') ? false : true,
+                'title_exists' => $nextPost->title === trans('Undefined') ? false : true,
                 'url' => [
                     'show' => route('post.show', [
                         'vault' => $post->journal->vault_id,
@@ -175,5 +178,38 @@ class PostShowViewHelper
                     'label' => $mood->moodTrackingParameter->label,
                 ],
             ]);
+    }
+
+    private static function getMetrics(Post $post): Collection
+    {
+        $journalMetrics = $post->journal->journalMetrics;
+
+        $collection = collect([]);
+        foreach ($journalMetrics as $journalMetric) {
+            $postMetrics = $post->postMetrics()
+                ->where('journal_metric_id', $journalMetric->id)
+                ->get()
+                ->map(fn (PostMetric $postMetric) => [
+                    'id' => $postMetric->id,
+                    'value' => $postMetric->value,
+                    'label' => $postMetric->label,
+                ]);
+
+            $collection->push([
+                'id' => $journalMetric->id,
+                'label' => $journalMetric->label,
+                'total' => $postMetrics->sum('value'),
+                'post_metrics' => $postMetrics,
+                'url' => [
+                    'store' => route('post.metrics.store', [
+                        'vault' => $post->journal->vault_id,
+                        'journal' => $post->journal_id,
+                        'post' => $post->id,
+                    ]),
+                ],
+            ]);
+        }
+
+        return $collection;
     }
 }

@@ -11,13 +11,14 @@ use App\Models\Group;
 use App\Models\Journal;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
+use App\Models\LifeMetric;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
 use App\Models\TimelineEvent;
 use App\Models\User;
 use App\Models\Vault;
-use App\Models\VaultQuickFactTemplate;
+use App\Models\VaultQuickFactsTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -195,10 +196,21 @@ class VaultTest extends TestCase
     public function it_has_many_quick_fact_template_entries(): void
     {
         $vault = Vault::factory()->create();
-        VaultQuickFactTemplate::factory()->count(2)->create([
+        VaultQuickFactsTemplate::factory()->count(2)->create([
             'vault_id' => $vault->id,
         ]);
 
         $this->assertTrue($vault->quickFactsTemplateEntries()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_life_metrics_entries(): void
+    {
+        $vault = Vault::factory()->create();
+        LifeMetric::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->lifeMetrics()->exists());
     }
 }

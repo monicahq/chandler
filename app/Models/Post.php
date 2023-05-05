@@ -101,6 +101,14 @@ class Post extends Model
     }
 
     /**
+     * Get the post metrics associated with the post.
+     */
+    public function postMetrics(): HasMany
+    {
+        return $this->hasMany(PostMetric::class);
+    }
+
+    /**
      * Get the post's title.
      *
      * @return Attribute<string,string>
@@ -113,7 +121,7 @@ class Post extends Model
                     return $value;
                 }
 
-                return trans('app.undefined');
+                return trans('Undefined');
             },
             set: fn ($value) => $value,
         );

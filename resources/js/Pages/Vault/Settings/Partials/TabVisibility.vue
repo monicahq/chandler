@@ -38,7 +38,7 @@ const update = () => {
       <h3 class="mb-4 sm:mb-0">
         <span class="mr-1"> 🎟️ </span>
 
-        Tab visibility
+        {{ $t('Tabs visibility') }}
       </h3>
     </div>
 
@@ -54,7 +54,7 @@ const update = () => {
         </svg>
 
         <div class="inline">
-          <p>Please reload the page to see the changes.</p>
+          <p>{{ $t('You might need to reload the page to see the changes.') }}</p>
         </div>
       </div>
       <ul class="rounded-b rounded-t bg-white dark:bg-gray-900">
@@ -83,7 +83,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Journals tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Journals tab') }} </span>
           </label>
         </li>
         <li
@@ -97,7 +97,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Groups tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Groups tab') }} </span>
           </label>
         </li>
         <li
@@ -111,7 +111,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Companies tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Companies tab') }} </span>
           </label>
         </li>
         <li
@@ -125,7 +125,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Tasks tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Tasks tab') }} </span>
           </label>
         </li>
         <li
@@ -139,7 +139,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Reports tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Reports tab') }} </span>
           </label>
         </li>
         <li
@@ -153,7 +153,7 @@ const update = () => {
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
-            <span class="ml-3 dark:text-gray-300"> Show Files tab </span>
+            <span class="ml-3 dark:text-gray-300"> {{ $t('Show Files tab') }} </span>
           </label>
         </li>
       </ul>

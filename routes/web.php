@@ -97,13 +97,17 @@ use App\Domains\Vault\ManageCalendar\Web\Controllers\VaultCalendarController;
 use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\JournalMetricController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostController;
+use App\Domains\Vault\ManageJournals\Web\Controllers\PostMetricController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostPhotoController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricContactController;
+use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -217,6 +221,12 @@ Route::middleware([
                 // important date summary
                 Route::get('importantDates', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.important_dates.index');
             });
+
+            // life metrics
+            Route::post('lifeMetrics', [LifeMetricController::class, 'store'])->name('vault.life_metrics.store');
+            Route::put('lifeMetrics/{metric}', [LifeMetricController::class, 'update'])->name('vault.life_metrics.update');
+            Route::post('lifeMetrics/{metric}', [LifeMetricContactController::class, 'store'])->name('vault.life_metrics.contact.store');
+            Route::delete('lifeMetrics/{metric}', [LifeMetricController::class, 'destroy'])->name('vault.life_metrics.destroy');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -414,6 +424,10 @@ Route::middleware([
                         // slices of life
                         Route::put('slices', [PostSliceOfLifeController::class, 'update'])->name('post.slices.update');
                         Route::delete('slices', [PostSliceOfLifeController::class, 'destroy'])->name('post.slices.destroy');
+
+                        // post metrics
+                        Route::post('metrics', [PostMetricController::class, 'store'])->name('post.metrics.store');
+                        Route::delete('metrics/{metric}', [PostMetricController::class, 'destroy'])->name('post.metrics.destroy');
                     });
 
                     // slices of life
@@ -428,6 +442,11 @@ Route::middleware([
                         Route::delete('cover', [SliceOfLifeCoverImageController::class, 'destroy'])->name('slices.cover.destroy');
                         Route::delete('', [SliceOfLifeController::class, 'destroy'])->name('slices.destroy');
                     });
+
+                    //  journal metrics
+                    Route::get('metrics', [JournalMetricController::class, 'index'])->name('journal_metrics.index');
+                    Route::post('metrics', [JournalMetricController::class, 'store'])->name('journal_metrics.store');
+                    Route::delete('metrics/{metric}', [JournalMetricController::class, 'destroy'])->name('journal_metrics.destroy');
                 });
             });
 

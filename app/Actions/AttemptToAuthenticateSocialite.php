@@ -103,7 +103,7 @@ class AttemptToAuthenticateSocialite
     private function checkUserAssociation(Request $request, User $user, string $driver): void
     {
         if (($userId = Auth::id()) && $userId !== $user->id) {
-            $this->throwFailedAuthenticationException($request, $driver, __('This provider is already associated with another account'));
+            $this->throwFailedAuthenticationException($request, $driver, trans('This provider is already associated with another account'));
         }
     }
 
@@ -129,7 +129,6 @@ class AttemptToAuthenticateSocialite
             'email' => $socialite->getEmail(),
             'first_name' => $names[0],
             'last_name' => $names[1] ?? $names[0],
-            'locale' => App::getLocale(),
             'terms' => true,
         ];
 
