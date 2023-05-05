@@ -2,7 +2,6 @@
 
 return [
     'failed' => 'As credenciais indicadas não coincidem com as registadas no sistema.',
-    'throttle' => 'O número limite de tentativas de login foi atingido. Por favor tente novamente dentro de :seconds segundos.',
     'lang' => 'Português',
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
@@ -12,4 +11,5 @@ return [
     'login_provider_saml2' => 'Provedor SAML 2.0',
     'login_provider_twitter' => 'Twitter',
     'password' => 'A palavra-passe está errada.',
+    'throttle' => 'O número limite de tentativas de login foi atingido. Por favor tente novamente dentro de :seconds segundos.',
 ];

@@ -2,7 +2,6 @@
 
 return [
     'failed' => 'Неверное имя пользователя или пароль.',
-    'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте ещё раз через :seconds секунд.',
     'lang' => 'Pусский',
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
@@ -12,4 +11,5 @@ return [
     'login_provider_saml2' => 'Provedor SAML 2.0',
     'login_provider_twitter' => 'Twitter',
     'password' => 'Некорректный пароль.',
+    'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте ещё раз через :seconds секунд.',
 ];
