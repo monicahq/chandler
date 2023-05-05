@@ -24,6 +24,7 @@
     "+ pronoun": "+ pronom",
     "+ suffix": "+ suffixe",
     ":count contact|:count contacts": ":count contact|:count contacts",
+    ":count hours slept": ":count heures de sommeil",
     ":count min read": ":count min de lecture",
     ":count post|:count posts": ":count publication|:count publications",
     ":count template section|:count template sections": ":count section de modèle|:count sections de modèle",
