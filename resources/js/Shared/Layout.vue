@@ -222,7 +222,7 @@
               <!-- <inertia-link
                 href=""
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_reports') }}
+                {{ $t('Reports') }}
               </inertia-link> -->
 
               <inertia-link
@@ -281,13 +281,13 @@
               <!-- <inertia-link
                 href=""
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_gift_center') }}
+                {{ $t('Gift center') }}
               </inertia-link> -->
 
               <!-- <inertia-link
                 href=""
                 class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('app.layout_menu_loans') }}
+                {{ $t('Loans') }}
               </inertia-link> -->
 
               <inertia-link

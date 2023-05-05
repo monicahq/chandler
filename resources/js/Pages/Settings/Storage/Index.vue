@@ -17,7 +17,7 @@
                 class="text-blue-500 hover:underline"
               >
                 {{
-                  $t('app.breadcrumb_settings')
+                  $t('Settings')
                 }}
               </inertia-link>
             </li>

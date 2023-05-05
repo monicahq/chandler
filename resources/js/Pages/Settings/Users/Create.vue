@@ -26,7 +26,7 @@ k
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.back" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_settings_users') }}
+                {{ $t('Users') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -40,7 +40,7 @@ k
               </svg>
             </li>
             <li class="inline">
-              {{ $t('app.breadcrumb_settings_users_new_cta') }}
+              {{ $t('Create a user') }}
             </li>
           </ul>
         </div>

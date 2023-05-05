@@ -59,7 +59,7 @@
         <inertia-link
           :href="data.url.index"
           class="rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
-          {{ $t('app.view_all') }}
+          {{ $t('View all') }}
         </inertia-link>
       </div>
     </div>

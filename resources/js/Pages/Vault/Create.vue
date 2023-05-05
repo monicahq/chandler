@@ -10,7 +10,7 @@
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="data.url.back" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_vault_index') }}
+                {{ $t('All the vaults') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">

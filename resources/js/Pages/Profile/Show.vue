@@ -30,7 +30,7 @@ const providersExists = computed(() => size(props.providers) > 0);
       <Breadcrumb
         :items="[
           {
-            name: $t('app.breadcrumb_settings'),
+            name: $t('Settings'),
             url: route('settings.index'),
           },
           {
