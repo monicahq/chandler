@@ -1,3 +1,32 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import { Inertia } from '@inertiajs/inertia';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import Avatar from '@/Shared/Avatar.vue';
+import Pagination from '@/Components/Pagination.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { trans } from 'laravel-vue-i18n';
+
+const props = defineProps({
+  layoutData: Object,
+  data: Object,
+  paginator: Object,
+});
+
+const form = useForm({
+  sort_order: '',
+});
+
+const update = (sortOrder) => {
+  form.sort_order = sortOrder;
+
+  axios.put(props.data.url.sort.update, form).then((response) => {
+    localStorage.success = trans('Changes saved');
+    Inertia.visit(response.data.data);
+  });
+};
+</script>
+
 <template>
   <layout :layout-data="layoutData" :inside-vault="true">
     <main class="relative sm:mt-24">
@@ -6,7 +35,7 @@
           <!-- left -->
           <div>
             <!-- labels -->
-            <div>
+            <div class="mb-8">
               <div class="mb-3 border-b border-gray-200 dark:border-gray-700">
                 <span class="mr-1"> 🏷️ </span>
                 {{ $t('Labels') }}
@@ -38,6 +67,31 @@
               <p v-else class="text-sm text-gray-500">
                 {{ $t('No labels yet.') }}
               </p>
+            </div>
+
+            <!-- sort -->
+            <div>
+              <div class="mb-3 border-b border-gray-200 dark:border-gray-700">
+                <span class="mr-1"> 🌡️ </span>
+                {{ $t('Sort contacts') }}
+              </div>
+              <ul>
+                <li class="mb-1">
+                  <span @click="update('last_updated')" class="cursor-pointer text-blue-500 hover:underline">{{
+                    $t('By last updated')
+                  }}</span>
+                </li>
+                <li class="mb-1">
+                  <span @click="update('a_to_z')" class="cursor-pointer text-blue-500 hover:underline">{{
+                    $t('From A to Z')
+                  }}</span>
+                </li>
+                <li class="mb-1">
+                  <span @click="update('z_to_a')" class="cursor-pointer text-blue-500 hover:underline">{{
+                    $t('From Z to A')
+                  }}</span>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -79,37 +133,6 @@
     </main>
   </layout>
 </template>
-
-<script>
-import Layout from '@/Shared/Layout.vue';
-import PrettyLink from '@/Shared/Form/PrettyLink.vue';
-import Avatar from '@/Shared/Avatar.vue';
-import Pagination from '@/Components/Pagination.vue';
-
-export default {
-  components: {
-    Layout,
-    PrettyLink,
-    Avatar,
-    Pagination,
-  },
-
-  props: {
-    layoutData: {
-      type: Object,
-      default: null,
-    },
-    paginator: {
-      type: Object,
-      default: null,
-    },
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .contact-list {

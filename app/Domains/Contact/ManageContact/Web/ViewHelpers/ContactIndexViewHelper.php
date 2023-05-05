@@ -54,6 +54,11 @@ class ContactIndexViewHelper
                         'vault' => $vault->id,
                     ]),
                 ],
+                'sort' => [
+                    'update' => route('contact.sort.update', [
+                        'vault' => $vault->id,
+                    ]),
+                ],
             ],
         ];
     }

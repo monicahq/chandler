@@ -81,6 +81,9 @@ class ContactIndexViewHelperTest extends TestCase
                     'index' => env('APP_URL').'/vaults/'.$vault->id.'/contacts',
                     'create' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/create',
                 ],
+                'sort' => [
+                    'update' => env('APP_URL').'/vaults/'.$vault->id.'/contacts/sort',
+                ],
             ],
             $array['url']
         );
