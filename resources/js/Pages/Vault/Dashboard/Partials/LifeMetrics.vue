@@ -102,6 +102,7 @@ const destroy = (lifeMetric) => {
     axios
       .delete(lifeMetric.url.destroy)
       .then(() => {
+        flash(trans('The life metric has been deleted'), 'success');
         let id = localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id);
         localLifeMetrics.value.splice(id, 1);
       })
