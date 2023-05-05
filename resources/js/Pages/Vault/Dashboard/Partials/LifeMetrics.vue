@@ -7,6 +7,7 @@ import HoverMenu from '@/Shared/HoverMenu.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, nextTick } from 'vue';
 import { trans } from 'laravel-vue-i18n';
+import { flash } from '@/methods.js';
 
 const props = defineProps({
   data: Object,
@@ -98,7 +99,7 @@ const update = (lifeMetric) => {
 };
 
 const destroy = (lifeMetric) => {
-  if (confirm('Are you sure? This action cannot be undone.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeMetric.url.destroy)
       .then(() => {
