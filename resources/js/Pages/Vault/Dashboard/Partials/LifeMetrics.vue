@@ -6,6 +6,7 @@ import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import HoverMenu from '@/Shared/HoverMenu.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref, nextTick } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   data: Object,
@@ -55,6 +56,7 @@ const store = () => {
   axios
     .post(props.data.url.store, form)
     .then((response) => {
+      flash(trans('The life metric has been created'), 'success');
       loadingState.value = '';
       createLifeMetricModalShown.value = false;
       localLifeMetrics.value.push(response.data.data);
@@ -85,6 +87,7 @@ const update = (lifeMetric) => {
   axios
     .put(lifeMetric.url.update, form)
     .then((response) => {
+      flash(trans('The life metric has been updated'), 'success');
       loadingState.value = '';
       editedLifeMetricId.value = 0;
       localLifeMetrics.value[localLifeMetrics.value.findIndex((x) => x.id === lifeMetric.id)] = response.data.data;
@@ -95,7 +98,7 @@ const update = (lifeMetric) => {
 };
 
 const destroy = (lifeMetric) => {
-  if (confirm('Are you sure? This will delete the life metric permanently.')) {
+  if (confirm('Are you sure? This action cannot be undone.')) {
     axios
       .delete(lifeMetric.url.destroy)
       .then(() => {
@@ -127,11 +130,11 @@ const destroy = (lifeMetric) => {
           </svg>
         </span>
 
-        <span class="font-semibold"> Life metrics </span>
+        <span class="font-semibold"> {{ $t('Life metrics') }} </span>
       </div>
       <pretty-button
         v-if="!createLifeMetricModalShown"
-        :text="'Track a new metric'"
+        :text="$t('Track a new metric')"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
         @click="showCreateLifeMetricModal" />
@@ -148,20 +151,20 @@ const destroy = (lifeMetric) => {
         <text-input
           ref="labelField"
           v-model="form.label"
-          :label="'Label'"
+          :label="$t('Name')"
           :type="'text'"
           :autofocus="true"
           :input-class="'block w-full'"
           :required="true"
           :autocomplete="false"
-          :placeholder="'Watch Netflix every day'"
+          :placeholder="$t('Watch Netflix every day')"
           :maxlength="255"
           @esc-key-pressed="createLifeMetricModalShown = false" />
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="createLifeMetricModalShown = false" />
-        <pretty-button :text="'Save'" :state="loadingState" :icon="'plus'" :classes="'save'" />
+        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createLifeMetricModalShown = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save'" />
       </div>
     </form>
 
@@ -180,22 +183,23 @@ const destroy = (lifeMetric) => {
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
                 <ul @click="toggleGraph(lifeMetric)">
                   <li @click="showLifeMetricGraph(lifeMetric)" class="text-sm text-gray-600">
-                    Total:
-                    <a-tooltip placement="bottomLeft" :title="'Events this week'" arrow-point-at-center>
+                    {{ $t('Total:') }}
+
+                    <a-tooltip placement="bottomLeft" :title="$t('Events this week')" arrow-point-at-center>
                       <span
                         class="cursor-pointer whitespace-nowrap rounded-lg bg-slate-100 py-0.5 px-2 text-sm text-slate-400"
                         >{{ lifeMetric.stats.weekly_events }}</span
                       >
                     </a-tooltip>
                     <span class="mx-1 text-gray-400">/</span>
-                    <a-tooltip placement="bottomLeft" :title="'Events this month'" arrow-point-at-center>
+                    <a-tooltip placement="bottomLeft" :title="$t('Events this month')" arrow-point-at-center>
                       <span
                         class="cursor-pointer whitespace-nowrap rounded-lg bg-yellow-100 py-0.5 px-2 text-sm text-slate-400"
                         >{{ lifeMetric.stats.monthly_events }}</span
                       >
                     </a-tooltip>
                     <span class="mx-1 text-gray-400">/</span>
-                    <a-tooltip placement="bottomLeft" :title="'Events this year'" arrow-point-at-center>
+                    <a-tooltip placement="bottomLeft" :title="$t('Events this year')" arrow-point-at-center>
                       <span
                         class="cursor-pointer whitespace-nowrap rounded-lg bg-green-100 py-0.5 px-2 text-sm text-slate-400"
                         >{{ lifeMetric.stats.yearly_events }}</span
@@ -249,7 +253,7 @@ const destroy = (lifeMetric) => {
               <text-input
                 ref="labelField"
                 v-model="form.label"
-                :label="'Label'"
+                :label="$t('Name')"
                 :type="'text'"
                 :autofocus="true"
                 :input-class="'block w-full'"
@@ -260,8 +264,8 @@ const destroy = (lifeMetric) => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="editedLifeMetricId = 0" />
-              <pretty-button :text="'Save'" :state="loadingState" :icon="'check'" :classes="'save'" />
+              <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="editedLifeMetricId = 0" />
+              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save'" />
             </div>
           </form>
         </li>
@@ -272,7 +276,9 @@ const destroy = (lifeMetric) => {
         v-if="localLifeMetrics.length == 0"
         class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
         <img src="/img/vault_life_metrics_blank.svg" :alt="$t('Life events')" class="mx-auto mt-4 h-20 w-20" />
-        <p class="px-5 pb-5 pt-2 text-center">Life metrics let you track metrics that are important to you.</p>
+        <p class="px-5 pb-5 pt-2 text-center">
+          {{ $t('Life metrics let you track metrics that are important to you.') }}
+        </p>
       </div>
     </div>
   </div>
