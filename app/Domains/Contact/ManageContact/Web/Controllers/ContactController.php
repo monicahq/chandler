@@ -31,11 +31,13 @@ class ContactController extends Controller
                     ->where('listed', true)
                     ->orderBy('last_name', 'asc')
                     ->paginate(25);
+                break;
             case User::CONTACT_SORT_ORDER_DESC:
                 $contacts = Contact::where('vault_id', $vault->id)
                     ->where('listed', true)
                     ->orderBy('last_name', 'desc')
                     ->paginate(25);
+                break;
             default:
                 $contacts = Contact::where('vault_id', $vault->id)
                 ->where('listed', true)
