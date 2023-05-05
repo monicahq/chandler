@@ -1,11 +1,22 @@
 <script setup>
 import Layout from '@/Shared/Layout.vue';
 import Avatar from '@/Shared/Avatar.vue';
+import { Inertia } from '@inertiajs/inertia';
+import { trans } from 'laravel-vue-i18n';
 
-defineProps({
+const props = defineProps({
   layoutData: Object,
   data: Object,
 });
+
+const destroy = () => {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
+    axios.delete(props.data.url.destroy).then((response) => {
+      localStorage.success = trans('The group has been deleted');
+      Inertia.visit(response.data.data);
+    });
+  }
+};
 </script>
 
 <template>
@@ -69,7 +80,7 @@ defineProps({
           </div>
 
           <!-- type -->
-          <div class="flex items-center">
+          <div class="mr-8 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -84,6 +95,20 @@ defineProps({
             </svg>
 
             <p class="text-center text-gray-600">{{ $t('Group type: :name', { name: data.type.label }) }}</p>
+          </div>
+
+          <!-- actions -->
+          <div class="flex items-center">
+            <ul class="list">
+              <li class="mr-4 inline">
+                <inertia-link :href="props.data.url.edit" class="text-blue-500 hover:underline">{{
+                  $t('Edit')
+                }}</inertia-link>
+              </li>
+              <li class="inline" @click="destroy()">
+                <span class="inline cursor-pointer text-red-500 hover:text-red-900">{{ $t('Delete') }}</span>
+              </li>
+            </ul>
           </div>
         </div>
 
