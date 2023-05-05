@@ -3,17 +3,11 @@
 namespace App\Domains\Contact\ManageContact\Services;
 
 use App\Interfaces\ServiceInterface;
-use App\Models\Gender;
-use App\Models\Pronoun;
 use App\Services\BaseService;
 
 class UpdateContactSortOrder extends BaseService implements ServiceInterface
 {
     private array $data;
-
-    private Gender $gender;
-
-    private Pronoun $pronoun;
 
     /**
      * Get the validation rules that apply to the service.
