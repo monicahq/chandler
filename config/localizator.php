@@ -54,6 +54,6 @@ return [
     /**
      * Should the localize command sort extracted strings alphabetically?
      */
-    'sort' => true,
+    'sort' => false,
 
 ];
