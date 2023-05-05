@@ -75,13 +75,13 @@ const get = (day) => {
 
             <!-- days -->
             <div class="grid grid-cols-7 rounded-t-lg border-l border-r border-t last:border-b dark:border-gray-700">
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.monday') }}</div>
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.tuesday') }}</div>
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.wednesday') }}</div>
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.thursday') }}</div>
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.friday') }}</div>
-              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('app.saturday') }}</div>
-              <div class="p-2 text-center text-xs">{{ $t('app.sunday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Monday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Tuesday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Wednesday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Thursday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Friday') }}</div>
+              <div class="border-r p-2 text-center text-xs dark:border-gray-700">{{ $t('Saturday') }}</div>
+              <div class="p-2 text-center text-xs">{{ $t('Sunday') }}</div>
             </div>
 
             <!-- actual calendar -->
@@ -116,7 +116,9 @@ const get = (day) => {
                 </div>
 
                 <!-- important dates -->
-                <div v-if="day.important_dates?.length > 0" class="mb-1 text-xs text-gray-600">Important dates</div>
+                <div v-if="day.important_dates?.length > 0" class="mb-1 text-xs text-gray-600">
+                  {{ $t('Important dates') }}
+                </div>
                 <div v-if="day.important_dates?.length > 0" class="flex">
                   <div v-for="date in day.important_dates" :key="date.id">
                     <contact-card
@@ -145,7 +147,7 @@ const get = (day) => {
             <div v-if="loadedDay.mood_events.length > 0" class="border-b border-gray-200 dark:border-gray-700">
               <h2
                 class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
-                Your mood that day
+                {{ $t('Your mood that day') }}
               </h2>
               <ul class="p-3">
                 <li v-for="mood in loadedDay.mood_events" :key="mood.id" class="mb-2">
@@ -192,7 +194,7 @@ const get = (day) => {
             <div v-if="loadedDay.important_dates.length > 0">
               <h2
                 class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
-                Important dates
+                {{ $t('Important dates') }}
               </h2>
               <ul class="p-3">
                 <li
@@ -214,7 +216,7 @@ const get = (day) => {
             <div v-if="loadedDay.posts.length > 0" class="border-b border-gray-200 dark:border-gray-700">
               <h2
                 class="border-b border-gray-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-gray-600 dark:border-gray-700 dark:bg-slate-900">
-                Posts in your journals
+                {{ $t('Posts in your journals') }}
               </h2>
               <ul class="p-3">
                 <li v-for="post in loadedDay.posts" :key="post.id" class="mb-2">
@@ -234,7 +236,7 @@ const get = (day) => {
               "
               class="flex items-center justify-center">
               <p class="mt-4 px-5 pb-5 pt-2 text-center text-gray-600">
-                There are no events on that day, future or past.
+                {{ $t('There are no events on that day, future or past.') }}
               </p>
             </div>
           </div>
@@ -245,7 +247,7 @@ const get = (day) => {
             class="flex items-center rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-slate-900 sm:p-0">
             <div>
               <img src="/img/calendar_day_blank.svg" :alt="$t('Groups')" class="mx-auto mt-4 h-36 w-36" />
-              <p class="px-5 pb-5 pt-2 text-center">Click on a day to see the details</p>
+              <p class="px-5 pb-5 pt-2 text-center">{{ $t('Click on a day to see the details') }}</p>
             </div>
           </div>
         </div>
