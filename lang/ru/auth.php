@@ -2,7 +2,7 @@
 
 return [
     'failed' => 'Essas credenciais não correspondem aos nossos registros.',
-    'lang' => 'Português',
+    'lang' => 'Pусский',
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',
