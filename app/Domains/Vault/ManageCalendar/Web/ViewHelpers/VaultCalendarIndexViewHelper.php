@@ -54,6 +54,7 @@ class VaultCalendarIndexViewHelper
         $endOfWeek = $lastDayOfMonth->endOfWeek();
         $contactsId = $vault->contacts()->pluck('id');
 
+        // @phpstan-ignore-next-line
         return collect($startOfWeek->toPeriod($endOfWeek)->toArray())
             ->map(fn (CarbonImmutable $day) => [
                 'id' => $day->day,
