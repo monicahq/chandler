@@ -26,7 +26,7 @@
         {{ charactersLeft }}
       </span>
     </div>
-    <p v-if="markdown" class="rounded-b-lg bg-slate-100 px-3 py-2 text-xs">
+    <p v-if="markdown" class="rounded-b-lg bg-slate-100 px-3 py-2 text-xs dark:bg-slate-900">
       <span>{{ $t('We support Markdown to format the text (bold, lists, headings, etc…).') }}</span>
 
       <a
