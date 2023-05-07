@@ -88,6 +88,8 @@ const showCreateLifeEventModal = () => {
   createLifeEventModalShown.value = true;
 };
 
+const showEditLifeEventModal = () => {};
+
 const toggleTimelineEventVisibility = (timelineEvent) => {
   timelineEvent.collapsed = !timelineEvent.collapsed;
 
@@ -156,9 +158,9 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               <span class="mr-2 text-gray-500">{{ timelineEvent.happened_at }}</span>
 
               <span
-                class="ml-3 whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400 dark:bg-slate-900"
-                >{{ timelineEvent.life_events.length }}</span
-              >
+                class="ml-3 whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400 dark:bg-slate-900">
+                {{ timelineEvent.life_events.length }}
+              </span>
             </div>
 
             <!-- chevrons and menu -->
@@ -187,11 +189,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               </svg>
 
               <!-- menu -->
-              <hover-menu
-                :show-edit="true"
-                :show-delete="true"
-                @edit="showEditNoteModal(note)"
-                @delete="destroy(timelineEvent)" />
+              <hover-menu :show-edit="false" :show-delete="true" @delete="destroy(timelineEvent)" />
             </div>
           </div>
 
@@ -211,14 +209,14 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                   <p v-if="lifeEvent.summary" class="mr-4 text-sm font-bold">{{ lifeEvent.summary }}</p>
                   <div>
                     <span
-                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800"
-                      >{{ lifeEvent.life_event_type.category.label }}</span
-                    >
+                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800">
+                      {{ lifeEvent.life_event_type.category.label }}
+                    </span>
                     >
                     <span
-                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800"
-                      >{{ lifeEvent.life_event_type.label }}</span
-                    >
+                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800">
+                      {{ lifeEvent.life_event_type.label }}
+                    </span>
                   </div>
                 </div>
 
@@ -253,7 +251,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                   <hover-menu
                     :show-edit="true"
                     :show-delete="true"
-                    @edit="showEditNoteModal(note)"
+                    @edit="showEditLifeEventModal(timelineEvent, lifeEvent)"
                     @delete="destroyLifeEvent(timelineEvent, lifeEvent)" />
                 </div>
               </div>

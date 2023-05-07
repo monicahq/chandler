@@ -205,13 +205,13 @@ const store = () => {
       <div v-else class="flex items-center justify-between border-b border-gray-200 p-3 dark:border-gray-700">
         <div>
           <span class="text-sm">{{ $t('Chosen type:') }}</span>
-          <span class="rounded border bg-white px-2 py-1 font-mono text-sm dark:bg-gray-800">{{
-            selectedLifeEventCategory.label
-          }}</span>
+          <span class="rounded border bg-white px-2 py-1 font-mono text-sm dark:bg-gray-800">
+            {{ selectedLifeEventCategory.label }}
+          </span>
           >
-          <span class="rounded border bg-white px-2 py-1 font-mono text-sm dark:bg-gray-800">{{
-            selectedLifeEventType.label
-          }}</span>
+          <span class="rounded border bg-white px-2 py-1 font-mono text-sm dark:bg-gray-800">
+            {{ selectedLifeEventType.label }}
+          </span>
         </div>
 
         <p @click="resetType()" class="cursor-pointer text-sm text-blue-500 hover:underline">{{ $t('Change') }}</p>
