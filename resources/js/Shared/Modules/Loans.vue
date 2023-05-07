@@ -31,7 +31,7 @@
       <!-- add a loan modal -->
       <form
         v-if="createLoanModalShown"
-        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+        class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
         @submit.prevent="submit()">
         <div class="border-b border-gray-200 dark:border-gray-700">
           <!-- loan options -->
@@ -253,7 +253,7 @@
         <!-- edit loan modal -->
         <form
           v-if="editedLoanId === loan.id"
-          class="bg-form mb-6 w-full rounded-lg border border-gray-200 dark:border-gray-700"
+          class="mb-6 w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="update(loan)">
           <div class="border-b border-gray-200 dark:border-gray-700">
             <!-- loan options -->

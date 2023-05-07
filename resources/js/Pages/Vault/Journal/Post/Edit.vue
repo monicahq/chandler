@@ -317,7 +317,7 @@ const destroy = () => {
             </div>
 
             <!-- post body -->
-            <div class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+            <div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
               <div class="border-gray-200 p-5 dark:border-gray-700">
                 <!-- title -->
                 <text-input
@@ -349,7 +349,7 @@ const destroy = () => {
           <div class="">
             <!-- Publish action -->
             <div class="mb-2 rounded-lg border border-gray-200 text-center dark:border-gray-700 dark:bg-gray-900">
-              <div class="bg-form rounded-b-lg p-5">
+              <div class="rounded-b-lg bg-gray-50 p-5 dark:bg-gray-900">
                 <pretty-link :href="data.url.show" :text="$t('Close')" :icon="'exit'" />
               </div>
             </div>

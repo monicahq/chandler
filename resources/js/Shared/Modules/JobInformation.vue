@@ -29,7 +29,7 @@
     <!-- edit job information -->
     <div
       v-if="editJobInformation"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
       <form @submit.prevent="update">
         <div class="border-b border-gray-200 p-2 dark:border-gray-700">
           <errors :errors="form.errors" />

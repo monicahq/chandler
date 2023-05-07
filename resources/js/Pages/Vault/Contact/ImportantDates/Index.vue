@@ -62,7 +62,7 @@
         <!-- modal to create a new date -->
         <form
           v-if="createDateModalShown"
-          class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+          class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="submit()">
           <div class="border-b border-gray-200 dark:border-gray-700">
             <div v-if="form.errors.length > 0" class="p-5">
@@ -276,7 +276,7 @@
             </div>
 
             <!-- edit date modal -->
-            <form v-if="editedDateId === date.id" class="bg-form" @submit.prevent="update(date)">
+            <form v-if="editedDateId === date.id" class="bg-gray-50 dark:bg-gray-900" @submit.prevent="update(date)">
               <div class="border-b border-gray-200 dark:border-gray-700">
                 <div v-if="form.errors.length > 0" class="p-5">
                   <errors :errors="form.errors" />

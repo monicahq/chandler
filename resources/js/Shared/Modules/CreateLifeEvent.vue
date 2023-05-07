@@ -144,7 +144,7 @@ const store = () => {
   <div>
     <form
       v-if="modalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="store()">
       <!-- choose life event categories/types -->
       <div v-if="!selectedLifeEventType" class="border-b border-gray-200 dark:border-gray-700">

@@ -15,7 +15,7 @@
     <!-- add modal -->
     <form
       v-if="setupTelegramModalShown"
-      class="item-list bg-form mb-6 rounded-lg border border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+      class="item-list mb-6 rounded-lg border border-b border-gray-200 bg-gray-50 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 dark:bg-slate-900 hover:dark:bg-slate-800"
       @submit.prevent="store()">
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <errors :errors="form.errors" />

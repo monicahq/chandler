@@ -27,7 +27,7 @@
     <!-- add a pet modal -->
     <form
       v-if="addPetModalShown"
-      class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
       @submit.prevent="submit()">
       <div class="border-b border-gray-200 dark:border-gray-700">
         <div v-if="form.errors.length > 0" class="p-5">
@@ -93,7 +93,7 @@
           </div>
 
           <!-- edit pet modal -->
-          <form v-if="editedPetId == pet.id" class="bg-form" @submit.prevent="update(pet)">
+          <form v-if="editedPetId == pet.id" class="bg-gray-50 dark:bg-gray-900" @submit.prevent="update(pet)">
             <div class="border-b border-gray-200 dark:border-gray-700">
               <div v-if="form.errors.length > 0" class="p-5">
                 <errors :errors="form.errors" />
