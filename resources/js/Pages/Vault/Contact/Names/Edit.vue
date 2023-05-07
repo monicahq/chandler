@@ -153,7 +153,7 @@
               :text="$t('Update')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save'" />
+              :classes="'save dark:save'" />
           </div>
         </form>
       </div>

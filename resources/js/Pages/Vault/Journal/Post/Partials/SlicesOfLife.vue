@@ -105,7 +105,7 @@ const reset = () => {
             :text="$t('Save')"
             :state="loadingState"
             :icon="'check'"
-            :classes="'save'" />
+            :classes="'save dark:save'" />
         </div>
 
         <div v-if="slice" class="border-t border-gray-200 p-2 dark:border-gray-700">

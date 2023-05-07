@@ -100,7 +100,7 @@ const showEditModal = () => {
             :text="$t('Save')"
             :state="loadingState"
             :icon="'check'"
-            :classes="'save'" />
+            :classes="'save dark:save'" />
         </div>
       </form>
     </div>

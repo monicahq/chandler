@@ -4,7 +4,7 @@
     <div>
       <label v-if="label" class="mb-2 block text-sm" :for="id">
         {{ label }}
-        <span v-if="!required" class="optional-badge text-xs"> {{ $t('optional') }} </span>
+        <span v-if="!required" class="optional-badge dark:optional-badge text-xs"> {{ $t('optional') }} </span>
       </label>
 
       <!-- list of selected contacts -->
@@ -324,11 +324,9 @@ export default {
   padding: 1px 3px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .optional-badge {
-    color: #d4d8dd;
-    background-color: #2f3031;
-  }
+.dark .dark\:optional-badge {
+  color: #d4d8dd;
+  background-color: #2f3031;
 }
 
 .icon-search {

@@ -49,7 +49,7 @@
 
       <div class="flex justify-between p-5">
         <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createGoalModalShown = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save'" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
       </div>
     </form>
 
