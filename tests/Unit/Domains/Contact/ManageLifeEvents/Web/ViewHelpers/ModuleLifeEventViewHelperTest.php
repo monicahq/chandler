@@ -193,7 +193,7 @@ class ModuleLifeEventViewHelperTest extends TestCase
         $array = ModuleLifeEventViewHelper::dtoLifeEvent($lifeEvent, $user, $contact);
 
         $this->assertEquals(
-            19,
+            20,
             count($array)
         );
 
