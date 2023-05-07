@@ -32,7 +32,7 @@
         v-if="displayAddContactButton"
         class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-500 dark:text-gray-900 hover:dark:bg-slate-700"
         @click="showAddContactMode">
-        {{ cLabelCta }}
+        {{ labelCta }}
       </p>
     </div>
 
@@ -59,7 +59,7 @@
           :type="type"
           :name="name"
           :required="required"
-          :placeholder="cPlaceholder"
+          :placeholder="placeholder"
           @keyup="search"
           @keydown.esc="sendEscKey" />
         <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs">
@@ -161,7 +161,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: null,
+      default: () => trans('Find a contact in this vault'),
     },
     label: {
       type: String,
@@ -169,7 +169,7 @@ export default {
     },
     labelCta: {
       type: String,
-      default: null,
+      default: () => trans('+ Add a contact'),
     },
     type: {
       type: String,
@@ -214,12 +214,6 @@ export default {
   },
 
   computed: {
-    cPlaceholder() {
-      return this.placeholder ?? trans('Find a contact in this vault');
-    },
-    cLabelCta() {
-      return this.labelCta ?? trans('+ Add a contact');
-    },
     displayAddContactButton: function () {
       if (!this.addMultipleContacts && this.localContacts.length >= 1) {
         return false;
