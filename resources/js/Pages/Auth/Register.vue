@@ -44,7 +44,7 @@ const policy = () => {
     <JetValidationErrors class="mb-4" />
 
     <p class="mb-2 text-lg font-bold">{{ $t('Sign up for an account') }}</p>
-    <p class="mb-8 text-sm text-gray-500">{{ $t('Your name here will be used to add yourself as a contact.') }}'</p>
+    <p class="mb-8 text-sm text-gray-500">{{ $t('Your name here will be used to add yourself as a contact.') }}</p>
 
     <form @submit.prevent="submit">
       <div>
