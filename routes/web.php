@@ -94,6 +94,7 @@ use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNameOr
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesNumberFormatController;
 use App\Domains\Settings\ManageUserPreferences\Web\Controllers\PreferencesTimezoneController;
 use App\Domains\Settings\ManageUsers\Web\Controllers\UserController;
+use App\Domains\Vault\ManageCalendar\Web\Controllers\VaultCalendarController;
 use App\Domains\Vault\ManageCompanies\Web\Controllers\VaultCompanyController;
 use App\Domains\Vault\ManageFiles\Web\Controllers\VaultFileController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\JournalController;
@@ -106,6 +107,8 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\PostSliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\PostTagController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
+use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricContactController;
+use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCountriesController;
@@ -190,6 +193,11 @@ Route::middleware([
             // update dashboard's default tab
             Route::put('defaultTab', [VaultDefaultTabOnDashboardController::class, 'update'])->name('vault.default_tab.update');
 
+            // calendar
+            Route::get('calendar', [VaultCalendarController::class, 'index'])->name('vault.calendar.index');
+            Route::get('calendar/years/{year}/months/{month}', [VaultCalendarController::class, 'month'])->name('vault.calendar.month');
+            Route::get('calendar/years/{year}/months/{month}/days/{day}', [VaultCalendarController::class, 'day'])->name('vault.calendar.day');
+
             // reminders
             Route::get('reminders', [VaultReminderController::class, 'index'])->name('vault.reminder.index');
 
@@ -214,6 +222,12 @@ Route::middleware([
                 // important date summary
                 Route::get('importantDates', [ReportImportantDateSummaryController::class, 'index'])->name('vault.reports.important_dates.index');
             });
+
+            // life metrics
+            Route::post('lifeMetrics', [LifeMetricController::class, 'store'])->name('vault.life_metrics.store');
+            Route::put('lifeMetrics/{metric}', [LifeMetricController::class, 'update'])->name('vault.life_metrics.update');
+            Route::post('lifeMetrics/{metric}', [LifeMetricContactController::class, 'store'])->name('vault.life_metrics.contact.store');
+            Route::delete('lifeMetrics/{metric}', [LifeMetricController::class, 'destroy'])->name('vault.life_metrics.destroy');
 
             // vault contacts
             Route::prefix('contacts')->group(function () {
@@ -373,6 +387,9 @@ Route::middleware([
             Route::get('groups', [GroupController::class, 'index'])->name('group.index');
             Route::middleware('can:group-owner,vault,group')->prefix('groups')->group(function () {
                 Route::get('{group}', [GroupController::class, 'show'])->name('group.show');
+                Route::get('{group}/edit', [GroupController::class, 'edit'])->name('group.edit');
+                Route::put('{group}', [GroupController::class, 'update'])->name('group.update');
+                Route::delete('{group}', [GroupController::class, 'destroy'])->name('group.destroy');
             });
 
             // journal page
