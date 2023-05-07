@@ -69,6 +69,7 @@ class EditLifeEvent extends BaseService implements ServiceInterface
         $this->data = $data;
         $this->validate();
         $this->store();
+        $this->removeParticipants();
         $this->associateParticipants();
         $this->updateLastEditedDate();
 
@@ -112,6 +113,11 @@ class EditLifeEvent extends BaseService implements ServiceInterface
             $participant->last_updated_at = Carbon::now();
             $participant->save();
         }
+    }
+
+    private function removeParticipants(): void
+    {
+        $this->lifeEvent->participants()->detach();
     }
 
     private function associateParticipants(): void

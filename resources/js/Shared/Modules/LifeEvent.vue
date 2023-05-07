@@ -75,6 +75,12 @@ const destroyLifeEvent = (timelineEvent, lifeEvent) => {
   }
 };
 
+const refreshLifeEvent = (timelineEvent, lifeEvent) => {
+  var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+  var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
+  localTimelines.value[id].life_events[lifeEventId] = lifeEvent;
+};
+
 const refreshTimelineEvents = (timelineEvent) => {
   localTimelines.value.unshift(timelineEvent);
 };
@@ -204,7 +210,8 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                   :layout-data="props.layoutData"
                   :open-modal="lifeEvent.edit"
                   :life-event="lifeEvent"
-                  @close-modal="lifeEvent.edit = false" />
+                  @close-modal="lifeEvent.edit = false"
+                  @life-event-created="(event) => refreshLifeEvent(timelineEvent, event)" />
               </template>
               <template v-else>
                 <!-- name of life event -->
@@ -325,25 +332,25 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                   </div>
                 </div>
               </template>
+            </div>
 
-              <!-- add a new life event to the timeline -->
-              <div class="mb-2 ml-6">
-                <span
-                  @click="showAddLifeEventModalForTimelineEventId = timelineEvent.id"
-                  v-if="showAddLifeEventModalForTimelineEventId != timelineEvent.id"
-                  class="cursor-pointer text-sm text-blue-500 hover:underline">
-                  {{ $t('Add another life event') }}
-                </span>
+            <!-- add a new life event to the timeline -->
+            <div class="mb-2 ml-6">
+              <span
+                @click="showAddLifeEventModalForTimelineEventId = timelineEvent.id"
+                v-if="showAddLifeEventModalForTimelineEventId != timelineEvent.id"
+                class="cursor-pointer text-sm text-blue-500 hover:underline">
+                {{ $t('Add another life event') }}
+              </span>
 
-                <create-life-event
-                  :data="props.data"
-                  :layout-data="props.layoutData"
-                  :open-modal="showAddLifeEventModalForTimelineEventId == timelineEvent.id"
-                  :create-timeline-event="false"
-                  :timeline-event="timelineEvent"
-                  @close-modal="showAddLifeEventModalForTimelineEventId = 0"
-                  @life-event-created="refreshLifeEvents" />
-              </div>
+              <create-life-event
+                :data="props.data"
+                :layout-data="props.layoutData"
+                :open-modal="showAddLifeEventModalForTimelineEventId == timelineEvent.id"
+                :create-timeline-event="false"
+                :timeline-event="timelineEvent"
+                @close-modal="showAddLifeEventModalForTimelineEventId = 0"
+                @life-event-created="refreshLifeEvents" />
             </div>
           </div>
         </div>
