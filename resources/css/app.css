@@ -24,3 +24,9 @@ body {
 .uploadcare--button_primary {
   background: #3891ff;
 }
+
+@media (prefers-color-scheme: dark) {
+  .bg-form {
+    background-color: rgb(17 24 39);
+  }
+}

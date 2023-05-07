@@ -391,14 +391,14 @@ const destroy = () => {
             <v-date-picker v-model="form.date" :model-config="modelConfig" class="mb-6 inline-block">
               <template v-slot="{ inputValue, inputEvents }">
                 <input
-                  class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
+                  class="rounded border bg-white px-2 py-1 dark:border-gray-700 dark:bg-gray-900"
                   :value="inputValue"
                   v-on="inputEvents" />
               </template>
             </v-date-picker>
 
             <!-- contacts -->
-            <p class="mb-2 flex items-center font-bold">
+            <p class="mb-2 mt-6 flex items-center font-bold">
               <span>{{ $t('Contacts in this post') }}</span>
             </p>
             <contact-selector
@@ -408,7 +408,7 @@ const destroy = () => {
               :display-most-consulted-contacts="true"
               :add-multiple-contacts="true"
               :required="true"
-              :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700 mb-6'" />
+              :div-outer-class="'flex-1 border-gray-200 dark:border-gray-700 mb-8'" />
 
             <!-- slices of life -->
             <slices-of-life :data="data" />
