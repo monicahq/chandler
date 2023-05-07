@@ -356,32 +356,32 @@ class CreateVault extends BaseService implements ServiceInterface
     {
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_breakfast',
+            'label_translation_key' => trans_key('Breakfast'),
             'position' => 1,
         ]);
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_lunch',
+            'label_translation_key' => trans_key('Lunch'),
             'position' => 2,
         ]);
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_dinner',
+            'label_translation_key' => trans_key('Dinner'),
             'position' => 3,
         ]);
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_snack',
+            'label_translation_key' => trans_key('Snack'),
             'position' => 4,
         ]);
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_drink',
+            'label_translation_key' => trans_key('Drink'),
             'position' => 5,
         ]);
         MealCategory::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_category_dessert',
+            'label_translation_key' => trans_key('Dessert'),
             'position' => 6,
         ]);
     }
@@ -390,815 +390,815 @@ class CreateVault extends BaseService implements ServiceInterface
     {
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tomatoes',
+            'label_translation_key' => trans_key('Tomatoes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_onions',
+            'label_translation_key' => trans_key('Onions'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_garlic',
+            'label_translation_key' => trans_key('Garlic'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_carrots',
+            'label_translation_key' => trans_key('Carrots'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bell_peppers',
+            'label_translation_key' => trans_key('Bell peppers'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_spinach',
+            'label_translation_key' => trans_key('Spinach'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_broccoli',
+            'label_translation_key' => trans_key('Broccoli'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cauliflower',
+            'label_translation_key' => trans_key('Cauliflower'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_potatoes',
+            'label_translation_key' => trans_key('Potatoes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sweet_potatoes',
+            'label_translation_key' => trans_key('Sweet potatoes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_peas',
+            'label_translation_key' => trans_key('Peas'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_corn',
+            'label_translation_key' => trans_key('Corn'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_green_beans',
+            'label_translation_key' => trans_key('Green beans'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_asparagus',
+            'label_translation_key' => trans_key('Asparagus'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_zucchini',
+            'label_translation_key' => trans_key('Zucchini'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_eggplant',
+            'label_translation_key' => trans_key('Eggplant'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cabbage',
+            'label_translation_key' => trans_key('Cabbage'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lettuce',
+            'label_translation_key' => trans_key('Lettuce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_kale',
+            'label_translation_key' => trans_key('Kale'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_collard_greens',
+            'label_translation_key' => trans_key('Collard greens'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_brussels_sprouts',
+            'label_translation_key' => trans_key('Brussels sprouts'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_artichokes',
+            'label_translation_key' => trans_key('Artichokes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_beets',
+            'label_translation_key' => trans_key('Beets'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_radishes',
+            'label_translation_key' => trans_key('Radishes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_turnips',
+            'label_translation_key' => trans_key('Turnips'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_parsnips',
+            'label_translation_key' => trans_key('Parsnips'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_squash',
+            'label_translation_key' => trans_key('Squash'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pumpkins',
+            'label_translation_key' => trans_key('Pumpkins'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_okra',
+            'label_translation_key' => trans_key('Okra'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cucumbers',
+            'label_translation_key' => trans_key('Cucumbers'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mushrooms',
+            'label_translation_key' => trans_key('Mushrooms'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_avocado',
+            'label_translation_key' => trans_key('Avocado'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_chicken',
+            'label_translation_key' => trans_key('Chicken'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_beef',
+            'label_translation_key' => trans_key('Beef'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pork',
+            'label_translation_key' => trans_key('Pork'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lamb',
+            'label_translation_key' => trans_key('Lamb'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_veal',
+            'label_translation_key' => trans_key('Veal'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_chicken',
+            'label_translation_key' => trans_key('Chicken'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_turkey',
+            'label_translation_key' => trans_key('Turkey'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_duck',
+            'label_translation_key' => trans_key('Duck'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_goose',
+            'label_translation_key' => trans_key('Goose'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_quail',
+            'label_translation_key' => trans_key('Quail'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pheasant',
+            'label_translation_key' => trans_key('Pheasant'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_venison',
+            'label_translation_key' => trans_key('Venison'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bison',
+            'label_translation_key' => trans_key('Bison'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rabbit',
+            'label_translation_key' => trans_key('Rabbit'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_goat',
+            'label_translation_key' => trans_key('Goat'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_horse',
+            'label_translation_key' => trans_key('Horse'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_kangaroo',
+            'label_translation_key' => trans_key('Kangaroo'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_ostrich',
+            'label_translation_key' => trans_key('Ostrich'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_alligator',
+            'label_translation_key' => trans_key('Alligator'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_salmon',
+            'label_translation_key' => trans_key('Salmon'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tuna',
+            'label_translation_key' => trans_key('Tuna'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cod',
+            'label_translation_key' => trans_key('Cod'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_haddock',
+            'label_translation_key' => trans_key('Haddock'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_halibut',
+            'label_translation_key' => trans_key('Halibut'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tilapia',
+            'label_translation_key' => trans_key('Tilapia'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_trout',
+            'label_translation_key' => trans_key('Trout'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_catfish',
+            'label_translation_key' => trans_key('Catfish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_snapper',
+            'label_translation_key' => trans_key('Snapper'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_grouper',
+            'label_translation_key' => trans_key('Grouper'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mahi mahi',
+            'label_translation_key' => trans_key('Mahi mahi'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_swordfish',
+            'label_translation_key' => trans_key('Swordfish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mackerel',
+            'label_translation_key' => trans_key('Mackerel'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sardines',
+            'label_translation_key' => trans_key('Sardines'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_anchovies',
+            'label_translation_key' => trans_key('Anchovies'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sea bass',
+            'label_translation_key' => trans_key('Sea bass'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sole',
+            'label_translation_key' => trans_key('Sole'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_flounder',
+            'label_translation_key' => trans_key('Flounder'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_perch',
+            'label_translation_key' => trans_key('Perch'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pike',
+            'label_translation_key' => trans_key('Pike'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rainbow_trout',
+            'label_translation_key' => trans_key('Rainbow trout'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_arctic_char',
+            'label_translation_key' => trans_key('Arctic char'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_carp',
+            'label_translation_key' => trans_key('Carp'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_eel',
+            'label_translation_key' => trans_key('Eel'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_barramundi',
+            'label_translation_key' => trans_key('Barramundi'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_redfish',
+            'label_translation_key' => trans_key('Redfish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_wahoo',
+            'label_translation_key' => trans_key('Wahoo'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_whitefish',
+            'label_translation_key' => trans_key('Whitefish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_herring',
+            'label_translation_key' => trans_key('Herring'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_monkfish',
+            'label_translation_key' => trans_key('Monkfish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tilefish',
+            'label_translation_key' => trans_key('Tilefish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_yellowfin_tuna',
+            'label_translation_key' => trans_key('Yellowfin tuna'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bluefin_tuna',
+            'label_translation_key' => trans_key('Bluefin tuna'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_shark',
+            'label_translation_key' => trans_key('Shark'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cobia',
+            'label_translation_key' => trans_key('Cobia'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pompano',
+            'label_translation_key' => trans_key('Pompano'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rockfish',
+            'label_translation_key' => trans_key('Rockfish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_black_cod',
+            'label_translation_key' => trans_key('Black cod'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_red_snapper',
+            'label_translation_key' => trans_key('Red snapper'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_amberjack',
+            'label_translation_key' => trans_key('Amberjack'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_shrimp',
+            'label_translation_key' => trans_key('Shrimp'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lobster',
+            'label_translation_key' => trans_key('Lobster'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_crab',
+            'label_translation_key' => trans_key('Crab'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_clams',
+            'label_translation_key' => trans_key('Clams'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mussels',
+            'label_translation_key' => trans_key('Mussels'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_oysters',
+            'label_translation_key' => trans_key('Oysters'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tofu',
+            'label_translation_key' => trans_key('Tofu'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tempeh',
+            'label_translation_key' => trans_key('Tempeh'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_seitan',
+            'label_translation_key' => trans_key('Seitan'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_eggs',
+            'label_translation_key' => trans_key('Eggs'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_beans',
+            'label_translation_key' => trans_key('Beans'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lentils',
+            'label_translation_key' => trans_key('Lentils'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_chickpeas',
+            'label_translation_key' => trans_key('Chickpeas'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_peanuts',
+            'label_translation_key' => trans_key('Peanuts'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_almonds',
+            'label_translation_key' => trans_key('Almonds'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_walnuts',
+            'label_translation_key' => trans_key('Walnuts'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cashews',
+            'label_translation_key' => trans_key('Cashews'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pistachios',
+            'label_translation_key' => trans_key('Pistachios'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pumpkin_seeds',
+            'label_translation_key' => trans_key('Pumpkin seeds'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sunflower_seeds',
+            'label_translation_key' => trans_key('Sunflower seeds'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rice',
+            'label_translation_key' => trans_key('Rice'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_quinoa',
+            'label_translation_key' => trans_key('Quinoa'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_barley',
+            'label_translation_key' => trans_key('Barley'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_oats',
+            'label_translation_key' => trans_key('Oats'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_wheat',
+            'label_translation_key' => trans_key('Wheat'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rye',
+            'label_translation_key' => trans_key('Rye'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cornmeal',
+            'label_translation_key' => trans_key('Cornmeal'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bulgur',
+            'label_translation_key' => trans_key('Bulgur'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_couscous',
+            'label_translation_key' => trans_key('Couscous'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bread',
+            'label_translation_key' => trans_key('Bread'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pasta',
+            'label_translation_key' => trans_key('Pasta'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_noodles',
+            'label_translation_key' => trans_key('Noodles'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_salt',
+            'label_translation_key' => trans_key('Salt'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pepper',
+            'label_translation_key' => trans_key('Pepper'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_oregano',
+            'label_translation_key' => trans_key('Oregano'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_basil',
+            'label_translation_key' => trans_key('Basil'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_thyme',
+            'label_translation_key' => trans_key('Thyme'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_rosemary',
+            'label_translation_key' => trans_key('Rosemary'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sage',
+            'label_translation_key' => trans_key('Sage'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cilantro',
+            'label_translation_key' => trans_key('Cilantro'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_parsley',
+            'label_translation_key' => trans_key('Parsley'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_dill',
+            'label_translation_key' => trans_key('Dill'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bay_leaves',
+            'label_translation_key' => trans_key('Bay leaves'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_curry_powder',
+            'label_translation_key' => trans_key('Curry powder'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cumin',
+            'label_translation_key' => trans_key('Cumin'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_coriander',
+            'label_translation_key' => trans_key('Coriander'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_paprika',
+            'label_translation_key' => trans_key('Paprika'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_chili_powder',
+            'label_translation_key' => trans_key('Chili powder'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_garlic_powder',
+            'label_translation_key' => trans_key('Garlic powder'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_onion_powder',
+            'label_translation_key' => trans_key('Onion powder'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_turmeric',
+            'label_translation_key' => trans_key('Turmeric'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_ginger',
+            'label_translation_key' => trans_key('Ginger'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_nutmeg',
+            'label_translation_key' => trans_key('Nutmeg'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cinnamon',
+            'label_translation_key' => trans_key('Cinnamon'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cloves',
+            'label_translation_key' => trans_key('Cloves'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cardamom',
+            'label_translation_key' => trans_key('Cardamom'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mustard_seeds',
+            'label_translation_key' => trans_key('Mustard seeds'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_olive_oil',
+            'label_translation_key' => trans_key('Olive oil'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_vegetable_oil',
+            'label_translation_key' => trans_key('Vegetable oil'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_canola_oil',
+            'label_translation_key' => trans_key('Canola oil'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_coconut_oil',
+            'label_translation_key' => trans_key('Coconut oil'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_butter',
+            'label_translation_key' => trans_key('Butter'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_margarine',
+            'label_translation_key' => trans_key('Margarine'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lard',
+            'label_translation_key' => trans_key('Lard'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_shortening',
+            'label_translation_key' => trans_key('Shortening'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_ghee',
+            'label_translation_key' => trans_key('Ghee'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_milk',
+            'label_translation_key' => trans_key('Milk'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cheese',
+            'label_translation_key' => trans_key('Cheese'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_yogurt',
+            'label_translation_key' => trans_key('Yogurt'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sour_cream',
+            'label_translation_key' => trans_key('Sour cream'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_butter',
+            'label_translation_key' => trans_key('Butter'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cream',
+            'label_translation_key' => trans_key('Cream'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cream_cheese',
+            'label_translation_key' => trans_key('Cream cheese'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_apples',
+            'label_translation_key' => trans_key('Apples'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_bananas',
+            'label_translation_key' => trans_key('Bananas'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_oranges',
+            'label_translation_key' => trans_key('Oranges'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_grapes',
+            'label_translation_key' => trans_key('Grapes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_berries',
+            'label_translation_key' => trans_key('Berries'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pineapple',
+            'label_translation_key' => trans_key('Pineapple'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mango',
+            'label_translation_key' => trans_key('Mango'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_papaya',
+            'label_translation_key' => trans_key('Papaya'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_kiwi',
+            'label_translation_key' => trans_key('Kiwi'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_peaches',
+            'label_translation_key' => trans_key('Peaches'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_plums',
+            'label_translation_key' => trans_key('Plums'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pears',
+            'label_translation_key' => trans_key('Pears'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_cherries',
+            'label_translation_key' => trans_key('Cherries'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_grapefruit',
+            'label_translation_key' => trans_key('Grapefruit'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_lemons',
+            'label_translation_key' => trans_key('Lemons'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_limes',
+            'label_translation_key' => trans_key('Limes'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_melons',
+            'label_translation_key' => trans_key('Melons'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_sugar',
+            'label_translation_key' => trans_key('Sugar'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_brown_sugar',
+            'label_translation_key' => trans_key('Brown sugar'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_honey',
+            'label_translation_key' => trans_key('Honey'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_maple_syrup',
+            'label_translation_key' => trans_key('Maple syrup'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_agave_nectar',
+            'label_translation_key' => trans_key('Agave nectar'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_stevia',
+            'label_translation_key' => trans_key('Stevia'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_molasses',
+            'label_translation_key' => trans_key('Molasses'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_ketchup',
+            'label_translation_key' => trans_key('Ketchup'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mustard',
+            'label_translation_key' => trans_key('Mustard'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_mayonnaise',
+            'label_translation_key' => trans_key('Mayonnaise'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_barbecue_sauce',
+            'label_translation_key' => trans_key('Barbecue sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_soy_sauce',
+            'label_translation_key' => trans_key('Soy sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_hoisin_sauce',
+            'label_translation_key' => trans_key('Hoisin sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_teriyaki_sauce',
+            'label_translation_key' => trans_key('Teriyaki sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_worcestershire_sauce',
+            'label_translation_key' => trans_key('Worcestershire sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_hot_sauce',
+            'label_translation_key' => trans_key('Hot sauce'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_salsa',
+            'label_translation_key' => trans_key('Salsa'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_guacamole',
+            'label_translation_key' => trans_key('Guacamole'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_salad_dressing',
+            'label_translation_key' => trans_key('Salad dressing'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_vinegar',
+            'label_translation_key' => trans_key('Vinegar'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_relish',
+            'label_translation_key' => trans_key('Relish'),
         ]);
         Ingredient::create([
             'vault_id' => $this->vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_pickles',
+            'label_translation_key' => trans_key('Pickles'),
         ]);
     }
 }
