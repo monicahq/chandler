@@ -2,8 +2,8 @@
   <div class="mb3">
     <label v-if="label" class="mb-2 block text-sm dark:text-gray-100" :for="id">
       {{ label }}
-      <span v-if="!required" class="optional-badge text-xs">
-        {{ $t('app.optional') }}
+      <span v-if="!required" class="optional-badge dark:optional-badge text-xs">
+        {{ $t('optional') }}
       </span>
     </label>
 
@@ -22,19 +22,19 @@
         @keydown.esc="sendEscKey"
         @focus="showMaxLength"
         @blur="displayMaxLength = false" />
-      <span v-if="maxlength && displayMaxLength" class="length absolute rounded text-xs dark:text-gray-100">
+      <span v-if="maxlength && displayMaxLength" class="length dark:length absolute rounded text-xs dark:text-gray-100">
         {{ charactersLeft }}
       </span>
     </div>
-    <p v-if="markdown" class="rounded-b-lg bg-slate-100 px-3 py-2 text-xs">
-      We
+    <p v-if="markdown" class="rounded-b-lg bg-slate-100 px-3 py-2 text-xs dark:bg-slate-900">
+      <span>{{ $t('We support Markdown to format the text (bold, lists, headings, etc…).') }}</span>
+
       <a
         href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
         target="_blank"
         class="text-blue-500 hover:underline"
-        >support Markdown</a
+        >{{ $t('(Help)') }}</a
       >
-      to format the text (bold, lists, headings, etc...).
     </p>
 
     <p v-if="help" class="f7 mb3 lh-title">
@@ -163,14 +163,12 @@ export default {
   padding: 3px 4px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .optional-badge {
-    color: #d4d8dd;
-    background-color: #2f3031;
-  }
-  .length {
-    background-color: #2d2f33;
-  }
+.dark .dark\:optional-badge {
+  color: #d4d8dd;
+  background-color: #2f3031;
+}
+.dark .dark\:length {
+  background-color: #2d2f33;
 }
 
 .counter {

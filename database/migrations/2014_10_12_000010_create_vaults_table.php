@@ -21,7 +21,7 @@ return new class() extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->foreignIdFor(Template::class, 'default_template_id')->nullable()->constrained('templates')->nullOnDelete();
-            $table->boolean('show_activity_tab_on_dashboard')->default(true);
+            $table->string('default_activity_tab')->default('activity');
             $table->boolean('show_group_tab')->default(true);
             $table->boolean('show_tasks_tab')->default(true);
             $table->boolean('show_files_tab')->default(true);
@@ -29,6 +29,7 @@ return new class() extends Migration
             $table->boolean('show_companies_tab')->default(true);
             $table->boolean('show_reports_tab')->default(true);
             $table->boolean('show_kitchen_tab')->default(true);
+            $table->boolean('show_calendar_tab')->default(true);
             $table->timestamps();
         });
     }

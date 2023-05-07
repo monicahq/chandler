@@ -4,7 +4,7 @@
     <div>
       <label v-if="label" class="mb-2 block text-sm" :for="id">
         {{ label }}
-        <span v-if="!required" class="optional-badge text-xs"> {{ $t('app.optional') }} </span>
+        <span v-if="!required" class="optional-badge dark:optional-badge text-xs"> {{ $t('optional') }} </span>
       </label>
 
       <!-- list of selected contacts -->
@@ -21,14 +21,16 @@
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="inline cursor-pointer text-blue-500 hover:underline" @click="remove(contact)">Remove</li>
+            <li class="inline cursor-pointer text-blue-500 hover:underline" @click="remove(contact)">
+              {{ $t('Remove') }}
+            </li>
           </ul>
         </li>
       </ul>
 
       <p
         v-if="displayAddContactButton"
-        class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
+        class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-500 dark:text-gray-900 hover:dark:bg-slate-700"
         @click="showAddContactMode">
         {{ labelCta }}
       </p>
@@ -74,7 +76,9 @@
           form.searchTerm.length == 0
         "
         class="mb-6">
-        <p class="mb-2 mt-2 text-center text-sm text-gray-600 dark:text-gray-400">Maybe one of these contacts?</p>
+        <p class="mb-2 mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          {{ $t('Maybe one of these contacts?') }}
+        </p>
         <ul class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li
             v-for="contact in mostConsultedContacts"
@@ -84,7 +88,7 @@
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">Add</li>
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
             </ul>
           </li>
         </ul>
@@ -94,14 +98,14 @@
       <div
         v-if="processingSearch"
         class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
-        <p>Searching...</p>
+        <p>{{ $t('Searching…') }}</p>
       </div>
 
       <!-- not enough characters -->
       <div
         v-if="form.searchTerm.length < 3 && form.searchTerm.length != 0"
         class="mb-6 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
-        <p>Please enter at least 3 characters to initiate a search.</p>
+        <p>{{ $t('Please enter at least 3 characters to initiate a search.') }}</p>
       </div>
 
       <!-- search results: results found -->
@@ -117,7 +121,7 @@
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">Add</li>
+              <li class="inline cursor-pointer text-blue-500 hover:underline" @click="add(contact)">{{ $t('Add') }}</li>
             </ul>
           </li>
         </ul>
@@ -127,7 +131,7 @@
       <div
         v-if="searchResults.length == 0 && form.searchTerm.length >= 3"
         class="mb-3 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-500 dark:border-gray-700 dark:bg-gray-900">
-        <p>No search results</p>
+        <p>{{ $t('No results found') }}</p>
       </div>
     </div>
   </div>
@@ -135,6 +139,7 @@
 
 <script>
 import Errors from '@/Shared/Form/Errors.vue';
+import { trans } from 'laravel-vue-i18n';
 
 export default {
   components: {
@@ -156,7 +161,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: 'Find a contact in this vault',
+      default: () => trans('Find a contact in this vault'),
     },
     label: {
       type: String,
@@ -164,7 +169,7 @@ export default {
     },
     labelCta: {
       type: String,
-      default: '+ Add a contact',
+      default: () => trans('+ Add a contact'),
     },
     type: {
       type: String,
@@ -313,11 +318,9 @@ export default {
   padding: 1px 3px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .optional-badge {
-    color: #d4d8dd;
-    background-color: #2f3031;
-  }
+.dark .dark\:optional-badge {
+  color: #d4d8dd;
+  background-color: #2f3031;
 }
 
 .icon-search {

@@ -5,6 +5,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   data: Object,
@@ -56,7 +57,7 @@ const store = (journalMetric) => {
 };
 
 const destroy = (journalMetric, postMetric) => {
-  if (confirm('Are you sure?')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios.delete(postMetric.url.destroy).then(() => {
       var id = localJournalMetrics.value.findIndex((x) => x.id === journalMetric.id);
       var postMetricId = localJournalMetrics.value[id].post_metrics.findIndex((x) => x.id === postMetric.id);
@@ -69,7 +70,7 @@ const destroy = (journalMetric, postMetric) => {
 <template>
   <div class="mb-8">
     <p class="mb-2 flex items-center justify-between font-bold">
-      <span>Post metrics</span>
+      <span>{{ $t('Post metrics') }}</span>
     </p>
 
     <!-- journal metrics -->
@@ -108,26 +109,26 @@ const destroy = (journalMetric, postMetric) => {
           @click="showAddMetricModal(journalMetric)"
           v-if="!addModalShown && editModeJournalMetricId != journalMetric.id"
           class="mb-6 mr-3 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          add a new metric
+          {{ $t('add a new metric') }}
         </li>
         <li
           @click="showEditMetricModal(journalMetric)"
           v-if="!addModalShown && journalMetric.post_metrics.length > 0 && editModeJournalMetricId != journalMetric.id"
-          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          edit
+          class="mb-6 inline cursor-pointer text-sm">
+          <span class="text-blue-500 hover:underline">{{ $t('edit') }}</span>
         </li>
         <li
           @click="editModeJournalMetricId = 0"
           v-if="editModeJournalMetricId == journalMetric.id"
-          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline">
-          close edit mode
+          class="mb-6 inline cursor-pointer text-sm">
+          <span class="text-blue-500 hover:underline">{{ $t('close edit mode') }}</span>
         </li>
       </ul>
 
       <!-- modal to add a new post metric -->
       <div
         v-if="addModalShown && journalMetric.id === journalMetricModal"
-        class="bg-form mb-6 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
         <form @submit.prevent="store(journalMetric)">
           <div class="border-b border-gray-200 p-2 dark:border-gray-700">
             <errors :errors="form.errors" />
@@ -141,7 +142,7 @@ const destroy = (journalMetric, postMetric) => {
               :type="'number'"
               :min="0"
               :max="1000000"
-              :label="'Numerical value'"
+              :label="$t('Numerical value')"
               @esc-key-pressed="addModalShown = false" />
 
             <text-input
@@ -150,18 +151,18 @@ const destroy = (journalMetric, postMetric) => {
               :input-class="'block w-full'"
               :required="false"
               :maxlength="255"
-              :label="'More details'"
+              :label="$t('More details')"
               @esc-key-pressed="addModalShown = false" />
           </div>
 
           <div class="flex justify-between p-2">
-            <pretty-span :text="$t('app.cancel')" :classes="'mr-3'" @click="addModalShown = false" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="addModalShown = false" />
             <pretty-button
               :href="'data.url.vault.create'"
-              :text="$t('app.save')"
+              :text="$t('Save')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save'" />
+              :classes="'save dark:save'" />
           </div>
         </form>
       </div>
@@ -169,7 +170,7 @@ const destroy = (journalMetric, postMetric) => {
 
     <!-- blank state -->
     <p v-if="localJournalMetrics.length <= 0" class="text-sm text-gray-600 dark:text-gray-400">
-      There are no journal metrics.
+      {{ $t('There are no journal metrics.') }}
     </p>
   </div>
 </template>

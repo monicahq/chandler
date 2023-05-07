@@ -1,3 +1,20 @@
+<script setup>
+import { computed } from 'vue';
+
+defineEmits(['edit', 'delete']);
+defineProps({
+  showEdit: Boolean,
+  showDelete: Boolean,
+});
+
+const theme = computed(() => {
+  return localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ? 'dark'
+    : 'light';
+});
+</script>
+
 <template>
   <a-dropdown>
     <a class="ant-dropdown-link cursor-pointer" @click.prevent>
@@ -10,34 +27,17 @@
       </svg>
     </a>
     <template #overlay>
-      <a-menu>
+      <a-menu :theme="theme">
         <a-menu-item v-if="showEdit">
-          <a href="" @click.prevent="$emit('edit', $event.target.value)">{{ $t('app.edit') }}</a>
+          <a href="" @click.prevent="$emit('edit', $event.target.value)">{{ $t('Edit') }}</a>
         </a-menu-item>
         <a-menu-item v-if="showDelete">
-          <a href="" @click.prevent="$emit('delete', $event.target.value)">{{ $t('app.delete') }}</a>
+          <a href="" @click.prevent="$emit('delete', $event.target.value)">{{ $t('Delete') }}</a>
         </a-menu-item>
       </a-menu>
     </template>
   </a-dropdown>
 </template>
-
-<script>
-export default {
-  components: {},
-
-  props: {
-    showEdit: {
-      type: Boolean,
-      default: false,
-    },
-    showDelete: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .ant-dropdown-menu {
@@ -45,12 +45,12 @@ export default {
 }
 
 .ant-dropdown-menu-item:hover {
-  background-color: rgb(248 250 252 / var(--tw-bg-opacity)); // bg-slate-50
+  background-color: #f8fafc; // bg-slate-50
 }
 
 @media (prefers-color-scheme: dark) {
   .ant-dropdown-menu-item:hover {
-    background-color: rgb(15 23 42 / var(--tw-bg-opacity)); // bg-slate-900
+    background-color: #020617; // bg-slate-950
   }
 }
 </style>

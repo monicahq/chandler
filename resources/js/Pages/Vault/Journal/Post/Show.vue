@@ -16,11 +16,11 @@ defineProps({
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
             <li class="mr-2 inline text-gray-600 dark:text-gray-400">
-              {{ $t('app.breadcrumb_location') }}
+              {{ $t('You are here:') }}
             </li>
             <li class="mr-2 inline">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
-                {{ $t('app.breadcrumb_journal_index') }}
+                {{ $t('Journals') }}
               </inertia-link>
             </li>
             <li class="relative mr-2 inline">
@@ -106,7 +106,7 @@ defineProps({
               <div v-else>&nbsp;</div>
             </div>
 
-            <div class="post relative rounded bg-white">
+            <div class="post dark:post relative rounded bg-white dark:bg-gray-900">
               <!-- date of the post -->
               <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
 
@@ -115,7 +115,7 @@ defineProps({
                 <li
                   v-for="tag in data.tags"
                   :key="tag.id"
-                  class="mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0">
+                  class="mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0 dark:bg-neutral-800">
                   {{ tag.name }}
                 </li>
               </ul>
@@ -145,7 +145,7 @@ defineProps({
               </div>
 
               <!-- no section yet -->
-              <div v-else class="text-gray-400">This post has no content yet.</div>
+              <div v-else class="text-gray-400">{{ $t('This post has no content yet.') }}</div>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ defineProps({
           <div class="">
             <!-- contacts -->
             <div v-if="data.contacts.length > 0" class="mb-4">
-              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_contacts') }}</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('Contacts in this post') }}</p>
 
               <div v-for="contact in data.contacts" :key="contact.id" class="mb-2 block">
                 <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
@@ -162,7 +162,7 @@ defineProps({
 
             <!-- slices of life -->
             <div v-if="data.sliceOfLife" class="mb-4">
-              <p class="mb-2 text-sm font-semibold">Slice of life</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('Slice of life') }}</p>
               <div class="mb-6 last:mb-0">
                 <div
                   class="rounded border-b border-l border-r border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
@@ -177,7 +177,7 @@ defineProps({
 
             <!-- post metrics -->
             <div v-if="data.journalMetrics.length > 0" class="mb-4">
-              <p class="mb-2 text-sm font-semibold">Post metrics</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('Post metrics') }}</p>
               <div v-for="journalMetric in data.journalMetrics" :key="journalMetric.id">
                 <div class="mb-1 flex items-center justify-between font-semibold">
                   <span>{{ journalMetric.label }}</span>
@@ -203,7 +203,7 @@ defineProps({
 
             <!-- mood tracking events -->
             <div v-if="data.moodTrackingEvents.length > 0">
-              <p class="mb-2 text-sm font-semibold">{{ $t('vault.journal_show_mood') }}</p>
+              <p class="mb-2 text-sm font-semibold">{{ $t('Your mood that you logged at this date') }}</p>
 
               <ul class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                 <li
@@ -211,9 +211,13 @@ defineProps({
                   :key="mood.id"
                   class="item-list border-b border-gray-200 p-3 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <span>{{ mood.mood_tracking_parameter.label }}</span>
-                  <span class="block text-sm" v-if="mood.number_of_hours_slept"
-                    >Slept {{ mood.number_of_hours_slept }} hours</span
-                  >
+                  <span class="block text-sm" v-if="mood.number_of_hours_slept">
+                    {{
+                      $tChoice('Slept :count hour|Slept :count hours', mood.number_of_hours_slept, {
+                        count: mood.number_of_hours_slept,
+                      })
+                    }}
+                  </span>
                   <span v-if="mood.note" class="block text-sm">{{ mood.note }}</span>
                 </li>
               </ul>
@@ -222,7 +226,9 @@ defineProps({
             <!-- options -->
             <ul class="mb-6 text-sm">
               <li class="flex items-center">
-                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">Edit post</inertia-link>
+                <inertia-link :href="data.url.edit" class="text-blue-500 hover:underline">
+                  {{ $t('Edit post') }}
+                </inertia-link>
               </li>
             </ul>
           </div>
@@ -268,6 +274,26 @@ defineProps({
   &:after {
     background: #f6f6f6;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+  }
+}
+
+.dark .dark\:post {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+
+  &:before {
+    background: #09090b;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+    left: -5px;
+    top: 4px;
+    transform: rotate(-2.5deg);
+  }
+
+  &:after {
+    background: #171717;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
     right: -3px;
     top: 1px;
     transform: rotate(1.4deg);

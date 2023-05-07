@@ -5,6 +5,7 @@ import ContactCard from '@/Shared/ContactCard.vue';
 import HoverMenu from '@/Shared/HoverMenu.vue';
 import CreateLifeEvent from '@/Shared/Modules/CreateLifeEvent.vue';
 import { onMounted, ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps({
   layoutData: Object,
@@ -50,7 +51,7 @@ const loadMore = () => {
 };
 
 const destroy = (timelineEvent) => {
-  if (confirm('Are you sure? This will delete the event permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(timelineEvent.url.destroy)
       .then(() => {
@@ -62,7 +63,7 @@ const destroy = (timelineEvent) => {
 };
 
 const destroyLifeEvent = (timelineEvent, lifeEvent) => {
-  if (confirm('Are you sure? This will delete the event permanently.')) {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
     axios
       .delete(lifeEvent.url.destroy)
       .then(() => {
@@ -124,10 +125,10 @@ const toggleLifeEventVisibility = (lifeEvent) => {
           </svg>
         </span>
 
-        <span class="font-semibold"> Life events </span>
+        <span class="font-semibold"> {{ $t('Life events') }} </span>
       </div>
       <pretty-button
-        :text="'Add a life event'"
+        :text="$t('Add a life event')"
         :icon="'plus'"
         :classes="'sm:w-fit w-full'"
         @click="showCreateLifeEventModal" />
@@ -148,15 +149,16 @@ const toggleLifeEventVisibility = (lifeEvent) => {
         <div v-for="timelineEvent in localTimelines" :key="timelineEvent.id" class="mb-4">
           <!-- timeline event name -->
           <div
-            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 hover:dark:bg-slate-800"
             @click="toggleTimelineEventVisibility(timelineEvent)">
             <!-- timeline date / label / number of events -->
             <div>
               <span class="mr-2 text-gray-500">{{ timelineEvent.happened_at }}</span>
 
-              <span class="ml-3 whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400">{{
-                timelineEvent.life_events.length
-              }}</span>
+              <span
+                class="ml-3 whitespace-nowrap rounded-lg bg-slate-100 px-2 py-0.5 text-sm text-slate-400 dark:bg-slate-900"
+                >{{ timelineEvent.life_events.length }}</span
+              >
             </div>
 
             <!-- chevrons and menu -->
@@ -199,22 +201,24 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               v-for="lifeEvent in timelineEvent.life_events"
               :key="lifeEvent.id"
               :class="!lifeEvent.collapsed ? 'border' : ''"
-              class="mb-2 ml-6 rounded-lg border-gray-200">
+              class="mb-2 ml-6 rounded-lg border-gray-200 dark:border-gray-700">
               <!-- name of life event -->
               <div
                 :class="lifeEvent.collapsed ? 'rounded-lg border' : ''"
-                class="flex cursor-pointer items-center justify-between rounded-t-lg border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                class="flex cursor-pointer items-center justify-between rounded-t-lg border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 hover:dark:bg-slate-800">
                 <!-- title -->
                 <div @click="toggleLifeEventVisibility(lifeEvent)" class="flex items-center">
                   <p v-if="lifeEvent.summary" class="mr-4 text-sm font-bold">{{ lifeEvent.summary }}</p>
                   <div>
-                    <span class="rounded border bg-white px-2 py-1 font-mono text-sm">{{
-                      lifeEvent.life_event_type.category.label
-                    }}</span>
+                    <span
+                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800"
+                      >{{ lifeEvent.life_event_type.category.label }}</span
                     >
-                    <span class="rounded border bg-white px-2 py-1 font-mono text-sm">{{
-                      lifeEvent.life_event_type.label
-                    }}</span>
+                    >
+                    <span
+                      class="rounded border bg-white px-2 py-1 font-mono text-sm dark:border-gray-700 dark:bg-gray-800"
+                      >{{ lifeEvent.life_event_type.label }}</span
+                    >
                   </div>
                 </div>
 
@@ -257,12 +261,14 @@ const toggleLifeEventVisibility = (lifeEvent) => {
               <!-- description -->
               <div
                 v-if="!lifeEvent.collapsed && lifeEvent.description"
-                class="flex items-center border-b border-gray-200 px-3 py-2">
+                class="flex items-center border-b border-gray-200 px-3 py-2 dark:border-gray-700">
                 {{ lifeEvent.description }}
               </div>
 
               <!-- date of life event | distance -->
-              <div v-if="!lifeEvent.collapsed" class="flex items-center border-b border-gray-200 px-3 py-2 text-sm">
+              <div
+                v-if="!lifeEvent.collapsed"
+                class="flex items-center border-b border-gray-200 px-3 py-2 text-sm dark:border-gray-700">
                 <!-- date -->
                 <div class="mr-4 flex items-center">
                   <svg
@@ -321,7 +327,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
                 @click="showAddLifeEventModalForTimelineEventId = timelineEvent.id"
                 v-if="showAddLifeEventModalForTimelineEventId != timelineEvent.id"
                 class="cursor-pointer text-sm text-blue-500 hover:underline">
-                Add another life event
+                {{ $t('Add another life event') }}
               </span>
 
               <create-life-event
@@ -341,7 +347,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
           <span
             @click="loadMore()"
             class="cursor-pointer rounded border border-gray-200 px-3 py-1 text-sm text-blue-500 hover:border-gray-500 dark:border-gray-700">
-            {{ $t('app.view_older') }}
+            {{ $t('Load previous entries') }}
           </span>
         </div>
       </div>
@@ -354,9 +360,9 @@ const toggleLifeEventVisibility = (lifeEvent) => {
       <!-- blank state -->
       <div
         v-if="localTimelines.length == 0"
-        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <img src="/img/contact_blank_life_event.svg" :alt="$t('Life events')" class="mx-auto mt-4 h-20 w-20" />
-        <p class="px-5 pb-5 pt-2 text-center">Life events let you document what happened in your life.</p>
+        <p class="px-5 pb-5 pt-2 text-center">{{ $t('Life events let you document what happened in your life.') }}</p>
       </div>
     </div>
   </div>

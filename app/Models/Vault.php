@@ -42,12 +42,13 @@ class Vault extends Model
         'name',
         'description',
         'default_template_id',
-        'show_activity_tab_on_dashboard',
+        'default_activity_tab',
         'show_group_tab',
         'show_tasks_tab',
         'show_files_tab',
         'show_journal_tab',
         'show_companies_tab',
+        'show_calendar_tab',
     ];
 
     /**
@@ -57,13 +58,13 @@ class Vault extends Model
      */
     protected $casts = [
         'show_group_tab' => 'boolean',
+        'show_calendar_tab' => 'boolean',
         'show_tasks_tab' => 'boolean',
         'show_files_tab' => 'boolean',
         'show_journal_tab' => 'boolean',
         'show_companies_tab' => 'boolean',
         'show_reports_tab' => 'boolean',
         'show_kitchen_tab' => 'boolean',
-        'show_activity_tab_on_dashboard' => 'boolean',
     ];
 
     /**
@@ -245,5 +246,13 @@ class Vault extends Model
     public function ingredients(): HasMany
     {
         return $this->hasMany(Ingredient::class);
+    }
+
+    /**
+     * Get the life metric records associated with the vault.
+     */
+    public function lifeMetrics(): HasMany
+    {
+        return $this->hasMany(LifeMetric::class);
     }
 }

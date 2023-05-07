@@ -10,31 +10,31 @@
               <ul class="mb-4">
                 <li class="border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'index' }">
                   <inertia-link :href="data.statistics.url.index">
-                    {{ $t('vault.files_filter_all') }}
+                    {{ $t('All files') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.all }})</span>
                   </inertia-link>
                 </li>
               </ul>
 
               <p class="mb-2 pl-2 text-sm text-gray-500">
-                {{ $t('vault.files_filter_or') }}
+                {{ $t('Or filter by type') }}
               </p>
               <ul>
                 <li class="mb-2 border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'documents' }">
                   <inertia-link :href="data.statistics.url.documents">
-                    {{ $t('vault.files_filter_documents') }}
+                    {{ $t('Documents') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.documents }})</span>
                   </inertia-link>
                 </li>
                 <li class="mb-2 border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'photos' }">
                   <inertia-link :href="data.statistics.url.photos">
-                    {{ $t('vault.files_filter_photos') }}
+                    {{ $t('Photos') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.photos }})</span>
                   </inertia-link>
                 </li>
                 <li class="mb-2 border-l-2 pl-2" :class="{ 'border-orange-500': tab === 'avatars' }">
                   <inertia-link :href="data.statistics.url.avatars">
-                    {{ $t('vault.files_filter_avatars') }}
+                    {{ $t('Avatars') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.avatars }})</span>
                   </inertia-link>
                 </li>
@@ -44,11 +44,13 @@
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
+            <errors :errors="errors" />
+
             <!-- title + cta -->
             <div class="mb-6 flex items-center justify-between">
               <h3>
                 <span class="mr-1"> 📸 </span>
-                {{ $t('vault.files_filter_title') }}
+                {{ $t('All the files') }}
               </h3>
             </div>
 
@@ -90,10 +92,10 @@
                 <!-- right part -->
                 <ul class="text-sm">
                   <li class="mr-4 inline">
-                    <a :href="file.url.download" class="text-blue-500 hover:underline">{{ $t('app.download') }}</a>
+                    <a :href="file.url.download" class="text-blue-500 hover:underline">{{ $t('Download') }}</a>
                   </li>
                   <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">
-                    {{ $t('app.delete') }}
+                    {{ $t('Delete') }}
                   </li>
                 </ul>
               </li>
@@ -107,7 +109,7 @@
               v-if="data.files.length == 0"
               class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
               <p class="p-5 text-center">
-                {{ $t('vault.files_filter_blank') }}
+                {{ $t('There are no files yet.') }}
               </p>
             </div>
           </div>
@@ -121,12 +123,14 @@
 import Layout from '@/Shared/Layout.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Errors from '@/Shared/Form/Errors.vue';
 
 export default {
   components: {
     Layout,
     Avatar,
     Pagination,
+    Errors,
   },
 
   props: {
@@ -151,6 +155,7 @@ export default {
   data() {
     return {
       localFiles: [],
+      errors: [],
     };
   },
 
@@ -160,16 +165,17 @@ export default {
 
   methods: {
     destroy(file) {
-      if (confirm(this.$t('contact.documents_delete_confirm'))) {
+      if (confirm(this.$t('Are you sure? This action cannot be undone.'))) {
+        this.errors = [];
         axios
           .delete(file.url.destroy)
           .then(() => {
-            this.flash(this.$t('contact.documents_delete_success'), 'success');
+            this.flash(this.$t('The document has been deleted'), 'success');
             var id = this.localFiles.findIndex((x) => x.id === file.id);
             this.localFiles.splice(id, 1);
           })
           .catch((error) => {
-            this.form.errors = error.response.data;
+            this.errors = error.response.data;
           });
       }
     },

@@ -12,6 +12,7 @@ use App\Models\Ingredient;
 use App\Models\Journal;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
+use App\Models\LifeMetric;
 use App\Models\Meal;
 use App\Models\MealCategory;
 use App\Models\MoodTrackingParameter;
@@ -236,5 +237,16 @@ class VaultTest extends TestCase
         ]);
 
         $this->assertTrue($vault->ingredients()->exists());
+    }
+
+    /** @test */
+    public function it_has_many_life_metrics_entries(): void
+    {
+        $vault = Vault::factory()->create();
+        LifeMetric::factory()->count(2)->create([
+            'vault_id' => $vault->id,
+        ]);
+
+        $this->assertTrue($vault->lifeMetrics()->exists());
     }
 }

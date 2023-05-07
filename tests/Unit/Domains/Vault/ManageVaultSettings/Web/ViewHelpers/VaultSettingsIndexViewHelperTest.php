@@ -79,6 +79,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'show_companies_tab' => true,
                 'show_reports_tab' => true,
                 'show_kitchen_tab' => true,
+                'show_calendar_tab' => true,
             ],
             $array['visibility']
         );
