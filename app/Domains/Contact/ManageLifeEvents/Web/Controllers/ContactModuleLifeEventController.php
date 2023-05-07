@@ -4,7 +4,7 @@ namespace App\Domains\Contact\ManageLifeEvents\Web\Controllers;
 
 use App\Domains\Contact\ManageLifeEvents\Services\CreateLifeEvent;
 use App\Domains\Contact\ManageLifeEvents\Services\DestroyLifeEvent;
-use App\Domains\Contact\ManageLifeEvents\Services\EditLifeEvent;
+use App\Domains\Contact\ManageLifeEvents\Services\UpdateLifeEvent;
 use App\Domains\Contact\ManageLifeEvents\Web\ViewHelpers\ModuleLifeEventViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -93,7 +93,7 @@ class ContactModuleLifeEventController extends Controller
             'participant_ids' => $participants,
         ];
 
-        $lifeEvent = (new EditLifeEvent())->execute($data);
+        $lifeEvent = (new UpdateLifeEvent())->execute($data);
         $contact = Contact::find($contactId);
 
         return response()->json([
