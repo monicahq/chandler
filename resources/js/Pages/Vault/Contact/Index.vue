@@ -4,8 +4,10 @@ import { Inertia } from '@inertiajs/inertia';
 import PrettyLink from '@/Shared/Form/PrettyLink.vue';
 import Avatar from '@/Shared/Avatar.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { trans } from 'laravel-vue-i18n';
+import { onMounted } from 'vue';
 
 const props = defineProps({
   layoutData: Object,
@@ -17,9 +19,11 @@ const form = useForm({
   sort_order: '',
 });
 
-const update = (sortOrder) => {
-  form.sort_order = sortOrder;
+onMounted(() => {
+  form.sort_order = props.data.user_contact_sort_order;
+});
 
+const update = () => {
   axios.put(props.data.url.sort.update, form).then((response) => {
     localStorage.success = trans('Changes saved');
     Inertia.visit(response.data.data);
@@ -68,46 +72,32 @@ const update = (sortOrder) => {
                 {{ $t('No labels yet.') }}
               </p>
             </div>
-
-            <!-- sort -->
-            <div>
-              <div class="mb-3 border-b border-gray-200 dark:border-gray-700">
-                <span class="mr-1"> 🌡️ </span>
-                {{ $t('Sort contacts') }}
-              </div>
-              <ul>
-                <li class="mb-1">
-                  <span @click="update('last_updated')" class="cursor-pointer text-blue-500 hover:underline">{{
-                    $t('By last updated')
-                  }}</span>
-                </li>
-                <li class="mb-1">
-                  <span @click="update('a_to_z')" class="cursor-pointer text-blue-500 hover:underline">{{
-                    $t('From A to Z')
-                  }}</span>
-                </li>
-                <li class="mb-1">
-                  <span @click="update('z_to_a')" class="cursor-pointer text-blue-500 hover:underline">{{
-                    $t('From Z to A')
-                  }}</span>
-                </li>
-              </ul>
-            </div>
           </div>
 
           <!-- right -->
           <div class="p-3 sm:px-3 sm:py-0">
             <!-- title + cta -->
-            <div class="mb-6 flex items-center justify-between">
+            <div class="mb-3 flex items-center justify-between">
               <h3>
                 <span class="mr-1"> 🥸 </span>
                 {{ $t('All contacts in the vault') }}
               </h3>
-              <pretty-link
-                v-if="layoutData.vault.permission.at_least_editor"
-                :href="data.url.contact.create"
-                :text="$t('Add a contact')"
-                :icon="'plus'" />
+
+              <div class="flex items-center">
+                <dropdown
+                  v-model="form.sort_order"
+                  :data="props.data.contact_sort_orders"
+                  :required="false"
+                  :dropdown-class="'block w-full mr-2'"
+                  @change="update()" />
+
+                <pretty-link
+                  v-if="layoutData.vault.permission.at_least_editor"
+                  :href="props.data.url.contact.create"
+                  :text="$t('Add a contact')"
+                  class="ml-3"
+                  :icon="'plus'" />
+              </div>
             </div>
 
             <!-- contact list -->

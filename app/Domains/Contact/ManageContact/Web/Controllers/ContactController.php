@@ -25,30 +25,25 @@ class ContactController extends Controller
 {
     public function index(Request $request, Vault $vault)
     {
+        $contacts = Contact::where('vault_id', $vault->id)
+            ->where('listed', true);
+
         switch (Auth::user()->contact_sort_order) {
             case User::CONTACT_SORT_ORDER_ASC:
-                $contacts = Contact::where('vault_id', $vault->id)
-                    ->where('listed', true)
-                    ->orderBy('last_name', 'asc')
-                    ->paginate(25);
+                $contacts = $contacts->orderBy('last_name', 'asc');
                 break;
             case User::CONTACT_SORT_ORDER_DESC:
-                $contacts = Contact::where('vault_id', $vault->id)
-                    ->where('listed', true)
-                    ->orderBy('last_name', 'desc')
-                    ->paginate(25);
+                $contacts = $contacts->orderBy('last_name', 'desc');
                 break;
             default:
-                $contacts = Contact::where('vault_id', $vault->id)
-                ->where('listed', true)
-                ->orderBy('last_updated_at', 'desc')
-                ->paginate(25);
+                $contacts = $contacts->orderBy('last_updated_at', 'desc');
                 break;
         }
+        $contacts = $contacts->paginate(25);
 
         return Inertia::render('Vault/Contact/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => ContactIndexViewHelper::data($contacts, $vault),
+            'data' => ContactIndexViewHelper::data($contacts, $vault, null, Auth::user()),
             'paginator' => PaginatorHelper::getData($contacts),
         ]);
     }

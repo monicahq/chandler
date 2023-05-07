@@ -52,9 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     /**
      * Possible contact sort order.
      */
-    public const CONTACT_SORT_ORDER_ASC = 'a_to_z';
+    public const CONTACT_SORT_ORDER_ASC = 'asc';
 
-    public const CONTACT_SORT_ORDER_DESC = 'z_to_a';
+    public const CONTACT_SORT_ORDER_DESC = 'desc';
 
     public const CONTACT_SORT_ORDER_LAST_UPDATED = 'last_updated';
 

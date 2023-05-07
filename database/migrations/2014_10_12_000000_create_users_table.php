@@ -23,7 +23,6 @@ return new class() extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('name_order')->default('%first_name% %last_name%');
-            $table->string('contact_sort_order')->default(User::CONTACT_SORT_ORDER_LAST_UPDATED);
             $table->string('date_format')->default('MMM DD, YYYY');
             $table->string('timezone')->nullable();
             $table->string('number_format')->default(User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL);
