@@ -97,36 +97,36 @@ class CreateVaultTest extends TestCase
 
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_breakfast',
+            'label_translation_key' => 'Breakfast',
         ]);
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_lunch',
+            'label_translation_key' => 'Lunch',
         ]);
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_dinner',
+            'label_translation_key' => 'Dinner',
         ]);
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_snack',
+            'label_translation_key' => 'Snack',
         ]);
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_drink',
+            'label_translation_key' => 'Drink',
         ]);
         $this->assertDatabaseHas('meal_categories', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_category_dessert',
+            'label_translation_key' => 'Dessert',
         ]);
 
         $this->assertDatabaseHas('ingredients', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_tomatoes',
+            'label_translation_key' => 'Tomatoes',
         ]);
         $this->assertDatabaseHas('ingredients', [
             'vault_id' => $vault->id,
-            'label_translation_key' => 'vault.meal_ingredients_onions',
+            'label_translation_key' => 'Onions',
         ]);
     }
 }
