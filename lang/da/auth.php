@@ -2,7 +2,7 @@
 
 return [
     'failed' => 'De angivne oplysninger er ugyldige.',
-    'lang' => 'dansk',
+    'lang' => 'Dansk',
     'login_provider_azure' => 'Microsoft',
     'login_provider_facebook' => 'Facebook',
     'login_provider_github' => 'GitHub',
