@@ -43,15 +43,8 @@ class ContactShowViewHelper
         $templatePages = $contact->template->pages()->orderBy('position', 'asc')->get();
 
         // get the first page to display in this default page
-        $firstPage = $templatePages->filter(function ($page) {
-            return $page->type != TemplatePage::TYPE_CONTACT;
-        })->first();
-
-        if ($firstPage) {
-            $templatesPagesCollection = self::getTemplatePagesList($templatePages, $contact, $firstPage);
-        } else {
-            $templatesPagesCollection = self::getTemplatePagesList($templatePages, $contact);
-        }
+        $firstPage = $templatePages->firstWhere('type', '!=', TemplatePage::TYPE_CONTACT);
+        $templatesPagesCollection = self::getTemplatePagesList($templatePages, $contact, $firstPage);
 
         return [
             'contact_name' => ModuleContactNameViewHelper::data($contact, $user),
