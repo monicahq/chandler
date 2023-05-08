@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     'failed' => 'Неверное имя пользователя или пароль.',
     'lang' => 'Pусский',
