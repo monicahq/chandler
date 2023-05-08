@@ -76,8 +76,8 @@ const destroyLifeEvent = (timelineEvent, lifeEvent) => {
 };
 
 const refreshLifeEvent = (timelineEvent, lifeEvent) => {
-  var id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
-  var lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
+  let id = localTimelines.value.findIndex((x) => x.id === timelineEvent.id);
+  let lifeEventId = localTimelines.value[id].life_events.findIndex((x) => x.id === lifeEvent.id);
   localTimelines.value[id].life_events[lifeEventId] = lifeEvent;
 };
 
