@@ -30,9 +30,9 @@ class ContactFactory extends Factory
             'prefix' => 'Dr.',
             'suffix' => 'III',
             'company_id' => Company::factory(),
-            'gender_id' => fn (array $properties) => Gender::factory()->create([
-                'account_id' => Vault::find($properties['vault_id'])->account_id,
-            ])->getKey(),
+            'gender_id' => fn (array $attributes) => Gender::factory([
+                'account_id' => Vault::find($attributes['vault_id'])->account_id,
+            ]),
         ];
     }
 

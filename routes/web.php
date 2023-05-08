@@ -1,5 +1,6 @@
 <?php
 
+//region declare
 use App\Domains\Contact\ManageAvatar\Web\Controllers\ModuleAvatarController;
 use App\Domains\Contact\ManageCalls\Web\Controllers\ContactModuleCallController;
 use App\Domains\Contact\ManageContact\Web\Controllers\ContactArchiveController;
@@ -43,6 +44,7 @@ use App\Domains\Contact\ManageReligion\Web\Controllers\ContactModuleReligionCont
 use App\Domains\Contact\ManageReminders\Web\Controllers\ContactModuleReminderController;
 use App\Domains\Contact\ManageTasks\Web\Controllers\ContactModuleTaskController;
 use App\Domains\Settings\CancelAccount\Web\Controllers\CancelAccountController;
+use App\Domains\Settings\ExportAccount\Web\Controllers\ExportAccountController;
 use App\Domains\Settings\ManageAddressTypes\Web\Controllers\PersonalizeAddressTypeController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonsController;
 use App\Domains\Settings\ManageCallReasons\Web\Controllers\PersonalizeCallReasonTypesController;
@@ -145,6 +147,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+
+//endregion
 
 Route::get('/', function () {
     if (! Auth::check()) {
@@ -721,6 +725,11 @@ Route::middleware([
             // cancel
             Route::get('cancel', [CancelAccountController::class, 'index'])->name('cancel.index');
             Route::put('cancel', [CancelAccountController::class, 'destroy'])->name('cancel.destroy');
+
+            // export
+            Route::get('export', [ExportAccountController::class, 'index'])->name('export.index');
+            Route::post('export', [ExportAccountController::class, 'store'])->name('export.store');
+            Route::post('download/{id}', [ExportAccountController::class, 'download'])->name('export.download');
         });
     });
 

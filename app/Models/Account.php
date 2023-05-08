@@ -169,4 +169,12 @@ class Account extends Model
     {
         return $this->hasMany(Religion::class);
     }
+
+    /**
+     * Get the export jobs associated with the account.
+     */
+    public function exportJobs(): HasMany
+    {
+        return $this->hasMany(ExportJob::class);
+    }
 }
