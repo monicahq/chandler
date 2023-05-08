@@ -149,19 +149,13 @@ class ContactShowViewHelper
         ];
     }
 
+    /**
+     * @param  EloquentCollection<int,TemplatePage>  $templatePages
+     */
     private static function getTemplatePagesList(EloquentCollection $templatePages, Contact $contact, TemplatePage $currentTemplatePage = null): Collection
     {
-        $templatePages = $templatePages->filter(function ($page) {
-            return $page->type != TemplatePage::TYPE_CONTACT;
-        });
-
-        $pagesCollection = collect();
-        foreach ($templatePages as $page) {
-            if ($page->type == TemplatePage::TYPE_CONTACT) {
-                continue;
-            }
-
-            $pagesCollection->push([
+        return $templatePages->filter(fn (TemplatePage $page) => $page->type !== TemplatePage::TYPE_CONTACT)
+            ->map(fn (TemplatePage $page) => [
                 'id' => $page->id,
                 'name' => $page->name,
                 'selected' => $currentTemplatePage ? $page->id === $currentTemplatePage->id : null,
@@ -173,14 +167,14 @@ class ContactShowViewHelper
                     ]),
                 ],
             ]);
-        }
-
-        return $pagesCollection;
     }
 
+    /**
+     * @param  EloquentCollection<int,TemplatePage>  $templatePages
+     */
     private static function getContactInformation(EloquentCollection $templatePages, Contact $contact, User $user): Collection
     {
-        $contactInformationPage = $templatePages->where('type', TemplatePage::TYPE_CONTACT)->first();
+        $contactInformationPage = $templatePages->firstWhere('type', TemplatePage::TYPE_CONTACT);
         $modules = $contactInformationPage->modules()->orderBy('position', 'asc')->get();
 
         $modulesCollection = collect();
