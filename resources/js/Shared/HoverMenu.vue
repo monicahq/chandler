@@ -1,16 +1,10 @@
 <script setup>
-import { computed } from 'vue';
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue';
-import { isDark } from '@/methods.js';
 
 defineEmits(['edit', 'delete']);
 defineProps({
   showEdit: Boolean,
   showDelete: Boolean,
-});
-
-const theme = computed(() => {
-  return isDark() ? 'dark' : 'light';
 });
 </script>
 
@@ -26,7 +20,7 @@ const theme = computed(() => {
       </svg>
     </a>
     <template #overlay>
-      <Menu :theme="theme">
+      <Menu :theme="isDark() ? 'dark' : 'light'">
         <MenuItem v-if="showEdit">
           <a href="" @click.prevent="$emit('edit', $event.target.value)">{{ $t('Edit') }}</a>
         </MenuItem>
