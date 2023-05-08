@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'failed' => 'As credenciais indicadas não coincidem com as registadas no sistema.',
     'lang' => 'Português',

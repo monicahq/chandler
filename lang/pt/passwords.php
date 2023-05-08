@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'reset' => 'A palavra-passe foi redefinida!',
     'sent' => 'O lembrete para a palavra-passe foi enviado!',

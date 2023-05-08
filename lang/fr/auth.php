@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
     'lang' => 'Français',

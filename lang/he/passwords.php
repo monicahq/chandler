@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'reset' => 'הסיסמה אופסה!',
     'sent' => 'קישור לאיפוס הסיסמה נשלח אליך באימייל',

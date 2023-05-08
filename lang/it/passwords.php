@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'reset' => 'La password è stata reimpostata!',
     'sent' => 'Ti abbiamo inviato una email con il link per il reset della password!',
