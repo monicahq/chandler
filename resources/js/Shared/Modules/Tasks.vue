@@ -65,7 +65,7 @@
 
         <!-- task options -->
         <div v-if="form.due_at_checked" class="ml-4 mt-4">
-          <DatePicker v-model.string="form.due_at" class="inline-block h-full" :masks="masks" :isDark="isDark">
+          <DatePicker v-model.string="form.due_at" class="inline-block h-full" :masks="masks" :is-dark="isDark()">
             <template #default="{ inputValue, inputEvents }">
               <input
                 class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
@@ -161,7 +161,7 @@
 
             <!-- task options -->
             <div v-if="form.due_at_checked" class="ml-4 mt-4">
-              <DatePicker v-model.string="form.due_at" class="inline-block h-full" :masks="masks" :isDark="isDark">
+              <DatePicker v-model.string="form.due_at" class="inline-block h-full" :masks="masks" :is-dark="isDark()">
                 <template #default="{ inputValue, inputEvents }">
                   <input
                     class="rounded border bg-white px-2 py-1 dark:bg-gray-900"

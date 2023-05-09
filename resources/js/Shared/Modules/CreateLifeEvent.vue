@@ -271,7 +271,7 @@ const store = () => {
             :timezone="'UTC'"
             class="inline-block h-full"
             :masks="masks"
-            :isDark="isDark">
+            :is-dark="isDark()">
             <template #default="{ inputValue, inputEvents }">
               <input
                 class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
