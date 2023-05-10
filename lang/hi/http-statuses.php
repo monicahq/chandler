@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
     '0' => 'अज्ञात त्रुटि',
     '100' => 'जारी रखें',
