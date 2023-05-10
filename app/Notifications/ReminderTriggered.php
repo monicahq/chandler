@@ -60,7 +60,7 @@ class ReminderTriggered extends Notification
         ]);
 
         return (new MailMessage())
-            ->subject(trans_key('Reminder for :name', ['name' => $this->contactName]))
+            ->subject(trans('Reminder for :name', ['name' => $this->contactName]))
             ->line(trans_key('You wanted to be reminded of the following:'))
             ->line($this->content)
             ->line(trans_key('for'))
