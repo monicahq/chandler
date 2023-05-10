@@ -5,7 +5,7 @@ return [
     /**
      * The locales you wish to support.
      */
-    'supported-locales' => ['en', 'bn', 'de', 'es', 'fr', 'it', 'pt', 'ru'],
+    'supported-locales' => ['en', 'bn', 'da', 'de', 'es', 'fr', 'hi', 'it', 'ja', 'nl', 'pt', 'ru'],
 
     /**
      * The detectors to use to find a matching locale.
