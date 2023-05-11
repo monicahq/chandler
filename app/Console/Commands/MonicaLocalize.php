@@ -34,10 +34,13 @@ class MonicaLocalize extends Command
         array_shift($locales);
         $this->call('localize', ['lang' => implode(',', $locales)]);
 
-        $this->loadAllSavedTranslations($locales);
+        $this->loadTranslations($locales);
     }
 
-    private function loadAllSavedTranslations(array $locales): void
+    /**
+     * Heavily inspired by https://stevensteel.com/blog/automatically-find-translate-and-save-missing-translation-keys
+     */
+    private function loadTranslations(array $locales): void
     {
         $path = lang_path();
         $finder = new Finder();

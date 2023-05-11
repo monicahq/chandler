@@ -4,8 +4,9 @@ return [
 
     /**
      * The locales you wish to support.
+     * English HAS TO be the first language of the array.
      */
-    'supported-locales' => ['en', 'de', 'es', 'fr', 'it', 'pt', 'ru'],
+    'supported-locales' => ['en', 'bn', 'ca', 'da', 'de', 'es', 'el', 'fr', 'he', 'hi', 'it', 'ja', 'ml', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'sv', 'te', 'tr', 'ur', 'vi', 'zh'],
 
     /**
      * The detectors to use to find a matching locale.
