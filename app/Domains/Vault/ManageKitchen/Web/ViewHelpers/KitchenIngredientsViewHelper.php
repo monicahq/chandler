@@ -16,6 +16,9 @@ class KitchenIngredientsViewHelper
         return [
             'ingredients' => $ingredients,
             'url' => [
+                'meals' => route('vault.kitchen.meals.index', [
+                    'vault' => $vault->id,
+                ]),
                 'store' => route('vault.kitchen.ingredients.store', [
                     'vault' => $vault->id,
                 ]),

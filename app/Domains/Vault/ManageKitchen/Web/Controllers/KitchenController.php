@@ -9,10 +9,11 @@ use App\Models\Vault;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class KitchenController extends Controller
 {
-    public function index(Request $request, Vault $vault)
+    public function index(Request $request, Vault $vault): Response
     {
         return Inertia::render('Vault/Kitchen/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),

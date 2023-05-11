@@ -33,6 +33,7 @@ class KitchenIngredientsViewHelperTest extends TestCase
         $this->assertArrayHasKey('ingredients', $array);
         $this->assertEquals(
             [
+                'meals' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/meals',
                 'store' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/ingredients',
             ],
             $array['url']

@@ -14,31 +14,31 @@ const props = defineProps({
 });
 
 const loadingState = ref(false);
-const localIngredients = ref([]);
+const localMeals = ref([]);
 const nameField = ref(null);
-const createIngredientModalShown = ref(false);
-const editedIngredientId = ref(0);
+const createMealsModalShown = ref(false);
+const editedMealId = ref(0);
 
 onMounted(() => {
-  localIngredients.value = props.data.ingredients;
+  localMeals.value = props.data.meals;
 });
 
 const form = useForm({
-  label: null,
+  name: null,
 });
 
 const showAddModal = () => {
-  form.label = null;
-  createIngredientModalShown.value = true;
+  form.name = null;
+  createMealsModalShown.value = true;
 
   nextTick(() => {
     nameField.value.focus();
   });
 };
 
-const showUpdateModal = (ingredient) => {
-  form.label = ingredient.label;
-  editedIngredientId.value = ingredient.id;
+const showUpdateModal = (meal) => {
+  form.name = meal.name;
+  editedMealId.value = meal.id;
 
   nextTick(() => {
     nameField.value.focus();
@@ -51,38 +51,38 @@ const store = () => {
   axios
     .post(props.data.url.store, form)
     .then((response) => {
-      flash(trans('The ingredient has been added'), 'success');
+      flash(trans('The meal has been added'), 'success');
       loadingState.value = '';
-      createIngredientModalShown.value = false;
-      localIngredients.value.push(response.data.data);
+      createMealsModalShown.value = false;
+      localMeals.value.push(response.data.data);
     })
     .catch(() => {
       loadingState.value = '';
     });
 };
 
-const update = (ingredient) => {
+const update = (meal) => {
   loadingState.value = 'loading';
 
   axios
-    .put(ingredient.url.update, form)
+    .put(meal.url.update, form)
     .then((response) => {
-      flash(trans('The ingredient has been updated'), 'success');
+      flash(trans('The meal has been updated'), 'success');
       loadingState.value = '';
-      editedIngredientId.value = 0;
-      localIngredients.value[localIngredients.value.findIndex((x) => x.id === ingredient.id)] = response.data.data;
+      editedMealId.value = 0;
+      localMeals.value[localMeals.value.findIndex((x) => x.id === meal.id)] = response.data.data;
     })
     .catch(() => {
       loadingState.value = '';
     });
 };
 
-const destroy = (ingredient) => {
+const destroy = (meal) => {
   if (confirm(trans('Are you sure? This action cannot be undone.'))) {
-    axios.delete(ingredient.url.destroy).then(() => {
-      flash(trans('The ingredient has been deleted'), 'success');
-      var id = localIngredients.value.findIndex((x) => x.id === ingredient.id);
-      localIngredients.value.splice(id, 1);
+    axios.delete(meal.url.destroy).then(() => {
+      flash(trans('The meal has been deleted'), 'success');
+      var id = localMeals.value.findIndex((x) => x.id === meal.id);
+      localMeals.value.splice(id, 1);
     });
   }
 };
@@ -113,7 +113,7 @@ const destroy = (ingredient) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline">{{ $t('Ingredient list') }}</li>
+            <li class="inline">{{ $t('Meals list') }}</li>
           </ul>
         </div>
       </div>
@@ -124,35 +124,31 @@ const destroy = (ingredient) => {
         <!-- tabs -->
         <div class="flex justify-center">
           <div class="mb-8 inline-flex rounded-md shadow-sm">
-            <inertia-link
-              :href="data.url.meals"
-              class="inline-flex items-center rounded-l-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
-              {{ $t('Meals') }}
-            </inertia-link>
-
             <span
-              class="inline-flex items-center rounded-r-md border-b border-r border-t border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
-              {{ $t('Ingredients') }}
+              class="inline-flex items-center rounded-l-md border-b border-l border-t border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              {{ $t('Meals') }}
             </span>
+
+            <inertia-link
+              :href="data.url.ingredients"
+              class="inline-flex items-center rounded-r-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              {{ $t('Ingredients') }}
+            </inertia-link>
           </div>
         </div>
 
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1"> 🥕 </span>
-            {{ $t('All the ingredients') }}
+            <span class="mr-1"> 🥘 </span>
+            {{ $t('All the meals') }}
           </h3>
-          <pretty-button
-            v-if="!createIngredientModalShown"
-            :text="$t('Add an ingredient')"
-            :icon="'plus'"
-            @click="showAddModal" />
+          <pretty-button v-if="!createMealsModalShown" :text="$t('Add a meal')" :icon="'plus'" @click="showAddModal" />
         </div>
 
-        <!-- modal to create a ingredient -->
+        <!-- modal to create a meal -->
         <form
-          v-if="createIngredientModalShown"
+          v-if="createMealsModalShown"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
           @submit.prevent="store()">
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
@@ -160,7 +156,7 @@ const destroy = (ingredient) => {
 
             <text-input
               ref="nameField"
-              v-model="form.label"
+              v-model="form.name"
               :label="$t('Name')"
               :type="'text'"
               :autofocus="true"
@@ -168,49 +164,49 @@ const destroy = (ingredient) => {
               :required="true"
               :autocomplete="false"
               :maxlength="255"
-              @esc-key-pressed="createIngredientModalShown = false" />
+              @esc-key-pressed="createMealsModalShown = false" />
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createIngredientModalShown = false" />
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createMealsModalShown = false" />
             <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
           </div>
         </form>
 
-        <!-- list of ingredients -->
+        <!-- list of meals -->
         <ul
-          v-if="localIngredients.length > 0"
+          v-if="localMeals.length > 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
           <li
-            v-for="ingredient in localIngredients"
-            :key="ingredient.id"
+            v-for="meal in localMeals"
+            :key="meal.id"
             class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
-            <!-- detail of the ingredient -->
-            <div v-if="editedIngredientId != ingredient.id" class="flex items-center justify-between px-5 py-2">
-              <span class="text-base">{{ ingredient.label }}</span>
+            <!-- detail of the meal -->
+            <div v-if="editedMealId != meal.id" class="flex items-center justify-between px-5 py-2">
+              <span class="text-base">{{ meal.name }}</span>
 
               <!-- actions -->
               <ul class="text-sm">
-                <li class="mr-4 inline" @click="showUpdateModal(ingredient)">
+                <li class="mr-4 inline" @click="showUpdateModal(meal)">
                   <span class="cursor-pointer text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                 </li>
-                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(ingredient)">
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(meal)">
                   {{ $t('Delete') }}
                 </li>
               </ul>
             </div>
 
-            <!-- rename a ingredient modal -->
+            <!-- rename a meal modal -->
             <form
-              v-if="editedIngredientId == ingredient.id"
+              v-if="editedMealId == meal.id"
               class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
-              @submit.prevent="update(ingredient)">
+              @submit.prevent="update(meal)">
               <div class="border-b border-gray-200 p-5 dark:border-gray-700">
                 <errors :errors="form.errors" />
 
                 <text-input
                   ref="nameField"
-                  v-model="form.label"
+                  v-model="form.name"
                   :label="$t('Name')"
                   :type="'text'"
                   :autofocus="true"
@@ -218,11 +214,11 @@ const destroy = (ingredient) => {
                   :required="true"
                   :autocomplete="false"
                   :maxlength="255"
-                  @esc-key-pressed="editedIngredientId = 0" />
+                  @esc-key-pressed="editedMealId = 0" />
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editedIngredientId = 0" />
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editedMealId = 0" />
                 <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
               </div>
             </form>
@@ -231,11 +227,11 @@ const destroy = (ingredient) => {
 
         <!-- blank state -->
         <div
-          v-if="localIngredients.length == 0"
+          v-if="localMeals.length == 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <img src="/img/kitchen_ingredient_blank.svg" :alt="$t('Calls')" class="mx-auto mt-4 h-40 w-40" />
+          <img src="/img/kitchen_meal_blank.svg" :alt="$t('Meals')" class="mx-auto mt-4 h-40 w-40" />
           <p class="p-5 text-center">
-            {{ $t("Here is the list of all the ingredients that are used in the meals you'll cook.") }}
+            {{ $t('Keep track of all your recipes.') }}
           </p>
         </div>
       </div>

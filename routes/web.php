@@ -109,6 +109,7 @@ use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeController;
 use App\Domains\Vault\ManageJournals\Web\Controllers\SliceOfLifeCoverImageController;
 use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenController;
 use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenIngredientsController;
+use App\Domains\Vault\ManageKitchen\Web\Controllers\KitchenMealsController;
 use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricContactController;
 use App\Domains\Vault\ManageLifeMetrics\Web\Controllers\LifeMetricController;
 use App\Domains\Vault\ManageReports\Web\Controllers\ReportAddressesCitiesController;
@@ -479,6 +480,14 @@ Route::middleware([
             // kitchen
             Route::prefix('kitchen')->name('vault.kitchen.')->group(function () {
                 Route::get('', [KitchenController::class, 'index'])->name('index');
+
+                // meals
+                Route::get('meals', [KitchenMealsController::class, 'index'])->name('meals.index');
+                Route::post('meals', [KitchenMealsController::class, 'store'])->name('meals.store');
+                Route::put('meals/{meal}', [KitchenMealsController::class, 'update'])->name('meals.update');
+                Route::delete('meals/{meal}', [KitchenMealsController::class, 'destroy'])->name('meals.destroy');
+
+                // ingredients
                 Route::get('ingredients', [KitchenIngredientsController::class, 'index'])->name('ingredients.index');
                 Route::post('ingredients', [KitchenIngredientsController::class, 'store'])->name('ingredients.store');
                 Route::put('ingredients/{ingredient}', [KitchenIngredientsController::class, 'update'])->name('ingredients.update');

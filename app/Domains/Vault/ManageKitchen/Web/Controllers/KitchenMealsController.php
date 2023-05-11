@@ -2,13 +2,13 @@
 
 namespace App\Domains\Vault\ManageKitchen\Web\Controllers;
 
-use App\Domains\Vault\ManageKitchen\Services\CreateIngredient;
-use App\Domains\Vault\ManageKitchen\Services\DestroyIngredient;
-use App\Domains\Vault\ManageKitchen\Services\UpdateIngredient;
-use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenIngredientsViewHelper;
+use App\Domains\Vault\ManageKitchen\Services\CreateMeal;
+use App\Domains\Vault\ManageKitchen\Services\DestroyMeal;
+use App\Domains\Vault\ManageKitchen\Services\UpdateMeal;
+use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenMealsViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Ingredient;
+use App\Models\Meal;
 use App\Models\Vault;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class KitchenIngredientsController extends Controller
+class KitchenMealsController extends Controller
 {
     public function index(Request $request, Vault $vault): Response
     {
-        return Inertia::render('Vault/Kitchen/Ingredients/Index', [
+        return Inertia::render('Vault/Kitchen/Meals/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => KitchenIngredientsViewHelper::data($vault),
+            'data' => KitchenMealsViewHelper::data($vault),
         ]);
     }
 
@@ -32,43 +32,43 @@ class KitchenIngredientsController extends Controller
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vault->id,
-            'label' => $request->input('label'),
+            'name' => $request->input('name'),
         ];
 
-        $ingredient = (new CreateIngredient())->execute($data);
+        $meal = (new CreateMeal())->execute($data);
 
         return response()->json([
-            'data' => KitchenIngredientsViewHelper::dto($ingredient),
+            'data' => KitchenMealsViewHelper::dto($meal),
         ], 201);
     }
 
-    public function update(Request $request, Vault $vault, Ingredient $ingredient): JsonResponse
+    public function update(Request $request, Vault $vault, Meal $meal): JsonResponse
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vault->id,
-            'ingredient_id' => $ingredient->id,
-            'label' => $request->input('label'),
+            'meal_id' => $meal->id,
+            'name' => $request->input('name'),
         ];
 
-        $ingredient = (new UpdateIngredient())->execute($data);
+        $meal = (new UpdateMeal())->execute($data);
 
         return response()->json([
-            'data' => KitchenIngredientsViewHelper::dto($ingredient),
+            'data' => KitchenMealsViewHelper::dto($meal),
         ], 200);
     }
 
-    public function destroy(Request $request, Vault $vault, Ingredient $ingredient): JsonResponse
+    public function destroy(Request $request, Vault $vault, Meal $meal): JsonResponse
     {
         $data = [
             'account_id' => Auth::user()->account_id,
             'author_id' => Auth::id(),
             'vault_id' => $vault->id,
-            'ingredient_id' => $ingredient->id,
+            'meal_id' => $meal->id,
         ];
 
-        (new DestroyIngredient())->execute($data);
+        (new DestroyMeal())->execute($data);
 
         return response()->json([
             'data' => true,
