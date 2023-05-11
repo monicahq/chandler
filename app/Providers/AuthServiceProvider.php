@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Contact;
 use App\Models\Group;
 use App\Models\Journal;
+use App\Models\Meal;
 use App\Models\Post;
 use App\Models\SliceOfLife;
 use App\Models\User;
@@ -105,6 +106,17 @@ class AuthServiceProvider extends ServiceProvider
             return SliceOfLife::where([
                 'id' => static::id($sliceOfLife),
                 'journal_id' => static::id($journal),
+            ])->exists();
+        });
+
+        Gate::define('meal-owner', function (User $user, $vault, $meal): bool {
+            if ($meal instanceof Meal) {
+                return $meal->vault_id === static::id($vault);
+            }
+
+            return Meal::where([
+                'id' => static::id($meal),
+                'vault_id' => static::id($vault),
             ])->exists();
         });
     }

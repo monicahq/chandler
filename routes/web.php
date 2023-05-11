@@ -445,7 +445,7 @@ Route::middleware([
                     Route::get('slices', [SliceOfLifeController::class, 'index'])->name('slices.index');
                     Route::post('slices', [SliceOfLifeController::class, 'store'])->name('slices.store');
 
-                    Route::middleware('can:slice-owner,journal,slice')->prefix('slices/{slice}')->group(function () {
+                    Route::middleware('can:sliceOfLife-owner,journal,slice')->prefix('slices/{slice}')->group(function () {
                         Route::get('', [SliceOfLifeController::class, 'show'])->name('slices.show');
                         Route::get('edit', [SliceOfLifeController::class, 'edit'])->name('slices.edit');
                         Route::put('', [SliceOfLifeController::class, 'update'])->name('slices.update');
@@ -484,8 +484,12 @@ Route::middleware([
                 // meals
                 Route::get('meals', [KitchenMealsController::class, 'index'])->name('meals.index');
                 Route::post('meals', [KitchenMealsController::class, 'store'])->name('meals.store');
-                Route::put('meals/{meal}', [KitchenMealsController::class, 'update'])->name('meals.update');
-                Route::delete('meals/{meal}', [KitchenMealsController::class, 'destroy'])->name('meals.destroy');
+
+                Route::middleware('can:meal-owner,vault,meal')->prefix('meals/{meal}')->group(function () {
+                    Route::get('', [KitchenMealsController::class, 'show'])->name('meals.show');
+                    Route::put('', [KitchenMealsController::class, 'update'])->name('meals.update');
+                    Route::delete('', [KitchenMealsController::class, 'destroy'])->name('meals.destroy');
+                });
 
                 // ingredients
                 Route::get('ingredients', [KitchenIngredientsController::class, 'index'])->name('ingredients.index');

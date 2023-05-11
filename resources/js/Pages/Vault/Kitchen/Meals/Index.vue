@@ -183,7 +183,11 @@ const destroy = (meal) => {
             class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- detail of the meal -->
             <div v-if="editedMealId != meal.id" class="flex items-center justify-between px-5 py-2">
-              <span class="text-base">{{ meal.name }}</span>
+              <span class="text-base"
+                ><inertia-link :href="meal.url.show" class="text-blue-500 hover:underline">{{
+                  meal.name
+                }}</inertia-link></span
+              >
 
               <!-- actions -->
               <ul class="text-sm">

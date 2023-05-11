@@ -42,6 +42,14 @@ class KitchenMealsController extends Controller
         ], 201);
     }
 
+    public function show(Request $request, Vault $vault, Meal $meal): Response
+    {
+        return Inertia::render('Vault/Kitchen/Meals/Show', [
+            'layoutData' => VaultIndexViewHelper::layoutData($vault),
+            'data' => KitchenMealsViewHelper::data($vault),
+        ]);
+    }
+
     public function update(Request $request, Vault $vault, Meal $meal): JsonResponse
     {
         $data = [

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Vault\ManageKitchen\Web\Controllers;
 
-use App\Domains\Vault\ManageJournals\Web\ViewHelpers\JournalIndexViewHelper;
+use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenMealsViewHelper;
 use App\Domains\Vault\ManageVault\Web\ViewHelpers\VaultIndexViewHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Vault;
@@ -15,9 +15,9 @@ class KitchenController extends Controller
 {
     public function index(Request $request, Vault $vault): Response
     {
-        return Inertia::render('Vault/Kitchen/Index', [
+        return Inertia::render('Vault/Kitchen/Meals/Index', [
             'layoutData' => VaultIndexViewHelper::layoutData($vault),
-            'data' => JournalIndexViewHelper::data($vault, Auth::user()),
+            'data' => KitchenMealsViewHelper::data($vault, Auth::user()),
         ]);
     }
 }

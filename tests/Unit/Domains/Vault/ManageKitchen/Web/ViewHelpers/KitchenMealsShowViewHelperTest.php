@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Domains\Vault\ManageKitchen\Web\ViewHelpers;
 
+use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenMealsShowViewHelper;
 use App\Domains\Vault\ManageKitchen\Web\ViewHelpers\KitchenMealsViewHelper;
+use App\Models\Ingredient;
 use App\Models\Meal;
 use App\Models\MealCategory;
 use App\Models\User;
@@ -12,7 +14,7 @@ use function env;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class KitchenMealsViewHelperTest extends TestCase
+class KitchenMealsShowViewHelperTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -24,23 +26,36 @@ class KitchenMealsViewHelperTest extends TestCase
         $vault = Vault::factory()->create([
             'account_id' => $user->account_id,
         ]);
-        Meal::factory()->create([
+        $meal = Meal::factory()->create([
             'vault_id' => $vault->id,
             'name' => 'name',
         ]);
         $mealCategory = MealCategory::factory()->create([
             'vault_id' => $vault->id,
         ]);
+        $ingredient = Ingredient::factory()->create([
+            'vault_id' => $vault->id,
+            'label' => 'label',
+        ]);
 
-        $array = KitchenMealsViewHelper::data($vault);
+        $array = KitchenMealsShowViewHelper::data($vault, $meal);
 
-        $this->assertArrayHasKey('meals', $array);
+        $this->assertCount(4, $array);
+        $this->assertArrayHasKey('meal', $array);
+        $this->assertEquals(
+            [
+                0 => [
+                    'id' => $ingredient->id,
+                    'label' => 'label',
+                ],
+            ],
+            $array['ingredients']->toArray()
+        );
         $this->assertEquals(
             [
                 0 => [
                     'id' => $mealCategory->id,
                     'label' => $mealCategory->label,
-                    'count' => 0,
                 ],
             ],
             $array['meal_categories']->toArray()
@@ -86,7 +101,6 @@ class KitchenMealsViewHelperTest extends TestCase
                     'label' => $mealCategory->label,
                 ],
                 'url' => [
-                    'show' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/meals/'.$meal->id,
                     'update' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/meals/'.$meal->id,
                     'destroy' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen/meals/'.$meal->id,
                 ],

@@ -2,30 +2,32 @@
 
 namespace App\Domains\Vault\ManageKitchen\Web\ViewHelpers;
 
+use App\Models\Ingredient;
 use App\Models\Meal;
 use App\Models\MealCategory;
 use App\Models\Vault;
 
-class KitchenMealsViewHelper
+class KitchenMealsShowViewHelper
 {
-    public static function data(Vault $vault): array
+    public static function data(Vault $vault, Meal $meal): array
     {
-        $meals = $vault->meals()
-            ->with('mealCategory')
-            ->get()
-            ->map(fn (Meal $meal) => self::dto($meal));
-
         $mealCategories = $vault->mealCategories()
-            ->withCount('meals')
             ->get()
             ->map(fn (MealCategory $mealCategory) => [
                 'id' => $mealCategory->id,
                 'label' => $mealCategory->label,
-                'count' => $mealCategory->meals_count,
+            ]);
+
+        $ingredients = $vault->ingredients()
+            ->get()
+            ->map(fn (Ingredient $ingredient) => [
+                'id' => $ingredient->id,
+                'label' => $ingredient->label,
             ]);
 
         return [
-            'meals' => $meals,
+            'meal' => self::dto($meal),
+            'ingredients' => $ingredients,
             'meal_categories' => $mealCategories,
             'url' => [
                 'ingredients' => route('vault.kitchen.ingredients.index', [
@@ -50,10 +52,6 @@ class KitchenMealsViewHelper
                 'label' => $meal->mealCategory->label,
             ] : null,
             'url' => [
-                'show' => route('vault.kitchen.meals.show', [
-                    'vault' => $meal->vault_id,
-                    'meal' => $meal->id,
-                ]),
                 'update' => route('vault.kitchen.meals.update', [
                     'vault' => $meal->vault_id,
                     'meal' => $meal->id,
