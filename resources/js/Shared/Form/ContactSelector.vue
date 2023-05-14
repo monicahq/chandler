@@ -324,8 +324,15 @@ export default {
 }
 
 .icon-search {
-  left: 8px;
   top: 13px;
+}
+
+.ltr .icon-search {
+  left: 8px;
+}
+
+.rtl .icon-search {
+  right: 8px;
 }
 
 .item-list {

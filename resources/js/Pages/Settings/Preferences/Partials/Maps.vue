@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 🗺️ </span>
-        <span class="mr-2">
+        <span class="ltr:mr-1 rtl:ml-1"> 🗺️ </span>
+        <span class="ltr:mr-2 rtl:ml-2">
           {{ $t('What should we use to display maps?') }}
         </span>
 
@@ -36,7 +36,7 @@
             :value="mapType.value"
             name="date-format"
             type="radio"
-            class="relative mr-3 h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
+            class="relative h-4 w-4 border-gray-300 text-sky-500 ltr:mr-3 rtl:ml-3 dark:border-gray-700" />
           <div>
             <label
               :for="'input' + mapType.id"

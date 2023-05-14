@@ -158,9 +158,14 @@ export default {
 
 .length {
   top: 10px;
-  right: 10px;
   background-color: #e5eeff;
   padding: 3px 4px;
+}
+.ltr .length {
+  right: 10px;
+}
+.rtl .length {
+  left: 10px;
 }
 
 .dark .dark\:optional-badge {
@@ -171,7 +176,10 @@ export default {
   background-color: #2d2f33;
 }
 
-.counter {
+.ltr .counter {
   padding-right: 64px;
+}
+.rtl .counter {
+  padding-left: 64px;
 }
 </style>

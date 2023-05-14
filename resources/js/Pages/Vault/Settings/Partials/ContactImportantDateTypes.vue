@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="mr-1"> 📁 </span>
+        <span class="ltr:mr-1 rtl:ml-1"> 📁 </span>
         {{ $t('All the important date types used in the vault') }}
       </h3>
       <pretty-button v-if="!createTypeModalShown" :text="$t('Add a type')" :icon="'plus'" @click="showTypeModal" />
@@ -51,7 +51,7 @@
             {{ type.label }}
             <span
               v-if="type.internal_type"
-              class="mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0"
+              class="inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0 ltr:mr-2 rtl:ml-2"
               >{{ type.internal_type }}</span
             >
           </span>
@@ -63,7 +63,7 @@
             </li>
             <li
               v-if="type.can_be_deleted"
-              class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900 hover:dark:text-red-100"
+              class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4 hover:dark:text-red-100"
               @click="destroy(type)">
               {{ $t('Delete') }}
             </li>

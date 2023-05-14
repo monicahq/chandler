@@ -50,7 +50,7 @@
         <!-- icons -->
         <div class="flew-grow">
           <ul class="relative">
-            <li class="icon-dark-mode relative mr-4 inline">
+            <li class="icon-dark-mode relative inline ltr:mr-4 rtl:ml-4">
               <label for="dark-mode-toggle" class="relative inline-flex cursor-pointer">
                 <input
                   id="dark-mode-toggle"
@@ -59,7 +59,7 @@
                   class="peer sr-only"
                   @click="toggleStyle" />
                 <div
-                  class="peer mr-2 h-4 w-7 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
+                  class="peer h-4 w-7 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[14px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 ltr:mr-2 rtl:ml-2 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
                 <svg
                   v-if="!style.checked"
                   xmlns="http://www.w3.org/2000/svg"
@@ -159,11 +159,11 @@
                 </svg>
               </label>
             </li>
-            <li class="mr-4 inline">
+            <li class="inline ltr:mr-4 rtl:ml-4">
               <inertia-link :href="layoutData.url.settings" class="relative inline">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="icon-cog relative mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
+                  class="icon-cog relative inline-block h-4 w-4 cursor-pointer text-gray-600 ltr:mr-1 rtl:ml-1 dark:text-gray-300 sm:h-4 sm:w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">
@@ -186,7 +186,7 @@
               <inertia-link class="inline" method="post" :href="route('logout')" as="button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mr-1 inline-block h-4 w-4 cursor-pointer text-gray-600 dark:text-gray-300 sm:h-4 sm:w-4"
+                  class="inline-block h-4 w-4 cursor-pointer text-gray-600 ltr:mr-1 rtl:ml-1 dark:text-gray-300 sm:h-4 sm:w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor">
@@ -208,112 +208,105 @@
       <nav v-if="insideVault" class="bg-white dark:border-slate-300/10 dark:bg-gray-900 sm:border-b">
         <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
           <div class="flex items-baseline justify-between space-x-6">
-            <div>
-              <inertia-link
-                :href="layoutData.vault.url.dashboard"
-                :class="{
-                  'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
-                    $page.component === 'Vault/Dashboard/Index',
-                }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Dashboard') }}
-              </inertia-link>
-
-              <!-- <inertia-link
-                href=""
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Reports') }}
-              </inertia-link> -->
-
-              <inertia-link
-                :href="layoutData.vault.url.contacts"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Contacts') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.calendar"
-                v-if="layoutData.vault.visibility.show_calendar_tab"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Calendar') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Calendar') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.journals"
-                v-if="layoutData.vault.visibility.show_journal_tab"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Journal') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Journals') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.groups"
-                v-if="layoutData.vault.visibility.show_group_tab"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Group') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Groups') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.companies"
-                v-if="layoutData.vault.visibility.show_companies_tab"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Companies') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Companies') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.tasks"
-                v-if="layoutData.vault.visibility.show_tasks_tab"
-                :class="{
-                  'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
-                    $page.component.startsWith('Vault/Dashboard/Task'),
-                }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Tasks') }}
-              </inertia-link>
-
-              <inertia-link
-                :href="layoutData.vault.url.reports"
-                v-if="layoutData.vault.visibility.show_reports_tab"
-                :class="{
-                  'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
-                    $page.component.startsWith('Vault/Reports'),
-                }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Reports') }}
-              </inertia-link>
-
-              <!-- <inertia-link
-                href=""
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Gift center') }}
-              </inertia-link> -->
-
-              <!-- <inertia-link
-                href=""
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Loans') }}
-              </inertia-link> -->
-
-              <inertia-link
-                :href="layoutData.vault.url.files"
-                v-if="layoutData.vault.visibility.show_files_tab"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Files') }"
-                class="mr-2 rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
-                {{ $t('Files') }}
-              </inertia-link>
-
-              <inertia-link
-                v-if="layoutData.vault.permission.at_least_editor"
-                :href="layoutData.vault.url.settings"
-                :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Settings') }"
-                class="rounded-md px-2 py-1 text-sm font-medium hover:bg-gray-700 hover:text-white">
-                {{ $t('Vault settings') }}
-              </inertia-link>
-            </div>
+            <ul class="list-none text-sm font-medium">
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.dashboard"
+                  :class="{
+                    'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
+                      $page.component === 'Vault/Dashboard/Index',
+                  }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Dashboard') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.contacts"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Contact') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Contacts') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.calendar"
+                  v-if="layoutData.vault.visibility.show_calendar_tab"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Calendar') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Calendar') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.journals"
+                  v-if="layoutData.vault.visibility.show_journal_tab"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Journal') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Journals') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.groups"
+                  v-if="layoutData.vault.visibility.show_group_tab"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Group') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Groups') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.companies"
+                  v-if="layoutData.vault.visibility.show_companies_tab"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Companies') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Companies') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.tasks"
+                  v-if="layoutData.vault.visibility.show_tasks_tab"
+                  :class="{
+                    'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
+                      $page.component.startsWith('Vault/Dashboard/Task'),
+                  }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Tasks') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.reports"
+                  v-if="layoutData.vault.visibility.show_reports_tab"
+                  :class="{
+                    'bg-blue-700 text-white dark:bg-blue-300 dark:text-gray-900':
+                      $page.component.startsWith('Vault/Reports'),
+                  }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Reports') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  :href="layoutData.vault.url.files"
+                  v-if="layoutData.vault.visibility.show_files_tab"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Files') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white ltr:mr-2 rtl:ml-2 dark:bg-sky-400/20 dark:text-slate-400 hover:dark:text-slate-300">
+                  {{ $t('Files') }}
+                </inertia-link>
+              </li>
+              <li class="inline">
+                <inertia-link
+                  v-if="layoutData.vault.permission.at_least_editor"
+                  :href="layoutData.vault.url.settings"
+                  :class="{ 'bg-blue-700 text-white': $page.component.startsWith('Vault/Settings') }"
+                  class="rounded-md px-2 py-1 hover:bg-gray-700 hover:text-white">
+                  {{ $t('Vault settings') }}
+                </inertia-link>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -400,8 +393,15 @@ export default {
 
 <style lang="scss" scoped>
 .icon-search {
-  left: 8px;
   top: 8px;
+}
+
+.ltr .icon-search {
+  left: 8px;
+}
+
+.rtl .icon-search {
+  right: 8px;
 }
 
 .icon-cog {

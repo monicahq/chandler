@@ -7,11 +7,11 @@ defineProps({
 <template>
   <div class="flex items-baseline justify-between space-x-6">
     <ul class="text-sm">
-      <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+      <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
         {{ $t('You are here:') }}
       </li>
       <template v-for="(item, index) in items" :key="index">
-        <li v-if="index > 0" class="relative ml-2 inline">
+        <li v-if="index > 0" class="relative inline ltr:ml-2 rtl:mr-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-breadcrumb relative inline h-3 w-3"

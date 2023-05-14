@@ -121,7 +121,7 @@ const copyToClipboard = (token) => {
             <div v-for="permission in availablePermissions" :key="permission">
               <label class="flex items-center">
                 <JetCheckbox v-model:checked="createApiTokenForm.permissions" :value="permission" />
-                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                <span class="text-sm text-gray-600 ltr:ml-2 rtl:mr-2 dark:text-gray-400">
                   {{ permission }}
                 </span>
               </label>
@@ -131,7 +131,7 @@ const copyToClipboard = (token) => {
       </template>
 
       <template #actions>
-        <JetActionMessage :on="createApiTokenForm.recentlySuccessful" class="mr-3">
+        <JetActionMessage :on="createApiTokenForm.recentlySuccessful" class="ltr:mr-3 rtl:ml-3">
           {{ $t('Created.') }}
         </JetActionMessage>
 
@@ -168,12 +168,14 @@ const copyToClipboard = (token) => {
 
                   <button
                     v-if="availablePermissions.length > 0"
-                    class="ml-6 cursor-pointer text-sm text-gray-400 underline"
+                    class="cursor-pointer text-sm text-gray-400 underline ltr:ml-6 rtl:mr-6"
                     @click="manageApiTokenPermissions(token)">
                     {{ $t('Permissions') }}
                   </button>
 
-                  <button class="ml-6 cursor-pointer text-sm text-red-500" @click="confirmApiTokenDeletion(token)">
+                  <button
+                    class="cursor-pointer text-sm text-red-500 ltr:ml-6 rtl:mr-6"
+                    @click="confirmApiTokenDeletion(token)">
                     {{ $t('Delete') }}
                   </button>
                 </div>
@@ -203,7 +205,7 @@ const copyToClipboard = (token) => {
           </div>
 
           <JetButton
-            class="ml-3"
+            class="ltr:ml-3 rtl:mr-3"
             :title="$t('Copy value into the clipboard')"
             @click.prevent="copyToClipboard($page.props.jetstream.flash.token)">
             {{ $t('Copy') }}
@@ -233,7 +235,7 @@ const copyToClipboard = (token) => {
           <div v-for="permission in availablePermissions" :key="permission">
             <label class="flex items-center">
               <JetCheckbox v-model:checked="updateApiTokenForm.permissions" :value="permission" />
-              <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+              <span class="text-sm text-gray-600 ltr:ml-2 rtl:mr-2 dark:text-gray-400">
                 {{ permission }}
               </span>
             </label>
@@ -247,7 +249,7 @@ const copyToClipboard = (token) => {
         </JetSecondaryButton>
 
         <JetButton
-          class="ml-3"
+          class="ltr:ml-3 rtl:mr-3"
           :class="{ 'opacity-25': updateApiTokenForm.processing }"
           :disabled="updateApiTokenForm.processing"
           @click="updateApiToken">
@@ -272,7 +274,7 @@ const copyToClipboard = (token) => {
         </JetSecondaryButton>
 
         <JetDangerButton
-          class="ml-3"
+          class="ltr:ml-3 rtl:mr-3"
           :class="{ 'opacity-25': deleteApiTokenForm.processing }"
           :disabled="deleteApiTokenForm.processing"
           @click="deleteApiToken">

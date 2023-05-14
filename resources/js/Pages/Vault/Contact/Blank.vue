@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 {{ $t('Contacts') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"

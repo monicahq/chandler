@@ -51,7 +51,7 @@
 
                 <label
                   :for="currentTask.id"
-                  class="ml-2 flex cursor-pointer items-center text-gray-900 dark:text-gray-100">
+                  class="flex cursor-pointer items-center text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-gray-100">
                   {{ currentTask.label }}
 
                   <!-- due date -->
@@ -62,10 +62,10 @@
                         ? 'bg-red-400/10 text-red-600 dark:bg-red-600/10 dark:text-red-400'
                         : 'bg-sky-400/10 text-sky-600 dark:bg-sky-600/10 dark:text-sky-400'
                     "
-                    class="ml-2 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5">
+                    class="flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 ltr:ml-2 rtl:mr-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="mr-1 h-3 w-3"
+                      class="h-3 w-3 ltr:mr-1 rtl:ml-1"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

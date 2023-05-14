@@ -94,7 +94,7 @@ const stop = () => {
         {{ $t('Cancel') }}
       </JetSecondaryButton>
 
-      <JetButton class="ml-2" :class="{ 'opacity-25': processing }" :disabled="processing">
+      <JetButton class="ltr:ml-2 rtl:mr-2" :class="{ 'opacity-25': processing }" :disabled="processing">
         {{ $t('Submit') }}
       </JetButton>
     </div>

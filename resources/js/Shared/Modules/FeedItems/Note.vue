@@ -15,7 +15,7 @@ const props = defineProps({
       class="flex items-center border-b border-gray-300 px-3 py-2 text-sm dark:border-gray-700">
       <Avatar
         :data="props.data.contact.avatar"
-        :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5 mr-2'" />
+        :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5 ltr:mr-2 rtl:ml-2'" />
 
       <div class="flex flex-col">
         <inertia-link :href="props.data.contact.url" class="text-gray-800 hover:underline dark:text-gray-200">{{
@@ -34,7 +34,7 @@ const props = defineProps({
       <!-- the note was deleted -->
       <span
         v-else
-        class="mb-2 mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 last:mr-0">
+        class="mb-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 last:mr-0 ltr:mr-2 rtl:ml-2">
         <span>{{ props.data.note.description }}</span>
       </span>
     </div>
@@ -44,6 +44,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 .icon-avatar {
   top: 3px;
+}
+
+.ltr .icon-avatar {
   left: -11px;
+}
+
+.rtl .icon-avatar {
+  right: -11px;
 }
 </style>

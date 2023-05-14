@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative mr-1">
+        <span class="relative ltr:mr-1 rtl:ml-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -37,7 +37,7 @@
           <!-- loan options -->
           <div class="border-b border-gray-200 px-5 pb-3 pt-5 dark:border-gray-700">
             <ul class="">
-              <li class="mr-5 inline-block">
+              <li class="inline-block ltr:mr-5 rtl:ml-5">
                 <div class="flex items-center">
                   <input
                     id="object"
@@ -48,13 +48,13 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="object"
-                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                     {{ $t('The loan is an object') }}
                   </label>
                 </div>
               </li>
 
-              <li class="mr-5 inline-block">
+              <li class="inline-block ltr:mr-5 rtl:ml-5">
                 <div class="flex items-center">
                   <input
                     id="monetary"
@@ -65,7 +65,7 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="monetary"
-                    class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                     {{ $t('The loan is monetary') }}
                   </label>
                 </div>
@@ -138,7 +138,7 @@
               :label="$t('Who makes the loan?')"
               :add-multiple-contacts="true"
               :required="true"
-              :div-outer-class="'p-5 flex-1 border-r border-gray-200 dark:border-gray-700'" />
+              :div-outer-class="'p-5 flex-1 ltr:border-r rtl:border-l border-gray-200 dark:border-gray-700'" />
 
             <contact-selector
               v-model="form.loanees"
@@ -175,10 +175,13 @@
 
       <!-- list of loans -->
       <div v-for="loan in localLoans" :key="loan.id" class="mb-5 flex">
-        <div v-if="editedLoanId != loan.id" class="mr-3 flex items-center">
+        <div v-if="editedLoanId != loan.id" class="flex items-center ltr:mr-3 rtl:ml-3">
           <div class="flex -space-x-2 overflow-hidden">
             <div v-for="loaner in loan.loaners" :key="loaner.id">
-              <contact-card :contact="loaner" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
+              <contact-card
+                :contact="loaner"
+                :avatarClasses="'h-7 w-7 rounded-full ltr:mr-2 rtl:ml-2'"
+                :displayName="false" />
             </div>
           </div>
 
@@ -193,7 +196,10 @@
           </svg>
 
           <div v-for="loanee in loan.loanees" :key="loanee.id">
-            <contact-card :contact="loanee" :avatarClasses="'h-7 w-7 rounded-full mr-2'" :displayName="false" />
+            <contact-card
+              :contact="loanee"
+              :avatarClasses="'h-7 w-7 rounded-full ltr:mr-2 rtl:ml-2'"
+              :displayName="false" />
           </div>
         </div>
 
@@ -203,13 +209,13 @@
           <div class="border-b border-gray-200 px-3 py-2 dark:border-gray-700">
             <div class="flex items-center justify-between">
               <div>
-                <span class="mr-2 block">
-                  <span v-if="loan.amount_lent" class="mr-2">
-                    <span v-if="loan.currency_name" class="mr-1 text-gray-500">
+                <span class="block ltr:mr-2 rtl:ml-2">
+                  <span v-if="loan.amount_lent" class="ltr:mr-2 rtl:ml-2">
+                    <span v-if="loan.currency_name" class="text-gray-500 ltr:mr-1 rtl:ml-1">
                       {{ loan.currency_name }}
                     </span>
                     {{ loan.amount_lent }}
-                    <span class="ml-2"> • </span>
+                    <span class="ltr:ml-2 rtl:mr-2"> • </span>
                   </span>
                   {{ loan.name }}
                 </span>
@@ -217,7 +223,7 @@
                   {{ loan.description }}
                 </span>
               </div>
-              <span v-if="loan.loaned_at_human_format" class="mr-2 text-sm text-gray-500">{{
+              <span v-if="loan.loaned_at_human_format" class="text-sm text-gray-500 ltr:mr-2 rtl:ml-2">{{
                 loan.loaned_at_human_format
               }}</span>
             </div>
@@ -229,16 +235,21 @@
               <!-- settle -->
               <li
                 v-if="!loan.settled"
-                class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+                class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
                 @click="toggle(loan)">
                 {{ $t('Settle') }}
               </li>
-              <li v-else class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="toggle(loan)">
+              <li
+                v-else
+                class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+                @click="toggle(loan)">
                 {{ $t('Revert') }}
               </li>
 
               <!-- edit -->
-              <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline" @click="showEditLoanModal(loan)">
+              <li
+                class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+                @click="showEditLoanModal(loan)">
                 {{ $t('Edit') }}
               </li>
 
@@ -259,7 +270,7 @@
             <!-- loan options -->
             <div class="border-b border-gray-200 px-5 pb-3 pt-5 dark:border-gray-700">
               <ul class="">
-                <li class="mr-5 inline-block">
+                <li class="inline-block ltr:mr-5 rtl:ml-5">
                   <div class="flex items-center">
                     <input
                       id="object"
@@ -270,13 +281,13 @@
                       class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="object"
-                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                       {{ $t('The loan is an object') }}
                     </label>
                   </div>
                 </li>
 
-                <li class="mr-5 inline-block">
+                <li class="inline-block ltr:mr-5 rtl:ml-5">
                   <div class="flex items-center">
                     <input
                       id="monetary"
@@ -287,7 +298,7 @@
                       class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="monetary"
-                      class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                       {{ $t('The loan is monetary') }}
                     </label>
                   </div>
@@ -364,7 +375,7 @@
                 :label="$t('Who makes the loan?')"
                 :add-multiple-contacts="true"
                 :required="true"
-                :div-outer-class="'p-5 flex-1 border-r border-gray-200 dark:border-gray-700'" />
+                :div-outer-class="'p-5 flex-1 ltr:border-r rtl:border-l border-gray-200 dark:border-gray-700'" />
 
               <contact-selector
                 v-model="form.loanees"

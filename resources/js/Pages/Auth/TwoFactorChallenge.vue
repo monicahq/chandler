@@ -116,7 +116,7 @@ defineProps({
             </template>
           </button>
 
-          <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+          <JetButton class="ltr:ml-4 rtl:mr-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
             {{ $t('Log in') }}
           </JetButton>
         </div>

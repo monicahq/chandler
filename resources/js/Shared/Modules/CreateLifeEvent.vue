@@ -356,7 +356,7 @@ const store = () => {
           @esc-key-pressed="addDistanceFieldShown = false" />
 
         <ul>
-          <li class="mr-5 inline-block">
+          <li class="inline-block ltr:mr-5 rtl:ml-5">
             <div class="flex items-center">
               <input
                 id="km"
@@ -365,7 +365,9 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label for="km" class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                for="km"
+                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-1 rtl:mr-1 dark:text-gray-300">
                 {{ $t('km') }}
               </label>
             </div>
@@ -380,7 +382,9 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label for="miles" class="ml-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                for="miles"
+                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-1 rtl:mr-1 dark:text-gray-300">
                 {{ $t('miles') }}
               </label>
             </div>
@@ -393,7 +397,7 @@ const store = () => {
         <!-- summary -->
         <div v-if="!addSummaryFieldShown">
           <span
-            class="mb-2 mr-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddSummaryField"
             >{{ $t('+ add summary') }}
           </span>
@@ -402,7 +406,7 @@ const store = () => {
         <!-- description -->
         <div v-if="!addDescriptionFieldShown">
           <span
-            class="mb-2 mr-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddDescriptionField"
             >{{ $t('+ add description') }}
           </span>
@@ -411,7 +415,7 @@ const store = () => {
         <!-- distance -->
         <div v-if="!addDistanceFieldShown">
           <span
-            class="mb-2 mr-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddDistanceField"
             >{{ $t('+ add distance') }}
           </span>

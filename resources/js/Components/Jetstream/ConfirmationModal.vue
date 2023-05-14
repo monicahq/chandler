@@ -40,7 +40,7 @@ const close = () => {
             </svg>
           </div>
 
-          <h3 class="ml-3 text-lg">
+          <h3 class="text-lg ltr:ml-3 rtl:mr-3">
             <slot name="title" />
           </h3>
         </div>

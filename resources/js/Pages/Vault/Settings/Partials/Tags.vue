@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="mr-1"> ⚡ </span>
+        <span class="ltr:mr-1 rtl:ml-1"> ⚡ </span>
         {{ $t('All the tags used in the vault') }}
       </h3>
       <pretty-button v-if="!createTagModalShown" :text="$t('Add a tag')" :icon="'plus'" @click="showLabelModal" />
@@ -48,7 +48,7 @@
         <!-- detail of the tag -->
         <div v-if="editTagModalShownId != tag.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
-            <span class="mr-2">{{ tag.name }}</span>
+            <span class="ltr:mr-2 rtl:ml-2">{{ tag.name }}</span>
             <span v-if="tag.count > 0" class="text-xs text-gray-500"
               >({{ $tChoice(':count post|:count posts', tag.count, { count: tag.count }) }})</span
             >
@@ -56,7 +56,7 @@
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="mr-4 inline cursor-pointer" @click="updateTagModal(tag)">
+            <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="updateTagModal(tag)">
               <span class="text-blue-500 hover:underline">{{ $t('Edit') }}</span>
             </li>
             <li

@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="data.url.back" class="text-blue-500 hover:underline">
                 {{ $t('Contacts') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -156,49 +156,49 @@
             <div class="flex flex-wrap text-xs">
               <span
                 v-if="!showMiddleNameField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayMiddleNameField">
                 {{ $t('+ middle name') }}
               </span>
               <span
                 v-if="!showPrefixField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayPrefixField">
                 {{ $t('+ prefix') }}
               </span>
               <span
                 v-if="!showSuffixField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displaySuffixField">
                 {{ $t('+ suffix') }}
               </span>
               <span
                 v-if="!showNicknameField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayNicknameField">
                 {{ $t('+ nickname') }}
               </span>
               <span
                 v-if="!showMaidenNameField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayMaidenNameField">
                 {{ $t('+ maiden name') }}
               </span>
               <span
                 v-if="data.genders.length > 0 && !showGenderField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayGenderField">
                 {{ $t('+ gender') }}
               </span>
               <span
                 v-if="data.pronouns.length > 0 && !showPronounField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayPronounField">
                 {{ $t('+ pronoun') }}
               </span>
               <span
                 v-if="data.templates.length > 0 && !showTemplateField"
-                class="mb-2 mr-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
+                class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900 dark:text-white"
                 @click="displayTemplateField">
                 {{ $t('+ change template') }}
               </span>

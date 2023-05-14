@@ -27,7 +27,7 @@
           :key="reminder.id"
           class="item-list border-b border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800 hover:dark:bg-slate-900">
           <div class="flex items-center">
-            <p class="mr-3 text-xs text-gray-400">
+            <p class="text-xs text-gray-400 ltr:mr-3 rtl:ml-3">
               {{ reminder.scheduled_at }}
             </p>
             <div class="flex items-center text-sm">
@@ -49,7 +49,7 @@
     <div
       v-if="data.reminders.length == 0"
       class="mb-4 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
-      <img src="/img/dashboard_blank_reminders.svg" :alt="$t('Reminders')" class="mr-2 h-14 w-14" />
+      <img src="/img/dashboard_blank_reminders.svg" :alt="$t('Reminders')" class="h-14 w-14 ltr:mr-2 rtl:ml-2" />
       <p class="px-5 text-center">
         {{ $t('No upcoming reminders.') }}
       </p>

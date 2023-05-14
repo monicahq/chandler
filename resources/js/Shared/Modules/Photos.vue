@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative mr-1">
+        <span class="relative ltr:mr-1 rtl:ml-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -39,7 +39,7 @@
       v-if="!data.canUploadFile"
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="bg-gray-100 p-3 text-center">
-        <span class="mr-1">⚠️</span> {{ $t('You don’t have enough space left in your account.') }}
+        <span class="ltr:mr-1 rtl:ml-1">⚠️</span> {{ $t('You don’t have enough space left in your account.') }}
       </p>
     </div>
 
@@ -168,11 +168,5 @@ export default {
 .icon-sidebar {
   color: #737e8d;
   top: -2px;
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
 }
 </style>

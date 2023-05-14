@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="mb-3 flex border-b border-gray-200 pb-1 font-medium dark:border-gray-700">
-      <span class="relative mr-2">
+      <span class="relative ltr:mr-2 rtl:ml-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon-sidebar relative inline h-4 w-4 text-gray-300 hover:text-gray-600 dark:text-gray-400"
@@ -13,7 +13,7 @@
         </svg>
       </span>
 
-      <span class="mr-2 inline">
+      <span class="inline ltr:mr-2 rtl:ml-2">
         {{ $t('Last updated') }}
       </span>
 

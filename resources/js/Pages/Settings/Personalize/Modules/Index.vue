@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
                 {{ $t('Settings') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -23,12 +23,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
                 {{ $t('Personalize your account') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -87,7 +87,7 @@
             <div>
               <!-- search a module -->
               <div
-                class="module-list rounded-t-md border-l border-r border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                class="module-list rounded-t-md border-t border-gray-200 px-3 py-2 hover:bg-slate-50 ltr:border-l ltr:border-r rtl:border-l rtl:border-r dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <text-input
                   v-model="form.search"
                   :type="'text'"
@@ -144,9 +144,9 @@
                   <!-- row options -->
                   <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                     <div>
-                      <div class="relative mr-3 inline cursor-pointer">
+                      <div class="relative inline cursor-pointer ltr:mr-3 rtl:ml-3">
                         <svg
-                          class="mr-1 inline h-3 w-3"
+                          class="inline h-3 w-3 ltr:mr-1 rtl:ml-1"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg">
@@ -162,9 +162,9 @@
                         <span>Add a field to the left</span>
                       </div>
 
-                      <div class="relative mr-2 inline cursor-pointer" @click="addFieldToRight(row)">
+                      <div class="relative inline cursor-pointer ltr:mr-2 rtl:ml-2" @click="addFieldToRight(row)">
                         <svg
-                          class="mr-1 inline h-3 w-3"
+                          class="inline h-3 w-3 ltr:mr-1 rtl:ml-1"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +183,7 @@
 
                     <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
                       <svg
-                        class="mr-1 inline h-3 w-3"
+                        class="inline h-3 w-3 ltr:mr-1 rtl:ml-1"
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -205,13 +205,13 @@
                     <div
                       v-for="field in row.fields"
                       :key="field.id"
-                      class="border-r border-gray-200 last:border-r-0 dark:border-gray-700">
+                      class="border-gray-200 last:border-r-0 ltr:border-r rtl:border-l dark:border-gray-700">
                       <!-- row options -->
                       <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                         <div>
-                          <div class="relative mr-3 inline cursor-pointer">
+                          <div class="relative inline cursor-pointer ltr:mr-3 rtl:ml-3">
                             <svg
-                              class="mr-1 inline h-3 w-3"
+                              class="inline h-3 w-3 ltr:mr-1 rtl:ml-1"
                               viewBox="0 0 24 24"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -230,7 +230,7 @@
 
                         <div class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroyRow(row)">
                           <svg
-                            class="mr-1 inline h-3 w-3"
+                            class="inline h-3 w-3 ltr:mr-1 rtl:ml-1"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg">

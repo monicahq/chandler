@@ -200,7 +200,7 @@ const destroyLifeEventType = (lifeEventType) => {
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="mr-1"> 👩‍🍼 </span>
+        <span class="ltr:mr-1 rtl:ml-1"> 👩‍🍼 </span>
         {{ $t('Life event types and categories') }}
       </h3>
       <pretty-button
@@ -251,9 +251,9 @@ const destroyLifeEventType = (lifeEventType) => {
               class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
               <div class="mb-3 flex items-center justify-between">
                 <!-- icon to move position -->
-                <div class="mr-2 flex">
+                <div class="flex ltr:mr-2 rtl:ml-2">
                   <svg
-                    class="handle mr-2 cursor-move"
+                    class="handle cursor-move ltr:mr-2 rtl:ml-2"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -278,14 +278,16 @@ const destroyLifeEventType = (lifeEventType) => {
                   <li class="inline cursor-pointer" @click="renameLifeEventCategoryModal(element)">
                     <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                   </li>
-                  <li class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
+                  <li
+                    class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
+                    @click="destroy(element)">
                     {{ $t('Delete') }}
                   </li>
                 </ul>
               </div>
 
               <!-- available life event types -->
-              <div class="ml-8">
+              <div class="ltr:ml-8 rtl:mr-8">
                 <p class="mb-1 text-sm text-gray-500">{{ $t('Life event types:') }}</p>
 
                 <draggable
@@ -300,9 +302,9 @@ const destroyLifeEventType = (lifeEventType) => {
                         class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
                         <div class="flex items-center justify-between">
                           <!-- icon to move position -->
-                          <div class="mr-2 flex">
+                          <div class="flex ltr:mr-2 rtl:ml-2">
                             <svg
-                              class="handle mr-2 cursor-move"
+                              class="handle cursor-move ltr:mr-2 rtl:ml-2"
                               width="24"
                               height="24"
                               viewBox="0 0 24 24"
@@ -328,7 +330,7 @@ const destroyLifeEventType = (lifeEventType) => {
                               <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                             </li>
                             <li
-                              class="ml-4 inline cursor-pointer text-red-500 hover:text-red-900"
+                              class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
                               @click="destroyLifeEventType(element)">
                               {{ $t('Delete') }}
                             </li>

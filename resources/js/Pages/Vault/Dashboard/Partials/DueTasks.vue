@@ -35,7 +35,7 @@
             @change="toggle(task)" />
 
           <div>
-            <label :for="task.id" class="mb-2 ml-2 flex cursor-pointer text-gray-900 dark:text-gray-300">
+            <label :for="task.id" class="mb-2 flex cursor-pointer text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
               {{ task.label }}
             </label>
 
@@ -48,10 +48,10 @@
                     ? 'bg-red-400/10 text-red-600 dark:bg-red-600/10 dark:text-red-400'
                     : 'bg-sky-400/10 text-sky-600 dark:bg-sky-600/10 dark:text-sky-400'
                 "
-                class="ml-2 mr-4 flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 dark:text-sky-400">
+                class="flex items-center rounded-full px-2 py-0.5 text-xs font-medium leading-5 ltr:ml-2 ltr:mr-4 rtl:ml-4 rtl:mr-2 dark:text-sky-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="mr-1 h-3 w-3"
+                  class="h-3 w-3 ltr:mr-1 rtl:ml-1"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -82,7 +82,7 @@
     <div
       v-if="data.tasks.length == 0"
       class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
-      <img src="/img/dashboard_blank_tasks.svg" :alt="$t('Tasks')" class="mr-2 h-14 w-14" />
+      <img src="/img/dashboard_blank_tasks.svg" :alt="$t('Tasks')" class="h-14 w-14 ltr:mr-2 rtl:ml-2" />
       <p class="px-5 text-center">
         {{ $t('No tasks.') }}
       </p>

@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 🗓 </span>
-        <span class="mr-2">
+        <span class="ltr:mr-1 rtl:ml-1"> 🗓 </span>
+        <span class="ltr:mr-2 rtl:ml-2">
           {{ $t('Timezone') }}
         </span>
 
@@ -573,8 +573,14 @@ export default {
 
 <style lang="scss" scoped>
 select {
+  background-position: right 3px center;
+}
+.ltr select {
   padding-left: 8px;
   padding-right: 20px;
-  background-position: right 3px center;
+}
+.rtl select {
+  padding-right: 8px;
+  padding-left: 20px;
 }
 </style>

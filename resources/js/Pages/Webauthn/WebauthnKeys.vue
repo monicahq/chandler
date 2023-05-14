@@ -173,7 +173,7 @@ const webauthnRegisterCallback = (data) => {
             </svg>
           </div>
 
-          <div class="ml-3 w-48">
+          <div class="w-48 ltr:ml-3 rtl:mr-3">
             <div class="text-sm text-gray-600 dark:text-gray-400">
               {{ key.name }}
             </div>
@@ -185,7 +185,7 @@ const webauthnRegisterCallback = (data) => {
             </div>
           </div>
 
-          <div class="ml-3 text-sm">
+          <div class="text-sm ltr:ml-3 rtl:mr-3">
             <JetSecondaryButton
               class="pointer text-indigo-400 hover:text-indigo-600"
               href=""
@@ -193,7 +193,7 @@ const webauthnRegisterCallback = (data) => {
               {{ $t('Update') }}
             </JetSecondaryButton>
             <JetConfirmsPassword @confirmed="keyBeingDeleted = key.id">
-              <JetSecondaryButton class="pointer ml-2 text-indigo-400 hover:text-indigo-600" href="">
+              <JetSecondaryButton class="pointer text-indigo-400 hover:text-indigo-600 ltr:ml-2 rtl:mr-2" href="">
                 {{ $t('Delete') }}
               </JetSecondaryButton>
             </JetConfirmsPassword>

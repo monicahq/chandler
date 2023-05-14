@@ -15,15 +15,15 @@ defineProps({
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
                 {{ $t('Journals') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -38,7 +38,7 @@ defineProps({
                 {{ data.journal.name }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -60,7 +60,7 @@ defineProps({
       <div class="mx-auto max-w-6xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
           <!-- left -->
-          <div class="mr-8">
+          <div class="ltr:mr-8 rtl:ml-8">
             <!-- post previous/next -->
             <div class="mb-4 flex justify-between">
               <!-- previous post -->
@@ -71,7 +71,7 @@ defineProps({
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="mr-1 h-4 w-4 text-gray-400">
+                  class="h-4 w-4 text-gray-400 ltr:mr-1 rtl:ml-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                 </svg>
 
@@ -99,7 +99,7 @@ defineProps({
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="ml-1 h-4 w-4 text-gray-400">
+                  class="h-4 w-4 text-gray-400 ltr:ml-1 rtl:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                 </svg>
               </div>
@@ -115,7 +115,7 @@ defineProps({
                 <li
                   v-for="tag in data.tags"
                   :key="tag.id"
-                  class="mr-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0 dark:bg-neutral-800">
+                  class="inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0 ltr:mr-2 rtl:ml-2 dark:bg-neutral-800">
                   {{ tag.name }}
                 </li>
               </ul>
@@ -128,7 +128,7 @@ defineProps({
                 <div
                   v-for="photo in data.photos"
                   :key="photo.id"
-                  class="mr-2 rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                  class="rounded-md border border-gray-200 p-2 shadow-sm hover:bg-slate-50 hover:shadow-lg ltr:mr-2 rtl:ml-2 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                   <img :src="photo.url.display" :alt="photo.name" />
                 </div>
               </div>
@@ -156,7 +156,10 @@ defineProps({
               <p class="mb-2 text-sm font-semibold">{{ $t('Contacts in this post') }}</p>
 
               <div v-for="contact in data.contacts" :key="contact.id" class="mb-2 block">
-                <contact-card :contact="contact" :avatarClasses="'h-5 w-5 rounded-full mr-2'" :displayName="true" />
+                <contact-card
+                  :contact="contact"
+                  :avatarClasses="'h-5 w-5 rounded-full ltr:mr-2 rtl:ml-2'"
+                  :displayName="true" />
               </div>
             </div>
 
@@ -165,7 +168,7 @@ defineProps({
               <p class="mb-2 text-sm font-semibold">{{ $t('Slice of life') }}</p>
               <div class="mb-6 last:mb-0">
                 <div
-                  class="rounded border-b border-l border-r border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+                  class="rounded border-b border-t border-gray-200 px-3 py-2 hover:bg-slate-50 ltr:border-l ltr:border-r rtl:border-l rtl:border-r dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
                   :class="data.sliceOfLife.cover_image ? '' : 'border-t'">
                   <inertia-link :href="data.sliceOfLife.url.show" class="font-semibold">{{
                     data.sliceOfLife.name
@@ -262,7 +265,9 @@ defineProps({
     width: 100%;
     z-index: -1;
   }
+}
 
+.ltr .post {
   &:before {
     background: #fafafa;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
@@ -275,6 +280,24 @@ defineProps({
     background: #f6f6f6;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
     right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+  }
+}
+
+.rtl .post {
+  &:before {
+    background: #fafafa;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    right: -5px;
+    top: 4px;
+    transform: rotate(-2.5deg);
+  }
+
+  &:after {
+    background: #f6f6f6;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    left: -3px;
     top: 1px;
     transform: rotate(1.4deg);
   }

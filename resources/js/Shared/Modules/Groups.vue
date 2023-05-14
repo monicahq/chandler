@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative mr-1">
+        <span class="relative ltr:mr-1 rtl:ml-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -113,7 +113,7 @@
 
         <!-- actions -->
         <ul class="text-sm">
-          <li class="mr-4 inline cursor-pointer">
+          <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4">
             <inertia-link :href="group.url.show" class="text-blue-500 hover:underline">{{ $t('View') }}</inertia-link>
           </li>
           <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(group)">

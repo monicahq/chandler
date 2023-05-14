@@ -73,15 +73,15 @@ const destroy = (metric) => {
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
                 {{ $t('Journals') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -91,12 +91,12 @@ const destroy = (metric) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <inertia-link :href="data.journal.url.show" class="text-blue-500 hover:underline">{{
                 data.journal.name
               }}</inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative inline ltr:mr-2 rtl:ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -117,7 +117,7 @@ const destroy = (metric) => {
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
           <h3>
-            <span class="mr-1"> 📊 </span>
+            <span class="ltr:mr-1 rtl:ml-1"> 📊 </span>
             {{ $t('All journal metrics in :name', { name: data.journal.name }) }}
           </h3>
 

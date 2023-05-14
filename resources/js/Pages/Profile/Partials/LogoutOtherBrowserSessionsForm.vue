@@ -94,7 +94,7 @@ const closeModal = () => {
             </svg>
           </div>
 
-          <div class="ml-3">
+          <div class="ltr:ml-3 rtl:mr-3">
             <div class="text-sm text-gray-600 dark:text-gray-400">
               {{ session.agent.platform ? session.agent.platform : $t('Unknown') }} -
               {{ session.agent.browser ? session.agent.browser : $t('Unknown') }}
@@ -121,7 +121,7 @@ const closeModal = () => {
           {{ $t('Log Out Other Browser Sessions') }}
         </JetButton>
 
-        <JetActionMessage :on="form.recentlySuccessful" class="ml-3">
+        <JetActionMessage :on="form.recentlySuccessful" class="ltr:ml-3 rtl:mr-3">
           {{ $t('Done.') }}
         </JetActionMessage>
       </div>
@@ -158,7 +158,7 @@ const closeModal = () => {
           </JetSecondaryButton>
 
           <JetButton
-            class="ml-3"
+            class="ltr:ml-3 rtl:mr-3"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
             @click="logoutOtherBrowserSessions">

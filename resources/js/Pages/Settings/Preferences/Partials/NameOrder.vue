@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 👉 </span>
-        <span class="mr-2">
+        <span class="ltr:mr-1 rtl:ml-1"> 👉 </span>
+        <span class="ltr:mr-2 rtl:ml-2">
           {{ $t('Customize how contacts should be displayed') }}
         </span>
 
@@ -68,9 +68,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ $t('First name Last name') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond </span>
+            <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4"> James Bond </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -83,10 +83,10 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="last_name_first_name"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ $t('Last name First name') }}
 
-            <span class="ml-4 font-normal text-gray-500"> Bond James </span>
+            <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4"> Bond James </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -99,9 +99,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name_nickname"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ $t('First name Last name (nickname)') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond (007) </span>
+            <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4"> James Bond (007) </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -112,9 +112,11 @@
             name="name-order"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label
+            for="nickname"
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ $t('nickname') }}
-            <span class="ml-4 font-normal text-gray-500"> 007 </span>
+            <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4"> 007 </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -124,11 +126,13 @@
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
             @click="focusNameOrder" />
-          <label for="custom" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label
+            for="custom"
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ $t('Custom name order') }}
           </label>
         </div>
-        <div class="ml-8">
+        <div class="ltr:ml-8 rtl:mr-8">
           <text-input
             :ref="'nameOrder'"
             v-model="form.nameOrder"
@@ -141,7 +145,7 @@
             :maxlength="255" />
 
           <p class="mb-4 text-sm">
-            <span class="mr-1">{{
+            <span class="ltr:mr-1 rtl:ml-1">{{
               $t(
                 'Please read our documentation to know more about this feature, and which variables you have access to',
               )

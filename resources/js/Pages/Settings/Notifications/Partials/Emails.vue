@@ -52,37 +52,23 @@
           {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
         <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
-          <span class="mr-2">
+          <span class="ltr:mr-2 rtl:ml-2">
             {{ $t('At') }}
           </span>
 
-          <select
-            v-model="form.hours"
-            class="mr-1 rounded-md border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
-            :required="required">
-            <option v-for="n in 24" :key="n" :value="n - 1">
-              {{ String(n - 1).padStart(2, '0') }}
-            </option>
-          </select>
+          <Dropdown v-model="form.hours" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="hours" />
 
-          <span class="mr-2"> h: </span>
+          <span class="ltr:mr-2 rtl:ml-2">{{ $t('h:') }}</span>
 
-          <select
-            v-model="form.minutes"
-            class="mr-1 rounded-md border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm"
-            :required="required">
-            <option v-for="n in 12" :key="n" :value="(n - 1) * 5">
-              {{ String((n - 1) * 5).padStart(2, '0') }}
-            </option>
-          </select>
+          <Dropdown v-model="form.minutes" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="minutes" />
 
-          <span>m</span>
+          <span>{{ $t('m') }}</span>
         </div>
       </div>
 
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <p class="flex">
-          <span class="mr-2">⚠️</span>
+          <span class="ltr:mr-2 rtl:ml-2">⚠️</span>
           {{
             $t(
               'We’ll send an email to this email address that you will need to confirm before we can send notifications to this address.',
@@ -109,7 +95,7 @@
           <a-tooltip v-if="email.verified_at" placement="topLeft" title="Verified" arrow-point-at-center>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="mr-2 inline h-4 w-4 text-green-600"
+              class="inline h-4 w-4 text-green-600 ltr:mr-2 rtl:ml-2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
@@ -124,8 +110,8 @@
           <!-- email address + label -->
           <div>
             <span class="mb-0 block">{{ email.content }}</span>
-            <ul class="bulleted-list mr-2 text-sm text-gray-500">
-              <li v-if="email.label" class="mr-1 inline">
+            <ul class="bulleted-list text-sm text-gray-500 ltr:mr-2 rtl:ml-2">
+              <li v-if="email.label" class="inline ltr:mr-1 rtl:ml-1">
                 {{ email.label }}
               </li>
               <li class="inline">
@@ -140,13 +126,13 @@
           <!-- activate/deactivate -->
           <li
             v-if="email.active"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
             @click="toggle(email)">
             {{ $t('Deactivate') }}
           </li>
           <li
             v-if="!email.active"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
             @click="toggle(email)">
             {{ $t('Activate') }}
           </li>
@@ -154,18 +140,18 @@
           <!-- link to send a test email, if not already sent -->
           <li
             v-if="testEmailSentId != email.id"
-            class="mr-4 inline cursor-pointer text-blue-500 hover:underline"
+            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
             @click="sendTest(email)">
             {{ $t('Send test') }}
           </li>
 
           <!-- text saying that the email has been sent -->
-          <li v-if="testEmailSentId == email.id" class="mr-4 inline">
+          <li v-if="testEmailSentId == email.id" class="inline ltr:mr-4 rtl:ml-4">
             {{ $t('Test email sent!') }}
           </li>
 
           <!-- view log -->
-          <li class="mr-4 inline cursor-pointer text-blue-500 hover:underline">
+          <li class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4">
             <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">
               {{ $t('View log') }}
             </inertia-link>
@@ -179,7 +165,7 @@
 
         <!-- actions when the email has NOT been verified -->
         <ul v-else class="text-sm">
-          <li class="mr-4 inline">
+          <li class="inline ltr:mr-4 rtl:ml-4">
             {{ $t('Verification email sent') }}
           </li>
 
@@ -206,6 +192,7 @@ import PrettyButton from '@/Shared/Form/PrettyButton.vue';
 import PrettySpan from '@/Shared/Form/PrettySpan.vue';
 import TextInput from '@/Shared/Form/TextInput.vue';
 import Errors from '@/Shared/Form/Errors.vue';
+import Dropdown from '@/Shared/Form/Dropdown.vue';
 
 export default {
   components: {
@@ -214,6 +201,7 @@ export default {
     PrettySpan,
     TextInput,
     Errors,
+    Dropdown,
   },
 
   props: {
@@ -243,6 +231,25 @@ export default {
     this.localEmails = this.data.emails;
     this.form.hours = '09';
     this.form.minutes = '00';
+  },
+
+  computed: {
+    hours() {
+      let result = [];
+      for (let i = 0; i < 24; i++) {
+        let name = i.toString().padStart(2, '0');
+        result.push({ id: i, name: name });
+      }
+      return result;
+    },
+    minutes() {
+      let result = [];
+      for (let i = 0; i < 60; i += 5) {
+        let name = i.toString().padStart(2, '0');
+        result.push({ id: i, name: name });
+      }
+      return result;
+    },
   },
 
   methods: {
@@ -331,11 +338,5 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-}
-
-select {
-  padding-left: 8px;
-  padding-right: 20px;
-  background-position: right 3px center;
 }
 </style>

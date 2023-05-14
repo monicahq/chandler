@@ -118,7 +118,7 @@ const destroy = (lifeMetric) => {
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative mr-1">
+        <span class="relative ltr:mr-1 rtl:ml-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -181,7 +181,7 @@ const destroy = (lifeMetric) => {
           :key="lifeMetric.id"
           class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
           <div v-if="editedLifeMetricId !== lifeMetric.id" class="flex items-center justify-between p-3">
-            <div class="mr-8 flex w-full items-center justify-between">
+            <div class="flex w-full items-center justify-between ltr:mr-8 rtl:ml-8">
               <div>
                 <p class="mb-1 text-lg font-semibold">{{ lifeMetric.label }}</p>
                 <ul @click="toggleGraph(lifeMetric)">

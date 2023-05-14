@@ -78,7 +78,12 @@ const reload = () => {
 .auth-provider {
   width: 15px;
   height: 15px;
+}
+.ltr .auth-provider {
   margin-right: 8px;
+}
+.rtl .auth-provider {
+  margin-left: 8px;
 }
 .w-43 {
   width: 43%;
@@ -94,7 +99,8 @@ const reload = () => {
     <!-- beta mode-->
     <div class="mb-4 rounded-lg border bg-amber-50 p-6">
       <p class="mb-2 text-center font-bold">
-        <span class="mr-2">🚧</span> {{ $t('Chandler is in beta.') }} <span class="ml-2">🚧</span>
+        <span class="ltr:mr-2 rtl:ml-2">🚧</span> {{ $t('Chandler is in beta.') }}
+        <span class="ltr:ml-2 rtl:mr-2">🚧</span>
       </p>
       <p class="mb-2">{{ $t('Compared to Monica:') }}</p>
       <ul class="list mb-2 pl-3">
@@ -114,7 +120,7 @@ const reload = () => {
       <div class="w-full">
         <div class="border-b border-gray-200 px-6 pb-6 pt-8 dark:border-gray-700">
           <h1 class="mb-4 text-center text-xl text-gray-800 dark:text-gray-200">
-            <span class="mr-2"> 👋 </span>
+            <span class="ltr:mr-2 rtl:ml-2"> 👋 </span>
             {{ $t('Sign in to your account') }}
           </h1>
 
@@ -134,7 +140,7 @@ const reload = () => {
 
             <WebauthnLogin :remember="true" :public-key="publicKeyRef" />
 
-            <JetSecondaryButton class="mr-2 mt-4" @click.prevent="webauthn = false">
+            <JetSecondaryButton class="mt-4 ltr:mr-2 rtl:ml-2" @click.prevent="webauthn = false">
               {{ $t('Use your password') }}
             </JetSecondaryButton>
           </div>
@@ -167,7 +173,7 @@ const reload = () => {
             <div class="mb-3 block">
               <label class="flex items-center">
                 <JetCheckbox v-model:checked="form.remember" name="remember" />
-                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                <span class="text-sm text-gray-600 ltr:ml-2 rtl:mr-2 dark:text-gray-400">
                   {{ $t('Remember me') }}
                 </span>
               </label>
@@ -181,7 +187,7 @@ const reload = () => {
                 {{ $t('Forgot password?') }}
               </Link>
 
-              <PrettyButton :text="$t('Log in')" :state="loadingState" :classes="'save ml-4'" />
+              <PrettyButton :text="$t('Log in')" :state="loadingState" :classes="'save ltr:ml-4 rtl:mr-4'" />
             </div>
 
             <div class="mt-3 block">
@@ -192,10 +198,13 @@ const reload = () => {
                 <JetSecondaryButton
                   v-for="(provider, id) in providers"
                   :key="id"
-                  class="mb-2 mr-2 inline w-32 align-middle"
+                  class="mb-2 inline w-32 align-middle ltr:mr-2 rtl:ml-2"
                   :href="route('login.provider', { driver: id })"
                   @click.prevent="open(id)">
-                  <img :src="provider.logo" :alt="provider.name" class="relative mr-2 h-4 w-4 align-middle" />
+                  <img
+                    :src="provider.logo"
+                    :alt="provider.name"
+                    class="relative h-4 w-4 align-middle ltr:mr-2 rtl:ml-2" />
                   <span class="align-middle">
                     {{ provider.name }}
                   </span>
@@ -204,7 +213,7 @@ const reload = () => {
             </div>
 
             <div v-if="publicKeyRef" class="mt-3 block">
-              <JetSecondaryButton class="mr-2" @click.prevent="reload">
+              <JetSecondaryButton class="ltr:mr-2 rtl:ml-2" @click.prevent="reload">
                 {{ $t('Use your security key') }}
               </JetSecondaryButton>
             </div>

@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 🗓 </span>
-        <span class="mr-2">
+        <span class="ltr:mr-1 rtl:ml-1"> 🗓 </span>
+        <span class="ltr:mr-2 rtl:ml-2">
           {{ $t('How should we display dates') }}
         </span>
 
@@ -61,7 +61,7 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             :for="'input' + date.id"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ date.value }}
           </label>
         </div>

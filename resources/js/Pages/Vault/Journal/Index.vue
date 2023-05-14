@@ -15,7 +15,7 @@ defineProps({
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
           <h3>
-            <span class="mr-1"> ✍️ </span>
+            <span class="ltr:mr-1 rtl:ml-1"> ✍️ </span>
             {{ $t('All the journals') }}
           </h3>
 
@@ -40,7 +40,7 @@ defineProps({
                 }}</inertia-link>
 
                 <div v-if="journal.last_updated" class="mb-2 flex items-center text-sm sm:mb-0">
-                  <span class="mr-1">
+                  <span class="ltr:mr-1 rtl:ml-1">
                     <svg
                       class="h-4 w-4 text-gray-500"
                       xmlns="http://www.w3.org/2000/svg"

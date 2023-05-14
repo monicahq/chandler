@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative mr-1">
+        <span class="relative ltr:mr-1 rtl:ml-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -44,7 +44,7 @@
             :key="relationshipType.id"
             class="item-list flex items-center justify-between border-b border-gray-200 px-5 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <div class="flex">
-              <div class="mr-2 flex items-center">
+              <div class="flex items-center ltr:mr-2 rtl:ml-2">
                 <avatar :data="relationshipType.contact.avatar" :classes="'mr-2 h-5 w-5'" />
 
                 <!-- name -->
@@ -57,13 +57,13 @@
                 <span v-else>{{ relationshipType.contact.name }}</span>
 
                 <!-- age -->
-                <span v-if="relationshipType.contact.age" class="ml-2 text-xs text-gray-400"
+                <span v-if="relationshipType.contact.age" class="text-xs text-gray-400 ltr:ml-2 rtl:mr-2"
                   >({{ relationshipType.contact.age }})</span
                 >
               </div>
 
               <!-- relationship type -->
-              <span class="mr-2 text-gray-400">{{ relationshipType.relationship_type.name }}</span>
+              <span class="text-gray-400 ltr:mr-2 rtl:ml-2">{{ relationshipType.relationship_type.name }}</span>
             </div>
 
             <!-- actions -->

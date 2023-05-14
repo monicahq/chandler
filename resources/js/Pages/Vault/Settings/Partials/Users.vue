@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="mr-1"> 🐱 </span>
+        <span class="ltr:mr-1 rtl:ml-1"> 🐱 </span>
         {{ $t('Users') }}
       </h3>
       <pretty-span v-if="!addUserModalShown" :text="$t('Add a user')" :icon="'plus'" @click="showAddUserModal" />
@@ -36,7 +36,7 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             :for="'user' + user.id"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
             {{ user.name }}
           </label>
         </div>
@@ -59,9 +59,11 @@
               name="permission"
               type="radio"
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="viewer" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              for="viewer"
+              class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
               {{ $t('Viewer') }}
-              <span class="ml-4 font-normal text-gray-500">
+              <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                 {{ $t('Can view data, but can’t edit it.') }}
               </span>
             </label>
@@ -76,9 +78,11 @@
               name="permission"
               type="radio"
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="editor" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              for="editor"
+              class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
               {{ $t('Editor') }}
-              <span class="ml-4 font-normal text-gray-500">
+              <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                 {{ $t('Can edit data, but can’t manage the vault.') }}
               </span>
             </label>
@@ -93,9 +97,11 @@
               name="permission"
               type="radio"
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-            <label for="manager" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label
+              for="manager"
+              class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
               {{ $t('Manager') }}
-              <span class="ml-4 font-normal text-gray-500">
+              <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                 {{ $t('Can do everything, including adding or removing other users.') }}
               </span>
             </label>
@@ -128,7 +134,7 @@
 
             <!-- actions -->
             <ul v-if="user.id != layoutData.user.id" class="text-sm">
-              <li class="mr-4 inline cursor-pointer" @click="showChangePermissionModal(user)">
+              <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="showChangePermissionModal(user)">
                 <span class="text-blue-500 hover:underline">{{ $t('Change permission') }}</span>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(user)">
@@ -156,7 +162,7 @@
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 {{ $t('Viewer') }}
-                <span class="ml-4 font-normal text-gray-500">
+                <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                   {{ $t('Can view data, but can’t edit it.') }}
                 </span>
               </div>
@@ -172,9 +178,9 @@
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="editor"
-                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                   {{ $t('Editor') }}
-                  <span class="ml-4 font-normal text-gray-500">
+                  <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                     {{ $t('Can edit data, but can’t manage the vault.') }}
                   </span>
                 </label>
@@ -191,9 +197,9 @@
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="manager"
-                  class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+                  class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
                   {{ $t('Manager') }}
-                  <span class="ml-4 font-normal text-gray-500">
+                  <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
                     {{ $t('Can do everything, including adding or removing other users.') }}
                   </span>
                 </label>

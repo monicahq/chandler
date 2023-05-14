@@ -45,7 +45,7 @@
           class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @click="selectPage(element)">
           <!-- icon to move position -->
-          <div class="mr-2">
+          <div class="ltr:mr-2 rtl:ml-2">
             <svg
               class="handle cursor-move"
               width="24"
@@ -72,7 +72,7 @@
             </div>
 
             <ul class="text-xs">
-              <li class="mr-4 inline cursor-pointer" @click="renamePageModal(element)">
+              <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="renamePageModal(element)">
                 <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">

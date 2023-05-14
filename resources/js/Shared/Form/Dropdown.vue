@@ -14,9 +14,16 @@
         :disabled="disabled"
         :placeholder="placeholder"
         @change="change">
-        <option v-for="item in data" :key="item.id" :value="item.id">
-          {{ item.name }}
-        </option>
+        <template v-for="item in localData" :key="item.id">
+          <optgroup v-if="item.optgroup" :label="item.optgroup">
+            <option v-for="option in item.options" :key="option.id" :value="option.id">
+              {{ option.name }}
+            </option>
+          </optgroup>
+          <option v-else :value="item.id">
+            {{ item.name }}
+          </option>
+        </template>
       </select>
     </div>
 
@@ -89,6 +96,18 @@ export default {
         this.dropdownClass,
       ];
     },
+    localData() {
+      return _.map(this.data, (value) => {
+        if (_.isObject(value)) {
+          return value;
+        } else {
+          return {
+            id: value,
+            name: value,
+          };
+        }
+      });
+    },
   },
 
   methods: {
@@ -120,13 +139,25 @@ export default {
   background-color: #2f3031;
 }
 
-.counter {
+.ltr .counter {
   padding-right: 64px;
 }
 
+.rtl .counter {
+  padding-left: 64px;
+}
+
 select {
+  background-position: right 3px center;
+}
+
+.ltr select {
   padding-left: 8px;
   padding-right: 20px;
-  background-position: right 3px center;
+}
+
+.rtl select {
+  padding-right: 8px;
+  padding-left: 20px;
 }
 </style>
