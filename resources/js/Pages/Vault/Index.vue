@@ -31,13 +31,13 @@
             {{ $t('All the best,') }}
           </p>
           <p>
-            <a href="https://phpc.social/@regis" rel="noopener noreferrer" class="text-blue-500 hover:underline"
-              >Régis</a
-            >
+            <a href="https://phpc.social/@regis" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+              Régis
+            </a>
             &
-            <a href="https://twitter.com/asbin" rel="noopener noreferrer" class="text-blue-500 hover:underline"
-              >Alexis</a
-            >
+            <a href="https://twitter.com/asbin" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+              Alexis
+            </a>
           </p>
         </div>
       </div>
