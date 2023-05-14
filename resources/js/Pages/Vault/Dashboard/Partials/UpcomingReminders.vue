@@ -31,7 +31,7 @@
               {{ reminder.scheduled_at }}
             </p>
             <div class="flex items-center text-sm">
-              <avatar :data="reminder.contact.avatar" :classes="'mr-2 h-4 w-4 rounded-full'" />
+              <avatar :data="reminder.contact.avatar" :classes="'ltr:mr-2 rtl:ml-2 h-4 w-4 rounded-full'" />
 
               <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">
                 {{ reminder.contact.name }}

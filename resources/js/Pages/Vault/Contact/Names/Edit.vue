@@ -147,7 +147,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.show" :text="$t('Cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.show" :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Update')"

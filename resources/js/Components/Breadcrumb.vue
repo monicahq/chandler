@@ -22,7 +22,7 @@ defineProps({
           </svg>
         </li>
 
-        <li class="inline" :class="{ 'ml-2': index > 0 }">
+        <li class="inline" :class="{ 'ltr:ml-2 rtl:mr-2': index > 0 }">
           <inertia-link v-if="item.url" :href="item.url" class="text-blue-500 hover:underline">
             {{ item.name }}
           </inertia-link>

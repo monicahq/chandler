@@ -158,7 +158,10 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editModalshownId = 0" />
+                <pretty-span
+                  :text="$t('Cancel')"
+                  :classes="'ltr:mr-3 rtl:ml-3'"
+                  @click.prevent="editModalshownId = 0" />
                 <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
               </div>
             </form>

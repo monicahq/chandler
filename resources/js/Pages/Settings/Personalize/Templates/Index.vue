@@ -116,7 +116,10 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createTemplateModalShown = false" />
+            <pretty-span
+              :text="$t('Cancel')"
+              :classes="'ltr:mr-3 rtl:ml-3'"
+              @click="createTemplateModalShown = false" />
             <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
           </div>
         </form>
@@ -168,7 +171,10 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="renameTemplateModalShownId = 0" />
+                <pretty-span
+                  :text="$t('Cancel')"
+                  :classes="'ltr:mr-3 rtl:ml-3'"
+                  @click.prevent="renameTemplateModalShownId = 0" />
                 <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
               </div>
             </form>

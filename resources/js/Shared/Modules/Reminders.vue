@@ -179,7 +179,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="addReminderModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="addReminderModalShown = false" />
         <pretty-button :text="$t('Add date')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -299,7 +299,7 @@
                     v-model="form.month"
                     :data="data.months"
                     :required="true"
-                    :div-outer-class="'mr-2'"
+                    :div-outer-class="'ltr:mr-2 rtl:ml-2'"
                     :placeholder="$t('Choose a value')"
                     :dropdown-class="'block w-full'"
                     :label="$t('Month')" />
@@ -376,7 +376,7 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="editedReminderId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedReminderId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
             </div>
           </form>

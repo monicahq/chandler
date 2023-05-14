@@ -291,7 +291,7 @@ const store = () => {
 
         <!-- current contact -->
         <div class="mb-4 flex items-center">
-          <avatar :data="props.data.contact.avatar" :classes="'mr-2 h-5 w-5'" />
+          <avatar :data="props.data.contact.avatar" :classes="'ltr:mr-2 rtl:ml-2 h-5 w-5'" />
 
           <span>{{ props.data.contact.name }}</span>
         </div>
@@ -347,7 +347,7 @@ const store = () => {
           :label="$t('Distance')"
           :type="'number'"
           :autofocus="true"
-          :input-class="'mr-2'"
+          :input-class="'ltr:mr-2 rtl:ml-2'"
           :required="false"
           :autocomplete="false"
           :help="$t('Enter a number from 0 to 100000. No decimals.')"
@@ -422,7 +422,7 @@ const store = () => {
         </div>
       </div>
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="$emit('closeModal')" />
+        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="$emit('closeModal')" />
         <pretty-button
           v-if="selectedLifeEventType"
           :text="$t('Save')"

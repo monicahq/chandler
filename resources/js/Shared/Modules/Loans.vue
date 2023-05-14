@@ -108,7 +108,7 @@
               v-model="form.currency_id"
               :data="localCurrencies"
               :required="false"
-              :div-outer-class="'ml-3 mb-5'"
+              :div-outer-class="'ltr:ml-3 rtl:mr-3 mb-5'"
               :placeholder="$t('Choose a value')"
               :dropdown-class="'block'"
               :label="$t('Currency')" />
@@ -168,7 +168,7 @@
         <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
 
         <div class="flex justify-between p-5">
-          <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createLoanModalShown = false" />
+          <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createLoanModalShown = false" />
           <pretty-button :text="$t('Add loan')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
         </div>
       </form>
@@ -341,7 +341,7 @@
                 v-model="form.currency_id"
                 :data="localCurrencies"
                 :required="false"
-                :div-outer-class="'ml-3 mb-5'"
+                :div-outer-class="'ltr:ml-3 rtl:mr-3 mb-5'"
                 :placeholder="$t('Choose a value')"
                 :dropdown-class="'block'"
                 :label="$t('Currency')" />
@@ -405,7 +405,7 @@
           <div v-if="warning != ''" class="border-b p-3">⚠️ {{ warning }}</div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="editedLoanId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedLoanId = 0" />
             <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
           </div>
         </form>

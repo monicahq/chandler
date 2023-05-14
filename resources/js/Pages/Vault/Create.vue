@@ -41,7 +41,7 @@
             <h1 class="mb-1 flex justify-center text-2xl font-medium">
               <span>{{ $t('Create a vault') }}</span>
 
-              <help :url="$page.props.help_links.vault_create" :top="'9px'" :classes="'ml-2'" />
+              <help :url="$page.props.help_links.vault_create" :top="'9px'" :classes="['ltr:ml-2', 'rtl:mr-2']" />
             </h1>
             <p class="text-center text-sm">
               {{ $t('Vaults contain all your contacts data.') }}
@@ -65,7 +65,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Add')"

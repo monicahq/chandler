@@ -39,7 +39,10 @@
             <h1 class="mb-4 flex justify-center text-2xl font-medium">
               <span>{{ $t('Cancel your account') }}</span>
 
-              <help :url="$page.props.help_links.settings_account_deletion" :top="'9px'" :classes="'ml-3'" />
+              <help
+                :url="$page.props.help_links.settings_account_deletion"
+                :top="'9px'"
+                :classes="['ltr:ml-3', 'rtl:mr-3']" />
             </h1>
             <p class="mb-2">{{ $t('Thanks for giving Monica a try.') }}</p>
             <p class="mb-2">{{ $t('Once you cancel,') }}</p>
@@ -72,7 +75,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Go back')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Go back')" :classes="'ltr:mr-3 rtl:ml-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Cancel account')"

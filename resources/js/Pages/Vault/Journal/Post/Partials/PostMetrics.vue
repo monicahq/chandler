@@ -156,7 +156,7 @@ const destroy = (journalMetric, postMetric) => {
           </div>
 
           <div class="flex justify-between p-2">
-            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="addModalShown = false" />
+            <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="addModalShown = false" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Save')"

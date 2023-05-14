@@ -44,7 +44,8 @@ const linkClasses =
         :class="[
           commonClasses,
           linkClasses,
-          'ml-3',
+          'ltr:ml-3',
+          'rtl:mr-3',
           'rounded-md',
           'text-gray-700',
           'dark:text-gray-300',
@@ -54,7 +55,15 @@ const linkClasses =
       </Link>
       <span
         v-else
-        :class="[commonClasses, 'ml-3', 'rounded-md', 'text-gray-500', 'cursor-default', 'dark:bg-gray-900']">
+        :class="[
+          commonClasses,
+          'ltr:ml-3',
+          'rtl:mr-3',
+          'rounded-md',
+          'text-gray-500',
+          'cursor-default',
+          'dark:bg-gray-900',
+        ]">
         <span v-html="$t('Next')"></span>
       </span>
     </div>

@@ -66,7 +66,7 @@
 
               <!-- contact -->
               <div class="flex items-center">
-                <avatar :data="task.contact.avatar" :classes="'mr-2 h-5 w-5 rounded-full'" />
+                <avatar :data="task.contact.avatar" :classes="'ltr:mr-2 rtl:ml-2 h-5 w-5 rounded-full'" />
 
                 <inertia-link :href="task.contact.url.show" class="text-blue-500 hover:underline">
                   {{ task.contact.name }}

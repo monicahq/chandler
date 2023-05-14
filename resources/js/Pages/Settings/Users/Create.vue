@@ -131,7 +131,7 @@ k
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'mr-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" />
             <pretty-button
               :text="$t('Send invitation')"
               :state="loadingState"
