@@ -147,17 +147,15 @@ export default {
   padding-left: 64px;
 }
 
-select {
-  background-position: right 3px center;
-}
-
 .ltr select {
   padding-left: 8px;
   padding-right: 20px;
+  background-position: right 3px center;
 }
 
 .rtl select {
   padding-right: 8px;
   padding-left: 20px;
+  background-position: left 3px center;
 }
 </style>

@@ -31,11 +31,9 @@
 
           <Dropdown v-model="form.hours" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="hours" />
 
-          <span class="ltr:mr-2 rtl:ml-2">{{ $t('h:') }}</span>
+          <span class="ltr:mr-2 rtl:ml-2">:</span>
 
           <Dropdown v-model="form.minutes" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="minutes" />
-
-          <span>{{ $t('m') }}</span>
         </div>
       </div>
 
