@@ -572,11 +572,11 @@ const destroy = () => {
   animation: saving-spinner-animation 2500ms linear infinite;
 }
 
-.ltr .saving-spinner .dot {
+[dir='ltr'] .saving-spinner .dot {
   left: calc(15px * 4);
 }
 
-.rtl .saving-spinner .dot {
+[dir='rtl'] .saving-spinner .dot {
   right: calc(15px * 4);
 }
 

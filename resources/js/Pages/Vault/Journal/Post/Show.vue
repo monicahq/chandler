@@ -106,7 +106,7 @@ defineProps({
               <div v-else>&nbsp;</div>
             </div>
 
-            <div class="post dark:post relative rounded bg-white dark:bg-gray-900">
+            <div class="post relative rounded bg-white dark:bg-gray-900">
               <!-- date of the post -->
               <p class="mb-2 text-sm text-gray-400">{{ data.written_at }}</p>
 
@@ -264,7 +264,7 @@ defineProps({
   }
 }
 
-.ltr .post {
+[dir='ltr'] .post {
   &:before {
     background: #fafafa;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
@@ -282,7 +282,7 @@ defineProps({
   }
 }
 
-.rtl .post {
+[dir='rtl'] .post {
   &:before {
     background: #fafafa;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
@@ -300,23 +300,23 @@ defineProps({
   }
 }
 
-.dark .dark\:post {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+.dark .post {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05) !important;
 
   &:before {
-    background: #09090b;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-    left: -5px;
-    top: 4px;
-    transform: rotate(-2.5deg);
+    background: #09090b !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1) !important;
+    left: -5px !important;
+    top: 4px !important;
+    transform: rotate(-2.5deg) !important;
   }
 
   &:after {
-    background: #171717;
-    box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
-    right: -3px;
-    top: 1px;
-    transform: rotate(1.4deg);
+    background: #171717 !important;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.1) !important;
+    right: -3px !important;
+    top: 1px !important;
+    transform: rotate(1.4deg) !important;
   }
 }
 
