@@ -341,7 +341,7 @@ const store = () => {
       <!-- description -->
       <div
         v-if="selectedLifeEventType && addDistanceFieldShown"
-        class="flex items-center border-b border-gray-200 pb-1 pl-3 pr-3 pt-3 dark:border-gray-700">
+        class="flex items-center border-b border-gray-200 pb-1 pe-3 ps-3 pt-3 dark:border-gray-700">
         <text-input
           ref="distanceField"
           v-model="form.distance"

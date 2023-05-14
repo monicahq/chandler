@@ -122,7 +122,7 @@ const policy = () => {
           <span class="ms-2">🚧</span>
         </p>
         <p class="mb-2">{{ $t('Compared to Monica:') }}</p>
-        <ul class="list mb-2 pl-3">
+        <ul class="list mb-2 ps-3">
           <li class="list-disc">
             {{ $t('it misses some of the features, the most important ones being the API and gift management,') }}
           </li>

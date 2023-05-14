@@ -63,7 +63,7 @@
         <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 pr-2"
+            class="h-6 pe-2"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -166,7 +166,7 @@
               :key="reason.id"
               class="border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <!-- detail of the relationship type -->
-              <div v-if="renameReasonModalId != reason.id" class="flex items-center justify-between px-5 py-2 pl-6">
+              <div v-if="renameReasonModalId != reason.id" class="flex items-center justify-between px-5 py-2 ps-6">
                 <span>{{ reason.label }}</span>
 
                 <!-- actions -->
@@ -219,7 +219,7 @@
             <!-- create a new reason -->
             <div
               v-if="createReasonModalId != callReasonType.id"
-              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+              class="item-list border-b border-gray-200 px-5 py-2 ps-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showReasonModal(callReasonType)"

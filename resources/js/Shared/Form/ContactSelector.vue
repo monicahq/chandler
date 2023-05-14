@@ -225,7 +225,7 @@ export default {
     },
     localInputClasses() {
       return [
-        'pl-8 w-full rounded-md shadow-sm',
+        'ps-8 w-full rounded-md shadow-sm',
         'bg-white dark:bg-slate-900 border-gray-300 dark:border-gray-700',
         'focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
         'disabled:bg-slate-50 disabled:dark:bg-slate-900',

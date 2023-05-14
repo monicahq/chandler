@@ -17,7 +17,7 @@
     <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 pr-2"
+        class="h-6 w-6 pe-2"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor">

@@ -8,7 +8,7 @@
             <!-- filters -->
             <div>
               <ul class="mb-4">
-                <li class="border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'index' }">
+                <li class="border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'index' }">
                   <inertia-link :href="data.statistics.url.index">
                     {{ $t('All files') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.all }})</span>
@@ -16,23 +16,23 @@
                 </li>
               </ul>
 
-              <p class="mb-2 pl-2 text-sm text-gray-500">
+              <p class="mb-2 ps-2 text-sm text-gray-500">
                 {{ $t('Or filter by type') }}
               </p>
               <ul>
-                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'documents' }">
+                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'documents' }">
                   <inertia-link :href="data.statistics.url.documents">
                     {{ $t('Documents') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.documents }})</span>
                   </inertia-link>
                 </li>
-                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'photos' }">
+                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'photos' }">
                   <inertia-link :href="data.statistics.url.photos">
                     {{ $t('Photos') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.photos }})</span>
                   </inertia-link>
                 </li>
-                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'avatars' }">
+                <li class="mb-2 border-s-2 ps-2" :class="{ 'border-orange-500': tab === 'avatars' }">
                   <inertia-link :href="data.statistics.url.avatars">
                     {{ $t('Avatars') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.avatars }})</span>

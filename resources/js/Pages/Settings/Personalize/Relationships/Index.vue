@@ -65,7 +65,7 @@
         <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 grow pr-2"
+            class="h-6 grow pe-2"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -84,7 +84,7 @@
                 )
               }}
             </p>
-            <ul class="mb-2 list-disc pl-4">
+            <ul class="mb-2 list-disc ps-4">
               <li>{{ $t('a father-son relation shown on the father page,') }}</li>
               <li>{{ $t('a son-father relation shown on the son page.') }}</li>
             </ul>
@@ -187,7 +187,7 @@
             <div
               v-for="type in groupType.types"
               :key="type.id"
-              class="border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+              class="border-b border-gray-200 px-5 py-2 ps-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <!-- detail of the relationship type -->
               <div v-if="renameRelationshipTypeModalId != type.id" class="flex items-center justify-between">
                 <div class="relative">
@@ -277,7 +277,7 @@
             <!-- create a new relationship type line -->
             <div
               v-if="createRelationshipTypeModalId != groupType.id"
-              class="item-list border-b border-gray-200 px-5 py-2 pl-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+              class="item-list border-b border-gray-200 px-5 py-2 ps-6 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
               <span
                 class="cursor-pointer text-sm text-blue-500 hover:underline"
                 @click="showRelationshipTypeModal(groupType)"

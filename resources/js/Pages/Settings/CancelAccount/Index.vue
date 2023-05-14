@@ -43,7 +43,7 @@
             </h1>
             <p class="mb-2">{{ $t('Thanks for giving Monica a try.') }}</p>
             <p class="mb-2">{{ $t('Once you cancel,') }}</p>
-            <ul class="list-disc pl-6">
+            <ul class="list-disc ps-6">
               <li>{{ $t('Your account will be closed immediately,') }}</li>
               <li>{{ $t('All users and vaults will be deleted immediately,') }}</li>
               <li>

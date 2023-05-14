@@ -145,7 +145,7 @@
                     </label>
                   </div>
 
-                  <div v-if="showContactName" class="pl-6">
+                  <div v-if="showContactName" class="ps-6">
                     <text-input
                       :ref="'contactName'"
                       v-model="form.first_name"
@@ -211,7 +211,7 @@
                     </label>
                   </div>
 
-                  <div v-if="form.choice == 'contact'" class="pl-6">
+                  <div v-if="form.choice == 'contact'" class="ps-6">
                     <contact-selector
                       v-model="form.other_contact_id"
                       :search-url="layoutData.vault.url.search_contacts_only"

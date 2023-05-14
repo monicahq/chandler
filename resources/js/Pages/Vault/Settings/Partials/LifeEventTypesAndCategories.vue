@@ -248,7 +248,7 @@ const destroyLifeEventType = (lifeEventType) => {
         <template #item="{ element }">
           <div v-if="editLifeEventCategoryId != element.id" class="">
             <div
-              class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
+              class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
               <div class="mb-3 flex items-center justify-between">
                 <!-- icon to move position -->
                 <div class="me-2 flex">
@@ -297,7 +297,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   <template #item="{ element, id }">
                     <div v-if="editLifeEventTypeId != element.id" class="">
                       <div
-                        class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
+                        class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
                         <div class="flex items-center justify-between">
                           <!-- icon to move position -->
                           <div class="me-2 flex">

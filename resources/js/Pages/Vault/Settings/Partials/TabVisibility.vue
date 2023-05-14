@@ -45,7 +45,7 @@ const update = () => {
     <div class="mb-6 rounded border text-sm">
       <!-- help text -->
       <div class="flex rounded-t border-b border-gray-200 bg-slate-50 px-3 py-2 dark:border-gray-700 dark:bg-slate-900">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 pe-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"

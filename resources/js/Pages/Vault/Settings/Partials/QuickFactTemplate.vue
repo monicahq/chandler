@@ -157,7 +157,7 @@ const updatePosition = (event) => {
         <template #item="{ element }">
           <div
             v-if="editEntryId != element.id"
-            class="item-list flex items-center justify-between border-b border-gray-200 py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            class="item-list flex items-center justify-between border-b border-gray-200 py-2 pe-5 ps-4 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- icon to move position -->
             <div class="me-2 flex">
               <svg
