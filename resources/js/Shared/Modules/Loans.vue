@@ -143,7 +143,7 @@
               :label="$t('Who makes the loan?')"
               :add-multiple-contacts="true"
               :required="true"
-              :div-outer-class="'p-5 flex-1 border-s border-gray-200 dark:border-gray-700'" />
+              :div-outer-class="'p-5 flex-1 border-e border-gray-200 dark:border-gray-700'" />
 
             <contact-selector
               v-model="form.loanees"
@@ -369,7 +369,7 @@
                 :label="$t('Who makes the loan?')"
                 :add-multiple-contacts="true"
                 :required="true"
-                :div-outer-class="'p-5 flex-1 border-s border-gray-200 dark:border-gray-700'" />
+                :div-outer-class="'p-5 flex-1 border-e border-gray-200 dark:border-gray-700'" />
 
               <contact-selector
                 v-model="form.loanees"

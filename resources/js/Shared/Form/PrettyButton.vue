@@ -28,7 +28,7 @@
     <svg
       v-if="icon === 'minus' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative me-1 ms-1 inline h-5 w-5"
+      class="icon relative mx-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -44,7 +44,7 @@
     <svg
       v-if="icon === 'arrow' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative me-1 ms-1 inline h-5 w-5"
+      class="icon relative mx-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
