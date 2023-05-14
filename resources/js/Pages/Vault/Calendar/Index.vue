@@ -106,7 +106,7 @@ const get = (day) => {
                 v-for="day in week"
                 :key="day.id"
                 @click="get(day)"
-                class="h-32 border-e p-2 last:border-r-0 dark:border-gray-700"
+                class="h-32 border-e p-2 last:border-e-0 dark:border-gray-700"
                 :class="day.is_in_month ? 'cursor-pointer' : 'bg-slate-50 dark:bg-slate-900'">
                 <!-- date of the day -->
                 <div class="flex items-center justify-between">

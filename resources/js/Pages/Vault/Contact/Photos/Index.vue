@@ -89,7 +89,7 @@
             :preview-step="false"
             @success="onSuccess"
             @error="onError">
-            <pretty-button :text="$t('Add a photo')" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+            <pretty-button :text="$t('Add a photo')" :icon="'plus'" :class="'w-full sm:w-fit'" />
           </uploadcare>
         </div>
 

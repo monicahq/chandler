@@ -90,7 +90,7 @@
                 <div class="me-2 flex items-center">
                   <avatar
                     :data="reminder.contact.avatar"
-                    :classes="'h-4 w-4 me-2 rounded-full ring-2 ring-white dark:ring-gray-900'" />
+                    :class="'me-2 h-4 w-4 rounded-full ring-2 ring-white dark:ring-gray-900'" />
 
                   <inertia-link :href="reminder.contact.url.show" class="text-blue-500 hover:underline">
                     {{ reminder.contact.name }}

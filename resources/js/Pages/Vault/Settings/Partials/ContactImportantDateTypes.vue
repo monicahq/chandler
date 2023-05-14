@@ -32,8 +32,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createTypeModalShown = false" />
-        <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createTypeModalShown = false" />
+        <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :class="'save'" />
       </div>
     </form>
 
@@ -51,7 +51,7 @@
             {{ type.label }}
             <span
               v-if="type.internal_type"
-              class="me-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0"
+              class="me-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:me-0"
               >{{ type.internal_type }}</span
             >
           </span>
@@ -93,8 +93,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="editTypeModalShownId = 0" />
-            <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+            <pretty-span :text="$t('Cancel')" :class="'me-3'" @click.prevent="editTypeModalShownId = 0" />
+            <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :class="'save'" />
           </div>
         </form>
       </li>

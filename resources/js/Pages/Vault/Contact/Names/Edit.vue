@@ -147,13 +147,13 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.show" :text="$t('Cancel')" :classes="'me-3'" />
+            <pretty-link :href="data.url.show" :text="$t('Cancel')" :class="'me-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Update')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save dark:save'" />
+              :class="'save'" />
           </div>
         </form>
       </div>

@@ -115,7 +115,7 @@ defineProps({
                 <li
                   v-for="tag in data.tags"
                   :key="tag.id"
-                  class="me-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:mr-0 dark:bg-neutral-800">
+                  class="me-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-500 last:me-0 dark:bg-neutral-800">
                   {{ tag.name }}
                 </li>
               </ul>

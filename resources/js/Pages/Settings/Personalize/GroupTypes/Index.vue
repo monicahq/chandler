@@ -107,8 +107,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createGroupTypeModalShown = false" />
-            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+            <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createGroupTypeModalShown = false" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
           </div>
         </form>
 
@@ -234,12 +234,8 @@
                           </div>
 
                           <div class="flex justify-between p-5">
-                            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="roleGroupTypeId = 0" />
-                            <pretty-button
-                              :text="$t('Rename')"
-                              :state="loadingState"
-                              :icon="'check'"
-                              :classes="'save dark:save'" />
+                            <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="roleGroupTypeId = 0" />
+                            <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :class="'save'" />
                           </div>
                         </form>
                       </template>
@@ -277,12 +273,8 @@
                       </div>
 
                       <div class="flex justify-between p-5">
-                        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createRoleModalShown = false" />
-                        <pretty-button
-                          :text="$t('Save')"
-                          :state="loadingState"
-                          :icon="'plus'"
-                          :classes="'save dark:save'" />
+                        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createRoleModalShown = false" />
+                        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
                       </div>
                     </form>
 
@@ -326,12 +318,8 @@
                 </div>
 
                 <div class="flex justify-between p-5">
-                  <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="editGroupTypeId = 0" />
-                  <pretty-button
-                    :text="$t('Rename')"
-                    :state="loadingState"
-                    :icon="'check'"
-                    :classes="'save dark:save'" />
+                  <pretty-span :text="$t('Cancel')" :class="'me-3'" @click.prevent="editGroupTypeId = 0" />
+                  <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :class="'save'" />
                 </div>
               </form>
             </template>

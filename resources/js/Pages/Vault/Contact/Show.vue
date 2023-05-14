@@ -197,21 +197,21 @@ const destroyAvatar = () => {
           <div class="p-3 sm:p-3">
             <div v-if="data.contact_information.length > 0" class="mb-8">
               <div v-for="module in data.contact_information" :key="module.id">
-                <ContactAvatar v-if="module.type == 'avatar'" :data="module.data" />
+                <ContactAvatar v-if="module.type === 'avatar'" :data="module.data" />
 
-                <ContactName v-else-if="module.type == 'contact_names'" :data="module.data" />
+                <ContactName v-else-if="module.type === 'contact_names'" :data="module.data" />
 
-                <FamilySummary v-else-if="module.type == 'family_summary'" :data="module.data" />
+                <FamilySummary v-else-if="module.type === 'family_summary'" :data="module.data" />
 
-                <GenderPronoun v-else-if="module.type == 'gender_pronoun'" :data="module.data" />
+                <GenderPronoun v-else-if="module.type === 'gender_pronoun'" :data="module.data" />
 
-                <ImportantDates v-else-if="module.type == 'important_dates'" :data="module.data" />
+                <ImportantDates v-else-if="module.type === 'important_dates'" :data="module.data" />
 
-                <Labels v-else-if="module.type == 'labels'" :data="module.data" />
+                <Labels v-else-if="module.type === 'labels'" :data="module.data" />
 
-                <JobInformation v-else-if="module.type == 'company'" :data="module.data" />
+                <JobInformation v-else-if="module.type === 'company'" :data="module.data" />
 
-                <Religion v-else-if="module.type == 'religions'" :data="module.data" />
+                <Religion v-else-if="module.type === 'religions'" :data="module.data" />
               </div>
             </div>
 

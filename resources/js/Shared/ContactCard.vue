@@ -1,3 +1,20 @@
+<script setup>
+import { Popover as APopover } from 'ant-design-vue';
+
+defineProps({
+  contact: Object,
+  avatarClasses: String,
+  top: {
+    type: String,
+    default: '0px',
+  },
+  displayName: {
+    type: Boolean,
+    default: true,
+  },
+});
+</script>
+
 <template>
   <div class="relative inline" :style="'top: ' + top">
     <a-popover placement="bottomLeft">
@@ -80,34 +97,3 @@
     </a-popover>
   </div>
 </template>
-
-<script>
-import { Popover as APopover } from 'ant-design-vue';
-
-export default {
-  components: {
-    APopover,
-  },
-
-  props: {
-    top: {
-      type: String,
-      default: '0px',
-    },
-    contact: {
-      type: Object,
-      default: null,
-    },
-    avatarClasses: {
-      type: String,
-      default: '',
-    },
-    displayName: {
-      type: Boolean,
-      default: true,
-    },
-  },
-};
-</script>
-
-<style lang="scss" scoped></style>

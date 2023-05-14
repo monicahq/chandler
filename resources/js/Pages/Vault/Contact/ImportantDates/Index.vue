@@ -244,8 +244,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createDateModalShown = false" />
-            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+            <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createDateModalShown = false" />
+            <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
           </div>
         </form>
 
@@ -264,7 +264,7 @@
 
                 <span
                   v-if="date.type"
-                  class="ms-2 inline-block rounded bg-neutral-200 px-1 py-0 text-xs text-neutral-500 last:mr-0">
+                  class="ms-2 inline-block rounded bg-neutral-200 px-1 py-0 text-xs text-neutral-500 last:me-0">
                   {{ date.type.label }}
                 </span>
               </span>
@@ -414,8 +414,8 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedDateId = 0" />
-                <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+                <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedDateId = 0" />
+                <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
               </div>
             </form>
           </li>

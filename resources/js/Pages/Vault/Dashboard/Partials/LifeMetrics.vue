@@ -139,7 +139,7 @@ const destroy = (lifeMetric) => {
         v-if="!createLifeMetricModalShown"
         :text="$t('Track a new metric')"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
+        :class="'w-full sm:w-fit'"
         @click="showCreateLifeMetricModal" />
     </div>
 
@@ -166,8 +166,8 @@ const destroy = (lifeMetric) => {
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createLifeMetricModalShown = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createLifeMetricModalShown = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
       </div>
     </form>
 
@@ -215,7 +215,7 @@ const destroy = (lifeMetric) => {
               <pretty-button
                 v-if="!lifeMetric.incremented"
                 :text="'+ 1'"
-                :classes="'sm:w-fit w-full py-4 px-8'"
+                :class="'w-full px-8 py-4 sm:w-fit'"
                 @click="increment(lifeMetric)" />
               <span v-else class="w-full px-3 py-4 text-xl sm:w-fit">🤭</span>
             </div>
@@ -267,8 +267,8 @@ const destroy = (lifeMetric) => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedLifeMetricId = 0" />
-              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+              <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedLifeMetricId = 0" />
+              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
             </div>
           </form>
         </li>

@@ -25,7 +25,7 @@
       <pretty-button
         :text="$t('Add a reminder')"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
+        :class="'w-full sm:w-fit'"
         @click="showCreateReminderModal" />
     </div>
 
@@ -184,8 +184,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="addReminderModalShown = false" />
-        <pretty-button :text="$t('Add date')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="addReminderModalShown = false" />
+        <pretty-button :text="$t('Add date')" :state="loadingState" :icon="'plus'" :class="'save'" />
       </div>
     </form>
 
@@ -386,8 +386,8 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedReminderId = 0" />
-              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+              <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedReminderId = 0" />
+              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
             </div>
           </form>
         </li>

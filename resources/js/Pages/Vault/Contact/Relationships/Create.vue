@@ -78,7 +78,7 @@
                   {{ fromRelationship }}
                 </p>
                 <div class="flex items-center">
-                  <avatar :data="data.contact.avatar" :classes="'me-2 h-5 w-5'" />
+                  <avatar :data="data.contact.avatar" :class="'me-2 h-5 w-5'" />
 
                   <span>{{ data.contact.name }}</span>
                 </div>
@@ -316,13 +316,13 @@
 
           <!-- actions -->
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'me-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :class="'me-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Add')"
               :state="loadingState"
               :icon="'check'"
-              :classes="'save dark:save'" />
+              :class="'save'" />
           </div>
         </form>
       </div>

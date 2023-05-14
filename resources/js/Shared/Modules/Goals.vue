@@ -20,11 +20,7 @@
 
         <span class="font-semibold"> {{ $t('Goals') }} </span>
       </div>
-      <pretty-button
-        :text="$t('Add a goal')"
-        :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
-        @click="showCreateGoalModal" />
+      <pretty-button :text="$t('Add a goal')" :icon="'plus'" :class="'w-full sm:w-fit'" @click="showCreateGoalModal" />
     </div>
 
     <!-- add a note modal -->
@@ -48,8 +44,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createGoalModalShown = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createGoalModalShown = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
       </div>
     </form>
 
@@ -78,13 +74,13 @@
               <div
                 v-for="streak in goal.last_7_days"
                 :key="streak.id"
-                class="me-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center dark:border-gray-700 sm:mb-0 sm:mr-7 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
+                class="me-0 flex flex-row items-center justify-between border-b border-gray-200 p-3 text-center dark:border-gray-700 sm:mb-0 sm:me-7 sm:w-9 sm:flex-col sm:border-0 sm:p-0"
                 :class="{ 'text-gray-500': !streak.active }">
                 <div>
-                  <span class="mb-0 me-2 block text-xs font-semibold sm:mr-0">
+                  <span class="mb-0 me-2 block text-xs font-semibold sm:me-0">
                     {{ streak.day }}
                   </span>
-                  <span class="me-2 sm:mr-0">
+                  <span class="me-2 sm:me-0">
                     {{ streak.day_number }}
                   </span>
                 </div>
@@ -92,7 +88,7 @@
                 <!-- active streak -->
                 <span
                   v-if="streak.active"
-                  class="me-2 cursor-pointer text-2xl sm:mr-0"
+                  class="me-2 cursor-pointer text-2xl sm:me-0"
                   @click="toggleStreak(goal, streak)"
                   >👍</span
                 >
@@ -100,7 +96,7 @@
                 <!-- inactive streak -->
                 <span
                   v-else
-                  class="me-2 cursor-pointer text-center text-2xl sm:mr-0"
+                  class="me-2 cursor-pointer text-center text-2xl sm:me-0"
                   @click="toggleStreak(goal, streak)">
                   <div
                     class="rounded-md border border-gray-200 bg-slate-100 px-2 py-1 dark:border-gray-700 dark:bg-slate-900">

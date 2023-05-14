@@ -20,7 +20,7 @@
       <help :url="$page.props.help_links.last_updated_contacts" :top="'4px'" />
     </h3>
     <div v-for="contact in data" :key="contact.id" class="mb-2 flex items-center text-sm">
-      <avatar :data="contact.avatar" :classes="'me-2 h-5 w-5 rounded-full'" />
+      <avatar :data="contact.avatar" :class="'me-2 h-5 w-5 rounded-full'" />
 
       <inertia-link :href="contact.url.show" class="text-blue-500 hover:underline">
         {{ contact.name }}

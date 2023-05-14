@@ -292,7 +292,7 @@ const store = () => {
 
         <!-- current contact -->
         <div class="mb-4 flex items-center">
-          <avatar :data="props.data.contact.avatar" :classes="'me-2 h-5 w-5'" />
+          <avatar :data="props.data.contact.avatar" :class="'me-2 h-5 w-5'" />
 
           <span>{{ props.data.contact.name }}</span>
         </div>
@@ -419,13 +419,13 @@ const store = () => {
         </div>
       </div>
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="$emit('closeModal')" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="$emit('closeModal')" />
         <pretty-button
           v-if="selectedLifeEventType"
           :text="$t('Save')"
           :state="loadingState"
           :icon="'plus'"
-          :classes="'save dark:save'" />
+          :class="'save'" />
       </div>
     </form>
   </div>

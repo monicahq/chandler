@@ -82,7 +82,7 @@
 
                   <!-- avatar -->
                   <div v-if="file.object.type == 'contact'" class="flex items-center">
-                    <avatar :data="file.object.avatar" :classes="'rounded-full me-2 h-4 w-4'" />
+                    <avatar :data="file.object.avatar" :class="'me-2 h-4 w-4 rounded-full'" />
                     <inertia-link :href="file.object.url.show" class="text-sm text-blue-500 hover:underline">
                       {{ file.object.name }}
                     </inertia-link>

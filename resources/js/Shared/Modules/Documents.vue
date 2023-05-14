@@ -30,7 +30,7 @@
         :preview-step="false"
         @success="onSuccess"
         @error="onError">
-        <pretty-button :text="$t('Add a document')" :icon="'plus'" :classes="'sm:w-fit w-full'" />
+        <pretty-button :text="$t('Add a document')" :icon="'plus'" :class="'w-full sm:w-fit'" />
       </uploadcare>
     </div>
 

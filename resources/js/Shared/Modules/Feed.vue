@@ -7,7 +7,7 @@
           <div class="relative -start-[11px] top-[3px] w-6">
             <avatar
               :data="feedItem.author.avatar"
-              :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5'" />
+              :class="'relative h-5 w-5 rounded-full border border-gray-200 dark:border-gray-800'" />
           </div>
 
           <div class="flex w-full items-center justify-between">

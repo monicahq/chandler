@@ -69,7 +69,7 @@
                   <div v-for="contact in vault.contacts" :key="contact.id" class="inline-block">
                     <avatar
                       :data="contact.avatar"
-                      :classes="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
+                      :class="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
                   </div>
                   <div
                     v-if="vault.remaining_contacts != 0"

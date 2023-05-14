@@ -171,7 +171,7 @@ const reload = () => {
                 {{ $t('Forgot password?') }}
               </Link>
 
-              <PrettyButton :text="$t('Log in')" :state="loadingState" :classes="'save ms-4'" />
+              <PrettyButton :text="$t('Log in')" :state="loadingState" :class="'save ms-4'" />
             </div>
 
             <div class="mt-3 block">

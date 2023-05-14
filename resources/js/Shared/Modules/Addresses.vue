@@ -182,7 +182,7 @@ const destroy = () => {
       <pretty-button
         :text="$t('Add an address')"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
+        :class="'w-full sm:w-fit'"
         @click="showCreateAddressModal" />
     </div>
 
@@ -365,8 +365,8 @@ const destroy = () => {
         </div>
 
         <div class="flex justify-between p-5">
-          <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createAddressModalShown = false" />
-          <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+          <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createAddressModalShown = false" />
+          <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
         </div>
       </form>
 
@@ -526,8 +526,8 @@ const destroy = () => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedAddressId = 0" />
-              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+              <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedAddressId = 0" />
+              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
             </div>
           </form>
         </div>
@@ -707,8 +707,8 @@ const destroy = () => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedAddressId = 0" />
-              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+              <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedAddressId = 0" />
+              <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
             </div>
           </form>
         </div>

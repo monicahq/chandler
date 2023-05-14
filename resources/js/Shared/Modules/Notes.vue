@@ -31,11 +31,7 @@
 
         <span class="font-semibold"> {{ $t('Notes') }} </span>
       </div>
-      <pretty-button
-        :text="$t('Add a note')"
-        :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
-        @click="showCreateNoteModal" />
+      <pretty-button :text="$t('Add a note')" :icon="'plus'" :class="'w-full sm:w-fit'" @click="showCreateNoteModal" />
     </div>
 
     <!-- add a note modal -->
@@ -102,8 +98,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createNoteModalShown = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="createNoteModalShown = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
       </div>
     </form>
 
@@ -162,7 +158,7 @@
               <!-- author -->
               <div v-if="note.author" class="relative me-3 inline">
                 <div class="icon-avatar relative flex">
-                  <avatar :data="note.author.avatar" :classes="'rounded-full relative me-1 h-3 w-3'" />
+                  <avatar :data="note.author.avatar" :class="'relative me-1 h-3 w-3 rounded-full'" />
                   <span>{{ note.author.name }}</span>
                 </div>
               </div>
@@ -221,8 +217,8 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedNoteId = 0" />
-            <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+            <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="editedNoteId = 0" />
+            <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :class="'save'" />
           </div>
         </form>
       </div>

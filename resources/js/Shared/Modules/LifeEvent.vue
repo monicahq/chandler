@@ -136,7 +136,7 @@ const toggleLifeEventVisibility = (lifeEvent) => {
       <pretty-button
         :text="$t('Add a life event')"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
+        :class="'w-full sm:w-fit'"
         @click="showCreateLifeEventModal" />
     </div>
 

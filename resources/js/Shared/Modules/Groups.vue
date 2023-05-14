@@ -23,7 +23,7 @@
       <pretty-button
         :text="$t('Add to group')"
         :icon="'plus'"
-        :classes="'sm:w-fit w-full'"
+        :class="'w-full sm:w-fit'"
         @click="addGroupMode = true" />
     </div>
 
@@ -88,8 +88,8 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="addGroupMode = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
+        <pretty-span :text="$t('Cancel')" :class="'me-3'" @click="addGroupMode = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :class="'save'" />
       </div>
     </form>
 
@@ -105,7 +105,7 @@
           <div v-if="group.contacts" class="relative flex -space-x-2 overflow-hidden py-1">
             <div v-for="contact in group.contacts" :key="contact.id" class="inline-block">
               <inertia-link :href="contact.url.show">
-                <avatar :data="contact.avatar" :classes="'h-8 w-8 rounded-full ring-2 ring-white'" />
+                <avatar :data="contact.avatar" :class="'h-8 w-8 rounded-full ring-2 ring-white'" />
               </inertia-link>
             </div>
           </div>

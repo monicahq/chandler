@@ -124,7 +124,7 @@ const linkClasses =
             aria-disabled="true"
             :class="[
               commonClasses,
-              '-ml-px',
+              '-ms-px',
               'text-gray-700',
               'dark:text-gray-500',
               'dark:bg-gray-900',
@@ -135,7 +135,7 @@ const linkClasses =
           <span
             v-else-if="link.active"
             aria-current="page"
-            :class="[commonClasses, '-ml-px', 'text-gray-500', 'bg-gray-100', 'dark:bg-gray-800', 'cursor-default']"
+            :class="[commonClasses, '-ms-px', 'text-gray-500', 'bg-gray-100', 'dark:bg-gray-800', 'cursor-default']"
             v-html="link.label">
           </span>
           <Link
@@ -145,7 +145,7 @@ const linkClasses =
             :class="[
               commonClasses,
               linkClasses,
-              '-ml-px',
+              '-ms-px',
               'text-gray-700',
               'dark:text-gray-300',
               'dark:bg-gray-900',
@@ -164,7 +164,7 @@ const linkClasses =
           :class="[
             commonClasses,
             linkClasses,
-            '-ml-px',
+            '-ms-px',
             'px-2',
             'rounded-e-md',
             'text-gray-500',
@@ -181,7 +181,7 @@ const linkClasses =
           :class="[
             commonClasses,
             linkClasses,
-            '-ml-px',
+            '-ms-px',
             'px-2',
             'rounded-e-md',
             'text-gray-500',

@@ -138,7 +138,7 @@ const policy = () => {
           {{ $t('Already registered?') }}
         </Link>
 
-        <PrettyButton :text="$t('Register')" :state="loadingState" :classes="'save dark:save'" />
+        <PrettyButton :text="$t('Register')" :state="loadingState" :class="'save'" />
       </div>
     </form>
   </JetGuestLayout>
