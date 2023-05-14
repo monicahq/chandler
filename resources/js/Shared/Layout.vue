@@ -12,7 +12,7 @@
 
           <!-- information about the current vault -->
           <div v-if="layoutData.vault">
-            <span class="relative ml-1 mr-1">
+            <span class="relative mx-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="relative inline h-3 w-3"
@@ -56,7 +56,7 @@
                   id="dark-mode-toggle"
                   v-model="style.checked"
                   type="checkbox"
-                  class="peer sr-only"
+                  class="peer hidden"
                   @click="toggleStyle" />
                 <div
                   class="peer h-4 w-7 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[14px] after:top-[2px] after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 ltr:mr-2 rtl:ml-2 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />

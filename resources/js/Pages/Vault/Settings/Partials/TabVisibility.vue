@@ -65,7 +65,7 @@ const update = () => {
               id="toggle-files"
               v-model="form.show_calendar_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -79,7 +79,7 @@ const update = () => {
               id="toggle-journal"
               v-model="form.show_journal_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -93,7 +93,7 @@ const update = () => {
               id="toggle-group"
               v-model="form.show_group_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -107,7 +107,7 @@ const update = () => {
               id="toggle-companies"
               v-model="form.show_companies_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -121,7 +121,7 @@ const update = () => {
               id="toggle-tasks"
               v-model="form.show_tasks_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -135,7 +135,7 @@ const update = () => {
               id="toggle-reports"
               v-model="form.show_reports_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
@@ -149,7 +149,7 @@ const update = () => {
               id="toggle-files"
               v-model="form.show_files_tab"
               type="checkbox"
-              class="peer sr-only"
+              class="peer hidden"
               @change="update" />
             <div
               class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:right-[22px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-800 dark:peer-focus:ring-blue-800" />
