@@ -363,9 +363,7 @@ export default {
   },
 
   mounted() {
-    this.style.checked =
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    this.style.checked = this.isDark();
     if (localStorage.success) {
       this.flash(localStorage.success, 'success');
       localStorage.removeItem('success');
