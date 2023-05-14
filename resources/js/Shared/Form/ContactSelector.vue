@@ -319,7 +319,7 @@ export default {
 }
 
 .dark .optional-badge {
-  color: #d4d8dd;
+  color: #d4d8dd !important;
   background-color: #2f3031 !important;
 }
 
