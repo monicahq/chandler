@@ -25,7 +25,7 @@
     <!-- door icon -->
     <svg
       v-else-if="icon === 'exit'"
-      class="icon relative inline h-5 w-5 ltr:mr-1 rtl:ml-1"
+      class="icon relative me-1 inline h-5 w-5"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

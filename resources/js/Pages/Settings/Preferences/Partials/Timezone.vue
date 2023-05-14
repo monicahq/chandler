@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="ltr:mr-1 rtl:ml-1"> 🗓 </span>
-        <span class="ltr:mr-2 rtl:ml-2">
+        <span class="me-1"> 🗓 </span>
+        <span class="me-2">
           {{ $t('Timezone') }}
         </span>
 
@@ -52,7 +52,7 @@
         <select
           v-model="form.timezone"
           name="timezone"
-          class="rounded-md border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-900 sm:text-sm">
+          class="rounded-md border-gray-300 bg-white px-3 py-2 pe-5 ps-2 shadow-sm focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 ltr:bg-[right_3px_center] rtl:bg-[left_3px_center] dark:bg-gray-900 sm:text-sm">
           <optgroup label="General">
             <option value="GMT">GMT timezone</option>
             <option value="UTC">UTC timezone</option>
@@ -501,7 +501,7 @@
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editMode = false" />
+        <pretty-link :text="$t('Cancel')" :classes="'me-3'" @click="editMode = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -570,17 +570,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-select {
-  background-position: right 3px center;
-}
-.ltr select {
-  padding-left: 8px;
-  padding-right: 20px;
-}
-.rtl select {
-  padding-right: 8px;
-  padding-left: 20px;
-}
-</style>

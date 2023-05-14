@@ -8,7 +8,7 @@
             <!-- filters -->
             <div>
               <ul class="mb-4">
-                <li class="pl-2 ltr:border-l-2 rtl:border-r-2" :class="{ 'border-orange-500': tab === 'index' }">
+                <li class="border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'index' }">
                   <inertia-link :href="data.statistics.url.index">
                     {{ $t('All files') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.all }})</span>
@@ -20,21 +20,19 @@
                 {{ $t('Or filter by type') }}
               </p>
               <ul>
-                <li
-                  class="mb-2 pl-2 ltr:border-l-2 rtl:border-r-2"
-                  :class="{ 'border-orange-500': tab === 'documents' }">
+                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'documents' }">
                   <inertia-link :href="data.statistics.url.documents">
                     {{ $t('Documents') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.documents }})</span>
                   </inertia-link>
                 </li>
-                <li class="mb-2 pl-2 ltr:border-l-2 rtl:border-r-2" :class="{ 'border-orange-500': tab === 'photos' }">
+                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'photos' }">
                   <inertia-link :href="data.statistics.url.photos">
                     {{ $t('Photos') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.photos }})</span>
                   </inertia-link>
                 </li>
-                <li class="mb-2 pl-2 ltr:border-l-2 rtl:border-r-2" :class="{ 'border-orange-500': tab === 'avatars' }">
+                <li class="mb-2 border-s-2 pl-2" :class="{ 'border-orange-500': tab === 'avatars' }">
                   <inertia-link :href="data.statistics.url.avatars">
                     {{ $t('Avatars') }}
                     <span class="text-sm text-gray-500">({{ data.statistics.statistics.avatars }})</span>
@@ -51,7 +49,7 @@
             <!-- title + cta -->
             <div class="mb-6 flex items-center justify-between">
               <h3>
-                <span class="ltr:mr-1 rtl:ml-1"> 📸 </span>
+                <span class="me-1"> 📸 </span>
                 {{ $t('All the files') }}
               </h3>
             </div>
@@ -67,15 +65,15 @@
                 <!-- left part -->
                 <div class="mb-4 block items-center sm:mb-0 sm:flex">
                   <!-- created at -->
-                  <p class="text-sm text-gray-400 ltr:mr-2 rtl:ml-2">
+                  <p class="me-2 text-sm text-gray-400">
                     {{ file.created_at }}
                   </p>
 
                   <!-- file name -->
-                  <p class="flex max-w-none ltr:mr-4 rtl:ml-4 sm:max-w-sm">
+                  <p class="me-4 flex max-w-none sm:max-w-sm">
                     <span class="block truncate">{{ file.name }}</span>
 
-                    <span class="ltr:ml-2 rtl:mr-2">
+                    <span class="ms-2">
                       <span class="rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">
                         {{ file.size }}
                       </span>
@@ -84,7 +82,7 @@
 
                   <!-- avatar -->
                   <div v-if="file.object.type == 'contact'" class="flex items-center">
-                    <avatar :data="file.object.avatar" :classes="'rounded-full ltr:mr-2 rtl:ml-2 h-4 w-4'" />
+                    <avatar :data="file.object.avatar" :classes="'rounded-full me-2 h-4 w-4'" />
                     <inertia-link :href="file.object.url.show" class="text-sm text-blue-500 hover:underline">
                       {{ file.object.name }}
                     </inertia-link>
@@ -93,7 +91,7 @@
 
                 <!-- right part -->
                 <ul class="text-sm">
-                  <li class="inline ltr:mr-4 rtl:ml-4">
+                  <li class="me-4 inline">
                     <a :href="file.url.download" class="text-blue-500 hover:underline">{{ $t('Download') }}</a>
                   </li>
                   <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(file)">

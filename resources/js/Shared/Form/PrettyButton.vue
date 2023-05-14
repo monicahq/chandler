@@ -6,7 +6,7 @@
     <svg
       v-if="icon === 'plus' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5 ltr:mr-1 rtl:ml-1"
+      class="icon relative me-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
@@ -17,7 +17,7 @@
     <svg
       v-if="icon === 'check' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5 ltr:mr-1 rtl:ml-1"
+      class="icon relative me-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
@@ -28,7 +28,7 @@
     <svg
       v-if="icon === 'minus' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5 ltr:ml-1 ltr:mr-1 rtl:ml-1 rtl:mr-1"
+      class="icon relative me-1 ms-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -44,7 +44,7 @@
     <svg
       v-if="icon === 'arrow' && state != 'loading'"
       xmlns="http://www.w3.org/2000/svg"
-      class="icon relative inline h-5 w-5 ltr:ml-1 ltr:mr-1 rtl:ml-1 rtl:mr-1"
+      class="icon relative me-1 ms-1 inline h-5 w-5"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor">
@@ -95,8 +95,8 @@ export default {
   background-color: #fcf27e;
 }
 
-.dark .dark\:save {
-  background-color: #d0c10d;
+.dark .save {
+  background-color: #d0c10d !important;
   color: rgb(31 41 55); // text-gray-800
 }
 

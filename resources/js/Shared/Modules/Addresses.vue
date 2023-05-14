@@ -159,7 +159,7 @@ const destroy = () => {
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -206,7 +206,7 @@ const destroy = () => {
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="chooseExisting"
-              class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('Choose an existing address') }}
             </label>
           </div>
@@ -221,7 +221,7 @@ const destroy = () => {
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="createNew"
-              class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('Create a new address') }}
             </label>
           </div>
@@ -247,7 +247,7 @@ const destroy = () => {
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   :for="'address-' + address.id"
-                  class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                  class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ address.address }}
                 </label>
               </div>
@@ -281,7 +281,7 @@ const destroy = () => {
               :label="$t('Address')"
               :type="'text'"
               :autofocus="true"
-              :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+              :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
               :maxlength="255"
@@ -296,7 +296,7 @@ const destroy = () => {
               :label="$t('Apartment, suite, etc…')"
               :type="'text'"
               :autofocus="true"
-              :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+              :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
               :maxlength="255"
@@ -321,7 +321,7 @@ const destroy = () => {
               :label="$t('Province')"
               :type="'text'"
               :autofocus="true"
-              :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+              :input-class="'w-full me-2'"
               :required="false"
               :autocomplete="false"
               :maxlength="255"
@@ -358,16 +358,14 @@ const destroy = () => {
               :name="form.is_past_address"
               type="checkbox"
               class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
-            <label
-              :for="form.is_past_address"
-              class="cursor-pointer text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-gray-100">
+            <label :for="form.is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
               {{ $t('This address is not active anymore') }}
             </label>
           </div>
         </div>
 
         <div class="flex justify-between p-5">
-          <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createAddressModalShown = false" />
+          <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createAddressModalShown = false" />
           <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
         </div>
       </form>
@@ -400,19 +398,16 @@ const destroy = () => {
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline ltr:mr-2 rtl:ml-2">
-                <a
-                  :href="address.url.show"
-                  target="_blank"
-                  class="text-sm text-blue-500 hover:underline ltr:mr-2 rtl:ml-2"
-                  >{{ $t('View on map') }}</a
-                >
+              <li class="me-2 inline">
+                <a :href="address.url.show" target="_blank" class="me-2 text-sm text-blue-500 hover:underline">{{
+                  $t('View on map')
+                }}</a>
               </li>
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 {{ $t('Edit') }}
               </li>
               <li
-                class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
+                class="ms-4 inline cursor-pointer text-red-500 hover:text-red-900"
                 @click="showDeleteAddressModal(address)">
                 {{ $t('Delete') }}
               </li>
@@ -447,7 +442,7 @@ const destroy = () => {
                   :label="$t('Address')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -462,7 +457,7 @@ const destroy = () => {
                   :label="$t('Apartment, suite, etc…')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -487,7 +482,7 @@ const destroy = () => {
                   :label="$t('Province')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -524,16 +519,14 @@ const destroy = () => {
                   :name="form.is_past_address"
                   type="checkbox"
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
-                <label
-                  :for="form.is_past_address"
-                  class="cursor-pointer text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-gray-100">
+                <label :for="form.is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
                   {{ $t('This address is not active anymore') }}
                 </label>
               </div>
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedAddressId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedAddressId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
             </div>
           </form>
@@ -588,20 +581,15 @@ const destroy = () => {
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline ltr:mr-2 rtl:ml-2">
-                <a
-                  :href="address.url.show"
-                  target="_blank"
-                  class="text-sm text-blue-500 hover:underline ltr:mr-2 rtl:ml-2"
-                  >{{ $t('View on map') }}</a
-                >
+              <li class="me-2 inline">
+                <a :href="address.url.show" target="_blank" class="me-2 text-sm text-blue-500 hover:underline">{{
+                  $t('View on map')
+                }}</a>
               </li>
               <li class="inline cursor-pointer text-blue-500 hover:underline" @click="showEditAddressModal(address)">
                 {{ $t('Edit') }}
               </li>
-              <li
-                class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
-                @click="destroy(address)">
+              <li class="ms-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(address)">
                 {{ $t('Delete') }}
               </li>
             </ul>
@@ -635,7 +623,7 @@ const destroy = () => {
                   :label="$t('Address')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -650,7 +638,7 @@ const destroy = () => {
                   :label="$t('Apartment, suite, etc…')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -675,7 +663,7 @@ const destroy = () => {
                   :label="$t('Province')"
                   :type="'text'"
                   :autofocus="true"
-                  :input-class="'w-full ltr:mr-2 rtl:ml-2'"
+                  :input-class="'w-full me-2'"
                   :required="false"
                   :autocomplete="false"
                   :maxlength="255"
@@ -712,14 +700,14 @@ const destroy = () => {
                   name="is_past_address"
                   type="checkbox"
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
-                <label for="is_past_address" class="cursor-pointer text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-gray-100">
+                <label for="is_past_address" class="ms-2 cursor-pointer text-gray-900 dark:text-gray-100">
                   {{ $t('This address is not active anymore') }}
                 </label>
               </div>
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedAddressId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedAddressId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
             </div>
           </form>
@@ -743,7 +731,7 @@ const destroy = () => {
         </JetSecondaryButton>
 
         <JetDangerButton
-          class="ltr:ml-3 rtl:mr-3"
+          class="ms-3"
           :class="{ 'opacity-25': processAddressDeletion }"
           :disabled="processAddressDeletion"
           @click="destroy()">

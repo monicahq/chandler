@@ -90,7 +90,7 @@ const destroy = (journalMetric, postMetric) => {
             <span
               @click="destroy(journalMetric, postMetric)"
               v-if="editModeJournalMetricId === journalMetric.id"
-              class="ltr:ml-2 rtl:mr-2">
+              class="ms-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -108,7 +108,7 @@ const destroy = (journalMetric, postMetric) => {
         <li
           @click="showAddMetricModal(journalMetric)"
           v-if="!addModalShown && editModeJournalMetricId != journalMetric.id"
-          class="mb-6 inline cursor-pointer text-sm text-blue-500 hover:underline ltr:mr-3 rtl:ml-3">
+          class="mb-6 me-3 inline cursor-pointer text-sm text-blue-500 hover:underline">
           {{ $t('add a new metric') }}
         </li>
         <li
@@ -156,7 +156,7 @@ const destroy = (journalMetric, postMetric) => {
           </div>
 
           <div class="flex justify-between p-2">
-            <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="addModalShown = false" />
+            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="addModalShown = false" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Save')"

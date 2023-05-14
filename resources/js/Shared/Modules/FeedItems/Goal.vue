@@ -6,7 +6,7 @@
       class="flex items-center border-b border-gray-300 px-3 py-2 text-sm dark:border-gray-700">
       <avatar
         :data="data.contact.avatar"
-        :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5 ltr:mr-2 rtl:ml-2'" />
+        :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5 me-2'" />
 
       <div class="flex flex-col">
         <inertia-link :href="data.contact.url" class="text-gray-800 hover:underline dark:text-gray-200">{{
@@ -18,11 +18,11 @@
     <div class="px-3 py-2">
       <!-- the goal still exists in the system -->
       <div v-if="data.goal.object" class="flex items-center">
-        <span class="ltr:mr-2 rtl:ml-2">{{ data.goal.object.name }}</span>
+        <span class="me-2">{{ data.goal.object.name }}</span>
       </div>
 
       <!-- the goal was deleted -->
-      <span v-else class="mb-2 ltr:mr-2 rtl:ml-2">
+      <span v-else class="mb-2 me-2">
         <span>{{ data.goal.description }}</span>
       </span>
     </div>

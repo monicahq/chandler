@@ -13,7 +13,7 @@ defineProps({
     <main class="relative sm:mt-24">
       <div class="mx-auto max-w-4xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <h3 class="mb-6 font-semibold">
-          <span class="ltr:mr-1 rtl:ml-1"> 👥 </span>
+          <span class="me-1"> 👥 </span>
           {{ $t('All groups in the vault') }}
         </h3>
 

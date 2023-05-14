@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="ltr:mr-1 rtl:ml-1"> 🗑 </span>
+        <span class="me-1"> 🗑 </span>
         {{ $t('Delete the vault') }}
       </h3>
     </div>
@@ -39,7 +39,7 @@
       <p class="mb-1 px-5 py-2 text-center">
         <pretty-link
           :text="$t('Delete the vault')"
-          :classes="'ltr:mr-3 rtl:ml-3 text-red-600 dark:text-red-400 border-red-600 dark:border-red-400'"
+          :classes="'me-3 text-red-600 dark:text-red-400 border-red-600 dark:border-red-400'"
           @click="destroy" />
       </p>
     </div>

@@ -117,12 +117,6 @@ const alignmentClasses = computed(() => {
 });
 </script>
 
-<style scoped>
-.overflow-auto {
-  overflow: auto;
-}
-</style>
-
 <template>
   <div ref="main" class="relative" :class="$attrs.class">
     <div
@@ -157,8 +151,7 @@ const alignmentClasses = computed(() => {
           </svg>
         </button>
       </div>
-      <div
-        class="flex w-8 items-center border-gray-200 py-1 pl-2 pr-1 text-gray-300 ltr:border-l rtl:border-r dark:border-gray-600">
+      <div class="flex w-8 items-center border-e border-gray-200 py-1 pl-2 pr-1 text-gray-300 dark:border-gray-600">
         <button
           @click.prevent="
             open = !open;
@@ -209,7 +202,7 @@ const alignmentClasses = computed(() => {
               close();
             ">
             <div
-              class="relative flex w-full items-center border-transparent bg-white p-2 pl-2 hover:border-teal-600 hover:bg-teal-600 hover:text-teal-100 ltr:border-l-2 rtl:border-r-2 dark:bg-gray-800 hover:dark:border-teal-400 hover:dark:bg-teal-400 hover:dark:text-teal-900">
+              class="relative flex w-full items-center border-s-2 border-transparent bg-white p-2 pl-2 hover:border-teal-600 hover:bg-teal-600 hover:text-teal-100 dark:bg-gray-800 hover:dark:border-teal-400 hover:dark:bg-teal-400 hover:dark:text-teal-900">
               <div class="flex w-full items-center">
                 <div class="mx-2 leading-6">
                   {{ option.name }}

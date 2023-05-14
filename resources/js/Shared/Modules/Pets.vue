@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
-          <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
+          <span class="relative me-1">
             <svg
               class="icon-sidebar relative inline h-4 w-4"
               style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor; overflow: hidden"
@@ -62,7 +62,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="addPetModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="addPetModalShown = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -77,13 +77,13 @@
           <!-- pet -->
           <div v-if="editedPetId != pet.id" class="flex items-center justify-between px-3 py-2">
             <div class="flex items-center">
-              <span class="text-sm text-gray-500 ltr:mr-2 rtl:ml-2">{{ pet.pet_category.name }}</span>
-              <span class="ltr:mr-2 rtl:ml-2">{{ pet.name }}</span>
+              <span class="me-2 text-sm text-gray-500">{{ pet.pet_category.name }}</span>
+              <span class="me-2">{{ pet.name }}</span>
             </div>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline ltr:mr-4 rtl:ml-4" @click="showEditPetModal(pet)">
+              <li class="me-4 inline" @click="showEditPetModal(pet)">
                 <span class="cursor-pointer text-blue-500 hover:underline">{{ $t('Edit') }}</span>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(pet)">
@@ -127,7 +127,7 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedPetId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedPetId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
             </div>
           </form>

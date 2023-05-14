@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -57,11 +57,11 @@
           </div>
 
           <!-- audio or video -->
-          <div class="border-gray-200 p-5 ltr:border-l rtl:border-r dark:border-gray-700">
+          <div class="border-e border-gray-200 p-5 dark:border-gray-700">
             <p class="mb-2 block text-sm">{{ $t('Nature of the call') }}</p>
 
             <div class="flex">
-              <div class="flex items-center ltr:mr-6 rtl:ml-6">
+              <div class="me-6 flex items-center">
                 <input
                   id="audio"
                   v-model="form.type"
@@ -71,7 +71,7 @@
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="audio"
-                  class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ $t('Audio-only call') }}
                 </label>
               </div>
@@ -86,7 +86,7 @@
                   class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                 <label
                   for="video"
-                  class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                  class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   {{ $t('Video call') }}
                 </label>
               </div>
@@ -99,7 +99,7 @@
           <p class="mb-2 block text-sm">{{ $t('Who called?') }}</p>
 
           <div class="mb-4 flex">
-            <div class="flex items-center ltr:mr-6 rtl:ml-6">
+            <div class="me-6 flex items-center">
               <input
                 id="me"
                 v-model="form.who_initiated"
@@ -107,9 +107,7 @@
                 name="who_initiated"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="me"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+              <label for="me" class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('I called') }}
               </label>
             </div>
@@ -124,14 +122,14 @@
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="me_not_answered"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
               </label>
             </div>
           </div>
 
           <div class="flex">
-            <div class="flex items-center ltr:mr-6 rtl:ml-6">
+            <div class="me-6 flex items-center">
               <input
                 id="contact"
                 v-model="form.who_initiated"
@@ -141,7 +139,7 @@
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="contact"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t(':name called', { name: data.contact_name }) }}
               </label>
             </div>
@@ -156,7 +154,7 @@
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
               <label
                 for="contact_not_answered"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t(':name called, but I didn’t answer', { name: data.contact_name }) }}
               </label>
             </div>
@@ -204,9 +202,7 @@
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-            <label
-              :for="emotion.type"
-              class="block cursor-pointer font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+            <label :for="emotion.type" class="ms-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
               {{ emotion.name }}
             </label>
           </div>
@@ -217,7 +213,7 @@
           <!-- cta to add a description -->
           <span
             v-if="!descriptionFieldShown"
-            class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 ltr:mr-2 rtl:ml-2"
+            class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
             @click="showDescriptionField">
             {{ $t('+ add description') }}
           </span>
@@ -225,7 +221,7 @@
           <!-- cta to add a reason -->
           <span
             v-if="!reasonFieldShown"
-            class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 ltr:mr-2 rtl:ml-2"
+            class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
             @click="showReasonField">
             {{ $t('+ add reason') }}
           </span>
@@ -241,7 +237,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createCallModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createCallModalShown = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -261,7 +257,7 @@
               <svg
                 v-if="!call.answered"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-red-500 ltr:mr-2 rtl:ml-2"
+                class="me-2 h-4 w-4 text-red-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -276,7 +272,7 @@
               <svg
                 v-if="call.answered"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-green-600 ltr:mr-2 rtl:ml-2"
+                class="me-2 h-4 w-4 text-green-600"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -288,17 +284,17 @@
               </svg>
             </div>
 
-            <span class="text-sm text-gray-500 ltr:mr-2 rtl:ml-2">{{ call.called_at }}</span>
+            <span class="me-2 text-sm text-gray-500">{{ call.called_at }}</span>
 
             <!-- who called -->
             <span
               v-if="call.who_initiated == 'me'"
-              class="rounded border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 ltr:mr-2 rtl:ml-2">
+              class="me-2 rounded border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800">
               {{ $t('I called') }}
             </span>
             <span
               v-else
-              class="rounded border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 ltr:mr-2 rtl:ml-2">
+              class="me-2 rounded border border-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800">
               {{ $t(':name called', { name: data.contact_name }) }}
             </span>
 
@@ -338,11 +334,11 @@
               </div>
 
               <!-- audio or video -->
-              <div class="border-gray-200 p-5 ltr:border-l rtl:border-r dark:border-gray-700">
+              <div class="border-e border-gray-200 p-5 dark:border-gray-700">
                 <p class="mb-2 block text-sm">{{ $t('Nature of the call') }}</p>
 
                 <div class="flex">
-                  <div class="flex items-center ltr:mr-6 rtl:ml-6">
+                  <div class="me-6 flex items-center">
                     <input
                       id="audio"
                       v-model="form.type"
@@ -352,7 +348,7 @@
                       class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="audio"
-                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       {{ $t('Audio-only call') }}
                     </label>
                   </div>
@@ -367,7 +363,7 @@
                       class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="video"
-                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                      class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       {{ $t('Video call') }}
                     </label>
                   </div>
@@ -380,7 +376,7 @@
               <p class="mb-2 block text-sm">{{ $t('Who called?') }}</p>
 
               <div class="mb-4 flex">
-                <div class="flex items-center ltr:mr-6 rtl:ml-6">
+                <div class="me-6 flex items-center">
                   <input
                     id="me"
                     v-model="form.who_initiated"
@@ -390,7 +386,7 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="me"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t('I called') }}
                   </label>
                 </div>
@@ -405,14 +401,14 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="me_not_answered"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t('I called, but :name didn’t answer', { name: data.contact_name }) }}
                   </label>
                 </div>
               </div>
 
               <div class="flex">
-                <div class="flex items-center ltr:mr-6 rtl:ml-6">
+                <div class="me-6 flex items-center">
                   <input
                     id="contact"
                     v-model="form.who_initiated"
@@ -422,7 +418,7 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="contact"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t(':name called', { name: data.contact_name }) }}
                   </label>
                 </div>
@@ -437,7 +433,7 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="contact_not_answered"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                    class="ms-2 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t(':name called, but I didn’t answer', { name: data.contact_name }) }}
                   </label>
                 </div>
@@ -487,7 +483,7 @@
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                 <label
                   :for="emotion.type"
-                  class="block cursor-pointer font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                  class="ms-2 block cursor-pointer font-medium text-gray-700 dark:text-gray-300">
                   {{ emotion.name }}
                 </label>
               </div>
@@ -498,7 +494,7 @@
               <!-- cta to add a description -->
               <span
                 v-if="!descriptionFieldShown"
-                class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 ltr:mr-2 rtl:ml-2"
+                class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
                 @click="showDescriptionField">
                 {{ $t('+ add description') }}
               </span>
@@ -506,7 +502,7 @@
               <!-- cta to add a reason -->
               <span
                 v-if="!reasonFieldShown"
-                class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 ltr:mr-2 rtl:ml-2"
+                class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300"
                 @click="showReasonField">
                 {{ $t('+ add reason') }}
               </span>
@@ -522,7 +518,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedCallId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedCallId = 0" />
             <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
           </div>
         </form>

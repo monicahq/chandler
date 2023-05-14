@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
                 {{ $t('Settings') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -39,10 +39,7 @@
             <h1 class="mb-4 flex justify-center text-2xl font-medium">
               <span>{{ $t('Cancel your account') }}</span>
 
-              <help
-                :url="$page.props.help_links.settings_account_deletion"
-                :top="'9px'"
-                :classes="['ltr:ml-3', 'rtl:mr-3']" />
+              <help :url="$page.props.help_links.settings_account_deletion" :top="'9px'" :classes="'ms-3'" />
             </h1>
             <p class="mb-2">{{ $t('Thanks for giving Monica a try.') }}</p>
             <p class="mb-2">{{ $t('Once you cancel,') }}</p>
@@ -75,7 +72,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Go back')" :classes="'ltr:mr-3 rtl:ml-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Go back')" :classes="'me-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Cancel account')"

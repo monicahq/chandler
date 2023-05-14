@@ -37,7 +37,7 @@
           >{{ $t('Add') }}</span
         >
         <span v-if="module.already_used" class="text-xs"
-          ><span class="ltr:mr-1 rtl:ml-1">✅</span> {{ $t('Already used on this page') }}</span
+          ><span class="me-1">✅</span> {{ $t('Already used on this page') }}</span
         >
       </li>
     </ul>
@@ -56,7 +56,7 @@
           <div
             class="item-list flex items-center border-b border-gray-200 py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
             <!-- anchor to move module -->
-            <div class="ltr:mr-2 rtl:ml-2">
+            <div class="me-2">
               <svg
                 class="handle cursor-move"
                 width="24"

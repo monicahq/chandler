@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -39,7 +39,7 @@
       v-if="!data.canUploadFile"
       class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="bg-gray-100 p-3 text-center">
-        <span class="ltr:mr-1 rtl:ml-1">⚠️</span>
+        <span class="me-1">⚠️</span>
         {{ $t('You don’t have enough space left in your account. Please upgrade.') }}
       </p>
     </div>
@@ -56,14 +56,14 @@
             <span class="flex items-center">
               <span class="max-w-sm truncate">{{ document.name }}</span>
 
-              <span class="rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500 ltr:ml-2 rtl:mr-2">
+              <span class="ms-2 rounded border bg-blue-50 px-1 py-0 font-mono text-xs text-blue-500">
                 {{ document.size }}
               </span>
             </span>
 
             <!-- actions -->
             <ul class="text-sm">
-              <li class="inline ltr:mr-4 rtl:ml-4">
+              <li class="me-4 inline">
                 <a :href="document.url.download" class="text-blue-500 hover:underline">{{ $t('Download') }}</a>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(document)">

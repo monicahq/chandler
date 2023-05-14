@@ -42,7 +42,7 @@ const logout = () => {
 
             <div class="hidden sm:ml-6 sm:flex sm:items-center">
               <!-- Settings Dropdown -->
-              <div class="relative ltr:ml-3 rtl:mr-3">
+              <div class="relative ms-3">
                 <JetDropdown align="right" width="48">
                   <template #trigger>
                     <button
@@ -61,7 +61,7 @@ const logout = () => {
                         {{ $page.props.user.name }}
 
                         <svg
-                          class="-mr-0.5 h-4 w-4 ltr:ml-2 rtl:mr-2"
+                          class="-mr-0.5 ms-2 h-4 w-4"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                           fill="currentColor">
@@ -144,7 +144,7 @@ const logout = () => {
           <!-- Responsive Settings Options -->
           <div class="border-t border-gray-200 pb-1 pt-4 dark:border-gray-800">
             <div class="flex items-center px-4">
-              <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 ltr:mr-3 rtl:ml-3">
+              <div v-if="$page.props.jetstream.managesProfilePhotos" class="me-3 shrink-0">
                 <img
                   class="h-10 w-10 rounded-full object-cover"
                   :src="$page.props.user.profile_photo_url"

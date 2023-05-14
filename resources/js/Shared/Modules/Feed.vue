@@ -1,17 +1,17 @@
 <template>
   <div class="mb-4">
-    <div class="border-gray-200 ltr:ml-4 ltr:border-l rtl:mr-4 rtl:border-r dark:border-gray-700">
+    <div class="ms-4 border-s border-gray-200 dark:border-gray-700">
       <div v-for="feedItem in feed" :key="feedItem.id" class="mb-8">
         <!-- action & user -->
         <div class="mb-2 flex">
-          <div class="icon-avatar relative w-6">
+          <div class="relative -start-[11px] top-[3px] w-6">
             <avatar
               :data="feedItem.author.avatar"
               :classes="'rounded-full border-gray-200 dark:border-gray-800 border relative h-5 w-5'" />
           </div>
 
           <div class="flex w-full items-center justify-between">
-            <p class="text-gray-400 ltr:mr-2 rtl:ml-2">
+            <p class="me-2 text-gray-400">
               <!-- author name + link to profile -->
               <inertia-link
                 v-if="feedItem.author.url"
@@ -22,14 +22,14 @@
               <span v-else class="font-medium text-gray-800 dark:text-gray-200">{{ feedItem.author.name }}</span>
 
               <!-- action done -->
-              <span class="ltr:ml-2 rtl:mr-2">{{ feedItem.sentence }}</span>
+              <span class="ms-2">{{ feedItem.sentence }}</span>
             </p>
 
             <p class="flex items-center text-sm text-gray-400">
               <span>{{ feedItem.created_at }}</span>
 
               <svg
-                class="h-4 w-4 ltr:ml-2 rtl:mr-2"
+                class="ms-2 h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -45,7 +45,7 @@
         </div>
 
         <!-- feed object -->
-        <div v-if="feedItem.data" class="ltr:ml-6 rtl:mr-6">
+        <div v-if="feedItem.data" class="ms-6">
           <generic-action
             v-if="feedItem.action === 'contact_created'"
             :data="feedItem.data"
@@ -152,7 +152,7 @@
         </div>
 
         <!-- details -->
-        <div v-if="feedItem.description" class="ltr:ml-6 rtl:mr-6">
+        <div v-if="feedItem.description" class="ms-6">
           <div class="rounded-lg border border-gray-300 px-3 py-2">
             <span class="text-sm">
               {{ feedItem.description }}
@@ -262,17 +262,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.icon-avatar {
-  top: 3px;
-}
-
-.ltr .icon-avatar {
-  left: -11px;
-}
-
-.rtl .icon-avatar {
-  right: -11px;
-}
-</style>

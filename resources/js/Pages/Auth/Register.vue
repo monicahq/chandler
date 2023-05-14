@@ -109,7 +109,7 @@ const policy = () => {
             <JetCheckbox id="terms" v-model:checked="form.terms" name="terms" />
 
             <div
-              class="ltr:ml-2 rtl:mr-2"
+              class="ms-2"
               v-html="$t('I agree to the :terms and :policy', { terms: terms(), policy: policy() })"></div>
           </div>
         </JetLabel>
@@ -118,8 +118,8 @@ const policy = () => {
       <!-- beta mode-->
       <div class="mb-4 rounded-lg border bg-amber-50 p-6">
         <p class="mb-2 text-center font-bold">
-          <span class="ltr:mr-2 rtl:ml-2">🚧</span> {{ $t('Chandler is in beta.') }}
-          <span class="ltr:ml-2 rtl:mr-2">🚧</span>
+          <span class="me-2">🚧</span> {{ $t('Chandler is in beta.') }}
+          <span class="ms-2">🚧</span>
         </p>
         <p class="mb-2">{{ $t('Compared to Monica:') }}</p>
         <ul class="list mb-2 pl-3">
@@ -134,7 +134,7 @@ const policy = () => {
       </div>
 
       <div class="mt-4 flex items-center justify-end">
-        <Link :href="route('login')" class="text-sm text-blue-500 hover:underline ltr:mr-4 rtl:ml-4 dark:text-gray-400">
+        <Link :href="route('login')" class="me-4 text-sm text-blue-500 hover:underline dark:text-gray-400">
           {{ $t('Already registered?') }}
         </Link>
 

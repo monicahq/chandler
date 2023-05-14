@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="icon-sidebar relative inline h-4 w-4"
@@ -67,10 +67,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span
-          :text="$t('Cancel')"
-          :classes="'ltr:mr-3 rtl:ml-3'"
-          @click="addContactInformationModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="addContactInformationModalShown = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -86,13 +83,13 @@
           <div v-if="editedContactInformationId != info.id" class="flex items-center justify-between px-3 py-2">
             <div>
               <a :href="info.data_with_protocol" class="text-blue-500 hover:underline">{{ info.data }}</a>
-              <span class="text-xs text-gray-500 ltr:ml-2 rtl:mr-2">({{ info.label }})</span>
+              <span class="ms-2 text-xs text-gray-500">({{ info.label }})</span>
             </div>
 
             <!-- actions -->
             <ul class="text-sm">
               <li
-                class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+                class="me-4 inline cursor-pointer text-blue-500 hover:underline"
                 @click="showEditContactInformationModal(info)">
                 {{ $t('Edit') }}
               </li>
@@ -140,10 +137,7 @@
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span
-                :text="$t('Cancel')"
-                :classes="'ltr:mr-3 rtl:ml-3'"
-                @click="editedContactInformationId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedContactInformationId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
             </div>
           </form>

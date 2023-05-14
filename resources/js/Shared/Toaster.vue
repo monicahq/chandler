@@ -46,11 +46,9 @@ const act = (action, timeout) => {
     class="fixed bottom-8 z-[9999] rounded-md border-zinc-200 bg-white px-5 py-2.5 shadow-sm shadow-gray-400 transition duration-700 ease-in-out dark:border-zinc-600 dark:bg-gray-900 dark:shadow-gray-600"
     :class="[
       levelClass,
-      isOpen
-        ? ['opacity-100', 'translate-x-0', 'ltr:right-7', 'rtl:left-7']
-        : ['opacity-0', 'translate-x-full', 'ltr:right-0', 'rtl:left-0'],
+      isOpen ? ['opacity-100', 'translate-x-0', 'end-7'] : ['opacity-0', 'translate-x-full', 'end-0'],
     ]">
-    <span class="ltr:mr-1 rtl:ml-1"> 👋 </span>
+    <span class="me-1"> 👋 </span>
     {{ messageText }}
   </div>
 </template>

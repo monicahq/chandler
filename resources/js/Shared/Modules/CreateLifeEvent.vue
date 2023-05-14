@@ -292,7 +292,7 @@ const store = () => {
 
         <!-- current contact -->
         <div class="mb-4 flex items-center">
-          <avatar :data="props.data.contact.avatar" :classes="'ltr:mr-2 rtl:ml-2 h-5 w-5'" />
+          <avatar :data="props.data.contact.avatar" :classes="'me-2 h-5 w-5'" />
 
           <span>{{ props.data.contact.name }}</span>
         </div>
@@ -348,7 +348,7 @@ const store = () => {
           :label="$t('Distance')"
           :type="'number'"
           :autofocus="true"
-          :input-class="'ltr:mr-2 rtl:ml-2'"
+          :input-class="'me-2'"
           :required="false"
           :autocomplete="false"
           :help="$t('Enter a number from 0 to 100000. No decimals.')"
@@ -357,7 +357,7 @@ const store = () => {
           @esc-key-pressed="addDistanceFieldShown = false" />
 
         <ul>
-          <li class="inline-block ltr:mr-5 rtl:ml-5">
+          <li class="me-5 inline-block">
             <div class="flex items-center">
               <input
                 id="km"
@@ -366,9 +366,7 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="km"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-1 rtl:mr-1 dark:text-gray-300">
+              <label for="km" class="ms-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('km') }}
               </label>
             </div>
@@ -383,9 +381,7 @@ const store = () => {
                 name="distance_unit"
                 type="radio"
                 class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-              <label
-                for="miles"
-                class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-1 rtl:mr-1 dark:text-gray-300">
+              <label for="miles" class="ms-1 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                 {{ $t('miles') }}
               </label>
             </div>
@@ -398,7 +394,7 @@ const store = () => {
         <!-- summary -->
         <div v-if="!addSummaryFieldShown">
           <span
-            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 me-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddSummaryField"
             >{{ $t('+ add summary') }}
           </span>
@@ -407,7 +403,7 @@ const store = () => {
         <!-- description -->
         <div v-if="!addDescriptionFieldShown">
           <span
-            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 me-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddDescriptionField"
             >{{ $t('+ add description') }}
           </span>
@@ -416,14 +412,14 @@ const store = () => {
         <!-- distance -->
         <div v-if="!addDistanceFieldShown">
           <span
-            class="mb-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
+            class="mb-2 me-2 cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-sm hover:bg-slate-300 dark:border-gray-500 dark:bg-slate-800 dark:text-gray-50 hover:dark:bg-slate-700"
             @click="showAddDistanceField"
             >{{ $t('+ add distance') }}
           </span>
         </div>
       </div>
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="$emit('closeModal')" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="$emit('closeModal')" />
         <pretty-button
           v-if="selectedLifeEventType"
           :text="$t('Save')"

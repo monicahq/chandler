@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.settings" class="text-blue-500 hover:underline">
                 {{ $t('Settings') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -23,12 +23,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.personalize" class="text-blue-500 hover:underline">
                 {{ $t('Personalize your account') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -51,7 +51,7 @@
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="ltr:mr-1 rtl:ml-1"> ☎️ </span>
+            <span class="me-1"> ☎️ </span>
             {{ $t('All the contact information types') }}
           </h3>
           <pretty-button
@@ -101,7 +101,7 @@
           <div class="flex justify-between p-5">
             <pretty-span
               :text="$t('Cancel')"
-              :classes="'ltr:mr-3 rtl:ml-3'"
+              :classes="'me-3'"
               @click="createContactInformationTypeModalShown = false" />
             <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
           </div>
@@ -121,7 +121,7 @@
               class="flex items-center justify-between px-5 py-2">
               <div>
                 <span class="text-base">{{ contactInformationType.name }}</span>
-                <code v-if="contactInformationType.protocol" class="code text-xs ltr:ml-3 rtl:mr-3"
+                <code v-if="contactInformationType.protocol" class="code ms-3 text-xs"
                   >[{{
                     $t('Protocol: :name', {
                       name: contactInformationType.protocol,
@@ -139,7 +139,7 @@
                 </li>
                 <li
                   v-if="contactInformationType.can_be_deleted"
-                  class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
+                  class="ms-4 inline cursor-pointer text-red-500 hover:text-red-900"
                   @click="destroy(contactInformationType)">
                   {{ $t('Delete') }}
                 </li>
@@ -182,7 +182,7 @@
               <div class="flex justify-between p-5">
                 <pretty-span
                   :text="$t('Cancel')"
-                  :classes="'ltr:mr-3 rtl:ml-3'"
+                  :classes="'me-3'"
                   @click.prevent="renameContactInformationTypeModalShownId = 0" />
                 <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
               </div>

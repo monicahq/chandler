@@ -41,15 +41,15 @@ const submit = () => {
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
                 {{ $t('Journals') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -59,12 +59,12 @@ const submit = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <inertia-link :href="data.journal.url.show" class="text-blue-500 hover:underline">{{
                 data.journal.name
               }}</inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -74,12 +74,12 @@ const submit = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <inertia-link :href="data.url.slices_index" class="text-blue-500 hover:underline">{{
                 $t('Slices of life')
               }}</inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -89,12 +89,12 @@ const submit = () => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <inertia-link :href="data.slice.url.show" class="text-blue-500 hover:underline">{{
                 data.slice.name
               }}</inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -139,7 +139,7 @@ const submit = () => {
 
           <!-- actions -->
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'me-3'" />
             <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
           </div>
         </form>

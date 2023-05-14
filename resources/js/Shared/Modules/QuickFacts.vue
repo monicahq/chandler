@@ -106,14 +106,14 @@ const destroy = (quickFact) => {
 <template>
   <div class="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800">
     <div @click="toggle()" class="flex cursor-pointer items-center justify-between" :class="openState ? ' mb-4' : ''">
-      <div class="flex items-center ltr:mr-1 rtl:ml-1">
+      <div class="me-1 flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="relative inline h-4 w-4 ltr:mr-1 rtl:ml-1">
+          class="relative me-1 inline h-4 w-4">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -132,7 +132,7 @@ const destroy = (quickFact) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="h-4 w-4 cursor-pointer text-gray-400 ltr:mr-2 rtl:ml-2">
+          class="me-2 h-4 w-4 cursor-pointer text-gray-400">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
 
@@ -143,7 +143,7 @@ const destroy = (quickFact) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="h-4 w-4 cursor-pointer text-gray-400 ltr:mr-2 rtl:ml-2">
+          class="me-2 h-4 w-4 cursor-pointer text-gray-400">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
       </div>
@@ -153,7 +153,7 @@ const destroy = (quickFact) => {
       <!-- templates -->
       <div class="mb-4 flex">
         <ul class="list">
-          <li v-for="template in data.templates" :key="template.id" class="inline ltr:mr-2 rtl:ml-2">
+          <li v-for="template in data.templates" :key="template.id" class="me-2 inline">
             <span
               @click="get(template)"
               :class="localTemplate.id === template.id ? 'rounded border border-gray-200 bg-white font-semibold' : ''"
@@ -179,7 +179,7 @@ const destroy = (quickFact) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-4 w-4 flex-none text-green-600 ltr:mr-1 rtl:ml-1">
+                class="me-1 h-4 w-4 flex-none text-green-600">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -218,12 +218,12 @@ const destroy = (quickFact) => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedQuickFactId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedQuickFactId = 0" />
               <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
             </div>
           </form>
         </li>
-        <li v-if="!createQuickFactModalShown" class="mt-1 ltr:ml-2 rtl:mr-2">
+        <li v-if="!createQuickFactModalShown" class="ms-2 mt-1">
           <span @click="showCreateQuickFactModal()" class="cursor-pointer text-blue-500 hover:underline">{{
             $t('+ add another')
           }}</span>
@@ -269,7 +269,7 @@ const destroy = (quickFact) => {
         </div>
 
         <div class="flex justify-between p-5">
-          <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createQuickFactModalShown = false" />
+          <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createQuickFactModalShown = false" />
           <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
         </div>
       </form>

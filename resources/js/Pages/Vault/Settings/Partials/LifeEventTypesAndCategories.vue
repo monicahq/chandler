@@ -200,7 +200,7 @@ const destroyLifeEventType = (lifeEventType) => {
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="ltr:mr-1 rtl:ml-1"> 👩‍🍼 </span>
+        <span class="me-1"> 👩‍🍼 </span>
         {{ $t('Life event types and categories') }}
       </h3>
       <pretty-button
@@ -232,10 +232,7 @@ const destroyLifeEventType = (lifeEventType) => {
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span
-          :text="$t('Cancel')"
-          :classes="'ltr:mr-3 rtl:ml-3'"
-          @click="createLifeEventCategoryModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createLifeEventCategoryModalShown = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -254,9 +251,9 @@ const destroyLifeEventType = (lifeEventType) => {
               class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
               <div class="mb-3 flex items-center justify-between">
                 <!-- icon to move position -->
-                <div class="flex ltr:mr-2 rtl:ml-2">
+                <div class="me-2 flex">
                   <svg
-                    class="handle cursor-move ltr:mr-2 rtl:ml-2"
+                    class="handle me-2 cursor-move"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -281,16 +278,14 @@ const destroyLifeEventType = (lifeEventType) => {
                   <li class="inline cursor-pointer" @click="renameLifeEventCategoryModal(element)">
                     <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                   </li>
-                  <li
-                    class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
-                    @click="destroy(element)">
+                  <li class="ms-4 inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
                     {{ $t('Delete') }}
                   </li>
                 </ul>
               </div>
 
               <!-- available life event types -->
-              <div class="ltr:ml-8 rtl:mr-8">
+              <div class="ms-8">
                 <p class="mb-1 text-sm text-gray-500">{{ $t('Life event types:') }}</p>
 
                 <draggable
@@ -305,9 +300,9 @@ const destroyLifeEventType = (lifeEventType) => {
                         class="item-list mb-2 rounded-lg border border-gray-200 bg-white py-2 pl-4 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800">
                         <div class="flex items-center justify-between">
                           <!-- icon to move position -->
-                          <div class="flex ltr:mr-2 rtl:ml-2">
+                          <div class="me-2 flex">
                             <svg
-                              class="handle cursor-move ltr:mr-2 rtl:ml-2"
+                              class="handle me-2 cursor-move"
                               width="24"
                               height="24"
                               viewBox="0 0 24 24"
@@ -333,7 +328,7 @@ const destroyLifeEventType = (lifeEventType) => {
                               <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
                             </li>
                             <li
-                              class="inline cursor-pointer text-red-500 hover:text-red-900 ltr:ml-4 rtl:mr-4"
+                              class="ms-4 inline cursor-pointer text-red-500 hover:text-red-900"
                               @click="destroyLifeEventType(element)">
                               {{ $t('Delete') }}
                             </li>
@@ -364,10 +359,7 @@ const destroyLifeEventType = (lifeEventType) => {
                       </div>
 
                       <div class="flex justify-between p-5">
-                        <pretty-span
-                          :text="$t('Cancel')"
-                          :classes="'ltr:mr-3 rtl:ml-3'"
-                          @click="lifeEventCategoryId = 0" />
+                        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="lifeEventCategoryId = 0" />
                         <pretty-button
                           :text="$t('Rename')"
                           :state="loadingState"
@@ -414,7 +406,7 @@ const destroyLifeEventType = (lifeEventType) => {
                   <div class="flex justify-between p-5">
                     <pretty-span
                       :text="$t('Cancel')"
-                      :classes="'ltr:mr-3 rtl:ml-3'"
+                      :classes="'me-3'"
                       @click="createLifeEventTypeModalShown = false" />
                     <pretty-button
                       :text="$t('Save')"
@@ -467,10 +459,7 @@ const destroyLifeEventType = (lifeEventType) => {
             </div>
 
             <div class="flex justify-between p-5">
-              <pretty-span
-                :text="$t('Cancel')"
-                :classes="'ltr:mr-3 rtl:ml-3'"
-                @click.prevent="editLifeEventCategoryId = 0" />
+              <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="editLifeEventCategoryId = 0" />
               <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
             </div>
           </form>

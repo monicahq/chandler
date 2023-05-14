@@ -43,15 +43,15 @@ const destroy = () => {
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="layoutData.vault.url.groups" class="text-blue-500 hover:underline">
                 {{ $t('Groups') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -77,14 +77,14 @@ const destroy = () => {
         <!-- group information -->
         <div class="mb-8 flex justify-center">
           <!-- number of contacts -->
-          <div class="flex items-center ltr:mr-8 rtl:ml-8">
+          <div class="me-8 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="h-4 w-4 ltr:mr-1 rtl:ml-1">
+              class="me-1 h-4 w-4">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -97,14 +97,14 @@ const destroy = () => {
           </div>
 
           <!-- type -->
-          <div class="flex items-center ltr:mr-8 rtl:ml-8">
+          <div class="me-8 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="h-4 w-4 ltr:mr-1 rtl:ml-1">
+              class="me-1 h-4 w-4">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -117,7 +117,7 @@ const destroy = () => {
           <!-- actions -->
           <div class="flex items-center">
             <ul class="list">
-              <li class="inline ltr:mr-4 rtl:ml-4">
+              <li class="me-4 inline">
                 <inertia-link :href="props.data.url.edit" class="text-blue-500 hover:underline">{{
                   $t('Edit')
                 }}</inertia-link>
@@ -133,7 +133,7 @@ const destroy = () => {
         <div v-for="role in data.roles" :key="role.id" class="mb-8">
           <p
             v-if="role.contacts.length > 0"
-            class="mb-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 last:mr-0 ltr:mr-2 rtl:ml-2">
+            class="mb-2 me-2 inline-block rounded bg-neutral-200 px-2 py-1 text-xs font-semibold text-neutral-800 last:mr-0">
             {{ role.label }}
           </p>
 
@@ -146,7 +146,7 @@ const destroy = () => {
 
               <inertia-link :href="contact.url" class="text-blue-500 hover:underline">{{ contact.name }}</inertia-link>
 
-              <span v-if="contact.age" class="text-xs text-gray-500 ltr:ml-1 rtl:mr-1">({{ contact.age }})</span>
+              <span v-if="contact.age" class="ms-1 text-xs text-gray-500">({{ contact.age }})</span>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ const destroy = () => {
             </JetSecondaryButton>
 
             <JetDangerButton
-              class="ltr:ml-3 rtl:mr-3"
+              class="ms-3"
               :class="{ 'opacity-25': deleteGroupForm.processing }"
               :disabled="deleteGroupForm.processing"
               @click="destroy">

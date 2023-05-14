@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 {{ $t('Contacts') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -23,12 +23,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.contact" class="text-blue-500 hover:underline">
                 {{ $t('Profile of :name', { name: data.contact.name }) }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -78,7 +78,7 @@
                   {{ fromRelationship }}
                 </p>
                 <div class="flex items-center">
-                  <avatar :data="data.contact.avatar" :classes="'ltr:mr-2 rtl:ml-2 h-5 w-5'" />
+                  <avatar :data="data.contact.avatar" :classes="'me-2 h-5 w-5'" />
 
                   <span>{{ data.contact.name }}</span>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                    class="me-2 h-5 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -123,7 +123,7 @@
                       class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                     <label
                       for="unknown"
-                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       {{ $t('I don’t know the name') }}
                     </label>
                   </div>
@@ -140,7 +140,7 @@
                       @click="displayContactNameField" />
                     <label
                       for="name"
-                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       {{ $t('I know the name') }}
                     </label>
                   </div>
@@ -169,25 +169,25 @@
                     <div class="mb-4 flex flex-wrap text-xs">
                       <span
                         v-if="!showLastNameField"
-                        class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                         @click="displayLastNameField">
                         {{ $t('+ last name') }}
                       </span>
                       <span
                         v-if="!showMiddleNameField"
-                        class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                         @click="displayMiddleNameField">
                         {{ $t('+ middle name') }}
                       </span>
                       <span
                         v-if="!showNicknameField"
-                        class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                         @click="displayNicknameField">
                         {{ $t('+ nickname') }}
                       </span>
                       <span
                         v-if="!showMaidenNameField"
-                        class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                        class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                         @click="displayMaidenNameField">
                         {{ $t('+ maiden name') }}
                       </span>
@@ -206,7 +206,7 @@
                       @click="displayContactSelector" />
                     <label
                       for="contact"
-                      class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                      class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                       {{ $t('Choose an existing contact') }}
                     </label>
                   </div>
@@ -285,13 +285,13 @@
               <div class="flex flex-wrap text-xs">
                 <span
                   v-if="data.genders.length > 0 && !showGenderField"
-                  class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                   @click="displayGenderField">
                   {{ $t('+ gender') }}
                 </span>
                 <span
                   v-if="data.pronouns.length > 0 && !showPronounField"
-                  class="mb-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:bg-slate-500 dark:text-gray-900"
+                  class="mb-2 me-2 flex cursor-pointer flex-wrap rounded-lg border bg-slate-200 px-1 py-1 hover:bg-slate-300 dark:bg-slate-500 dark:text-gray-900"
                   @click="displayPronounField">
                   {{ $t('+ pronoun') }}
                 </span>
@@ -307,9 +307,7 @@
                   name="create-contact"
                   type="checkbox"
                   class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
-                <label
-                  for="create-contact"
-                  class="block cursor-pointer text-sm text-gray-900 ltr:ml-2 rtl:mr-2 dark:text-white">
+                <label for="create-contact" class="ms-2 block cursor-pointer text-sm text-gray-900 dark:text-white">
                   {{ $t('Create a contact entry for this person') }}
                 </label>
               </div>
@@ -318,7 +316,7 @@
 
           <!-- actions -->
           <div class="flex justify-between p-5">
-            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" />
+            <pretty-link :href="data.url.back" :text="$t('Cancel')" :classes="'me-3'" />
             <pretty-button
               :href="'data.url.vault.create'"
               :text="$t('Add')"

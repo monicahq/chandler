@@ -37,7 +37,7 @@ const deleteKey = () => {
       </JetSecondaryButton>
 
       <JetDangerButton
-        class="ltr:ml-2 rtl:mr-2"
+        class="ms-2"
         @click="deleteKey"
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing">

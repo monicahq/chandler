@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 sm:mb-0">
-        <span class="ltr:mr-1 rtl:ml-1"> 🏷 </span>
+        <span class="me-1"> 🏷 </span>
         {{ $t('All the labels used in the vault') }}
       </h3>
       <pretty-button v-if="!createlabelModalShown" :text="$t('Add a label')" :icon="'plus'" @click="showLabelModal" />
@@ -45,7 +45,7 @@
               @click="form.text_color = color.text_color" />
             <label
               :for="color.bg_color"
-              class="inline-block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+              class="ms-2 inline-block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               <div class="rounded p-4" :class="color.bg_color" />
             </label>
           </div>
@@ -53,7 +53,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createlabelModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createlabelModalShown = false" />
         <pretty-button :text="$t('Create label')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -69,8 +69,8 @@
         <!-- detail of the label -->
         <div v-if="editLabelModalShownId != label.id" class="flex items-center justify-between px-5 py-2">
           <span class="flex items-center text-base">
-            <div class="inline-block h-4 w-4 rounded-full ltr:mr-2 rtl:ml-2" :class="label.bg_color" />
-            <span class="ltr:mr-2 rtl:ml-2">{{ label.name }}</span>
+            <div class="me-2 inline-block h-4 w-4 rounded-full" :class="label.bg_color" />
+            <span class="me-2">{{ label.name }}</span>
             <span v-if="label.count > 0" class="text-xs text-gray-500"
               >({{ $tChoice(':count contact|:count contacts', label.count, { count: label.count }) }})</span
             >
@@ -78,7 +78,7 @@
 
           <!-- actions -->
           <ul class="text-sm">
-            <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="updateLabelModal(label)">
+            <li class="me-4 inline cursor-pointer" @click="updateLabelModal(label)">
               <span class="text-blue-500 hover:underline">{{ $t('Edit') }}</span>
             </li>
             <li
@@ -125,7 +125,7 @@
                   @click="form.text_color = color.text_color" />
                 <label
                   :for="color.bg_color"
-                  class="inline-block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                  class="ms-2 inline-block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                   <div class="rounded p-4" :class="color.bg_color" />
                 </label>
               </div>
@@ -133,10 +133,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span
-              :text="$t('Cancel')"
-              :classes="'ltr:mr-3 rtl:ml-3'"
-              @click.prevent="editLabelModalShownId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="editLabelModalShownId = 0" />
             <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
           </div>
         </form>

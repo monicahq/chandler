@@ -5,15 +5,15 @@
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.settings.index" class="text-blue-500 hover:underline">
                 {{ $t('Settings') }}
               </inertia-link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -36,7 +36,7 @@
         <!-- title + cta -->
         <div class="mb-6 flex items-center justify-between">
           <h3>
-            <span class="ltr:mr-1 rtl:ml-1"> 🥸 </span>
+            <span class="me-1"> 🥸 </span>
             {{ $t('All users in this account') }}
           </h3>
           <pretty-link :href="data.url.users.create" :text="$t('Invite a new user')" :icon="'plus'" />
@@ -58,7 +58,7 @@
                   <!-- is administrator -->
                   <span
                     v-if="user.is_account_administrator"
-                    class="rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500 ltr:ml-2 rtl:mr-2"
+                    class="ms-2 rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500"
                     >{{ $t('Administrator') }}</span
                   >
                 </span>
@@ -91,7 +91,7 @@
                   <!-- is administrator -->
                   <span
                     v-if="user.is_account_administrator"
-                    class="rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500 ltr:ml-2 rtl:mr-2"
+                    class="ms-2 rounded bg-neutral-200 px-2 py-1 text-xs text-neutral-500"
                     >{{ $t('Administrator') }}</span
                   >
                 </span>
@@ -101,7 +101,7 @@
 
               <!-- actions -->
               <ul v-if="!user.is_logged_user" class="text-sm">
-                <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="showEditModal(user)">
+                <li class="me-4 inline cursor-pointer" @click="showEditModal(user)">
                   <span class="text-blue-500 hover:underline">{{ $t('Edit') }}</span>
                 </li>
                 <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(user)">
@@ -128,7 +128,7 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="viewer"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t('Regular user') }}
                   </label>
                 </div>
@@ -144,9 +144,9 @@
                     class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
                   <label
                     for="manager"
-                    class="block cursor-pointer text-sm font-medium text-gray-700 ltr:ml-3 rtl:mr-3 dark:text-gray-300">
+                    class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ $t('Administrator') }}
-                    <span class="font-normal text-gray-500 ltr:ml-4 rtl:mr-4">
+                    <span class="ms-4 font-normal text-gray-500">
                       {{
                         $t(
                           'Can do everything, including adding or removing other users, managing billing and closing the account.',
@@ -158,10 +158,7 @@
               </div>
 
               <div class="flex justify-between p-5">
-                <pretty-span
-                  :text="$t('Cancel')"
-                  :classes="'ltr:mr-3 rtl:ml-3'"
-                  @click.prevent="editModalshownId = 0" />
+                <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="editModalshownId = 0" />
                 <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
               </div>
             </form>

@@ -49,7 +49,7 @@ watch(message, async () => {
               </svg>
             </span>
 
-            <p class="truncate text-sm font-medium text-white ltr:ml-3 rtl:mr-3">
+            <p class="ms-3 truncate text-sm font-medium text-white">
               {{ message }}
             </p>
           </div>

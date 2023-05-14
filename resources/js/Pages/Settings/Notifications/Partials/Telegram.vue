@@ -25,21 +25,21 @@
           {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
         <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
-          <span class="ltr:mr-2 rtl:ml-2">
+          <span class="me-2">
             {{ $t('At') }}
           </span>
 
-          <Dropdown v-model="form.hours" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="hours" />
+          <Dropdown v-model="form.hours" dropdownClass="me-1" :required="required" :data="hours" />
 
-          <span class="ltr:mr-2 rtl:ml-2">:</span>
+          <span class="me-2">:</span>
 
-          <Dropdown v-model="form.minutes" dropdownClass="ltr:mr-1 rtl:ml-1" :required="required" :data="minutes" />
+          <Dropdown v-model="form.minutes" dropdownClass="me-1" :required="required" :data="minutes" />
         </div>
       </div>
 
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
-        <p class="mb-4 font-semibold"><span class="ltr:mr-1 rtl:ml-1">👋</span> {{ $t('What happens now?') }}</p>
-        <ol class="list-decimal ltr:ml-4 rtl:mr-4">
+        <p class="mb-4 font-semibold"><span class="me-1">👋</span> {{ $t('What happens now?') }}</p>
+        <ol class="ms-4 list-decimal">
           <li class="mb-2">
             {{
               $t(
@@ -61,10 +61,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span
-          :text="$t('Cancel')"
-          :classes="'ltr:mr-3 rtl:ml-3'"
-          @click.prevent="setupTelegramModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="setupTelegramModalShown = false" />
         <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -86,7 +83,7 @@
             <a-tooltip v-if="localTelegram.active" placement="topLeft" title="Verified" arrow-point-at-center>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="inline h-4 w-4 text-green-600 ltr:mr-2 rtl:ml-2"
+                class="me-2 inline h-4 w-4 text-green-600"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -106,7 +103,7 @@
 
           <!-- actions when Telegram is not active -->
           <ul v-if="!localTelegram.active" class="text-sm">
-            <li class="inline ltr:mr-4 rtl:ml-4">
+            <li class="me-4 inline">
               <a :href="localTelegram.url.open" target="_blank" class="text-blue-500 hover:underline">{{
                 $t('Open Telegram to validate your identity')
               }}</a>
@@ -122,16 +119,16 @@
             <!-- link to send a test notification, if not already sent -->
             <li
               v-if="!notificationSent"
-              class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+              class="me-4 inline cursor-pointer text-blue-500 hover:underline"
               @click="sendTest">
               {{ $t('Send test') }}
             </li>
-            <li v-if="notificationSent" class="inline ltr:mr-4 rtl:ml-4">
+            <li v-if="notificationSent" class="me-4 inline">
               {{ $t('Notification sent') }}
             </li>
 
             <!-- view log -->
-            <li class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4">
+            <li class="me-4 inline cursor-pointer text-blue-500 hover:underline">
               <inertia-link :href="localTelegram.url.logs" class="text-blue-500 hover:underline">
                 {{ $t('View log') }}
               </inertia-link>

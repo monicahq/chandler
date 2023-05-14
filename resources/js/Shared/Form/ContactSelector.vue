@@ -4,7 +4,9 @@
     <div>
       <label v-if="label" class="mb-2 block text-sm" :for="id">
         {{ label }}
-        <span v-if="!required" class="optional-badge dark:optional-badge text-xs"> {{ $t('optional') }} </span>
+        <span v-if="!required" class="optional-badge rounded px-[3px] py-px text-xs">
+          {{ $t('optional') }}
+        </span>
       </label>
 
       <!-- list of selected contacts -->
@@ -41,7 +43,7 @@
       <div class="relative mb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon-search absolute h-4 w-4 text-gray-400"
+          class="absolute start-2 top-[13px] h-4 w-4 text-gray-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor">
@@ -312,27 +314,13 @@ export default {
 
 <style lang="scss" scoped>
 .optional-badge {
-  border-radius: 4px;
   color: #283e59;
   background-color: #edf2f9;
-  padding: 1px 3px;
 }
 
-.dark .dark\:optional-badge {
+.dark .optional-badge {
   color: #d4d8dd;
-  background-color: #2f3031;
-}
-
-.icon-search {
-  top: 13px;
-}
-
-.ltr .icon-search {
-  left: 8px;
-}
-
-.rtl .icon-search {
-  right: 8px;
+  background-color: #2f3031 !important;
 }
 
 .item-list {

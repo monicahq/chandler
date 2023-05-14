@@ -15,10 +15,10 @@ defineProps({
   <div>
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span v-if="$slots.icon" class="ltr:mr-1 rtl:ml-1">
+        <span v-if="$slots.icon" class="me-1">
           <slot name="icon" />
         </span>
-        <span class="ltr:mr-2 rtl:ml-2">
+        <span class="me-2">
           <slot name="title" />
         </span>
 

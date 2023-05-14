@@ -156,15 +156,15 @@ const destroyAvatar = () => {
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="inline text-gray-600 ltr:mr-2 rtl:ml-2 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="inline ltr:mr-2 rtl:ml-2">
+            <li class="me-2 inline">
               <Link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 {{ $t('Contacts') }}
               </Link>
             </li>
-            <li class="relative inline ltr:mr-2 rtl:ml-2">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -187,9 +187,9 @@ const destroyAvatar = () => {
         <!-- banner if contact is archived -->
         <!-- this is based on the `listed` boolean on the contact object -->
         <div v-if="!data.listed" class="mb-8 rounded-lg border border-gray-300 px-3 py-2 text-center">
-          <span class="ltr:mr-4 rtl:ml-4"> 🕸️ </span>
+          <span class="me-4"> 🕸️ </span>
           {{ $t('The contact is archived') }}
-          <span class="ltr:ml-4 rtl:mr-4"> 🕷️ </span>
+          <span class="ms-4"> 🕷️ </span>
         </div>
 
         <div class="special-grid grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -278,13 +278,13 @@ const destroyAvatar = () => {
             <!-- family summary -->
             <div v-if="data.group_summary_information.length > 0">
               <div class="mb-6 flex rounded border border-gray-200 p-3 dark:border-gray-700">
-                <img src="/img/group.svg" class="h-6 w-6 ltr:mr-2 rtl:ml-2" />
+                <img src="/img/group.svg" class="me-2 h-6 w-6" />
                 <ul>
-                  <li class="inline ltr:mr-2 rtl:ml-2">{{ $t('Part of') }}</li>
+                  <li class="me-2 inline">{{ $t('Part of') }}</li>
                   <li
                     v-for="group in data.group_summary_information"
                     :key="group.id"
-                    class="group-list-item inline ltr:mr-2 rtl:ml-2">
+                    class="group-list-item me-2 inline">
                     <Link :href="group.url.show" class="text-blue-500 hover:underline">
                       {{ group.name }}
                     </Link>
@@ -296,7 +296,7 @@ const destroyAvatar = () => {
             <!-- all the pages -->
             <div class="mb-8 w-full border-b border-gray-200 dark:border-gray-700">
               <div class="flex overflow-x-auto">
-                <div v-for="page in data.template_pages" :key="page.id" class="flex-none ltr:mr-2 rtl:ml-2">
+                <div v-for="page in data.template_pages" :key="page.id" class="me-2 flex-none">
                   <Link
                     :href="page.url.show"
                     :class="{ 'border-orange-500 hover:border-orange-500': page.selected }"
@@ -369,7 +369,7 @@ const destroyAvatar = () => {
           </JetSecondaryButton>
 
           <JetDangerButton
-            class="ltr:ml-3 rtl:mr-3"
+            class="ms-3"
             :class="{ 'opacity-25': deleteContactForm.processing }"
             :disabled="deleteContactForm.processing"
             @click="destroy">
@@ -394,7 +394,7 @@ const destroyAvatar = () => {
           </JetSecondaryButton>
 
           <JetButton
-            class="ltr:ml-3 rtl:mr-3"
+            class="ms-3"
             :class="{ 'opacity-25': toggleArchiveForm.processing }"
             :disabled="toggleArchiveForm.processing"
             @click="toggleArchive">

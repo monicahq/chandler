@@ -52,21 +52,21 @@
           {{ $t('At which time should we send the notification, when the reminder occurs?') }}
         </p>
         <div class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300">
-          <span class="ltr:mr-2 rtl:ml-2">
+          <span class="me-2">
             {{ $t('At') }}
           </span>
 
-          <Dropdown v-model="form.hours" dropdown-class="ltr:mr-1 rtl:ml-1" :required="required" :data="hours" />
+          <Dropdown v-model="form.hours" dropdown-class="me-1" :required="required" :data="hours" />
 
-          <span class="ltr:mr-2 rtl:ml-2">:</span>
+          <span class="me-2">:</span>
 
-          <Dropdown v-model="form.minutes" dropdown-class="ltr:mr-1 rtl:ml-1" :required="required" :data="minutes" />
+          <Dropdown v-model="form.minutes" dropdown-class="me-1" :required="required" :data="minutes" />
         </div>
       </div>
 
       <div class="border-b border-gray-200 p-5 dark:border-gray-700">
         <p class="flex">
-          <span class="ltr:mr-2 rtl:ml-2">⚠️</span>
+          <span class="me-2">⚠️</span>
           {{
             $t(
               'We’ll send an email to this email address that you will need to confirm before we can send notifications to this address.',
@@ -76,7 +76,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click.prevent="addEmailModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="addEmailModalShown = false" />
         <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -93,7 +93,7 @@
           <a-tooltip v-if="email.verified_at" placement="topLeft" title="Verified" arrow-point-at-center>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="inline h-4 w-4 text-green-600 ltr:mr-2 rtl:ml-2"
+              class="me-2 inline h-4 w-4 text-green-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
@@ -108,8 +108,8 @@
           <!-- email address + label -->
           <div>
             <span class="mb-0 block">{{ email.content }}</span>
-            <ul class="bulleted-list text-sm text-gray-500 ltr:mr-2 rtl:ml-2">
-              <li v-if="email.label" class="inline ltr:mr-1 rtl:ml-1">
+            <ul class="bulleted-list me-2 text-sm text-gray-500">
+              <li v-if="email.label" class="me-1 inline">
                 {{ email.label }}
               </li>
               <li class="inline">
@@ -124,13 +124,13 @@
           <!-- activate/deactivate -->
           <li
             v-if="email.active"
-            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+            class="me-4 inline cursor-pointer text-blue-500 hover:underline"
             @click="toggle(email)">
             {{ $t('Deactivate') }}
           </li>
           <li
             v-if="!email.active"
-            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+            class="me-4 inline cursor-pointer text-blue-500 hover:underline"
             @click="toggle(email)">
             {{ $t('Activate') }}
           </li>
@@ -138,18 +138,18 @@
           <!-- link to send a test email, if not already sent -->
           <li
             v-if="testEmailSentId != email.id"
-            class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4"
+            class="me-4 inline cursor-pointer text-blue-500 hover:underline"
             @click="sendTest(email)">
             {{ $t('Send test') }}
           </li>
 
           <!-- text saying that the email has been sent -->
-          <li v-if="testEmailSentId == email.id" class="inline ltr:mr-4 rtl:ml-4">
+          <li v-if="testEmailSentId == email.id" class="me-4 inline">
             {{ $t('Test email sent!') }}
           </li>
 
           <!-- view log -->
-          <li class="inline cursor-pointer text-blue-500 hover:underline ltr:mr-4 rtl:ml-4">
+          <li class="me-4 inline cursor-pointer text-blue-500 hover:underline">
             <inertia-link :href="email.url.logs" class="text-blue-500 hover:underline">
               {{ $t('View log') }}
             </inertia-link>
@@ -163,7 +163,7 @@
 
         <!-- actions when the email has NOT been verified -->
         <ul v-else class="text-sm">
-          <li class="inline ltr:mr-4 rtl:ml-4">
+          <li class="me-4 inline">
             {{ $t('Verification email sent') }}
           </li>
 

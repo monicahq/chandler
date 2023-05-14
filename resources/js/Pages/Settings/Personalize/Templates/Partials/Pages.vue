@@ -45,7 +45,7 @@
           class="mb-2 flex items-center rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-5 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-900 hover:dark:bg-slate-800"
           @click="selectPage(element)">
           <!-- icon to move position -->
-          <div class="ltr:mr-2 rtl:ml-2">
+          <div class="me-2">
             <svg
               class="handle cursor-move"
               width="24"
@@ -72,7 +72,7 @@
             </div>
 
             <ul class="text-xs">
-              <li class="inline cursor-pointer ltr:mr-4 rtl:ml-4" @click="renamePageModal(element)">
+              <li class="me-4 inline cursor-pointer" @click="renamePageModal(element)">
                 <span class="text-blue-500 hover:underline">{{ $t('Rename') }}</span>
               </li>
               <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(element)">
@@ -104,10 +104,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span
-              :text="$t('Cancel')"
-              :classes="'ltr:mr-3 rtl:ml-3'"
-              @click.prevent="renamePageModalShownId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click.prevent="renamePageModalShownId = 0" />
             <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
           </div>
         </form>
@@ -136,7 +133,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createPageModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createPageModalShown = false" />
         <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save dark:save'" />
       </div>
     </form>

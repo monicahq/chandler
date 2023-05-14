@@ -3,7 +3,7 @@
     <!-- title + cta -->
     <div class="mb-3 items-center justify-between border-b border-gray-200 pb-2 dark:border-gray-700 sm:flex">
       <div class="mb-2 sm:mb-0">
-        <span class="relative ltr:mr-1 rtl:ml-1">
+        <span class="relative me-1">
           <svg
             class="icon-sidebar relative inline h-4 w-4"
             viewBox="0 0 24 24"
@@ -78,7 +78,7 @@
               name="emotion"
               type="radio"
               class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-700 dark:bg-slate-900 dark:text-indigo-400" />
-            <label :for="emotion.type" class="block font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+            <label :for="emotion.type" class="ms-2 block font-medium text-gray-700 dark:text-gray-300">
               {{ emotion.name }}
             </label>
           </div>
@@ -87,7 +87,7 @@
         <!-- cta to add a title -->
         <span
           v-if="!titleFieldShown"
-          class="inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 ltr:mr-2 rtl:ml-2 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
+          class="me-2 inline-block cursor-pointer rounded-lg border bg-slate-200 px-1 py-1 text-xs hover:bg-slate-300 dark:border-gray-700 dark:bg-slate-800 hover:dark:bg-slate-700"
           @click="showTitleField">
           {{ $t('+ add title') }}
         </span>
@@ -102,7 +102,7 @@
       </div>
 
       <div class="flex justify-between p-5">
-        <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="createNoteModalShown = false" />
+        <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="createNoteModalShown = false" />
         <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
       </div>
     </form>
@@ -138,12 +138,12 @@
             class="flex justify-between border-t border-gray-200 px-3 py-1 text-xs text-gray-600 hover:rounded-b hover:bg-slate-50 dark:border-gray-700 dark:text-gray-400 hover:dark:bg-slate-900">
             <div class="flex items-center">
               <!-- emotion -->
-              <div v-if="note.emotion" class="relative inline ltr:mr-3 rtl:ml-3">
+              <div v-if="note.emotion" class="relative me-3 inline">
                 {{ note.emotion.name }}
               </div>
 
               <!-- date -->
-              <div class="relative inline ltr:mr-3 rtl:ml-3">
+              <div class="relative me-3 inline">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="icon-note relative inline h-3 w-3 text-gray-400"
@@ -160,9 +160,9 @@
               </div>
 
               <!-- author -->
-              <div v-if="note.author" class="relative inline ltr:mr-3 rtl:ml-3">
+              <div v-if="note.author" class="relative me-3 inline">
                 <div class="icon-avatar relative flex">
-                  <avatar :data="note.author.avatar" :classes="'rounded-full relative ltr:mr-1 rtl:ml-1 h-3 w-3'" />
+                  <avatar :data="note.author.avatar" :classes="'rounded-full relative me-1 h-3 w-3'" />
                   <span>{{ note.author.name }}</span>
                 </div>
               </div>
@@ -213,7 +213,7 @@
                   name="emotion"
                   type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400" />
-                <label :for="emotion.type" class="block font-medium text-gray-700 ltr:ml-2 rtl:mr-2 dark:text-gray-300">
+                <label :for="emotion.type" class="ms-2 block font-medium text-gray-700 dark:text-gray-300">
                   {{ emotion.name }}
                 </label>
               </div>
@@ -221,7 +221,7 @@
           </div>
 
           <div class="flex justify-between p-5">
-            <pretty-span :text="$t('Cancel')" :classes="'ltr:mr-3 rtl:ml-3'" @click="editedNoteId = 0" />
+            <pretty-span :text="$t('Cancel')" :classes="'me-3'" @click="editedNoteId = 0" />
             <pretty-button :text="$t('Update')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
           </div>
         </form>

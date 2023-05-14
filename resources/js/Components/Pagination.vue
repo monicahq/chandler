@@ -44,8 +44,7 @@ const linkClasses =
         :class="[
           commonClasses,
           linkClasses,
-          'ltr:ml-3',
-          'rtl:mr-3',
+          'ms-3',
           'rounded-md',
           'text-gray-700',
           'dark:text-gray-300',
@@ -55,15 +54,7 @@ const linkClasses =
       </Link>
       <span
         v-else
-        :class="[
-          commonClasses,
-          'ltr:ml-3',
-          'rtl:mr-3',
-          'rounded-md',
-          'text-gray-500',
-          'cursor-default',
-          'dark:bg-gray-900',
-        ]">
+        :class="[commonClasses, 'ms-3', 'rounded-md', 'text-gray-500', 'cursor-default', 'dark:bg-gray-900']">
         <span v-html="$t('Next')"></span>
       </span>
     </div>
@@ -95,8 +86,7 @@ const linkClasses =
           :class="[
             commonClasses,
             'px-2',
-            'ltr:rounded-l-md',
-            'rtl:rounded-r-md',
+            'rounded-s-md',
             'text-gray-500',
             'focus:z-10',
             'cursor-default',
@@ -117,8 +107,7 @@ const linkClasses =
             commonClasses,
             linkClasses,
             'px-2',
-            'ltr:rounded-l-md',
-            'rtl:rounded-r-md',
+            'rounded-s-md',
             'text-gray-500',
             'dark:bg-gray-900',
             'hover:text-gray-400',
@@ -177,8 +166,7 @@ const linkClasses =
             linkClasses,
             '-ml-px',
             'px-2',
-            'ltr:rounded-r-md',
-            'rtl:rounded-l-md',
+            'rounded-e-md',
             'text-gray-500',
             'dark:bg-gray-900',
             'hover:text-gray-400',
@@ -195,8 +183,7 @@ const linkClasses =
             linkClasses,
             '-ml-px',
             'px-2',
-            'ltr:rounded-r-md',
-            'rtl:rounded-l-md',
+            'rounded-e-md',
             'text-gray-500',
             'dark:bg-gray-900',
             'focus:z-10',

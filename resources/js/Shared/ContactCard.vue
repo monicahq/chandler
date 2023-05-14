@@ -5,7 +5,7 @@
       <template #content>
         <div class="flex">
           <!-- avatar -->
-          <div class="ltr:mr-2 rtl:ml-2">
+          <div class="me-2">
             <div v-if="contact.avatar.type === 'svg'" class="h-16 w-16 rounded-full" v-html="contact.avatar.content" />
             <img v-else class="h-16 w-16 rounded-full" :src="contact.avatar.content" alt="avatar" />
           </div>
@@ -21,7 +21,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-4 w-4 text-gray-400 ltr:mr-1 rtl:ml-1">
+                class="me-1 h-4 w-4 text-gray-400">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -40,7 +40,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="h-4 w-4 text-gray-400 ltr:mr-2 rtl:ml-2">
+                class="me-2 h-4 w-4 text-gray-400">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"

@@ -36,7 +36,7 @@ const submit = () => {
 
     <form @submit.prevent="submit">
       <h1 class="mb-3 text-center text-xl">
-        <span class="ltr:mr-2 rtl:ml-2"> 👋 </span>
+        <span class="me-2"> 👋 </span>
         {{ $t('Welcome to Monica.') }}
       </h1>
       <p class="mb-4 text-center">{{ $t('Please complete this form to finalize your account.') }}'</p>
@@ -87,7 +87,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4 flex items-center justify-end">
-        <JetButton class="ltr:ml-4 rtl:mr-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        <JetButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           {{ $t('Create account') }}
         </JetButton>
       </div>
