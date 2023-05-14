@@ -390,7 +390,11 @@ const destroy = () => {
             <p class="mb-2 flex items-center font-bold">
               <span>{{ $t('Written on') }}</span>
             </p>
-            <DatePicker v-model.string="form.date" :masks="masks" class="mb-6 inline-block">
+            <DatePicker
+              v-model.string="form.date"
+              :masks="masks"
+              :locale="$attrs.user.locale"
+              class="mb-6 inline-block">
               <template v-slot="{ inputValue, inputEvents }">
                 <input
                   class="rounded border bg-white px-2 py-1 dark:border-gray-700 dark:bg-gray-900"

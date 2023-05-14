@@ -274,6 +274,7 @@ const store = () => {
             :timezone="'UTC'"
             class="inline-block h-full"
             :masks="masks"
+            :locale="$attrs.user.locale"
             :is-dark="isDark()">
             <template #default="{ inputValue, inputEvents }">
               <input

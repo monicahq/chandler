@@ -118,7 +118,12 @@
           <div class="border-b border-gray-200 p-5 dark:border-gray-700">
             <p class="mb-2 block text-sm">{{ $t('When was the loan made?') }}</p>
 
-            <DatePicker v-model.string="form.loaned_at" class="inline-block h-full" :masks="masks" :is-dark="isDark()">
+            <DatePicker
+              v-model.string="form.loaned_at"
+              class="inline-block h-full"
+              :masks="masks"
+              :locale="$attrs.user.locale"
+              :is-dark="isDark()">
               <template #default="{ inputValue, inputEvents }">
                 <input
                   class="rounded border bg-white px-2 py-1 dark:bg-gray-900"

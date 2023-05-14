@@ -113,7 +113,12 @@
                 </label>
               </div>
               <div v-if="form.choice == 'full_date'" class="mb-4 ltr:ml-6 rtl:mr-6">
-                <DatePicker v-model.string="form.date" class="inline-block h-full" :masks="masks" :isDark="isDark">
+                <DatePicker
+                  v-model.string="form.date"
+                  class="inline-block h-full"
+                  :masks="masks"
+                  :isDark="isDark"
+                  :locale="$attrs.user.locale">
                   <template #default="{ inputValue, inputEvents }">
                     <input
                       class="rounded border bg-white px-2 py-1 dark:bg-gray-900"
@@ -331,6 +336,7 @@
                       class="inline-block h-full"
                       :masks="masks"
                       :isDark="isDark"
+                      :locale="$attrs.user.locale"
                       :update-on-input="false">
                       <template #default="{ inputValue, inputEvents }">
                         <input

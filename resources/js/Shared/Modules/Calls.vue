@@ -41,7 +41,12 @@
         <div class="flex border-b border-gray-200 dark:border-gray-700">
           <div class="p-5">
             <p class="mb-2 block text-sm">{{ $t('When did the call happened?') }}</p>
-            <DatePicker v-model.string="form.called_at" class="inline-block h-full" :masks="masks" :is-dark="isDark()">
+            <DatePicker
+              v-model.string="form.called_at"
+              class="inline-block h-full"
+              :masks="masks"
+              :locale="$attrs.user.locale"
+              :is-dark="isDark()">
               <template #default="{ inputValue, inputEvents }">
                 <input
                   class="rounded border bg-white px-2 py-1 dark:bg-gray-900"

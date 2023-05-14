@@ -205,7 +205,7 @@
                     <div
                       v-for="field in row.fields"
                       :key="field.id"
-                      class="border-gray-200 last:border-r-0 ltr:border-r rtl:border-l dark:border-gray-700">
+                      class="border-gray-200 ltr:border-r last:ltr:border-r-0 rtl:border-l last:rtl:border-l-0 dark:border-gray-700">
                       <!-- row options -->
                       <div class="flex justify-between border-b border-gray-200 px-3 py-1 text-xs dark:border-gray-700">
                         <div>

@@ -160,12 +160,13 @@ const submit = () => {
 
         <!-- date picker -->
         <div v-if="datePickerFieldShown">
-          <p class="mb-2 mt-2 block text-sm dark:text-gray-100">Change date</p>
+          <p class="mb-2 mt-2 block text-sm dark:text-gray-100">{{ $t('Change date') }}</p>
           <DatePicker
             v-model.string="form.date"
             :timezone="'UTC'"
             class="inline-block h-full"
             :masks="masks"
+            :locale="$attrs.user.locale"
             :is-dark="isDark()">
             <template #default="{ inputValue, inputEvents }">
               <input

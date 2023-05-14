@@ -13,13 +13,8 @@ const levelClass = ref(null);
 const messageText = ref(null);
 
 onMounted(() => {
-  if (props.level) {
-    levelClass.value = 'is-' + props.level;
-  }
-
   if (props.message) {
-    messageText.value = props.message;
-    show();
+    show(props);
   }
 
   emitter.on('flash', (data) => show(data));
