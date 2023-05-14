@@ -87,7 +87,7 @@
             <div>
               <!-- search a module -->
               <div
-                class="module-list rounded-t-md border-s border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+                class="module-list rounded-t-md border-x border-t border-gray-200 px-3 py-2 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
                 <text-input
                   v-model="form.search"
                   :type="'text'"

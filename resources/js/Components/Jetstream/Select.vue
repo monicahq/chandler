@@ -151,7 +151,7 @@ const alignmentClasses = computed(() => {
           </svg>
         </button>
       </div>
-      <div class="flex w-8 items-center border-e border-gray-200 py-1 pl-2 pr-1 text-gray-300 dark:border-gray-600">
+      <div class="flex w-8 items-center border-s border-gray-200 py-1 pl-2 pr-1 text-gray-300 dark:border-gray-600">
         <button
           @click.prevent="
             open = !open;
