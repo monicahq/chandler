@@ -4,7 +4,7 @@
       <!-- blank state -->
       <div v-if="data.vaults.length == 0" class="mx-auto mb-6 max-w-md px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div
-          class="dark:bg-ghray-900 rounded-t-lg border-l border-r border-t border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
+          class="dark:bg-gray-900 rounded-t-lg border-l border-r border-t border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
           <p class="mb-2 text-center text-xl">👋</p>
           <h2 class="mb-6 text-center text-lg font-semibold">
             {{ $t('Thanks for giving Monica a try') }}
@@ -34,7 +34,7 @@
             <a href="https://phpc.social/@regis" rel="noopener noreferrer" class="text-blue-500 hover:underline">
               Régis
             </a>
-            &
+            &amp;
             <a href="https://twitter.com/asbin" rel="noopener noreferrer" class="text-blue-500 hover:underline">
               Alexis
             </a>
