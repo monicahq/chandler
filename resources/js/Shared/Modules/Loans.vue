@@ -204,11 +204,8 @@
             <div class="flex items-center justify-between">
               <div>
                 <span class="mr-2 block">
-                  <span v-if="loan.amount_lent" class="mr-2">
-                    <span v-if="loan.currency_name" class="mr-1 text-gray-500">
-                      {{ loan.currency_name }}
-                    </span>
-                    {{ loan.amount_lent }}
+                  <span v-if="loan.amount_full" class="mr-2">
+                    {{ loan.amount_full }}
                     <span class="ml-2"> • </span>
                   </span>
                   {{ loan.name }}
@@ -527,7 +524,7 @@ export default {
       axios
         .post(this.data.url.store, this.form)
         .then((response) => {
-          this.flash($t('The loan has been created'), 'success');
+          this.flash(this.$t('The loan has been created'), 'success');
           this.localLoans.unshift(response.data.data);
           this.loadingState = '';
           this.createLoanModalShown = false;
@@ -545,7 +542,7 @@ export default {
         .put(loan.url.update, this.form)
         .then((response) => {
           this.loadingState = '';
-          this.flash($t('The loan has been edited'), 'success');
+          this.flash(this.$t('The loan has been edited'), 'success');
           this.localLoans[this.localLoans.findIndex((x) => x.id === loan.id)] = response.data.data;
           this.editedLoanId = 0;
         })

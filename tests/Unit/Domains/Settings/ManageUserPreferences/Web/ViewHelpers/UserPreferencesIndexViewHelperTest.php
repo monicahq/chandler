@@ -208,6 +208,11 @@ class UserPreferencesIndexViewHelperTest extends TestCase
                 ],
                 2 => [
                     'id' => 3,
+                    'format' => '1.234,56',
+                    'value' => User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL,
+                ],
+                3 => [
+                    'id' => 4,
                     'format' => '1234.56',
                     'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
                 ],

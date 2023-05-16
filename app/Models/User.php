@@ -33,6 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     public const NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL = '1 234,56';
 
+    public const NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL = '1.234,56';
+
     public const NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL = '1234.56';
 
     /**
