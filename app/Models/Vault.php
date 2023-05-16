@@ -64,6 +64,7 @@ class Vault extends Model
         'show_journal_tab' => 'boolean',
         'show_companies_tab' => 'boolean',
         'show_reports_tab' => 'boolean',
+        'show_kitchen_tab' => 'boolean',
     ];
 
     /**
@@ -221,6 +222,30 @@ class Vault extends Model
     public function quickFactsTemplateEntries(): HasMany
     {
         return $this->hasMany(VaultQuickFactsTemplate::class);
+    }
+
+    /**
+     * Get the meal category records associated with the vault.
+     */
+    public function mealCategories(): HasMany
+    {
+        return $this->hasMany(MealCategory::class);
+    }
+
+    /**
+     * Get the meal records associated with the vault.
+     */
+    public function meals(): HasMany
+    {
+        return $this->hasMany(Meal::class);
+    }
+
+    /**
+     * Get the ingredient records associated with the vault.
+     */
+    public function ingredients(): HasMany
+    {
+        return $this->hasMany(Ingredient::class);
     }
 
     /**

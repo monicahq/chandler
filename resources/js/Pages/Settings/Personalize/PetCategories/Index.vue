@@ -86,7 +86,7 @@
           </div>
         </form>
 
-        <!-- list of groups types -->
+        <!-- list of pet categories -->
         <ul
           v-if="localPetCategories.length > 0"
           class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">

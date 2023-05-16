@@ -82,6 +82,7 @@ class UpdateVaultTabVisibilityTest extends TestCase
             'show_journal_tab' => true,
             'show_companies_tab' => true,
             'show_reports_tab' => true,
+            'show_kitchen_tab' => true,
             'show_calendar_tab' => true,
         ];
 
@@ -96,6 +97,7 @@ class UpdateVaultTabVisibilityTest extends TestCase
             'show_journal_tab' => true,
             'show_companies_tab' => true,
             'show_reports_tab' => true,
+            'show_kitchen_tab' => true,
             'show_calendar_tab' => true,
         ]);
     }

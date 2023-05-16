@@ -1,0 +1,262 @@
+<script setup>
+import Layout from '@/Shared/Layout.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettySpan from '@/Shared/Form/PrettySpan.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { onMounted, ref, nextTick } from 'vue';
+import { trans } from 'laravel-vue-i18n';
+import { flash } from '@/methods.js';
+
+const props = defineProps({
+  layoutData: Object,
+  data: Object,
+});
+
+const loadingState = ref(false);
+const localMeals = ref([]);
+const nameField = ref(null);
+const createMealsModalShown = ref(false);
+const editedMealId = ref(0);
+
+onMounted(() => {
+  localMeals.value = props.data.meals;
+});
+
+const form = useForm({
+  name: null,
+});
+
+const showAddModal = () => {
+  form.name = null;
+  createMealsModalShown.value = true;
+
+  nextTick(() => {
+    nameField.value.focus();
+  });
+};
+
+const showUpdateModal = (meal) => {
+  form.name = meal.name;
+  editedMealId.value = meal.id;
+
+  nextTick(() => {
+    nameField.value.focus();
+  });
+};
+
+const store = () => {
+  loadingState.value = 'loading';
+
+  axios
+    .post(props.data.url.store, form)
+    .then((response) => {
+      flash(trans('The meal has been added'), 'success');
+      loadingState.value = '';
+      createMealsModalShown.value = false;
+      localMeals.value.push(response.data.data);
+    })
+    .catch(() => {
+      loadingState.value = '';
+    });
+};
+
+const update = (meal) => {
+  loadingState.value = 'loading';
+
+  axios
+    .put(meal.url.update, form)
+    .then((response) => {
+      flash(trans('The meal has been updated'), 'success');
+      loadingState.value = '';
+      editedMealId.value = 0;
+      localMeals.value[localMeals.value.findIndex((x) => x.id === meal.id)] = response.data.data;
+    })
+    .catch(() => {
+      loadingState.value = '';
+    });
+};
+
+const destroy = (meal) => {
+  if (confirm(trans('Are you sure? This action cannot be undone.'))) {
+    axios.delete(meal.url.destroy).then(() => {
+      flash(trans('The meal has been deleted'), 'success');
+      var id = localMeals.value.findIndex((x) => x.id === meal.id);
+      localMeals.value.splice(id, 1);
+    });
+  }
+};
+</script>
+
+<template>
+  <layout :layout-data="layoutData" :inside-vault="true">
+    <!-- breadcrumb -->
+    <nav class="bg-white dark:bg-gray-900 sm:mt-20 sm:border-b">
+      <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
+        <div class="flex items-baseline justify-between space-x-6">
+          <ul class="text-sm">
+            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+              {{ $t('You are here:') }}
+            </li>
+            <li class="mr-2 inline">
+              <inertia-link :href="layoutData.vault.url.journals" class="text-blue-500 hover:underline">
+                {{ $t('Kitchen') }}
+              </inertia-link>
+            </li>
+            <li class="relative mr-2 inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon-breadcrumb relative inline h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+            <li class="inline">{{ $t('Meals list') }}</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="sm:mt-18 relative">
+      <div class="mx-auto max-w-3xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
+        <!-- tabs -->
+        <div class="flex justify-center">
+          <div class="mb-8 inline-flex rounded-md shadow-sm">
+            <span
+              class="inline-flex items-center rounded-l-md border-b border-l border-t border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-400 dark:font-bold dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              {{ $t('Meals') }}
+            </span>
+
+            <inertia-link
+              :href="data.url.ingredients"
+              class="inline-flex items-center rounded-r-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white hover:dark:bg-gray-600 hover:dark:text-white dark:focus:text-white dark:focus:ring-blue-500">
+              {{ $t('Ingredients') }}
+            </inertia-link>
+          </div>
+        </div>
+
+        <!-- title + cta -->
+        <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
+          <h3 class="mb-4 sm:mb-0">
+            <span class="mr-1"> 🥘 </span>
+            {{ $t('All the meals') }}
+          </h3>
+          <pretty-button v-if="!createMealsModalShown" :text="$t('Add a meal')" :icon="'plus'" @click="showAddModal" />
+        </div>
+
+        <!-- modal to create a meal -->
+        <form
+          v-if="createMealsModalShown"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+          @submit.prevent="store()">
+          <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+            <errors :errors="form.errors" />
+
+            <text-input
+              ref="nameField"
+              v-model="form.name"
+              :label="$t('Name')"
+              :type="'text'"
+              :autofocus="true"
+              :input-class="'block w-full'"
+              :required="true"
+              :autocomplete="false"
+              :maxlength="255"
+              @esc-key-pressed="createMealsModalShown = false" />
+          </div>
+
+          <div class="flex justify-between p-5">
+            <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click="createMealsModalShown = false" />
+            <pretty-button :text="$t('Add')" :state="loadingState" :icon="'plus'" :classes="'save'" />
+          </div>
+        </form>
+
+        <!-- list of meals -->
+        <ul
+          v-if="localMeals.length > 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <li
+            v-for="meal in localMeals"
+            :key="meal.id"
+            class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800">
+            <!-- detail of the meal -->
+            <div v-if="editedMealId != meal.id" class="flex items-center justify-between px-5 py-2">
+              <span class="text-base"
+                ><inertia-link :href="meal.url.show" class="text-blue-500 hover:underline">{{
+                  meal.name
+                }}</inertia-link></span
+              >
+
+              <!-- actions -->
+              <ul class="text-sm">
+                <li class="mr-4 inline" @click="showUpdateModal(meal)">
+                  <span class="cursor-pointer text-blue-500 hover:underline">{{ $t('Rename') }}</span>
+                </li>
+                <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(meal)">
+                  {{ $t('Delete') }}
+                </li>
+              </ul>
+            </div>
+
+            <!-- rename a meal modal -->
+            <form
+              v-if="editedMealId == meal.id"
+              class="item-list border-b border-gray-200 hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-900 hover:dark:bg-slate-800"
+              @submit.prevent="update(meal)">
+              <div class="border-b border-gray-200 p-5 dark:border-gray-700">
+                <errors :errors="form.errors" />
+
+                <text-input
+                  ref="nameField"
+                  v-model="form.name"
+                  :label="$t('Name')"
+                  :type="'text'"
+                  :autofocus="true"
+                  :input-class="'block w-full'"
+                  :required="true"
+                  :autocomplete="false"
+                  :maxlength="255"
+                  @esc-key-pressed="editedMealId = 0" />
+              </div>
+
+              <div class="flex justify-between p-5">
+                <pretty-span :text="$t('Cancel')" :classes="'mr-3'" @click.prevent="editedMealId = 0" />
+                <pretty-button :text="$t('Rename')" :state="loadingState" :icon="'check'" :classes="'save'" />
+              </div>
+            </form>
+          </li>
+        </ul>
+
+        <!-- blank state -->
+        <div
+          v-if="localMeals.length == 0"
+          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+          <img src="/img/kitchen_meal_blank.svg" :alt="$t('Meals')" class="mx-auto mt-4 h-40 w-40" />
+          <p class="p-5 text-center">
+            {{ $t('Keep track of all your recipes.') }}
+          </p>
+        </div>
+      </div>
+    </main>
+  </layout>
+</template>
+
+<style lang="scss" scoped>
+.item-list {
+  &:hover:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

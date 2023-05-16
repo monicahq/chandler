@@ -60,7 +60,7 @@ class CreateGroupTypeRole extends BaseService implements ServiceInterface
         $groupType = $this->account()->groupTypes()
             ->findOrFail($this->data['group_type_id']);
 
-        // determine the new position of the template page
+        // determine the new position of the group type role
         $newPosition = $groupType->groupTypeRoles()
             ->max('position');
         $newPosition++;

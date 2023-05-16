@@ -71,6 +71,11 @@ class CreateVaultTest extends TestCase
             $contact->can_be_deleted
         );
 
+        $this->assertInstanceOf(
+            Vault::class,
+            $vault
+        );
+
         $this->assertDatabaseHas('user_vault', [
             'vault_id' => $vault->id,
             'user_id' => $author->id,
@@ -90,9 +95,38 @@ class CreateVaultTest extends TestCase
             'can_be_deleted' => false,
         ]);
 
-        $this->assertInstanceOf(
-            Vault::class,
-            $vault
-        );
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Breakfast',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Lunch',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Dinner',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Snack',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Drink',
+        ]);
+        $this->assertDatabaseHas('meal_categories', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Dessert',
+        ]);
+
+        $this->assertDatabaseHas('ingredients', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Tomatoes',
+        ]);
+        $this->assertDatabaseHas('ingredients', [
+            'vault_id' => $vault->id,
+            'label_translation_key' => 'Onions',
+        ]);
     }
 }

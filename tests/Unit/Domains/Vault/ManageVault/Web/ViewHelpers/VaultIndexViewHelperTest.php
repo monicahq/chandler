@@ -50,6 +50,7 @@ class VaultIndexViewHelperTest extends TestCase
                     'show_journal_tab' => false,
                     'show_companies_tab' => false,
                     'show_reports_tab' => false,
+                    'show_kitchen_tab' => false,
                     'show_calendar_tab' => false,
                 ],
                 'url' => [
@@ -58,6 +59,7 @@ class VaultIndexViewHelperTest extends TestCase
                     'calendar' => env('APP_URL').'/vaults/'.$vault->id.'/calendar',
                     'journals' => env('APP_URL').'/vaults/'.$vault->id.'/journals',
                     'groups' => env('APP_URL').'/vaults/'.$vault->id.'/groups',
+                    'kitchen' => env('APP_URL').'/vaults/'.$vault->id.'/kitchen',
                     'companies' => env('APP_URL').'/vaults/'.$vault->id.'/companies',
                     'tasks' => env('APP_URL').'/vaults/'.$vault->id.'/tasks',
                     'files' => env('APP_URL').'/vaults/'.$vault->id.'/files',

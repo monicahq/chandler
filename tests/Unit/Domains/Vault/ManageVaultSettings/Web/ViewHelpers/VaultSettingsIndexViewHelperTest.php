@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Label;
 use App\Models\LifeEventCategory;
 use App\Models\LifeEventType;
+use App\Models\MealCategory;
 use App\Models\MoodTrackingParameter;
 use App\Models\Tag;
 use App\Models\Template;
@@ -44,7 +45,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $vault->refresh();
         $array = VaultSettingsIndexViewHelper::data($vault);
         $this->assertCount(
-            13,
+            14,
             $array
         );
         $this->assertArrayHasKey('templates', $array);
@@ -58,6 +59,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
         $this->assertArrayHasKey('mood_tracking_parameter_colors', $array);
         $this->assertArrayHasKey('life_event_categories', $array);
         $this->assertArrayHasKey('quick_fact_templates', $array);
+        $this->assertArrayHasKey('meal_categories', $array);
         $this->assertEquals(
             [
                 0 => [
@@ -76,6 +78,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'show_journal_tab' => true,
                 'show_companies_tab' => true,
                 'show_reports_tab' => true,
+                'show_kitchen_tab' => true,
                 'show_calendar_tab' => true,
             ],
             $array['visibility']
@@ -118,6 +121,7 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                 'mood_tracking_parameter_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/moodTrackingParameters',
                 'life_event_category_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/lifeEventCategories',
                 'quick_fact_templates_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/quickFactTemplates',
+                'kitchen_store' => env('APP_URL').'/vaults/'.$vault->id.'/settings/mealCategories',
                 'update' => env('APP_URL').'/vaults/'.$vault->id.'/settings',
                 'update_tab_visibility' => env('APP_URL').'/vaults/'.$vault->id.'/settings/visibility',
                 'destroy' => env('APP_URL').'/vaults/'.$vault->id,
@@ -282,6 +286,31 @@ class VaultSettingsIndexViewHelperTest extends TestCase
                     'position' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id.'/order',
                     'update' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id,
                     'destroy' => env('APP_URL').'/vaults/'.$template->vault_id.'/settings/quickFactTemplates/'.$template->id,
+                ],
+            ],
+            $array
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_dto_for_meal_category(): void
+    {
+        $mealCategory = MealCategory::factory()->create();
+
+        $array = VaultSettingsIndexViewHelper::dtoMealCategory($mealCategory);
+        $this->assertEquals(
+            4,
+            count($array)
+        );
+        $this->assertEquals(
+            [
+                'id' => $mealCategory->id,
+                'label' => $mealCategory->label,
+                'position' => 1,
+                'url' => [
+                    'position' => env('APP_URL').'/vaults/'.$mealCategory->vault_id.'/settings/mealCategories/'.$mealCategory->id.'/order',
+                    'update' => env('APP_URL').'/vaults/'.$mealCategory->vault_id.'/settings/mealCategories/'.$mealCategory->id,
+                    'destroy' => env('APP_URL').'/vaults/'.$mealCategory->vault_id.'/settings/mealCategories/'.$mealCategory->id,
                 ],
             ],
             $array
