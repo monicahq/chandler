@@ -27,7 +27,7 @@ class MonetaryNumberHelperTest extends TestCase
             'number_format' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
         ]);
         $this->assertEquals(
-            '12 345,67',
+            '12 345,67',
             MonetaryNumberHelper::formatValue($user, $number)
         );
 

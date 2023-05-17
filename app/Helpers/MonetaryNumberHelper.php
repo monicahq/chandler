@@ -36,7 +36,7 @@ class MonetaryNumberHelper
                 return static::exchangeValue($amount, $currency);
 
             default:
-                return '';
+                return static::exchangeValue($amount, $currency);
         }
     }
 
@@ -63,7 +63,7 @@ class MonetaryNumberHelper
                 return static::formatCurrency($amount, $currency, format: \NumberFormatter::DECIMAL);
 
             default:
-                return '';
+                return static::formatCurrency($amount, $currency, format: \NumberFormatter::DECIMAL);
         }
     }
 

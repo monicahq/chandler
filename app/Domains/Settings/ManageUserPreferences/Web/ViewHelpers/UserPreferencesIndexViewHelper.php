@@ -114,7 +114,7 @@ class UserPreferencesIndexViewHelper
         ]);
         $collection->push([
             'id' => 2,
-            'format' => '1 234,56',
+            'format' => '1 234,56',
             'value' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
         ]);
         $collection->push([
