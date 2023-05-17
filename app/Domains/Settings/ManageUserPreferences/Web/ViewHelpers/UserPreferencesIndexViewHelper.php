@@ -122,11 +122,11 @@ class UserPreferencesIndexViewHelper
             'format' => '1.234,56',
             'value' => User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL,
         ]);
-        $collection->push([
-            'id' => 4,
-            'format' => '1234.56',
-            'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
-        ]);
+        // $collection->push([
+        //     'id' => 4,
+        //     'format' => '1234.56',
+        //     'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+        // ]);
 
         return [
             'numbers' => $collection,

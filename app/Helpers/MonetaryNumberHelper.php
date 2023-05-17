@@ -48,7 +48,7 @@ class MonetaryNumberHelper
         switch ($user->number_format) {
             // 1,234.56
             case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
-                return static::formatCurrency($amount, $currency, 'en');
+                return static::formatCurrency($amount, $currency, 'en-US');
 
                 // 1 234,56
             case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
@@ -60,7 +60,7 @@ class MonetaryNumberHelper
 
                 // 1234.56
             case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
-                return static::formatCurrency($amount, $currency);
+                return static::formatCurrency($amount, $currency, format: \NumberFormatter::DECIMAL);
 
             default:
                 return '';
@@ -79,16 +79,15 @@ class MonetaryNumberHelper
      * @param  string|null  $currency  Currency of amount.
      * @return string Formatted amount for display with currency symbol (ex '1,235.87 €').
      */
-    public static function formatCurrency(int $amount, ?string $currency = null, ?string $locale = null): string
+    public static function formatCurrency(int $amount, ?string $currency = null, ?string $locale = null, ?int $format = \NumberFormatter::CURRENCY): string
     {
         if (! $currency) {
-            $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), \NumberFormatter::DECIMAL);
-
-            return $numberFormatter->format($amount / 100);
+            $currency = 'USD';
+            $format = \NumberFormatter::DECIMAL;
         }
 
         $money = new Money($amount, new Currency($currency));
-        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), \NumberFormatter::CURRENCY);
+        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), $format);
         $moneyFormatter = new IntlMoneyFormatter($numberFormatter, new ISOCurrencies());
 
         return $moneyFormatter->format($money);
@@ -105,7 +104,7 @@ class MonetaryNumberHelper
     public static function getValue(int $amount, ?string $currency = null, ?string $locale = null): string
     {
         if (! $currency) {
-            return (string) ($amount / 100);
+            $currency = 'USD';
         }
 
         $money = new Money($amount, new Currency($currency));
@@ -125,7 +124,7 @@ class MonetaryNumberHelper
     public static function parseInput(string $exchange, ?string $currency): int
     {
         if (! $currency) {
-            return (int) ($exchange * 100);
+            $currency = 'USD';
         }
 
         $moneyParser = new DecimalMoneyParser(new ISOCurrencies());
@@ -145,7 +144,7 @@ class MonetaryNumberHelper
     public static function exchangeValue(int $amount, ?string $currency): string
     {
         if (! $currency) {
-            return (string) ($amount / 100);
+            $currency = 'USD';
         }
 
         $money = new Money($amount, new Currency($currency));

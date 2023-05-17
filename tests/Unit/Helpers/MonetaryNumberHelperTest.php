@@ -20,23 +20,23 @@ class MonetaryNumberHelperTest extends TestCase
         ]);
         $this->assertEquals(
             '12,345.67',
-            MonetaryNumberHelper::format($user, $number)
+            MonetaryNumberHelper::formatValue($user, $number)
         );
 
         $user = User::factory()->create([
             'number_format' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
         ]);
         $this->assertEquals(
-            '12 345,67',
-            MonetaryNumberHelper::format($user, $number)
+            '12 345,67',
+            MonetaryNumberHelper::formatValue($user, $number)
         );
 
         $user = User::factory()->create([
-            'number_format' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+            'number_format' => User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL,
         ]);
         $this->assertEquals(
-            '12345.67',
-            MonetaryNumberHelper::format($user, $number)
+            '12.345,67',
+            MonetaryNumberHelper::formatValue($user, $number)
         );
     }
 }

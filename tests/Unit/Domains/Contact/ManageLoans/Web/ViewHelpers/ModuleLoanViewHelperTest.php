@@ -58,7 +58,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $contact = Contact::factory()->create();
         $otherContact = Contact::factory()->create();
         $user = User::factory()->create([
-            'number_format' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+            'number_format' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
         ]);
         $loan = Loan::factory()->create([
             'currency_id' => Currency::factory()->create(),
@@ -70,7 +70,7 @@ class ModuleLoanViewHelperTest extends TestCase
         $array = ModuleLoanViewHelper::dtoLoan($loan, $contact, $user);
 
         $this->assertEquals(
-            15,
+            16,
             count($array)
         );
 
@@ -91,7 +91,11 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['description']
         );
         $this->assertEquals(
-            '1000.32',
+            '1 000,32 $CA',
+            $array['amount_full']
+        );
+        $this->assertEquals(
+            '1 000,32',
             $array['amount_lent']
         );
         $this->assertEquals(
