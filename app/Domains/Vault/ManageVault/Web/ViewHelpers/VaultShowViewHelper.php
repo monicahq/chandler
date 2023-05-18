@@ -3,10 +3,13 @@
 namespace App\Domains\Vault\ManageVault\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
+use App\Models\Contact;
 use App\Models\MoodTrackingEvent;
+use App\Models\MoodTrackingParameter;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Collection;
 
 class VaultShowViewHelper
@@ -97,7 +100,7 @@ class VaultShowViewHelper
             ->wherePivot('vault_id', $vault->id)
             ->wherePivot('is_favorite', true)
             ->get()
-            ->map(fn ($contact) => [
+            ->map(fn (Contact $contact) => [
                 'id' => $contact->id,
                 'name' => $contact->name,
                 'avatar' => $contact->avatar,
@@ -119,7 +122,7 @@ class VaultShowViewHelper
             ->where('completed', false)
             ->where('due_at', '<=', Carbon::now()->addDays(30))
             ->sortBy('due_at')
-            ->map(fn ($task) => [
+            ->map(fn (Task $task) => [
                 'id' => $task->id,
                 'label' => $task->label,
                 'description' => $task->description,
@@ -163,7 +166,7 @@ class VaultShowViewHelper
         $moodTrackingParametersCollection = $vault->moodTrackingParameters()
             ->orderBy('position', 'asc')
             ->get()
-            ->map(fn ($moodTrackingParameter) => [
+            ->map(fn (MoodTrackingParameter $moodTrackingParameter) => [
                 'id' => $moodTrackingParameter->id,
                 'label' => $moodTrackingParameter->label,
                 'hex_color' => $moodTrackingParameter->hex_color,
