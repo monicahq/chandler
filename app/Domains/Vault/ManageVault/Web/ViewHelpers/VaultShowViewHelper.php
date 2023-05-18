@@ -4,12 +4,12 @@ namespace App\Domains\Vault\ManageVault\Web\ViewHelpers;
 
 use App\Helpers\DateHelper;
 use App\Models\Contact;
+use App\Models\ContactTask;
 use App\Models\MoodTrackingEvent;
 use App\Models\MoodTrackingParameter;
 use App\Models\User;
 use App\Models\Vault;
 use Carbon\Carbon;
-use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Collection;
 
 class VaultShowViewHelper
@@ -120,7 +120,7 @@ class VaultShowViewHelper
             ->where('completed', false)
             ->where('due_at', '<=', Carbon::now()->addDays(30))
             ->sortBy('due_at')
-            ->map(fn (Task $task) => [
+            ->map(fn (ContactTask $task) => [
                 'id' => $task->id,
                 'label' => $task->label,
                 'description' => $task->description,
