@@ -68,14 +68,12 @@ class CollectionHelper
     /**
      * Get a value retrieving callback.
      */
-    private static function valueRetriever(string|callable $value): callable
+    protected static function valueRetriever(string|callable $value): callable
     {
         if (! is_string($value) && is_callable($value)) {
             return $value;
         }
 
-        return function ($item) use ($value) {
-            return data_get($item, $value);
-        };
+        return fn ($item) => data_get($item, $value);
     }
 }
