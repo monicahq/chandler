@@ -68,7 +68,7 @@ class CollectionHelper
     /**
      * Get a value retrieving callback.
      */
-    protected static function valueRetriever(string|callable $value): callable
+    protected static function valueRetriever(callable|string $value): callable
     {
         if (! is_string($value) && is_callable($value)) {
             return $value;

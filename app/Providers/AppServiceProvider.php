@@ -63,11 +63,20 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if (! Collection::hasMacro('sortByCollator')) {
-            Collection::macro('sortByCollator', function ($callback, $options = \Collator::SORT_STRING, $descending = false) {
+            Collection::macro('sortByCollator', function (callable|string $callback) {
                 /** @var Collection */
                 $collect = $this;
 
-                return CollectionHelper::sortByCollator($collect, $callback, $options, $descending);
+                return CollectionHelper::sortByCollator($collect, $callback);
+            });
+        }
+
+        if (! Collection::hasMacro('sortByCollatorDesc')) {
+            Collection::macro('sortByCollatorDesc', function (callable|string $callback) {
+                /** @var Collection */
+                $collect = $this;
+
+                return CollectionHelper::sortByCollator($collect, $callback, descending: true);
             });
         }
 
