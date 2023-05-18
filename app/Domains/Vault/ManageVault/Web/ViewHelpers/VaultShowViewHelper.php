@@ -20,19 +20,17 @@ class VaultShowViewHelper
             ->orderBy('last_updated_at', 'desc')
             ->take(5)
             ->get()
-            ->map(function ($contact) {
-                return [
-                    'id' => $contact->id,
-                    'name' => $contact->name,
-                    'avatar' => $contact->avatar,
-                    'url' => [
-                        'show' => route('contact.show', [
-                            'vault' => $contact->vault_id,
-                            'contact' => $contact->id,
-                        ]),
-                    ],
-                ];
-            });
+            ->map(fn (Contact $contact) => [
+                'id' => $contact->id,
+                'name' => $contact->name,
+                'avatar' => $contact->avatar,
+                'url' => [
+                    'show' => route('contact.show', [
+                        'vault' => $contact->vault_id,
+                        'contact' => $contact->id,
+                    ]),
+                ],
+            ]);
     }
 
     public static function upcomingReminders(Vault $vault, User $user): array

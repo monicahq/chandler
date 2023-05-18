@@ -4,6 +4,7 @@ namespace App\Domains\Contact\ManageContact\Web\ViewHelpers;
 
 use App\Models\Gender;
 use App\Models\Pronoun;
+use App\Models\Template;
 use App\Models\Vault;
 
 class ContactCreateViewHelper
