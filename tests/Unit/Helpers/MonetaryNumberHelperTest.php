@@ -98,8 +98,8 @@ class MonetaryNumberHelperTest extends TestCase
     /** @test */
     public function it_returns_the_amount_without_the_currency_symbol_if_not_provided()
     {
-        $this->assertEquals('500', MonetaryNumberHelper::formatCurrency(500));
-        $this->assertEquals('5,000', MonetaryNumberHelper::formatCurrency(5000));
+        $this->assertEquals('5', MonetaryNumberHelper::formatCurrency(500));
+        $this->assertEquals('50', MonetaryNumberHelper::formatCurrency(5000));
     }
 
     /** @test */

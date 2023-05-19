@@ -108,7 +108,7 @@ class MonetaryNumberHelper
         }
 
         $money = new Money($amount, new Currency($currency));
-        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), \NumberFormatter::DECIMAL);
+        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), \NumberFormatter::PATTERN_DECIMAL);
         $moneyFormatter = new IntlMoneyFormatter($numberFormatter, new ISOCurrencies());
 
         return $moneyFormatter->format($money);
