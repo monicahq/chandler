@@ -1,10 +1,88 @@
+<script setup>
+import PrettyButton from '@/Shared/Form/PrettyButton.vue';
+import PrettyLink from '@/Shared/Form/PrettyLink.vue';
+import TextInput from '@/Shared/Form/TextInput.vue';
+import Errors from '@/Shared/Form/Errors.vue';
+import Help from '@/Shared/Help.vue';
+import { onMounted, ref } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { trans } from 'laravel-vue-i18n';
+import { flash } from '@/methods';
+
+const props = defineProps({
+  data: Object,
+});
+
+const nameOrder = ref(null);
+const loadingState = ref('');
+const editMode = ref(false);
+const localNameOrder = ref('');
+const localNameExample = ref('');
+const disableNameOrder = ref(true);
+const form = useForm({
+  nameOrder: '',
+  choice: '',
+  errors: [],
+});
+
+onMounted(() => {
+  localNameOrder.value = props.data.name_order;
+  localNameExample.value = props.data.name_example;
+  form.nameOrder = props.data.name_order;
+});
+
+const enableEditMode = () => {
+  editMode.value = true;
+};
+const focusNameOrder = () => {
+  disableNameOrder.value = false;
+
+  nextTick(() => {
+    nameOrder.value.focus();
+  });
+};
+
+const helpDocumentation = () => {
+  let msg = trans(
+    'Please read our <link>documentation</link> to know more about this feature, and which variables you have access to.',
+  );
+  let link = 'https://docs.monicahq.com/user-and-account-settings/manage-preferences#customize-contact-names';
+
+  return msg
+    .replace(
+      '<link>',
+      `<a href="${link}" lang="en" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">`,
+    )
+    .replace('</link>', '</a>');
+};
+
+const submit = () => {
+  loadingState.value = 'loading';
+
+  axios
+    .post(props.data.url.store, form)
+    .then((response) => {
+      flash(trans('Changes saved'), 'success');
+      localNameOrder.value = form.nameOrder;
+      localNameExample.value = response.data.data.name_example;
+      form.choice.value = form.nameOrder;
+      editMode.value = false;
+      loadingState.value = null;
+    })
+    .catch((error) => {
+      loadingState.value = null;
+      form.errors = error.response.data;
+    });
+};
+</script>
+
 <template>
   <div class="mb-16">
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 👉 </span>
-        <span class="mr-2">
+        <span class="me-1"> 👉 </span>
+        <span class="me-2">
           {{ $t('Customize how contacts should be displayed') }}
         </span>
 
@@ -17,7 +95,7 @@
     <div class="mb-6 flex rounded border bg-slate-50 px-3 py-2 text-sm dark:border-gray-700 dark:bg-slate-900">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 grow pr-2"
+        class="h-6 grow pe-2"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor">
@@ -68,9 +146,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('First name Last name') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond </span>
+            <span class="ms-4 font-normal text-gray-500"> James Bond </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -83,10 +161,10 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="last_name_first_name"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('Last name First name') }}
 
-            <span class="ml-4 font-normal text-gray-500"> Bond James </span>
+            <span class="ms-4 font-normal text-gray-500"> Bond James </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -99,9 +177,9 @@
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             for="first_name_last_name_nickname"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('First name Last name (nickname)') }}
-            <span class="ml-4 font-normal text-gray-500"> James Bond (007) </span>
+            <span class="ms-4 font-normal text-gray-500"> James Bond (007) </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -112,9 +190,9 @@
             name="name-order"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="nickname" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="nickname" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('nickname') }}
-            <span class="ml-4 font-normal text-gray-500"> 007 </span>
+            <span class="ms-4 font-normal text-gray-500"> 007 </span>
           </label>
         </div>
         <div class="mb-2 flex items-center">
@@ -124,11 +202,11 @@
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
             @click="focusNameOrder" />
-          <label for="custom" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="custom" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('Custom name order') }}
           </label>
         </div>
-        <div class="ml-8">
+        <div class="ms-8">
           <text-input
             :ref="'nameOrder'"
             v-model="form.nameOrder"
@@ -141,121 +219,21 @@
             :maxlength="255" />
 
           <p class="mb-4 text-sm">
-            <span class="mr-1">{{
-              $t(
-                'Please read our documentation to know more about this feature, and which variables you have access to',
-              )
-            }}</span>
-
-            (<a
-              href="https://docs.monicahq.com/user-and-account-settings/manage-preferences#customize-contact-names"
-              target="_blank"
-              class="text-blue-500 hover:underline"
-              >{{ $t('Link to documentation') }}</a
-            >)
+            <span class="mr-1" v-html="helpDocumentation()"></span>
           </p>
         </div>
       </div>
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="$t('Cancel')" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+        <pretty-link :text="$t('Cancel')" :class="'me-3'" @click="editMode = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
       </div>
     </form>
   </div>
 </template>
 
-<script>
-import PrettyButton from '@/Shared/Form/PrettyButton.vue';
-import PrettyLink from '@/Shared/Form/PrettyLink.vue';
-import TextInput from '@/Shared/Form/TextInput.vue';
-import Errors from '@/Shared/Form/Errors.vue';
-import Help from '@/Shared/Help.vue';
-
-export default {
-  components: {
-    PrettyButton,
-    PrettyLink,
-    TextInput,
-    Errors,
-    Help,
-  },
-
-  props: {
-    data: {
-      type: Object,
-      default: null,
-    },
-  },
-
-  data() {
-    return {
-      loadingState: '',
-      editMode: false,
-      localNameOrder: '',
-      localNameExample: '',
-      disableNameOrder: true,
-      form: {
-        nameOrder: '',
-        choice: '',
-        errors: [],
-      },
-    };
-  },
-
-  mounted() {
-    this.localNameOrder = this.data.name_order;
-    this.localNameExample = this.data.name_example;
-    this.form.nameOrder = this.data.name_order;
-  },
-
-  methods: {
-    enableEditMode() {
-      this.editMode = true;
-    },
-
-    setNameOrder() {
-      this.disableNameOrder = true;
-      this.form.nameOrder = this.form.choice;
-    },
-
-    focusNameOrder() {
-      this.disableNameOrder = false;
-
-      this.$nextTick(() => {
-        this.$refs.nameOrder.focus();
-      });
-    },
-
-    submit() {
-      this.loadingState = 'loading';
-
-      axios
-        .post(this.data.url.store, this.form)
-        .then((response) => {
-          this.flash(this.$t('Changes saved'), 'success');
-          this.localNameOrder = this.form.nameOrder;
-          this.localNameExample = response.data.data.name_example;
-          this.choice = this.form.nameOrder;
-          this.editMode = false;
-          this.loadingState = null;
-        })
-        .catch((error) => {
-          this.loadingState = null;
-          this.form.errors = error.response.data;
-        });
-    },
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-pre {
-  background-color: #1f2937;
-  color: #c9ef78;
-}
-
 .example {
   border-bottom-left-radius: 9px;
   border-bottom-right-radius: 9px;
