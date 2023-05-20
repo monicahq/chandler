@@ -20,7 +20,7 @@ class MonetaryNumberHelper
     /**
      * Get the currencies list from Money library.
      */
-    protected static function getCurrencies(): ISOCurrencies
+    private static function getCurrencies(): ISOCurrencies
     {
         if (self::$currencies === null) {
             self::$currencies = new ISOCurrencies();
@@ -37,7 +37,7 @@ class MonetaryNumberHelper
      * @param  string|null  $currency  Currency of amount.
      * @return string Formatted amount for display without currency symbol (ex: '1234.50').
      */
-    public static function formatValue(User $user, int $amount, ?string $currency = null, ?int $format = \NumberFormatter::DECIMAL): string
+    public static function formatValue(User $user, int $amount, ?string $currency = null, int $format = \NumberFormatter::DECIMAL): string
     {
         if ($currency === null) {
             $currency = 'USD';
@@ -47,7 +47,7 @@ class MonetaryNumberHelper
         $money = new Money($amount, new Currency($currency));
 
         $numberFormatter = new \NumberFormatter(App::getLocale(), $format);
-        static::setNumberFormat($user, $numberFormatter);
+        self::setNumberFormat($user, $numberFormatter);
 
         if ($format === \NumberFormatter::CURRENCY) {
             $numberFormatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, '');
@@ -60,7 +60,7 @@ class MonetaryNumberHelper
 
     /**
      * Format a monetary amount, with the currency.
-     * The value is formatted using current langage.
+     * The value is formatted using current language.
      *
      * @param  int  $amount  Amount value in storable format (ex: 100 for 1,00€).
      * @param  string|null  $currency  Currency of amount.
@@ -84,14 +84,14 @@ class MonetaryNumberHelper
         // First get the base formatted value, without currency symbol.
         $base = self::formatMoney($money, \NumberFormatter::DECIMAL);
 
-        // Then get the formatted value with currency symbol.
+        // Then get the localized formatted value with currency symbol.
         $formatted = self::formatMoney($money);
 
-        // Finally replace the base formatted value with the formatted value.
+        // Finally replace the base formatted value with the true value.
         return (string) Str::of($formatted)->replace($base, $value);
     }
 
-    private static function formatMoney(Money $money, $format = \NumberFormatter::CURRENCY): string
+    private static function formatMoney(Money $money, int $format = \NumberFormatter::CURRENCY): string
     {
         $formatter = new \NumberFormatter(App::getLocale(), $format);
         $moneyFormatter = new IntlMoneyFormatter($formatter, static::getCurrencies());
@@ -108,12 +108,8 @@ class MonetaryNumberHelper
      */
     public static function parseInput(string $value, ?string $currency = null): int
     {
-        if (! $currency) {
-            $currency = 'USD';
-        }
-
         $moneyParser = new DecimalMoneyParser(static::getCurrencies());
-        $money = $moneyParser->parse($value, new Currency($currency));
+        $money = $moneyParser->parse($value, new Currency($currency ?? 'USD'));
 
         return (int) $money->getAmount();
     }
@@ -128,13 +124,8 @@ class MonetaryNumberHelper
      */
     public static function inputValue(int $amount, ?string $currency = null): string
     {
-        if (! $currency) {
-            $currency = 'USD';
-        }
-
-        $money = new Money($amount, new Currency($currency));
-
         $moneyFormatter = new DecimalMoneyFormatter(static::getCurrencies());
+        $money = new Money($amount, new Currency($currency ?? 'USD'));
 
         return $moneyFormatter->format($money);
     }
@@ -142,32 +133,38 @@ class MonetaryNumberHelper
     /**
      * Set the numberFormatter symbols according to set user preferences.
      */
-    protected static function setNumberFormat(User $user, \NumberFormatter $numberFormatter)
+    private static function setNumberFormat(User $user, \NumberFormatter $numberFormatter): void
     {
         switch ($user->number_format) {
-            // 1,234.56
             case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
-                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
-                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, ',');
+                // 1,234.56
+                $decimal = '.';
+                $thousands = ',';
                 break;
 
-                // 1 234,56
             case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
-                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, ',');
-                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, ' ');
+                // 1 234,56
+                $decimal = ',';
+                $thousands = ' ';
                 break;
 
-                // 1.234,56
             case User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL:
-                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, ',');
-                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '.');
+                // 1.234,56
+                $decimal = ',';
+                $thousands = '.';
                 break;
 
-                // 1234.56
             case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
-                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
-                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '');
+                // 1234.56
+                $decimal = '.';
+                $thousands = '';
                 break;
+
+            default:
+                return;
         }
+
+        $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, $decimal);
+        $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, $thousands);
     }
 }
