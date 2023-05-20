@@ -20,7 +20,7 @@ class MonetaryNumberHelper
     /**
      * Get the currencies list from Money library.
      */
-    private static function getCurrencies(): ISOCurrencies
+    protected static function getCurrencies(): ISOCurrencies
     {
         if (self::$currencies === null) {
             self::$currencies = new ISOCurrencies();
