@@ -108,6 +108,11 @@ class UserPreferencesIndexViewHelper
     {
         $collection = collect();
         $collection->push([
+            'id' => 0,
+            'format' => trans('Locale default'),
+            'value' => User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT,
+        ]);
+        $collection->push([
             'id' => 1,
             'format' => '1,234.56',
             'value' => User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL,
@@ -122,11 +127,11 @@ class UserPreferencesIndexViewHelper
             'format' => '1.234,56',
             'value' => User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL,
         ]);
-        // $collection->push([
-        //     'id' => 4,
-        //     'format' => '1234.56',
-        //     'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
-        // ]);
+        $collection->push([
+            'id' => 4,
+            'format' => '1234.56',
+            'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+        ]);
 
         return [
             'numbers' => $collection,

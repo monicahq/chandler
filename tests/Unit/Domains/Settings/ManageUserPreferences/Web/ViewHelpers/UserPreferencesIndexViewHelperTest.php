@@ -197,25 +197,30 @@ class UserPreferencesIndexViewHelperTest extends TestCase
         $this->assertEquals(
             [
                 0 => [
+                    'id' => 0,
+                    'format' => 'Locale default',
+                    'value' => User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT,
+                ],
+                1 => [
                     'id' => 1,
                     'format' => '1,234.56',
                     'value' => User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL,
                 ],
-                1 => [
+                2 => [
                     'id' => 2,
                     'format' => '1 234,56',
                     'value' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
                 ],
-                2 => [
+                3 => [
                     'id' => 3,
                     'format' => '1.234,56',
                     'value' => User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL,
                 ],
-                // 3 => [
-                //     'id' => 4,
-                //     'format' => '1234.56',
-                //     'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
-                // ],
+                4 => [
+                    'id' => 4,
+                    'format' => '1234.56',
+                    'value' => User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL,
+                ],
             ],
             $array['numbers']->toArray()
         );

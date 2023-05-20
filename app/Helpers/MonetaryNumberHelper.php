@@ -4,93 +4,29 @@ namespace App\Helpers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
 use Money\Formatter\DecimalMoneyFormatter;
+use Money\Formatter\IntlLocalizedDecimalFormatter;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Money\Parser\DecimalMoneyParser;
 
 class MonetaryNumberHelper
 {
-    /**
-     * Format the number according to the user preferences.
-     */
-    public static function formatValue(User $user, int $amount, ?string $currency = null): string
-    {
-        switch ($user->number_format) {
-            // 1,234.56
-            case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
-                return static::getValue($amount, $currency, 'en');
-
-                // 1 234,56
-            case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
-                return static::getValue($amount, $currency, 'fr');
-
-                // 1.234,56
-            case User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL:
-                return static::getValue($amount, $currency, 'de');
-
-                // 1234.56
-            case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
-                return static::exchangeValue($amount, $currency);
-
-            default:
-                return static::exchangeValue($amount, $currency);
-        }
-    }
+    private static $currencies;
 
     /**
-     * Format the amount with the currency symbol according to the user preferences.
+     * Get the currencies list from Money library.
      */
-    public static function format(User $user, int $amount, ?string $currency = null): string
+    protected static function getCurrencies(): ISOCurrencies
     {
-        switch ($user->number_format) {
-            // 1,234.56
-            case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
-                return static::formatCurrency($amount, $currency, 'en-US');
-
-                // 1 234,56
-            case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
-                return static::formatCurrency($amount, $currency, 'fr');
-
-                // 1.234,56
-            case User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL:
-                return static::formatCurrency($amount, $currency, 'de');
-
-                // 1234.56
-            case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
-                return static::formatCurrency($amount, $currency, format: \NumberFormatter::DECIMAL);
-
-            default:
-                return static::formatCurrency($amount, $currency, format: \NumberFormatter::DECIMAL);
-        }
-    }
-
-    /**
-     * Format a monetary amount with currency symbol.
-     * The value is formatted using current langage, as per the currency symbol.
-     *
-     * If the currency parameter is not passed, then the currency specified in
-     * the users's settings will be used. If the currency setting is not
-     * defined, then the amount will be returned without a currency symbol.
-     *
-     * @param  int  $amount  Amount value in storable format (ex: 100 for 1,00€).
-     * @param  string|null  $currency  Currency of amount.
-     * @return string Formatted amount for display with currency symbol (ex '1,235.87 €').
-     */
-    public static function formatCurrency(int $amount, ?string $currency = null, ?string $locale = null, ?int $format = \NumberFormatter::CURRENCY): string
-    {
-        if (! $currency) {
-            $currency = 'USD';
-            $format = \NumberFormatter::DECIMAL;
+        if (static::$currencies === null) {
+            static::$currencies = new ISOCurrencies();
         }
 
-        $money = new Money($amount, new Currency($currency));
-        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), $format);
-        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, new ISOCurrencies());
-
-        return $moneyFormatter->format($money);
+        return static::$currencies;
     }
 
     /**
@@ -101,55 +37,137 @@ class MonetaryNumberHelper
      * @param  string|null  $currency  Currency of amount.
      * @return string Formatted amount for display without currency symbol (ex: '1234.50').
      */
-    public static function getValue(int $amount, ?string $currency = null, ?string $locale = null): string
+    public static function formatValue(User $user, int $amount, ?string $currency = null, ?int $format = \NumberFormatter::DECIMAL): string
     {
-        if (! $currency) {
+        if ($currency === null) {
             $currency = 'USD';
+            $format = \NumberFormatter::DECIMAL;
         }
 
         $money = new Money($amount, new Currency($currency));
-        $numberFormatter = new \NumberFormatter($locale ?? App::getLocale(), \NumberFormatter::PATTERN_DECIMAL);
-        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, new ISOCurrencies());
+
+        $numberFormatter = new \NumberFormatter(App::getLocale(), $format);
+        static::setNumberFormat($user, $numberFormatter);
+
+        if ($format === \NumberFormatter::CURRENCY) {
+            $numberFormatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, '');
+        }
+
+        $moneyFormatter = new IntlLocalizedDecimalFormatter($numberFormatter, static::getCurrencies());
+
+        return trim($moneyFormatter->format($money), ' ');
+    }
+
+    /**
+     * Format a monetary amount, with the currency.
+     * The value is formatted using current langage.
+     *
+     * @param  int  $amount  Amount value in storable format (ex: 100 for 1,00€).
+     * @param  string|null  $currency  Currency of amount.
+     * @return string Formatted amount for display without currency symbol (ex: '1234.50').
+     */
+    public static function format(User $user, int $amount, ?string $currency = null): string
+    {
+        $value = static::formatValue($user, $amount, $currency);
+
+        if ($currency === null) {
+            return $value;
+        }
+
+        // // Other working example using MessageFormatter.
+        // $number = static::inputValue($amount, $currency);
+        // $base = \MessageFormatter::formatMessage(App::getLocale(), "{0, number}", [$number]);
+        // $formatted = \MessageFormatter::formatMessage(App::getLocale(), "{0, number, :: currency/$currency}", [$number]);
+
+        $money = new Money($amount, new Currency($currency));
+
+        // First get the base formatted value, without currency symbol.
+        $base = static::formatMoney($money, \NumberFormatter::DECIMAL);
+
+        // Then get the formatted value with currency symbol.
+        $formatted = static::formatMoney($money);
+
+        // Finally replace the base formatted value with the formatted value.
+        return (string) Str::of($formatted)->replace($base, $value);
+    }
+
+    private static function formatMoney(Money $money, $format = \NumberFormatter::CURRENCY): string
+    {
+        $formatter = new \NumberFormatter(App::getLocale(), $format);
+        $moneyFormatter = new IntlMoneyFormatter($formatter, static::getCurrencies());
 
         return $moneyFormatter->format($money);
     }
 
     /**
-     * Parse a monetary exchange value as storable integer.
+     * Parse a monetary value as storable integer.
      * Currency is used to know the precision of this currency.
      *
-     * @param  string  $exchange  Amount value in exchange format (ex: 1.00).
+     * @param  string  $value  Amount value in input format (ex: 145.00).
      * @return int Amount as storable format (ex: 14500).
      */
-    public static function parseInput(string $exchange, ?string $currency): int
+    public static function parseInput(string $value, ?string $currency = null): int
     {
         if (! $currency) {
             $currency = 'USD';
         }
 
-        $moneyParser = new DecimalMoneyParser(new ISOCurrencies());
-        $money = $moneyParser->parse($exchange, new Currency($currency));
+        $moneyParser = new DecimalMoneyParser(static::getCurrencies());
+        $money = $moneyParser->parse($value, new Currency($currency));
 
         return (int) $money->getAmount();
     }
 
     /**
-     * Format a monetary value as exchange value.
-     * Exchange value is the amount to be entered in an input by a user,
+     * Format a monetary value as input value.
+     * Input value is the amount to be entered in an input by a user,
      * using ordinary format.
      *
      * @param  int  $amount  Amount value in storable format (ex: 100 for 1,00€).
-     * @return string Real value of amount in exchange format (ex: 1.24).
+     * @return string Real value of amount in input format (ex: 1.24).
      */
-    public static function exchangeValue(int $amount, ?string $currency): string
+    public static function inputValue(int $amount, ?string $currency = null): string
     {
         if (! $currency) {
             $currency = 'USD';
         }
 
         $money = new Money($amount, new Currency($currency));
-        $moneyFormatter = new DecimalMoneyFormatter(new ISOCurrencies());
+
+        $moneyFormatter = new DecimalMoneyFormatter(static::getCurrencies());
 
         return $moneyFormatter->format($money);
+    }
+
+    /**
+     * Set the numberFormatter symbols according to set user preferences.
+     */
+    protected static function setNumberFormat(User $user, \NumberFormatter $numberFormatter)
+    {
+        switch ($user->number_format) {
+            // 1,234.56
+            case User::NUMBER_FORMAT_TYPE_COMMA_THOUSANDS_DOT_DECIMAL:
+                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
+                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, ',');
+                break;
+
+                // 1 234,56
+            case User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL:
+                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, ',');
+                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, ' ');
+                break;
+
+                // 1.234,56
+            case User::NUMBER_FORMAT_TYPE_DOT_THOUSANDS_COMMA_DECIMAL:
+                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, ',');
+                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '.');
+                break;
+
+                // 1234.56
+            case User::NUMBER_FORMAT_TYPE_NO_SPACE_DOT_DECIMAL:
+                $numberFormatter->setSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, '.');
+                $numberFormatter->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, '');
+                break;
+        }
     }
 }

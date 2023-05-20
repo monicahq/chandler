@@ -499,11 +499,11 @@ export default {
     showEditLoanModal(loan) {
       this.getCurrencies();
       this.form.errors = [];
-      this.form.type = loan.amount_lent ? 'monetary' : 'object';
+      this.form.type = loan.amount_lent_input ? 'monetary' : 'object';
       this.form.name = loan.name;
       this.form.description = loan.description;
       this.form.loaned_at = loan.loaned_at;
-      this.form.amount_lent = loan.amount_lent_int;
+      this.form.amount_lent = loan.amount_lent_input;
       this.form.currency_id = loan.currency_id;
       this.form.loaners = loan.loaners;
       this.form.loanees = loan.loanees;

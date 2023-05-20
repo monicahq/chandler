@@ -100,7 +100,7 @@ class ModuleLoanViewHelperTest extends TestCase
         );
         $this->assertEquals(
             '1000.32',
-            $array['amount_lent_int']
+            $array['amount_lent_input']
         );
         $this->assertEquals(
             $loan->currency_id,
