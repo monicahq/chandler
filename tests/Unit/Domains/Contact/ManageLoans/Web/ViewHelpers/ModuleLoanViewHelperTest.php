@@ -91,7 +91,7 @@ class ModuleLoanViewHelperTest extends TestCase
             $array['description']
         );
         $this->assertEquals(
-            '1 000,32 $CA',
+            'CA$1 000,32',
             $array['amount_full']
         );
         $this->assertEquals(

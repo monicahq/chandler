@@ -22,11 +22,11 @@ class MonetaryNumberHelper
      */
     protected static function getCurrencies(): ISOCurrencies
     {
-        if (static::$currencies === null) {
-            static::$currencies = new ISOCurrencies();
+        if (self::$currencies === null) {
+            self::$currencies = new ISOCurrencies();
         }
 
-        return static::$currencies;
+        return self::$currencies;
     }
 
     /**
@@ -82,10 +82,10 @@ class MonetaryNumberHelper
         $money = new Money($amount, new Currency($currency));
 
         // First get the base formatted value, without currency symbol.
-        $base = static::formatMoney($money, \NumberFormatter::DECIMAL);
+        $base = self::formatMoney($money, \NumberFormatter::DECIMAL);
 
         // Then get the formatted value with currency symbol.
-        $formatted = static::formatMoney($money);
+        $formatted = self::formatMoney($money);
 
         // Finally replace the base formatted value with the formatted value.
         return (string) Str::of($formatted)->replace($base, $value);
