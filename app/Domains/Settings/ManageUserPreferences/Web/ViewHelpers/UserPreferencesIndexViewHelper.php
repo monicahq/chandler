@@ -114,7 +114,7 @@ class UserPreferencesIndexViewHelper
         $collection = collect();
         $collection->push([
             'id' => 0,
-            'format' => trans('Locale default: :number', ['number' => $default]),
+            'format' => trans('Locale default: :value', ['value' => $default]),
             'value' => User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT,
         ]);
         $collection->push([
