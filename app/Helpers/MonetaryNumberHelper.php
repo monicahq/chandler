@@ -74,11 +74,6 @@ class MonetaryNumberHelper
             return $value;
         }
 
-        // // Other working example using MessageFormatter.
-        // $number = static::inputValue($amount, $currency);
-        // $base = \MessageFormatter::formatMessage(App::getLocale(), "{0, number}", [$number]);
-        // $formatted = \MessageFormatter::formatMessage(App::getLocale(), "{0, number, :: currency/$currency}", [$number]);
-
         $money = new Money($amount, new Currency($currency));
 
         // First get the base formatted value, without currency symbol.
@@ -161,6 +156,7 @@ class MonetaryNumberHelper
                 break;
 
             default:
+                // Don't set decimal or thousands symbols.
                 return;
         }
 
