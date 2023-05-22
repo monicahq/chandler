@@ -2,6 +2,7 @@
 
 namespace App\Domains\Settings\ManageUserPreferences\Web\ViewHelpers;
 
+use App\Helpers\MonetaryNumberHelper;
 use App\Helpers\NameHelper;
 use App\Models\Contact;
 use App\Models\User;
@@ -106,10 +107,14 @@ class UserPreferencesIndexViewHelper
 
     public static function dtoNumberFormat(User $user): array
     {
+        $user = new User();
+        $user->number_format = User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT;
+        $default = MonetaryNumberHelper::formatValue($user, 123456);
+
         $collection = collect();
         $collection->push([
             'id' => 0,
-            'format' => trans('Locale default'),
+            'format' => trans('Locale default: :number', ['number' => $default]),
             'value' => User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT,
         ]);
         $collection->push([
@@ -119,7 +124,7 @@ class UserPreferencesIndexViewHelper
         ]);
         $collection->push([
             'id' => 2,
-            'format' => '1 234,56',
+            'format' => '1 234,56',
             'value' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
         ]);
         $collection->push([

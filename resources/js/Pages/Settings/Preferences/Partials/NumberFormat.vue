@@ -33,14 +33,14 @@
           <input
             :id="'input' + numberFormat.id"
             v-model="form.numberFormat"
-            :value="numberFormat.format"
+            :value="numberFormat.value"
             name="date-format"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             :for="'input' + numberFormat.id"
             class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ numberFormat.value }}
+            {{ numberFormat.format }}
           </label>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default {
   },
 
   mounted() {
-    this.localNumberFormat = this.data.number_format;
+    this.localNumberFormat = _.find(this.data.numbers, (format) => format.value === this.data.number_format).format;
     this.form.numberFormat = this.data.number_format;
   },
 

@@ -198,7 +198,7 @@ class UserPreferencesIndexViewHelperTest extends TestCase
             [
                 0 => [
                     'id' => 0,
-                    'format' => 'Locale default',
+                    'format' => 'Locale default: 1,234.56',
                     'value' => User::NUMBER_FORMAT_TYPE_LOCALE_DEFAULT,
                 ],
                 1 => [
@@ -208,7 +208,7 @@ class UserPreferencesIndexViewHelperTest extends TestCase
                 ],
                 2 => [
                     'id' => 2,
-                    'format' => '1 234,56',
+                    'format' => '1 234,56',
                     'value' => User::NUMBER_FORMAT_TYPE_SPACE_THOUSANDS_COMMA_DECIMAL,
                 ],
                 3 => [
