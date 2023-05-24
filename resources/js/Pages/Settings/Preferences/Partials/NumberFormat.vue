@@ -3,8 +3,8 @@
     <!-- title + cta -->
     <div class="mb-3 mt-8 items-center justify-between sm:mt-0 sm:flex">
       <h3 class="mb-4 flex font-semibold sm:mb-0">
-        <span class="mr-1"> 💵 </span>
-        <span class="mr-2">
+        <span class="me-1"> 💵 </span>
+        <span class="me-2">
           {{ $t('How should we display numerical values') }}
         </span>
 
@@ -17,7 +17,7 @@
     <div v-if="!editMode" class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <p class="px-5 py-2">
         <span class="mb-2 block">{{ $t('Current way of displaying numbers:') }}</span>
-        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ localNumberFormat }}</span>
+        <span class="mb-2 block rounded bg-slate-100 px-5 py-2 text-sm dark:bg-slate-900">{{ currentFormat }}</span>
       </p>
     </div>
 
@@ -33,22 +33,22 @@
           <input
             :id="'input' + numberFormat.id"
             v-model="form.numberFormat"
-            :value="numberFormat.format"
+            :value="numberFormat.value"
             name="date-format"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
           <label
             :for="'input' + numberFormat.id"
-            class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ numberFormat.value }}
+            class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ numberFormat.format }}
           </label>
         </div>
       </div>
 
       <!-- actions -->
       <div class="flex justify-between p-5">
-        <pretty-link :text="$t('Cancel')" :classes="'mr-3'" @click="editMode = false" />
-        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+        <pretty-link :text="$t('Cancel')" :class="'me-3'" @click="editMode = false" />
+        <pretty-button :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
       </div>
     </form>
   </div>
@@ -90,6 +90,13 @@ export default {
   mounted() {
     this.localNumberFormat = this.data.number_format;
     this.form.numberFormat = this.data.number_format;
+  },
+
+  computed: {
+    currentFormat() {
+      let index = _.findIndex(this.data.numbers, (f) => f.value === this.localNumberFormat);
+      return index >= 0 ? this.data.numbers[index].format : '';
+    },
   },
 
   methods: {

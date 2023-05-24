@@ -60,12 +60,12 @@ class ReminderTriggered extends Notification
         ]);
 
         return (new MailMessage())
-            ->subject(trans('email.notification_reminder_email', ['name' => $this->contactName]))
-            ->line(trans('email.reminder_triggered_intro'))
+            ->subject(trans('Reminder for :name', ['name' => $this->contactName]))
+            ->line(trans('You wanted to be reminded of the following:'))
             ->line($this->content)
-            ->line(trans('email.reminder_triggered_for'))
+            ->line(trans('for'))
             ->line($this->contactName)
-            ->line(trans('email.reminder_triggered_signature'));
+            ->line(trans('Test email for Monica'));
     }
 
     public function toTelegram($notifiable)
@@ -77,10 +77,10 @@ class ReminderTriggered extends Notification
         ]);
 
         // content contains the label of the ContactReminder object
-        $content = '🔔 Reminder: '.
-            $this->content.' '.
-            trans('email.reminder_triggered_for').' '.
-            $this->contactName;
+        $content = trans('🔔 Reminder: :label for :contactName', [
+            'label' => $this->content,
+            'contactName' => $this->contactName,
+        ]);
 
         return TelegramMessage::create()
             ->to($this->channel->content)

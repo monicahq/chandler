@@ -2,9 +2,8 @@
   <layout title="Dashboard" :layout-data="layoutData">
     <main class="relative mt-16 sm:mt-24">
       <!-- blank state -->
-      <div v-if="data.vaults.length == 0" class="mx-auto mb-6 max-w-md px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
-        <div
-          class="dark:bg-ghray-900 rounded-t-lg border-l border-r border-t border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
+      <div v-if="data.vaults.length === 0" class="mx-auto mb-6 max-w-md px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
+        <div class="rounded-t-lg border-x border-t border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900">
           <p class="mb-2 text-center text-xl">👋</p>
           <h2 class="mb-6 text-center text-lg font-semibold">
             {{ $t('Thanks for giving Monica a try') }}
@@ -31,14 +30,19 @@
             {{ $t('All the best,') }}
           </p>
           <p>
-            <a href="https://phpc.social/@regis" class="text-blue-500 hover:underline">Régis</a> &
-            <a href="https://twitter.com/asbin" class="text-blue-500 hover:underline">Alexis</a>
+            <a href="https://phpc.social/@regis" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+              Régis
+            </a>
+            &amp;
+            <a href="https://twitter.com/asbin" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+              Alexis
+            </a>
           </p>
         </div>
       </div>
 
       <!-- list of existing vaults -->
-      <div v-if="data.vaults.length > 0" class="mx-auto max-w-4xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
+      <div v-else class="mx-auto max-w-4xl px-2 py-2 sm:px-6 sm:py-6 lg:px-8">
         <div class="mb-10 items-center justify-between sm:mb-6 sm:flex">
           <h3 class="mb-3 dark:text-slate-200 sm:mb-0">
             {{ $t('All the vaults in the account') }}
@@ -69,11 +73,11 @@
                   <div v-for="contact in vault.contacts" :key="contact.id" class="inline-block">
                     <avatar
                       :data="contact.avatar"
-                      :classes="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
+                      :class="'h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900'" />
                   </div>
                   <div
                     v-if="vault.remaining_contacts != 0"
-                    class="remaining-contact relative flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-gray-300 dark:text-gray-900 hover:dark:bg-gray-400">
+                    class="relative -start-[5px] -top-px flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800 dark:bg-gray-300 dark:text-gray-900 hover:dark:bg-gray-400">
                     + {{ vault.remaining_contacts }}
                   </div>
                 </div>
@@ -172,11 +176,6 @@ export default {
   height: 250px;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-}
-
-.remaining-contact {
-  top: -1px;
-  left: -5px;
 }
 
 @media (max-width: 480px) {

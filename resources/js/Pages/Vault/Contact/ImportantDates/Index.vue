@@ -78,15 +78,15 @@ const destroy = (date) => {
       <div class="max-w-8xl mx-auto hidden px-4 py-2 sm:px-6 md:block">
         <div class="flex items-baseline justify-between space-x-6">
           <ul class="text-sm">
-            <li class="mr-2 inline text-gray-600 dark:text-gray-400">
+            <li class="me-2 inline text-gray-600 dark:text-gray-400">
               {{ $t('You are here:') }}
             </li>
-            <li class="mr-2 inline">
+            <li class="me-2 inline">
               <inertia-link :href="layoutData.vault.url.contacts" class="text-blue-500 hover:underline">
                 {{ $t('Contacts') }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -96,12 +96,12 @@ const destroy = (date) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </li>
-            <li class="mr-2 inline">
+            <li class="me-2 inline">
               <inertia-link :href="data.url.contact" class="text-blue-500 hover:underline">
                 {{ $t('Profile of :name', { name: data.contact.name }) }}
               </inertia-link>
             </li>
-            <li class="relative mr-2 inline">
+            <li class="relative me-2 inline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-breadcrumb relative inline h-3 w-3"
@@ -122,7 +122,7 @@ const destroy = (date) => {
         <!-- title + cta -->
         <div class="mb-6 mt-8 items-center justify-between sm:mt-0 sm:flex">
           <h3 class="mb-4 sm:mb-0">
-            <span class="mr-1"> 🗓 </span>
+            <span class="me-1"> 🗓 </span>
             {{ $t('All the important dates') }}
           </h3>
           <PrettyButton v-if="!createDateModalShown" :text="$t('Add a date')" :icon="'plus'" @click="showCreateModal" />
@@ -154,14 +154,14 @@ const destroy = (date) => {
 
                   <span
                     v-if="date.type"
-                    class="ml-2 inline-block rounded bg-neutral-200 px-1 py-0 text-xs text-neutral-500 last:mr-0">
+                    class="ms-2 inline-block rounded bg-neutral-200 px-1 py-0 text-xs text-neutral-500 last:me-0">
                     {{ date.type.label }}
                   </span>
                 </span>
 
                 <!-- actions -->
                 <ul class="text-sm">
-                  <li class="mr-4 inline cursor-pointer" @click="updateDateModal(date)">
+                  <li class="me-4 inline cursor-pointer" @click="updateDateModal(date)">
                     <span class="text-blue-500 hover:underline">{{ $t('Edit') }}</span>
                   </li>
                   <li class="inline cursor-pointer text-red-500 hover:text-red-900" @click="destroy(date)">
