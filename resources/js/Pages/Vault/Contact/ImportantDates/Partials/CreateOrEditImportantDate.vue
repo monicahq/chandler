@@ -155,11 +155,11 @@ defineExpose({
             name="date"
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
-          <label for="full_date" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="full_date" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('I know the exact date, including the year') }}
           </label>
         </div>
-        <div v-if="form.choice === 'full_date'" class="mb-4 ml-6">
+        <div v-if="form.choice === 'full_date'" class="mb-4 ms-6">
           <DatePicker
             v-model.string="form.date"
             class="inline-block h-full"
@@ -185,17 +185,17 @@ defineExpose({
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
             @input="showMonth" />
-          <label for="month_day" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="month_day" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('I only know the day and month, not the year') }}
           </label>
         </div>
-        <div v-if="form.choice === 'month_day'" class="ml-6 flex">
+        <div v-if="form.choice === 'month_day'" class="ms-6 flex">
           <Dropdown
             :ref="'month'"
             v-model.number="form.month"
             :data="data.months"
             :required="true"
-            :div-outer-class="'mb-5 mr-2'"
+            :div-outer-class="'mb-5 me-2'"
             :placeholder="$t('Choose a value')"
             :dropdown-class="'block w-full'"
             :label="$t('Month')" />
@@ -220,11 +220,11 @@ defineExpose({
             type="radio"
             class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700"
             @input="showAge" />
-          <label for="year" class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label for="year" class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $t('I only know a number of years (an age, for example)') }}
           </label>
         </div>
-        <div v-if="form.choice === 'year'" class="ml-6">
+        <div v-if="form.choice === 'year'" class="ms-6">
           <TextInput
             :ref="'age'"
             v-model.number="form.age"
@@ -247,13 +247,13 @@ defineExpose({
             name="reminder"
             type="checkbox"
             class="focus:ring-3 relative h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 focus:dark:ring-blue-600" />
-          <label for="reminder" class="ml-2 block cursor-pointer text-sm text-gray-900 dark:text-gray-100">
+          <label for="reminder" class="ms-2 block cursor-pointer text-sm text-gray-900 dark:text-gray-100">
             {{ $t('Create a reminder') }}
           </label>
         </div>
 
         <!-- reminder options -->
-        <div v-if="form.reminder" class="ml-4 mt-4">
+        <div v-if="form.reminder" class="ms-4 mt-4">
           <div class="mb-2 flex items-center">
             <input
               id="recurring_year"
@@ -264,7 +264,7 @@ defineExpose({
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="recurring_year"
-              class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('Remind me about this date every year') }}
             </label>
           </div>
@@ -279,7 +279,7 @@ defineExpose({
               class="h-4 w-4 border-gray-300 text-sky-500 dark:border-gray-700" />
             <label
               for="one_time"
-              class="ml-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
+              class="ms-3 block cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300">
               {{ $t('Remind me about this date just once, in one year from now') }}
             </label>
           </div>
@@ -288,7 +288,7 @@ defineExpose({
     </div>
 
     <div class="flex justify-between p-5">
-      <PrettySpan :text="$t('Cancel')" :classes="'mr-3'" @click="$emit('close')" />
+      <PrettySpan :text="$t('Cancel')" :classes="'me-3'" @click="$emit('close')" />
       <PrettyButton :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
     </div>
   </form>
