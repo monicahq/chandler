@@ -37,6 +37,18 @@ const localDropdownClasses = computed(() => {
     props.dropdownClass,
   ];
 });
+const localData = computed(() => {
+  return _.map(props.data, (value) => {
+    if (_.isObject(value)) {
+      return value;
+    } else {
+      return {
+        id: value,
+        name: value,
+      };
+    }
+  });
+});
 
 const sendEscKey = () => {
   emit('esc-key-pressed');
