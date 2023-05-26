@@ -112,8 +112,8 @@ defineExpose({
 </script>
 
 <template>
-  <form class="bg-gray-50 dark:bg-gray-900" @submit.prevent="submit">
-    <div class="border-b border-gray-200 dark:border-gray-700">
+  <form class="rounded-lg bg-gray-50 dark:border-gray-700 dark:bg-gray-900" @submit.prevent="submit">
+    <div class="border-b">
       <div v-if="form.errors.length > 0" class="p-5">
         <Errors :errors="form.errors" />
       </div>
