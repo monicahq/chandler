@@ -112,8 +112,10 @@ defineExpose({
 </script>
 
 <template>
-  <form class="rounded-lg bg-gray-50 dark:border-gray-700 dark:bg-gray-900" @submit.prevent="submit">
-    <div class="border-b">
+  <form
+    class="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900"
+    @submit.prevent="submit">
+    <div class="border-b border-gray-200 dark:border-gray-700">
       <div v-if="form.errors.length > 0" class="p-5">
         <Errors :errors="form.errors" />
       </div>
@@ -239,7 +241,9 @@ defineExpose({
       </div>
 
       <!-- reminders -->
-      <div v-if="date === undefined && form.choice != 'year'" class="border-t border-gray-200 p-5 dark:border-gray-700">
+      <div
+        v-if="date === undefined && form.choice !== 'year'"
+        class="border-t border-gray-200 p-5 dark:border-gray-700">
         <div class="flex items-center">
           <input
             id="reminder"
@@ -289,7 +293,7 @@ defineExpose({
 
     <div class="flex justify-between p-5">
       <PrettySpan :text="$t('Cancel')" :classes="'me-3'" @click="$emit('close')" />
-      <PrettyButton :text="$t('Save')" :state="loadingState" :icon="'check'" :classes="'save dark:save'" />
+      <PrettyButton :text="$t('Save')" :state="loadingState" :icon="'check'" :class="'save'" />
     </div>
   </form>
 </template>

@@ -131,15 +131,13 @@ const destroy = (date) => {
         <Errors :errors="errors" />
 
         <!-- modal to create a new date -->
-        <div
+        <CreateOrEditImportantDate
           v-if="createDateModalShown"
-          class="mb-6 rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-          <CreateOrEditImportantDate
-            :ref="'createForm'"
-            :data="data"
-            @close="createDateModalShown = false"
-            @created="created" />
-        </div>
+          class="mb-6"
+          :ref="'createForm'"
+          :data="data"
+          @close="createDateModalShown = false"
+          @created="created" />
 
         <div v-else>
           <!-- list of dates -->
