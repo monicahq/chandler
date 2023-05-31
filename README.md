@@ -1,6 +1,6 @@
 <p align="center">
 
-![Monica's Logo](https://user-images.githubusercontent.com/61099/37693034-5783b3d6-2c93-11e8-80ea-bd78438dcd51.png)
+![Monica's Logo](https://user-images.githubusercontent.com/61099/242266547-63d98bd9-35f3-4dfe-92f4-a4a8dd75aa5c.png)
 
 <p>
 <h1 align="center">Document your life</h1>
