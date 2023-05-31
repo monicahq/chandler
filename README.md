@@ -2,7 +2,7 @@
 
 ![Monica's Logo](https://user-images.githubusercontent.com/61099/242266547-63d98bd9-35f3-4dfe-92f4-a4a8dd75aa5c.png)
 
-<p>
+</p>
 <h1 align="center">Document your life</h1>
 
 <div align="center">
@@ -17,6 +17,7 @@
 Monica is an open source personal relationship management system, that lets you document your life.
 
 > **Note**
+>
 > This branch is the beta version of Monica. If you want to browse the stable and current version, use the main branch instead.
 
 - [Introduction](#introduction)
