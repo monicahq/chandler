@@ -14,11 +14,19 @@
 
 </div>
 
-Monica is an open source personal relationship management system, that lets you document your life.
+<p align="center">
+  <a href="https://docs.monicahq.com">Docs</a>
+   -
+   <a href="https://github.com/monicahq/monica/issues/new?assignees=&labels=bug&template=bug_report.md">Bug report</a>
+</p>
+
+## Monica is an open source personal relationship management system, that lets you document your life.
 
 > **Note**
 >
 > This branch is the beta version of Monica. If you want to browse the stable and current version, use the main branch instead.
+
+## Table of contents
 
 - [Introduction](#introduction)
   - [Features](#features)
