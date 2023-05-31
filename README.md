@@ -95,9 +95,9 @@ Here are some of the things you can do to help.
 
 ### Contribute as a developer
 
-- Read our [Contribution Guide](/CONTRIBUTING.md).
+- Read our [Contribution Guide](https://docs.monicahq.com/developers/contribution-guide).
 
-- Install [the developer version locally](/docs/contribute/readme.md) so you can start contributing.
+- Install [the developer version locally](https://docs.monicahq.com/developers/setup-local-development) so you can start contributing.
 
 - Look for [issues labelled ‘Bugs’](https://github.com/monicahq/monica/issues?q=is%3Aopen+is%3Aissue+label%3Abug) if you are looking to have an immediate impact on Monica.
 
