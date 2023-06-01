@@ -29,7 +29,7 @@ echo -n ${release:-$version} | tee $ROOT/config/.release
 
 # BUILD
 composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev --working-dir=$ROOT
-yarn --cwd $ROOT install --frozen-lockfile --non-interactive
+yarn --cwd $ROOT install --immutable
 yarn --cwd $ROOT run build
 
 
