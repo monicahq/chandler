@@ -84,7 +84,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.php-version }}
-          extensions: redis
           coverage: none
 
     # Composer
