@@ -18,19 +18,19 @@ if [ -z "$commit" ]; then
   release=$(git --git-dir $ROOT/.git log --pretty="%h" -n1 HEAD)
 fi
 
-set -v
-
+echo -n "version: "
 echo -n "$version" | tee $ROOT/config/.version
-
+echo -n -e "\ncommit: "
 echo -n $commit | tee $ROOT/config/.commit
-
+echo -n -e "\nrelease: "
 echo -n ${release:-$version} | tee $ROOT/config/.release
+echo ""
 
 
 # BUILD
 composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-dev --working-dir=$ROOT
-yarn --cwd $ROOT install --immutable
-yarn --cwd $ROOT run build
+yarn install --cwd $ROOT --immutable
+yarn run --cwd $ROOT build
 
 
 # PACKAGE
@@ -43,7 +43,7 @@ ln -s $ROOT/.eslintignore $package/
 ln -s $ROOT/.eslintrc.yml $package/
 ln -s $ROOT/.prettierignore $package/
 ln -s $ROOT/.prettierrc.json $package/
-ln -s $ROOT/.tools-versions $package/
+ln -s $ROOT/.tool-versions $package/
 ln -s $ROOT/.yarnrc.yml $package/
 ln -s $ROOT/artisan $package/
 ln -s $ROOT/composer.json $package/
@@ -60,7 +60,7 @@ ln -s $ROOT/yarn.lock $package/
 ln -s $ROOT/app $package/
 ln -s $ROOT/bootstrap $package/
 ln -s $ROOT/config $package/
-ln -s $ROOT/docs $package/
+ln -s $ROOT/lang $package/
 ln -s $ROOT/public $package/
 ln -s $ROOT/resources $package/
 ln -s $ROOT/routes $package/
@@ -68,7 +68,7 @@ ln -s $ROOT/vendor $package/
 
 ln -s $ROOT/database/factories $package/database/
 ln -s $ROOT/database/migrations $package/database/
-ln -s $ROOT/database/seeds $package/database/
+ln -s $ROOT/database/seeders $package/database/
 
 mkdir -p $package/storage/app/public
 mkdir -p $package/storage/logs
@@ -85,7 +85,7 @@ echo "package=$package.tar.bz2" >> $GITHUB_OUTPUT
 # ASSETS
 assets=monica-assets-$version
 mkdir -p $assets/public
-ln -s $ROOT/public/build $assets/public/build/
+ln -s $ROOT/public/build $assets/public/
 
 tar chfj $assets.tar.bz2 --exclude .gitignore --exclude .gitkeep $assets
 sha512sum "$assets.tar.bz2" > "$assets.tar.bz2.sha512"
